@@ -52,12 +52,12 @@ interface BaseModel<T> extends RuleField, NodeModel {
     }
 }
 
-export interface StringFieldModel extends BaseModel<StringConstraints>, ValueField<string>  {
-    type: "string"
+export interface StringFieldModel extends BaseModel<StringConstraints>, ValueField<string> {
+    type: 'string'
 }
 
-export interface NumberFieldModel extends BaseModel<NumberConstraints>,  ValueField<number> {
-    type: "number"
+export interface NumberFieldModel extends BaseModel<NumberConstraints>, ValueField<number> {
+    type: 'number'
 }
 
 type FormMetaData = {
@@ -72,7 +72,7 @@ export interface ContainerModel<T> {
 
 export type FieldModel = StringFieldModel | NumberFieldModel;
 export interface FieldSetModel extends BaseModel<ContainerConstraints>, ContainerModel<FieldModel | FieldSetModel> {
-    type?: "array" | "object"
+    type?: 'array' | 'object'
     count?: number
     initialCount?: number;
 }

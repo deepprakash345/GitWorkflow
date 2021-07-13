@@ -1,5 +1,5 @@
-import createFormInstance from './FormInstance'
+import createFormInstance from './FormInstance';
 
 export default {
-    createFormInstance
-}
+  createFormInstance
+};

@@ -1,14 +1,12 @@
-import { NodeModel } from "./Types";
-
 abstract class Node<T> {
     protected _jsonModel: T
 
-    constructor(node: T) {
-        this._jsonModel = node;
+    constructor (node: T) {
+      this._jsonModel = node;
     }
-    
-    public json(): T {
-        return Object.assign({}, this._jsonModel);
+
+    public json (): T {
+      return Object.assign({}, this._jsonModel);
     }
 }
 
