@@ -1,42 +1,41 @@
-interface BaseConstraints {
+type BaseConstraints ={
     required?: boolean;
     expression?: string;
 }
-
-interface StringConstraints extends BaseConstraints {
+type StringConstraints = BaseConstraints & {
     minLength?: number;
     maxLength?: number;
     multiline?: boolean;
 }
 
-interface NumberConstraints extends BaseConstraints {
+type NumberConstraints = BaseConstraints & {
     minimum?: number;
     maximum?: number;
     fracDigits?: number;
     leadDigits?: number;
 }
 
-interface ContainerConstraints extends BaseConstraints {
+type ContainerConstraints = BaseConstraints & {
     minItems?: number;
     maxItems?: number;
 }
 
-interface RuleField {
+type RuleField = {
     rules?: {
         [key: string] : string;
     }
 }
 
-interface ValueField<T> {
+type ValueField<T> = {
     value?: T;
     default?: T;
 }
 
-export interface NodeModel {
+export type NodeModel = {
 
 }
 
-interface BaseModel<T> extends RuleField, NodeModel {
+type BaseModel<T> = RuleField & NodeModel & {
    readonly type?: string;
    readonly name?: string;
    readonly dataRef?: string;
@@ -52,11 +51,11 @@ interface BaseModel<T> extends RuleField, NodeModel {
     }
 }
 
-export interface StringFieldModel extends BaseModel<StringConstraints>, ValueField<string> {
+export type StringFieldModel = BaseModel<StringConstraints> & ValueField<string> & {
     type: 'string'
 }
 
-export interface NumberFieldModel extends BaseModel<NumberConstraints>, ValueField<number> {
+export type NumberFieldModel = BaseModel<NumberConstraints> & ValueField<number> & {
     type: 'number'
 }
 
@@ -66,17 +65,18 @@ type FormMetaData = {
     locale: string
 }
 
-export interface ContainerModel<T> {
+export type ContainerModel<T> = {
     items: Array<T>
 }
 
 export type FieldModel = StringFieldModel | NumberFieldModel;
-export interface FieldSetModel extends BaseModel<ContainerConstraints>, ContainerModel<FieldModel | FieldSetModel> {
+export type FieldSetModel = BaseModel<ContainerConstraints> & {
     type?: 'array' | 'object'
     count?: number
     initialCount?: number;
+    items: Array<FieldModel | FieldSetModel>
 }
 
-export interface FormModel extends ContainerModel<FieldModel | FieldSetModel> {
-     metadata?: FormMetaData
+export type FormModel = ContainerModel<FieldModel | FieldSetModel> & {
+    metadata?: FormMetaData
 }

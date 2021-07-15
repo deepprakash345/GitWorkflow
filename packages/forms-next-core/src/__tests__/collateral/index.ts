@@ -1,4 +1,4 @@
-import { FormModel } from '../../Types'
+import { FormModel } from '../../Types';
 
 export const oneFieldForm: FormModel = {
   items: [{
@@ -6,7 +6,15 @@ export const oneFieldForm: FormModel = {
     viewType: 'text',
     name: 'name'
   }]
-}
+};
+
+export const numberFieldForm: FormModel = {
+  items: [{
+    type: 'number',
+    viewType: 'numericEdit',
+    name: 'name'
+  }]
+};
 
 export const formWithPanel: FormModel = {
   items: [{
@@ -22,7 +30,7 @@ export const formWithPanel: FormModel = {
       name: 'zip'
     }]
   }]
-}
+};
 
 export const panelWithoutBinding: FormModel = {
   items: [{
@@ -36,4 +44,4 @@ export const panelWithoutBinding: FormModel = {
       name: 'zip'
     }]
   }]
-}
+};
