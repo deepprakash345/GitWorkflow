@@ -20,7 +20,8 @@
   "scripts": {
     "test": "jest",
     "build": "npx tsc",
-    "clean": "rm -rf lib coverage"
+    "clean": "rm -rf lib coverage",
+    "prepublish": "npx tsc"
   },
   "dependencies": {
     "lodash": "^4.17.21"

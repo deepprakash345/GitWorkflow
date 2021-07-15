@@ -60,7 +60,7 @@ const resolve = (items: Array<FieldModel|FieldSetModel>, data: Data, parentId: s
   return formItems;
 };
 
-const createFormInstance = function (formModel: FormModel, data: Data = {}) {
+export const createFormInstance = function (formModel: FormModel, data: Data = {}) {
   const newData = Object.assign({}, data);
   const items = resolve(formModel.items, newData).map(x => x.json());
   const form = new Form({ items });
@@ -69,5 +69,3 @@ const createFormInstance = function (formModel: FormModel, data: Data = {}) {
     data: newData
   });
 };
-
-export default createFormInstance;

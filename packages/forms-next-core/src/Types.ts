@@ -2,7 +2,7 @@ type BaseConstraints ={
     required?: boolean;
     expression?: string;
 }
-type StringConstraints = BaseConstraints & {
+export type StringConstraints = BaseConstraints & {
     minLength?: number;
     maxLength?: number;
     multiline?: boolean;
@@ -40,6 +40,7 @@ type BaseModel<T> = RuleField & NodeModel & {
    readonly name?: string;
    readonly dataRef?: string;
    id?: string
+   title?: string
    readOnly?: boolean;
    enabled?: boolean;
    presence?: boolean;

@@ -1,5 +1,2 @@
-import createFormInstance from './FormInstance';
-
-export default {
-  createFormInstance
-};
+export {createFormInstance} from './FormInstance';
+export * from './Types';
