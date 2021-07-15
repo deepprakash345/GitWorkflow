@@ -140,7 +140,7 @@ const mapProperties = function (obj: any): any {
 
 
 export const fetchForm = (url: string) : Promise<string> =>  {
-  return fetch(url)
+  return fetch(`${url}/jcr:content/guideContainer.guidejson`)
   .then((response: any) => response.text()).then((data: string) => {
     const oldForm = JSON.parse(data);
     const newForm = {items: [mapProperties(oldForm.rootPanel)]};
