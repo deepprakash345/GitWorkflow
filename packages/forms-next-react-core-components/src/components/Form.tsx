@@ -1,11 +1,12 @@
 import { FormModel } from '@adobe/forms-next-core';
 import { renderItem } from './ItemRenderer';
-
-const Form = function (props: FormModel, mappings: any) {
-    const { items } = props;
-    return (<form>{
-        items.map(renderItem(mappings))
-    }
+import { Flex } from "@adobe/react-spectrum"
+const Form = function (props: { form: FormModel, mappings: any }) {
+    const { form, mappings } = props;
+    return (<form>
+        <Flex direction="column" width="size-4000" gap="size-100">
+            {form.items.map(renderItem(mappings))}
+        </Flex>
     </form>);
 };
 

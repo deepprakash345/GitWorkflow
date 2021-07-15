@@ -4,5 +4,6 @@ export const renderItem = (mappings: any) => (item: any) => {
     if (Comp === undefined) {
         return <div><h4>Undefined Element</h4><pre>{JSON.stringify(item, null, 2)}</pre></div>;
     }
-    return <Comp field={item} />;
+    item.mappings = mappings
+    return <Comp {...item} />;
 };

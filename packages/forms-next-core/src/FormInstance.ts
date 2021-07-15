@@ -60,12 +60,90 @@ const resolve = (items: Array<FieldModel|FieldSetModel>, data: Data, parentId: s
   return formItems;
 };
 
-export const createFormInstance = function (formModel: FormModel, data: Data = {}) {
+export const createFormInstance = (formModel: FormModel, data: Data = {}) => {
   const newData = Object.assign({}, data);
   const items = resolve(formModel.items, newData).map(x => x.json());
   const form = new Form({ items });
   return ({
     form,
     data: newData
+  });
+};
+
+declare var fetch: any;
+
+const mappings: {[key: string]: string} = {
+  'sling:resourceType': 'viewType',
+  'jcr:title': 'title',
+  'mandatory': 'constraints.required',
+  'placeholderText' : 'placeholder'
+};
+
+const gncMapping: {[key: string]: string} = {
+  'guideTextBox' : 'string'
+}
+const keep  = ['name'];
+const isObject = function (item: any) {
+  return (item && typeof item === 'object' && !Array.isArray(item));
+};
+
+function mergeDeep(target: any, ...sources: any[]): any {
+  if (!sources.length) return target;
+  const source = sources.shift();
+
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        mergeDeep(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+
+  return mergeDeep(target, ...sources);
+}
+
+const mapProperties = function (obj: any): any {
+  let newObj: any = {};
+  if (obj.items) {
+    newObj.items = Object.entries(obj.items).map((e) => {
+      return mapProperties(e[1]);
+    });
+  }
+  const props = Object.entries(obj).map(([key, value]) => {
+    if (key === 'guideNodeClass') return ['constraints', {'type' : gncMapping[value as string]}];
+    else if (mappings[key]) {
+      let newKey = mappings[key];
+      if (newKey.indexOf('.') > -1) {
+        let acc = {};
+        let curr:any = acc;
+        let [prop, ...rest] = newKey.split('.');
+        for (let i =0;i < rest.length; i++) {
+          if (i == rest.length - 1) {
+            curr[rest[i]] = value;
+          } else {
+            curr[rest[i]] = {};
+            curr = curr[rest[i]];
+          }
+        }
+        return [prop, acc];
+      }
+      return [mappings[key], value];
+    }
+    else if (keep.indexOf(key) > -1) return [key, value];
+    else return ['extra', undefined];
+  }).filter(e => e[1] != undefined).map(e => Object.fromEntries([e]));
+  return mergeDeep(newObj, ...props);
+};
+
+
+export const fetchForm = (url: string) : Promise<string> =>  {
+  return fetch(url)
+  .then((response: any) => response.text()).then((data: string) => {
+    const oldForm = JSON.parse(data);
+    const newForm = {items: [mapProperties(oldForm.rootPanel)]};
+    return JSON.stringify(newForm, null, 2);
   });
 };

@@ -44,6 +44,7 @@ type BaseModel<T> = RuleField & NodeModel & {
    readOnly?: boolean;
    enabled?: boolean;
    presence?: boolean;
+   placeholder?: string;
    valid?: boolean
    constraints?: T;
    viewType?: string
