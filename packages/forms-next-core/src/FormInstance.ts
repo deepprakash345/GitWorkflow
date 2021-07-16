@@ -76,7 +76,8 @@ const mappings: {[key: string]: string} = {
   'sling:resourceType': 'viewType',
   'jcr:title': 'title',
   'mandatory': 'constraints.required',
-  'placeholderText' : 'placeholder'
+  'placeholderText' : 'placeholder',
+  'longDescription' : 'description'
 };
 
 const gncMapping: {[key: string]: string} = {

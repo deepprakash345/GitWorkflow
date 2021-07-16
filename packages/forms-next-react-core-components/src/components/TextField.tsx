@@ -1,6 +1,6 @@
 import { TextField } from '@adobe/react-spectrum';
-import { FieldModel } from '@adobe/forms-next-core';
 import { SpectrumTextFieldProps } from '@react-types/textfield';
+import { FieldModel } from '@adobe/forms-next-core';
 import { StringConstraints } from '@adobe/forms-next-core'
 const TextFieldComponent = function (props: FieldModel) {
 

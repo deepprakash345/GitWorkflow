@@ -41,6 +41,7 @@ type BaseModel<T> = RuleField & NodeModel & {
    readonly dataRef?: string;
    id?: string
    title?: string
+   description?: string
    readOnly?: boolean;
    enabled?: boolean;
    presence?: boolean;
