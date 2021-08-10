@@ -1,32 +1,29 @@
 import Node from './Node';
-import { FieldModel } from './Types';
+import {FieldModel} from './Types';
 
-class Field extends Node<FieldModel> {
+class Field extends Node<any> implements FieldModel {
   public constructor (params: FieldModel) {
     super(params);
-    if (this._jsonModel.value === undefined) {
-      this._jsonModel.value = this.default;
+    let value = this.getP('value', undefined);
+    if (value === undefined) {
+      this._jsonModel[':value'] = this.default; //TODO: see if we want to keep :
     }
   }
 
-  public get value () : string | number | null {
-    return this._jsonModel.value || null;
-  }
-
   get readOnly () {
-    return this._jsonModel.readOnly || false;
+    return this.getP('readOnly', false);
   }
 
   get enabled () {
-    return this._jsonModel.enabled || true;
+    return this.getP('enabled', true);
   }
 
   get 'default' () {
-    return this._jsonModel.default;
+    return this.getP('default', null);
   }
 
   get presence () {
-    return this._jsonModel.presence || true;
+    return this.getP('presence', true);
   }
 
   get valid () {
@@ -42,6 +39,10 @@ class Field extends Node<FieldModel> {
       presence: this.presence,
       valid: this.valid
     });
+  }
+
+  get value() {
+    return this.getP('value', null);
   }
 }
 

@@ -1,9 +1,8 @@
 import Node from './Node';
-import { ContainerModel, FieldModel, FieldSetModel } from './Types';
 
-class Container<T extends ContainerModel<FieldModel|FieldSetModel>> extends Node<T> {
+class Container extends Node<any> {
   get items () {
-    return this._jsonModel.items;
+    return this.getP('items', []);
   }
 }
 

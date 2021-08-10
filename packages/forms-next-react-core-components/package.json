@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-react-core-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -14,6 +14,7 @@
     "lib"
   ],
   "publishConfig": {
+    "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-aem-release-local",
     "access": "public"
   },
   "scripts": {
@@ -25,6 +26,7 @@
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "@types/react-test-renderer": "^17.0.1",
+    "eslint-plugin-jest": "^24.3.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

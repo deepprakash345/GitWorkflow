@@ -1,5 +1,5 @@
 import { formWithPanel, numberFieldForm, oneFieldForm, panelWithoutBinding } from './collateral/index';
-import createFormInstance from '../FormInstance';
+import {createFormInstance} from '../FormInstance';
 import { FieldModel, FieldSetModel, FormModel } from '../Types';
 
 test('single field form', () => {

@@ -1,7 +1,7 @@
 import Container from './Container';
-import { FormModel } from './Types';
+import {FormModel} from './Types';
 
-class Form extends Container<FormModel> {
+class Form extends Container implements FormModel {
 
 }
 export default Form;

@@ -173,6 +173,8 @@ $RECYCLE.BIN/
 
 #IntelliJ
 *.iml
+.idea/
+
 
 #Visual Studio Code
 .vscode/

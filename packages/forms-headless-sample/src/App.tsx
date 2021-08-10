@@ -1,18 +1,20 @@
 import React from 'react';
 import './App.css';
 import { Grid, View, TextField, TextArea, Button, Flex } from '@adobe/react-spectrum'
+import json from './samples/contact-us.json';
 import { fetchForm, FormModel } from "@adobe/forms-next-core"
 import Form from '@adobe/forms-next-react-core-components/lib/components/Form'
 import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
+import {createFormInstance} from "@adobe/forms-next-core/lib";
 
 
 function App() {
   let [value, setValue] = React.useState('');
-  let [form, setForm] = React.useState('');
+  let [form, setForm] = React.useState<FormModel>(createFormInstance(json));
 
   const fetchAF = async () => {
     const data = await fetchForm(value);
-    setForm(data);
+    setForm(JSON.parse(data));
   }
 
   return (
@@ -31,10 +33,10 @@ function App() {
         </Flex>
       </View>
       <View gridArea="sidebar" padding="size-200" paddingBottom="size-1000" >
-        <TextArea label="JSON Model" minWidth="100%" minHeight="size-6000" value={form} />
+        <TextArea label="JSON Model" minWidth="100%" minHeight="size-6000" value={JSON.stringify(form)} />
       </View>
       <View gridArea="content" >
-        {form.length > 0 ? <Form form={JSON.parse(form) as FormModel} mappings={mappings}></Form> : ""}
+        {form != null? <Form form={form} mappings={mappings}></Form> : ""}
       </View>
     </Grid>
   );
