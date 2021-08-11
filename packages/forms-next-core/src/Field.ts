@@ -1,8 +1,10 @@
 import Node from './Node';
-import {FieldModel} from './Types';
+import {FieldJson, FieldModel} from './Types';
+import {filterProps, undefinedValueFilter} from './utils/JsonUtils';
 
-class Field extends Node<any> implements FieldModel {
-  public constructor (params: FieldModel) {
+
+class Field extends Node<FieldJson> implements FieldModel {
+  public constructor (params: FieldJson) {
     super(params);
     let value = this.getP('value', undefined);
     if (value === undefined) {
@@ -19,7 +21,7 @@ class Field extends Node<any> implements FieldModel {
   }
 
   get 'default' () {
-    return this.getP('default', null);
+    return this.getP('default', undefined);
   }
 
   get presence () {
@@ -27,18 +29,19 @@ class Field extends Node<any> implements FieldModel {
   }
 
   get valid () {
-    return true;
+    return undefined;
   }
 
-  public json (): FieldModel {
-    return Object.assign({}, super.json(), {
-      value: this.value,
-      readOnly: this.readOnly,
-      enabled: this.enabled,
-      default: this.default,
-      presence: this.presence,
-      valid: this.valid
-    });
+  public json (): FieldJson {
+    return filterProps(Object.assign({}, super.json(), {
+      ':value': this.value,
+      ':readOnly': this.readOnly,
+      ':enabled': this.enabled,
+      ':default': this.default,
+      ':presence': this.presence,
+      ':valid': this.valid
+      // eslint-disable-next-line no-unused-vars
+    }), undefinedValueFilter);
   }
 
   get value() {

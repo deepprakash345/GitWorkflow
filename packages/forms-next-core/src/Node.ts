@@ -1,6 +1,6 @@
 import {getProperty} from './utils/JsonUtils';
 
-class Node<T extends {[key: string] : any}> {
+class Node<T> {
     protected _jsonModel: T
 
     constructor (node: T) {

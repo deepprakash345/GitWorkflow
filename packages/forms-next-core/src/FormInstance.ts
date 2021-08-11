@@ -1,37 +1,38 @@
-import { FieldModel, FormModel} from './Types';
 import Field from './Field';
 import Form from './Form';
 import Fieldset from './Fieldset';
 import {getProperty} from './utils/JsonUtils';
+import {Items} from './Types';
 
-
-const createField = function (field: FieldModel) {
-  return new Field(field);
+const items2Json = (items: Items<Field | Fieldset>): Items<any> => {
+   return Object.fromEntries(Object.entries(items).map(([key, item]) => [key, item.json()]));
 };
 
-type Items = {
-  [key: string]: any
-}
-
-const mapItems = function (items: Items, parentId: string = ''): Array<Field|Fieldset> {
-  return Object.values(items).map(item => {
+const mapItems = function (items: Items<any>, parentId: string = ''): Items<Field | Fieldset> {
+  const newEntries = Object.entries(items).map(([key, item]) => {
     const newItem = Object.assign({}, item);
     let retVal: Field | Fieldset;
-    if (getProperty(newItem, 'name', undefined)) {
-      newItem[':id'] = (parentId.length > 0 ? parentId + '.' : '') + getProperty(newItem, 'name', '');
+    const name = getProperty(newItem, 'name', '');
+    if (name.length > 0) {
+      newItem[':id'] = (parentId.length > 0 ? parentId + '.' : '') + name;
     }
-    if (getProperty(newItem, 'items', undefined)) {
-      const newItems = mapItems(newItem.items, newItem.id);
-      retVal = new Fieldset(newItems);
+    const children = getProperty(newItem, 'items', undefined);
+    if (children !== undefined) {
+      const newItems = mapItems(children, newItem[':id']);
+      newItem[':items'] = items2Json(newItems);
+      retVal = new Fieldset(newItem);
     } else {
-      retVal = createField(newItem);
+      retVal = new Field(newItem);
     }
-    return retVal;
+    return [key, retVal];
   });
+  return Object.fromEntries(newEntries);
 };
 
-export const createFormInstance = (formModel: any): FormModel => {
-  return new Form(mapItems(getProperty(formModel, 'items', {}), '') );
+export const createFormInstance = (formModel: any): any => {
+  const mappedItems = mapItems(getProperty(formModel, 'items', {}), '');
+  formModel[':items'] = items2Json(mappedItems);
+  return new Form(formModel);
 };
 
 declare var fetch: any;

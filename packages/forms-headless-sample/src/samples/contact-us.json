@@ -3,7 +3,7 @@
   ":items": {
     "name" : {
         ":name": "name",
-        ":type": "text-edit",
+        ":type": "fd/af/components/guidetextbox",
         ":title":"Your Name",
         ":description": "We need it to address you in our responses",
         ":dataRef": "name",
@@ -11,7 +11,7 @@
         ":rules": {
             ":required" : "isAnonymous == true()"
         },
-        "constraints" : {
+        ":constraints" : {
             ":dataType": "string",
             ":minLength": 1,
             ":maxLength": 30,
@@ -27,7 +27,7 @@
     },
     "email" : {  
         ":name": "email",
-        ":type": "text-edit",
+        ":type": "fd/af/components/guidetextbox",
         ":title":"Email Address",
         ":description": "It's a promise that we will not spam you",
         ":dataRef": "email",
@@ -35,7 +35,7 @@
         ":rules": {
             ":required" : "isAnonymous == false()"
         },
-        "constraints" : {
+        ":constraints" : {
             ":dataType": "string",
             ":format" : "email",
             ":required": true,
@@ -48,13 +48,13 @@
     },
     "isAnonymous" : {
         ":name": "isAnonymous",
-        ":type": "checkbox",
+        ":type": "fd/af/components/guidetextbox",
         ":title": "Remain Anonymous",
         ":richTextTitle" : false,
         ":hideTitle" : false,
         ":description": "In case you want to remain anonymous",
         ":dataRef": "isAnonymous",
-        "constraints" : {
+        ":constraints" : {
             ":dataType": "boolean",
             ":options" : [{
                 "value": true
@@ -72,12 +72,12 @@
     },
     "phone" : {  
         ":name": "phone",
-        ":type": "text-edit",
+        ":type": "fd/af/components/guidetextbox",
         ":title":"Mobile Number",
         ":description": "Your mobile number where we can reach you. But only if you want",
         ":dataRef": "phone",
         ":screenReaderText" : "Enter you mobile number without the ISD code",
-        "constraints" : {
+        ":constraints" : {
             ":pattern" : "/[0-9]{10}/"
         },
         ":constraintMessages": {
@@ -86,12 +86,12 @@
     },
     "message" : {
         ":name": "message",
-        ":type": "text-edit",
+        ":type": "fd/af/components/guidetextbox",
         ":title":"Message",
         ":dataRef": "message",
         ":multiline" : true,
         ":screenReaderText" : "Enter your message in less than 1000 characters and minimum 50 characters",
-        "constraints" : {
+        ":constraints" : {
             ":minLength": 50,
             ":maxLength": 1000,
             ":required": true

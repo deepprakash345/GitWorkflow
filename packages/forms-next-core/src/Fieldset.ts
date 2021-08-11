@@ -12,8 +12,8 @@ class Fieldset extends Container implements FieldsetModel  {
 
   public json (): any {
     return Object.assign({}, super.json(), {
-      count: this.count,
-      initialCount: this.initialCount
+      ':count': this.count,
+      ':initialCount': this.initialCount
     });
   }
 }
