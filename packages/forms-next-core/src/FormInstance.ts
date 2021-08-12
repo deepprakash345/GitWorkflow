@@ -16,7 +16,7 @@ const mapItems = function (items: Items<any>, parentId: string = ''): Items<Fiel
     if (name.length > 0) {
       newItem[':id'] = (parentId.length > 0 ? parentId + '.' : '') + name;
     }
-    const children = getProperty(newItem, 'items', undefined);
+    const children = getProperty(newItem, ':items', undefined);
     if (children !== undefined) {
       const newItems = mapItems(children, newItem[':id']);
       newItem[':items'] = items2Json(newItems);
@@ -29,10 +29,15 @@ const mapItems = function (items: Items<any>, parentId: string = ''): Items<Fiel
   return Object.fromEntries(newEntries);
 };
 
-export const createFormInstance = (formModel: any): any => {
+export const createFormInstance = (formModel: any): Form => {
   const mappedItems = mapItems(getProperty(formModel, 'items', {}), '');
-  formModel[':items'] = items2Json(mappedItems);
-  return new Form(formModel);
+  formModel = {
+    ...formModel,
+    ':items' : items2Json(mappedItems)
+  };
+  let f = new Form(formModel);
+  f.executeAllRules();
+  return f;
 };
 
 declare var fetch: any;

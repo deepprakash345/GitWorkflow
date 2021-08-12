@@ -15,7 +15,7 @@ import ace from 'ace-builds'
 
 function App() {
   let [value, setValue] = React.useState('');
-  let [form, setForm] = React.useState<FormModel>(createFormInstance(json).json());
+  let [form, setForm] = React.useState(json);
   const aceEditor = useRef(null);
   const fetchAF = async () => {
     const data = await fetchForm(value);
@@ -27,6 +27,8 @@ function App() {
             const editor = (aceEditor as any).current.editor
         }
     })
+
+
 
   return (
     <Grid
@@ -62,7 +64,7 @@ function App() {
           />
       </View>
       <View gridArea="content" >
-        {form != null? <Form form={form} mappings={mappings}></Form> : ""}
+        {form != null? <Form formJson={form} mappings={mappings}></Form> : ""}
       </View>
     </Grid>
   );

@@ -1,11 +1,18 @@
 import { renderItem } from './ItemRenderer';
 import { Flex } from '@adobe/react-spectrum';
-const Form = function (props: { form: any, mappings: any }) {
-    const { form, mappings } = props;
-    const a = Object.values(form[':items']);
+import {createFormInstance} from '@adobe/forms-next-core/lib';
+import {useState} from 'react';
+const Form = function (props: { formJson: any, mappings: any }) {
+    const { formJson, mappings } = props;
+    debugger;
+    const fullForm = createFormInstance(formJson);
+    fullForm.subscribe('$form', (id, form) => {
+        setForm(form);
+    });
+    const [form, setForm] = useState(fullForm.json());
     return (<form>
         <Flex direction="column" width="size-4000" gap="size-100">
-            {a.map(renderItem(mappings))}
+            {Object.values(form[':items']).map(renderItem(mappings, fullForm))}
         </Flex>
     </form>);
 };

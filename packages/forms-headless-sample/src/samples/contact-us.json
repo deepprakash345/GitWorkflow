@@ -1,28 +1,57 @@
 {
   ":data": {},
   ":items": {
-    "name" : {
-        ":name": "name",
+    "firstName" : {
+        ":name": "firstName",
         ":type": "fd/af/components/guidetextbox",
-        ":title":"Your Name",
-        ":description": "We need it to address you in our responses",
-        ":dataRef": "name",
-        ":screenReaderText" : "Enter your name as you like us to address you",
-        ":rules": {
-            ":required" : "isAnonymous == true()"
-        },
-        ":constraints" : {
+        ":title":"First Name",
+        ":dataRef": "firstName",
+        ":default" : "john",
+        "constraints" : {
             ":dataType": "string",
-            ":minLength": 1,
+            ":minLength": 0,
             ":maxLength": 30,
             ":required": true,
-            ":expression": "len(trim(value)) > 0"
+            ":expression": ""
         },
         ":constraintMessages": {
             ":minLength": "Name cannot be empty",
             ":maxLength": "Please enter only first 30 characters of your name",
             ":required": "Name cannot be empty",
             ":expression": "Name can not contain only spaces"
+        },
+        ":description": "We need it to address you in our responses",
+        ":screenReaderText" : "Enter your name as you like us to address you"
+    },
+      "lastName" : {
+          ":name": "lastName",
+          ":type": "fd/af/components/guidetextbox",
+          ":title":"Last Name",
+          ":dataRef": "lastName",
+          ":default" : "doe",
+          ":description": "We need it to address you in our responses",
+          ":screenReaderText" : "Enter your name as you like us to address you",
+          "constraints" : {
+              ":dataType": "string",
+              ":minLength": 0,
+              ":maxLength": 30,
+              ":required": true,
+              ":expression": ""
+          },
+          ":constraintMessages": {
+              ":minLength": "Name cannot be empty",
+              ":maxLength": "Please enter only first 30 characters of your name",
+              ":required": "Name cannot be empty",
+              ":expression": "Name can not contain only spaces"
+          }
+      },
+    "name" : {
+        ":name": "name",
+        ":type": "fd/af/components/guidetextbox",
+        ":title":"Your Full Name",
+        ":dataRef": "name",
+        ":rules" : {
+            ":value" : "$form.firstName.value + \" \" + $form.lastName.value"
         }
     },
     "email" : {  
@@ -32,9 +61,6 @@
         ":description": "It's a promise that we will not spam you",
         ":dataRef": "email",
         ":screenReaderText" : "Provide your email address so that we can reply to you.",
-        ":rules": {
-            ":required" : "isAnonymous == false()"
-        },
         ":constraints" : {
             ":dataType": "string",
             ":format" : "email",

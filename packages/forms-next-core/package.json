@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "eslint-plugin-jest": "^24.3.6",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "@adobe/forms-next-expression-parser": "0.1.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
