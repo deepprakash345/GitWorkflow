@@ -2,7 +2,6 @@ import Container from './Container';
 import {FormModel} from './Types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
-import runtime from './AFRuntime';
 import AFNodeFactory from './rules/AFNodeFactory';
 import {mergeDeep} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
@@ -25,9 +24,9 @@ class Form extends Container implements FormModel, Controller {
 
     public getElement(id: string) {
         //todo: do this only if id contains " as . can be used the name (`address."street.name"`)
-        let r = makeFormula(id, runtime, this.nodeFactory);
-        let node = r.compile();
-        return node.search(this._jsonModel[':items']);
+        let r = makeFormula(id, undefined, this.nodeFactory);
+        r.compile();
+        return r.search(this._jsonModel[':items']);
     }
 
     public dispatch(action: Action) {
@@ -78,9 +77,9 @@ class Form extends Container implements FormModel, Controller {
             if (typeof rule === 'object') {
                 throw [];
             } else if (typeof rule === 'string') {
-                let r = makeFormula(rule as string, runtime, new AFNodeFactory(this._jsonModel[':items'], element));
-                let node = r.compile();
-                return [prop, node.search(element)];
+                let r = makeFormula(rule as string, undefined, new AFNodeFactory(this._jsonModel[':items'], element));
+                r.compile();
+                return [prop, r.search(element)];
             } else {
                 return [prop];
             }

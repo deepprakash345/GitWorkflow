@@ -51,7 +51,7 @@
         ":title":"Your Full Name",
         ":dataRef": "name",
         ":rules" : {
-            ":value" : "$form.firstName.value + \" \" + $form.lastName.value"
+            ":value" : "$form.firstName.value + ' ' + $form.lastName.value"
         }
     },
     "email" : {  
