@@ -120,6 +120,7 @@ export type FieldJson = {
 }
 
 export type ContainerJson = {
+    ':type'?: string;
     ':items': Items<FieldJson | ConstraintsJson>
 }
 

@@ -5,6 +5,7 @@ import json from './samples/contact-us.json';
 import { fetchForm, FormModel } from "@adobe/forms-next-core"
 import Form from '@adobe/forms-next-react-core-components/lib/components/Form'
 import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
+import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
 import {createFormInstance} from "@adobe/forms-next-core/lib";
 import AceEditor from "react-ace";
 
@@ -17,6 +18,7 @@ function App() {
   let [value, setValue] = React.useState('');
   let [form, setForm] = React.useState(json);
   const aceEditor = useRef(null);
+  const formController = createFormInstance(form);
   const fetchAF = async () => {
     const data = await fetchForm(value);
     setForm(JSON.parse(data));
@@ -64,7 +66,9 @@ function App() {
           />
       </View>
       <View gridArea="content" >
-        {form != null? <Form formJson={form} mappings={mappings}></Form> : ""}
+              <FormContext.Provider value={{mappings: mappings, controller: formController}}>
+                {form != null? <Form formJson={formController.json()}></Form> : ""}
+              </FormContext.Provider>
       </View>
     </Grid>
   );

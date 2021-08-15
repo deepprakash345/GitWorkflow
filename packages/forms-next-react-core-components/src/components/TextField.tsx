@@ -1,18 +1,13 @@
 import { TextField } from '@adobe/react-spectrum';
 import { SpectrumTextFieldProps } from '@react-types/textfield';
 import {FieldJson} from '@adobe/forms-next-core';
-import Form from '@adobe/forms-next-core/lib/Form';
-import {Change} from '@adobe/forms-next-core/lib/controller/Actions';
-import {useState} from 'react';
+import {useRuleEngine} from '../react-mapper/hooks';
 
-type Mapping<T> = T & {
-    mappings: any
-    form: Form
-}
+const TextFieldComponent = function (originalProps: FieldJson) {
+    const [props, dispatchChange] = useRuleEngine<FieldJson, string>(originalProps);
+    console.log('rendering TextField ' + props[':id'] + ' ' + props[':value']);
 
-const TextFieldComponent = function (props: Mapping<FieldJson>) {
-
-    const spectrumProps = (props: any) => {return {
+    const spectrumProps: SpectrumTextFieldProps = {
         placeholder: props[':placeholder'],
         value: props[':value'] as string,
         label: props[':title'],
@@ -22,26 +17,15 @@ const TextFieldComponent = function (props: Mapping<FieldJson>) {
         }),
         validationState: props[':valid'] === false ? 'invalid' : (props[':valid'] === undefined ? undefined : 'valid')
     };
-    };
-
-    const {form} = props;
-
-    const [spectrumState, setSpectrumState] = useState(spectrumProps(props));
 
     const handleChange = (val: string) => {
-        const changeAction = new Change(props[':id'] as string, val);
-        form.dispatch(changeAction);
+       dispatchChange(val);
     };
 
-    form.subscribe(props[':id'] as string, (id, x: any) => {
-        setSpectrumState(spectrumProps(x));
-    });
-
     return (
-        <TextField {...spectrumState} onChange={handleChange}/>
+        <TextField {...spectrumProps} onChange={handleChange} />
     );
 };
-
 
 
 export default TextFieldComponent;

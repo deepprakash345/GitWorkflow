@@ -1,18 +1,11 @@
-import { renderItem } from './ItemRenderer';
 import { Flex } from '@adobe/react-spectrum';
-import Form from '@adobe/forms-next-core/lib/Form';
+import {FieldsetJson} from '@adobe/forms-next-core/lib';
+import {useRenderChildren} from '../react-mapper/hooks';
 
-type Mapping<T> = T & {
-    mappings: any
-    form: Form
-}
-
-const Panel = function (props: Mapping<any>) {
-    const {mappings, form } = props;
-    const a = Object.values(props[':items']);
+const Panel = function (props: FieldsetJson) {
     return (
         <Flex direction="column" width="size-2000" gap="size-100">
-            {a.map(renderItem(mappings, form))}
+            {useRenderChildren(props)}
         </Flex>);
 };
 

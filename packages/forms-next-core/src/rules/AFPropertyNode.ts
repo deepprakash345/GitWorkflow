@@ -5,7 +5,6 @@ import {getProperty} from '../utils/JsonUtils';
 export class AFPropertyNode implements Node {
 
     constructor(private name: string) {
-        console.log('accessing property node ' + name);
     }
 
     search(data: JSONValue): JSONValue {

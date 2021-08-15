@@ -5,16 +5,23 @@ import {makeFormula} from '@adobe/forms-next-expression-parser';
 import runtime from './AFRuntime';
 import AFNodeFactory from './rules/AFNodeFactory';
 import {mergeDeep} from './utils/JsonUtils';
+import {callbackFn, Controller} from './controller/Controller';
 
-type callbackFn = (id:string, obj: any) => void
 
-class Form extends Container implements FormModel {
+class Form extends Container implements FormModel, Controller {
 
     nodeFactory = new AFNodeFactory()
 
     callbacks: {
         [key: string] : callbackFn[]
     } = {}
+
+    private printCallbacks() {
+        const s = Object.entries(this.callbacks).map(([id, fn]) => {
+            return `${id} : ${fn.length}`;
+        }).join(' ');
+        console.log(s);
+    }
 
     public getElement(id: string) {
         //todo: do this only if id contains " as . can be used the name (`address."street.name"`)
@@ -25,6 +32,7 @@ class Form extends Container implements FormModel {
 
     public dispatch(action: Action) {
         let elem = this.getElement(action.id);
+        console.log('new action ' + JSON.stringify(action, null, 2));
         switch (action.type) {
             case 'change':
                 this.handleChange(elem, action.payload);
@@ -43,8 +51,10 @@ class Form extends Container implements FormModel {
         this.trigger(elem[':id'], elem);
     }
 
-    trigger(id: string, elem: any) {
+    private trigger(id: string, elem: any) {
         if (id in this.callbacks) {
+            console.log(`subscription to be triggered : ${id}`);
+            //todo:  add in queue
             this.callbacks[id].map(x => {
                 x(id, elem);
             });
@@ -54,6 +64,13 @@ class Form extends Container implements FormModel {
     subscribe(id: string, callback: callbackFn) {
         this.callbacks[id] = this.callbacks[id] || [];
         this.callbacks[id].push(callback);
+        console.log(`subscription added : ${id}, count : ${this.callbacks[id].length}`);
+        return {
+            unsubscribe : () => {
+                this.callbacks[id] = this.callbacks[id].filter(x => x !== callback);
+                console.log(`subscription removed : ${id}, count : ${this.callbacks[id].length}`);
+            }
+        };
     }
 
     _executeRulesForElement(element:any, rules: any) {
