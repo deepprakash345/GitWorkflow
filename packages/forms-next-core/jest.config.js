@@ -1,6 +1,7 @@
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   collectCoverage: true,
-  testRegex: "src/__tests__/[^.]+\\.test\\.ts",
+  coveragePathIgnorePatterns : ['src/__tests__/*'],
+  testRegex: 'src/__tests__/[^.]+\\.test\\.ts'
 };

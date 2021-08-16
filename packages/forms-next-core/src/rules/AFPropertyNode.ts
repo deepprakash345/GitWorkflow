@@ -8,6 +8,9 @@ export class AFPropertyNode implements Node {
     }
 
     search(data: JSONValue): JSONValue {
+        if (data == null) {
+            return null;
+        }
         if (':items' in data && !this.name.startsWith(':') && this.name in data[':items']) {
             return data[':items'][this.name];
         } else {

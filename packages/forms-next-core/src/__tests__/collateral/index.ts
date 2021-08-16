@@ -2,7 +2,7 @@ export const oneFieldForm = {
     ':items': {
         'name': {
             ':constraints': {
-                ':datatype': 'string'
+                ':dataType': 'string'
             },
             ':type': 'text',
             ':name': 'name'
@@ -76,7 +76,7 @@ export const formWithRules = {
         'fullName' : {
             ':type' : 'text',
             ':rules' : {
-                ':value' : '$form.firstName.value + " " + $form.lastName.value'
+                ':value' : "$form.firstName.value + ' ' + $form.lastName.value"
             },
             ':name' : 'fullName'
         }
@@ -112,6 +112,13 @@ export const create = (arr: any[], nameMap: any = {p : 1}): any => {
                 [curr]: newNameMap[curr] ? newNameMap[curr] + 1 : 1
             };
             obj = createObj(curr);
+        } else if (typeof curr === 'object') {
+            const [[name, props]] = Object.entries(curr);
+            newNameMap = {
+                ...newNameMap,
+                [name]: newNameMap[name] ? newNameMap[name] + 1 : 1
+            };
+            obj = Object.assign(createObj(name), props);
         } else {
             throw `${curr} not support currently`;
         }

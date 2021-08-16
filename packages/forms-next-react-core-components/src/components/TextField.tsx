@@ -8,9 +8,10 @@ const TextFieldComponent = function (originalProps: FieldJson) {
     console.log('rendering TextField ' + props[':id'] + ' ' + props[':value']);
 
     const spectrumProps: SpectrumTextFieldProps = {
+        name: props[':name'],
         placeholder: props[':placeholder'],
         value: props[':value'] as string,
-        label: props[':title'],
+        label: props[':hideTitle'] === true ? '' :props[':title'],
         ...(props[':constraints'] && props[':constraints'][':required'] && {
             isRequired: true,
             necessityIndicator: 'icon'

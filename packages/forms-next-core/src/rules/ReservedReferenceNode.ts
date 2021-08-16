@@ -9,15 +9,9 @@ export default class AFReservedReferenceNode implements Node {
 
     search(data: JSONValue, references?: { [p: string]: JSONValue }, event?: JSONValue): JSONValue {
         switch (this.name.toLowerCase()) {
-            // we might consider converting a reservedRef to a namedRef if an reserved name does not exist.
-            case 'event':
-                return event;
-            case 'field':
-                return this.field;
             case 'form':
                 return this.form;
         }
-        return;
     }
 }
 

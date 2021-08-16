@@ -8,8 +8,8 @@ class Container extends Node<any> implements ContainerModel<Field | Fieldset> {
     return this.getP('items', {});
   }
 
-  children () {
-    return Object.values(this._jsonModel[':items']);
+  get children (): any {
+    return this._jsonModel[':items'];
   }
 
 }

@@ -19,7 +19,7 @@
     "access": "public"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --silent",
     "build": "npx tsc",
     "clean": "rm -rf lib coverage",
     "prepublish": "npx tsc"

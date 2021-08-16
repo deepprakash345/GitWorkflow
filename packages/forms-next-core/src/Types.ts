@@ -105,6 +105,7 @@ export type FieldJson = {
     ':dataRef'?: string;
     ':id'?: string
     ':title'?: string
+    ':hideTitle'?:boolean
     ':description'?: string
     ':readOnly'?: boolean;
     ':enabled'?: boolean;

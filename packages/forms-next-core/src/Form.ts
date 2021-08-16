@@ -15,13 +15,6 @@ class Form extends Container implements FormModel, Controller {
         [key: string] : callbackFn[]
     } = {}
 
-    private printCallbacks() {
-        const s = Object.entries(this.callbacks).map(([id, fn]) => {
-            return `${id} : ${fn.length}`;
-        }).join(' ');
-        console.log(s);
-    }
-
     public getElement(id: string) {
         //todo: do this only if id contains " as . can be used the name (`address."street.name"`)
         let r = makeFormula(id, undefined, this.nodeFactory);
@@ -32,6 +25,9 @@ class Form extends Container implements FormModel, Controller {
     public dispatch(action: Action) {
         let elem = this.getElement(action.id);
         console.log('new action ' + JSON.stringify(action, null, 2));
+        if (elem == null) {
+            throw `invalid action ${action.type}. ${action.id} doesn't exist`;
+        }
         switch (action.type) {
             case 'change':
                 this.handleChange(elem, action.payload);
@@ -74,16 +70,14 @@ class Form extends Container implements FormModel, Controller {
 
     _executeRulesForElement(element:any, rules: any) {
         return Object.fromEntries(Object.entries(rules).map(([prop, rule]) => {
-            if (typeof rule === 'object') {
-                throw [];
-            } else if (typeof rule === 'string') {
+            if (typeof rule === 'string') {
                 let r = makeFormula(rule as string, undefined, new AFNodeFactory(this._jsonModel[':items'], element));
                 r.compile();
                 return [prop, r.search(element)];
             } else {
-                return [prop];
+                throw `only expression strings are supported. ${typeof(rule)} types are not supported`;
             }
-        }).filter(x => x.length == 2));
+        }));
     }
 
     executeAllRules(items: any = this._jsonModel[':items']) {
@@ -91,6 +85,7 @@ class Form extends Container implements FormModel, Controller {
             if (':items' in x) {
                 this.executeAllRules(x[':items']);
             } else if (':rules' in x) {
+                //todo : handle the case for panels.
                 items[key] = mergeDeep(x, this._executeRulesForElement(x, x[':rules']));
                 this.trigger(x[':id'], items[key]);
             }
