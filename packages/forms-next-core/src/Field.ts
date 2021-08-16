@@ -1,47 +1,51 @@
 import Node from './Node';
-import { FieldModel } from './Types';
+import {FieldJson, FieldModel} from './Types';
+import {filterProps, undefinedValueFilter} from './utils/JsonUtils';
 
-class Field extends Node<FieldModel> {
-  public constructor (params: FieldModel) {
+
+class Field extends Node<FieldJson> implements FieldModel {
+  public constructor (params: FieldJson) {
     super(params);
-    if (this._jsonModel.value === undefined) {
-      this._jsonModel.value = this.default;
+    let value = this.getP('value', undefined);
+    if (value === undefined) {
+      this._jsonModel[':value'] = this.default; //TODO: see if we want to keep :
     }
   }
 
-  public get value () : string | number | null {
-    return this._jsonModel.value || null;
-  }
-
   get readOnly () {
-    return this._jsonModel.readOnly || false;
+    return this.getP('readOnly', false);
   }
 
   get enabled () {
-    return this._jsonModel.enabled || true;
+    return this.getP('enabled', true);
   }
 
   get 'default' () {
-    return this._jsonModel.default;
+    return this.getP('default', undefined);
   }
 
   get presence () {
-    return this._jsonModel.presence || true;
+    return this.getP('presence', true);
   }
 
   get valid () {
-    return true;
+    return undefined;
   }
 
-  public json (): FieldModel {
-    return Object.assign({}, super.json(), {
-      value: this.value,
-      readOnly: this.readOnly,
-      enabled: this.enabled,
-      default: this.default,
-      presence: this.presence,
-      valid: this.valid
-    });
+  public json (): FieldJson {
+    return filterProps(Object.assign({}, super.json(), {
+      ':value': this.value,
+      ':readOnly': this.readOnly,
+      ':enabled': this.enabled,
+      ':default': this.default,
+      ':presence': this.presence,
+      ':valid': this.valid
+      // eslint-disable-next-line no-unused-vars
+    }), undefinedValueFilter);
+  }
+
+  get value() {
+    return this.getP('value', null);
   }
 }
 

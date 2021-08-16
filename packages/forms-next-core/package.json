@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-core",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Core Module for Forms Runtime",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -15,21 +15,22 @@
     "lib"
   ],
   "publishConfig": {
+    "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-aem-release-local",
     "access": "public"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --silent",
     "build": "npx tsc",
     "clean": "rm -rf lib coverage",
     "prepublish": "npx tsc"
   },
   "dependencies": {
-    "jmespath": "^0.15.0",
-    "lodash": "^4.17.21"
+    "eslint-plugin-jest": "^24.3.6",
+    "lodash": "^4.17.21",
+    "@adobe/forms-next-expression-parser": "0.1.5"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
-    "@types/jmespath": "^0.15.0",
     "@types/lodash": "^4.14.171",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",

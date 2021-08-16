@@ -1,0 +1,45 @@
+
+export const getProperty = <P>(data: any, key: string, def: P): P => {
+    if (key in data) {
+        return data[key];
+    } else if (!key.startsWith(':')) {
+        const prefixedKey = `:${key}`;
+        if (prefixedKey in data) {
+            return data[prefixedKey];
+        }
+    }
+    return def;
+};
+
+
+export const undefinedValueFilter = ([key, value]: [string, any]) => value !== undefined;
+
+export const filterProps = (data: any, filterFn: (x: [string, any]) => boolean) => {
+    if (typeof filterFn !== 'function') {
+        return data;
+    }
+    const newEntries = Object.entries(data).filter(filterFn);
+    return Object.fromEntries(newEntries);
+};
+
+const isObject = function (item: any) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+};
+
+export function mergeDeep(target: any, ...sources: any[]): any {
+    if (!sources.length) return target;
+    const source = sources.shift();
+
+    if (isObject(target) && isObject(source)) {
+        for (const key in source) {
+            if (isObject(source[key])) {
+                if (!target[key]) Object.assign(target, { [key]: {} });
+                mergeDeep(target[key], source[key]);
+            } else {
+                Object.assign(target, { [key]: source[key] });
+            }
+        }
+    }
+
+    return mergeDeep(target, ...sources);
+}

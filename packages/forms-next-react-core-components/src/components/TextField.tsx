@@ -1,29 +1,32 @@
 import { TextField } from '@adobe/react-spectrum';
 import { SpectrumTextFieldProps } from '@react-types/textfield';
-import { FieldModel } from '@adobe/forms-next-core';
-import { StringConstraints } from '@adobe/forms-next-core'
-const TextFieldComponent = function (props: FieldModel) {
+import {FieldJson} from '@adobe/forms-next-core';
+import {useRuleEngine} from '../react-mapper/hooks';
 
-    const { id, name, value,
-        readOnly, enabled,
-        title, constraints, valid, placeholder
-    } = props;
-
-    const { required, minLength, maxLength } = constraints as StringConstraints;
+const TextFieldComponent = function (originalProps: FieldJson) {
+    const [props, dispatchChange] = useRuleEngine<FieldJson, string>(originalProps);
+    console.log('rendering TextField ' + props[':id'] + ' ' + props[':value']);
 
     const spectrumProps: SpectrumTextFieldProps = {
-        placeholder,
-        value: value as string,
-        label: title,
-        ...(required && { isRequired: true, necessityIndicator: 'icon' }),
-        validationState: valid === false ? 'invalid' : (valid === undefined ? undefined : 'valid')
+        name: props[':name'],
+        placeholder: props[':placeholder'],
+        value: props[':value'] as string,
+        label: props[':hideTitle'] === true ? '' :props[':title'],
+        ...(props[':constraints'] && props[':constraints'][':required'] && {
+            isRequired: true,
+            necessityIndicator: 'icon'
+        }),
+        validationState: props[':valid'] === false ? 'invalid' : (props[':valid'] === undefined ? undefined : 'valid')
+    };
+
+    const handleChange = (val: string) => {
+       dispatchChange(val);
     };
 
     return (
-        <TextField {...spectrumProps} />
+        <TextField {...spectrumProps} onChange={handleChange} />
     );
 };
-
 
 
 export default TextFieldComponent;

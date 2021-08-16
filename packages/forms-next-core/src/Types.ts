@@ -1,41 +1,46 @@
-type BaseConstraints ={
+export interface BaseConstraints {
     required?: boolean;
     expression?: string;
 }
-export type StringConstraints = BaseConstraints & {
+
+export interface StringConstraints extends BaseConstraints {
     minLength?: number;
     maxLength?: number;
     multiline?: boolean;
 }
 
-type NumberConstraints = BaseConstraints & {
+export interface NumberConstraints extends BaseConstraints {
     minimum?: number;
     maximum?: number;
     fracDigits?: number;
     leadDigits?: number;
 }
 
-type ContainerConstraints = BaseConstraints & {
+export type FieldConstraints = StringConstraints | NumberConstraints;
+
+interface ContainerConstraints extends BaseConstraints {
     minItems?: number;
     maxItems?: number;
 }
 
-type RuleField = {
+interface RuleField {
     rules?: {
         [key: string] : string;
     }
 }
 
-type ValueField<T> = {
-    value?: T;
-    default?: T;
+type Primitives = string | number | boolean | null;
+
+interface ValueField {
+    value: Primitives;
+    default?: Primitives;
 }
 
-export type NodeModel = {
+export interface NodeModel {
 
 }
 
-type BaseModel<T> = RuleField & NodeModel & {
+interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
    readonly type?: string;
    readonly name?: string;
    readonly dataRef?: string;
@@ -54,12 +59,8 @@ type BaseModel<T> = RuleField & NodeModel & {
     }
 }
 
-export type StringFieldModel = BaseModel<StringConstraints> & ValueField<string> & {
-    type: 'string'
-}
-
-export type NumberFieldModel = BaseModel<NumberConstraints> & ValueField<number> & {
-    type: 'number'
+export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
+    json: () => FieldJson
 }
 
 type FormMetaData = {
@@ -68,18 +69,72 @@ type FormMetaData = {
     locale: string
 }
 
-export type ContainerModel<T> = {
-    items: Array<T>
+export type Items<T> = {[key:string]: T}
+
+export interface ContainerModel<T> {
+    items: Items<T>
 }
 
-export type FieldModel = StringFieldModel | NumberFieldModel;
-export type FieldSetModel = BaseModel<ContainerConstraints> & {
+export interface FieldsetModel extends BaseModel<ContainerConstraints>, ContainerModel<FieldModel | FieldsetModel> {
     type?: 'array' | 'object'
     count?: number
     initialCount?: number;
-    items: Array<FieldModel | FieldSetModel>
+    json: () => FieldsetJson
 }
 
-export type FormModel = ContainerModel<FieldModel | FieldSetModel> & {
+export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
     metadata?: FormMetaData
+    json: () => any
+}
+
+export type ConstraintsJson = {
+    ':required'?: boolean;
+    ':expression'?: string;
+    ':minLength'?: number;
+    ':maxLength'?: number;
+    ':multiline'?: boolean;
+    ':minimum'?: number;
+    ':maximum'?: number;
+    ':fracDigits'?: number;
+    ':leadDigits'?: number;
+}
+
+export type FieldJson = {
+    ':type'?: string;
+    ':name'?: string;
+    ':dataRef'?: string;
+    ':id'?: string
+    ':title'?: string
+    ':hideTitle'?:boolean
+    ':description'?: string
+    ':readOnly'?: boolean;
+    ':enabled'?: boolean;
+    ':presence'?: boolean;
+    ':placeholder'?: string;
+    ':valid'?: boolean
+    ':constraints'?: ConstraintsJson;
+    ':viewType'?: string
+    ':value'?: Primitives
+    ':props'?: {
+        [key: string] : any;
+    }
+}
+
+export type ContainerJson = {
+    ':type'?: string;
+    ':items': Items<FieldJson | ConstraintsJson>
+}
+
+export type FieldsetJson = ContainerJson & {
+    ':type'?: 'array' | 'object'
+    ':count'?: number
+    ':initialCount'?: number;
+}
+
+export type FormJson = ContainerJson & {
+    ':metadata'?: {
+        ':version': string
+        ':grammarVersion': string
+        ':locale': string
+    }
 }

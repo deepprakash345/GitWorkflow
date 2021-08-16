@@ -1,0 +1,136 @@
+{
+  ":data": {},
+  ":items": {
+    "firstName" : {
+        ":name": "firstName",
+        ":type": "fd/af/components/guidetextbox",
+        ":title":"First Name",
+        ":dataRef": "firstName",
+        ":default" : "john",
+        "constraints" : {
+            ":dataType": "string",
+            ":minLength": 0,
+            ":maxLength": 30,
+            ":required": true,
+            ":expression": ""
+        },
+        ":constraintMessages": {
+            ":minLength": "Name cannot be empty",
+            ":maxLength": "Please enter only first 30 characters of your name",
+            ":required": "Name cannot be empty",
+            ":expression": "Name can not contain only spaces"
+        },
+        ":description": "We need it to address you in our responses",
+        ":screenReaderText" : "Enter your name as you like us to address you"
+    },
+      "lastName" : {
+          ":name": "lastName",
+          ":type": "fd/af/components/guidetextbox",
+          ":title":"Last Name",
+          ":dataRef": "lastName",
+          ":default" : "doe",
+          ":description": "We need it to address you in our responses",
+          ":screenReaderText" : "Enter your name as you like us to address you",
+          "constraints" : {
+              ":dataType": "string",
+              ":minLength": 0,
+              ":maxLength": 30,
+              ":required": true,
+              ":expression": ""
+          },
+          ":constraintMessages": {
+              ":minLength": "Name cannot be empty",
+              ":maxLength": "Please enter only first 30 characters of your name",
+              ":required": "Name cannot be empty",
+              ":expression": "Name can not contain only spaces"
+          }
+      },
+    "name" : {
+        ":name": "name",
+        ":type": "fd/af/components/guidetextbox",
+        ":title":"Your Full Name",
+        ":dataRef": "name",
+        ":rules" : {
+            ":value" : "$form.firstName.value + ' ' + $form.lastName.value"
+        }
+    },
+    "email" : {  
+        ":name": "email",
+        ":type": "fd/af/components/guidetextbox",
+        ":title":"Email Address",
+        ":description": "It's a promise that we will not spam you",
+        ":dataRef": "email",
+        ":screenReaderText" : "Provide your email address so that we can reply to you.",
+        ":constraints" : {
+            ":dataType": "string",
+            ":format" : "email",
+            ":required": true,
+            ":expression" : ""
+        },
+        ":constraintMessages": {
+            ":format" : "Please enter a valid email address",
+            ":required": "The email address is mandatory"
+        }
+    },
+    "isAnonymous" : {
+        ":name": "isAnonymous",
+        ":type": "fd/af/components/guidetextbox",
+        ":title": "Remain Anonymous",
+        ":richTextTitle" : false,
+        ":hideTitle" : false,
+        ":description": "In case you want to remain anonymous",
+        ":dataRef": "isAnonymous",
+        ":constraints" : {
+            ":dataType": "boolean",
+            ":options" : [{
+                "value": true
+            }, {
+                "value": false
+            }],
+            ":required": false,
+            ":expression": ""
+        },
+        ":constraintMessages": {
+            ":dataType": "",
+            ":required": "",
+            ":expression": ""
+        }
+    },
+    "phone" : {  
+        ":name": "phone",
+        ":type": "fd/af/components/guidetextbox",
+        ":title":"Mobile Number",
+        ":description": "Your mobile number where we can reach you. But only if you want",
+        ":dataRef": "phone",
+        ":screenReaderText" : "Enter you mobile number without the ISD code",
+        ":constraints" : {
+            ":pattern" : "/[0-9]{10}/"
+        },
+        ":constraintMessages": {
+            ":pattern" : "Phone number must be 10 digit long"
+        }
+    },
+    "message" : {
+        ":name": "message",
+        ":type": "fd/af/components/guidetextbox",
+        ":title":"Message",
+        ":dataRef": "message",
+        ":multiline" : true,
+        ":screenReaderText" : "Enter your message in less than 1000 characters and minimum 50 characters",
+        ":constraints" : {
+            ":minLength": 50,
+            ":maxLength": 1000,
+            ":required": true
+        },
+        ":constraintMessages": {
+            ":minLength": "Enter minimum 50 characters",
+            ":maxLength": "Maximum Limit (1000 characters) reached. Please email us directly",
+            ":required": "The message is "
+        }
+    }
+  },
+  ":metadata":{
+      ":grammar" : "jsonformula-af",
+      ":locale" : "en-us"
+  }
+}

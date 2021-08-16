@@ -1,13 +1,14 @@
-import { FormModel } from '@adobe/forms-next-core';
-import { renderItem } from './ItemRenderer';
-import { Flex } from "@adobe/react-spectrum"
-const Form = function (props: { form: FormModel, mappings: any }) {
-    const { form, mappings } = props;
-    return (<form>
-        <Flex direction="column" width="size-4000" gap="size-100">
-            {form.items.map(renderItem(mappings))}
-        </Flex>
-    </form>);
+import { Flex } from '@adobe/react-spectrum';
+import {useRenderChildren} from '../react-mapper/hooks';
+const Form = function (props: { formJson: any }) {
+    const { formJson} = props;
+    return (
+            <form>
+                <Flex direction="column" width="size-4000" gap="size-100">
+                    {useRenderChildren(formJson)}
+                </Flex>
+            </form>
+    );
 };
 
 export default Form;
