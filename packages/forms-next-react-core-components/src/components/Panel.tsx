@@ -1,5 +1,5 @@
 import { Flex } from '@adobe/react-spectrum';
-import {FieldsetJson} from '@adobe/forms-next-core/lib';
+import {FieldsetJson} from '@adobe/forms-next-core';
 import {useRenderChildren} from '../react-mapper/hooks';
 
 const Panel = function (props: FieldsetJson) {

@@ -7,11 +7,6 @@ class Container extends Node<any> implements ContainerModel<Field | Fieldset> {
   get items (): { [key:string]: Field|Fieldset } {
     return this.getP('items', {});
   }
-
-  get children (): any {
-    return this._jsonModel[':items'];
-  }
-
 }
 
 export default Container;

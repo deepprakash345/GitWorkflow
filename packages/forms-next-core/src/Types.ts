@@ -83,6 +83,7 @@ export interface FieldsetModel extends BaseModel<ContainerConstraints>, Containe
 }
 
 export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
+    data?: any
     metadata?: FormMetaData
     json: () => any
 }

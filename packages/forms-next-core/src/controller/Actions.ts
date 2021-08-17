@@ -33,3 +33,9 @@ export class Change extends ActionImpl {
         super(id, payload, 'change');
     }
 }
+
+export class Click extends ActionImpl {
+    constructor(id: string, payload: any) {
+        super(id, payload, 'click');
+    }
+}

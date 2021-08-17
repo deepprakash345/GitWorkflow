@@ -127,7 +127,16 @@
             ":maxLength": "Maximum Limit (1000 characters) reached. Please email us directly",
             ":required": "The message is "
         }
-    }
+    },
+      "submit" : {
+          ":name": "submit",
+          ":type": "fd/af/components/guidebutton",
+          ":title":"Submit",
+          ":screenReaderText" : "Enter your message in less than 1000 characters and minimum 50 characters",
+          ":events" : {
+              ":click" : "submit()"
+          }
+      }
   },
   ":metadata":{
       ":grammar" : "jsonformula-af",

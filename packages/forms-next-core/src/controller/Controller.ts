@@ -9,4 +9,5 @@ export type Subscription = {
 export interface Controller {
     subscribe (id: string, callback: callbackFn): Subscription
     dispatch(action: Action) : void
+    getState(): any
 }
