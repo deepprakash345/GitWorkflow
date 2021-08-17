@@ -32,7 +32,7 @@ const changeSpec = [
         'items': ['f', 'f', 'f'],
         'event': new Change('f1', 'value1'),
         'expected': (form: Form) => {
-            expect(form.children.f1).toEqual(expect.objectContaining({
+            expect(form.items.f1).toEqual(expect.objectContaining({
                 ':name': 'f1',
                 ':value': 'value1'
             }));
@@ -166,3 +166,171 @@ test.todo('subscription gets invoked only if the state changes');/*, () => {
     form.dispatch(new Change('f1', 'value2'));
     expect(callback).not.toHaveBeenCalled();
 });*/
+
+test('a value change updates the dataDom as well', () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = createFormInstance(formJson);
+    form.dispatch(new Change('f1', 'value2'));
+    expect(form.getState().data).toEqual({
+        'f1': 'value2'
+    });
+});
+
+test('a value change updates the nested dataDom as well', () => {
+    const formJson = create([{
+        'f': {
+            ':dataRef': 'a.b.c.d'
+        }
+    }, 'f', 'f']);
+    let form = createFormInstance(formJson);
+    form.dispatch(new Change('f1', 'value2'));
+    expect(form.getState().data).toEqual({
+        a: {
+            b: {
+                c: {
+                    d: 'value2'
+                }
+            }
+        }
+    });
+});
+
+
+test('a value change updates the nested dataDom as well', () => {
+    const formJson = create([{
+        'f': {
+            ':dataRef': 'a.b.c.d'
+        }
+    }, 'f', 'f']);
+    let form = createFormInstance(formJson);
+    form.dispatch(new Change('f1', 'value2'));
+    expect(form.getState().data).toEqual({
+        a: {
+            b: {
+                c: {
+                    d: 'value2'
+                }
+            }
+        }
+    });
+});
+
+test('multiple field changes also keep the data modified', () => {
+    const formJson = create([{
+        'f': {
+            ':dataRef': 'a.b.c.d'
+        }
+    }, 'f', 'f']);
+    let form = createFormInstance(formJson);
+    form.dispatch(new Change('f1', 'value2'));
+    form.dispatch(new Change('f2', 'value2'));
+    form.dispatch(new Change('f3', 'value2'));
+    expect(form.getState().data).toEqual({
+        a: {
+            b: {
+                c: {
+                    d: 'value2'
+                }
+            }
+        },
+        f2: 'value2',
+        f3: 'value2'
+    });
+});
+
+test.todo('default values should also modify the data dom');/* () => {
+    const formJson = create([{
+        'f': {
+            ':dataRef': 'a.b.c.d',
+            ':defaultValue': 'test'
+        }
+    }, 'f', 'f']);
+    let form = createFormInstance(formJson);
+    expect(form.getState().data).toEqual({
+        a: {
+            b: {
+                c: {
+                    d: 'test'
+                }
+            }
+        }
+    });
+});*/
+
+test.todo('rules should modify the data dom');/*, () => {
+    const formJson = create([{
+        'f': {
+            ':dataRef': 'a.b.c.d',
+            ':default': 'john'
+        }
+    }, {
+        'f': {
+            ':default': 'doe'
+        }
+    }, {
+        'f': {
+            ':dataRef': 'e',
+            ':rules': {
+                ':value': '$form.f1.value + $form.f2.value'
+            }
+        }
+    }]);
+    let form = createFormInstance(formJson);
+    expect(form.getState().data).toEqual({
+        a: {
+            b: {
+                c: {
+                    d: 'test'
+                }
+            }
+        },
+        f1 : 'doe',
+        e : 'johndoe'
+    });
+});*/
+
+
+
+test.todo('conflicting dataRefs should throw an exception'); /* const formJson = create([{
+        'f' : {
+            ':dataRef' : 'a.b.c.d'
+        }
+    }, {
+       'f' : {
+            ':dataRef' : 'a.b'
+       }
+    }, 'f']);*/
+
+test.todo('dataDom is updated as per the dataType of the element'); /*
+const formJson = create([{
+        'f' : {
+            ':constraints' : {
+                ':dataType' : 'number'
+            }
+            ':dataRef' : 'number'
+        }
+    }, {
+        'f' : {
+            ':constraints' : {
+                ':dataType' : 'string'
+            }
+            ':dataRef' : 'string'
+        }
+    }, {
+        'f' : {
+            ':constraints' : {
+                ':dataType' : 'boolean'
+            }
+            ':dataRef' : 'boolean'
+        }
+    }]);
+    let form = createFormInstance(formJson);
+    form.dispatch(new Change('f1', '10'));
+    form.dispatch(new Change('f2', 'value2'));
+    form.dispatch(new Change('f3', 'true'));
+    expect(form.getState().data).toEqual({
+        number : 10,
+        string : 'value2',
+        boolean: true
+    });
+    */

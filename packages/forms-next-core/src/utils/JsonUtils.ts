@@ -43,3 +43,7 @@ export function mergeDeep(target: any, ...sources: any[]): any {
 
     return mergeDeep(target, ...sources);
 }
+
+export const jsonString = (obj: any) => {
+    return JSON.stringify(obj, null, 2);
+};

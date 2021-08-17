@@ -5,21 +5,25 @@ import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
 import {mergeDeep} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
+import FunctionRuntime from './rules/FunctionRuntime';
 
 
 class Form extends Container implements FormModel, Controller {
 
-    nodeFactory = new AFNodeFactory()
+    private nodeFactory = new AFNodeFactory()
+    private functions = new FunctionRuntime(this).getFunctions();
 
-    callbacks: {
+    private callbacks: {
         [key: string] : callbackFn[]
     } = {}
 
+    private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
     public getElement(id: string) {
         //todo: do this only if id contains " as . can be used the name (`address."street.name"`)
-        let r = makeFormula(id, undefined, this.nodeFactory);
-        r.compile();
-        return r.search(this._jsonModel[':items']);
+        //todo: or use dataRefRegex here as well
+        let formula = makeFormula({}, this.nodeFactory);
+        let node = formula.compile(id);
+        return node.search(this._jsonModel[':items']);
     }
 
     public dispatch(action: Action) {
@@ -31,6 +35,9 @@ class Form extends Container implements FormModel, Controller {
         switch (action.type) {
             case 'change':
                 this.handleChange(elem, action.payload);
+                break;
+            case 'click':
+                this.handleClick(elem);
         }
     }
 
@@ -38,12 +45,46 @@ class Form extends Container implements FormModel, Controller {
         return true;
     }
 
+    private updateDataDom(elem: any) {
+        const dataRef: string = elem[':dataRef'] || elem[':name'] || '';
+        let data = this._jsonModel.data || {};
+        this._jsonModel.data = data;
+        if (dataRef.length > 0) {
+            let m = this.dataRefRegex.exec(dataRef);
+            if (m == null) {
+                throw `Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`;
+            }
+            do {
+                let nextM = this.dataRefRegex.exec(dataRef);
+                if (m.length < 2) {
+                    throw `Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`;
+                } else {
+                    if (nextM != null) {
+                        let tmp = data[m[1]] || {};
+                        data[m[1]] = tmp;
+                        data = tmp;
+                    } else {
+                        data[m[1]] = elem[':value'];
+                    }
+                }
+                m = nextM;
+            } while (m != null);
+        }
+    }
+
     private handleChange(elem: any, value: string) {
         elem[':value'] = value;
         let valid = this.evaluateConstraints(elem);
+        //todo : make it conditional based on valid flag
+        this.updateDataDom(elem);
         elem[':valid'] = valid;
         this.executeAllRules();
         this.trigger(elem[':id'], elem);
+    }
+
+    private handleClick(elem: any) {
+        let rule = elem[':events']?.[':click'];
+        this._executeRule(elem, rule);
     }
 
     private trigger(id: string, elem: any) {
@@ -68,15 +109,19 @@ class Form extends Container implements FormModel, Controller {
         };
     }
 
+    _executeRule(element: any, rule: any) {
+        if (typeof rule === 'string') {
+            let formula = makeFormula(this.functions, new AFNodeFactory(this._jsonModel[':items'], element));
+            let node = formula.compile(rule as string);
+            return node.search(element);
+        } else {
+            throw `only expression strings are supported. ${typeof(rule)} types are not supported`;
+        }
+    }
+
     _executeRulesForElement(element:any, rules: any) {
         return Object.fromEntries(Object.entries(rules).map(([prop, rule]) => {
-            if (typeof rule === 'string') {
-                let r = makeFormula(rule as string, undefined, new AFNodeFactory(this._jsonModel[':items'], element));
-                r.compile();
-                return [prop, r.search(element)];
-            } else {
-                throw `only expression strings are supported. ${typeof(rule)} types are not supported`;
-            }
+            return [prop, this._executeRule(element, rule)];
         }));
     }
 
@@ -86,10 +131,18 @@ class Form extends Container implements FormModel, Controller {
                 this.executeAllRules(x[':items']);
             } else if (':rules' in x) {
                 //todo : handle the case for panels.
-                items[key] = mergeDeep(x, this._executeRulesForElement(x, x[':rules']));
+                let updates = this._executeRulesForElement(x, x[':rules']);
+                items[key] = mergeDeep(x, updates);
+                if (':value' in updates) {
+                    this.updateDataDom(items[key]);
+                }
                 this.trigger(x[':id'], items[key]);
             }
         });
+    }
+
+    getState() {
+        return this.json();
     }
 }
 export default Form;

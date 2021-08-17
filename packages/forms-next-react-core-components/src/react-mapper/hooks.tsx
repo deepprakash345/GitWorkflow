@@ -1,8 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import formContext, {IFormContext} from './FormContext';
-import {Change} from '@adobe/forms-next-core/lib/controller/Actions';
+import {Change, Click} from '@adobe/forms-next-core/lib/controller/Actions';
 import {ContainerJson} from '@adobe/forms-next-core/lib';
-import {Subscription} from '@adobe/forms-next-core/lib/controller/Controller';
 
 type hasID = {
     ':id'?: string,
@@ -11,7 +10,7 @@ type hasID = {
 
 type Dispatch<T> = (x: T) => any
 
-export const useRuleEngine = function<T extends hasID, P>(props: T): [T, Dispatch<P>] {
+export const useRuleEngine = function<T extends hasID, P>(props: T): [T, Dispatch<any>, Dispatch<void>] {
     const [elementState, setElementState] = useState(props);
     const context:IFormContext = useContext(formContext);
     const id = props[':id'] as string;
@@ -28,7 +27,13 @@ export const useRuleEngine = function<T extends hasID, P>(props: T): [T, Dispatc
         const changeAction = new Change(id as string, val);
         context.controller?.dispatch(changeAction);
     };
-    return [elementState, dispatchChange];
+
+    const dispatchClick = () => {
+        const clickAction = new Click(id as string, null);
+        context.controller?.dispatch(clickAction);
+    };
+
+    return [elementState, dispatchChange, dispatchClick];
 };
 
 export const useRenderChildren = function<T extends ContainerJson>(props: T) {
@@ -38,8 +43,8 @@ export const useRenderChildren = function<T extends ContainerJson>(props: T) {
         const Comp = context.mappings[child[':type']];
         if (Comp === undefined) {
             return <div><h4>Undefined Element</h4><pre>{JSON.stringify(child, null, 2)}</pre></div>;
-        }
-        return <Comp {...child} />;
+        }//todo: find better key
+        return <Comp key={child[':id']} {...child} />;
     });
 
 };
