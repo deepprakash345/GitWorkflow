@@ -44,6 +44,19 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     return mergeDeep(target, ...sources);
 }
 
+export function getOrElse(obj: any, jsonPath: string){
+    let currObject = obj;
+    let propChain = (jsonPath || '').split('.');
+    for (let prop of propChain) {
+        if(isObject(currObject))
+            currObject = currObject[prop];
+        else
+            currObject = undefined;
+    }
+    if(currObject)
+        return currObject;
+}
+
 export const jsonString = (obj: any) => {
     return JSON.stringify(obj, null, 2);
 };

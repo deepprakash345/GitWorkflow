@@ -20,19 +20,21 @@ type FormState = {
     controller?: Controller,
 }
 
+
 function App() {
     let [value, setValue] = React.useState('');
     let [form, setForm] = React.useState<FormState>({
-        json: json,
-        controller: createFormInstance(json),
+        json: undefined
     });
     const aceEditor = useRef(null);
     const fetchAF = async () => {
         const data = await fetchForm(value);
-        const json = JSON.parse(data)
-        setForm({
-            json,
-            controller : createFormInstance(json)
+        const currentJson = JSON.parse(data)
+        createFormInstance(currentJson).then((result) => {
+            setForm({
+                json,
+                controller: result
+            });
         });
     }
 
@@ -42,10 +44,16 @@ function App() {
     }
 
     useEffect(() => {
+        createFormInstance(json).then((result) => {
+            setForm({
+                json,
+                controller: result
+            });
+        });
         if (aceEditor.current) {
             const editor = (aceEditor as any).current.editor
         }
-    })
+    }, [])
 
 
     return (

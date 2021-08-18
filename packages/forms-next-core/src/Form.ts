@@ -1,11 +1,12 @@
 import Container from './Container';
-import {FormModel} from './Types';
+import {FormMetaDataModel, FormModel, MetaDataJson} from './Types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
-import {mergeDeep} from './utils/JsonUtils';
+import {getOrElse, mergeDeep} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
 import FunctionRuntime from './rules/FunctionRuntime';
+import FormMetaData from "./FormMetaData";
 
 
 class Form extends Container implements FormModel, Controller {
@@ -18,8 +19,14 @@ class Form extends Container implements FormModel, Controller {
     } = {}
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
+
+    get metaData () : FormMetaData | undefined {
+        // @ts-ignore
+        let metaData = this.getP<MetaDataJson>('metadata', undefined);
+        return metaData ? new FormMetaData(metaData) : undefined;
+    }
+
     public getElement(id: string) {
-        //todo: do this only if id contains " as . can be used the name (`address."street.name"`)
         //todo: or use dataRefRegex here as well
         let formula = makeFormula({}, this.nodeFactory);
         let node = formula.compile(id);
@@ -87,6 +94,20 @@ class Form extends Container implements FormModel, Controller {
         this._executeRule(elem, rule);
     }
 
+    /*
+     * This API gets the element w.r.t to the node.
+     * Eg - path is a/b/c, then it converts the path to a.b.c and then searches for c.
+    */
+    private _getElement(node: Object, path: string, options: any) {
+        options = options || {};
+        let {index} = options;
+        let convertedPath = path.split('/').join('.');
+        if (index) {
+            convertedPath = convertedPath + '.' + index;
+        }
+        return getOrElse(node, convertedPath);
+    }
+
     private trigger(id: string, elem: any) {
         if (id in this.callbacks) {
             console.log(`subscription to be triggered : ${id}`);
@@ -123,6 +144,21 @@ class Form extends Container implements FormModel, Controller {
         return Object.fromEntries(Object.entries(rules).map(([prop, rule]) => {
             return [prop, this._executeRule(element, rule)];
         }));
+    }
+
+    setData(data: Object, items: any = this._jsonModel[':items']) {
+        Object.entries(items).forEach( ([key, x]: [string, any]) => {
+            if (':items' in x) {
+                this.setData(x[':items']);
+            } else if (':dataRef' in x || ':name' in x) {
+                // todo: handle the case for panels
+                let value = this._getElement(data, x[':dataRef'] || x[':name'], null);
+                if (value) {
+                    x[':value'] = value;
+                    this.trigger(x[':id'], items[key]);
+                }
+            }
+        });
     }
 
     executeAllRules(items: any = this._jsonModel[':items']) {

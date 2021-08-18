@@ -43,8 +43,8 @@ export const useRenderChildren = function<T extends ContainerJson>(props: T) {
         const Comp = context.mappings[child[':type']];
         if (Comp === undefined) {
             return <div><h4>Undefined Element</h4><pre>{JSON.stringify(child, null, 2)}</pre></div>;
-        }//todo: find better key
-        return <Comp key={child[':id']} {...child} />;
+        }
+        return <Comp key={JSON.stringify(child, null, 2)} {...child} />;
     });
 
 };

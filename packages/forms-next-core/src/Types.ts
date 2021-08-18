@@ -63,10 +63,12 @@ export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
     json: () => FieldJson
 }
 
-type FormMetaData = {
+export interface FormMetaDataModel  {
     version: string
     grammarVersion: string
-    locale: string
+    locale: string,
+    action: string,
+    dataUrl: string
 }
 
 export type Items<T> = {[key:string]: T}
@@ -84,7 +86,7 @@ export interface FieldsetModel extends BaseModel<ContainerConstraints>, Containe
 
 export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
     data?: any
-    metadata?: FormMetaData
+    metadata?: MetaDataJson
     json: () => any
 }
 
@@ -122,8 +124,17 @@ export type FieldJson = {
 }
 
 export type ContainerJson = {
+    ':id'?: string;
     ':type'?: string;
     ':items': Items<FieldJson | ConstraintsJson>
+}
+
+export type MetaDataJson = {
+    ':version'?: string
+    ':grammarVersion'?: string
+    ':locale'?: string,
+    ':action'?: string,
+    ':dataUrl'?: string
 }
 
 export type FieldsetJson = ContainerJson & {
@@ -133,9 +144,5 @@ export type FieldsetJson = ContainerJson & {
 }
 
 export type FormJson = ContainerJson & {
-    ':metadata'?: {
-        ':version': string
-        ':grammarVersion': string
-        ':locale': string
-    }
+    ':metadata'?: MetaDataJson
 }
