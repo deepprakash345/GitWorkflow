@@ -1,12 +1,12 @@
-#Introduction
+## Introduction
 
 Client side runtime for Headless Adaptive Form
 
-#Pre-requisite
+## Pre-requisite
 
 Setup the npm environment variables by following [this](https://wiki.corp.adobe.com/display/ES/Dealing+with+Mandatory+Authenticated+Access+to+Artifactory+in+Static+Pipeline+Projects#DealingwithMandatoryAuthenticatedAccesstoArtifactoryinStaticPipelineProjects-ChangesNeededForLocalDevelopment)
 
-#Getting Started
+## Getting Started
 
 To begin with trigger the command
 ```

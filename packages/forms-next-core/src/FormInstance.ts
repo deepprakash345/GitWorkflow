@@ -2,7 +2,7 @@ import Field from './Field';
 import Form from './Form';
 import Fieldset from './Fieldset';
 import {getProperty} from './utils/JsonUtils';
-import {Items} from './Types';
+import {FormJson, Items} from './Types';
 
 const items2Json = (items: Items<Field | Fieldset>): Items<any> => {
    return Object.fromEntries(Object.entries(items).map(([key, item]) => [key, item.json()]));
@@ -63,14 +63,14 @@ export const fetchForm = (url: string) : Promise<string> =>  {
       });
 };
 
-export const submitForm = (url: string, data: any) : Promise<string> =>  {
+export const submitForm = (url: string, data: any, form: Form) : Promise<string> =>  {
     // todo: add attachments and metadata later
-    const form = new FormData();
-    form.append(':data', data);
-    form.append(':contentType', 'application/json');
+    const formData = new FormData();
+    formData.append(':data', data);
+    formData.append(':contentType', 'application/json');
     const requestOptions: any = {
         method: 'POST',
-        body: form
+        body: formData
     };
 
     return fetch(url, requestOptions)
@@ -82,12 +82,9 @@ export const submitForm = (url: string, data: any) : Promise<string> =>  {
             return response.json();
         })
         .then((data: any) => {
-            // todo: trigger a success event and send the payload, user would auto handle the event
-            // todo: in the rule grammar
-            const redirectUrl = data[':redirectUrl'];
-            if (redirectUrl) {
-                window.location.href = redirectUrl;
-            }
+            // todo: send the payload(data) to the rule grammar
+            let rule = form.json()[':events']?.[':submitSuccess'];
+            form._executeRule(form.json(), rule);
         })
         // todo: trigger an error event
         .catch((error: any) => console.log('error', error));

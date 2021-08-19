@@ -37,7 +37,7 @@ export default class FunctionRuntime {
         // todo have to implement validate here
         this.validate();
         if (this.form.metaData && this.form.metaData.action) {
-            const data = await submitForm(this.form.metaData.action, jsonString(this.getData()));
+            const data = await submitForm(this.form.metaData.action, jsonString(this.getData()), this.form);
             console.log(data);
         }  else {
             console.log('error', 'no submit url configured');
