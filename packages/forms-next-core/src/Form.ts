@@ -20,10 +20,10 @@ class Form extends Container implements FormModel, Controller {
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
-    get metaData () : FormMetaData | undefined {
+    get metaData () : FormMetaData {
         // @ts-ignore
-        let metaData = this.getP<MetaDataJson>('metadata', undefined);
-        return metaData ? new FormMetaData(metaData) : undefined;
+        let metaData = this.getP<MetaDataJson>('metadata', {});
+        return new FormMetaData(metaData);
     }
 
     public getElement(id: string) {
@@ -101,7 +101,7 @@ class Form extends Container implements FormModel, Controller {
     private _getElement(node: Object, path: string, options: any) {
         options = options || {};
         let {index} = options;
-        let convertedPath = path.split('/').join('.');
+        let convertedPath = path;
         if (index) {
             convertedPath = convertedPath + '.' + index;
         }
@@ -149,13 +149,13 @@ class Form extends Container implements FormModel, Controller {
     setData(data: Object, items: any = this._jsonModel[':items']) {
         Object.entries(items).forEach( ([key, x]: [string, any]) => {
             if (':items' in x) {
-                this.setData(x[':items']);
+                this.setData(data, x[':items']);
             } else if (':dataRef' in x || ':name' in x) {
                 // todo: handle the case for panels
                 let value = this._getElement(data, x[':dataRef'] || x[':name'], null);
                 if (value) {
                     x[':value'] = value;
-                    this.trigger(x[':id'], items[key]);
+                    this.trigger(x[':id'], x);
                 }
             }
         });
