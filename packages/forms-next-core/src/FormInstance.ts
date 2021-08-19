@@ -36,7 +36,7 @@ export const createFormInstance = async (formModel: any): Promise<Form> => {
         ':items': items2Json(mappedItems)
     };
     let f = new Form(formModel);
-    if (f.metaData && f.metaData.dataUrl) {
+    if (f.metaData?.dataUrl) {
         const data = await fetchData(f.metaData.dataUrl + window.location.search);
         const formData = JSON.parse(data)[':data'];
         // if data exist, set the form data
@@ -75,17 +75,21 @@ export const submitForm = (url: string, data: any) : Promise<string> =>  {
 
     return fetch(url, requestOptions)
         .then((response: any) => {
+            // todo: trigger an error event
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
             return response.json();
         })
         .then((data: any) => {
+            // todo: trigger a success event and send the payload, user would auto handle the event
+            // todo: in the rule grammar
             const redirectUrl = data[':redirectUrl'];
             if (redirectUrl) {
                 window.location.href = redirectUrl;
             }
         })
+        // todo: trigger an error event
         .catch((error: any) => console.log('error', error));
 };
 
