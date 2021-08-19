@@ -1,5 +1,9 @@
 {
   ":data": {},
+  ":events" : {
+    ":submitSuccess" : "openWebPage($form.thankyouMessage)"
+  },
+  "thankyouMessage" : "Thank you for submitting the form",
   ":items": {
     "firstName" : {
         ":name": "firstName",
