@@ -74,7 +74,6 @@ function App() {
                     name="UNIQUE_ID_OF_DIV"
                     editorProps={{$blockScrolling: true}}
                     tabSize={2}
-                    onChange={(value: any) => setForm(value)}
                     setOptions={{
                         enableBasicAutocompletion: true,
                         enableLiveAutocompletion: true,
