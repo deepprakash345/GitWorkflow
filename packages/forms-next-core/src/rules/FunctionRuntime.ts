@@ -1,7 +1,8 @@
 import Form from '../Form';
+import {submitForm} from '../FormInstance';
 import {jsonString} from '../utils/JsonUtils';
 
-declare var window: any;
+//declare var window: any;
 
 export default class FunctionRuntime {
 
@@ -11,6 +12,10 @@ export default class FunctionRuntime {
 
     getFunctions () {
         return {
+            validate : () => {
+                // todo have to implement
+              return this.validate();
+            },
             getData : () => {
                 this.getData();
             },
@@ -20,12 +25,23 @@ export default class FunctionRuntime {
         };
     }
 
+    private validate () {
+        return true;
+    }
+
     private getData () {
         return this.form.getState().data;
     }
 
-    private submit () {
-        //todo: fix this
-        window.alert(jsonString(this.getData()));
+    private async submit() {
+        // todo have to implement validate here
+        this.validate();
+        if (this.form.metaData && this.form.metaData.action) {
+            const data = await submitForm(this.form.metaData.action, jsonString(this.getData()), this.form);
+            console.log(data);
+        }  else {
+            console.log('error', 'no submit url configured');
+        }
+
     }
 }

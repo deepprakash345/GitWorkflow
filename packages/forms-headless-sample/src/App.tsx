@@ -20,20 +20,19 @@ type FormState = {
     controller?: Controller,
 }
 
+
 function App() {
     let [value, setValue] = React.useState('');
-    let [form, setForm] = React.useState<FormState>({
-        json: json,
-        controller: createFormInstance(json),
-    });
+    let [form, setForm] = React.useState<FormState>({});
     const aceEditor = useRef(null);
+    const createForm = async (json: any) => {
+        const controller = await createFormInstance(json)
+        setForm({json, controller})
+    }
     const fetchAF = async () => {
         const data = await fetchForm(value);
-        const json = JSON.parse(data)
-        setForm({
-            json,
-            controller : createFormInstance(json)
-        });
+        const currentJson = JSON.parse(data)
+        await createForm(currentJson);
     }
 
     const forceRender = () => {
@@ -42,10 +41,11 @@ function App() {
     }
 
     useEffect(() => {
+        createForm(json);
         if (aceEditor.current) {
             const editor = (aceEditor as any).current.editor
         }
-    })
+    }, [])
 
 
     return (
@@ -82,7 +82,7 @@ function App() {
                 />
             </View>
             <View gridArea="content">
-                {form.json !== undefined ? (
+                {form?.json !== undefined ? (
                     <FormContext.Provider value={{mappings: mappings, controller: form.controller}}>
                         {form != null ? <Form formJson={form.controller?.getState()}></Form> : ""}
                     </FormContext.Provider>
