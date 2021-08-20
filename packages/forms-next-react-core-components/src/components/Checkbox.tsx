@@ -2,6 +2,8 @@ import {Checkbox} from '@adobe/react-spectrum';
 import {FieldJson} from '@adobe/forms-next-core';
 import {useRuleEngine} from '../react-mapper/hooks';
 import {SpectrumCheckboxProps} from '@react-types/checkbox';
+import React from 'react';
+
 const CheckboxComponent = function (originalProps: FieldJson) {
     const [props, dispatchChange] = useRuleEngine<FieldJson, string>(originalProps);
     console.log('rendering TextField ' + props[':id'] + ' ' + props[':value']);

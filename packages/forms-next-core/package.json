@@ -22,7 +22,7 @@
     "test": "jest --silent",
     "build": "npx tsc",
     "clean": "rm -rf lib coverage",
-    "prepublish": "npx tsc"
+    "prepublish": "npm run build && npm run test"
   },
   "dependencies": {
     "@adobe/forms-next-expression-parser": "0.1.7",

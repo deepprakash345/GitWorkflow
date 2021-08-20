@@ -1,4 +1,4 @@
-
+import React from 'react';
 const PlainText = function (props: any) {
     const { title } = props.field;
     return (<p>{title}</p>);

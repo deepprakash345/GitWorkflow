@@ -6,7 +6,7 @@ import AFNodeFactory from './rules/AFNodeFactory';
 import {getOrElse, mergeDeep} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
 import FunctionRuntime from './rules/FunctionRuntime';
-import FormMetaData from "./FormMetaData";
+import FormMetaData from './FormMetaData';
 
 
 class Form extends Container implements FormModel, Controller {
@@ -59,12 +59,12 @@ class Form extends Container implements FormModel, Controller {
         if (dataRef.length > 0) {
             let m = this.dataRefRegex.exec(dataRef);
             if (m == null) {
-                throw `Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`;
+                throw new Error(`Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`);
             }
             do {
                 let nextM = this.dataRefRegex.exec(dataRef);
                 if (m.length < 2) {
-                    throw `Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`;
+                    throw new Error(`Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`);
                 } else {
                     if (nextM != null) {
                         let tmp = data[m[1]] || {};
@@ -136,7 +136,7 @@ class Form extends Container implements FormModel, Controller {
             let node = formula.compile(rule as string);
             return node.search(element);
         } else {
-            throw `only expression strings are supported. ${typeof(rule)} types are not supported`;
+            throw new Error(`only expression strings are supported. ${typeof(rule)} types are not supported`);
         }
     }
 

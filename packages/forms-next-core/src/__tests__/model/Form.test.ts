@@ -3,25 +3,25 @@ import {createFormInstance} from '../../FormInstance';
 import {Change} from '../../controller/Actions';
 import Form from '../../Form';
 
-test('fetch an element from form', () => {
+test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     const f1 = form.getElement('f1');
     expect(f1[':name']).toEqual('f1');
 });
 
-test('fetch a nested element from form', () => {
+test('fetch a nested element from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     const f1 = form.getElement('p1.p2.f2');
     expect(f1[':name']).toEqual('f2');
 });
 
-test('form with rules', () => {
+test('form with rules', async () => {
     const formJson: any = Object.assign({}, formWithRules);
     formJson[':items'].firstName[':value'] = 'john';
     formJson[':items'].lastName[':value'] = 'doe';
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.executeAllRules();
     expect(form.json()[':items'].fullName[':value']).toEqual('john doe');
 });
@@ -40,24 +40,24 @@ const changeSpec = [
     }
 ];
 
-test.each(changeSpec)('$name', ({items, event, expected}) => {
+test.each(changeSpec)('$name', async ({items, event, expected}) => {
     const formJson = create(items);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.dispatch(event);
     expected(form);
 });
 
-test('dispatching an event on unknown field throws exception', () => {
+test('dispatching an event on unknown field throws exception', async () => {
     const formJson = create(['f', 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     expect(() => {
         form.dispatch(new Change('a1', 'value1'));
     }).toThrow("invalid action change. a1 doesn't exist");
 });
 
-test('subscription gets invoked whenever the state changes', () => {
+test('subscription gets invoked whenever the state changes', async () => {
     const formJson = create(['f', 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     let callback = jest.fn();
     form.subscribe('f1', callback);
     form.dispatch(new Change('f1', 'value2'));
@@ -81,18 +81,18 @@ const subscriptionCollateral = ['a',
             }
     }, 'd'];
 
-test('subscription gets invoked for dependent fields', () => {
+test('subscription gets invoked for dependent fields', async () => {
     const formJson = create(subscriptionCollateral);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     let callback = jest.fn();
     form.subscribe('c1', callback);
     form.dispatch(new Change('a1', '10'));
     expect(callback).toHaveBeenCalled();
 });
 
-test("subscription doesn't get invoked after unsubscribing", () => {
+test("subscription doesn't get invoked after unsubscribing", async() => {
     const formJson = create(subscriptionCollateral);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     let callback = jest.fn();
     const subscription = form.subscribe('c1', callback);
     subscription.unsubscribe();
@@ -134,21 +134,19 @@ const nonStringRules = [
         }
     }];
 
-test.each(nonStringRules)('rules with $name type throw an exception', ({name, type, rules}) => {
+test.each(nonStringRules)('rules with $name type throw an exception', async ({name, type, rules}) => {
     const formJson = create([{
         f: {
             ':rules': rules
         }
     }]);
-    expect(() => {
-        createFormInstance(formJson);
-    }).toThrow(`only expression strings are supported. ${type === undefined ? name : type} types are not supported`);
+    await expect(createFormInstance(formJson)).rejects.toThrow(`only expression strings are supported. ${type === undefined ? name : type} types are not supported`);
 
 });
 
 test.todo('subscription gets invoked only for dependent fields');/*, () => {
     const formJson = create(subscriptionCollateral);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     let callbackc1 = jest.fn();
     let callbackb1 = jest.fn();
     form.subscribe('c1', callbackc1);
@@ -160,29 +158,29 @@ test.todo('subscription gets invoked only for dependent fields');/*, () => {
 
 test.todo('subscription gets invoked only if the state changes');/*, () => {
     const formJson = create(['f', 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     let callback = jest.fn();
     form.subscribe('f1', callback);
     form.dispatch(new Change('f1', 'value2'));
     expect(callback).not.toHaveBeenCalled();
 });*/
 
-test('a value change updates the dataDom as well', () => {
+test('a value change updates the dataDom as well', async () => {
     const formJson = create(['f', 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
     expect(form.getState().data).toEqual({
         'f1': 'value2'
     });
 });
 
-test('a value change updates the nested dataDom as well', () => {
+test('a value change updates the nested dataDom as well', async () => {
     const formJson = create([{
         'f': {
             ':dataRef': 'a.b.c.d'
         }
     }, 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
     expect(form.getState().data).toEqual({
         a: {
@@ -196,13 +194,13 @@ test('a value change updates the nested dataDom as well', () => {
 });
 
 
-test('a value change updates the nested dataDom as well', () => {
+test('a value change updates the nested dataDom as well', async () => {
     const formJson = create([{
         'f': {
             ':dataRef': 'a.b.c.d'
         }
     }, 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
     expect(form.getState().data).toEqual({
         a: {
@@ -215,13 +213,13 @@ test('a value change updates the nested dataDom as well', () => {
     });
 });
 
-test('multiple field changes also keep the data modified', () => {
+test('multiple field changes also keep the data modified', async () => {
     const formJson = create([{
         'f': {
             ':dataRef': 'a.b.c.d'
         }
     }, 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
     form.dispatch(new Change('f2', 'value2'));
     form.dispatch(new Change('f3', 'value2'));
@@ -245,7 +243,7 @@ test.todo('default values should also modify the data dom');/* () => {
             ':defaultValue': 'test'
         }
     }, 'f', 'f']);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     expect(form.getState().data).toEqual({
         a: {
             b: {
@@ -275,7 +273,7 @@ test.todo('rules should modify the data dom');/*, () => {
             }
         }
     }]);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     expect(form.getState().data).toEqual({
         a: {
             b: {
@@ -324,7 +322,7 @@ const formJson = create([{
             ':dataRef' : 'boolean'
         }
     }]);
-    let form = createFormInstance(formJson);
+    let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', '10'));
     form.dispatch(new Change('f2', 'value2'));
     form.dispatch(new Change('f3', 'true'));
