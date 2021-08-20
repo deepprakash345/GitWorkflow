@@ -90,6 +90,11 @@ export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
     json: () => any
 }
 
+type Option = {
+    ':value'?: Primitives
+    ':text'?: string
+}
+
 export type ConstraintsJson = {
     ':required'?: boolean;
     ':expression'?: string;
@@ -100,6 +105,7 @@ export type ConstraintsJson = {
     ':maximum'?: number;
     ':fracDigits'?: number;
     ':leadDigits'?: number;
+    ':options'?: Option[];
 }
 
 export type FieldJson = {

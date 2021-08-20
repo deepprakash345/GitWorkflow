@@ -78,7 +78,7 @@
     },
     "isAnonymous" : {
         ":name": "isAnonymous",
-        ":type": "fd/af/components/guidetextbox",
+        ":type": "fd/af/components/guidecheckbox",
         ":title": "Remain Anonymous",
         ":richTextTitle" : false,
         ":hideTitle" : false,
@@ -87,11 +87,9 @@
         ":constraints" : {
             ":dataType": "boolean",
             ":options" : [{
-                "value": true
-            }, {
-                "value": false
+                ":value": true
             }],
-            ":required": false,
+            ":required": true,
             ":expression": ""
         },
         ":constraintMessages": {

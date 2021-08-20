@@ -1,16 +1,12 @@
 import {useContext, useEffect, useState} from 'react';
 import formContext, {IFormContext} from './FormContext';
 import {Change, Click} from '@adobe/forms-next-core/lib/controller/Actions';
-import {ContainerJson} from '@adobe/forms-next-core/lib';
+import {ContainerJson, FieldJson} from '@adobe/forms-next-core/lib';
 
-type hasID = {
-    ':id'?: string,
-    [key: string]: any
-}
 
 type Dispatch<T> = (x: T) => any
 
-export const useRuleEngine = function<T extends hasID, P>(props: T): [T, Dispatch<any>, Dispatch<void>] {
+export const useRuleEngine = function<T extends FieldJson, P>(props: T): [T, Dispatch<any>, Dispatch<void>] {
     const [elementState, setElementState] = useState(props);
     const context:IFormContext = useContext(formContext);
     const id = props[':id'] as string;
