@@ -8,15 +8,7 @@ import {Change, Click} from '@adobe/forms-next-core/lib/controller/Actions';
 let mockController : Controller;
 
 beforeEach(() => {
-    mockController = {
-        subscribe : jest.fn().mockReturnValue({
-            unsubscribe: jest.fn()
-        }),
-
-        dispatch : jest.fn(),
-
-        getState : jest.fn()
-    };
+    mockController =
 });
 
 test('should return the original value', () => {

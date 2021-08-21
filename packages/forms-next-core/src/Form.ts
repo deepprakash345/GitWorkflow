@@ -15,12 +15,12 @@ class Form extends Container implements FormModel, Controller {
     private functions = new FunctionRuntime(this).getFunctions();
 
     private callbacks: {
-        [key: string] : callbackFn[]
+        [key: string]: callbackFn[]
     } = {}
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
-    get metaData () : FormMetaData {
+    get metaData(): FormMetaData {
         // @ts-ignore
         let metaData = this.getP<MetaDataJson>('metadata', {});
         return new FormMetaData(metaData);
@@ -34,17 +34,19 @@ class Form extends Container implements FormModel, Controller {
     }
 
     public dispatch(action: Action) {
-        let elem = this.getElement(action.id);
-        console.log('new action ' + JSON.stringify(action, null, 2));
-        if (elem == null) {
-            throw `invalid action ${action.type}. ${action.id} doesn't exist`;
-        }
-        switch (action.type) {
-            case 'change':
-                this.handleChange(elem, action.payload);
-                break;
-            case 'click':
-                this.handleClick(elem);
+        if (action.id.length > 0) {
+            let elem = this.getElement(action.id);
+            console.log('new action ' + JSON.stringify(action, null, 2));
+            if (elem == null) {
+                throw `invalid action ${action.type}. ${action.id} doesn't exist`;
+            }
+            switch (action.type) {
+                case 'change':
+                    this.handleChange(elem, action.payload);
+                    break;
+                case 'click':
+                    this.handleClick(elem);
+            }
         }
     }
 
@@ -123,7 +125,7 @@ class Form extends Container implements FormModel, Controller {
         this.callbacks[id].push(callback);
         console.log(`subscription added : ${id}, count : ${this.callbacks[id].length}`);
         return {
-            unsubscribe : () => {
+            unsubscribe: () => {
                 this.callbacks[id] = this.callbacks[id].filter(x => x !== callback);
                 console.log(`subscription removed : ${id}, count : ${this.callbacks[id].length}`);
             }
@@ -136,18 +138,18 @@ class Form extends Container implements FormModel, Controller {
             let node = formula.compile(rule as string);
             return node.search(element);
         } else {
-            throw new Error(`only expression strings are supported. ${typeof(rule)} types are not supported`);
+            throw new Error(`only expression strings are supported. ${typeof (rule)} types are not supported`);
         }
     }
 
-    _executeRulesForElement(element:any, rules: any) {
+    _executeRulesForElement(element: any, rules: any) {
         return Object.fromEntries(Object.entries(rules).map(([prop, rule]) => {
             return [prop, this._executeRule(element, rule)];
         }));
     }
 
     setData(data: Object, items: any = this._jsonModel[':items']) {
-        Object.entries(items).forEach( ([key, x]: [string, any]) => {
+        Object.entries(items).forEach(([key, x]: [string, any]) => {
             if (':items' in x) {
                 this.setData(data, x[':items']);
             } else if (':dataRef' in x || ':name' in x) {
@@ -162,7 +164,7 @@ class Form extends Container implements FormModel, Controller {
     }
 
     executeAllRules(items: any = this._jsonModel[':items']) {
-        Object.entries(items).forEach( ([key, x]: [string, any]) => {
+        Object.entries(items).forEach(([key, x]: [string, any]) => {
             if (':items' in x) {
                 this.executeAllRules(x[':items']);
             } else if (':rules' in x) {
@@ -181,4 +183,5 @@ class Form extends Container implements FormModel, Controller {
         return this.json();
     }
 }
+
 export default Form;
