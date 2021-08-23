@@ -2,7 +2,7 @@ import { TextField } from '@adobe/react-spectrum';
 import { SpectrumTextFieldProps } from '@react-types/textfield';
 import {FieldJson} from '@adobe/forms-next-core';
 import {useRuleEngine} from '../react-mapper/hooks';
-
+import React from 'react';
 const TextFieldComponent = function (originalProps: FieldJson) {
     const [props, dispatchChange] = useRuleEngine<FieldJson, string>(originalProps);
     console.log('rendering TextField ' + props[':id'] + ' ' + props[':value']);

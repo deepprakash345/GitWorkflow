@@ -1,8 +1,8 @@
 import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent} from './collateral/index';
 import {createFormInstance} from '../FormInstance';
 
-test('single field form', () => {
-    const actual = createFormInstance(oneFieldForm);
+test('single field form', async () => {
+    const actual = await createFormInstance(oneFieldForm);
     expect(actual.items.name).toEqual({
         ':constraints' : { ':dataType': 'string' },
         ':type': 'text',
@@ -14,8 +14,8 @@ test('single field form', () => {
     });
 });
 
-test('single field form with number type', () => {
-    const actual = createFormInstance(numberFieldForm);
+test('single field form with number type', async () => {
+    const actual = await createFormInstance(numberFieldForm);
     expect(actual.items.name).toEqual({
         ':type': 'numericEdit',
         ':constraints' : { ':dataType': 'number' },
@@ -27,10 +27,10 @@ test('single field form with number type', () => {
     });
 });
 
-test('single field form with default', () => {
+test('single field form with default', async () => {
     const form = JSON.parse(JSON.stringify(oneFieldForm));
     form[':items'].name[':default'] = 'john doe';
-    const actual = createFormInstance(form);
+    const actual = await createFormInstance(form);
     expect(actual.items.name).toEqual({
         ':default': 'john doe',
         ':type': 'text',
@@ -44,8 +44,8 @@ test('single field form with default', () => {
     });
 });
 
-test('form with panel', () => {
-    const actual = createFormInstance(formWithPanel);
+test('form with panel', async () => {
+    const actual = await createFormInstance(formWithPanel);
     expect(actual.items.name).toEqual({
         ':type': 'text',
         ':constraints' : { ':dataType': 'string' },
@@ -75,8 +75,8 @@ test('form with panel', () => {
     });
 });
 
-test('nested fields with non form component', () => {
-    const actual = createFormInstance(nonFormComponent);
+test('nested fields with non form component', async () => {
+    const actual = await createFormInstance(nonFormComponent);
     expect(actual.items.name).toEqual({
         ':type': 'text',
         ':constraints' : { ':dataType': 'string' },
