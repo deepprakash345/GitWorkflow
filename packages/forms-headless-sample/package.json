@@ -1,10 +1,10 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.4",
-    "@adobe/forms-next-react-core-components": "^0.1.4",
+    "@adobe/forms-next-core": "^0.1.5",
+    "@adobe/forms-next-react-core-components": "^0.1.5",
     "@adobe/react-spectrum": "^3.12.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

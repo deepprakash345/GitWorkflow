@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-react-core-components",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -23,7 +23,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.4",
+    "@adobe/forms-next-core": "^0.1.5",
     "@adobe/react-spectrum": "^3.12.0"
   },
   "peerDependencies": {
