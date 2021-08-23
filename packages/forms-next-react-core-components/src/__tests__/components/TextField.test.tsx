@@ -10,7 +10,9 @@ const field = {
     ':title': 'name'
 };
 
-const labelInputTests: InputFieldTestCase[] = [
+export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null) => any
+
+const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     {
         name: 'field gets rendered without a provider',
         field: field,
@@ -104,7 +106,7 @@ const labelInputTests: InputFieldTestCase[] = [
 ];
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
-    const component = <TextField {...field} />;
+    const component = <TextField {...field[0]} />;
     const checkExpectations = ({container}: RenderResult) => {
         const label = container.querySelector('label');
         const input = container.querySelector('input');

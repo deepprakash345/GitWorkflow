@@ -4,11 +4,12 @@ import FormContext from '../../react-mapper/FormContext';
 import React from 'react';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 import {Change, Click} from '@adobe/forms-next-core/lib/controller/Actions';
+import {testController} from '../utils';
 
 let mockController : Controller;
 
 beforeEach(() => {
-    mockController =
+    mockController = testController();
 });
 
 test('should return the original value', () => {
