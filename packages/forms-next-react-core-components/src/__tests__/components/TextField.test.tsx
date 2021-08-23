@@ -106,7 +106,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
 ];
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
-    const component = <TextField {...field[0]} />;
+    const component = <TextField {...field} />;
     const checkExpectations = ({container}: RenderResult) => {
         const label = container.querySelector('label');
         const input = container.querySelector('input');
