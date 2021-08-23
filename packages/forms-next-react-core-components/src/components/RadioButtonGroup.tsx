@@ -19,6 +19,7 @@ const RadioGroupComponent = function (originalProps: FieldJson) {
     const radioGrpProps:SpectrumRadioGroupProps = {
         name,
         label,
+        value : props[':value'] as string,
         ...(props[':constraints']?.[':required'] && {
             isRequired: true,
             necessityIndicator: 'icon'
