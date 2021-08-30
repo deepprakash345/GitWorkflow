@@ -1,8 +1,9 @@
 import Form from '../Form';
-import {submitForm} from '../FormInstance';
+import {request, RequestOptions} from '../FormInstance';
 import {jsonString} from '../utils/JsonUtils';
+import {CustomEvent} from '../controller/Actions';
 
-//declare var window: any;
+declare var window: any;
 
 export default class FunctionRuntime {
 
@@ -13,14 +14,28 @@ export default class FunctionRuntime {
     getFunctions () {
         return {
             validate : () => {
-                // todo have to implement
               return this.validate();
             },
-            getData : () => {
-                this.getData();
+            get_data : () => {
+                return this.getData();
             },
-            submit: () => {
-                this.submit();
+            submit_form: (success: string, error: string) => {
+                this.submit(success, error);
+                return {};
+            },
+            show_message_box: (str?: String) => {
+                //todo : let it be defined using some view mechanism
+                window.alert(str);
+                return {};
+            },
+            dispatch_event: (element: any, eventName: string | any, payload?: any) => {
+                if (typeof element === 'string') {
+                    payload = eventName;
+                    eventName = element;
+                    element = {':id' : '$all'};
+                }
+                this.form.dispatch(new CustomEvent(eventName, payload, element[':id']));
+                return {};
             }
         };
     }
@@ -33,15 +48,27 @@ export default class FunctionRuntime {
         return this.form.getState().data;
     }
 
-    private async submit() {
+    async submit(success: string, error: string) {
         // todo have to implement validate here
         this.validate();
-        if (this.form.metaData && this.form.metaData.action) {
-            const data = await submitForm(this.form.metaData.action, jsonString(this.getData()), this.form);
-            console.log(data);
-        }  else {
-            console.log('error', 'no submit url configured');
+        const endpoint = this.form.metaData?.action;
+        const data = jsonString(this.getData());
+        const formData = new FormData();
+        formData.append(':data', data);
+        formData.append(':contentType', 'application/json');
+        const requestOptions: RequestOptions = {
+            method: 'POST',
+            contentType : 'application/json'
+        };
+        let result;
+        try {
+            result = await request(endpoint, formData, requestOptions);
+        } catch (e) {
+            //todo: define error payload
+            console.log('error handled');
+            this.form.dispatch(new CustomEvent(error, {}));
+            return;
         }
-
+        this.form.dispatch(new CustomEvent(success, result));
     }
 }

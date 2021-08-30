@@ -64,11 +64,11 @@ export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
 }
 
 export interface FormMetaDataModel  {
-    version: string
-    grammarVersion: string
-    locale: string,
-    action: string,
-    dataUrl: string
+    readonly version: string
+    readonly grammarVersion: string
+    readonly locale: string,
+    readonly action: string,
+    readonly dataUrl: string
 }
 
 export type Items<T> = {[key:string]: T}

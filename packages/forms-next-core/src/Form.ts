@@ -21,12 +21,14 @@ class Form extends Container implements FormModel, Controller {
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
     get metaData(): FormMetaData {
-        // @ts-ignore
         let metaData = this.getP<MetaDataJson>('metadata', {});
         return new FormMetaData(metaData);
     }
 
     public getElement(id: string) {
+        if (id === '$form') {
+            return this._jsonModel;
+        }
         //todo: or use dataRefRegex here as well
         let formula = makeFormula({}, this.nodeFactory);
         let node = formula.compile(id);
@@ -35,9 +37,10 @@ class Form extends Container implements FormModel, Controller {
 
     public dispatch(action: Action) {
         if (action.id.length > 0) {
-            let elem = this.getElement(action.id);
+            let elem = this.getElement(action.id) as any;
+            let eventName;
             console.log('new action ' + JSON.stringify(action, null, 2));
-            if (elem == null) {
+            if (elem == null && action.id !== '$all') {
                 throw `invalid action ${action.type}. ${action.id} doesn't exist`;
             }
             switch (action.type) {
@@ -46,6 +49,14 @@ class Form extends Container implements FormModel, Controller {
                     break;
                 case 'click':
                     this.handleClick(elem);
+                    break;
+                case 'customEvent':
+                    eventName = action.payload[':name'];
+                    if (action.id == '$all') {
+                        this._executeEvents(eventName, action.payload.payload);
+                    } else {
+                        this._executeRule(elem, elem[':events']?.[eventName]);
+                    }
             }
         }
     }
@@ -93,7 +104,9 @@ class Form extends Container implements FormModel, Controller {
 
     private handleClick(elem: any) {
         let rule = elem[':events']?.[':click'];
-        this._executeRule(elem, rule);
+        if (typeof rule === 'string' && rule.length > 0) {
+            this._executeRule(elem, rule);
+        }
     }
 
     /*
@@ -132,23 +145,71 @@ class Form extends Container implements FormModel, Controller {
         };
     }
 
-    _executeRule(element: any, rule: any) {
+    /**
+     * Execute a single rule on given element with the given payload
+     * @param element
+     * @param rule
+     * @param payload
+     * @private
+     */
+    private _executeRule(element: any, rule: any, payload?: any) {
         if (typeof rule === 'string') {
-            let formula = makeFormula(this.functions, new AFNodeFactory(this._jsonModel[':items'], element));
+            let formula = makeFormula(this.functions, new AFNodeFactory(this._jsonModel, element));
             let node = formula.compile(rule as string);
-            return node.search(element);
+            let context = {
+                '$form' : this._jsonModel,
+                '$field' : element,
+                '$event' : {
+                    'target' : element,
+                    'type' : rule,
+                    'payload' : payload
+                }
+            };
+            return node.search(element, context);
         } else {
             throw new Error(`only expression strings are supported. ${typeof (rule)} types are not supported`);
         }
     }
 
-    _executeRulesForElement(element: any, rules: any) {
+    _executeEvents(eventName: any, payload?: any) {
+        const checkAndExecute = (item: any) => {
+            let item2 = item;
+            const evnt = item?.[':events']?.[eventName];
+            if (evnt) {
+                let updates = this._executeRule(item, evnt, payload);
+                item2 = mergeDeep(item, updates);
+            }
+            if (':items' in item2) {
+                let entries= Object.entries(item2[':items'])
+                    .map(([key, child]) => {
+                        return [key, checkAndExecute(child)];
+                    });
+                item2[':items'] = Object.fromEntries(entries);
+            }
+            return item2;
+        };
+        this._jsonModel = checkAndExecute(this._jsonModel);
+    }
+
+    /**
+     * Execute the given rules on the given element
+     * @param element
+     * @param rules
+     * @private
+     */
+    private _executeRulesForElement(element: any, rules: any) {
         return Object.fromEntries(Object.entries(rules).map(([prop, rule]) => {
             return [prop, this._executeRule(element, rule)];
         }));
     }
 
+    /**
+     * prefill the form with data on the given element
+     * @param data {object} data to prefill the form
+     * @param [items] form element on which to apply the operation. The children of the element will also be included
+     */
     setData(data: Object, items: any = this._jsonModel[':items']) {
+        this._jsonModel.data = Object.assign({}, data);
         Object.entries(items).forEach(([key, x]: [string, any]) => {
             if (':items' in x) {
                 this.setData(data, x[':items']);
@@ -163,6 +224,10 @@ class Form extends Container implements FormModel, Controller {
         });
     }
 
+    /**
+     * Executes all rules on the items
+     * @param items elements on which to execute all the rules. default is the entire form
+     */
     executeAllRules(items: any = this._jsonModel[':items']) {
         Object.entries(items).forEach(([key, x]: [string, any]) => {
             if (':items' in x) {
@@ -179,6 +244,9 @@ class Form extends Container implements FormModel, Controller {
         });
     }
 
+    /**
+     * returns the current state of the form
+     */
     getState() {
         return this.json();
     }

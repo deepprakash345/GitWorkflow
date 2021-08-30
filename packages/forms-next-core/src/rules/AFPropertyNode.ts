@@ -11,10 +11,13 @@ export class AFPropertyNode implements Node {
         if (data == null) {
             return null;
         }
-        if (':items' in data && !this.name.startsWith(':') && this.name in data[':items']) {
-            return data[':items'][this.name];
-        } else {
-            return getProperty(data, this.name, null);
+        if (typeof data === 'object') {
+            if (':items' in data && !this.name.startsWith(':') && this.name in data[':items']) {
+                return data[':items'][this.name];
+            } else {
+                return getProperty(data, this.name, null);
+            }
         }
+        return null;
     }
 }

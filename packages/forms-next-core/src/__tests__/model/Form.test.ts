@@ -1,20 +1,28 @@
 import {create, formWithRules} from '../collateral';
 import {createFormInstance} from '../../FormInstance';
-import {Change} from '../../controller/Actions';
+import {Change, Click, CustomEvent} from '../../controller/Actions';
 import Form from '../../Form';
+import {FieldJson} from '../../Types';
 
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('f1');
-    expect(f1[':name']).toEqual('f1');
+    const f1 = form.getElement('f1') as FieldJson;
+    expect(f1?.[':name']).toEqual('f1');
 });
 
 test('fetch a nested element from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('p1.p2.f2');
+    const f1 = form.getElement('p1.p2.f2') as FieldJson;
     expect(f1[':name']).toEqual('f2');
+});
+
+test('fetch $form from form', async () => {
+    const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
+    let form = await createFormInstance(formJson);
+    const f1 = form.getElement('$form');
+    expect(f1).toEqual(form.getState());
 });
 
 test('form with rules', async () => {
@@ -53,6 +61,14 @@ test('dispatching an event on unknown field throws exception', async () => {
     expect(() => {
         form.dispatch(new Change('a1', 'value1'));
     }).toThrow("invalid action change. a1 doesn't exist");
+});
+
+test('dispatching an event on a field without rule should not throw exception', async () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    const state = form.getState();
+    form.dispatch(new Click('f1', {}));
+    expect(state).toEqual(form.getState());
 });
 
 test('subscription gets invoked whenever the state changes', async () => {
@@ -255,7 +271,22 @@ test.todo('default values should also modify the data dom');/* () => {
     });
 });*/
 
-test.todo('rules should modify the data dom');/*, () => {
+test('rules should modify the data dom', async () => {
+    const formJson = create(['f', 'f', {
+        'f': {
+            ':dataRef': 'e',
+            ':rules': {
+                ':value': "'default value'"
+            }
+        }
+    }]);
+    let form = await createFormInstance(formJson);
+    expect(form.getState().data).toEqual({
+        e : 'default value'
+    });
+});
+
+test.todo('rules using default values should modify the data dom');/*, () => {
     const formJson = create([{
         'f': {
             ':dataRef': 'a.b.c.d',
@@ -332,3 +363,73 @@ const formJson = create([{
         boolean: true
     });
     */
+
+test.todo('object returned in event should be applied to the field properties');/*, async () => {
+    const formJson = create(['f', {
+        'f' : {
+            ':events' : {
+                ':click' : '{":value" : 2 + 3}'
+            }
+        }
+    }]);
+    let form = await createFormInstance(formJson);
+    form.dispatch(new Click('f2', null));
+    expect(form.getState()[':items'].f2[':value']).toEqual(5);
+});*/
+
+test.todo('object returned in custom event should be applied to the field properties');/*, async () => {
+    const formJson = create(['f', {
+        'f' : {
+            ':events' : {
+                'customClick' : '{":value" : 2 + 3}'
+            }
+        }
+    }]);
+    let form = await createFormInstance(formJson);
+    form.dispatch(new CustomEvent('customClick', null, 'f2'));
+    expect(form.getState()[':items'].f2[':value']).toEqual(5);
+});*/
+
+test('custom event should be executed for all the fields', async () => {
+    const formJson = create([{
+        'f' : {
+            ':events' : {
+                'customClick' : '{":value" : 1 + 3}'
+            }
+        }
+    }, {
+        'f' : {
+            ':events' : {
+                'customClick' : '{":value" : 2 + 3}'
+            }
+        }
+    }]);
+    let form = await createFormInstance(formJson);
+    form.dispatch(new CustomEvent('customClick', null));
+    expect(form.getState()[':items'].f1[':value']).toEqual(4);
+    expect(form.getState()[':items'].f2[':value']).toEqual(5);
+});
+
+test('custom event should pass the payload to the event', async () => {
+    const formJson = create([{
+        'f' : {
+            ':events' : {
+                'customClick1' : '{":value" : 1 + $event.payload.add}'
+            }
+        }
+    }, {
+        'f' : {
+            ':title' : 'myfield',
+            ':events' : {
+                'customClick2' : '{":value" : $event.target.title}'
+            }
+        }
+    }]);
+    let form = await createFormInstance(formJson);
+    form.dispatch(new CustomEvent('customClick1', {add: 3}));
+    expect(form.getState()[':items'].f1[':value']).toEqual(4);
+
+    form.dispatch(new CustomEvent('customClick2', null));
+    expect(form.getState()[':items'].f2[':value']).toEqual('myfield');
+
+});

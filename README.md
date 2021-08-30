@@ -38,17 +38,41 @@ the errors this time
 
 # Run the demo
 
-Navigate to `packages/forms-headless-demo` and run the command `npm run start`. You can execute `lerna run start` from the project's root directory as well
+Navigate to `packages/forms-headless-demo` and run the command `npm run start`. 
+You can execute `lerna run start` from the project's root directory as well
+
+If you get a react hook error, then trigger the setup.sh command at the root
+and run the `lerna run start` or `npm run start` command again
 
 # Integrate with AEM
 
-## Build API Package
+## Development Setup
 
-TBD
+We are trying to create a development setup which will contain all the configurations and packages needed inside AEM.
+Till that can be created, please follow the instructions in the following sections.
 
-## CORS - Cross Origin Resource Sharing
+## Build and Install packages
 
-This project relies on a CORS configuration running on the target AEM environment and assumes that the app is running on http://localhost:3000 in development mode.
+There are multiple packages to be build and installed. Follow the instructions provided in the Readme of the 
+repositories to install the packages
+
+1. Rest API - https://git.corp.adobe.com/livecycle/af2-rest-api
+2. WCM Core Components - https://github.com/adobe/aem-core-wcm-components
+3. Forms Core Components - https://git.corp.adobe.com/livecycle/aem-core-forms-components
+
+All of them can be built and installed using the following command
+```
+git clone <repo-url>
+cd <repo-folder>
+mvn clean install -PautoInstallPackage
+```
+
+## Setup Configuration
+
+### Enable CORS - Cross Origin Resource Sharing for the development server
+
+This project relies on a CORS configuration running on the target AEM environment and 
+assumes that the app is running on http://localhost:3000 in development mode.
 
 1. Navigate to the Configuration Manager (http://localhost:4502/system/console/configMgr)
 2. Open the configuration for "Adobe Granite Cross-Origin Resource Sharing Policy"
@@ -56,15 +80,14 @@ This project relies on a CORS configuration running on the target AEM environmen
     - Allowed Origins: http://localhost:3000
 
 
-## CSRF - Cross site request forgery
+### Disable CSRF - Cross site request forgery for demo server
 
 If you are getting errors related to CORS in the development environment, you might want to configure AEM as follows:
 
 1. Navigate to the Configuration Manager (http://localhost:4502/system/console/configMgr)
 2. Open the configuration for "Adobe Granite CSRF Filter"
 3. Edit with the following additional values:
-    - Whitelist a new user agent (or)
+    - Whitelist a new user agent **forms-headless-demo**
     - Remove POST from the filter method
     
 
-*Sample CORS config for Author environment*

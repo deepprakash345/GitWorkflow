@@ -1,5 +1,7 @@
-import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent} from './collateral/index';
-import {createFormInstance} from '../FormInstance';
+import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent, create} from './collateral/index';
+import {createFormInstance, fetchForm} from '../FormInstance';
+import {jsonString} from '../utils/JsonUtils';
+const nock = require('nock');
 
 test('single field form', async () => {
     const actual = await createFormInstance(oneFieldForm);
@@ -102,5 +104,69 @@ test('nested fields with non form component', async () => {
         }
     });
 });
+const API_HOST = 'https://api.aem-forms.com';
+test('Fetch a form from rest API should work', async () => {
+    const scope = nock(API_HOST)
+        .get('/my-test-form.model.json')
+        .reply(200, {
+            'model' : create(['f', 'f', 'f'])
+        });
+    const form = await fetchForm(`${API_HOST}/my-test-form`);
+    const formObj = JSON.parse(form);
+    expect(formObj).toEqual(create(['f', 'f', 'f']));
+});
 
-test.todo('Fetch a form from rest API should work');
+test('Fetch a form from wrong rest API should throw an error', async () => {
+    const scope = nock(API_HOST)
+        .get('/my-test-form.model.json')
+        .reply(404);
+    await expect(fetchForm(`${API_HOST}/my-test-form`)).rejects.toThrow('Not Found');
+});
+
+test('Form should be prefilled from data URL', async () => {
+    let json = create(['f', 'f', 'f']);
+    json[':metadata'] = {
+        ':dataUrl' : `${API_HOST}/my-test-data.json`
+    };
+    const data = {
+        'f1' : 'x',
+        'f2' : 'y',
+        'f3' : 'z'
+    };
+    nock(API_HOST)
+        .post('/my-test-data.json')
+        .reply(200, {
+            ':data' : jsonString(data)
+        });
+    const form = await createFormInstance(json);
+    expect(form.getState().data).toEqual(data);
+    expect((form.items.f1 as any)[':value']).toEqual(data['f1']);
+    expect((form.items.f2 as any)[':value']).toEqual(data['f2']);
+    expect((form.items.f3 as any)[':value']).toEqual(data['f3']);
+});
+
+test.todo('Form creation should not fail if prefill url returns no data');/*, async () => {
+    let json = create(['f', 'f', 'f']);
+    json[':metadata'] = {
+        'dataUrl' : `${API_HOST}/my-test-data.json`
+    };
+    nock(API_HOST)
+        .post('/my-test-data.json')
+        .reply(404);
+    const form = await createFormInstance(json);
+    expect(form.getState().data).toEqual({});
+});*/
+
+test.todo('Form creation should not fail if prefill url returns wrong data'); /*, async () => {
+    let json = create(['f', 'f', 'f']);
+    json[':metadata'] = {
+        'dataUrl' : `${API_HOST}/my-test-data.json`
+    };
+    nock(API_HOST)
+        .post('/my-test-data.json')
+        .reply(200, {
+            'some-key' : 'some-value'
+        });
+    const form = await createFormInstance(json);
+    expect(form.getState().data).toEqual({});
+});*/

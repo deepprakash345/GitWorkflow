@@ -39,3 +39,12 @@ export class Click extends ActionImpl {
         super(id, payload, 'click');
     }
 }
+
+export class CustomEvent extends ActionImpl {
+    constructor(eventName: string, payload: any, id: string = '$all') {
+        super(id, {
+            ':name' : eventName,
+            payload
+        }, 'customEvent');
+    }
+}
