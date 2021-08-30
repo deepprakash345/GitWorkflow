@@ -3,11 +3,13 @@ import {render, RenderResult} from '@testing-library/react';
 import TextField from '../../components/TextField';
 import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
 import userEvent from '@testing-library/user-event';
+import {FieldJson} from '@adobe/forms-next-core/lib';
 
 const field = {
     ':name': 'name',
     ':value': 'john doe',
-    ':title': 'name'
+    ':title': 'name',
+    ':visible' : true
 };
 
 export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null) => any
@@ -134,14 +136,27 @@ test('value entered by user in text field is set in model', async () => {
     // @ts-ignore
     userEvent.type(input, inputValue);
     const state = form.getState();
-    expect(state[':items'].name[':value']).toEqual(inputValue);
+    expect((state[':items'].name as FieldJson)[':value']).toEqual(inputValue);
     expect(input?.value).toEqual(inputValue);
 });
 
 test.todo('it should handle disable property');
 test.todo('it should handle richTextTitle property');
 test.todo('it should handle readOnly property');
-test.todo('it should handle visible property');
+test('it should handle visible property', async () => {
+    const f = {
+        ...field,
+        ':visible' : false
+    };
+
+    const component = <TextField {...f} />;
+    const form = await createForm(field);
+    const wrapper = Provider(form);
+    const {container} = render(component, {wrapper});
+    const input = container.querySelector('input');
+    expect(container.innerHTML).toEqual('');
+    expect(input).toBeNull();
+});
 test.todo('it should handle screenReaderText property');
 test.todo('it should handle minLength constraint');
 test.todo('it should handle maxLength constraint');

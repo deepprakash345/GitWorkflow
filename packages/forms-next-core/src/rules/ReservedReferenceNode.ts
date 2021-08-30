@@ -7,11 +7,14 @@ export default class AFReservedReferenceNode implements Node {
         // do nothing
     }
 
-    search(data: JSONValue, references?: { [p: string]: JSONValue }, event?: JSONValue): JSONValue {
+    search(data: JSONValue, context?: { [p: string]: JSONValue }): JSONValue {
         switch (this.name.toLowerCase()) {
             case 'form':
                 return this.form;
+            case 'event':
+                return context?.['$event'] || null;
         }
+        return null;
     }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {ContainerJson} from '@adobe/forms-next-core/lib';
 
 export const renderChildren = function<T extends ContainerJson>(props: T, mappings: any) {
@@ -16,5 +16,13 @@ export const renderChildren = function<T extends ContainerJson>(props: T, mappin
         });
     } else {
         return [];
+    }
+};
+
+export const renderIfVisible = function(props:any, Component: any)  {
+    if (props?.[':visible'] === true) {
+        return Component;
+    } else {
+        return null;
     }
 };

@@ -1,4 +1,4 @@
-import {renderChildren} from '../../react-mapper/utils';
+import {renderChildren, renderIfVisible} from '../../react-mapper/utils';
 import React from 'react';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 
@@ -85,4 +85,54 @@ test('render children with correct mappings', () => {
         }
     }, mappings);
     expect(res[0].toString()).toStrictEqual((<MyComponent {...item}/>).toString());
+});
+
+test('renderIfVisible should not return if visible property is false', () => {
+    const MyComponent = (props: any) => {
+        return <div>{props.value}</div>;
+    };
+    const val = renderIfVisible({':visible' : false}, <MyComponent value={10}/>);
+    expect(val).toEqual(null);
+});
+
+test('renderIfVisible should return if visible property is true', () => {
+    const MyComponent = (props: any) => {
+        return <div>{props.value}</div>;
+    };
+    const val = renderIfVisible({':visible' : true}, <MyComponent value={10}/>);
+    expect(val).toEqual(<MyComponent value={10}/>);
+});
+
+test('renderIfVisible should not return if visible property is unset', () => {
+    const MyComponent = (props: any) => {
+        return <div>{props.value}</div>;
+    };
+    const val = renderIfVisible({}, <MyComponent value={10}/>);
+    expect(val).toEqual(null);
+});
+
+test('renderIfVisible should not return if props is not an object', () => {
+    const MyComponent = (props: any) => {
+        return <div>{props.value}</div>;
+    };
+    let res = renderIfVisible('', <MyComponent value={10}/>);
+    expect(res).toBeNull();
+
+    res = renderIfVisible(undefined, <MyComponent value={10}/>);
+    expect(res).toBeNull();
+
+    res = renderIfVisible(null, <MyComponent value={10}/>);
+    expect(res).toBeNull();
+
+    res = renderIfVisible(true, <MyComponent value={10}/>);
+    expect(res).toBeNull();
+
+    res = renderIfVisible(false, <MyComponent value={10}/>);
+    expect(res).toBeNull();
+
+    res = renderIfVisible(1, <MyComponent value={10}/>);
+    expect(res).toBeNull();
+
+    res = renderIfVisible([], <MyComponent value={10}/>);
+    expect(res).toBeNull();
 });

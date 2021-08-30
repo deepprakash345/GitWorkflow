@@ -13,19 +13,19 @@ class Field extends Node<FieldJson> implements FieldModel {
   }
 
   get readOnly () {
-    return this.getP('readOnly', false);
+    return this.getP(':readOnly', false);
   }
 
   get enabled () {
-    return this.getP('enabled', true);
+    return this.getP(':enabled', true);
   }
 
   get 'default' () {
-    return this.getP('default', undefined);
+    return this.getP(':default', undefined);
   }
 
-  get presence () {
-    return this.getP('presence', true);
+  get visible () {
+    return this.getP(':visible', true);
   }
 
   get valid () {
@@ -38,7 +38,7 @@ class Field extends Node<FieldJson> implements FieldModel {
       ':readOnly': this.readOnly,
       ':enabled': this.enabled,
       ':default': this.default,
-      ':presence': this.presence,
+      ':visible': this.visible,
       ':valid': this.valid
       // eslint-disable-next-line no-unused-vars
     }), undefinedValueFilter);

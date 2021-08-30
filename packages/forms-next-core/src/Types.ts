@@ -49,7 +49,7 @@ interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
    description?: string
    readOnly?: boolean;
    enabled?: boolean;
-   presence?: boolean;
+   visible?: boolean;
    placeholder?: string;
    valid?: boolean
    constraints?: T;
@@ -64,11 +64,11 @@ export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
 }
 
 export interface FormMetaDataModel  {
-    version: string
-    grammarVersion: string
-    locale: string,
-    action: string,
-    dataUrl: string
+    readonly version: string
+    readonly grammarVersion: string
+    readonly locale: string,
+    readonly action: string,
+    readonly dataUrl: string
 }
 
 export type Items<T> = {[key:string]: T}
@@ -108,31 +108,32 @@ export type ConstraintsJson = {
     ':options'?: Option[];
 }
 
-export type FieldJson = {
+type BaseJson =  {
+    ':id'?: string;
     ':type'?: string;
-    ':name'?: string;
     ':dataRef'?: string;
-    ':id'?: string
     ':title'?: string
     ':hideTitle'?:boolean
     ':description'?: string
-    ':readOnly'?: boolean;
     ':enabled'?: boolean;
-    ':presence'?: boolean;
-    ':placeholder'?: string;
-    ':valid'?: boolean
+    ':visible'?: boolean;
+    ':name'?: string;
     ':constraints'?: ConstraintsJson;
     ':viewType'?: string
+}
+
+export type FieldJson = BaseJson & {
+    ':readOnly'?: boolean;
+    ':placeholder'?: string;
+    ':valid'?: boolean
     ':value'?: Primitives
     ':props'?: {
         [key: string] : any;
     }
 }
 
-export type ContainerJson = {
-    ':id'?: string;
-    ':type'?: string;
-    ':items': Items<FieldJson | ConstraintsJson>
+export type ContainerJson = BaseJson & {
+    ':items': Items<FieldJson | ContainerJson>
 }
 
 export type MetaDataJson = {
@@ -150,5 +151,6 @@ export type FieldsetJson = ContainerJson & {
 }
 
 export type FormJson = ContainerJson & {
-    ':metadata'?: MetaDataJson
+    ':metadata'?: MetaDataJson,
+    ':data'?: any
 }

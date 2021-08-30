@@ -1,13 +1,15 @@
 import React from 'react';
-import {render, RenderResult} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import RadioButtonGroup from '../../components/RadioButtonGroup';
 import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@adobe/forms-next-core/lib';
+import Form from '@adobe/forms-next-core/lib/Form';
 
 const field : FieldJson = {
     ':name': 'EmploymentStatus',
     ':value': true,
+    ':visible' : true,
     ':title': 'Are you Employed',
     ':constraints' : {
         ':options' : [{
@@ -192,18 +194,35 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
     }
 ];
 
-test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+type Result = Input & {
+    form?: Form,
+}
+
+const helper = async (field : any, useProvider = true) : Promise<Result> => {
     const component = <RadioButtonGroup {...field} />;
-    const checkExpectations = ({container}: RenderResult) => {
-        const labels = Array.from(container.querySelectorAll('label'));
-        const inputs = Array.from(container.querySelectorAll('input'));
-        const group = container.querySelector('[role="radiogroup"]');
-        expects({labels, inputs, group, container});
+    let container, form;
+    if (useProvider) {
+        form = await createForm(field);
+        const wrapper = Provider(form);
+        container = render(component, {wrapper}).container;
+    } else {
+        container = render(component).container;
+    }
+    const group = container.querySelector('[role="radiogroup"]');
+    const inputs = Array.from(container.querySelectorAll('input'));
+    const labels = Array.from(container.querySelectorAll('label'));
+    return {
+        inputs,
+        labels,
+        container,
+        group,
+        form
     };
-    checkExpectations(render(component));
-    const form = await createForm(field);
-    const wrapper = Provider(form);
-    checkExpectations(render(component, {wrapper}));
+};
+
+test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+    expects(await helper(field));
+    expects(await helper(field, true));
 });
 
 test('option selected by user is set in the model', async () => {
@@ -212,28 +231,34 @@ test('option selected by user is set in the model', async () => {
         ':id' : field[':name']
     };
     f[':value'] = undefined;
-    const component = <RadioButtonGroup {...f} />;
-    const form = await createForm(f);
-    const wrapper = Provider(form);
-    const {container} = render(component, {wrapper});
-    const inputs = Array.from(container.querySelectorAll('input'));
-    let state = form.getState();
-    expect(state[':items'].EmploymentStatus[':value']).toBeUndefined();
+    const {inputs, form} = await helper(f);
+    let state = form?.getState();
+    expect((state?.[':items'].EmploymentStatus as FieldJson)[':value']).toBeUndefined();
     userEvent.click(inputs[0]);
-    state = form.getState();
-    expect(state[':items'].EmploymentStatus[':value']).toEqual(true);
-    expect(inputs[0].checked).toEqual(true);
-    expect(inputs[1].checked).toEqual(false);
+    state = form?.getState();
+    expect((state?.[':items'].EmploymentStatus as FieldJson)[':value']).toEqual(true);
+    expect(inputs[0]?.checked).toEqual(true);
+    expect(inputs[1]?.checked).toEqual(false);
     userEvent.click(inputs[1]);
-    state = form.getState();
-    expect(state[':items'].EmploymentStatus[':value']).toEqual(false);
-    expect(inputs[0].checked).toEqual(false);
-    expect(inputs[1].checked).toEqual(true);
+    state = form?.getState();
+    expect((state?.[':items'].EmploymentStatus as FieldJson)[':value']).toEqual(false);
+    expect(inputs[0]?.checked).toEqual(false);
+    expect(inputs[1]?.checked).toEqual(true);
 });
+
+test('it should handle visible property', async () => {
+    const f = {
+        ...field,
+        ':visible' : false
+    };
+
+    const {inputs, container} = await helper(f);
+    expect(container?.innerHTML).toEqual('');
+    expect(inputs.length).toEqual(0);
+});
+
 
 test.todo('it should handle disable property');
 test.todo('it should handle richTextTitle property');
-test.todo('it should handle readOnly property');
-test.todo('it should handle visible property');
 test.todo('it should handle screenReaderText property');
 test.todo('it should dispatch click event to controller');

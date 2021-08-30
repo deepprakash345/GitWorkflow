@@ -3,6 +3,7 @@ import {FieldJson} from '@adobe/forms-next-core';
 import React from 'react';
 import { SpectrumRadioGroupProps } from '@react-types/radio';
 import {useRuleEngine} from '../react-mapper/hooks';
+import {renderIfVisible} from '../react-mapper/utils';
 
 const RadioGroupComponent = function (originalProps: FieldJson) {
     const [props, dispatchChange] = useRuleEngine(originalProps);
@@ -25,16 +26,11 @@ const RadioGroupComponent = function (originalProps: FieldJson) {
             necessityIndicator: 'icon'
         }),
         validationState : props[':valid'] === false ? 'invalid' : (props[':valid'] === undefined ? undefined : 'valid'),
-        children : options.map(radio)
+        children : options.map(radio),
+        onChange: dispatchChange
     };
 
-    const handleChange = (val: string) => {
-        dispatchChange(val);
-    };
-
-    return (
-        <RadioGroup {...radioGrpProps} onChange={handleChange}/>
-    );
+    return renderIfVisible(props, <RadioGroup {...radioGrpProps} />);
 };
 
 
