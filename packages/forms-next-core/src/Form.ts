@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FormMetaDataModel, FormModel, MetaDataJson} from './Types';
+import {FormJson, FormModel, MetaDataJson} from './Types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
@@ -9,7 +9,7 @@ import FunctionRuntime from './rules/FunctionRuntime';
 import FormMetaData from './FormMetaData';
 
 
-class Form extends Container implements FormModel, Controller {
+class Form extends Container<FormJson> implements FormModel, Controller {
 
     private nodeFactory = new AFNodeFactory()
     private functions = new FunctionRuntime(this).getFunctions();
@@ -67,8 +67,8 @@ class Form extends Container implements FormModel, Controller {
 
     private updateDataDom(elem: any) {
         const dataRef: string = elem[':dataRef'] || elem[':name'] || '';
-        let data = this._jsonModel.data || {};
-        this._jsonModel.data = data;
+        let data = this._jsonModel[':data'] || {};
+        this._jsonModel[':data'] = data;
         if (dataRef.length > 0) {
             let m = this.dataRefRegex.exec(dataRef);
             if (m == null) {
@@ -209,7 +209,7 @@ class Form extends Container implements FormModel, Controller {
      * @param [items] form element on which to apply the operation. The children of the element will also be included
      */
     setData(data: Object, items: any = this._jsonModel[':items']) {
-        this._jsonModel.data = Object.assign({}, data);
+        this._jsonModel[':data'] = Object.assign({}, data);
         Object.entries(items).forEach(([key, x]: [string, any]) => {
             if (':items' in x) {
                 this.setData(data, x[':items']);

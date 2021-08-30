@@ -12,10 +12,10 @@ export const createForm = async (field: any) => {
     return await createFormInstance(formJson);
 };
 
-export const Provider = (controller: Controller) => (props: any) => {
+export const Provider = (controller: Controller, mappings: any = {}) => (props: any) => {
     const c = {
         controller,
-        mappings: {}
+        mappings
     };
     const {children} = props;
     return <FormContext.Provider value={c}>{children}</FormContext.Provider>;

@@ -10,7 +10,7 @@ test('single field form', async () => {
         ':type': 'text',
         ':name': 'name',
         ':readOnly': false,
-        ':presence': true,
+        ':visible': true,
         ':enabled': true,
         ':id': 'name'
     });
@@ -23,7 +23,7 @@ test('single field form with number type', async () => {
         ':constraints' : { ':dataType': 'number' },
         ':name': 'name',
         ':readOnly': false,
-        ':presence': true,
+        ':visible': true,
         ':enabled': true,
         ':id': 'name'
     });
@@ -39,7 +39,7 @@ test('single field form with default', async () => {
         ':constraints' : { ':dataType': 'string' },
         ':name': 'name',
         ':readOnly': false,
-        ':presence': true,
+        ':visible': true,
         ':enabled': true,
         ':id': 'name',
         ':value': 'john doe'
@@ -53,7 +53,7 @@ test('form with panel', async () => {
         ':constraints' : { ':dataType': 'string' },
         ':name': 'name',
         ':readOnly': false,
-        ':presence': true,
+        ':visible': true,
         ':enabled': true,
         ':id': 'name'
     });
@@ -61,6 +61,7 @@ test('form with panel', async () => {
         ':constraints' : { ':dataType': 'object' },
         ':name': 'address',
         ':id': 'address',
+        ':visible' : true,
         ':count': 1,
         ':initialCount': 1,
         ':items': {
@@ -69,7 +70,7 @@ test('form with panel', async () => {
                 ':constraints' : { ':dataType': 'number' },
                 ':name': 'zip',
                 ':readOnly': false,
-                ':presence': true,
+                ':visible': true,
                 ':enabled': true,
                 ':id': 'address.zip'
             }
@@ -84,20 +85,21 @@ test('nested fields with non form component', async () => {
         ':constraints' : { ':dataType': 'string' },
         ':name': 'name',
         ':readOnly': false,
-        ':presence': true,
+        ':visible': true,
         ':enabled': true,
         ':id': 'name'
     });
     expect(actual.items.somekey).toEqual({
         ':count': 1,
         ':initialCount': 1,
+        ':visible' : true,
         ':items': {
             'zip': {
                 ':type': 'numericEdit',
                 ':constraints' : { ':dataType': 'number' },
                 ':name': 'zip',
                 ':readOnly': false,
-                ':presence': true,
+                ':visible': true,
                 ':enabled': true,
                 ':id': 'zip'
             }
@@ -139,7 +141,7 @@ test('Form should be prefilled from data URL', async () => {
             ':data' : jsonString(data)
         });
     const form = await createFormInstance(json);
-    expect(form.getState().data).toEqual(data);
+    expect(form.getState()[':data']).toEqual(data);
     expect((form.items.f1 as any)[':value']).toEqual(data['f1']);
     expect((form.items.f2 as any)[':value']).toEqual(data['f2']);
     expect((form.items.f3 as any)[':value']).toEqual(data['f3']);

@@ -31,7 +31,8 @@ test('form with rules', async () => {
     formJson[':items'].lastName[':value'] = 'doe';
     let form = await createFormInstance(formJson);
     form.executeAllRules();
-    expect(form.json()[':items'].fullName[':value']).toEqual('john doe');
+    let field = form.json()[':items'].fullName as FieldJson;
+    expect(field[':value']).toEqual('john doe');
 });
 
 const changeSpec = [
@@ -185,7 +186,7 @@ test('a value change updates the dataDom as well', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
-    expect(form.getState().data).toEqual({
+    expect(form.getState()[':data']).toEqual({
         'f1': 'value2'
     });
 });
@@ -198,7 +199,7 @@ test('a value change updates the nested dataDom as well', async () => {
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
-    expect(form.getState().data).toEqual({
+    expect(form.getState()[':data']).toEqual({
         a: {
             b: {
                 c: {
@@ -218,7 +219,7 @@ test('a value change updates the nested dataDom as well', async () => {
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'value2'));
-    expect(form.getState().data).toEqual({
+    expect(form.getState()[':data']).toEqual({
         a: {
             b: {
                 c: {
@@ -239,7 +240,7 @@ test('multiple field changes also keep the data modified', async () => {
     form.dispatch(new Change('f1', 'value2'));
     form.dispatch(new Change('f2', 'value2'));
     form.dispatch(new Change('f3', 'value2'));
-    expect(form.getState().data).toEqual({
+    expect(form.getState()[':data']).toEqual({
         a: {
             b: {
                 c: {
@@ -281,7 +282,7 @@ test('rules should modify the data dom', async () => {
         }
     }]);
     let form = await createFormInstance(formJson);
-    expect(form.getState().data).toEqual({
+    expect(form.getState()[':data']).toEqual({
         e : 'default value'
     });
 });
@@ -406,8 +407,10 @@ test('custom event should be executed for all the fields', async () => {
     }]);
     let form = await createFormInstance(formJson);
     form.dispatch(new CustomEvent('customClick', null));
-    expect(form.getState()[':items'].f1[':value']).toEqual(4);
-    expect(form.getState()[':items'].f2[':value']).toEqual(5);
+    let f: FieldJson = form.getState()[':items'].f1;
+    expect(f[':value']).toEqual(4);
+    f = form.getState()[':items'].f2;
+    expect(f[':value']).toEqual(5);
 });
 
 test('custom event should pass the payload to the event', async () => {
@@ -427,9 +430,11 @@ test('custom event should pass the payload to the event', async () => {
     }]);
     let form = await createFormInstance(formJson);
     form.dispatch(new CustomEvent('customClick1', {add: 3}));
-    expect(form.getState()[':items'].f1[':value']).toEqual(4);
+    let f: FieldJson = form.getState()[':items'].f1;
+    expect(f[':value']).toEqual(4);
 
     form.dispatch(new CustomEvent('customClick2', null));
-    expect(form.getState()[':items'].f2[':value']).toEqual('myfield');
+    f = form.getState()[':items'].f2;
+    expect(f[':value']).toEqual('myfield');
 
 });

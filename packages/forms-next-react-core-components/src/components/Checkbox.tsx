@@ -3,6 +3,7 @@ import {FieldJson} from '@adobe/forms-next-core';
 import {useRuleEngine} from '../react-mapper/hooks';
 import {SpectrumCheckboxProps} from '@react-types/checkbox';
 import React from 'react';
+import {renderIfVisible} from '../react-mapper/utils';
 
 /**
  * The checkbox component follows the convention that the first value of option is used as selected value
@@ -32,7 +33,7 @@ const CheckboxComponent = function (originalProps: FieldJson) {
     };
 
     return (
-        <Checkbox {...spectrumProps} onChange={handleChange}>{title}</Checkbox>
+        renderIfVisible(props, <Checkbox {...spectrumProps} onChange={handleChange}>{title}</Checkbox>)
     );
 };
 

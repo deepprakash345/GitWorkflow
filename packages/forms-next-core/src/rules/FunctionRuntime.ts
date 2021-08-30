@@ -45,7 +45,7 @@ export default class FunctionRuntime {
     }
 
     private getData () {
-        return this.form.getState().data;
+        return this.form.getState()[':data'];
     }
 
     async submit(success: string, error: string) {
