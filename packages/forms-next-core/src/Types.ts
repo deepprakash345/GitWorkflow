@@ -44,7 +44,7 @@ interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
    readonly type?: string;
    readonly name?: string;
    readonly dataRef?: string;
-   id?: string
+   id: string
    title?: string
    description?: string
    readOnly?: boolean;
@@ -74,7 +74,7 @@ export interface FormMetaDataModel  {
 export type Items<T> = {[key:string]: T}
 
 export interface ContainerModel<T> {
-    items: Items<T>
+    children: Items<T>
 }
 
 export interface FieldsetModel extends BaseModel<ContainerConstraints>, ContainerModel<FieldModel | FieldsetModel> {
@@ -109,7 +109,7 @@ export type ConstraintsJson = {
 }
 
 type BaseJson =  {
-    ':id'?: string;
+    ':id': string;
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string
@@ -126,6 +126,7 @@ export type FieldJson = BaseJson & {
     ':readOnly'?: boolean;
     ':placeholder'?: string;
     ':valid'?: boolean
+    ':default'?: Primitives
     ':value'?: Primitives
     ':props'?: {
         [key: string] : any;

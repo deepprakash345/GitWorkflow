@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@adobe/forms-next-core/lib';
 
 const field = {
+    ':id' : 'field',
     ':name': 'name',
     ':value': 'john doe',
     ':title': 'name',
@@ -123,11 +124,11 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
 test('value entered by user in text field is set in model', async () => {
     const f = {
         ...field,
-        ':id' : field[':name']
+        ':id' : undefined
     };
-    const component = <TextField {...f} />;
-    const form = await createForm(field);
+    const form = await createForm(f);
     const wrapper = Provider(form);
+    const component = <TextField {...form.getState()[':items'].name} />;
     const {container} = render(component, {wrapper});
     const input = container.querySelector('input');
     // @ts-ignore

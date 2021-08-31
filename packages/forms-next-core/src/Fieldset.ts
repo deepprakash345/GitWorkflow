@@ -1,7 +1,19 @@
 import Container from './Container';
-import {FieldsetJson, FieldsetModel} from './Types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './Types';
+import Field from './Field';
 
-class Fieldset extends Container<FieldsetJson> implements FieldsetModel  {
+
+export const createChild = (child: FieldsetJson | FieldJson) => {
+  let retVal: Fieldset | Field;
+  if (':items' in child) {
+    retVal = new Fieldset(child as FieldsetJson);
+  } else {
+    retVal = new Field(child as FieldJson);
+  }
+  return retVal;
+};
+
+export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   get count () {
     return this.getP('count', 1);
   }
@@ -21,6 +33,8 @@ class Fieldset extends Container<FieldsetJson> implements FieldsetModel  {
       ':visible': this.visible
     });
   }
-}
 
-export default Fieldset;
+  protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
+    return createChild(child);
+  }
+}

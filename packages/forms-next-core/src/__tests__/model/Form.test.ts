@@ -41,7 +41,7 @@ const changeSpec = [
         'items': ['f', 'f', 'f'],
         'event': new Change('f1', 'value1'),
         'expected': (form: Form) => {
-            expect(form.items.f1).toEqual(expect.objectContaining({
+            expect(form.getState()[':items'].f1).toEqual(expect.objectContaining({
                 ':name': 'f1',
                 ':value': 'value1'
             }));

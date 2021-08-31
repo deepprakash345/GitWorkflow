@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FormJson, FormModel, MetaDataJson} from './Types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, Items, MetaDataJson} from './Types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
@@ -7,6 +7,7 @@ import {getOrElse, mergeDeep} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
 import FunctionRuntime from './rules/FunctionRuntime';
 import FormMetaData from './FormMetaData';
+import {createChild} from './Fieldset';
 
 
 class Form extends Container<FormJson> implements FormModel, Controller {
@@ -18,11 +19,20 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         [key: string]: callbackFn[]
     } = {}
 
+    constructor(n: FormJson) {
+        super(n);
+        this._jsonModel[':id'] = '$form';
+    }
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
     get metaData(): FormMetaData {
         let metaData = this.getP<MetaDataJson>('metadata', {});
         return new FormMetaData(metaData);
+    }
+
+    //todo: duplicate code alert (Fieldset#_createChild)
+    protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
+        return createChild(child);
     }
 
     public getElement(id: string) {

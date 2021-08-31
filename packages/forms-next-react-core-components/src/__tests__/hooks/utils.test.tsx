@@ -2,53 +2,48 @@ import {renderChildren, renderIfVisible} from '../../react-mapper/utils';
 import React from 'react';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 
+const item = {
+    ':id' : 'id',
+    ':type' : 'someType'
+};
+
+const parent = {
+    ':id' : 'parentid',
+    ':items' : {
+        'x' : item
+    }
+};
 
 test('render children with no mappings returns undefined elements', () => {
-    const item = {
-        ':type' : 'someType'
-    };
-    const res = renderChildren({
-        ':items' : {
-            'x' : item
-        }
-    }, undefined);
+
+    const res = renderChildren(parent, undefined);
     expect(res[0]).toEqual(<div><h4>Undefined Element</h4><pre>{jsonString(item)}</pre></div>);
 });
 
 test('render children with empty mappings returns undefined elements', () => {
-    const item = {
-        ':type' : 'someType'
-    };
-    const res = renderChildren({
-        ':items' : {
-            x : item
-        }
-    }, {});
+    const res = renderChildren(parent, {});
     expect(res[0]).toEqual(<div><h4>Undefined Element</h4><pre>{jsonString(item)}</pre></div>);
 });
 
 test('render children with no children', () => {
-    const item = {
-        ':type' : 'someType'
-    };
-    const res = renderChildren({
+    const p = {
+        ...parent,
         ':items' : {}
-    }, {});
+    };
+    const res = renderChildren(p, {});
     expect(res.length).toEqual(0);
 });
 
 test.each([123, '', true, [123]])('render children with items as %p', (items) => {
-    const res = renderChildren({
+    const p = {
+        ...parent,
         ':items' : items as unknown as any
-    }, {});
+    };
+    const res = renderChildren(p, {});
     expect(res.length).toEqual(0);
 });
 
 test('render children with missing mapping returns undefined element', () => {
-    const item = {
-        ':type' : 'someType'
-    };
-
     const MyComponent = (props: any) => {
         return <div>{props.value}</div>;
     };
@@ -57,20 +52,23 @@ test('render children with missing mapping returns undefined element', () => {
         'otherType' : MyComponent
     };
 
-    const res = renderChildren({
-        ':items' : {
-            x : item
-        }
-    }, mappings);
+    const res = renderChildren(parent, mappings);
     expect(res[0]).toEqual(<div><h4>Undefined Element</h4><pre>{jsonString(item)}</pre></div>);
 });
 
 test('render children with correct mappings', () => {
     const item = {
+        ':id' : 'id',
         ':type' : 'someType',
-        'value' : 'someValue'
+        'value' : 'some value'
     };
-
+    const p = {
+        ...parent,
+        ':items' : {
+            ...parent[':items'],
+            x : item
+        }
+    };
     const MyComponent = (props: any) => {
         return <div>{props.value}</div>;
     };
@@ -79,11 +77,7 @@ test('render children with correct mappings', () => {
         'someType' : MyComponent
     };
 
-    const res = renderChildren({
-        ':items' : {
-            x : item
-        }
-    }, mappings);
+    const res = renderChildren(parent, mappings);
     expect(res[0].toString()).toStrictEqual((<MyComponent {...item}/>).toString());
 });
 

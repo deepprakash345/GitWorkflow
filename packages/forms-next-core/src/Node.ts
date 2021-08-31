@@ -1,5 +1,6 @@
 import {getProperty} from './utils/JsonUtils';
 
+
 class Node<T> {
     protected _jsonModel: T
 

@@ -5,14 +5,17 @@ import {createForm, Provider} from '../utils';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 
 const emptyPanel = {
+    ':id' : 'emptypanel',
     ':visible' : true,
     ':items' : {}
 };
 
 const panelWithField = {
+    ':id' : 'panelWithField',
     ':visible' : true,
     ':items' : {
         'f1' : {
+            ':id' : 'f1',
             ':type' : 'text-field',
             ':title' : 'name',
             ':visible' : true
