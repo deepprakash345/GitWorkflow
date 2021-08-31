@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import './App.css';
 import {Grid, View, TextField, TextArea, Button, Flex} from '@adobe/react-spectrum'
-import json from './samples/contact-us.json';
+import json from './samples/statement-financial-position.json';
 import {fetchForm, FormModel, FormJson} from "@adobe/forms-next-core"
 import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
 import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
@@ -53,7 +53,6 @@ function App() {
             areas={['header  header', 'sidebar content']}
             columns={['1fr', '3fr']}
             rows={['size-1000', 'auto']}
-            height="100%"
             marginX="size-400"
             marginTop="size-400"
             gap="size-500">
