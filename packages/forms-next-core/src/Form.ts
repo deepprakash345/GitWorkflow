@@ -230,16 +230,17 @@ class Form extends Container<FormJson> implements FormModel, Controller {
      */
     executeAllRules(items: any = this._jsonModel[':items']) {
         Object.entries(items).forEach(([key, x]: [string, any]) => {
-            if (':items' in x) {
-                this.executeAllRules(x[':items']);
-            } else if (':rules' in x) {
-                //todo : handle the case for panels.
+            if (':rules' in x) {
                 let updates = this._executeRulesForElement(x, x[':rules']);
+                //todo: handle the case where updates are same as the original object
                 items[key] = mergeDeep(x, updates);
                 if (':value' in updates) {
                     this.updateDataDom(items[key]);
                 }
                 this.trigger(x[':id'], items[key]);
+            }
+            if (':items' in x) {
+                this.executeAllRules(x[':items']);
             }
         });
     }
