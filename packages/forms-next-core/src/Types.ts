@@ -90,7 +90,7 @@ export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
     json: () => any
 }
 
-type Option = {
+export type Option = {
     ':value'?: Primitives
     ':text'?: string
 }

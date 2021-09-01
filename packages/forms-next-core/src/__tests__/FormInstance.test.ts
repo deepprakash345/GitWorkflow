@@ -162,10 +162,10 @@ test.todo('Form creation should not fail if prefill url returns no data');/*, as
     expect(form.getState().data).toEqual({});
 });*/
 
-test.todo('Form creation should not fail if prefill url returns wrong data'); /*, async () => {
+test('Form creation should not fail if prefill url returns wrong data', async () => {
     let json = create(['f', 'f', 'f']);
     json[':metadata'] = {
-        'dataUrl' : `${API_HOST}/my-test-data.json`
+        ':dataUrl' : `${API_HOST}/my-test-data.json`
     };
     nock(API_HOST)
         .post('/my-test-data.json')
@@ -173,5 +173,5 @@ test.todo('Form creation should not fail if prefill url returns wrong data'); /*
             'some-key' : 'some-value'
         });
     const form = await createFormInstance(json);
-    expect(form.getState().data).toEqual({});
-});*/
+    expect(form.getState()[':data']).toEqual({});
+});

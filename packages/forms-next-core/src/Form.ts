@@ -23,6 +23,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
     constructor(n: FormJson) {
         super(n);
         this._jsonModel[':id'] = '$form';
+        this._jsonModel[':data'] = {};
     }
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
@@ -56,7 +57,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
             }
             switch (action.type) {
                 case 'change':
-                    this.handleChange(elem, action.payload);
+                    this.handleChange(elem, action.payload ? action.payload.toString() : '');
                     break;
                 case 'click':
                     this.handleClick(elem);
@@ -94,7 +95,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         return {
             valid: res.valid,
             constraint,
-            value
+            value: res.value
         };
     }
 
@@ -132,7 +133,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         elem[':value'] = value;
         if (!valid) {
             console.log(`${constraint} validation failed for ${elem[':id']} with value ${value}`);
-            elem['errorMessage'] = elem[':constraintMessages']?.[constraint] || 'There is an error in the field';
+            elem[':errorMessage'] = elem[':constraintMessages']?.[constraint] || 'There is an error in the field';
             this.trigger(elem[':id'], elem);
         } else {
             elem[':value'] = value;

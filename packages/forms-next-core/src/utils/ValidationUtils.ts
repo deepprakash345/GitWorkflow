@@ -1,10 +1,20 @@
+import {Option} from '../Types';
 
-const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
+const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 
 type ValidationResult = {
     valid: boolean,
     value: any
 }
+const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const daysInMonth = (leapYear: boolean, month: number) => {
+    if (leapYear && month == 2) return 29;
+    return days[month - 1];
+};
+
+const isLeapYear = (year: number) => {
+    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+};
 
 export const Constraints = {
     dataType : (constraint: string, inputVal: string): ValidationResult => {
@@ -27,8 +37,8 @@ export const Constraints = {
                 value = valid ? (inputVal === 'true') : inputVal;
                 break;
             case 'integer':
-                value = parseInt(inputVal);
-                valid = !isNaN(value);
+                value = parseFloat(inputVal);
+                valid = !isNaN(value) && Math.round(value) === value;
                 if (!valid) {
                     console.log('dataType constraint evaluation failed. Expected Integer. Received ' + inputVal);
                     value = inputVal;
@@ -48,7 +58,15 @@ export const Constraints = {
         switch(constraint) {
             case 'date':
                 res = dateRegex.exec(input.trim());
-                valid = res !== null && res.length === 4;
+                if (res != null) {
+                    const [match, year, month, date] = res;
+                    const [nMonth, nDate] = [+month, +date];
+                    let leapYear = isLeapYear(+year);
+                    valid = (nMonth >= 1 && nMonth <= 12) &&
+                        (nDate >= 1 && nDate <= daysInMonth(leapYear, nMonth));
+                } else {
+                    valid = false;
+                }
                 break;
         }
         return {valid, value};
@@ -65,11 +83,11 @@ export const Constraints = {
     },
 
     minLength : (constraint: number, value: string) => {
-        return [Constraints.minimum(constraint, value.length).valid, value];
+        return {...Constraints.minimum(constraint, value.length), value};
     },
 
     maxLength : (constraint: number, value: string) => {
-        return [Constraints.maximum(constraint, value.length).valid, value];
+        return {...Constraints.maximum(constraint, value.length), value};
     },
 
     pattern : (constraint: RegExp, value: string) => {
@@ -81,8 +99,11 @@ export const Constraints = {
         return {valid, value};
     },
 
-    options : (constraint: any, value: string) => {
-        return {valid: true, value};
+    options : (constraint: Option[], value: any) => {
+        return {
+            valid: constraint.map(x => x[':value']).indexOf(value) > -1,
+            value
+        };
     }
 
 };
