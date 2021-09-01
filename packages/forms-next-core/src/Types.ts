@@ -44,7 +44,7 @@ interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
    readonly type?: string;
    readonly name?: string;
    readonly dataRef?: string;
-   id?: string
+   id: string
    title?: string
    description?: string
    readOnly?: boolean;
@@ -74,7 +74,7 @@ export interface FormMetaDataModel  {
 export type Items<T> = {[key:string]: T}
 
 export interface ContainerModel<T> {
-    items: Items<T>
+    children: Items<T>
 }
 
 export interface FieldsetModel extends BaseModel<ContainerConstraints>, ContainerModel<FieldModel | FieldsetModel> {
@@ -90,13 +90,15 @@ export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
     json: () => any
 }
 
-type Option = {
+export type Option = {
     ':value'?: Primitives
     ':text'?: string
 }
 
-export type ConstraintsJson = {
+type ConstraintsJson = {
     ':required'?: boolean;
+    ':pattern'?:string,
+    ':format'?: string
     ':expression'?: string;
     ':minLength'?: number;
     ':maxLength'?: number;
@@ -106,10 +108,25 @@ export type ConstraintsJson = {
     ':fracDigits'?: number;
     ':leadDigits'?: number;
     ':options'?: Option[];
+    ':enforceOptions' ?: boolean
 }
 
+type ConstraintsMessages = {
+    ':required'?: string;
+    ':expression'?: string;
+    ':minLength'?: string;
+    ':maxLength'?: string;
+    ':multiline'?: string;
+    ':minimum'?: string;
+    ':maximum'?: string;
+    ':fracDigits'?: string;
+    ':leadDigits'?: string;
+    ':options'?: string;
+}
+
+
 type BaseJson =  {
-    ':id'?: string;
+    ':id': string;
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string
@@ -119,13 +136,16 @@ type BaseJson =  {
     ':visible'?: boolean;
     ':name'?: string;
     ':constraints'?: ConstraintsJson;
+    ':constraintMessages'?: ConstraintsMessages;
     ':viewType'?: string
+    ':errorMessage'?: string
 }
 
 export type FieldJson = BaseJson & {
     ':readOnly'?: boolean;
     ':placeholder'?: string;
     ':valid'?: boolean
+    ':default'?: Primitives
     ':value'?: Primitives
     ':props'?: {
         [key: string] : any;

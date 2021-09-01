@@ -32,6 +32,10 @@ class Field extends Node<FieldJson> implements FieldModel {
     return undefined;
   }
 
+  get id() {
+    return this._jsonModel[':id'];
+  }
+
   public json (): FieldJson {
     return filterProps(Object.assign({}, super.json(), {
       ':value': this.value,
@@ -39,7 +43,8 @@ class Field extends Node<FieldJson> implements FieldModel {
       ':enabled': this.enabled,
       ':default': this.default,
       ':visible': this.visible,
-      ':valid': this.valid
+      ':valid': this.valid,
+      ':id' : this.id
       // eslint-disable-next-line no-unused-vars
     }), undefinedValueFilter);
   }

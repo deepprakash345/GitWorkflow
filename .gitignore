@@ -189,3 +189,5 @@ $RECYCLE.BIN/
 
 #Temporary
 lib/
+tmp-dist/
+dist/

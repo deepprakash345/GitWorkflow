@@ -7,6 +7,7 @@ import {FieldJson} from '@adobe/forms-next-core/lib';
 import Form from '@adobe/forms-next-core/lib/Form';
 
 const field : FieldJson = {
+    ':id' : 'field',
     ':name': 'EmploymentStatus',
     ':value': true,
     ':visible' : true,

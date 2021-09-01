@@ -4,6 +4,7 @@ import React from 'react';
 import { SpectrumRadioGroupProps } from '@react-types/radio';
 import {useRuleEngine} from '../react-mapper/hooks';
 import {renderIfVisible} from '../react-mapper/utils';
+import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 
 const RadioGroupComponent = function (originalProps: FieldJson) {
     const [props, dispatchChange] = useRuleEngine(originalProps);
@@ -14,7 +15,7 @@ const RadioGroupComponent = function (originalProps: FieldJson) {
     const radio = (option : any) => {
         const value = option[':value'];
         const text = option[':text'] || '';
-        return <Radio value={value}>{text}</Radio>;
+        return <Radio key={JSON.stringify(option)} value={value}>{text}</Radio>;
     };
 
     const radioGrpProps:SpectrumRadioGroupProps = {

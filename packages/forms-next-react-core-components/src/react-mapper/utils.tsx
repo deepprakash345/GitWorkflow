@@ -12,7 +12,7 @@ export const renderChildren = function<T extends ContainerJson>(props: T, mappin
                     <pre>{JSON.stringify(child, null, 2)}</pre>
                 </div>;
             }
-            return <Comp key={JSON.stringify(child, null, 2)} {...child} />;
+            return <Comp key={child[':id']} {...child} />;
         });
     } else {
         return [];

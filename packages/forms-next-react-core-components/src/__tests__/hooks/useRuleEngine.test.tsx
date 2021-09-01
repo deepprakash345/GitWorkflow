@@ -17,8 +17,8 @@ test('should return the original value', () => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({}), {wrapper});
-    expect(result.current[0]).toEqual({});
+    const {result} = renderHook(() => useRuleEngine({':id' : 'something'}), {wrapper});
+    expect(result.current[0]).toEqual({':id' : 'something'});
 });
 
 test('should subscribe to the form', () => {

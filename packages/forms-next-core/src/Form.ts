@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FormJson, FormModel, MetaDataJson} from './Types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, Items, MetaDataJson} from './Types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
@@ -7,6 +7,8 @@ import {getOrElse, mergeDeep} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
 import FunctionRuntime from './rules/FunctionRuntime';
 import FormMetaData from './FormMetaData';
+import {createChild} from './Fieldset';
+import {Constraints} from './utils/ValidationUtils';
 
 
 class Form extends Container<FormJson> implements FormModel, Controller {
@@ -18,11 +20,21 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         [key: string]: callbackFn[]
     } = {}
 
+    constructor(n: FormJson) {
+        super(n);
+        this._jsonModel[':id'] = '$form';
+        this._jsonModel[':data'] = {};
+    }
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
     get metaData(): FormMetaData {
         let metaData = this.getP<MetaDataJson>('metadata', {});
         return new FormMetaData(metaData);
+    }
+
+    //todo: duplicate code alert (Fieldset#_createChild)
+    protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
+        return createChild(child);
     }
 
     public getElement(id: string) {
@@ -45,7 +57,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
             }
             switch (action.type) {
                 case 'change':
-                    this.handleChange(elem, action.payload);
+                    this.handleChange(elem, action.payload ? action.payload.toString() : '');
                     break;
                 case 'click':
                     this.handleClick(elem);
@@ -61,8 +73,30 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         }
     }
 
-    private evaluateConstraints(elem: any) {
-        return true;
+    private evaluateConstraints(elem: any, value: string) {
+        let constraint = ':dataType';
+        const constraints = elem[':constraints'] || {};
+        const res = Constraints.dataType(constraints[':dataType'] || 'string', value);
+        if (res.valid) {
+            const invalidConstraint = Object.entries(constraints).find(([key, restriction]) => {
+                let x = key.replace(/^:/, '');
+                if (x in Constraints && x !== 'dataType' && typeof (Constraints as any)[x] === 'function') {
+                    return !((Constraints as any)[x](restriction, res.value).valid);
+                } else if (x !== 'dataType') {
+                    console.error('invalid constraint ' + key);
+                    return false;
+                }
+            });
+            if (invalidConstraint != null) {
+                res.valid = false;
+                constraint = invalidConstraint[0];
+            }
+        }
+        return {
+            valid: res.valid,
+            constraint,
+            value: res.value
+        };
     }
 
     private updateDataDom(elem: any) {
@@ -92,14 +126,22 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         }
     }
 
-    private handleChange(elem: any, value: string) {
-        elem[':value'] = value;
-        let valid = this.evaluateConstraints(elem);
-        //todo : make it conditional based on valid flag
-        this.updateDataDom(elem);
+    private handleChange(elem: any, input: string) {
+        //todo : execute change event
+        let {valid, value, constraint} = this.evaluateConstraints(elem, input);
         elem[':valid'] = valid;
-        this.executeAllRules();
-        this.trigger(elem[':id'], elem);
+        elem[':value'] = value;
+        if (!valid) {
+            console.log(`${constraint} validation failed for ${elem[':id']} with value ${value}`);
+            elem[':errorMessage'] = elem[':constraintMessages']?.[constraint] || 'There is an error in the field';
+            this.trigger(elem[':id'], elem);
+        } else {
+            elem[':value'] = value;
+            //todo : make it conditional based on valid flag
+            this.updateDataDom(elem);
+            this.executeAllRules();
+            this.trigger(elem[':id'], elem);
+        }
     }
 
     private handleClick(elem: any) {

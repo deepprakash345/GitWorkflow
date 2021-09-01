@@ -22,7 +22,7 @@
     },
     "panel" : {
       ":type": "fd/af/components/panel",
-      ":id" : "panel",
+      ":name" : "panel",
       ":rules" : {
         ":visible" : "$form.employment_status.value == true"
       },
@@ -76,7 +76,7 @@
         "employment_start_date": {
           ":name": "employment_start_date",
           ":type": "fd/af/components/guidedatefield",
-          ":title":"Employment Title",
+          ":title":"Employment Start Date",
           ":rules" : {
             ":required" : "$form.employment_status.value == true"
           },
@@ -113,8 +113,9 @@
         ":type": "fd/af/components/guidetextbox",
         ":title":"On what date did your last period of employment end?",
         ":dataRef": "last_employment_end_date",
-        "constraints" : {
-            ":dataType": "date",
+        ":constraints" : {
+            ":dataType": "string",
+            ":format" : "date",
             ":required": true
         }
     },
@@ -139,7 +140,7 @@
     },
     "self_employment_details" : {
       ":type": "fd/af/components/panel",
-      ":id" : "self_employment_details",
+      ":name" : "self_employment_details",
       ":rules" : {
         ":visible" : "$form.self_employed.value == true"
       },
@@ -193,6 +194,15 @@
             ":required": "The field is required"
           }
         }
+      }
+    },
+    "submit": {
+      ":name": "submit",
+      ":type": "fd/af/components/guidebutton",
+      ":title": "Submit",
+      ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      ":events": {
+        ":click": "dispatch_event($form, 'submit')"
       }
     }
   },
