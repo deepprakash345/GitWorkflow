@@ -27,7 +27,7 @@ function App() {
     const aceEditor = useRef(null);
     const createForm = async (json: any) => {
         const controller = await createFormInstance(json)
-        setForm({json, controller})
+        setForm({json: controller.getState(), controller})
     }
     const fetchAF = async () => {
         const data = await fetchForm(value);

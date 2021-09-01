@@ -22,7 +22,7 @@
     },
     "panel" : {
       ":type": "fd/af/components/panel",
-      ":id" : "panel",
+      ":name" : "panel",
       ":rules" : {
         ":visible" : "$form.employment_status.value == true"
       },
@@ -139,7 +139,7 @@
     },
     "self_employment_details" : {
       ":type": "fd/af/components/panel",
-      ":id" : "self_employment_details",
+      ":name" : "self_employment_details",
       ":rules" : {
         ":visible" : "$form.self_employed.value == true"
       },
@@ -193,6 +193,15 @@
             ":required": "The field is required"
           }
         }
+      }
+    },
+    "submit": {
+      ":name": "submit",
+      ":type": "fd/af/components/guidebutton",
+      ":title": "Submit",
+      ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      ":events": {
+        ":click": "dispatch_event($form, 'submit')"
       }
     }
   },
