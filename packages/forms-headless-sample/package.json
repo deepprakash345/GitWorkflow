@@ -2,6 +2,7 @@
   "name": "forms-headless-sample",
   "version": "0.1.4",
   "private": true,
+  "homepage": "/pages/vdua/AF2-web-runtime/dist",
   "dependencies": {
     "@adobe/forms-next-core": "^0.1.6",
     "@adobe/forms-next-react-core-components": "^0.1.6",
