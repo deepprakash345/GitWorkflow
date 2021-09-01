@@ -48,7 +48,7 @@ and run the `lerna run start` or `npm run start` command again
 
 ## Development Setup
 
-We are trying to create a development setup which will contain all the configurations and packages needed inside AEM.
+Package containing all the configurations and packages needed inside AEM can be found here, https://artifactory.corp.adobe.com/native/maven-aemforms-dev-snapshot-local/com/adobe/aem/af2-enablement/0.0.1-SNAPSHOT/af2-enablement-0.0.1-20210901.095835-1.zip
 Till that can be created, please follow the instructions in the following sections.
 
 ## Build and Install packages
