@@ -76,7 +76,7 @@
         "employment_start_date": {
           ":name": "employment_start_date",
           ":type": "fd/af/components/guidedatefield",
-          ":title":"Employment Title",
+          ":title":"Employment Start Date",
           ":rules" : {
             ":required" : "$form.employment_status.value == true"
           },
@@ -113,8 +113,9 @@
         ":type": "fd/af/components/guidetextbox",
         ":title":"On what date did your last period of employment end?",
         ":dataRef": "last_employment_end_date",
-        "constraints" : {
-            ":dataType": "date",
+        ":constraints" : {
+            ":dataType": "string",
+            ":format" : "date",
             ":required": true
         }
     },

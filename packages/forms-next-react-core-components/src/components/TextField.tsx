@@ -18,6 +18,9 @@ const TextFieldComponent = function (originalProps: FieldJson) {
             necessityIndicator: 'icon'
         }),
         validationState: props[':valid'] === false ? 'invalid' : (props[':valid'] === undefined ? undefined : 'valid'),
+        minLength: props[':constraints']?.[':minLength'],
+        maxLength: props[':constraints']?.[':maxLength'],
+        pattern: props[':constraints']?.[':pattern'],
         onChange : dispatchChange
     };
 

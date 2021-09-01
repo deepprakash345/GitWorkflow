@@ -95,8 +95,10 @@ type Option = {
     ':text'?: string
 }
 
-export type ConstraintsJson = {
+type ConstraintsJson = {
     ':required'?: boolean;
+    ':pattern'?:string,
+    ':format'?: string
     ':expression'?: string;
     ':minLength'?: number;
     ':maxLength'?: number;
@@ -106,7 +108,22 @@ export type ConstraintsJson = {
     ':fracDigits'?: number;
     ':leadDigits'?: number;
     ':options'?: Option[];
+    ':enforceOptions' ?: boolean
 }
+
+type ConstraintsMessages = {
+    ':required'?: string;
+    ':expression'?: string;
+    ':minLength'?: string;
+    ':maxLength'?: string;
+    ':multiline'?: string;
+    ':minimum'?: string;
+    ':maximum'?: string;
+    ':fracDigits'?: string;
+    ':leadDigits'?: string;
+    ':options'?: string;
+}
+
 
 type BaseJson =  {
     ':id': string;
@@ -119,7 +136,9 @@ type BaseJson =  {
     ':visible'?: boolean;
     ':name'?: string;
     ':constraints'?: ConstraintsJson;
+    ':constraintMessages'?: ConstraintsMessages;
     ':viewType'?: string
+    ':errorMessage'?: string
 }
 
 export type FieldJson = BaseJson & {
