@@ -1,5 +1,5 @@
 import {Node} from '@adobe/forms-next-expression-parser/dist/node';
-import {JSONValue} from '@adobe/forms-next-expression-parser/dist/types';
+import {Json} from '@adobe/forms-next-expression-parser/dist/types';
 
 export default class AFReservedReferenceNode implements Node {
 
@@ -7,7 +7,7 @@ export default class AFReservedReferenceNode implements Node {
         // do nothing
     }
 
-    search(data: JSONValue, context?: { [p: string]: JSONValue }): JSONValue {
+    search(data: Json, context?: { [p: string]: Json }): Json {
         switch (this.name.toLowerCase()) {
             case 'form':
                 return this.form;
