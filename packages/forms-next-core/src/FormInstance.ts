@@ -23,8 +23,12 @@ export const createFormInstance = async (formModel: any, options?: any): Promise
 
 declare var fetch: any;
 
-export const fetchForm = (url: string) : Promise<string> =>  {
-  return request(`${url}.model.json`).then((formObj : any) => {
+export const fetchForm = (url: string, headers: any = {}) : Promise<string> =>  {
+    let headerObj = new Headers();
+    Object.entries(headers).forEach(([key, value]) => {
+        headerObj.append(key, value as string);
+    });
+  return request(`${url}`, null, headers).then((formObj : any) => {
           if ('model' in formObj) {
               const {model} = formObj;
               formObj = model;
@@ -35,16 +39,19 @@ export const fetchForm = (url: string) : Promise<string> =>  {
 
 export type RequestOptions = {
     contentType ?: string,
-    method: 'POST' | 'GET'
+    method?: 'POST' | 'GET',
+    headers?: any,
+    mode?: string
 }
 
 const defaultRequestOptions: RequestOptions = {
     method: 'GET'
 };
 
-export const request = (url: string, data: any = null, options: RequestOptions = defaultRequestOptions) => {
+export const request = (url: string, data: any = null, options: RequestOptions = {}) => {
+    const opts = {...defaultRequestOptions, ...options};
     return fetch(url, {
-        ...options,
+        ...opts,
         body: data
     }).then((response: Response) => {
         if (!response.ok) {
