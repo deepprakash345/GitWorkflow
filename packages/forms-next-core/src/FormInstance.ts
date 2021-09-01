@@ -23,31 +23,6 @@ export const createFormInstance = async (formModel: any, options?: any): Promise
 
 declare var fetch: any;
 
-export const fetchForm = (url: string, headers: any = {}) : Promise<string> =>  {
-    let headerObj = new Headers();
-    Object.entries(headers).forEach(([key, value]) => {
-        headerObj.append(key, value as string);
-    });
-  return request(`${url}`, null, headers).then((formObj : any) => {
-          if ('model' in formObj) {
-              const {model} = formObj;
-              formObj = model;
-          }
-          return jsonString(formObj);
-    });
-};
-
-export type RequestOptions = {
-    contentType ?: string,
-    method?: 'POST' | 'GET',
-    headers?: any,
-    mode?: string
-}
-
-const defaultRequestOptions: RequestOptions = {
-    method: 'GET'
-};
-
 export const request = (url: string, data: any = null, options: RequestOptions = {}) => {
     const opts = {...defaultRequestOptions, ...options};
     return fetch(url, {
@@ -61,7 +36,33 @@ export const request = (url: string, data: any = null, options: RequestOptions =
     });
 };
 
-const fetchData = (url: string, data?: any) =>  {
+export const fetchForm = (url: string, headers: any = {}): Promise<string> => {
+    let headerObj = new Headers();
+    Object.entries(headers).forEach(([key, value]) => {
+        headerObj.append(key, value as string);
+    });
+    return request(`${url}.model.json`, null, {headers}).then((formObj: any) => {
+        if ('model' in formObj) {
+            const {model} = formObj;
+            formObj = model;
+        }
+        return jsonString(formObj);
+    });
+};
+
+export type RequestOptions = {
+    contentType?: string,
+    method?: 'POST' | 'GET',
+    headers?: any,
+    mode?: string
+}
+
+const defaultRequestOptions: RequestOptions = {
+    method: 'GET'
+};
+
+
+const fetchData = (url: string, data?: any) => {
     return request(url, data, {
         method: 'POST'
     });

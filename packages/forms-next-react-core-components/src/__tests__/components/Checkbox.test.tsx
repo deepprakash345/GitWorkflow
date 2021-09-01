@@ -11,6 +11,7 @@ const field = {
     ':title': 'name',
     ':visible' : true,
     ':constraints' : {
+        ':dataType' : 'boolean',
         ':options': [{
             ':value': true,
             ':title': 'some option title'
@@ -246,6 +247,7 @@ test('clicking on checkbox twice resets the value', async () => {
     const f = {
         ...field,
         ':constraints' : {
+            ...field[':constraints'],
             ':options' : [
                 {
                     ':value' : false
@@ -276,6 +278,7 @@ test('deselecting the checkbox sets the value to off value', async () => {
     const f = {
         ...field,
         ':constraints' : {
+            ...field[':constraints'],
             ':options' : [
                 {
                     ':value' : false

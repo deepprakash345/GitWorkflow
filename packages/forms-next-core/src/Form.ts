@@ -57,7 +57,8 @@ class Form extends Container<FormJson> implements FormModel, Controller {
             }
             switch (action.type) {
                 case 'change':
-                    this.handleChange(elem, action.payload ? action.payload.toString() : '');
+                    //todo : set undefined to empty value
+                    this.handleChange(elem, action.payload != null ? action.payload.toString() : undefined);
                     break;
                 case 'click':
                     this.handleClick(elem);
