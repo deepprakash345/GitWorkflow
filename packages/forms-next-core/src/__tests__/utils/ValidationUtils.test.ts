@@ -82,7 +82,6 @@ const dataTypeValidations: { [key: string]: TestCase[] } = {
             'value': 'false',
             valid: true,
             cval: false
-
         },
         {
             'value': '',

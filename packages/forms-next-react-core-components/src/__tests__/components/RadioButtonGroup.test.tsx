@@ -13,6 +13,7 @@ const field : FieldJson = {
     ':visible' : true,
     ':title': 'Are you Employed',
     ':constraints' : {
+        ':dataType' : 'boolean',
         ':options' : [{
             ':value' : true,
             ':text' : 'Yes'

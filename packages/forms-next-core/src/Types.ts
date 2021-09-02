@@ -96,6 +96,7 @@ export type Option = {
 }
 
 type ConstraintsJson = {
+    ':dataType'?: 'string' | 'boolean' | 'number'
     ':required'?: boolean;
     ':pattern'?:string,
     ':format'?: string

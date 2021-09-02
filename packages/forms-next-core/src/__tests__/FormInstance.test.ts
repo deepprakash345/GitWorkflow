@@ -127,6 +127,22 @@ test('Fetch a form from wrong rest API should throw an error', async () => {
     await expect(fetchForm(`${API_HOST}/my-test-form`)).rejects.toThrow('Not Found');
 });
 
+test('Fetch form should pass the request headers', async () => {
+    const scope = nock(API_HOST, {
+        reqheaders : {
+            'authorization': 'Bearer sometoken'
+        }
+    }).get('/my-test-form.model.json')
+        .reply(200, {
+            'model' : create(['f', 'f', 'f'])
+        });
+    const form = await fetchForm(`${API_HOST}/my-test-form`, {
+        'authorization' : 'Bearer sometoken'
+    });
+    const formObj = JSON.parse(form);
+    expect(formObj).toEqual(create(['f', 'f', 'f']));
+});
+
 test('Form should be prefilled from data URL', async () => {
     let json = create(['f', 'f', 'f']);
     json[':metadata'] = {
