@@ -47,7 +47,7 @@ pipeline {
                 sh "sudo docker build -t af2-web-runtime-builder -f Dockerfile.build.mt ."
             }
         }
-        stage("build - typescript") {
+        stage("build - packages") {
             steps {
                 runDocker('npm install')
                 runDocker('npx lerna bootstrap')
