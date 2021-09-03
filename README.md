@@ -50,7 +50,7 @@ and run the `lerna run start` or `npm run start` command again
 
 Package containing all the configurations and packages needed inside AEM can be found here, 
 ```
-https://artifactory.corp.adobe.com/native/maven-aemforms-dev-snapshot-local/com/adobe/aem/af2-enablement/0.0.1-SNAPSHOT/af2-enablement-0.0.1-20210901.095835-1.zip
+https://artifactory.corp.adobe.com/ui/api/v1/download?repoKey=maven-aemforms-dev-snapshot-local&path=com%252Fadobe%252Faem%252Faf2-enablement%252F0.0.7-SNAPSHOT%252Faf2-enablement-0.0.7-20210902.071136-1.zip
 ```
 (else) one could also follow the instructions in the following sections.
 
