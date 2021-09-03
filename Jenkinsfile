@@ -74,23 +74,22 @@ pipeline {
                 checkCoverage(COVERAGE_CHECKS)
             }
         }
-//         stage("publish") {
-//             when {
-//                 expression {
-//                     return !isPullRequest()
-//                 }
-//             }
-//             steps {
-//                 script {
-//                     // clean the repository
-//                     runDocker('''
-//                         cd af-expression-parser-ts
-//                         npm version patch -m 'Update version to %s'
-//                         npm whoami
-//                     ''')
-//                 }
-//             }
-//         }
+        stage("publish") {
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
+                }
+            }
+            steps {
+                script {
+                    gitStrategy.checkout(env.BRANCH_NAME)
+                    runDocker("npx lerna version patch --yes --message ':release Updating version'")
+                    runDocker("npx lerna publish --yes")
+                }
+            }
+        }
     }
     post {
         always {
