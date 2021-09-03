@@ -68,12 +68,12 @@ pipeline {
                 junit "packages/forms-next-core/test-reports/junit.xml"
                 junit "packages/forms-next-react-core-components/test-reports/junit.xml"
             }
-            post {
-                always {
-                  step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-core/coverage/cobertura-coverage.xml'])
-                  step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-react-core-components/coverage/cobertura-coverage.xml'])
-                }
-              }
+//             post {
+//                 always {
+//                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-core/coverage/cobertura-coverage.xml'])
+//                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-react-core-components/coverage/cobertura-coverage.xml'])
+//                 }
+//               }
         }
 
         stage("coverage") {

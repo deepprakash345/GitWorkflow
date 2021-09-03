@@ -13,7 +13,7 @@
   "jest-junit" : {
     "suiteName": "component tests",
     "suiteNameTemplate" : "{filename}",
-    "classNameTemplate" : "{filename}.{title}",
+    "classNameTemplate" : "component-test.{filename}",
     "outputDirectory": "./test-reports"
   },
   "files": [
