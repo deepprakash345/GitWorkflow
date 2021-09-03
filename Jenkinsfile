@@ -104,7 +104,7 @@ pipeline {
                     gitStrategy.checkout(env.BRANCH_NAME)
                     runDocker('''npx lerna version patch --no-git-tag-version --no-push --yes
                     echo ":release" > message.txt
-                    jq -r "(.name + \\" \\" + .version)" packages/*/package.json >> message.txt
+                    jq -r "(.name + \\"@\\" + .version)" packages/*/package.json >> message.txt
                     ''')
                     sh "git add package.json package-lock.json packages/*/package.json packages/*/package-lock.json"
                     gitStrategy.impersonate("cqguides", "cqguides") {
