@@ -6,5 +6,6 @@ module.exports = {
   testRegex: 'src/__tests__/[^.]+\\.test\\.tsx',
   'moduleNameMapper' : {
     '\\.css' : '<rootDir>/src/__tests__/mocks/styleMock.js'
-  }
+  },
+  'reporters' : ['default', 'jest-junit']
 };

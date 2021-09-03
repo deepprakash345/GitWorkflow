@@ -4,5 +4,6 @@ module.exports = {
   collectCoverage: true,
   coveragePathIgnorePatterns : ['src/__tests__/*'],
   testRegex: 'src/__tests__/[^.]+\\.test\\.ts',
-  setupFiles: ['./src/__tests__/setupTests.js']
+  setupFiles: ['./src/__tests__/setupTests.js'],
+  'reporters' : ['default', 'jest-junit']
 };

@@ -11,7 +11,7 @@ to authenticate with npm and set the environment variables NPM_AUTH and NPM_EMAI
 The steps have been put in a script does the same which you can copy paste in your bashrc file or run on terminal
 ```
 auth=$(curl -s -u${ARTIFACTORY_USER}:${ARTIFACTORY_API_TOKEN} https://artifactory.corp.adobe.com/artifactory/api/npm/auth)
-export NPM_AUTH=$(echo "${auth}" | grep "_auth" | awk -F " " '{ print $3 }')
+export NPM_TOKEN=$(echo "${auth}" | grep "_auth" | awk -F " " '{ print $3 }')
 export NPM_EMAIL=$(echo "${auth}" | grep "email" | awk -F " " '{ print $3 }')
 ```
 
