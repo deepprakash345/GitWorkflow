@@ -35,13 +35,6 @@ pipeline {
     }
 
     stages {
-        stage("clean - environment") {
-            steps {
-                sh "rm -r packages/*/node_modules"
-                sh "rm -r packages/*/build"
-                sh "rm -r packages/*/lib"
-            }
-        }
         stage("build - environment") {
             steps {
                 sh "sudo docker build -t af2-web-runtime-builder -f Dockerfile.build.mt ."
