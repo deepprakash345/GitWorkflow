@@ -3,17 +3,17 @@
 
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
-
+BUILDER_DOCKER_NAME="af2-web-runtime-builder"
 def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
     ]) {
-        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app af2-web-runtime-builder sh -c '$command'"
+        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
     }
 }
 
 def cleanup() {
-    sh "docker rmi -f ts-builder || 1"
+    sh "docker rmi -f $BUILDER_DOCKER_NAME || 1"
 }
 
 def diffCoverage(String targetBranch, Integer failThreshold) {
@@ -37,7 +37,7 @@ pipeline {
     stages {
         stage("build - environment") {
             steps {
-                sh "sudo docker build -t af2-web-runtime-builder -f Dockerfile.build.mt ."
+                sh "sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt ."
             }
         }
         stage("build - packages") {
@@ -85,5 +85,11 @@ pipeline {
 //                 }
 //             }
 //         }
+    }
+    post {
+        always {
+            cleanUp()
+            cleanWs()
+        }
     }
 }
