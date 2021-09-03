@@ -109,7 +109,7 @@ pipeline {
                     sh "git add package.json package-lock.json packages/*/package.json packages/*/package-lock.json"
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         sh "git commit -F message.txt"
-                        sh "tail -3 message.txt |  while read in; do git tag $in; done"
+                        sh "tail -3 message.txt | while read in; do git tag \$in; done"
                         gitStrategy.push(env.BRANCH_NAME)
                     }
                     runDocker("npx lerna publish --yes")
