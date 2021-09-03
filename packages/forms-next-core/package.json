@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-core",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Core Module for Forms Runtime",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -11,10 +11,10 @@
     "source": "src",
     "test": "src/__tests__"
   },
-  "jest-junit" : {
+  "jest-junit": {
     "suiteName": "core tests",
-    "suiteNameTemplate" : "{filename}",
-    "classNameTemplate" : "model-test.{filename}",
+    "suiteNameTemplate": "{filename}",
+    "classNameTemplate": "model-test.{filename}",
     "outputDirectory": "./test-reports"
   },
   "files": [

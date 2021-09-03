@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-react-core-components",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -10,10 +10,10 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "jest-junit" : {
+  "jest-junit": {
     "suiteName": "component tests",
-    "suiteNameTemplate" : "{filename}",
-    "classNameTemplate" : "component-test.{filename}",
+    "suiteNameTemplate": "{filename}",
+    "classNameTemplate": "component-test.{filename}",
     "outputDirectory": "./test-reports"
   },
   "files": [
@@ -30,7 +30,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.6",
+    "@adobe/forms-next-core": "^0.1.7",
     "@adobe/react-spectrum": "^3.12.0",
     "jest-junit": "^12.2.0"
   },
