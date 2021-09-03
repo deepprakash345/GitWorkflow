@@ -1,5 +1,12 @@
 @Library(['com.adobe.qe.evergreen.sprout'])
 @Library(['com.adobe.qe.evergreen.forms.sprout'])
+import com.adobe.qe.evergreen.sprout.SproutConfig
+import com.adobe.qe.evergreen.sprout.vcs.Repository
+import com.adobe.qe.evergreen.sprout.vcs.RepositoryFactory
+
+SproutConfig config = new SproutConfig()
+config.setGithubAccessTokenId("cq-guides-password")
+Repository gitStrategy = RepositoryFactory.getStrategy(Repository.GIT, this)
 
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
@@ -44,7 +51,7 @@ def isPullRequest() {
 
 pipeline {
     agent {
-        label 'AEMDS_SJ_TestSlave2'
+        label 'centos'
     }
 
     stages {
@@ -57,7 +64,7 @@ pipeline {
             steps {
                 runDocker('npm install')
                 runDocker('npx lerna bootstrap')
-                runDocker('npx lerna run build --scope=@adobe/*')
+                runDocker('npx lerna run build')
             }
         }
         stage("test") {
@@ -85,26 +92,27 @@ pipeline {
             }
         }
         stage("publish") {
-//             when {
-//                 allOf {
-//                     //expression { return !isPullRequest() }
-//                     branch "main"
-//                     expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
-//                 }
-//             }
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
+                }
+            }
             steps {
                 script {
                     gitStrategy.checkout(env.BRANCH_NAME)
                     runDocker('''npx lerna version patch --no-git-tag-version --no-push --yes
                     echo ":release" > message.txt
-                    jq -r "(.name + \" \" + .version)" packages/*/package.json >> message.txt
+                    jq -r "(.name + \\" \\" + .version)" packages/*/package.json >> message.txt
                     ''')
                     sh "git add package.json package-lock.json packages/*/package.json packages/*/package-lock.json"
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         sh "git commit -F message.txt"
-                        sh "git log -1"
+                        sh "tail -3 message.txt |  while read in; do git tag $in; done"
+                        gitStrategy.push(env.BRANCH_NAME)
                     }
-                    //runDocker("npx lerna publish --yes")
+                    runDocker("npx lerna publish --yes")
                 }
             }
         }
