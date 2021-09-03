@@ -5,5 +5,5 @@ module.exports = {
   coveragePathIgnorePatterns : ['src/__tests__/*'],
   testRegex: 'src/__tests__/[^.]+\\.test\\.ts',
   setupFiles: ['./src/__tests__/setupTests.js'],
-  'testResultsProcessor': 'jest-junit'
+  'reporters' : ['default', 'jest-junit']
 };

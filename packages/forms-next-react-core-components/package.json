@@ -13,8 +13,8 @@
   "jest-junit" : {
     "suiteName": "component tests",
     "suiteNameTemplate" : "{filename}",
-    "outputDirectory": "./test-reports",
-    "outputName": "junit.xml"
+    "classNameTemplate" : "{filename}.{title}",
+    "outputDirectory": "./test-reports"
   },
   "files": [
     "lib"

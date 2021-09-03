@@ -7,5 +7,5 @@ module.exports = {
   'moduleNameMapper' : {
     '\\.css' : '<rootDir>/src/__tests__/mocks/styleMock.js'
   },
-  'testResultsProcessor': 'jest-junit'
+  'reporters' : ['default', 'jest-junit']
 };
