@@ -112,7 +112,7 @@ pipeline {
                         sh "tail -3 message.txt | while read in; do git tag \$in; done"
                         gitStrategy.push(env.BRANCH_NAME)
                     }
-                    runDocker("npx lerna publish --yes")
+                    runDocker("npx lerna publish from-package --yes ")
                 }
             }
         }
