@@ -12,15 +12,28 @@ def runDocker(String command) {
     }
 }
 
+COVERAGE_CHECKS=[["forms-next-core", 90],["forms-next-react-core-components", 90]]
+
 def cleanUp() {
     sh "docker rmi -f $BUILDER_DOCKER_NAME || 1"
 }
 
-def diffCoverage(String targetBranch, Integer failThreshold) {
-    status = sh(script:"diff-cover --html-report diff-cover.html --compare-branch ${targetBranch} coverage/cobertura-coverage.xml --fail-under=${failThreshold}",
+def diffCoverage(String targetBranch, String packageName, Integer failThreshold) {
+    echo "checking coverage for packages/${packageName}/coverage/diff-cover.html"
+    status = sh(script:"diff-cover --html-report packages/${packageName}/coverage/diff-cover.html --compare-branch ${targetBranch} packages/${packageName}/coverage/cobertura-coverage.xml --fail-under=${failThreshold}",
             returnStatus: true)
-    archiveArtifacts artifacts: 'diff-cover.html'
+    archiveArtifacts artifacts: "packages/${packageName}/coverage/diff-cover.html"
     return status
+}
+
+def checkCoverage(packages) {
+    for (int i = 0; i < packages.size(); i++) {
+        status = diffCoverage("origin/${this.env.CHANGE_TARGET}", packages[i][0], packages[i][1])
+        if (status != 0) {
+            error("Coverage failed for ${packages[i][0]}")
+        }
+    }
+    return 0
 }
 
 def isPullRequest() {
@@ -44,7 +57,7 @@ pipeline {
             steps {
                 runDocker('npm install')
                 runDocker('npx lerna bootstrap')
-                runDocker('npx lerna run build')
+                runDocker('npx lerna run build --scope=@adobe/*')
             }
         }
         stage("test") {
@@ -53,21 +66,14 @@ pipeline {
             }
         }
 
-//         stage("coverage") {
-//             when {
-//                 expression { return isPullRequest() }
-//             }
-//             steps {
-//                 dir("af-expression-parser-ts") {
-//                     script {
-//                         status = diffCoverage("origin/${this.env.CHANGE_TARGET}", DIFF_COVERAGE_FAIL_THRESHOLD)
-//                         if(status != 0) {
-//                             error("Failing pipeline due to low coverage.")
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+        stage("coverage") {
+            when {
+                expression { return isPullRequest() }
+            }
+            steps {
+                checkCoverage(COVERAGE_CHECKS)
+            }
+        }
 //         stage("publish") {
 //             when {
 //                 expression {
