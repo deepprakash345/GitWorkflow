@@ -10,6 +10,12 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "jest-junit" : {
+    "suiteName": "component tests",
+    "suiteNameTemplate" : "{filename}",
+    "outputDirectory": "./test-reports",
+    "outputName": "junit.xml"
+  },
   "files": [
     "lib"
   ],
@@ -19,13 +25,14 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "test-ci" : "jest --silent --coverage --coverageReporters=cobertura",
+    "test-ci": "jest --silent --coverage --coverageReporters=cobertura",
     "prepublishOnly": "npm run build && npm run test",
     "test": "jest --silent"
   },
   "dependencies": {
     "@adobe/forms-next-core": "^0.1.6",
-    "@adobe/react-spectrum": "^3.12.0"
+    "@adobe/react-spectrum": "^3.12.0",
+    "jest-junit": "^12.2.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",

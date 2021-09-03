@@ -176,6 +176,9 @@ $RECYCLE.BIN/
 .idea/
 
 
+#junit test reports
+test-reports/
+
 #Visual Studio Code
 .vscode/
 !.vscode/settings.json

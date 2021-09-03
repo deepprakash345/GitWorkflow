@@ -63,6 +63,10 @@ pipeline {
         stage("test") {
             steps {
                 runDocker('npx lerna run test-ci')
+                archiveArtifacts artifacts: "packages/forms-next-core/test-reports/junit.xml"
+                archiveArtifacts artifacts: "packages/forms-next-react-core-components/test-reports/junit.xml"
+                junit "packages/forms-next-core/test-reports/junit.xml"
+                junit "packages/forms-next-react-core-components/test-reports/junit.xml"
             }
         }
 

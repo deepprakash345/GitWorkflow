@@ -1,4 +1,7 @@
+coverage/
+test-results/
+src/__tests__
 .eslintrc.json
+jest.config.js
 package-lock.json
 tsconfig.json
-src/__tests__

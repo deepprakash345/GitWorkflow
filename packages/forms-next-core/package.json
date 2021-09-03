@@ -11,6 +11,12 @@
     "source": "src",
     "test": "src/__tests__"
   },
+  "jest-junit" : {
+    "suiteName": "core tests",
+    "suiteNameTemplate" : "{filename}",
+    "outputDirectory": "./test-reports",
+    "outputName": "junit.xml"
+  },
   "files": [
     "lib"
   ],
@@ -20,14 +26,15 @@
   },
   "scripts": {
     "test": "jest --silent",
-    "test-ci" : "jest --silent --coverage --coverageReporters=cobertura",
+    "test-ci": "jest --silent --coverage --coverageReporters=cobertura",
     "build": "npx tsc",
     "clean": "rm -rf lib coverage",
-    "prepublishOnly" : "npm run build && npm run test"
+    "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
     "@adobe/forms-next-expression-parser": "0.1.10",
     "eslint-plugin-jest": "^24.3.6",
+    "jest-junit": "^12.2.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
