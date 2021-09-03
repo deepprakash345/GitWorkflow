@@ -8,11 +8,11 @@ def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
     ]) {
-        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
+        sh "docker run -u `id -u` -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
     }
 }
 
-def cleanup() {
+def cleanUp() {
     sh "docker rmi -f $BUILDER_DOCKER_NAME || 1"
 }
 
