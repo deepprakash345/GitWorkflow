@@ -44,13 +44,14 @@ pipeline {
             steps {
                 runDocker('npm install')
                 runDocker('npx lerna bootstrap')
+                runDocker('npx lerna run build')
             }
         }
-//         stage("test") {
-//             steps {
-//                 runDocker('cd af-expression-parser-ts && npx jest --coverage --coverageReporters=cobertura')
-//             }
-//         }
+        stage("test") {
+            steps {
+                runDocker('npx lerna run test-ci')
+            }
+        }
 
 //         stage("coverage") {
 //             when {

@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "prepublish": "npm run build && npm run test",
+    "test-ci" : "jest --silent --coverage --coverageReporters=cobertura",
+    "prepublishOnly": "npm run build && npm run test",
     "test": "jest --silent"
   },
   "dependencies": {

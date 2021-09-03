@@ -20,9 +20,10 @@
   },
   "scripts": {
     "test": "jest --silent",
+    "test-ci" : "jest --silent --coverage --coverageReporters=cobertura",
     "build": "npx tsc",
     "clean": "rm -rf lib coverage",
-    "prepublish": "npm run build && npm run test"
+    "prepublishOnly" : "npm run build && npm run test"
   },
   "dependencies": {
     "@adobe/forms-next-expression-parser": "0.1.10",
