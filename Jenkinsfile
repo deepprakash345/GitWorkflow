@@ -8,7 +8,7 @@ def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
     ]) {
-        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app ts-builder sh -c '$command'"
+        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app af2-web-runtime-builder sh -c '$command'"
     }
 }
 
