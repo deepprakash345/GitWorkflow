@@ -1,5 +1,5 @@
-import {Constraints} from '../../utils/ValidationUtils';
-import {Option} from '../../Types';
+import {Constraints} from '../../src/utils/ValidationUtils';
+import {Option} from '../../src/Types';
 
 type TestCase = {
     name?: string

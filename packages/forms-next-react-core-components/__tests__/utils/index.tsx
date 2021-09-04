@@ -1,4 +1,4 @@
-import FormContext from '../../react-mapper/FormContext';
+import FormContext from '../../src/react-mapper/FormContext';
 import React from 'react';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';

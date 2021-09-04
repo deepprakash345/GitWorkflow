@@ -1,4 +1,4 @@
-import Panel from '../../components/Panel';
+import Panel from '../../src/components/Panel';
 import React from 'react';
 import {render} from '@testing-library/react';
 import {createForm, Provider} from '../utils';

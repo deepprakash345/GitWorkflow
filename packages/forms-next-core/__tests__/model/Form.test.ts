@@ -1,9 +1,9 @@
 import {create, formWithRules} from '../collateral';
-import {createFormInstance} from '../../FormInstance';
-import {Change, Click, CustomEvent} from '../../controller/Actions';
-import Form from '../../Form';
-import {FieldJson} from '../../Types';
-import Field from '../../Field';
+import {createFormInstance} from '../../src/FormInstance';
+import {Change, Click, CustomEvent} from '../../src/controller/Actions';
+import Form from '../../src/Form';
+import {FieldJson} from '../../src/Types';
+import Field from '../../src/Field';
 
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);

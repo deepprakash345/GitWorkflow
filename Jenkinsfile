@@ -99,10 +99,10 @@ pipeline {
                     branch "main"
                     expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
                     anyOf {
-                        changeset "**/*.css"
-                        changeset "**/*.js"
-                        changeset "**/*.ts"
-                        changeset "**/*.tsx"
+                        changeset "**/src/**/*.css"
+                        changeset "**/src/**/*.js"
+                        changeset "**/src/**/*.ts"
+                        changeset "**/src/**/*.tsx"
                         changeset "**/package.json"
                     }
                 }

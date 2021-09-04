@@ -1,4 +1,4 @@
-import Field from '../../Field';
+import Field from '../../src/Field';
 
 test('a field should add all the default values in its json', () => {
     const f = new Field({':id' : 'someid'});

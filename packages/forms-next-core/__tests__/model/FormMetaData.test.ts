@@ -1,5 +1,5 @@
-import {MetaDataJson} from '../../Types';
-import FormMetaData from '../../FormMetaData';
+import {MetaDataJson} from '../../src/Types';
+import FormMetaData from '../../src/FormMetaData';
 
 test('FormMetaData should return correct values', () => {
     const metadata:MetaDataJson = {
