@@ -97,6 +97,13 @@ pipeline {
                     expression { return !isPullRequest() }
                     branch "main"
                     expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
+                    anyOf {
+                        changeset "**/*.css"
+                        changeset "**/*.js"
+                        changeset "**/*.ts"
+                        changeset "**/*.tsx"
+                        changeset "**/package.json"
+                    }
                 }
             }
             steps {
