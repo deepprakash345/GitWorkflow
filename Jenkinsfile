@@ -11,6 +11,7 @@ Repository gitStrategy = RepositoryFactory.getStrategy(Repository.GIT, this)
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
 BUILDER_DOCKER_NAME="af2-web-runtime-builder"
+GIT_REPO_URL="git@git.corp.adobe.com:livecycle/forms-next-web-runtime.git"
 def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
@@ -117,6 +118,7 @@ pipeline {
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         sh "git commit -F message.txt"
                         sh "tail -3 message.txt | while read in; do git tag \$in; done"
+                        sh "git push ${GIT_REPO_URL} --tags"
                         gitStrategy.push(env.BRANCH_NAME)
                     }
                     runDocker("npx lerna publish from-package --yes ")
