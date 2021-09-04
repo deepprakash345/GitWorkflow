@@ -1,4 +1,4 @@
-import {getProperty} from '../../utils/JsonUtils';
+import {getProperty} from '../../src/utils/JsonUtils';
 
 test('getProperty returns exact name property', () => {
     const actual = getProperty({

@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import RadioButtonGroup from '../../components/RadioButtonGroup';
+import RadioButtonGroup from '../../src/components/RadioButtonGroup';
 import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@adobe/forms-next-core/lib';

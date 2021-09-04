@@ -1,6 +1,6 @@
 import {renderHook, act} from '@testing-library/react-hooks';
-import {useRuleEngine} from '../../react-mapper/hooks';
-import FormContext from '../../react-mapper/FormContext';
+import {useRuleEngine} from '../../src/react-mapper/hooks';
+import FormContext from '../../src/react-mapper/FormContext';
 import React from 'react';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 import {Change, Click} from '@adobe/forms-next-core/lib/controller/Actions';

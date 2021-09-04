@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, RenderResult} from '@testing-library/react';
-import TextField from '../../components/TextField';
+import TextField from '../../src/components/TextField';
 import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@adobe/forms-next-core/lib';

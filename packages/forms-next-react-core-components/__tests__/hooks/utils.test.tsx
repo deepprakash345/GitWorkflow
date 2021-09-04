@@ -1,4 +1,4 @@
-import {renderChildren, renderIfVisible} from '../../react-mapper/utils';
+import {renderChildren, renderIfVisible} from '../../src/react-mapper/utils';
 import React from 'react';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 

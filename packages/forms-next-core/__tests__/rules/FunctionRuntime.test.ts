@@ -1,7 +1,7 @@
 import {create} from '../collateral';
-import {createFormInstance} from '../../FormInstance';
-import FunctionRuntime from '../../rules/FunctionRuntime';
-import {Change, CustomEvent} from '../../controller/Actions';
+import {createFormInstance} from '../../src/FormInstance';
+import FunctionRuntime from '../../src/rules/FunctionRuntime';
+import {Change, CustomEvent} from '../../src/controller/Actions';
 import nock from 'nock';
 
 test('should return all the publically exposed functions', async () => {

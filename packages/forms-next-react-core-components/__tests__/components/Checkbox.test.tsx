@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react';
-import Checkbox from '../../components/Checkbox';
+import Checkbox from '../../src/components/Checkbox';
 import userEvent from '@testing-library/user-event';
 import {createForm, filterTestTable, ignoredTestTable, InputFieldTestCase, Provider} from '../utils';
 import {FieldExpectType} from './TextField.test';

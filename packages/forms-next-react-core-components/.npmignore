@@ -1,6 +1,6 @@
 coverage/
 test-results/
-src/__tests__
+__tests__
 .eslintrc.json
 jest.config.js
 package-lock.json
