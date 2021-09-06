@@ -192,5 +192,7 @@ test-reports/
 
 #Temporary
 lib/
+
+# For deployment to git pages
 tmp-dist/
 dist/

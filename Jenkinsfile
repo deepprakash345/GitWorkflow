@@ -92,6 +92,36 @@ pipeline {
                 checkCoverage(COVERAGE_CHECKS)
             }
         }
+        stage("deploy - git pages") {
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
+                    anyOf {
+                        changeset "**/src/**/*.css"
+                        changeset "**/src/**/*.js"
+                        changeset "**/src/**/*.ts"
+                        changeset "**/src/**/*.tsx"
+                        changeset "**/package.json"
+                    }
+                }
+            },
+            steps {
+                script {
+                    sh 'mkdir tmp-dist'
+                    sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
+                    sh 'git checkout gh-pages'
+                    sh 'rm -r dist'
+                    sh 'mv tmp-dist dist'
+                    sh 'git add .'
+                    sh 'git commit -m "deploying to git pages"'
+                    gitStrategy.impersonate("cqguides", "cqguides") {
+                        gitStrategy.push('gh-pages')
+                    }
+                }
+            }
+        }
         stage("publish") {
             when {
                 allOf {
