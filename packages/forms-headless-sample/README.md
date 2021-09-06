@@ -1,46 +1,103 @@
-# Getting Started with Create React App
+# Introduction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a demo site to test the headless feature. It requires a valid AEM Instance either locally or a cloud instance,
+the instructions of both are provided in the below sections
 
-## Available Scripts
+# Running the demo locally
 
-In the project directory, you can run:
+## Start the React APP
 
-### `npm start`
+Navigate to `packages/forms-headless-demo` and run the command `npm run start`. 
+You can execute `lerna run start` from the project's root directory as well
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+If you get a react hook error, then run the `npm install` command inside 
+`packages/forms-headless-demo` and then run `npm run start`. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Check the `.env` file and ensure the following variables are set
+```
+REACT_APP_AEM_URL=<point to the correct AEM instance>
+REACT_APP_AUTH_REQUIRED=<true if authentication required else false. Authentication is required for skyline author instance> 
+```
 
-### `npm test`
+**Note**: To test your changes continuously without building and releasing the dependent packages run setup.sh located
+at the root directory
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Integrate with Local AEM Instance
 
-### `npm run build`
+## One Click Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Package containing all the configurations and packages needed inside AEM can be found 
+[here](https://artifactory.corp.adobe.com/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Build Everything - For the developer inside you
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Enable Headless APIs
+Follow the steps mentioned 
+[here](https://git.corp.adobe.com/livecycle/af2-rest-api/blob/master/README.md#enable-feature-toggle)
+to enable the headless APIs
 
-### `npm run eject`
+### Build and Install packages
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+There are multiple packages to be build and installed. Follow the instructions provided in the Readme of the 
+repositories to install the packages
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. WCM Core Components - https://github.com/adobe/aem-core-wcm-components
+2. Forms Core Components - https://git.corp.adobe.com/livecycle/aem-core-forms-components
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+All of them can be built and installed using the following command
+```
+git clone <repo-url>
+cd <repo-folder>
+mvn clean install -PautoInstallPackage
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Setup Configuration
 
-## Learn More
+##### Enable CORS - Cross Origin Resource Sharing for the development server
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project relies on a CORS configuration running on the target AEM environment and 
+assumes that the app is running on http://localhost:3000 in development mode.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Navigate to the Configuration Manager (http://localhost:4502/system/console/configMgr)
+2. Open the configuration for "Adobe Granite Cross-Origin Resource Sharing Policy"
+3. Create a new configuration with the following additional values:
+    - Allowed Origins: http://localhost:3000
+
+
+#### Disable CSRF - Cross site request forgery for demo server
+
+If you are getting errors related to CORS in the development environment, you might want to configure AEM as follows:
+
+1. Navigate to the Configuration Manager (http://localhost:4502/system/console/configMgr)
+2. Open the configuration for "Adobe Granite CSRF Filter"
+3. Edit with the following additional values:
+    - Whitelist a new user agent **forms-headless-demo**
+    - Remove POST from the filter method
+
+# Integrate with Skyline Instance
+
+## Using Forms Headless Demo AEM Instance
+We have a skyline setup provisioned which can be used to run the demo. The URL of the instance is 
+```
+https://author-p9552-e11552-cmstg.adobeaemcloud.com
+```
+Please check you have access to the instance and obtain a developer token from 
+[Developer Console](https://dev-console-ns-team-aem-cm-stg-n3460.ethos14-stage-va7.dev.adobeaemcloud.com/#release-cm-p9552-e11552).
+The steps are provided in the 
+[official helpx page](https://experienceleague.adobe.com/docs/experience-manager-cloud-service/implementing/developing/generating-access-tokens-for-server-side-apis.html?lang=en)
+
+## Custom Skyline Instance
+
+The steps are not yet verified but they should work
+
+1. Enable the feature toggle on your instance
+2. Upload the
+[af2-enablement](https://artifactory.corp.adobe.com/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
+package to your instance via VSTS.
+
+# Testing the demo on cloud
+
+The demo app is hosted on [git-pages](ttps://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
+headless demo instance.
+
+

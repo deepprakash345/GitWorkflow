@@ -64,8 +64,8 @@ pipeline {
         stage("build - packages") {
             steps {
                 runDocker('npm install')
-                runDocker('npx lerna bootstrap')
-                runDocker('npx lerna run build')
+                runDocker('npx lerna bootstrap --ignore forms-headless-sample')
+                runDocker('npx lerna run build --no-private')
             }
         }
         stage("test") {
@@ -83,13 +83,20 @@ pipeline {
 //                 }
 //               }
         }
-
         stage("coverage") {
             when {
                 expression { return isPullRequest() }
             }
             steps {
                 checkCoverage(COVERAGE_CHECKS)
+            }
+        }
+        stage("build - sample") {
+            steps {
+                dir("packages/forms-headless-sample") {
+                    runDocker('npm install')
+                    runDocker('npm run build')
+                }
             }
         }
         stage("deploy - git pages") {
@@ -115,7 +122,7 @@ pipeline {
                     sh 'git checkout gh-pages'
                     sh 'rm -r dist'
                     sh 'mv tmp-dist dist'
-                    sh 'git add .'
+                    sh 'git add -A .'
                     sh 'git commit -m "deploying to git pages"'
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         gitStrategy.push('gh-pages')

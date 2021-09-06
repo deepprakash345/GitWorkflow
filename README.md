@@ -22,75 +22,27 @@ To begin with trigger the command.
 lerna bootstrap
 ```
 
-You might get an error while running this command as react-spectrum and our packages both use the 
-adobe scope but are present in different registries. Till the time we figure out a mechanism 
-follow these steps
+## Running tests
 
-1. In the .npmrc file change the first line to 
 ```
-registry=https://artifactory.corp.adobe.com/artifactory/api/npm/npmjs-remote/
+lerna run test
 ```
 
-2. Trigger the command above `lerna bootstrap` again and it might give errors for our packages but should work.
-If it doesn't, then remove your changes in .npmrc file and run the command `lerna bootstrap` again. Ignore
-the errors this time
+## Build
 
-
-# Run the demo
-
-Navigate to `packages/forms-headless-demo` and run the command `npm run start`. 
-You can execute `lerna run start` from the project's root directory as well
-
-If you get a react hook error, then trigger the setup.sh command at the root
-and run the `lerna run start` or `npm run start` command again
-
-# Integrate with AEM
-
-## Development Setup
-
-Package containing all the configurations and packages needed inside AEM can be found here, 
 ```
-https://artifactory.corp.adobe.com/ui/api/v1/download?repoKey=maven-aemforms-dev-snapshot-local&path=com%252Fadobe%252Faem%252Faf2-enablement%252F0.0.7-SNAPSHOT%252Faf2-enablement-0.0.7-20210902.071136-1.zip
-```
-(else) one could also follow the instructions in the following sections.
-
-## Build and Install packages
-
-There are multiple packages to be build and installed. Follow the instructions provided in the Readme of the 
-repositories to install the packages
-
-1. Rest API - https://git.corp.adobe.com/livecycle/af2-rest-api
-2. WCM Core Components - https://github.com/adobe/aem-core-wcm-components
-3. Forms Core Components - https://git.corp.adobe.com/livecycle/aem-core-forms-components
-
-All of them can be built and installed using the following command
-```
-git clone <repo-url>
-cd <repo-folder>
-mvn clean install -PautoInstallPackage
+lerna run build
 ```
 
-## Setup Configuration
+#Demo
+The demo app is hosted on [git-pages](ttps://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
+headless demo instance. To run the demo locally see the [official guide](/packages/forms-headless-sample/README.md)
 
-### Enable CORS - Cross Origin Resource Sharing for the development server
+# Contributing
 
-This project relies on a CORS configuration running on the target AEM environment and 
-assumes that the app is running on http://localhost:3000 in development mode.
+The project is currently closed for contributions. We are still finalizing certain aspects of CI/CD and once they are done
+we will accept PRs.
 
-1. Navigate to the Configuration Manager (http://localhost:4502/system/console/configMgr)
-2. Open the configuration for "Adobe Granite Cross-Origin Resource Sharing Policy"
-3. Create a new configuration with the following additional values:
-    - Allowed Origins: http://localhost:3000
-
-
-### Disable CSRF - Cross site request forgery for demo server
-
-If you are getting errors related to CORS in the development environment, you might want to configure AEM as follows:
-
-1. Navigate to the Configuration Manager (http://localhost:4502/system/console/configMgr)
-2. Open the configuration for "Adobe Granite CSRF Filter"
-3. Edit with the following additional values:
-    - Whitelist a new user agent **forms-headless-demo**
-    - Remove POST from the filter method
-    
-
+# CI/CD
+The project is built and tested using Jenkins and latest build status can be obtained 
+[here](https://lotus.ci.corp.adobe.com/view/Headless/job/af2-web-runtime/)
