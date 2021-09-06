@@ -97,7 +97,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*") }
                     anyOf {
                         changeset "**/src/**/*.css"
                         changeset "**/src/**/*.js"
@@ -106,7 +106,7 @@ pipeline {
                         changeset "**/package.json"
                     }
                 }
-            },
+            }
             steps {
                 script {
                     sh 'mkdir tmp-dist'
