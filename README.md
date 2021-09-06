@@ -34,8 +34,8 @@ lerna run test
 lerna run build
 ```
 
-#Demo
-The demo app is hosted on [git-pages](ttps://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
+# Demo
+The demo app is hosted on [git-pages](https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
 headless demo instance. To run the demo locally see the [official guide](/packages/forms-headless-sample/README.md)
 
 # Contributing

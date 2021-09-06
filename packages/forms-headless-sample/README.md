@@ -97,7 +97,7 @@ package to your instance via VSTS.
 
 # Testing the demo on cloud
 
-The demo app is hosted on [git-pages](ttps://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
+The demo app is hosted on [git-pages](https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
 headless demo instance.
 
 
