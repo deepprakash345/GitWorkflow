@@ -92,6 +92,10 @@ pipeline {
             }
         }
         stage("build - sample") {
+            environment {
+                REACT_APP_AEM_URL="https://author-p9552-e11552-cmstg.adobeaemcloud.com"
+                REACT_APP_AUTH_REQUIRED=true
+            }
             steps {
                 dir("packages/forms-headless-sample") {
                     runDocker('npm install')
