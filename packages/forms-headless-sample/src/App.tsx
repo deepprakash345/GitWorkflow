@@ -15,15 +15,14 @@ import {Controller} from "@adobe/forms-next-core/lib/controller/Controller";
 import Form from "@adobe/forms-next-react-core-components/lib/components/Form";
 import {DialogTrigger, Dialog} from '@adobe/react-spectrum'
 import {Heading, Divider, Content, ButtonGroup, ActionButton} from '@adobe/react-spectrum'
+import Help from "./Help";
 const { REACT_APP_AEM_URL } = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
-
 
 type FormState = {
     json?: any,
     controller?: Controller,
 }
-
 
 function App() {
     let [formUrl, setFormUrl] = React.useState('');
@@ -106,6 +105,7 @@ function App() {
                             </Dialog>
                         )}
                     </DialogTrigger>
+                    <Help/>
                 </Flex>
             </View>
             <View gridArea="sidebar" padding="size-200" paddingBottom="size-1000">
