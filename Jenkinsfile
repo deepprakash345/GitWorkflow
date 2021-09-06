@@ -111,6 +111,7 @@ pipeline {
                 script {
                     sh 'mkdir tmp-dist'
                     sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
+                    sh 'git checkout .'
                     sh 'git checkout gh-pages'
                     sh 'rm -r dist'
                     sh 'mv tmp-dist dist'
