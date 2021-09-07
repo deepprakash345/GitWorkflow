@@ -18,6 +18,7 @@ import {DialogTrigger, Dialog} from '@adobe/react-spectrum'
 import {Heading, Divider, Content, ButtonGroup, ActionButton} from '@adobe/react-spectrum'
 import Help from "./Help";
 import {Item, TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
+import {Checkbox} from '@adobe/react-spectrum';
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
@@ -33,6 +34,8 @@ function App() {
     let [askToken, setAskToken] = React.useState(false)
     let [form, setForm] = React.useState<FormState>({});
     let [inputForm, setInputForm] = React.useState('');
+    let [serverUrl, setServerUrl] = React.useState(REACT_APP_AEM_URL)
+    let [authRequired, setAuthRequired] = React.useState(token_required)
     const aceEditor = useRef(null);
 
     const createForm = async (json: string) => {
@@ -46,7 +49,7 @@ function App() {
     }
     const fetchAF = async () => {
         let auth = {}
-        if (token.length > 0 || !token_required) {
+        if (token.length > 0 || !authRequired) {
             if (token.length > 0) {
                 auth = {
                     'Authorization': 'Bearer ' + token
@@ -54,9 +57,9 @@ function App() {
             }
             setInputForm("")
             setForm({});
-            const data = await fetchForm(REACT_APP_AEM_URL + formUrl, auth);
+            const data = await fetchForm(serverUrl + formUrl, auth);
             await createForm(data);
-        } else if (token_required) {
+        } else if (authRequired) {
             setAskToken(true)
         }
     }
@@ -84,8 +87,17 @@ function App() {
             marginTop="size-400"
             gap="size-500">
             <View gridArea="header">
-                <Flex direction="row" width="100%" gap="size-1000" alignItems="end">
-                    <TextField label="Enter Form URL" width="500px" value={formUrl}
+                <Flex direction="row" width="100%" gap="size-200" alignItems="center">
+                    <Flex direction="column">
+                        <TextField label="Enter Server URL" value={serverUrl}
+                                   onChange={(v) => setServerUrl(v)}/>
+                        <Checkbox isSelected={authRequired}
+                                  onChange={(v) => {
+                                      setToken('');
+                                      setAuthRequired(v)
+                                  }}>Authenticate</Checkbox>
+                    </Flex>
+                   <TextField label="Enter Form URL" width="500px" alignSelf="start" value={formUrl}
                                onChange={(v) => setFormUrl(v)}/>
                     <DialogTrigger type="modal" isOpen={askToken}>
                         <ActionButton onPress={() => forceRender()} isDisabled={formUrl.length === 0}>Fetch
