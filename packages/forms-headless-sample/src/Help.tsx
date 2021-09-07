@@ -23,6 +23,9 @@ const Help = function () {
                 <Heading>Usage Instructions</Heading>
                 <Divider />
                 <Content>
+                    <p>The links work only with the Headless demo AEM Instance. For your custom instance you may need to
+                    change the URL</p>
+                    <Divider />
                     <h1>Create the JSON markup to represent your form</h1>
                     <p>Navigate to the wiki page and write the JSON as per the wiki. Some samples are provided here</p>
                     <h1>Upload the JSON in AEM</h1>

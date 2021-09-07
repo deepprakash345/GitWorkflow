@@ -16,7 +16,7 @@ def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
     ]) {
-        sh "docker run -u `id -u` -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
+        sh "docker run -u `id -u` -e REACT_APP_AEM_URL -e REACT_APP_AUTH_REQUIRED -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
     }
 }
 
@@ -93,8 +93,8 @@ pipeline {
         }
         stage("build - sample") {
             environment {
-                REACT_APP_AEM_URL="https://author-p9552-e11552-cmstg.adobeaemcloud.com"
-                REACT_APP_AUTH_REQUIRED=true
+                REACT_APP_AEM_URL = 'https://author-p9552-e11552-cmstg.adobeaemcloud.com'
+                REACT_APP_AUTH_REQUIRED = 'true'
             }
             steps {
                 dir("packages/forms-headless-sample") {
