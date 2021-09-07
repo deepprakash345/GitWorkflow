@@ -2,7 +2,8 @@ import React, {useEffect, useRef} from 'react';
 import './App.css';
 import {Grid, View, TextField, TextArea, Button, Flex} from '@adobe/react-spectrum'
 import json from './samples/statement-financial-position.json';
-import {fetchForm, FormModel, FormJson} from "@adobe/forms-next-core"
+import {fetchForm} from "@adobe/forms-next-core"
+import {jsonString} from "@adobe/forms-next-core/lib/utils/JsonUtils";
 import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
 import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
 import {createFormInstance} from "@adobe/forms-next-core/lib";
@@ -16,7 +17,9 @@ import Form from "@adobe/forms-next-react-core-components/lib/components/Form";
 import {DialogTrigger, Dialog} from '@adobe/react-spectrum'
 import {Heading, Divider, Content, ButtonGroup, ActionButton} from '@adobe/react-spectrum'
 import Help from "./Help";
-const { REACT_APP_AEM_URL } = process.env;
+import {Item, TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
+
+const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
 
 type FormState = {
@@ -29,10 +32,17 @@ function App() {
     let [token, setToken] = React.useState('');
     let [askToken, setAskToken] = React.useState(false)
     let [form, setForm] = React.useState<FormState>({});
+    let [inputForm, setInputForm] = React.useState('');
     const aceEditor = useRef(null);
-    const createForm = async (json: any) => {
-        const controller = await createFormInstance(json)
-        setForm({json: controller.getState(), controller})
+
+    const createForm = async (json: string) => {
+        setInputForm(json);
+        try {
+            const data = JSON.parse(json)
+            const controller = await createFormInstance(data)
+            setForm({json: controller.getState(), controller})
+        } catch (e) {
+        }
     }
     const fetchAF = async () => {
         let auth = {}
@@ -42,10 +52,10 @@ function App() {
                     'Authorization': 'Bearer ' + token
                 }
             }
+            setInputForm("")
             setForm({});
             const data = await fetchForm(REACT_APP_AEM_URL + formUrl, auth);
-            const currentJson = JSON.parse(data)
-            await createForm(currentJson);
+            await createForm(data);
         } else if (token_required) {
             setAskToken(true)
         }
@@ -56,13 +66,10 @@ function App() {
     }
 
     useEffect(() => {
-        createForm(json);
-        if (aceEditor.current) {
-            const editor = (aceEditor as any).current.editor
-        }
+        createForm(jsonString(json));
     }, [])
 
-    const tokenEntered = (close : any) => {
+    const tokenEntered = (close: any) => {
         close();
         setAskToken(false);
         forceRender();
@@ -79,16 +86,17 @@ function App() {
             <View gridArea="header">
                 <Flex direction="row" width="100%" gap="size-1000" alignItems="end">
                     <TextField label="Enter Form URL" width="500px" value={formUrl}
-                               onChange={(v) => setFormUrl(v)} />
+                               onChange={(v) => setFormUrl(v)}/>
                     <DialogTrigger type="modal" isOpen={askToken}>
-                        <ActionButton onPress={() => forceRender()} isDisabled={formUrl.length === 0}>Fetch Form</ActionButton>
+                        <ActionButton onPress={() => forceRender()} isDisabled={formUrl.length === 0}>Fetch
+                            Form</ActionButton>
                         {(close) => (
                             <Dialog>
                                 <Heading>Access Token Missing</Heading>
-                                <Divider />
+                                <Divider/>
                                 <Content>
                                     <TextArea label="Enter Access Token" width="100%" height="200px" value={token}
-                                               onChange={(v) => setToken(v)} />
+                                              onChange={(v) => setToken(v)}/>
                                 </Content>
                                 <ButtonGroup>
                                     <Button variant="secondary" onPress={() => {
@@ -109,21 +117,44 @@ function App() {
                 </Flex>
             </View>
             <View gridArea="sidebar" padding="size-200" paddingBottom="size-1000">
-                <AceEditor
-                    ref={aceEditor}
-                    className="form_ace_editor"
-                    mode="json"
-                    value={JSON.stringify(form.json || "loading Form", null, 2)}
-                    theme="github"
-                    name="UNIQUE_ID_OF_DIV"
-                    editorProps={{$blockScrolling: true}}
-                    tabSize={2}
-                    setOptions={{
-                        enableBasicAutocompletion: true,
-                        enableLiveAutocompletion: true,
-                        enableSnippets: true
-                    }}
-                />
+                <Tabs>
+                    <TabList>
+                        <Item key="json"> Form Json </Item>
+                        <Item key="state"> Form State </Item>
+                    </TabList>
+                    <TabPanels>
+                        <Item key="json">
+                            <AceEditor mode="json"
+                                       value={inputForm}
+                                       theme="github"
+                                       name="UNIQUE_ID_OF_DIV"
+                                       editorProps={{$blockScrolling: true}}
+                                       tabSize={2}
+                                       onChange={(value: any) => {
+                                           setForm({});
+                                           createForm(value)
+                                       }}
+                                       setOptions={{
+                                           enableBasicAutocompletion: true,
+                                           enableLiveAutocompletion: true,
+                                           enableSnippets: true
+                                       }}
+                            />
+                        </Item>
+                        <Item key="state">
+                            <AceEditor mode="json"
+                                       value={JSON.stringify(form.json || "loading Form", null, 2)}
+                                       theme="github"
+                                       readOnly={true}
+                                       name="UNIQUE_ID_OF_DIV"
+                                       editorProps={{$blockScrolling: true}}
+                                       tabSize={2}
+                            />
+                        </Item>
+                    </TabPanels>
+                </Tabs>
+
+
             </View>
             <View gridArea="content">
                 {form?.json !== undefined ? (

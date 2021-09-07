@@ -152,18 +152,12 @@ pipeline {
             steps {
                 script {
                     gitStrategy.checkout(env.BRANCH_NAME)
-                    runDocker('''npx lerna version patch --no-git-tag-version --no-push --yes
-                    echo ":release" > message.txt
-                    jq -r "(.name + \\"@\\" + .version)" packages/*/package.json >> message.txt
-                    ''')
-                    sh "git add package.json package-lock.json packages/*/package.json packages/*/package-lock.json"
                     gitStrategy.impersonate("cqguides", "cqguides") {
-                        sh "git commit -F message.txt"
-                        sh "tail -3 message.txt | while read in; do git tag \$in; done"
+                        runDocker("npx lerna version patch --no-push --yes")
                         sh "git push ${GIT_REPO_URL} --tags"
                         gitStrategy.push(env.BRANCH_NAME)
                     }
-                    runDocker("npx lerna publish from-package --yes ")
+                    runDocker("npx lerna publish from-package --yes")
                 }
             }
         }
