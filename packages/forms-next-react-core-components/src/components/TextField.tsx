@@ -1,7 +1,7 @@
-import { TextField } from '@adobe/react-spectrum';
+import { TextField, TextArea } from '@adobe/react-spectrum';
 import {FieldJson} from '@adobe/forms-next-core';
 import React from 'react';
-import {Handlers, useRenderer} from '../react-mapper/hooks';
+import {useRenderer} from '../react-mapper/hooks';
 import {
     baseConvertor,
     combineConvertors,
@@ -16,7 +16,7 @@ const mapper = combineConvertors(baseConvertor,
     stringConstraintConvertor);
 
 const TextFieldComponent = function (props: FieldJson) {
-    const renderedComponent = useRenderer(props, mapper, TextField);
+    const renderedComponent = useRenderer(props, mapper, props[':multiline'] === true ? TextArea : TextField);
     return renderedComponent;
 };
 

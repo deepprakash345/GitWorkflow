@@ -71,11 +71,11 @@ pipeline {
         stage("test") {
             steps {
                 runDocker('npx lerna run test-ci')
-                archiveArtifacts artifacts: "packages/forms-next-core/test-reports/junit.xml"
-                archiveArtifacts artifacts: "packages/forms-next-react-core-components/test-reports/junit.xml"
+                archiveArtifacts artifacts: "packages/*/coverage"
+                archiveArtifacts artifacts: "packages/*/test_reports"
                 junit "packages/forms-next-core/test-reports/junit.xml"
                 junit "packages/forms-next-react-core-components/test-reports/junit.xml"
-            }
+           }
 //             post {
 //                 always {
 //                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-core/coverage/cobertura-coverage.xml'])
@@ -103,37 +103,6 @@ pipeline {
                 }
             }
         }
-        stage("deploy - git pages") {
-            when {
-                allOf {
-                    expression { return !isPullRequest() }
-                    branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ "Publish.*") }
-                    anyOf {
-                        changeset "**/src/**/*.css"
-                        changeset "**/src/**/*.js"
-                        changeset "**/src/**/*.ts"
-                        changeset "**/src/**/*.tsx"
-                        changeset "**/package.json"
-                    }
-                }
-            }
-            steps {
-                script {
-                    sh 'mkdir tmp-dist'
-                    sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
-                    sh 'git checkout .'
-                    sh 'git checkout gh-pages'
-                    sh 'rm -r dist'
-                    sh 'mv tmp-dist dist'
-                    sh 'git add -A .'
-                    sh 'git commit -m "deploying to git pages"'
-                    gitStrategy.impersonate("cqguides", "cqguides") {
-                        gitStrategy.push('gh-pages')
-                    }
-                }
-            }
-        }
         stage("publish") {
             when {
                 allOf {
@@ -158,6 +127,37 @@ pipeline {
                         gitStrategy.push(env.BRANCH_NAME)
                     }
                     runDocker("npx lerna publish from-package --yes")
+                }
+            }
+        }
+        stage("deploy - git pages") {
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    expression { return gitStrategy.latestCommitMessage() ==~ "Publish.*" }
+                    anyOf {
+                        changeset "packages/forms-headless-sample/**/*.css"
+                        changeset "packages/forms-headless-sample/**/*.js"
+                        changeset "packages/forms-headless-sample/**/*.ts"
+                        changeset "packages/forms-headless-sample/**/*.tsx"
+                        changeset "packages/forms-headless-sample/package.json"
+                    }
+                }
+            }
+            steps {
+                script {
+                    sh 'mkdir tmp-dist'
+                    sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
+                    sh 'git checkout .'
+                    sh 'git checkout gh-pages'
+                    sh 'rm -r dist'
+                    sh 'mv tmp-dist dist'
+                    sh 'git add -A .'
+                    sh 'git commit -m "deploying to git pages"'
+                    gitStrategy.impersonate("cqguides", "cqguides") {
+                        gitStrategy.push('gh-pages')
+                    }
                 }
             }
         }
