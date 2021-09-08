@@ -17,7 +17,7 @@ test('should return the original value', () => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({':id' : 'something'}), {wrapper});
+    const {result} = renderHook(() => useRuleEngine({':id': 'something'}), {wrapper});
     expect(result.current[0]).toEqual({':id' : 'something'});
 });
 
@@ -26,7 +26,7 @@ test('should subscribe to the form', () => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({':id' : 'id'}), {wrapper});
+    const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
     expect(mockController.subscribe).toHaveBeenCalledWith('id', expect.anything());
 });
 
@@ -35,8 +35,8 @@ test('should trigger the dispatch event of the form', () => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({':id' : 'id'}), {wrapper});
-    result.current[1]('value');
+    const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
+    result.current[1].dispatchChange('value');
     expect(mockController.dispatch).toHaveBeenCalledWith(new Change('id', 'value'));
 });
 
@@ -45,8 +45,8 @@ test('should trigger the dispatch click event on the form', () => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({':id' : 'id'}), {wrapper});
-    result.current[2]();
+    const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
+    result.current[1].dispatchClick();
     expect(mockController.dispatch).toHaveBeenCalledWith(new Click('id', null));
 });
 
@@ -55,6 +55,6 @@ test('should subscribe to the form', () => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({':id' : 'id'}), {wrapper});
+    const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
     expect(mockController.subscribe).toHaveBeenCalledWith('id', expect.anything());
 });

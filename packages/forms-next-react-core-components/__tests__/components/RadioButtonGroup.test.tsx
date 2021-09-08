@@ -254,9 +254,11 @@ test('it should handle visible property', async () => {
         ':visible' : false
     };
 
-    const {inputs, container} = await helper(f);
-    expect(container?.innerHTML).toEqual('');
-    expect(inputs.length).toEqual(0);
+    const {container} = await helper(f);
+    expect(container?.innerHTML).toContain('display: none;');
+
+    const x = await helper(field);
+    expect(x.container?.innerHTML).not.toContain('display: none;');
 });
 
 

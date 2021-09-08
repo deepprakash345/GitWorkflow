@@ -1,31 +1,23 @@
 import { TextField } from '@adobe/react-spectrum';
-import { SpectrumTextFieldProps } from '@react-types/textfield';
 import {FieldJson} from '@adobe/forms-next-core';
-import {useRuleEngine} from '../react-mapper/hooks';
 import React from 'react';
-import {renderIfVisible} from '../react-mapper/utils';
-const TextFieldComponent = function (originalProps: FieldJson) {
-    const [props, dispatchChange] = useRuleEngine<FieldJson, string>(originalProps);
-    console.log('rendering TextField ' + props[':id'] + ' ' + props[':value']);
+import {Handlers, useRenderer} from '../react-mapper/hooks';
+import {
+    baseConvertor,
+    combineConvertors,
+    constraintConvertor,
+    fieldConvertor,
+    stringConstraintConvertor
+} from '../utils/SpectrumMappers';
 
-    const spectrumMapper: SpectrumTextFieldProps = {
-        name: props[':name'],
-        placeholder: props[':placeholder'],
-        value: props[':value'] as string,
-        label: props[':hideTitle'] === true ? '' :props[':title'],
-        ...(props[':constraints'] && props[':constraints'][':required'] && {
-            isRequired: true,
-            necessityIndicator: 'icon'
-        }),
-        validationState: props[':valid'] === false ? 'invalid' : (props[':valid'] === undefined ? undefined : 'valid'),
-        minLength: props[':constraints']?.[':minLength'],
-        maxLength: props[':constraints']?.[':maxLength'],
-        pattern: props[':constraints']?.[':pattern'],
-        onChange : dispatchChange
-    };
+const mapper = combineConvertors(baseConvertor,
+    fieldConvertor,
+    constraintConvertor,
+    stringConstraintConvertor);
 
-    return renderIfVisible(props, <TextField {...spectrumMapper} />);
+const TextFieldComponent = function (props: FieldJson) {
+    const renderedComponent = useRenderer(props, mapper, TextField);
+    return renderedComponent;
 };
-
 
 export default TextFieldComponent;

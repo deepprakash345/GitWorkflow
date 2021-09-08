@@ -234,9 +234,9 @@ test('selection made by the user sets the value', async () => {
         ...field,
         ':id' : field[':name']
     };
-    const {input, form} = await helper(f);
+    const {input, form, label} = await helper(f);
     // @ts-ignore
-    userEvent.click(input);
+    userEvent.click(label);
     const state = form?.getState();
     expect((state?.[':items'].name as FieldJson)[':value']).toEqual(true);
     expect(input?.checked).toEqual(true);
@@ -306,7 +306,6 @@ test('it should handle visible property', async () => {
         ':visible' : false
     };
 
-    const {input, container} = await helper(f);
-    expect(container.innerHTML).toEqual('');
-    expect(input).toBeNull();
+    const {input, container, label} = await helper(f);
+    expect(label?.getAttribute('style')).toEqual('display: none;');
 });

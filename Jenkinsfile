@@ -108,7 +108,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*") }
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ "Publish.*") }
                     anyOf {
                         changeset "**/src/**/*.css"
                         changeset "**/src/**/*.js"
@@ -139,7 +139,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ "Publish.*")}
                     anyOf {
                         changeset "**/src/**/*.css"
                         changeset "**/src/**/*.js"
