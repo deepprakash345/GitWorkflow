@@ -53,3 +53,15 @@ export const testController = () => {
         getState : jest.fn()
     };
 };
+
+
+export const randomString = (length: number) => {
+    let result           = '';
+    let characters       = 'abcdefghijklmnopqrstuvwxyz';
+    let charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+};
