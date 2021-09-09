@@ -3,7 +3,7 @@ module.exports = {
   coverageDirectory: 'target/coverage',
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
   testEnvironment: 'jsdom',
-  collectCoverage: true,
+  collectCoverage: false,
   coveragePathIgnorePatterns : ['__tests__/*'],
   testRegex: '__tests__/[^.]+\\.test\\.tsx',
   'moduleNameMapper' : {

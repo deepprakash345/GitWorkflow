@@ -28,9 +28,9 @@ def cleanUp() {
 
 def diffCoverage(String targetBranch, String packageName, Integer failThreshold) {
     echo "checking coverage for packages/${packageName}/coverage/diff-cover.html"
-    status = sh(script:"diff-cover --html-report packages/${packageName}/coverage/diff-cover.html --compare-branch ${targetBranch} packages/${packageName}/coverage/cobertura-coverage.xml --fail-under=${failThreshold}",
+    status = sh(script:"diff-cover --html-report packages/${packageName}/target/coverage/diff-cover.html --compare-branch ${targetBranch} packages/${packageName}/target/coverage/cobertura-coverage.xml --fail-under=${failThreshold}",
             returnStatus: true)
-    archiveArtifacts artifacts: "packages/${packageName}/coverage/diff-cover.html"
+    archiveArtifacts artifacts: "packages/${packageName}/target/coverage/diff-cover.html"
     return status
 }
 
@@ -81,7 +81,8 @@ pipeline {
                   cloverReportDir: 'packages/forms-next-react-core-components/target/coverage',
                   cloverReportFileName: 'clover.xml'
                 ])
-                archiveArtifacts artifacts: "packages/**/target/*"
+                archiveArtifacts artifacts: "packages/forms-next-react-core-components/target/**"
+                archiveArtifacts artifacts: "packages/forms-next-core/target/**"
                 junit "packages/forms-next-core/target/test-reports/junit.xml"
                 junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
 
