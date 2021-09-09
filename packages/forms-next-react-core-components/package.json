@@ -14,7 +14,7 @@
     "suiteName": "component tests",
     "suiteNameTemplate": "{filename}",
     "classNameTemplate": "component-test.{filename}",
-    "outputDirectory": "./test-reports"
+    "outputDirectory": "./target/test-reports"
   },
   "files": [
     "lib"
@@ -25,20 +25,20 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "test-ci": "jest --silent --coverage --coverageReporters=cobertura",
+    "test-ci": "jest --silent --coverage",
     "prepublishOnly": "npm run build && npm run test",
     "test": "jest --silent"
   },
   "dependencies": {
     "@adobe/forms-next-core": "^0.1.10",
-    "@adobe/react-spectrum": "^3.12.0",
-    "jest-junit": "^12.2.0"
+    "@adobe/react-spectrum": "^3.12.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "jest-junit": "^12.2.0",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^7.0.1",

@@ -6,7 +6,6 @@ export interface BaseConstraints {
 export interface StringConstraints extends BaseConstraints {
     minLength?: number;
     maxLength?: number;
-    multiline?: boolean;
 }
 
 export interface NumberConstraints extends BaseConstraints {
@@ -25,7 +24,7 @@ interface ContainerConstraints extends BaseConstraints {
 
 interface RuleField {
     rules?: {
-        [key: string] : string;
+        [key: string]: string;
     }
 }
 
@@ -41,21 +40,22 @@ export interface NodeModel {
 }
 
 interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
-   readonly type?: string;
-   readonly name?: string;
-   readonly dataRef?: string;
-   id: string
-   title?: string
-   description?: string
-   readOnly?: boolean;
-   enabled?: boolean;
-   visible?: boolean;
-   placeholder?: string;
-   valid?: boolean
-   constraints?: T;
-   viewType?: string
-   props?: {
-       [key: string] : any;
+    readonly type?: string;
+    readonly name?: string;
+    readonly dataRef?: string;
+    id: string
+    title?: string
+    description?: string
+    readOnly?: boolean;
+    enabled?: boolean;
+    visible?: boolean;
+    placeholder?: string;
+    valid?: boolean
+    constraints?: T;
+    multiline?: boolean;
+    viewType?: string
+    props?: {
+        [key: string]: any;
     }
 }
 
@@ -63,7 +63,7 @@ export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
     json: () => FieldJson
 }
 
-export interface FormMetaDataModel  {
+export interface FormMetaDataModel {
     readonly version: string
     readonly grammarVersion: string
     readonly locale: string,
@@ -71,7 +71,7 @@ export interface FormMetaDataModel  {
     readonly dataUrl: string
 }
 
-export type Items<T> = {[key:string]: T}
+export type Items<T> = { [key: string]: T }
 
 export interface ContainerModel<T> {
     children: Items<T>
@@ -98,18 +98,17 @@ export type Option = {
 type ConstraintsJson = {
     ':dataType'?: 'string' | 'boolean' | 'number'
     ':required'?: boolean;
-    ':pattern'?:string,
+    ':pattern'?: string,
     ':format'?: string
     ':expression'?: string;
     ':minLength'?: number;
     ':maxLength'?: number;
-    ':multiline'?: boolean;
     ':minimum'?: number;
     ':maximum'?: number;
     ':fracDigits'?: number;
     ':leadDigits'?: number;
     ':options'?: Option[];
-    ':enforceOptions' ?: boolean
+    ':enforceOptions'?: boolean
 }
 
 type ConstraintsMessages = {
@@ -117,7 +116,6 @@ type ConstraintsMessages = {
     ':expression'?: string;
     ':minLength'?: string;
     ':maxLength'?: string;
-    ':multiline'?: string;
     ':minimum'?: string;
     ':maximum'?: string;
     ':fracDigits'?: string;
@@ -126,12 +124,12 @@ type ConstraintsMessages = {
 }
 
 
-type BaseJson =  {
+type BaseJson = {
     ':id': string;
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string
-    ':hideTitle'?:boolean
+    ':hideTitle'?: boolean
     ':description'?: string
     ':enabled'?: boolean;
     ':visible'?: boolean;
@@ -148,8 +146,9 @@ export type FieldJson = BaseJson & {
     ':valid'?: boolean
     ':default'?: Primitives
     ':value'?: Primitives
+    ':multiline'?: boolean;
     ':props'?: {
-        [key: string] : any;
+        [key: string]: any;
     }
 }
 

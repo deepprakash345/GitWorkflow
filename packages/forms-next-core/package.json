@@ -15,7 +15,7 @@
     "suiteName": "core tests",
     "suiteNameTemplate": "{filename}",
     "classNameTemplate": "model-test.{filename}",
-    "outputDirectory": "./test-reports"
+    "outputDirectory": "./target/test-reports"
   },
   "files": [
     "lib"
@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "jest --silent",
-    "test-ci": "jest --silent --coverage --coverageReporters=cobertura",
+    "test-ci": "jest --silent --coverage",
     "build": "npx tsc",
     "clean": "rm -rf lib coverage",
     "prepublishOnly": "npm run build && npm run test"
