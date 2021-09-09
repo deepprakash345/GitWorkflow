@@ -73,12 +73,17 @@ pipeline {
                 runDocker('npx lerna run test-ci')
                 step([
                   $class: 'CloverPublisher',
-                  cloverReportDir: 'target/coverage',
+                  cloverReportDir: 'packages/forms-next-core/target/coverage',
+                  cloverReportFileName: 'clover.xml'
+                ])
+                step([
+                  $class: 'CloverPublisher',
+                  cloverReportDir: 'packages/forms-next-react-core-components/target/coverage',
                   cloverReportFileName: 'clover.xml'
                 ])
                 archiveArtifacts artifacts: "packages/**/target/*"
-                junit "packages/forms-next-core/test-reports/junit.xml"
-                junit "packages/forms-next-react-core-components/test-reports/junit.xml"
+                junit "packages/forms-next-core/target/test-reports/junit.xml"
+                junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
 
            }
 //             post {
