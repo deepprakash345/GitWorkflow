@@ -71,10 +71,15 @@ pipeline {
         stage("test") {
             steps {
                 runDocker('npx lerna run test-ci')
-                archiveArtifacts artifacts: "packages/*/coverage"
-                archiveArtifacts artifacts: "packages/*/test_reports"
+                step([
+                  $class: 'CloverPublisher',
+                  cloverReportDir: 'target/coverage',
+                  cloverReportFileName: 'clover.xml'
+                ])
+                archiveArtifacts artifacts: "packages/**/target/*"
                 junit "packages/forms-next-core/test-reports/junit.xml"
                 junit "packages/forms-next-react-core-components/test-reports/junit.xml"
+
            }
 //             post {
 //                 always {

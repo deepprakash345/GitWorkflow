@@ -15,7 +15,7 @@
     "suiteName": "core tests",
     "suiteNameTemplate": "{filename}",
     "classNameTemplate": "model-test.{filename}",
-    "outputDirectory": "./test-reports"
+    "outputDirectory": "./target/test-reports"
   },
   "files": [
     "lib"

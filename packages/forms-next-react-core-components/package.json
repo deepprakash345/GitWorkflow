@@ -14,7 +14,7 @@
     "suiteName": "component tests",
     "suiteNameTemplate": "{filename}",
     "classNameTemplate": "component-test.{filename}",
-    "outputDirectory": "./test-reports"
+    "outputDirectory": "./target/test-reports"
   },
   "files": [
     "lib"

@@ -1,5 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
+  coverageDirectory: 'target/coverage',
+  coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
   testEnvironment: 'node',
   collectCoverage: true,
   coveragePathIgnorePatterns : ['__tests__/*'],
