@@ -50,9 +50,11 @@ const renderDescription = (desc?: string) => {
 export const useRenderer = function(props:any, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
     const [state, handlers] = useRuleEngine<FieldJson, string>(props);
     const res = propsMapper(state, handlers);
+    const errMessage = state[':errorMessage'] || '';
     const description = res.description;
     return (<div className={'field'}>
         <Component {...res} />
         {description}
+        {errMessage.length > 0 ? <div>{errMessage}</div> : null}
     </div>);
 };
