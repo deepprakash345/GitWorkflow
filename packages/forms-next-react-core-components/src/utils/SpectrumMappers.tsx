@@ -2,6 +2,7 @@ import {FieldJson} from '@adobe/forms-next-core/lib';
 import {Handlers} from '../react-mapper/hooks';
 import {Radio} from '@adobe/react-spectrum';
 import React from 'react';
+import sanitizeHTML from 'sanitize-html';
 
 export type Convertor<T> = (props: T, handlers: Handlers) => any
 
@@ -21,11 +22,17 @@ export const combineConvertors = function combineConvertors<T>(...convertors: Co
 
 
 export const baseConvertor: Convertor<FieldJson> = (a, b) => {
+
+    const richTextTitle = (title:string = '') => {
+        const htmlProp = {__html : sanitizeHTML(title)};
+        return (<div dangerouslySetInnerHTML={htmlProp} /> );
+    };
+
     return {
         isHidden : a[':visible'] === false,
         name: a[':name'],
         isDisabled : a[':enabled'] === false,
-        label: a[':hideTitle'] === true ? '' : a[':title']
+        label: a[':hideTitle'] === true ? '' : (a[':richTextTitle'] === true ? richTextTitle(a[':title']) : a[':title'])
     };
 };
 

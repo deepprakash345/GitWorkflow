@@ -129,6 +129,7 @@ type BaseJson = {
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string
+    ':richTextTitle' ?: boolean
     ':hideTitle'?: boolean
     ':description'?: string
     ':enabled'?: boolean;

@@ -27,7 +27,7 @@ def cleanUp() {
 }
 
 def diffCoverage(String targetBranch, String packageName, Integer failThreshold) {
-    echo "checking coverage for packages/${packageName}/coverage/diff-cover.html"
+    echo "checking coverage for packages/${packageName}/target/coverage/diff-cover.html"
     status = sh(script:"diff-cover --html-report packages/${packageName}/target/coverage/diff-cover.html --compare-branch ${targetBranch} packages/${packageName}/target/coverage/cobertura-coverage.xml --fail-under=${failThreshold}",
             returnStatus: true)
     archiveArtifacts artifacts: "packages/${packageName}/target/coverage/diff-cover.html"
@@ -64,23 +64,24 @@ pipeline {
         stage("build - packages") {
             steps {
                 runDocker('npm install')
-                runDocker('npx lerna bootstrap --ignore forms-headless-sample')
-                runDocker('npx lerna run build --no-private')
+                runDocker('npx lerna bootstrap')
+                runDocker('npx lerna run build')
             }
         }
         stage("test") {
             steps {
                 runDocker('npx lerna run test-ci')
-                step([
-                  $class: 'CloverPublisher',
-                  cloverReportDir: 'packages/forms-next-core/target/coverage',
-                  cloverReportFileName: 'clover.xml'
-                ])
-                step([
-                  $class: 'CloverPublisher',
-                  cloverReportDir: 'packages/forms-next-react-core-components/target/coverage',
-                  cloverReportFileName: 'clover.xml'
-                ])
+                // need to aggregate the reports, until then no reporting
+//                 step([
+//                   $class: 'CloverPublisher',
+//                   cloverReportDir: 'packages/forms-next-core/target/coverage',
+//                   cloverReportFileName: 'clover.xml'
+//                 ])
+//                 step([
+//                   $class: 'CloverPublisher',
+//                   cloverReportDir: 'packages/forms-next-react-core-components/target/coverage',
+//                   cloverReportFileName: 'clover.xml'
+//                 ])
                 archiveArtifacts artifacts: "packages/forms-next-react-core-components/target/**"
                 archiveArtifacts artifacts: "packages/forms-next-core/target/**"
                 junit "packages/forms-next-core/target/test-reports/junit.xml"
@@ -94,7 +95,7 @@ pipeline {
 //                 }
 //               }
         }
-        stage("coverage") {
+        stage("diff coverage") {
             when {
                 expression { return isPullRequest() }
             }
@@ -102,19 +103,7 @@ pipeline {
                 checkCoverage(COVERAGE_CHECKS)
             }
         }
-        stage("build - sample") {
-            environment {
-                REACT_APP_AEM_URL = 'https://author-p9552-e11552-cmstg.adobeaemcloud.com'
-                REACT_APP_AUTH_REQUIRED = 'true'
-            }
-            steps {
-                dir("packages/forms-headless-sample") {
-                    runDocker('npm install')
-                    runDocker('npm run build')
-                }
-            }
-        }
-        stage("publish") {
+        stage("deploy") {
             when {
                 allOf {
                     expression { return !isPullRequest() }
@@ -131,6 +120,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh 'git checkout .'
                     gitStrategy.checkout(env.BRANCH_NAME)
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         runDocker("npx lerna version patch --no-push --yes")
@@ -141,19 +131,31 @@ pipeline {
                 }
             }
         }
-        stage("deploy - git pages") {
+        stage("verify - deployment") {
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ "Publish.*")}
+                    anyOf {
+                        changeset "**/src/**/*.css"
+                        changeset "**/src/**/*.js"
+                        changeset "**/src/**/*.ts"
+                        changeset "**/src/**/*.tsx"
+                        changeset "**/package.json"
+                    }
+                }
+            }
+            steps {
+                runDocker('lerna exec -- npm install')
+            }
+        }
+        stage("prepare sample") {
             when {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
                     expression { return gitStrategy.latestCommitMessage() ==~ "Publish.*" }
-                    anyOf {
-                        changeset "packages/forms-headless-sample/**/*.css"
-                        changeset "packages/forms-headless-sample/**/*.js"
-                        changeset "packages/forms-headless-sample/**/*.ts"
-                        changeset "packages/forms-headless-sample/**/*.tsx"
-                        changeset "packages/forms-headless-sample/package.json"
-                    }
                 }
             }
             steps {
@@ -165,7 +167,21 @@ pipeline {
                     sh 'rm -r dist'
                     sh 'mv tmp-dist dist'
                     sh 'git add -A .'
-                    sh 'git commit -m "deploying to git pages"'
+                }
+            }
+        }
+        stage("deploy sample") {
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    expression { return gitStrategy.latestCommitMessage() ==~ "Publish.*" }
+                    expression { return gitStrategy.hasUncomittedChanges() }
+                }
+            }
+            steps {
+                script {
+                    sh 'git commit -m "deploying to git pages" || 1'
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         gitStrategy.push('gh-pages')
                     }
