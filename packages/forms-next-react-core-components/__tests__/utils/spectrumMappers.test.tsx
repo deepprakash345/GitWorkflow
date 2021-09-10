@@ -1,4 +1,4 @@
-import {baseConvertor, combineConvertors, Convertor} from '../../src/utils/SpectrumMappers';
+import {baseConvertor, combineConvertors, Convertor, fieldConvertor} from '../../src/utils/SpectrumMappers';
 import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@adobe/forms-next-core/lib';
@@ -80,6 +80,13 @@ const suites: Suite = {
             inProps : {':title' : '<script>some-title<script>'},
             outProp: 'label',
             tests : [[[false, undefined, 'string', null, 1], '<script>some-title<script>']]
+        }
+    },
+    'fieldConvertor' : {
+        ':readOnly' : {
+            func: fieldConvertor,
+            outProp: 'isReadOnly',
+            tests : [[[false, undefined, 'string, null', 1], false], [true, true]]
         }
     }
 };

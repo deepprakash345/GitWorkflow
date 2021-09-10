@@ -52,7 +52,8 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b) => {
         placeholder: a[':placeholder'],
         value: a[':value'],
         validationState: a[':valid'] === false ? 'invalid' : (a[':valid'] === undefined ? undefined : 'valid'),
-        onChange: b.dispatchChange
+        onChange: b.dispatchChange,
+        isReadOnly : a[':readOnly'] === true
     };
 };
 
