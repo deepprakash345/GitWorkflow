@@ -180,9 +180,11 @@ pipeline {
                 }
             }
             steps {
-                sh 'git commit -m "deploying to git pages" || 1'
-                gitStrategy.impersonate("cqguides", "cqguides") {
-                    gitStrategy.push('gh-pages')
+                script {
+                    sh 'git commit -m "deploying to git pages" || 1'
+                    gitStrategy.impersonate("cqguides", "cqguides") {
+                        gitStrategy.push('gh-pages')
+                    }
                 }
             }
         }
