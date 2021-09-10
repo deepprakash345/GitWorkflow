@@ -145,3 +145,39 @@ test.todo('richTextTitle should allow src attribute in img,video');/*, () => {
         label: <div dangerouslySetInnerHTML={{'__html': '<video src="someurl" /><b>text</b>'}} />
     });
 });*/
+
+test('description should strip script tags', () => {
+    let html = '<script>text</script><b>text</b>';
+    let res = baseConvertor({...base, ':description': html}, mockHandler);
+    expect(res).toMatchObject({
+        description: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
+    });
+});
+
+test('description should strip onerror attribute in img,video', () => {
+    let html = '<img onerror="somejavascript" /><b>text</b>';
+    let res = baseConvertor({...base,':description': html}, mockHandler);
+    expect(res).toMatchObject({
+        description: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
+    });
+
+    html = '<video onerror="somejavascript" /><b>text</b>';
+    res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    expect(res).toMatchObject({
+        label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
+    });
+});
+
+test.todo('description should allow src attribute in img,video');/*, () => {
+    let html = '<img src="someurl" /><b>text</b>';
+    let res = baseConvertor({...base, ':description': html}, mockHandler);
+    expect(res).toMatchObject({
+        description: <div dangerouslySetInnerHTML={{'__html': '<img src="someurl"/><b>text</b>'}} />
+    });
+
+    html = '<video src="someurl" /><b>text</b>';
+    res = baseConvertor({...base, ':description': html}, mockHandler);
+    expect(res).toMatchObject({
+        description: <div dangerouslySetInnerHTML={{'__html': '<video src="someurl" /><b>text</b>'}} />
+    });
+});*/

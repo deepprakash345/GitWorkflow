@@ -108,7 +108,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ "Publish.*")}
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*Publish.*")}
                     anyOf {
                         changeset "**/src/**/*.css"
                         changeset "**/src/**/*.js"
@@ -136,7 +136,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ "Publish.*")}
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*Publish.*")}
                     anyOf {
                         changeset "**/src/**/*.css"
                         changeset "**/src/**/*.js"
@@ -147,7 +147,7 @@ pipeline {
                 }
             }
             steps {
-                runDocker('lerna exec -- npm install')
+                runDocker('npx lerna exec -- npm install')
             }
         }
         stage("prepare sample") {
@@ -155,7 +155,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return gitStrategy.latestCommitMessage() ==~ "Publish.*" }
+                    expression { return gitStrategy.latestCommitMessage() ==~ ".*Publish.*" }
                 }
             }
             steps {
@@ -175,7 +175,7 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return gitStrategy.latestCommitMessage() ==~ "Publish.*" }
+                    expression { return gitStrategy.latestCommitMessage() ==~ ".*Publish.*" }
                     expression { return gitStrategy.hasUncomittedChanges() }
                 }
             }

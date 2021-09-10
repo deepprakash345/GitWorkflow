@@ -8,7 +8,7 @@ const Panel = function (originalProps: FieldsetJson) {
     const mappings = useContext(formContext).mappings;
     const [props] = useRuleEngine<FieldsetJson, string>(originalProps);
 
-    return renderIfVisible(props,(<Flex direction="column" width="size-2000" gap="size-100">
+    return renderIfVisible(props,(<Flex direction="column" width="300px" gap="10px">
                 {renderChildren(props, mappings)}
             </Flex>));
 };

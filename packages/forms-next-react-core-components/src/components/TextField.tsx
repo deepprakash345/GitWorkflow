@@ -13,7 +13,9 @@ import {
 const mapper = combineConvertors(baseConvertor,
     fieldConvertor,
     constraintConvertor,
-    stringConstraintConvertor);
+    stringConstraintConvertor, (a, b) => {
+        return {width: '300px'};
+    });
 
 const TextFieldComponent = function (props: FieldJson) {
     const renderedComponent = useRenderer(props, mapper, props[':multiline'] === true ? TextArea : TextField);

@@ -32,7 +32,8 @@ export const baseConvertor: Convertor<FieldJson> = (a, b) => {
         isHidden : a[':visible'] === false,
         name: a[':name'],
         isDisabled : a[':enabled'] === false,
-        label: a[':hideTitle'] === true ? '' : (a[':richTextTitle'] === true ? richTextTitle(a[':title']) : a[':title'])
+        label: a[':hideTitle'] === true ? '' : (a[':richTextTitle'] === true ? richTextTitle(a[':title']) : a[':title']),
+        description: (a[':description'] && a[':description'].length > 0) ? richTextTitle(a[':description']) : null
     };
 };
 
