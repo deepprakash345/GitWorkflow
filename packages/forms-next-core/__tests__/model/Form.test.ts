@@ -258,10 +258,11 @@ test('an invalid value change should set the correct error message on the field'
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', ''));
+    expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
     expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('The value is required');
 });
 
-test('an invalid value change should set the correct error message on the field', async () => {
+test('an invalid datatype value should set the correct error message on the field', async () => {
     const formJson = create([{
         'f' : {
             ':constraints' : {
@@ -271,6 +272,7 @@ test('an invalid value change should set the correct error message on the field'
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'abcd'));
+    expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
     expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('There is an error in the field');
 });
 
@@ -299,6 +301,28 @@ test('an invalid value change should not update the data dom', async () => {
     let form = await createFormInstance(formJson);
     form.dispatch(new Change('f1', 'abcd'));
     expect(form.getState()[':data']).toEqual({});
+});
+
+test('making a value valid resets the valid state and removes the errorMessage', async () => {
+    const formJson = create([{
+        'f' : {
+            ':constraints' : {
+                ':required' : 'true'
+            },
+            ':constraintMessages' : {
+                ':required' : 'The value is required'
+            }
+        }
+    }, 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    form.dispatch(new Change('f1', ''));
+    expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
+    expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('The value is required');
+
+    form.dispatch(new Change('f1', '1234'));
+    expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(true);
+    expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('');
+
 });
 
 test('rules should modify the data dom', async () => {

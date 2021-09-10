@@ -138,6 +138,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
             this.trigger(elem[':id'], elem);
         } else {
             elem[':value'] = value;
+            elem[':errorMessage'] = '';
             //todo : make it conditional based on valid flag
             this.updateDataDom(elem);
             this.executeAllRules();

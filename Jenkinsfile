@@ -175,7 +175,6 @@ pipeline {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return gitStrategy.latestCommitMessage() ==~ ".*Publish.*" }
                     expression { return gitStrategy.hasUncomittedChanges() }
                 }
             }
