@@ -138,7 +138,7 @@ pipeline {
         stage("prepare sample") {
             when {
                 allOf {
-                    prepareSample
+                    expression { return prepareSample }
                     expression { return !isPullRequest() }
                     branch "main"
                 }
@@ -160,7 +160,7 @@ pipeline {
         stage("deploy sample") {
             when {
                 allOf {
-                    prepareSample
+                    expression { return prepareSample }
                     expression { return !isPullRequest() }
                     branch "main"
                     expression { return gitStrategy.hasUncomittedChanges() }
