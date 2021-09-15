@@ -131,25 +131,6 @@ pipeline {
                 }
             }
         }
-        stage("verify - deployment") {
-            when {
-                allOf {
-                    expression { return !isPullRequest() }
-                    branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*Publish.*")}
-                    anyOf {
-                        changeset "**/src/**/*.css"
-                        changeset "**/src/**/*.js"
-                        changeset "**/src/**/*.ts"
-                        changeset "**/src/**/*.tsx"
-                        changeset "**/package.json"
-                    }
-                }
-            }
-            steps {
-                runDocker('npx lerna exec -- npm install')
-            }
-        }
         stage("prepare sample") {
             when {
                 allOf {
@@ -160,6 +141,8 @@ pipeline {
             }
             steps {
                 script {
+                    runDocker('npx lerna exec -- npm install')
+                    runDocker('npx lerna run build')
                     sh 'mkdir tmp-dist'
                     sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
                     sh 'git checkout .'
