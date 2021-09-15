@@ -141,6 +141,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh "git pull ${GIT_REPO_URL}"
                     runDocker('npx lerna exec -- npm install')
                     runDocker('npx lerna run build')
                     sh 'mkdir tmp-dist'
