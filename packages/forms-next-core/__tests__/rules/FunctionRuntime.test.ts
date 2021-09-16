@@ -1,5 +1,5 @@
 import {create} from '../collateral';
-import {createFormInstance} from '../../src/FormInstance';
+import {createFormInstance} from '../../src';
 import FunctionRuntime from '../../src/rules/FunctionRuntime';
 import {Change, CustomEvent} from '../../src/controller/Actions';
 import nock from 'nock';

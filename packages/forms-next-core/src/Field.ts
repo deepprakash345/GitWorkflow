@@ -1,5 +1,5 @@
 import Node from './Node';
-import {FieldJson, FieldModel} from './Types';
+import {FieldJson, FieldModel} from './types';
 import {filterProps, undefinedValueFilter} from './utils/JsonUtils';
 
 

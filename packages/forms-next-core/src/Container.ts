@@ -1,5 +1,5 @@
 import Node from './Node';
-import {ContainerJson, ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel, Items} from './Types';
+import {ContainerJson, ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel, Items} from './types';
 import {getProperty} from './utils/JsonUtils';
 
 abstract class Container<T extends ContainerJson> extends Node<T> implements ContainerModel<FieldModel | FieldsetModel> {

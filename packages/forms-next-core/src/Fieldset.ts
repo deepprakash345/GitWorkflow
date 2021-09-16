@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './Types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
 import Field from './Field';
 
 

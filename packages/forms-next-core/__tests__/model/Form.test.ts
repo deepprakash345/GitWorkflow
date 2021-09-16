@@ -2,8 +2,7 @@ import {create, formWithRules} from '../collateral';
 import {createFormInstance} from '../../src/FormInstance';
 import {Change, Click, CustomEvent} from '../../src/controller/Actions';
 import Form from '../../src/Form';
-import {FieldJson} from '../../src/Types';
-import Field from '../../src/Field';
+import {FieldJson} from '../../src/types';
 
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);

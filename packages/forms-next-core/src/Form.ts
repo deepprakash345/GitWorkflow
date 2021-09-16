@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, Items, MetaDataJson} from './Types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, Items, MetaDataJson} from './types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';

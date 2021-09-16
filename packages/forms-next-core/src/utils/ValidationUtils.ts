@@ -1,4 +1,4 @@
-import {Option} from '../Types';
+import {OptionJson} from '../types';
 
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 
@@ -99,7 +99,7 @@ export const Constraints = {
         return {valid, value};
     },
 
-    options : (constraint: Option[], value: any) => {
+    options : (constraint: OptionJson[], value: any) => {
         return {
             valid: constraint.map(x => x[':value']).indexOf(value) > -1,
             value
