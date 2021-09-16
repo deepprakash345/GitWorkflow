@@ -8,6 +8,8 @@ SproutConfig config = new SproutConfig()
 config.setGithubAccessTokenId("cq-guides-password")
 Repository gitStrategy = RepositoryFactory.getStrategy(Repository.GIT, this)
 
+def prepareSample = false
+
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
 BUILDER_DOCKER_NAME="af2-web-runtime-builder"
@@ -63,8 +65,8 @@ pipeline {
         }
         stage("build - packages") {
             steps {
-                runDocker('npm install')
-                runDocker('npx lerna bootstrap')
+                runDocker('npm ci')
+                runDocker('npx lerna bootstrap --ci')
                 runDocker('npx lerna run build')
             }
         }
@@ -103,12 +105,12 @@ pipeline {
                 checkCoverage(COVERAGE_CHECKS)
             }
         }
-        stage("deploy") {
+        stage("publish") {
             when {
                 allOf {
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*Publish.*")}
+                    expression { return !(gitStrategy.latestCommitMessage() ==~ ".*:release.*")}
                     anyOf {
                         changeset "**/src/**/*.css"
                         changeset "**/src/**/*.js"
@@ -120,29 +122,31 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'git checkout .'
                     gitStrategy.checkout(env.BRANCH_NAME)
                     gitStrategy.impersonate("cqguides", "cqguides") {
-                        runDocker("npx lerna version patch --no-push --yes")
+                        runDocker("npx lerna version patch --no-push --yes -m \":release\"")
+                        runDocker("npx lerna publish from-package --yes")
+                        runDocker('npx lerna exec -- npm install')
+                        sh "git commit -a -m \":release Updating package-lock.json after version bump\""
                         sh "git push ${GIT_REPO_URL} --tags"
                         gitStrategy.push(env.BRANCH_NAME)
                     }
-                    runDocker("npx lerna publish from-package --yes")
+                    prepareSample = true
                 }
             }
         }
         stage("prepare sample") {
             when {
                 allOf {
+                    expression { return prepareSample }
                     expression { return !isPullRequest() }
                     branch "main"
-                    expression { return gitStrategy.latestCommitMessage() ==~ ".*Publish.*" }
                 }
             }
             steps {
                 script {
-                    runDocker('npx lerna exec -- npm install')
-                    runDocker('npx lerna run build')
+                    sh "git pull ${GIT_REPO_URL}"
+                    runDocker('npx lerna run build --scope=forms-headless-sample')
                     sh 'mkdir tmp-dist'
                     sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
                     sh 'git checkout .'
@@ -156,6 +160,7 @@ pipeline {
         stage("deploy sample") {
             when {
                 allOf {
+                    expression { return prepareSample }
                     expression { return !isPullRequest() }
                     branch "main"
                     expression { return gitStrategy.hasUncomittedChanges() }

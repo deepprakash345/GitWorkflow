@@ -27,7 +27,7 @@ at the root directory
 ## One Click Installation
 
 Package containing all the configurations and packages needed inside AEM can be found 
-[here](https://artifactory.corp.adobe.com/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
+[here](https://artifactory.corp.adobe.com/ui/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
 
 ## Build Everything - For the developer inside you
 
@@ -92,7 +92,7 @@ The steps are not yet verified but they should work
 
 1. Enable the feature toggle on your instance
 2. Upload the
-[af2-enablement](https://artifactory.corp.adobe.com/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
+[af2-enablement](https://artifactory.corp.adobe.com/ui/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
 package to your instance via VSTS.
 
 # Testing the demo on cloud
