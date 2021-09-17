@@ -1,3 +1,5 @@
+import {Controller} from './controller/Controller';
+
 export interface BaseConstraints {
     required?: boolean;
     expression?: string;
@@ -174,4 +176,9 @@ export type FieldsetJson = ContainerJson & {
 export type FormJson = ContainerJson & {
     ':metadata'?: MetaDataJson,
     ':data'?: any
+}
+
+export type FormState = {
+    json?: any,
+    controller?: Controller,
 }
