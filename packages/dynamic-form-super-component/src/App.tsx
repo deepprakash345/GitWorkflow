@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import './App.css';
-import {Grid, View, TextField, TextArea, Button, Flex} from '@adobe/react-spectrum'
+import {Grid, View} from '@adobe/react-spectrum'
 import json from './samples/wizard.json';
 import mappings from './mappings'
 import DynamicForm from "@adobe/forms-next-react-core-components/lib/components/DynamicForm";

@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider, defaultTheme } from '@adobe/react-spectrum'
+// @ts-ignore
+import Spectrum2Provider from '@react/react-spectrum/Provider';
+import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum'
 ReactDOM.render(
   <React.StrictMode>
-    <Provider theme={defaultTheme}>
+  <Spectrum2Provider>
+    <Spectrum3Provider theme={defaultTheme}>
       <App />
-    </Provider>
+    </Spectrum3Provider>
+  </Spectrum2Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

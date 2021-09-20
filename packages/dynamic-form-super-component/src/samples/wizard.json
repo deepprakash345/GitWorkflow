@@ -4,12 +4,12 @@
     "panel" : {
       ":type": "fd/af/components/wizard",
       ":name": "panel",
-      ":title": "wizard",
+      ":title": "wizard title",
       ":items": {
         "step1": {
           ":type": "fd/af/components/wizardstep",
           ":name": "step1",
-          ":title": "Step 1",
+          ":title": "Step1",
           ":items": {
             "employer": {
               ":name": "employer",
@@ -44,7 +44,7 @@
         "step2": {
           ":type": "fd/af/components/wizardstep",
           ":name": "step2",
-          ":title": "Step 2",
+          ":title": "Step2",
           ":items": {
             "employment_position": {
               ":name": "employment_position",
