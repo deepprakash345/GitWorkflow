@@ -4,20 +4,47 @@
     "panel" : {
       ":type": "fd/af/components/wizard",
       ":name": "panel",
-      ":title": "wizard title",
+      ":title": "wizard abc",
       ":items": {
         "step1": {
           ":type": "fd/af/components/wizardstep",
           ":name": "step1",
           ":title": "Step1",
           ":items": {
-            "employer": {
-              ":name": "employer",
+            "employerFName": {
+              ":name": "employerFName",
               ":type": "fd/af/components/guidetextbox",
-              ":title": "Employer's Name",
+              ":title": "Employer's First Name",
               ":constraints": {
                 ":dataType": "string",
                 ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            },
+            "employerLName": {
+              ":name": "employerLName",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employer's Last Name",
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            },
+            "employerFullName": {
+              ":name": "employerFullName",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employer's Full Name",
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":rules": {
+                ":value": "$form.panel.step1.employerFName.value + ' ' + $form.panel.step1.employerLName.value"
               },
               ":constraintMessages": {
                 ":required": "The field is required"
@@ -92,7 +119,6 @@
     }
   },
   ":events": {
-    "submit" : "submit_form('submitSuccess', 'submitError')",
     "submitSuccess": "show_message_box($form.thankyouMessage)"
   },
   "thankyouMessage": "Thank you for submitting the form",
