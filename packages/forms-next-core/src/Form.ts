@@ -71,8 +71,10 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                         if (elem[':events']?.[eventName]) {
                             this._executeRule(elem, elem[':events']?.[eventName]);
                         }
-                        // invoke any custom subscribers
-                        this.trigger(eventName, elem);
+                        if (action.id == '$form') {
+                            // invoke any custom subscribers
+                            this.trigger(eventName, elem);
+                        }
                     }
             }
         }

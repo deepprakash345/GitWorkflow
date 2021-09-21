@@ -119,6 +119,7 @@
     }
   },
   ":events": {
+    "submit" : "submit_form('submitSuccess', 'submitError')",
     "submitSuccess": "show_message_box($form.thankyouMessage)"
   },
   "thankyouMessage": "Thank you for submitting the form",

@@ -6,8 +6,8 @@ import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 
-const Form = function (props: { formJson: any, mappings: any, onSubmit?: FormEventHandler}) {
-    const { formJson, mappings, onSubmit} = props;
+const Form = function (props: { formJson: any, mappings: any, onSubmit?: FormEventHandler, onCustomEvent?: FormEventHandler}) {
+    const { formJson, mappings, onSubmit, onCustomEvent} = props;
     let [controller, setController] = React.useState<Controller|undefined>(undefined);
     const createForm = async (json: string) => {
         try {
@@ -16,6 +16,12 @@ const Form = function (props: { formJson: any, mappings: any, onSubmit?: FormEve
             if (typeof onSubmit === 'function') {
                 controller.subscribe('submit', () => {
                     onSubmit(controller.getState()[':data']);
+                });
+            }
+            // todo: have to handle custom events in trigger API in Form.ts later
+            if (typeof onCustomEvent === 'function') {
+                controller.subscribe('customEvent', () => {
+                    onCustomEvent(controller.getState()[':data']);
                 });
             }
             setController(controller);
