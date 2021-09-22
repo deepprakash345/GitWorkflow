@@ -6,8 +6,7 @@ This is a demo site to test the dynamic form component using quarry.
 
 ## Start the React APP
 
-Navigate to `packages/dynamic-form-super-component` and run the command `npm run start`. 
-You can execute `lerna run start` from the project's root directory as well
+Navigate to `packages/dynamic-form-super-component` and run the command `npm run start`.
 
 
 
