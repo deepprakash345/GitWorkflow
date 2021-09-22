@@ -1,12 +1,13 @@
 import { Flex } from '@adobe/react-spectrum';
-import React, {FormEventHandler, useEffect} from 'react';
+import React, {FormEventHandler, JSXElementConstructor, useEffect} from 'react';
 import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {FormJson} from '@adobe/forms-next-core';
 
-const Form = function (props: { formJson: any, mappings: any, onSubmit?: FormEventHandler, onCustomEvent?: FormEventHandler}) {
+const Form = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}, onSubmit?: FormEventHandler, onCustomEvent?: FormEventHandler}) {
     const { formJson, mappings, onSubmit, onCustomEvent} = props;
     let [controller, setController] = React.useState<Controller|undefined>(undefined);
     const createForm = async (json: string) => {
@@ -14,6 +15,7 @@ const Form = function (props: { formJson: any, mappings: any, onSubmit?: FormEve
             const data = JSON.parse(json);
             const controller = await createFormInstance(data);
             if (typeof onSubmit === 'function') {
+                // todo: have to fix this, support for subscribing events needs to be different than model update
                 controller.subscribe('submit', () => {
                     onSubmit(controller.getState()[':data']);
                 });

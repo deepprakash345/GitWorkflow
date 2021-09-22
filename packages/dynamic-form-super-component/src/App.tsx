@@ -15,7 +15,7 @@ function App() {
         <Grid>
             <View gridArea="content">
                 {json !== undefined ? (
-                    <DynamicForm formJson={json} mappings={mappings} onSubmit={(data)=> window.alert(JSON.stringify(data))}></DynamicForm>
+                    <DynamicForm formJson={json} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data))}/>
                 ) : 'Loading Form...'}
             </View>
         </Grid>

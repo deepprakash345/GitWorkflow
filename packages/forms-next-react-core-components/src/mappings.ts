@@ -3,7 +3,7 @@ import Button from './components/Button';
 import Panel from './components/Panel';
 import Checkbox from './components/Checkbox';
 import RadioGroup from './components/RadioButtonGroup';
-const mappings: any = {
+const mappings = {
     'fd/af/components/guidetextbox' : TextField,
     'fd/af/components/guidecheckbox' : Checkbox,
     'fd/af/components/guidebutton' : Button,

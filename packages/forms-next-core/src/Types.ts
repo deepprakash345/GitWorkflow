@@ -45,7 +45,7 @@ interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
     readonly type?: string;
     readonly name?: string;
     readonly dataRef?: string;
-    id: string
+    id?: string
     title?: string
     description?: string
     readOnly?: boolean;
@@ -127,7 +127,7 @@ type ConstraintsMessages = {
 
 
 type BaseJson = {
-    ':id': string;
+    ':id'?: string;
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string
@@ -182,3 +182,6 @@ export type FormState = {
     json?: any,
     controller?: Controller,
 }
+
+// todo: have to implement this to have strong types in DynamicForm component
+export type formElementTypes = 'textarea'|'textfield'|'button'|'panel'|'wizard';

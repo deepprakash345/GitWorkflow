@@ -4,7 +4,7 @@
     "panel" : {
       ":type": "fd/af/components/wizard",
       ":name": "panel",
-      ":title": "wizard abc",
+      ":title": "Custom Wizard",
       ":items": {
         "step1": {
           ":type": "fd/af/components/wizardstep",
@@ -15,6 +15,7 @@
               ":name": "employerFName",
               ":type": "fd/af/components/guidetextbox",
               ":title": "Employer's First Name",
+              ":default": "",
               ":constraints": {
                 ":dataType": "string",
                 ":required": true
@@ -27,6 +28,7 @@
               ":name": "employerLName",
               ":type": "fd/af/components/guidetextbox",
               ":title": "Employer's Last Name",
+              ":default": "",
               ":constraints": {
                 ":dataType": "string",
                 ":required": true
@@ -92,9 +94,6 @@
               ":name": "employment_start_date",
               ":type": "fd/af/components/guidedatefield",
               ":title": "Employment Start Date",
-              ":rules": {
-                ":required": "$form.employment_status.value == true"
-              },
               ":constraints": {
                 ":dataType": "string",
                 ":format": "date",
@@ -108,8 +107,8 @@
         }
       }
     },
-    "submit": {
-      ":name": "submit",
+    "formSubmit": {
+      ":name": "formSubmit",
       ":type": "fd/af/components/guidebutton",
       ":title": "Submit",
       ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",

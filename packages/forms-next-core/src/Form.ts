@@ -73,6 +73,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                         }
                         if (action.id == '$form') {
                             // invoke any custom subscribers
+                            // todo: events needs to managed differently than model update
                             this.trigger(eventName, elem);
                         }
                     }
