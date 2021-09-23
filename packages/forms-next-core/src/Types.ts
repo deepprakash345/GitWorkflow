@@ -183,5 +183,5 @@ export type FormState = {
     controller?: Controller,
 }
 
-// todo: have to implement this to have strong types in DynamicForm component
+// todo: have to implement this to have strong types in AdaptiveForm super component
 export type formElementTypes = 'textarea'|'textfield'|'button'|'panel'|'wizard';

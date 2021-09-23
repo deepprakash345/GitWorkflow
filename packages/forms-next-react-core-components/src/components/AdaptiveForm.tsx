@@ -7,7 +7,7 @@ import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@adobe/forms-next-core';
 
-const Form = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}, onSubmit?: FormEventHandler, onCustomEvent?: FormEventHandler}) {
+const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}, onSubmit?: FormEventHandler, onCustomEvent?: FormEventHandler}) {
     const { formJson, mappings, onSubmit, onCustomEvent} = props;
     let [controller, setController] = React.useState<Controller|undefined>(undefined);
     const createForm = async (json: string) => {
@@ -48,4 +48,4 @@ const Form = function (props: { formJson: FormJson, mappings: {[key:string]:JSXE
     );
 };
 
-export default Form;
+export default AdaptiveForm;

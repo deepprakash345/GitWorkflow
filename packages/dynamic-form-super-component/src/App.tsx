@@ -3,7 +3,7 @@ import './App.css';
 import {Grid, View} from '@adobe/react-spectrum'
 import json from './samples/wizard.json';
 import mappings from './mappings'
-import DynamicForm from "@adobe/forms-next-react-core-components/lib/components/DynamicForm";
+import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
         <Grid>
             <View gridArea="content">
                 {json !== undefined ? (
-                    <DynamicForm formJson={json} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data))}/>
+                    <AdaptiveForm formJson={json} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data))}/>
                 ) : 'Loading Form...'}
             </View>
         </Grid>
