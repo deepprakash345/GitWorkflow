@@ -1,3 +1,5 @@
+import {Controller} from './controller/Controller';
+
 export interface BaseConstraints {
     required?: boolean;
     expression?: string;
@@ -43,7 +45,7 @@ interface BaseModel<T extends BaseConstraints> extends RuleField, NodeModel {
     readonly type?: string;
     readonly name?: string;
     readonly dataRef?: string;
-    id: string
+    id?: string
     title?: string
     description?: string
     readOnly?: boolean;
@@ -125,7 +127,7 @@ type ConstraintsMessages = {
 
 
 type BaseJson = {
-    ':id': string;
+    ':id'?: string;
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string
@@ -175,3 +177,11 @@ export type FormJson = ContainerJson & {
     ':metadata'?: MetaDataJson,
     ':data'?: any
 }
+
+export type FormState = {
+    json?: any,
+    controller?: Controller,
+}
+
+// todo: have to implement this to have strong types in AdaptiveForm super component
+export type formElementTypes = 'textarea'|'textfield'|'button'|'panel'|'wizard';

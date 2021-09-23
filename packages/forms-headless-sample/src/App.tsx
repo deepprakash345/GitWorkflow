@@ -6,7 +6,7 @@ import {fetchForm} from "@adobe/forms-next-core"
 import {jsonString} from "@adobe/forms-next-core/lib/utils/JsonUtils";
 import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
 import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
-import {createFormInstance} from "@adobe/forms-next-core/lib";
+import {createFormInstance, FormState} from "@adobe/forms-next-core/lib";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
@@ -23,10 +23,7 @@ import {Checkbox} from '@adobe/react-spectrum';
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
 
-type FormState = {
-    json?: any,
-    controller?: Controller,
-}
+
 
 function App() {
     let [formUrl, setFormUrl] = React.useState('');

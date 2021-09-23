@@ -68,7 +68,14 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                     if (action.id == '$all') {
                         this._executeEvents(eventName, action.payload.payload);
                     } else {
-                        this._executeRule(elem, elem[':events']?.[eventName]);
+                        if (elem[':events']?.[eventName]) {
+                            this._executeRule(elem, elem[':events']?.[eventName]);
+                        }
+                        if (action.id == '$form') {
+                            // invoke any custom subscribers
+                            // todo: events needs to managed differently than model update
+                            this.trigger(eventName, elem);
+                        }
                     }
             }
         }
