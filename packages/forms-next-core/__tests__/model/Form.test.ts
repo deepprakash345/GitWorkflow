@@ -72,13 +72,84 @@ test('dispatching an event on a field without rule should not throw exception', 
     expect(state).toEqual(form.getState());
 });
 
-test('subscription gets invoked whenever the state changes', async () => {
+test('default subscription gets invoked only when the state changes', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
     form.subscribe('f1', callback);
     form.dispatch(new Change('f1', 'value2'));
-    expect(callback).toHaveBeenCalled();
+    form.dispatch(new Click('f1', {}));
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'change');
+
+});
+
+test('change subscription gets invoked only when the change event is triggered', async () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    let callback = jest.fn();
+    form.subscribe('f1', callback, 'change');
+    form.dispatch(new Change('f1', 'value2'));
+    form.dispatch(new Click('f1', {}));
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'change');
+});
+
+test('click subscription gets invoked only when that click event is triggered', async () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    let callback = jest.fn();
+    form.subscribe('f1', callback, 'click');
+    form.dispatch(new Change('f1', 'value2'));
+    form.dispatch(new Click('f1', 'value2'));
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'click');
+});
+
+test('multiple subscription can be registered for a field', async () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    let callback = jest.fn();
+    let callback1 = jest.fn();
+    form.subscribe('f1', callback, 'change');
+    form.subscribe('f1', callback1, 'click');
+    form.dispatch(new Change('f1', 'value2'));
+    form.dispatch(new Click('f1', 'value2'));
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'change');
+    expect(callback1).toHaveBeenCalledTimes(1);
+    expect(callback1).toHaveBeenCalledWith('f1', expect.anything(), 'click');
+});
+
+test('unsubscribing from one event does not affect other subscriptions', async () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    let callback = jest.fn();
+    let callback1 = jest.fn();
+    let x = form.subscribe('f1', callback, 'change');
+    form.subscribe('f1', callback1, 'click');
+    x.unsubscribe();
+    form.dispatch(new Change('f1', 'value2'));
+    form.dispatch(new Click('f1', 'value2'));
+    expect(callback).not.toHaveBeenCalled();
+    expect(callback1).toHaveBeenCalledTimes(1);
+    expect(callback1).toHaveBeenCalledWith('f1', expect.anything(), 'click');
+});
+
+test('custom event subscription can be registered', async () => {
+    const formJson = create([{
+        f: {
+            ':events': {
+                'customEvent': 'f2.value > 20'
+            }
+        }
+    }, 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    let callback = jest.fn();
+    form.subscribe('f1', callback, 'customEvent');
+    form.dispatch(new CustomEvent('customEvent', 'value2', 'f1'));
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'customEvent');
 });
 
 const subscriptionCollateral = ['a',
@@ -98,7 +169,7 @@ const subscriptionCollateral = ['a',
             }
     }, 'd'];
 
-test('subscription gets invoked for dependent fields', async () => {
+test('default subscription gets invoked for dependent fields', async () => {
     const formJson = create(subscriptionCollateral);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
@@ -106,6 +177,16 @@ test('subscription gets invoked for dependent fields', async () => {
     form.dispatch(new Change('a1', '10'));
     expect(callback).toHaveBeenCalled();
 });
+
+test('change event subscription gets invoked for dependent fields', async () => {
+    const formJson = create(subscriptionCollateral);
+    let form = await createFormInstance(formJson);
+    let callback = jest.fn();
+    form.subscribe('c1', callback, 'change');
+    form.dispatch(new Change('a1', '10'));
+    expect(callback).toHaveBeenCalled();
+});
+
 
 test("subscription doesn't get invoked after unsubscribing", async () => {
     const formJson = create(subscriptionCollateral);

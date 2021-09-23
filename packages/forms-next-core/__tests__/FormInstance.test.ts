@@ -1,7 +1,7 @@
 import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent, create} from './collateral';
 import {createFormInstance, fetchForm} from '../src';
 import {jsonString} from '../src/utils/JsonUtils';
-import {FieldJson, FieldModel} from '../src/types';
+import {FieldJson} from '../src/types';
 const nock = require('nock');
 
 test('single field form', async () => {

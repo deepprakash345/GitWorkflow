@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, Items, MetaDataJson} from './types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, MetaDataJson} from './types';
 import {Action} from './controller/Actions';
 import {makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
@@ -17,7 +17,9 @@ class Form extends Container<FormJson> implements FormModel, Controller {
     private functions = new FunctionRuntime(this).getFunctions();
 
     private callbacks: {
-        [key: string]: callbackFn[]
+        [key: string]: {
+            [key:string] : callbackFn[]
+        }
     } = {}
 
     constructor(n: FormJson) {
@@ -62,6 +64,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                     break;
                 case 'click':
                     this.handleClick(elem);
+                    this.trigger(elem[':id'], elem, 'click');
                     break;
                 case 'customEvent':
                     eventName = action.payload[':name'];
@@ -69,6 +72,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                         this._executeEvents(eventName, action.payload.payload);
                     } else {
                         this._executeRule(elem, elem[':events']?.[eventName]);
+                        this.trigger(elem[':id'], elem, eventName);
                     }
             }
         }
@@ -135,15 +139,14 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         if (!valid) {
             console.log(`${constraint} validation failed for ${elem[':id']} with value ${value}`);
             elem[':errorMessage'] = elem[':constraintMessages']?.[constraint] || 'There is an error in the field';
-            this.trigger(elem[':id'], elem);
         } else {
             elem[':value'] = value;
             elem[':errorMessage'] = '';
             //todo : make it conditional based on valid flag
             this.updateDataDom(elem);
             this.executeAllRules();
-            this.trigger(elem[':id'], elem);
         }
+        this.trigger(elem[':id'], elem, 'change');
     }
 
     private handleClick(elem: any) {
@@ -167,23 +170,24 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         return getOrElse(node, convertedPath);
     }
 
-    private trigger(id: string, elem: any) {
-        if (id in this.callbacks) {
+    private trigger(id: string, elem: any, eventName: string) {
+        if (id in this.callbacks && eventName in this.callbacks[id]) {
             console.log(`subscription to be triggered : ${id}`);
             //todo:  add in queue
-            this.callbacks[id].map(x => {
-                x(id, elem);
+            this.callbacks[id][eventName].map(x => {
+                x(id, elem, eventName);
             });
         }
     }
 
-    subscribe(id: string, callback: callbackFn) {
-        this.callbacks[id] = this.callbacks[id] || [];
-        this.callbacks[id].push(callback);
+    subscribe(id: string, callback: callbackFn, eventName: string = 'change') {
+        this.callbacks[id] = this.callbacks[id] || {};
+        this.callbacks[id][eventName] = this.callbacks[id][eventName] || [];
+        this.callbacks[id][eventName].push(callback);
         console.log(`subscription added : ${id}, count : ${this.callbacks[id].length}`);
         return {
             unsubscribe: () => {
-                this.callbacks[id] = this.callbacks[id].filter(x => x !== callback);
+                this.callbacks[id][eventName] = this.callbacks[id][eventName].filter(x => x !== callback);
                 console.log(`subscription removed : ${id}, count : ${this.callbacks[id].length}`);
             }
         };
@@ -221,6 +225,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
             const evnt = item?.[':events']?.[eventName];
             if (evnt) {
                 let updates = this._executeRule(item, evnt, payload);
+                this.trigger(item[':id'], item, 'click');
                 item2 = mergeDeep(item, updates);
             }
             if (':items' in item2) {
@@ -262,7 +267,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                 let value = this._getElement(data, x[':dataRef'] || x[':name'], null);
                 if (value) {
                     x[':value'] = value;
-                    this.trigger(x[':id'], x);
+                    this.trigger(x[':id'], x, 'change');
                 }
             }
         });
@@ -281,7 +286,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                 if (':value' in updates) {
                     this.updateDataDom(items[key]);
                 }
-                this.trigger(x[':id'], items[key]);
+                this.trigger(x[':id'], items[key], 'change');
             }
             if (':items' in x) {
                 this.executeAllRules(x[':items']);
