@@ -56,7 +56,8 @@ export type RequestOptions = {
     method?: 'POST' | 'GET',
     headers?: any,
     mode?: string
-}
+};
+
 
 const defaultRequestOptions: RequestOptions = {
     method: 'GET'

@@ -67,7 +67,7 @@ class Form extends Container<FormJson> implements FormModel, Controller {
                 switch (action.type) {
                     case 'customEvent':
                         eventName = action.payload[':name'];
-                        this._executeEvent(eventName, action.payload);
+                        this._executeEvent(eventName, action.payload.payload);
                         this.trigger(x[':id'], elem.json(), eventName);
                         break;
                     default:
