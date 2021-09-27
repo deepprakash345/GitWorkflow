@@ -4,12 +4,12 @@ export interface Action {
     payload: any
 }
 
-abstract class ActionImpl implements Action {
+class ActionImpl implements Action {
     private _id: string
     protected _type: string
     private _payload: any
 
-    protected constructor(id: string, payload: any, type: string) {
+    constructor(id: string, payload: any, type: string) {
         this._id = id;
         this._payload = payload;
         this._type = type;
@@ -48,3 +48,5 @@ export class CustomEvent extends ActionImpl {
         }, 'customEvent');
     }
 }
+
+export const copyAction = (action: Action, id: string) => new ActionImpl(id, action.payload, action.type);

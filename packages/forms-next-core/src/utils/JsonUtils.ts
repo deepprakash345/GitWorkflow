@@ -60,3 +60,24 @@ export function getOrElse(obj: any, jsonPath: string){
 export const jsonString = (obj: any) => {
     return JSON.stringify(obj, null, 2);
 };
+
+/*
+anythingInsideDoubleQuotes = "[^"]+?";
+anythingOtherThanDot = [^.]+?
+followedByDotOrEndOfString=\.|$
+idRegexString = (anythingInsideDoubleQuotes | anythingOtherThanDot)(?:followedByDotOrEndOfString)
+ */
+const idRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g;
+
+export const splitTokens = function *(id: string)  {
+    if (id.length > 0) {
+        let match = idRegex.exec(id);
+        do {
+            if (match == null || match.length < 2) {
+                throw new Error(`Exception while parsing id ${id}`);
+            }
+            yield match[1];
+            match = idRegex.exec(id);
+        } while (match != null);
+    }
+};

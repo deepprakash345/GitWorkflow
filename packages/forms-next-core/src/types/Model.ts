@@ -1,4 +1,6 @@
-import {FieldJson, FieldsetJson, MetaDataJson} from './Json';
+import {FieldJson, FieldsetJson, FormJson, MetaDataJson} from './Json';
+import {Action} from '../controller/Actions';
+import RuleEngine from '../rules/RuleEngine';
 
 export interface BaseConstraints {
     required?: boolean;
@@ -55,6 +57,8 @@ interface BaseModel<T extends BaseConstraints> extends RuleField {
     props?: {
         [key: string]: any;
     }
+    isContainer: boolean
+    dispatch: (action: Action, ruleEngine: RuleEngine, context: any) => any
 }
 
 export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
@@ -71,19 +75,21 @@ export interface FormMetaDataModel {
 
 export type Items<T> = { [key: string]: T }
 
-export interface ContainerModel<T> {
-    children: Items<T>
+export interface ContainerModel {
+    items: Items<FieldsetModel | FieldModel>
+    isContainer: boolean
 }
 
-export interface FieldsetModel extends BaseModel<ContainerConstraints>, ContainerModel<FieldModel | FieldsetModel> {
+export interface FieldsetModel extends BaseModel<ContainerConstraints>, ContainerModel {
     type?: 'array' | 'object'
     count?: number
     initialCount?: number;
     json: () => FieldsetJson
 }
 
-export type FormModel = ContainerModel<FieldModel | FieldsetModel> & {
+export type FormModel = ContainerModel & {
+    id ?: string
     data?: any
     metadata?: MetaDataJson
-    json: () => any
+    json: () => FormJson
 }

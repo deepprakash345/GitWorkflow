@@ -15,6 +15,10 @@ class Node<T> {
     protected getP<S>(key: string, def: S): S {
         return getProperty(this._jsonModel, key, def);
     }
+
+    get isContainer() {
+        return false;
+    }
 }
 
 export default Node;

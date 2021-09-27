@@ -1,5 +1,6 @@
 import Form from './Form';
 import {jsonString} from './utils/JsonUtils';
+import {Change} from './controller/Actions';
 
 export const createFormInstance = async (formModel: any, options?: any): Promise<Form> => {
     let f = new Form({...formModel});
@@ -17,7 +18,7 @@ export const createFormInstance = async (formModel: any, options?: any): Promise
             }
         }
     }
-    f.executeAllRules();
+    f.dispatch(new Change('$all', undefined));
     return f;
 };
 

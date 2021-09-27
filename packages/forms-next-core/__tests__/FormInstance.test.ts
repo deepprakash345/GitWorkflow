@@ -6,7 +6,7 @@ const nock = require('nock');
 
 test('single field form', async () => {
     const actual = await createFormInstance(oneFieldForm);
-    expect(actual.children.name.json()).toEqual({
+    expect(actual.items.name.json()).toEqual({
         ':constraints' : { ':dataType': 'string' },
         ':type': 'text',
         ':name': 'name',
@@ -19,7 +19,7 @@ test('single field form', async () => {
 
 test('single field form with number type', async () => {
     const actual = await createFormInstance(numberFieldForm);
-    expect(actual.children.name.json()).toEqual({
+    expect(actual.items.name.json()).toEqual({
         ':type': 'numericEdit',
         ':constraints' : { ':dataType': 'number' },
         ':name': 'name',
@@ -34,7 +34,7 @@ test('single field form with default', async () => {
     const form = JSON.parse(JSON.stringify(oneFieldForm));
     form[':items'].name[':default'] = 'john doe';
     const actual = await createFormInstance(form);
-    expect(actual.children.name.json()).toEqual({
+    expect(actual.items.name.json()).toEqual({
         ':default': 'john doe',
         ':type': 'text',
         ':constraints' : { ':dataType': 'string' },
@@ -49,7 +49,7 @@ test('single field form with default', async () => {
 
 test('form with panel', async () => {
     const actual = await createFormInstance(formWithPanel);
-    expect(actual.children.name.json()).toEqual({
+    expect(actual.items.name.json()).toEqual({
         ':type': 'text',
         ':constraints' : { ':dataType': 'string' },
         ':name': 'name',
@@ -58,7 +58,7 @@ test('form with panel', async () => {
         ':enabled': true,
         ':id': 'name'
     });
-    expect(actual.children.address.json()).toEqual({
+    expect(actual.items.address.json()).toEqual({
         ':constraints' : { ':dataType': 'object' },
         ':name': 'address',
         ':id': 'address',
@@ -81,7 +81,7 @@ test('form with panel', async () => {
 
 test('nested fields with non form component', async () => {
     const actual = await createFormInstance(nonFormComponent);
-    expect(actual.children.name.json()).toEqual({
+    expect(actual.items.name.json()).toEqual({
         ':type': 'text',
         ':constraints' : { ':dataType': 'string' },
         ':name': 'name',
@@ -90,7 +90,7 @@ test('nested fields with non form component', async () => {
         ':enabled': true,
         ':id': 'name'
     });
-    expect(actual.children.somekey.json()).toEqual({
+    expect(actual.items.somekey.json()).toEqual({
         ':count': 1,
         ':initialCount': 1,
         ':visible' : true,

@@ -1,32 +1,43 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormJson, FormModel, MetaDataJson} from './types';
-import {Action} from './controller/Actions';
-import {makeFormula} from '@adobe/forms-next-expression-parser';
+import {
+    FieldJson,
+    FieldModel,
+    FieldsetJson,
+    FieldsetModel,
+    FormJson,
+    FormModel, Items,
+    MetaDataJson
+} from './types';
+import {Action, Change, copyAction} from './controller/Actions';
+import {Json, makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './rules/AFNodeFactory';
-import {getOrElse, mergeDeep} from './utils/JsonUtils';
+import {getOrElse, mergeDeep, splitTokens} from './utils/JsonUtils';
 import {callbackFn, Controller} from './controller/Controller';
 import FunctionRuntime from './rules/FunctionRuntime';
 import FormMetaData from './FormMetaData';
 import {createChild} from './Fieldset';
-import {Constraints} from './utils/ValidationUtils';
-
+import RuleEngine from './rules/RuleEngine';
+import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
 
 class Form extends Container<FormJson> implements FormModel, Controller {
 
     private nodeFactory = new AFNodeFactory()
-    private functions = new FunctionRuntime(this).getFunctions();
 
     private callbacks: {
         [key: string]: {
-            [key:string] : callbackFn[]
+            [key: string]: callbackFn[]
         }
     } = {}
+
+    private ruleEngine;
 
     constructor(n: FormJson) {
         super(n);
         this._jsonModel[':id'] = '$form';
         this._jsonModel[':data'] = {};
+        this.ruleEngine = new RuleEngine(new FunctionRuntime(this).getFunctions(), this);
     }
+
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
     get metaData(): FormMetaData {
@@ -39,120 +50,62 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         return createChild(child);
     }
 
-    public getElement(id: string) {
-        if (id === '$form') {
-            return this._jsonModel;
-        }
-        //todo: or use dataRefRegex here as well
-        let formula = makeFormula({}, this.nodeFactory);
-        let node = formula.compile(id);
-        return node.search(this._jsonModel[':items']);
+    public getElement(id: string): FormModel | FieldModel | FieldsetModel {
+        return super.getElement(id) as FormModel | FieldsetModel | FieldModel;
     }
 
     public dispatch(action: Action) {
         if (action.id.length > 0) {
-            let elem = this.getElement(action.id) as any;
+            let elem = this.getElement(action.id);
             let eventName;
             console.log('new action ' + JSON.stringify(action, null, 2));
-            if (elem == null && action.id !== '$all') {
-                throw `invalid action ${action.type}. ${action.id} doesn't exist`;
-            }
-            switch (action.type) {
-                case 'change':
-                    //todo : set undefined to empty value
-                    this.handleChange(elem, action.payload != null ? action.payload.toString() : undefined);
-                    break;
-                case 'click':
-                    this.handleClick(elem);
-                    this.trigger(elem[':id'], elem, 'click');
-                    break;
-                case 'customEvent':
-                    eventName = action.payload[':name'];
-                    if (action.id == '$all') {
-                        this._executeEvents(eventName, action.payload.payload);
-                    } else {
-                        this._executeRule(elem, elem[':events']?.[eventName]);
-                        this.trigger(elem[':id'], elem, eventName);
-                    }
-            }
-        }
-    }
-
-    private evaluateConstraints(elem: any, value: string) {
-        let constraint = ':dataType';
-        const constraints = elem[':constraints'] || {};
-        const res = Constraints.dataType(constraints[':dataType'] || 'string', value);
-        if (res.valid) {
-            const invalidConstraint = Object.entries(constraints).find(([key, restriction]) => {
-                let x = key.replace(/^:/, '');
-                if (x in Constraints && x !== 'dataType' && typeof (Constraints as any)[x] === 'function') {
-                    return !((Constraints as any)[x](restriction, res.value).valid);
-                } else if (x !== 'dataType') {
-                    console.error('invalid constraint ' + key);
-                    return false;
+            let context = {
+                '$form': this
+            };
+            if (elem !== undefined) {
+                const x = elem.json();
+                switch (action.type) {
+                    case 'customEvent':
+                        eventName = action.payload[':name'];
+                        this._executeEvent(eventName, action.payload);
+                        this.trigger(x[':id'], elem.json(), eventName);
+                        break;
+                    default:
+                        if (elem !== this) {
+                            let updates = (elem as FieldModel | FieldsetModel).dispatch(action, this.ruleEngine, context);
+                            if (':value' in updates && updates[':valid'] !== false) {
+                                const field = elem as FieldModel;
+                                this.updateDataDom(field);
+                                this.trigger(field.id, field.json(), 'change');
+                                this._dispatchActionToItems(context, new Change('', undefined));
+                            }
+                            if (action.type !== 'change' && elem.id !== undefined) {
+                                this.trigger(elem.id, elem.json(), action.type);
+                            }
+                        }
                 }
-            });
-            if (invalidConstraint != null) {
-                res.valid = false;
-                constraint = invalidConstraint[0];
+            } else if (action.id === '$all') {
+                this._dispatchActionToItems(context, action);
+            } else {
+                throw new Error(`invalid action ${action.type}. ${action.id} doesn't exist`);
             }
         }
-        return {
-            valid: res.valid,
-            constraint,
-            value: res.value
-        };
     }
 
-    private updateDataDom(elem: any) {
-        const dataRef: string = elem[':dataRef'] || elem[':name'] || '';
-        let data = this._jsonModel[':data'] || {};
-        this._jsonModel[':data'] = data;
-        if (dataRef.length > 0) {
-            let m = this.dataRefRegex.exec(dataRef);
-            if (m == null) {
-                throw new Error(`Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`);
+    private updateDataDom(elem: FieldModel) {
+        const dataRef: string = elem.dataRef || elem.name || '';
+        let data = this._jsonModel[':data'];
+        let tokens = splitTokens(dataRef);
+        let token = tokens.next();
+        while (!token.done) {
+            let nextToken = tokens.next();
+            if (!nextToken.done) {
+                data[token.value] = data[token.value] || {};
+                data = data[token.value];
+            } else {
+                data[token.value] = elem.value;
             }
-            do {
-                let nextM = this.dataRefRegex.exec(dataRef);
-                if (m.length < 2) {
-                    throw new Error(`Exception while parsing dataRef ${dataRef}. Element : ${elem[':id']}`);
-                } else {
-                    if (nextM != null) {
-                        let tmp = data[m[1]] || {};
-                        data[m[1]] = tmp;
-                        data = tmp;
-                    } else {
-                        data[m[1]] = elem[':value'];
-                    }
-                }
-                m = nextM;
-            } while (m != null);
-        }
-    }
-
-    private handleChange(elem: any, input: string) {
-        //todo : execute change event
-        let {valid, value, constraint} = this.evaluateConstraints(elem, input);
-        elem[':valid'] = valid;
-        elem[':value'] = value;
-        if (!valid) {
-            console.log(`${constraint} validation failed for ${elem[':id']} with value ${value}`);
-            elem[':errorMessage'] = elem[':constraintMessages']?.[constraint] || 'There is an error in the field';
-        } else {
-            elem[':value'] = value;
-            elem[':errorMessage'] = '';
-            //todo : make it conditional based on valid flag
-            this.updateDataDom(elem);
-            this.executeAllRules();
-        }
-        this.trigger(elem[':id'], elem, 'change');
-    }
-
-    private handleClick(elem: any) {
-        let rule = elem[':events']?.[':click'];
-        if (typeof rule === 'string' && rule.length > 0) {
-            this._executeRule(elem, rule);
+            token = nextToken;
         }
     }
 
@@ -193,103 +146,78 @@ class Form extends Container<FormJson> implements FormModel, Controller {
         };
     }
 
+    private _events: {
+        [key: string]: RuleNode
+    } = {};
+
+    private getCompiledEvent(eName: string) {
+        if (!(eName in this._events)) {
+            let eString = this._jsonModel[':events']?.[eName];
+            if (typeof eString === 'string' && eString.length > 0) {
+                this._events[eName] = this.ruleEngine.compileRule(eString);
+            }
+        }
+        return this._events[eName];
+    }
+
     /**
      * Execute a single rule on given element with the given payload
-     * @param element
-     * @param rule
+     * @param eventName
      * @param payload
      * @private
      */
-    private _executeRule(element: any, rule: any, payload?: any) {
-        if (typeof rule === 'string') {
-            let formula = makeFormula(this.functions, new AFNodeFactory(this._jsonModel, element));
-            let node = formula.compile(rule as string);
-            let context = {
-                '$form' : this._jsonModel,
-                '$field' : element,
-                '$event' : {
-                    'target' : element,
-                    'type' : rule,
-                    'payload' : payload
-                }
-            };
-            return node.search(element, context);
-        } else {
-            throw new Error(`only expression strings are supported. ${typeof (rule)} types are not supported`);
+    private _executeEvent(eventName: string, payload?: any) {
+        const event = this.getCompiledEvent(eventName);
+        const context = {
+            '$form': this,
+            '$field': this,
+            '$event': {
+                'target': this,
+                'type': eventName,
+                'payload': payload
+            }
+        };
+        if (event) {
+            event.search(this as unknown as Json, context);
         }
     }
 
-    _executeEvents(eventName: any, payload?: any) {
-        const checkAndExecute = (item: any) => {
-            let item2 = item;
-            const evnt = item?.[':events']?.[eventName];
-            if (evnt) {
-                let updates = this._executeRule(item, evnt, payload);
-                this.trigger(item[':id'], item, 'click');
-                item2 = mergeDeep(item, updates);
+    _dispatchActionToItems(context: any, action: Action, items: Items<FieldModel | FieldsetModel> = this.items) {
+        Object.entries(items).forEach(([key, x]: [string, any]) => {
+            let updates = x.dispatch(copyAction(action, x.id), this.ruleEngine, context);
+            if (updates) {
+                if (':value' in updates) {
+                    this.updateDataDom(x as FieldModel);
+                    //todo: execute dependencies
+                }
+                if (Object.keys(updates).length > 0) {
+                    this.trigger(x.id, x.json(), 'change');
+                }
             }
-            if (':items' in item2) {
-                let entries= Object.entries(item2[':items'])
-                    .map(([key, child]) => {
-                        return [key, checkAndExecute(child)];
-                    });
-                item2[':items'] = Object.fromEntries(entries);
+            if ('items' in x) {
+                this._dispatchActionToItems(context, action, x.items);
             }
-            return item2;
-        };
-        this._jsonModel = checkAndExecute(this._jsonModel);
+        });
     }
 
-    /**
-     * Execute the given rules on the given element
-     * @param element
-     * @param rules
-     * @private
-     */
-    private _executeRulesForElement(element: any, rules: any) {
-        return Object.fromEntries(Object.entries(rules).map(([prop, rule]) => {
-            return [prop, this._executeRule(element, rule)];
-        }));
-    }
 
     /**
      * prefill the form with data on the given element
      * @param data {object} data to prefill the form
      * @param [items] form element on which to apply the operation. The children of the element will also be included
      */
-    setData(data: Object, items: any = this._jsonModel[':items']) {
-        this._jsonModel[':data'] = Object.assign({}, data);
+    setData(data: Object, items: any = this.items) {
+        this._jsonModel[':data'] = {...data};
         Object.entries(items).forEach(([key, x]: [string, any]) => {
-            if (':items' in x) {
-                this.setData(data, x[':items']);
-            } else if (':dataRef' in x || ':name' in x) {
+            if ('items' in x) {
+                this.setData(data, x.items);
+            } else if (x.dataRef || x.name) {
                 // todo: handle the case for panels
-                let value = this._getElement(data, x[':dataRef'] || x[':name'], null);
+                let value = this._getElement(data, x.dataRef || x.name, null);
                 if (value) {
-                    x[':value'] = value;
-                    this.trigger(x[':id'], x, 'change');
+                    x.dispatch(new Change(x.id, value), this.ruleEngine, {'$form' : this});
+                    this.trigger(x.id, x, 'change');
                 }
-            }
-        });
-    }
-
-    /**
-     * Executes all rules on the items
-     * @param items elements on which to execute all the rules. default is the entire form
-     */
-    executeAllRules(items: any = this._jsonModel[':items']) {
-        Object.entries(items).forEach(([key, x]: [string, any]) => {
-            if (':rules' in x) {
-                let updates = this._executeRulesForElement(x, x[':rules']);
-                //todo: handle the case where updates are same as the original object
-                items[key] = mergeDeep(x, updates);
-                if (':value' in updates) {
-                    this.updateDataDom(items[key]);
-                }
-                this.trigger(x[':id'], items[key], 'change');
-            }
-            if (':items' in x) {
-                this.executeAllRules(x[':items']);
             }
         });
     }

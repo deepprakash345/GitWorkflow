@@ -37,4 +37,8 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
     return createChild(child);
   }
+
+  get name () {
+    return this.getP(':name', '');
+  }
 }

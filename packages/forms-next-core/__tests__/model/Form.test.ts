@@ -7,14 +7,14 @@ import {FieldJson} from '../../src/types';
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('f1') as FieldJson;
+    const f1 = form.getElement('f1').json() as FieldJson;
     expect(f1?.[':name']).toEqual('f1');
 });
 
 test('fetch a nested element from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('p1.p2.f2') as FieldJson;
+    const f1 = form.getElement('p1.p2.f2').json() as FieldJson;
     expect(f1[':name']).toEqual('f2');
 });
 
@@ -22,7 +22,7 @@ test('fetch $form from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
     let form = await createFormInstance(formJson);
     const f1 = form.getElement('$form');
-    expect(f1).toEqual(form.getState());
+    expect(f1.json()).toEqual(form.getState());
 });
 
 test('form with rules', async () => {
@@ -30,7 +30,6 @@ test('form with rules', async () => {
     formJson[':items'].firstName[':value'] = 'john';
     formJson[':items'].lastName[':value'] = 'doe';
     let form = await createFormInstance(formJson);
-    form.executeAllRules();
     let field = form.json()[':items'].fullName as FieldJson;
     expect(field[':value']).toEqual('john doe');
 });

@@ -16,7 +16,7 @@ type ConstraintsJson = {
     ':enforceOptions'?: boolean
 }
 
-type ConstraintsMessages = {
+export type ConstraintsMessages = {
     ':required'?: string;
     ':expression'?: string;
     ':minLength'?: string;
@@ -28,8 +28,13 @@ type ConstraintsMessages = {
     ':options'?: string;
 }
 
+type WithRules = {
+    ':rules' ?: Items<string>
+    ':events' ?: Items<string>
+}
 
-type BaseJson = {
+
+type BaseJson = WithRules & {
     ':id': string;
     ':type'?: string;
     ':dataRef'?: string;
