@@ -1,28 +1,28 @@
 import {create, formWithRules} from '../collateral';
-import {createFormInstance} from '../../src/FormInstance';
+import {createFormInstance} from '../../src';
 import {Change, Click, CustomEvent} from '../../src/controller/Actions';
-import Form from '../../src/Form';
 import {FieldJson} from '../../src/types';
+import {Controller} from '../../src/controller/Controller';
 
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('f1').json() as FieldJson;
+    const f1 = form.getElementController('f1').getState() as FieldJson;
     expect(f1?.[':name']).toEqual('f1');
 });
 
 test('fetch a nested element from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('p1.p2.f2').json() as FieldJson;
+    const f1 = form.getElementController('p1.p2.f2').getState() as FieldJson;
     expect(f1[':name']).toEqual('f2');
 });
 
 test('fetch $form from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
     let form = await createFormInstance(formJson);
-    const f1 = form.getElement('$form');
-    expect(f1.json()).toEqual(form.getState());
+    const f1 = form.getElementController('$form');
+    expect(f1.getState()).toEqual(form.getState());
 });
 
 test('form with rules', async () => {
@@ -30,7 +30,7 @@ test('form with rules', async () => {
     formJson[':items'].firstName[':value'] = 'john';
     formJson[':items'].lastName[':value'] = 'doe';
     let form = await createFormInstance(formJson);
-    let field = form.json()[':items'].fullName as FieldJson;
+    let field = form.getState()[':items'].fullName as FieldJson;
     expect(field[':value']).toEqual('john doe');
 });
 
@@ -38,8 +38,9 @@ const changeSpec = [
     {
         'name': 'update on change event for normal field',
         'items': ['f', 'f', 'f'],
-        'event': new Change('f1', 'value1'),
-        'expected': (form: Form) => {
+        'field' : 'f1',
+        'event': new Change('value1'),
+        'expected': (form: Controller) => {
             expect(form.getState()[':items'].f1).toEqual(expect.objectContaining({
                 ':name': 'f1',
                 ':value': 'value1'
@@ -48,10 +49,10 @@ const changeSpec = [
     }
 ];
 
-test.each(changeSpec)('$name', async ({items, event, expected}) => {
+test.each(changeSpec)('$name', async ({items, field, event, expected}) => {
     const formJson = create(items);
     let form = await createFormInstance(formJson);
-    form.dispatch(event);
+    form.getElementController(field).dispatch(event);
     expected(form);
 });
 
@@ -59,15 +60,15 @@ test('dispatching an event on unknown field throws exception', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     expect(() => {
-        form.dispatch(new Change('a1', 'value1'));
-    }).toThrow("invalid action change. a1 doesn't exist");
+        form.getElementController('a1').dispatch(new Change('value1'));
+    }).toThrow("invalid action change. element doesn't exist");
 });
 
 test('dispatching an event on a field without rule should not throw exception', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const state = form.getState();
-    form.dispatch(new Click('f1', {}));
+    form.getElementController('f1').dispatch(new Click());
     expect(state).toEqual(form.getState());
 });
 
@@ -75,34 +76,33 @@ test('default subscription gets invoked only when the state changes', async () =
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('f1', callback);
-    form.dispatch(new Change('f1', 'value2'));
-    form.dispatch(new Click('f1', {}));
+    form.getElementController('f1').subscribe(callback);
+    form.getElementController('f1').dispatch(new Change('value2'));
+    form.getElementController('f1').dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'change');
-
+    expect(callback).toHaveBeenCalledWith('change', expect.anything(), 'value2');
 });
 
 test('change subscription gets invoked only when the change event is triggered', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('f1', callback, 'change');
-    form.dispatch(new Change('f1', 'value2'));
-    form.dispatch(new Click('f1', {}));
+    form.getElementController('f1').subscribe(callback, 'change');
+    form.getElementController('f1').dispatch(new Change('value2'));
+    form.getElementController('f1').dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'change');
+    expect(callback).toHaveBeenCalledWith('change', expect.anything(), 'value2');
 });
 
 test('click subscription gets invoked only when that click event is triggered', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('f1', callback, 'click');
-    form.dispatch(new Change('f1', 'value2'));
-    form.dispatch(new Click('f1', 'value2'));
+    form.getElementController('f1').subscribe(callback, 'click');
+    form.getElementController('f1').dispatch(new Change('value2'));
+    form.getElementController('f1').dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'click');
+    expect(callback).toHaveBeenCalledWith('click', expect.anything(), undefined);
 });
 
 test('multiple subscription can be registered for a field', async () => {
@@ -110,14 +110,14 @@ test('multiple subscription can be registered for a field', async () => {
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
     let callback1 = jest.fn();
-    form.subscribe('f1', callback, 'change');
-    form.subscribe('f1', callback1, 'click');
-    form.dispatch(new Change('f1', 'value2'));
-    form.dispatch(new Click('f1', 'value2'));
+    form.getElementController('f1').subscribe(callback, 'change');
+    form.getElementController('f1').subscribe(callback1, 'click');
+    form.getElementController('f1').dispatch(new Change('value2'));
+    form.getElementController('f1').dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'change');
+    expect(callback).toHaveBeenCalledWith('change', expect.anything(), 'value2');
     expect(callback1).toHaveBeenCalledTimes(1);
-    expect(callback1).toHaveBeenCalledWith('f1', expect.anything(), 'click');
+    expect(callback1).toHaveBeenCalledWith('click', expect.anything(), undefined);
 });
 
 test('unsubscribing from one event does not affect other subscriptions', async () => {
@@ -125,14 +125,14 @@ test('unsubscribing from one event does not affect other subscriptions', async (
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
     let callback1 = jest.fn();
-    let x = form.subscribe('f1', callback, 'change');
-    form.subscribe('f1', callback1, 'click');
+    let x = form.getElementController('f1').subscribe(callback, 'change');
+    form.getElementController('f1').subscribe(callback1, 'click');
     x.unsubscribe();
-    form.dispatch(new Change('f1', 'value2'));
-    form.dispatch(new Click('f1', 'value2'));
+    form.getElementController('f1').dispatch(new Change( 'value2'));
+    form.getElementController('f1').dispatch(new Click( 'value2'));
     expect(callback).not.toHaveBeenCalled();
     expect(callback1).toHaveBeenCalledTimes(1);
-    expect(callback1).toHaveBeenCalledWith('f1', expect.anything(), 'click');
+    expect(callback1).toHaveBeenCalledWith('click', expect.anything(), 'value2');
 });
 
 test('custom event subscription can be registered', async () => {
@@ -145,17 +145,17 @@ test('custom event subscription can be registered', async () => {
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('f1', callback, 'customEvent');
-    form.dispatch(new CustomEvent('customEvent', 'value2', 'f1'));
+    form.getElementController('f1').subscribe( callback, 'customEvent');
+    form.getElementController('f1').dispatch(new CustomEvent('customEvent', 'value2'));
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('f1', expect.anything(), 'customEvent');
+    expect(callback).toHaveBeenCalledWith('customEvent', expect.anything(), 'value2');
 });
 
 const subscriptionCollateral = ['a',
     {
         b: {
             ':rules': {
-                ':required': 'd.value > 20'
+                ':value': '$form.d1.value'
             }
         }
     },
@@ -163,7 +163,7 @@ const subscriptionCollateral = ['a',
         c:
             {
                 ':rules': {
-                    ':value': 'a1.value + b1.value'
+                    ':value': '$form.a1.value + $form.b1.value'
                 }
             }
     }, 'd'];
@@ -172,8 +172,8 @@ test('default subscription gets invoked for dependent fields', async () => {
     const formJson = create(subscriptionCollateral);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('c1', callback);
-    form.dispatch(new Change('a1', '10'));
+    form.getElementController('c1').subscribe(callback);
+    form.getElementController('a1').dispatch(new Change('10'));
     expect(callback).toHaveBeenCalled();
 });
 
@@ -181,8 +181,8 @@ test('change event subscription gets invoked for dependent fields', async () => 
     const formJson = create(subscriptionCollateral);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('c1', callback, 'change');
-    form.dispatch(new Change('a1', '10'));
+    form.getElementController('c1').subscribe( callback, 'change');
+    form.getElementController('a1').dispatch(new Change( '10'));
     expect(callback).toHaveBeenCalled();
 });
 
@@ -191,9 +191,9 @@ test("subscription doesn't get invoked after unsubscribing", async () => {
     const formJson = create(subscriptionCollateral);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    const subscription = form.subscribe('c1', callback);
+    const subscription = form.getElementController('c1').subscribe( callback);
     subscription.unsubscribe();
-    form.dispatch(new Change('a1', '10'));
+    form.getElementController('a1').dispatch(new Change( '10'));
     expect(callback).not.toHaveBeenCalled();
 });
 
@@ -244,7 +244,7 @@ test.each(nonStringRules)('rules with $name type throw an exception', async ({na
 test('a value change updates the dataDom as well', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'value2'));
+    form.getElementController('f1').dispatch(new Change( 'value2'));
     expect(form.getState()[':data']).toEqual({
         'f1': 'value2'
     });
@@ -257,7 +257,7 @@ test('a value change updates the nested dataDom as well', async () => {
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'value2'));
+    form.getElementController('f1').dispatch(new Change( 'value2'));
     expect(form.getState()[':data']).toEqual({
         a: {
             b: {
@@ -276,7 +276,7 @@ test('a value change updates the nested dataDom as well', async () => {
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'value2'));
+    form.getElementController('f1').dispatch(new Change( 'value2'));
     expect(form.getState()[':data']).toEqual({
         a: {
             b: {
@@ -295,9 +295,9 @@ test('multiple field changes also keep the data modified', async () => {
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'value2'));
-    form.dispatch(new Change('f2', 'value2'));
-    form.dispatch(new Change('f3', 'value2'));
+    form.getElementController('f1').dispatch(new Change( 'value2'));
+    form.getElementController('f2').dispatch(new Change( 'value2'));
+    form.getElementController('f3').dispatch(new Change( 'value2'));
     expect(form.getState()[':data']).toEqual({
         a: {
             b: {
@@ -313,92 +313,92 @@ test('multiple field changes also keep the data modified', async () => {
 
 test('an invalid value change should set the invalid state of the field', async () => {
     const formJson = create([{
-        'f' : {
-            ':constraints' : {
-                ':dataType' : 'number'
+        'f': {
+            ':constraints': {
+                ':dataType': 'number'
             }
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'abcd'));
+    form.getElementController('f1').dispatch(new Change( 'abcd'));
     expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
 });
 
 test('an invalid value change should set the correct error message on the field', async () => {
     const formJson = create([{
-        'f' : {
-            ':constraints' : {
-                ':required' : 'true'
+        'f': {
+            ':constraints': {
+                ':required': 'true'
             },
-            ':constraintMessages' : {
-                ':required' : 'The value is required'
+            ':constraintMessages': {
+                ':required': 'The value is required'
             }
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', ''));
+    form.getElementController('f1').dispatch(new Change( ''));
     expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
     expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('The value is required');
 });
 
 test('an invalid datatype value should set the correct error message on the field', async () => {
     const formJson = create([{
-        'f' : {
-            ':constraints' : {
-                ':dataType' : 'number'
+        'f': {
+            ':constraints': {
+                ':dataType': 'number'
             }
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'abcd'));
+    form.getElementController('f1').dispatch(new Change( 'abcd'));
     expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
     expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('There is an error in the field');
 });
 
 test('an invalid constraint in the field should not throw an exception', async () => {
     const formJson = create([{
-        'f' : {
-            ':constraints' : {
-                ':dataType' : 'number',
-                ':positive' : true
+        'f': {
+            ':constraints': {
+                ':dataType': 'number',
+                ':positive': true
             }
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', '-10'));
-    expect(form.getState()[':data']).toEqual({'f1' : -10});
+    form.getElementController('f1').dispatch(new Change( '-10'));
+    expect(form.getState()[':data']).toEqual({'f1': -10});
 });
 
 test('an invalid value change should not update the data dom', async () => {
     const formJson = create([{
-        'f' : {
-            ':constraints' : {
-                ':dataType' : 'number'
+        'f': {
+            ':constraints': {
+                ':dataType': 'number'
             }
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', 'abcd'));
+    form.getElementController('f1').dispatch(new Change( 'abcd'));
     expect(form.getState()[':data']).toEqual({});
 });
 
 test('making a value valid resets the valid state and removes the errorMessage', async () => {
     const formJson = create([{
-        'f' : {
-            ':constraints' : {
-                ':required' : 'true'
+        'f': {
+            ':constraints': {
+                ':required': 'true'
             },
-            ':constraintMessages' : {
-                ':required' : 'The value is required'
+            ':constraintMessages': {
+                ':required': 'The value is required'
             }
         }
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', ''));
+    form.getElementController('f1').dispatch(new Change( ''));
     expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(false);
     expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('The value is required');
 
-    form.dispatch(new Change('f1', '1234'));
+    form.getElementController('f1').dispatch(new Change( '1234'));
     expect((form.getState()[':items'].f1 as FieldJson)[':valid']).toEqual(true);
     expect((form.getState()[':items'].f1 as FieldJson)[':errorMessage']).toEqual('');
 
@@ -443,9 +443,9 @@ test('dataDom is updated as per the dataType of the element', async () => {
         }
     }]);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Change('f1', '10'));
-    form.dispatch(new Change('f2', 'value2'));
-    form.dispatch(new Change('f3', 'true'));
+    form.getElementController('f1').dispatch(new Change( '10'));
+    form.getElementController('f2').dispatch(new Change( 'value2'));
+    form.getElementController('f3').dispatch(new Change( 'true'));
     expect(form.getState()[':data']).toEqual({
         number: 10,
         string: 'value2',
@@ -468,7 +468,7 @@ test('custom event should be executed for all the fields', async () => {
         }
     }]);
     let form = await createFormInstance(formJson);
-    form.dispatch(new CustomEvent('customClick', null));
+    form.dispatch(new CustomEvent('customClick', null, true));
     let f: FieldJson = form.getState()[':items'].f1;
     expect(f[':value']).toEqual(4);
     f = form.getState()[':items'].f2;
@@ -491,11 +491,11 @@ test('custom event should pass the payload to the event', async () => {
         }
     }]);
     let form = await createFormInstance(formJson);
-    form.dispatch(new CustomEvent('customClick1', {add: 3}));
+    form.dispatch(new CustomEvent('customClick1', {add: 3}, true));
     let f: FieldJson = form.getState()[':items'].f1;
     expect(f[':value']).toEqual(4);
 
-    form.dispatch(new CustomEvent('customClick2', null));
+    form.dispatch(new CustomEvent('customClick2', null, true));
     f = form.getState()[':items'].f2;
     expect(f[':value']).toEqual('myfield');
 
@@ -594,9 +594,9 @@ test.todo('subscription gets invoked only for dependent fields');/*, () => {
     let form = await createFormInstance(formJson);
     let callbackc1 = jest.fn();
     let callbackb1 = jest.fn();
-    form.subscribe('c1', callbackc1);
-    form.subscribe('b1', callbackb1);
-    form.dispatch(new Change('a1', '10'));
+    form.getElementController('c1').subscribe( callbackc1);
+    form.getElementController('b1').subscribe( callbackb1);
+    form.getElementController('a1').dispatch(new Change( '10'));
     expect(callbackc1).toHaveBeenCalled();
     expect(callbackb1).not.toHaveBeenCalled();
 });*/
@@ -605,8 +605,8 @@ test.todo('subscription gets invoked only if the state changes');/*, () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.subscribe('f1', callback);
-    form.dispatch(new Change('f1', 'value2'));
+    form.getElementController('f1').subscribe( callback);
+    form.getElementController('f1').dispatch(new Change( 'value2'));
     expect(callback).not.toHaveBeenCalled();
 });*/
 

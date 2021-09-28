@@ -1,4 +1,6 @@
-import {Items, Primitives} from './Model';
+export type Items<T> = { [key: string]: T }
+export type Primitives = string | number | boolean | null;
+
 
 type ConstraintsJson = {
     ':dataType'?: 'string' | 'boolean' | 'number'
@@ -28,14 +30,14 @@ export type ConstraintsMessages = {
     ':options'?: string;
 }
 
-type WithRules = {
+export type RulesJson = {
     ':rules' ?: Items<string>
     ':events' ?: Items<string>
 }
 
 
-type BaseJson = WithRules & {
-    ':id': string;
+type BaseJson = RulesJson & {
+    ':id'?: string;
     ':type'?: string;
     ':dataRef'?: string;
     ':title'?: string

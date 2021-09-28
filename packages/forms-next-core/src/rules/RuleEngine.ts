@@ -1,21 +1,21 @@
-import {FormModel} from '../types';
-import {JSONFormula, makeFormula, Json} from '@adobe/forms-next-expression-parser';
+import {JSONFormula, makeFormula} from '@adobe/forms-next-expression-parser';
 import AFNodeFactory from './AFNodeFactory';
+import FunctionRuntime from './FunctionRuntime';
 
-type FunctionType = {
-    [name: string]: (...Json: any[]) => Json;
-}
-
-export default class RuleEngine {
+class RuleEngine {
 
     formula: JSONFormula
 
-    constructor(private functions: FunctionType , private form: FormModel) {
-        this.formula = makeFormula(functions, new AFNodeFactory());
+    constructor() {
+        this.formula = makeFormula(FunctionRuntime.getFunctions(), new AFNodeFactory());
     }
 
     compileRule(rule: string) {
         return this.formula.compile(rule as string);
     }
 }
+
+export default new RuleEngine();
+
+
 

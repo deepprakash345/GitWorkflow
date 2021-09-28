@@ -1,19 +1,30 @@
 import Container from './Container';
 import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
 import Field from './Field';
+import {Controller} from './controller/Controller';
+import {Action} from './controller/Actions';
 
-
-export const createChild = (child: FieldsetJson | FieldJson) => {
+export const createChild = (child: FieldsetJson | FieldJson,
+                            createController: (elem: FieldModel | FieldsetModel) => Controller) => {
   let retVal: Fieldset | Field;
   if (':items' in child) {
-    retVal = new Fieldset(child as FieldsetJson);
+    retVal = new Fieldset(child as FieldsetJson, createController);
   } else {
-    retVal = new Field(child as FieldJson);
+    retVal = new Field(child as FieldJson, createController);
   }
   return retVal;
 };
 
 export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
+
+  private _controller;
+
+  public constructor (params: FieldsetJson,
+                      _createController: (elem : FieldModel | FieldsetModel) => Controller) {
+    super(params, _createController);
+    this._controller = _createController(this as FieldsetModel);
+  }
+
   get count () {
     return this.getP('count', 1);
   }
@@ -34,11 +45,15 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
     });
   }
 
-  protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
-    return createChild(child);
+  protected _createChild(child: FieldsetJson | FieldJson, _createController: (elem : FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel {
+    return createChild(child, _createController);
   }
 
   get name () {
     return this.getP(':name', '');
+  }
+
+  controller() {
+    return this._controller;
   }
 }

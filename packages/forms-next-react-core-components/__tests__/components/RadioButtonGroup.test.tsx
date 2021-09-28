@@ -4,7 +4,7 @@ import RadioButtonGroup from '../../src/components/RadioButtonGroup';
 import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@adobe/forms-next-core/lib';
-import Form from '@adobe/forms-next-core/lib/Form';
+import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 
 const field : FieldJson = {
     ':id' : 'field',
@@ -197,7 +197,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
 ];
 
 type Result = Input & {
-    form?: Form,
+    form?: Controller,
 }
 
 const helper = async (field : any, useProvider = true) : Promise<Result> => {

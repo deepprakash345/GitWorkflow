@@ -6,13 +6,11 @@ import {fetchForm} from "@adobe/forms-next-core"
 import {jsonString} from "@adobe/forms-next-core/lib/utils/JsonUtils";
 import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
 import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
-import {createFormInstance, FormState} from "@adobe/forms-next-core/lib";
+import {createFormInstance} from "@adobe/forms-next-core/lib";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
-import ace from 'ace-builds'
-import {Controller} from "@adobe/forms-next-core/lib/controller/Controller";
 import Form from "@adobe/forms-next-react-core-components/lib/components/Form";
 import {DialogTrigger, Dialog} from '@adobe/react-spectrum'
 import {Heading, Divider, Content, ButtonGroup, ActionButton} from '@adobe/react-spectrum'
@@ -23,13 +21,11 @@ import {Checkbox} from '@adobe/react-spectrum';
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
 
-
-
 function App() {
     let [formUrl, setFormUrl] = React.useState('');
     let [token, setToken] = React.useState('');
     let [askToken, setAskToken] = React.useState(false)
-    let [form, setForm] = React.useState<FormState>({});
+    let [form, setForm] = React.useState<any>({});
     let [inputForm, setInputForm] = React.useState('');
     let [serverUrl, setServerUrl] = React.useState(REACT_APP_AEM_URL)
     let [authRequired, setAuthRequired] = React.useState(token_required)

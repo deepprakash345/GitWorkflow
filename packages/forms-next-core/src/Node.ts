@@ -2,10 +2,9 @@ import {getProperty} from './utils/JsonUtils';
 
 
 class Node<T> {
-    protected _jsonModel: T
 
-    constructor (node: T) {
-      this._jsonModel = node;
+    constructor (protected _jsonModel: T) {
+
     }
 
     public json (): T {

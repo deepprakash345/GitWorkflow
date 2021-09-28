@@ -42,7 +42,7 @@ export function ignoredTestTable<T>(tests: TestCase<T>[]) :TestCase<T>[] {
     return tests.filter(t => t.x);
 }
 
-export const testController = () => {
+export const testController = () : Controller => {
     return {
         subscribe : jest.fn().mockReturnValue({
             unsubscribe: jest.fn()
@@ -50,7 +50,9 @@ export const testController = () => {
 
         dispatch : jest.fn(),
 
-        getState : jest.fn()
+        getState : jest.fn(),
+
+        getElementController : jest.fn()
     };
 };
 

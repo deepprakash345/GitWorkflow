@@ -1,6 +1,6 @@
-import {FieldJson, FieldsetJson, FormJson, MetaDataJson} from './Json';
+import {FieldJson, FieldsetJson, FormJson, Items, MetaDataJson, Primitives} from './Json';
 import {Action} from '../controller/Actions';
-import RuleEngine from '../rules/RuleEngine';
+import {Controller} from '../controller/Controller';
 
 export interface BaseConstraints {
     required?: boolean;
@@ -26,24 +26,37 @@ interface ContainerConstraints extends BaseConstraints {
     maxItems?: number;
 }
 
-interface RuleField {
+export interface ScriptableField {
     rules?: {
         [key: string]: string;
     }
+    events?: {
+        [key: string] : string
+    }
 }
-
-export type Primitives = string | number | boolean | null;
 
 interface ValueField {
     value: Primitives;
     default?: Primitives;
 }
 
-interface BaseModel<T extends BaseConstraints> extends RuleField {
+export interface Dispatcher {
+    dispatch: (action: Action, context: any, trigger: (x: string) => void) => any
+}
+
+export interface WithState<T> {
+    json : () => T
+}
+
+interface WithController {
+    controller :() => Controller
+}
+
+interface BaseModel<T extends BaseConstraints> extends Dispatcher {
     readonly type?: string;
     readonly name?: string;
     readonly dataRef?: string;
-    id: string
+    id?: string
     title?: string
     description?: string
     readOnly?: boolean;
@@ -58,12 +71,14 @@ interface BaseModel<T extends BaseConstraints> extends RuleField {
         [key: string]: any;
     }
     isContainer: boolean
-    dispatch: (action: Action, ruleEngine: RuleEngine, context: any) => any
+
 }
 
-export interface FieldModel extends BaseModel<FieldConstraints>, ValueField {
-    json: () => FieldJson
-}
+export interface FieldModel extends BaseModel<FieldConstraints>,
+    ValueField,
+    ScriptableField,
+    WithState<FieldJson>,
+    WithController {}
 
 export interface FormMetaDataModel {
     readonly version: string
@@ -73,23 +88,27 @@ export interface FormMetaDataModel {
     readonly dataUrl: string
 }
 
-export type Items<T> = { [key: string]: T }
-
-export interface ContainerModel {
+export interface ContainerModel extends WithController {
     items: Items<FieldsetModel | FieldModel>
     isContainer: boolean
+    getElement: (id: string) => FieldModel | ContainerModel | undefined
 }
 
-export interface FieldsetModel extends BaseModel<ContainerConstraints>, ContainerModel {
+export interface FieldsetModel extends BaseModel<ContainerConstraints>,
+    ContainerModel,
+    ScriptableField,
+    WithState<FieldsetJson>,
+    WithController {
     type?: 'array' | 'object'
     count?: number
     initialCount?: number;
-    json: () => FieldsetJson
 }
 
-export type FormModel = ContainerModel & {
+export interface FormModel extends Dispatcher,
+    ContainerModel,
+    ScriptableField,
+    WithState<FormJson> {
     id ?: string
     data?: any
     metadata?: MetaDataJson
-    json: () => FormJson
 }

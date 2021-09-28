@@ -1,16 +1,14 @@
 export interface Action {
     type: string,
-    id: string,
     payload: any
+    metadata: any
 }
 
 class ActionImpl implements Action {
-    private _id: string
     protected _type: string
-    private _payload: any
+    private _payload?: any
 
-    constructor(id: string, payload: any, type: string) {
-        this._id = id;
+    constructor(payload: any, type: string, private _metadata?: any) {
         this._payload = payload;
         this._type = type;
     }
@@ -19,34 +17,33 @@ class ActionImpl implements Action {
         return this._type;
     }
 
-    public get id() {
-        return this._id;
-    }
-
     public get payload() {
         return this._payload;
+    }
+
+    public get metadata() {
+        return this._metadata;
     }
 }
 
 export class Change extends ActionImpl {
-    constructor(id: string, payload: any) {
-        super(id, payload, 'change');
+    constructor(payload: any, dispatch: boolean = false) {
+        super(payload, 'change', {dispatch});
     }
 }
 
 export class Click extends ActionImpl {
-    constructor(id: string, payload: any) {
-        super(id, payload, 'click');
+    constructor(payload?: any, dispatch: boolean = false) {
+        super(payload, 'click', {dispatch});
     }
 }
 
 export class CustomEvent extends ActionImpl {
-    constructor(eventName: string, payload: any, id: string = '$all') {
-        super(id, {
-            ':name' : eventName,
-            payload
-        }, 'customEvent');
+    //todo: dispatch means bubble down, find a better name
+    constructor(eventName: string, payload: any, dispatch: boolean = false) {
+        super(payload, 'customEvent', {
+            ':name': eventName,
+            dispatch
+        });
     }
 }
-
-export const copyAction = (action: Action, id: string) => new ActionImpl(id, action.payload, action.type);
