@@ -208,8 +208,6 @@ ignoredTestTable(labelInputTests).forEach((v) => {
     test.todo(v.name);
 });
 
-
-
 test('if no options are defined then value cannot be selected', async () => {
     const f = {
         ':name': 'name',

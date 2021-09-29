@@ -1,5 +1,5 @@
 import {Constraints} from '../../src/utils/ValidationUtils';
-import {Option} from '../../src/Types';
+import {OptionJson} from '../../src/types';
 
 type TestCase = {
     name?: string
@@ -350,7 +350,7 @@ test('required test should fail if the value is null or empty', () => {
 });
 
 test('options constraint should pass if value exists inside options', () => {
-    let options: Option[] = [{
+    let options: OptionJson[] = [{
         ':value' : 0
     }, {
         ':value' :  1
@@ -366,7 +366,7 @@ test('options constraint should pass if value exists inside options', () => {
 });
 
 test("options constraint should fail if value doesn't exists inside options", () => {
-    let options: Option[] = [{
+    let options: OptionJson[] = [{
         ':value' : 0
     }, {
         ':value' :  1

@@ -2,10 +2,9 @@ import {getProperty} from './utils/JsonUtils';
 
 
 class Node<T> {
-    protected _jsonModel: T
 
-    constructor (node: T) {
-      this._jsonModel = node;
+    constructor (protected _jsonModel: T) {
+
     }
 
     public json (): T {
@@ -14,6 +13,10 @@ class Node<T> {
 
     protected getP<S>(key: string, def: S): S {
         return getProperty(this._jsonModel, key, def);
+    }
+
+    get isContainer() {
+        return false;
     }
 }
 

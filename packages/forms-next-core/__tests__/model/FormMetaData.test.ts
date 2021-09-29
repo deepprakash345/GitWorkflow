@@ -1,4 +1,4 @@
-import {MetaDataJson} from '../../src/Types';
+import {MetaDataJson} from '../../src/types';
 import FormMetaData from '../../src/FormMetaData';
 
 test('FormMetaData should return correct values', () => {

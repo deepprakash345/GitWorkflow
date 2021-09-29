@@ -16,23 +16,24 @@ export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, H
     const [elementState, setElementState] = useState(props);
     const context:IFormContext = useContext(formContext);
     const id = props[':id'] as string;
+    const controller = context.controller?.getElementController(id);
     useEffect(() => {
-        const subscription = context.controller?.subscribe(id, (id: string, state: any) => {
+        const subscription = controller?.subscribe((id: string, state: any) => {
             setElementState(Object.assign({}, state));
         });
         return () => {
             subscription?.unsubscribe();
         };
-    }, [id]);
+    });
 
     const dispatchChange = (val: P) => {
-        const changeAction = new Change(id as string, val);
-        context.controller?.dispatch(changeAction);
+        const changeAction = new Change(val);
+        controller?.dispatch(changeAction);
     };
 
     const dispatchClick = () => {
-        const clickAction = new Click(id as string, null);
-        context.controller?.dispatch(clickAction);
+        const clickAction = new Click(null);
+        controller?.dispatch(clickAction);
     };
 
     return [elementState, {dispatchChange, dispatchClick}];
@@ -54,7 +55,6 @@ export const useRenderer = function(props:any, propsMapper: Convertor<any>, Comp
     const description = res.description;
     return (<div className={'field'}>
         <Component {...res} />
-        {description}
         {errMessage.length > 0 ? <div>{errMessage}</div> : null}
     </div>);
 };

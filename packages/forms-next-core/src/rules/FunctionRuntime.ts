@@ -1,58 +1,54 @@
-import Form from '../Form';
-import {request, RequestOptions} from '../FormInstance';
 import {jsonString} from '../utils/JsonUtils';
 import {CustomEvent} from '../controller/Actions';
+import {request, RequestOptions} from '../utils/Fetch';
 
 declare var window: any;
 
-export default class FunctionRuntime {
-
-    constructor(private form: Form) {
-
-    }
+class FunctionRuntimeImpl {
 
     getFunctions () {
         return {
-            validate : () => {
-              return this.validate();
+            validate : (context: any) => {
+              return this.validate(context);
             },
-            get_data : () => {
-                return this.getData();
+            get_data : (context : any) => {
+                return this.getData(context);
             },
-            submit_form: (success: string, error: string) => {
-                this.submit(success, error);
+            submit_form: (context: any, success: string, error: string) => {
+                this.submit(context, success, error);
                 return {};
             },
-            show_message_box: (str?: String) => {
+            show_message_box: (context: any, str?: String) => {
                 //todo : let it be defined using some view mechanism
                 window.alert(str);
                 return {};
             },
-            dispatch_event: (element: any, eventName: string | any, payload?: any) => {
+            dispatch_event: (context: any, element: any, eventName: string | any, payload?: any) => {
+                let dispatch = false;
                 if (typeof element === 'string') {
                     payload = eventName;
                     eventName = element;
-                    element = {':id' : '$all'};
+                    dispatch = true;
                 }
-                this.form.dispatch(new CustomEvent(eventName, payload, element[':id']));
+                context.$form.controller().dispatch(new CustomEvent(eventName, payload, dispatch));
                 return {};
             }
         };
     }
 
-    private validate () {
+    private validate (context: any) {
         return true;
     }
 
-    private getData () {
-        return this.form.getState()[':data'];
+    private getData (context: any) {
+        return context.$form.controller().getState()[':data'];
     }
 
-    async submit(success: string, error: string) {
+    async submit(context: any, success: string, error: string) {
         // todo have to implement validate here
-        this.validate();
-        const endpoint = this.form.metaData?.action;
-        const data = jsonString(this.getData());
+        this.validate(context);
+        const endpoint = context.$form.metaData?.action;
+        const data = jsonString(this.getData(context));
         const formData = new FormData();
         formData.append(':data', data);
         formData.append(':contentType', 'application/json');
@@ -66,9 +62,13 @@ export default class FunctionRuntime {
         } catch (e) {
             //todo: define error payload
             console.log('error handled');
-            this.form.dispatch(new CustomEvent(error, {}));
+            context.$form.controller().dispatch(new CustomEvent(error, {}));
             return;
         }
-        this.form.dispatch(new CustomEvent(success, result));
+        context.$form.controller().dispatch(new CustomEvent(success, result));
     }
 }
+
+const FunctionRuntime = new FunctionRuntimeImpl();
+
+export default FunctionRuntime;

@@ -1,4 +1,4 @@
-import {renderHook, act} from '@testing-library/react-hooks';
+import {renderHook} from '@testing-library/react-hooks';
 import {useRuleEngine} from '../../src/react-mapper/hooks';
 import FormContext from '../../src/react-mapper/FormContext';
 import React from 'react';
@@ -12,6 +12,15 @@ beforeEach(() => {
     mockController = testController();
 });
 
+test('should fetch the field controller', () => {
+    const wrapper = (props : any) => {
+        return (<FormContext.Provider
+            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
+    };
+    renderHook(() => useRuleEngine({':id': 'something'}), {wrapper});
+    expect(mockController.getElementController).toHaveBeenCalledWith('something');
+});
+
 test('should return the original value', () => {
     const wrapper = (props : any) => {
         return (<FormContext.Provider
@@ -22,39 +31,33 @@ test('should return the original value', () => {
 });
 
 test('should subscribe to the form', () => {
+    mockController.getElementController = jest.fn().mockReturnValue(mockController);
     const wrapper = (props : any) => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
-    const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
-    expect(mockController.subscribe).toHaveBeenCalledWith('id', expect.anything());
+    renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
+    expect(mockController.subscribe).toHaveBeenCalledWith(expect.anything());
 });
 
 test('should trigger the dispatch event of the form', () => {
+    mockController.getElementController = jest.fn().mockReturnValue(mockController);
     const wrapper = (props : any) => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
     const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
     result.current[1].dispatchChange('value');
-    expect(mockController.dispatch).toHaveBeenCalledWith(new Change('id', 'value'));
+    expect(mockController.dispatch).toHaveBeenCalledWith(new Change('value'));
 });
 
 test('should trigger the dispatch click event on the form', () => {
+    mockController.getElementController = jest.fn().mockReturnValue(mockController);
     const wrapper = (props : any) => {
         return (<FormContext.Provider
             value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
     };
     const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
     result.current[1].dispatchClick();
-    expect(mockController.dispatch).toHaveBeenCalledWith(new Click('id', null));
-});
-
-test('should subscribe to the form', () => {
-    const wrapper = (props : any) => {
-        return (<FormContext.Provider
-            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
-    };
-    const {result} = renderHook(() => useRuleEngine({':id': 'id'}), {wrapper});
-    expect(mockController.subscribe).toHaveBeenCalledWith('id', expect.anything());
+    expect(mockController.dispatch).toHaveBeenCalledWith(new Click(null));
 });

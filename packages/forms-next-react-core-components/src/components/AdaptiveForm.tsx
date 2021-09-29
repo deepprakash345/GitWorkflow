@@ -16,15 +16,15 @@ const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:stri
             const controller = await createFormInstance(data);
             if (typeof onSubmit === 'function') {
                 // todo: have to fix this, support for subscribing events needs to be different than model update
-                controller.subscribe('submit', () => {
+                controller.subscribe(() => {
                     onSubmit(controller.getState()[':data']);
-                });
+                }, 'submit');
             }
             // todo: have to handle custom events in trigger API in Form.ts later
             if (typeof onCustomEvent === 'function') {
-                controller.subscribe('customEvent', () => {
+                controller.subscribe(() => {
                     onCustomEvent(controller.getState()[':data']);
-                });
+                }, 'customEvent');
             }
             setController(controller);
             // eslint-disable-next-line no-empty

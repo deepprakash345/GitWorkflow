@@ -13,8 +13,8 @@ export class AFPropertyNode implements Node {
         }
         if (typeof data === 'object') {
             const obj = data as any;
-            if (':items' in obj && !this.name.startsWith(':') && this.name in obj[':items']) {
-                return obj[':items'][this.name];
+            if ('items' in obj && this.name in obj.items) {
+                return obj['items'][this.name];
             } else {
                 return getProperty(obj, this.name, null);
             }

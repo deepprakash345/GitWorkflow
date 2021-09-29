@@ -1,7 +1,10 @@
 import Form from './Form';
 import {jsonString} from './utils/JsonUtils';
+import {Change} from './controller/Actions';
+import {Controller} from './controller/Controller';
+import {request} from './utils/Fetch';
 
-export const createFormInstance = async (formModel: any, options?: any): Promise<Form> => {
+export const createFormInstance = async (formModel: any, options?: any): Promise<Controller> => {
     let f = new Form({...formModel});
     if (f.metaData?.dataUrl) {
         let formData;
@@ -17,23 +20,8 @@ export const createFormInstance = async (formModel: any, options?: any): Promise
             }
         }
     }
-    f.executeAllRules();
-    return f;
-};
-
-declare var fetch: any;
-
-export const request = (url: string, data: any = null, options: RequestOptions = {}) => {
-    const opts = {...defaultRequestOptions, ...options};
-    return fetch(url, {
-        ...opts,
-        body: data
-    }).then((response: Response) => {
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
-        return response.json();
-    });
+    f.controller()?.dispatch(new Change(undefined, true));
+    return f.controller();
 };
 
 export const fetchForm = (url: string, headers: any = {}): Promise<string> => {
@@ -49,19 +37,6 @@ export const fetchForm = (url: string, headers: any = {}): Promise<string> => {
         return jsonString(formObj);
     });
 };
-
-export type RequestOptions = {
-    contentType?: string,
-    method?: 'POST' | 'GET',
-    headers?: any,
-    mode?: string
-};
-
-
-const defaultRequestOptions: RequestOptions = {
-    method: 'GET'
-};
-
 
 const fetchData = (url: string, data?: any) => {
     return request(url, data, {
