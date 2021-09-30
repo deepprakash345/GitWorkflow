@@ -9,7 +9,7 @@ export interface Action {
     type: string,
     payload: any
     metadata: any,
-    target: Controller
+    readonly target: Controller
 }
 
 export type callbackFn = (action: Action) => void
@@ -79,6 +79,13 @@ class ActionImplWithTarget implements Action {
     public get target() {
         return this._target;
     }
+
+    public toString() {
+        return JSON.stringify({
+            payload : this._payload,
+            type : this._type
+        });
+    }
 }
 
 export class Change extends ActionImpl {
@@ -125,7 +132,7 @@ class ControllerImpl implements Controller {
             }
         };
         const actionWithTarget = new ActionImplWithTarget(action, this);
-        this._elem.dispatch(actionWithTarget, context, this.trigger);
+        this._elem.dispatch(actionWithTarget, context, this.trigger.bind(this));
     }
 
     getState(): FieldJson | FieldsetJson | FormJson {

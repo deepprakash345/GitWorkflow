@@ -67,7 +67,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
     }
 
     dispatch(action: Action, context: any, trigger: (e: Action) => void) {
-        console.log('new action ' + JSON.stringify(action, null, 2));
+        console.log('new action ' + action);
         const evntName = action.type == 'customEvent' ?  action.metadata[':name'] : action.type;
         let updates : any;
         if (evntName === 'change') {

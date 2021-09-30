@@ -1,8 +1,48 @@
 import {create} from '../collateral';
 import {createFormInstance} from '../../src';
 import FunctionRuntime from '../../src/rules/FunctionRuntime';
-import {Change, Click, CustomEvent} from '../../src/controller/Actions';
+import {Action, Change, Click, Controller, CustomEvent} from '../../src/controller/Controller';
 import nock from 'nock';
+
+//todo : remove dupliacate code Form.test.ts
+expect.extend({
+    matchesAction(received: Action, expected: {action: Action, target: Controller}) {
+        const passes = {
+            'target': received.target == expected.target,
+            'type': received.type === expected.action.type,
+            'metadata': JSON.stringify(received.metadata) === JSON.stringify(expected.action.metadata),
+            'payload': JSON.stringify(received.payload) == JSON.stringify(expected.action.payload)
+        };
+        const entries = Object.entries(passes).filter((key) => !key[1]);
+        if (entries.length > 0) {
+            return {
+                message: () => {
+                    let msg = `expected ${Object.keys(passes).length} to match but ${entries.length} did not match. `;
+                    msg = msg + entries.map((key) => key[0]).join(',') + ' did not match';
+                    return msg;
+                },
+                pass : false
+            };
+        } else {
+            return {
+                pass : true,
+                message: () => 'actions matched'
+            };
+        }
+    }
+});
+
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            matchesAction(expected: {action: Action, target: Controller}): R;
+        }
+
+        interface Expect {
+            matchesAction(expected: {action: Action, target: Controller}): void;
+        }
+    }
+}
 
 test('should return all the publically exposed functions', async () => {
     const result = FunctionRuntime.getFunctions();
@@ -52,8 +92,10 @@ test('getData should return the current state of the form data', async () => {
     form.subscribe(callback, 'customEvent');
     form.getElementController('f1').dispatch(new Change('value2'));
     form.getElementController('f3').dispatch(new Click());
-    expect(callback).toHaveBeenCalledWith('customEvent',
-        expect.objectContaining(form.getState()), {'f1' : 'value2'});
+    expect(callback.mock.calls[0][0]).matchesAction({
+        action : new CustomEvent('customEvent', {'f1' : 'value2'}),
+        target : form
+    });
 });
 
 const API_HOST = 'http://api.aem-forms.com';

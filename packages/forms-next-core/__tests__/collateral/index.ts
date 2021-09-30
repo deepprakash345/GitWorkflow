@@ -1,3 +1,5 @@
+import {Action, Controller} from '../../src/controller/Controller';
+
 export const oneFieldForm = {
     ':items': {
         'name': {
@@ -126,3 +128,4 @@ export const create = (arr: any[], nameMap: any = {p : 1}): any => {
         return items;
     }, {':items': {}});
 };
+

@@ -1,8 +1,7 @@
 import {create, formWithRules} from '../collateral';
 import {createFormInstance} from '../../src';
-import {Change, Click, CustomEvent} from '../../src/controller/Actions';
 import {FieldJson} from '../../src/types';
-import {Controller} from '../../src/controller/Controller';
+import {Controller, Change, Click, CustomEvent, Action} from '../../src/controller/Controller';
 
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
@@ -72,37 +71,82 @@ test('dispatching an event on a field without rule should not throw exception', 
     expect(state).toEqual(form.getState());
 });
 
+expect.extend({
+    matchesAction(received: Action, expected: {action: Action, target: Controller}) {
+        const passes = {
+            'target': received.target == expected.target,
+            'type': received.type === expected.action.type,
+            'metadata': JSON.stringify(received.metadata) === JSON.stringify(expected.action.metadata),
+            'payload': JSON.stringify(received.payload) == JSON.stringify(expected.action.payload)
+        };
+        const entries = Object.entries(passes).filter((key) => !key[1]);
+        if (entries.length > 0) {
+            return {
+                message: () => {
+                    let msg = `expected ${Object.keys(passes).length} to match but ${entries.length} did not match. `;
+                    msg = msg + entries.map((key) => key[0]).join(',') + ' did not match';
+                    return msg;
+                },
+                pass : false
+            };
+        } else {
+            return {
+                pass : true,
+                message: () => 'actions matched'
+            };
+        }
+    }
+});
+
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            matchesAction(expected: {action: Action, target: Controller}): R;
+        }
+
+        interface Expect {
+            matchesAction(expected: {action: Action, target: Controller}): void;
+        }
+    }
+}
+
 test('default subscription gets invoked only when the state changes', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.getElementController('f1').subscribe(callback);
-    form.getElementController('f1').dispatch(new Change('value2'));
-    form.getElementController('f1').dispatch(new Click());
+    let f1 = form.getElementController('f1');
+    f1.subscribe(callback);
+    const action = new Change('value2');
+    f1.dispatch(action);
+    f1.dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('change', expect.anything(), 'value2');
+    expect(callback.mock.calls[0][0]).matchesAction({action, target : f1});
 });
 
 test('change subscription gets invoked only when the change event is triggered', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.getElementController('f1').subscribe(callback, 'change');
-    form.getElementController('f1').dispatch(new Change('value2'));
-    form.getElementController('f1').dispatch(new Click());
+    const f1 = form.getElementController('f1');
+    f1.subscribe(callback, 'change');
+    const action = new Change('value2');
+    f1.dispatch(action);
+    f1.dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('change', expect.anything(), 'value2');
+    expect(callback.mock.calls[0][0]).matchesAction({action, target : f1});
 });
 
 test('click subscription gets invoked only when that click event is triggered', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.getElementController('f1').subscribe(callback, 'click');
-    form.getElementController('f1').dispatch(new Change('value2'));
-    form.getElementController('f1').dispatch(new Click());
+    const f1 = form.getElementController('f1');
+    f1.subscribe(callback, 'click');
+    const action = new Change('value2');
+    f1.dispatch(action);
+    f1.dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('click', expect.anything(), undefined);
+    expect(callback.mock.calls[0][0]).matchesAction({action: new Click(), target : f1});
 });
 
 test('multiple subscription can be registered for a field', async () => {
@@ -110,14 +154,16 @@ test('multiple subscription can be registered for a field', async () => {
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
     let callback1 = jest.fn();
-    form.getElementController('f1').subscribe(callback, 'change');
-    form.getElementController('f1').subscribe(callback1, 'click');
-    form.getElementController('f1').dispatch(new Change('value2'));
-    form.getElementController('f1').dispatch(new Click());
+    const f1 = form.getElementController('f1');
+    f1.subscribe(callback, 'change');
+    f1.subscribe(callback1, 'click');
+    const action = new Change('value2');
+    f1.dispatch(action);
+    f1.dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('change', expect.anything(), 'value2');
+    expect(callback.mock.calls[0][0]).matchesAction({action, target : f1});
     expect(callback1).toHaveBeenCalledTimes(1);
-    expect(callback1).toHaveBeenCalledWith('click', expect.anything(), undefined);
+    expect(callback1.mock.calls[0][0]).matchesAction({action: new Click(), target : f1});
 });
 
 test('unsubscribing from one event does not affect other subscriptions', async () => {
@@ -125,14 +171,15 @@ test('unsubscribing from one event does not affect other subscriptions', async (
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
     let callback1 = jest.fn();
-    let x = form.getElementController('f1').subscribe(callback, 'change');
-    form.getElementController('f1').subscribe(callback1, 'click');
+    const f1 = form.getElementController('f1');
+    let x = f1.subscribe(callback, 'change');
+    f1.subscribe(callback1, 'click');
     x.unsubscribe();
-    form.getElementController('f1').dispatch(new Change( 'value2'));
-    form.getElementController('f1').dispatch(new Click( 'value2'));
+    f1.dispatch(new Change( 'value2'));
+    f1.dispatch(new Click( ));
     expect(callback).not.toHaveBeenCalled();
     expect(callback1).toHaveBeenCalledTimes(1);
-    expect(callback1).toHaveBeenCalledWith('click', expect.anything(), 'value2');
+    expect(callback1.mock.calls[0][0]).matchesAction({action: new Click(), target : f1});
 });
 
 test('custom event subscription can be registered', async () => {
@@ -145,10 +192,12 @@ test('custom event subscription can be registered', async () => {
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    form.getElementController('f1').subscribe( callback, 'customEvent');
-    form.getElementController('f1').dispatch(new CustomEvent('customEvent', 'value2'));
+    const f1 = form.getElementController('f1');
+    f1.subscribe( callback, 'customEvent');
+    const action = new CustomEvent('customEvent', 'value2');
+    f1.dispatch(action);
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith('customEvent', expect.anything(), 'value2');
+    expect(callback.mock.calls[0][0]).matchesAction({action, target : f1});
 });
 
 const subscriptionCollateral = ['a',
