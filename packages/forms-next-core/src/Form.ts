@@ -8,12 +8,10 @@ import {
     FormModel,
     MetaDataJson
 } from './types';
-import {Action, Change} from './controller/Actions';
 import {getOrElse, splitTokens} from './utils/JsonUtils';
 import FormMetaData from './FormMetaData';
 import {createChild} from './Fieldset';
-import {createController} from './controller/ControllerImpl';
-import {Controller} from './controller/Controller';
+import {Action, Change, Controller, createController} from './controller/Controller';
 
 class Form extends Container<FormJson> implements FormModel {
 
@@ -36,7 +34,8 @@ class Form extends Container<FormJson> implements FormModel {
     protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
         return createChild(child, (elem) => {
             let controller = createController(this)(elem);
-            controller.subscribe((e, elem) => {
+            controller.subscribe((e: Action) => {
+                let elem = e.target.getState();
                 if (!(':valid' in elem) || elem[':valid'] !== false) {
                     this.updateDataDom(elem as FieldJson);
                     //todo: trigger only dependencies

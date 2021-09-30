@@ -1,7 +1,6 @@
 import Form from './Form';
 import {jsonString} from './utils/JsonUtils';
-import {Change} from './controller/Actions';
-import {Controller} from './controller/Controller';
+import {Controller, Change} from './controller/Controller';
 import {request} from './utils/Fetch';
 
 export const createFormInstance = async (formModel: any, options?: any): Promise<Controller> => {

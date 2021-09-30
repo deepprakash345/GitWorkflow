@@ -1,5 +1,5 @@
 import {jsonString} from '../utils/JsonUtils';
-import {CustomEvent} from '../controller/Actions';
+import {CustomEvent} from '../controller/Controller';
 import {request, RequestOptions} from '../utils/Fetch';
 
 declare var window: any;
