@@ -1,10 +1,9 @@
 import {ConstraintsMessages, FieldJson, FieldModel} from './types';
 import {filterProps, undefinedValueFilter} from './utils/JsonUtils';
-import {Action} from './controller/Actions';
 import {Constraints} from './utils/ValidationUtils';
 import {Controller} from './controller/Controller';
 import Scriptable from './Scriptable';
-import {emptyController} from './controller/ControllerImpl';
+import {emptyController} from './controller/Controller';
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
   private _controller: Controller;

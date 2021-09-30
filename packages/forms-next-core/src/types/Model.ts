@@ -1,6 +1,5 @@
 import {FieldJson, FieldsetJson, FormJson, Items, MetaDataJson, Primitives} from './Json';
-import {Action} from '../controller/Actions';
-import {Controller} from '../controller/Controller';
+import {Action, Controller} from '../controller/Controller';
 
 export interface BaseConstraints {
     required?: boolean;
@@ -41,7 +40,7 @@ interface ValueField {
 }
 
 export interface Dispatcher {
-    dispatch: (action: Action, context: any, trigger: (x: string) => void) => any
+    dispatch: (action: Action, context: any, trigger: (x: Action) => void) => any
 }
 
 export interface WithState<T> {

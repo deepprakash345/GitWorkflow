@@ -9,9 +9,8 @@ import {
     Items, RulesJson
 } from './types';
 import {getProperty, splitTokens} from './utils/JsonUtils';
-import {Action} from './controller/Actions';
 import Scriptable from './Scriptable';
-import {Controller} from './controller/Controller';
+import {Action, Controller} from './controller/Controller';
 
 const findChild = (container: ContainerModel,
                    childName: string): FieldModel | FieldsetModel | undefined => {
@@ -108,7 +107,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    dispatch(action: Action, context: any, trigger: (x: string) => void): any {
+    dispatch(action: Action, context: any, trigger: (x: Action) => void): any {
         super.dispatch(action, context, trigger);
         if (action.metadata?.dispatch) {
             this._dispatchActionToItems(context, action);

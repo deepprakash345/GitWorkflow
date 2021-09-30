@@ -1,10 +1,10 @@
 import {JSXElementConstructor, useContext, useEffect, useState} from 'react';
 import formContext, {IFormContext} from './FormContext';
-import {Change, Click} from '@adobe/forms-next-core/lib/controller/Actions';
 import {FieldJson} from '@adobe/forms-next-core/lib';
 import React from 'react';
 import {Convertor} from '../utils/SpectrumMappers';
 import {Text} from '@adobe/react-spectrum';
+import {Action, Change, Click} from '@adobe/forms-next-core/lib/controller/Controller';
 
 export type Dispatch<T> = (x: T) => any
 export type Handlers = {
@@ -18,8 +18,8 @@ export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, H
     const id = props[':id'] as string;
     const controller = context.controller?.getElementController(id);
     useEffect(() => {
-        const subscription = controller?.subscribe((id: string, state: any) => {
-            setElementState(Object.assign({}, state));
+        const subscription = controller?.subscribe((action: Action) => {
+            setElementState(Object.assign({}, action.target.getState()));
         });
         return () => {
             subscription?.unsubscribe();

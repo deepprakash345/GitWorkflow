@@ -3,7 +3,7 @@ import Node from './Node';
 import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
 import {Json} from '@adobe/forms-next-expression-parser';
-import {Action} from './controller/Actions';
+import {Action} from './controller/Controller';
 
 class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
@@ -66,7 +66,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         return {};
     }
 
-    dispatch(action: Action, context: any, trigger: (e: string) => void) {
+    dispatch(action: Action, context: any, trigger: (e: Action) => void) {
         console.log('new action ' + JSON.stringify(action, null, 2));
         const evntName = action.type == 'customEvent' ?  action.metadata[':name'] : action.type;
         let updates : any;
@@ -84,14 +84,14 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
             ...this.executeEvent(context, evntName) as object
         };
         if (evntName !== 'change') {
-            trigger(evntName);
+            trigger(action);
         }
         if (updates && Object.keys(updates).length > 0) {
             this._jsonModel = {
                 ...this._jsonModel,
                 ...updates
             };
-            trigger('change');
+            trigger(action);
         }
     }
 

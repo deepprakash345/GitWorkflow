@@ -2,7 +2,6 @@ import Container from './Container';
 import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
 import Field from './Field';
 import {Controller} from './controller/Controller';
-import {Action} from './controller/Actions';
 
 export const createChild = (child: FieldsetJson | FieldJson,
                             createController: (elem: FieldModel | FieldsetModel) => Controller) => {
