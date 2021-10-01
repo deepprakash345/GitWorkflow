@@ -331,6 +331,15 @@ test('pattern test should validate against the regex', () => {
    expect(res.value).toEqual(string);
 });
 
+test('pattern test should validate against the string regex', () => {
+    const regex = '[a-z]{4,6}';
+    const l = Math.floor(Math.random() * 10);
+    const string = randomString(l);
+    const res = Constraints.pattern(regex, string);
+    expect(res.valid).toEqual(new RegExp(regex).test(string));
+    expect(res.value).toEqual(string);
+});
+
 
 test('required test should pass if value is not empty', () => {
     expect(Constraints.required(true, 'varun').valid).toEqual(true);
