@@ -90,8 +90,14 @@ export const Constraints = {
         return {...Constraints.maximum(constraint, value.length), value};
     },
 
-    pattern : (constraint: RegExp, value: string) => {
-        return {valid: constraint.test(value), value};
+    pattern : (constraint: RegExp | string, value: string) => {
+        let regex: RegExp;
+        if (typeof constraint === 'string') {
+            regex = new RegExp(constraint);
+        } else {
+            regex = constraint;
+        }
+        return {valid: regex.test(value), value};
     },
 
     required : (constraint: boolean, value: any) => {
