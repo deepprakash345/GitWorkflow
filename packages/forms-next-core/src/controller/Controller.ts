@@ -9,6 +9,7 @@ export interface Action {
     type: string,
     payload: any
     metadata: any,
+    readonly isCustomEvent: boolean
     readonly target: Controller
 }
 
@@ -50,40 +51,41 @@ class ActionImpl implements Action {
     public get target() {
         return this._target;
     }
+
+    public get isCustomEvent() {
+        return false;
+    }
 }
 
 class ActionImplWithTarget implements Action {
-    protected _type: string
-    private _payload?: any
-    private _metadata?: any
 
-    constructor(action: Action, private _target: Controller) {
-        this._payload = action.payload;
-        this._type = action.type;
-        this._metadata = action.metadata;
-
-    }
+    constructor(private _action: Action, private _target: Controller) {}
 
     public get type() {
-        return this._type;
+        return this._action.type;
     }
 
     public get payload() {
-        return this._payload;
+        return this._action.payload;
     }
 
     public get metadata() {
-        return this._metadata;
+        return this._action.metadata;
     }
 
     public get target() {
         return this._target;
     }
 
+    public get isCustomEvent() {
+        return this._action.isCustomEvent;
+    }
+
     public toString() {
         return JSON.stringify({
-            payload : this._payload,
-            type : this._type
+            payload : this.payload,
+            type : this.type,
+            isCustomEvent: this.isCustomEvent
         });
     }
 }
@@ -103,10 +105,11 @@ export class Click extends ActionImpl {
 export class CustomEvent extends ActionImpl {
     //todo: dispatch means bubble down, find a better name
     constructor(eventName: string, payload: any, dispatch: boolean = false) {
-        super(payload, 'customEvent', {
-            ':name': eventName,
-            dispatch
-        });
+        super(payload, eventName, {dispatch});
+    }
+
+    public get isCustomEvent() {
+        return true;
     }
 }
 
