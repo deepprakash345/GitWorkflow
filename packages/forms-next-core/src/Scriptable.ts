@@ -75,6 +75,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
                 ...updates,
                 ...this.executeEvent(context, evntName) as object
             };
+            trigger(action);
         } else {
             if (evntName === 'change') {
                 updates = this.handleValueChange(action.payload);
@@ -98,7 +99,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
                 ...this._jsonModel,
                 ...updates
             };
-            trigger(new Change(undefined));
+            trigger(new Change(action.payload));
         }
     }
 
