@@ -3,7 +3,7 @@ import Node from './Node';
 import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
 import {Json} from '@adobe/forms-next-expression-parser';
-import {Action} from './controller/Controller';
+import {Action, Change} from './controller/Controller';
 
 class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
@@ -68,30 +68,38 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
 
     dispatch(action: Action, context: any, trigger: (e: Action) => void) {
         console.log('new action ' + action);
-        const evntName = action.type == 'customEvent' ?  action.metadata[':name'] : action.type;
         let updates : any;
-        if (evntName === 'change') {
-            updates = this.handleValueChange(action.payload);
-            if (Object.keys(updates).length === 0 || updates[':valid'] === false) {
-                updates = {
-                    ...updates,
-                    ...this.executeAllRules(context)
-                };
-            }
-        }
-        updates = {
-            ...updates,
-            ...this.executeEvent(context, evntName) as object
-        };
-        if (evntName !== 'change') {
+        const evntName = action.type;
+        if (action.isCustomEvent) {
+            updates = {
+                ...updates,
+                ...this.executeEvent(context, evntName) as object
+            };
             trigger(action);
+        } else {
+            if (evntName === 'change') {
+                updates = this.handleValueChange(action.payload);
+                if (Object.keys(updates).length === 0 || updates[':valid'] === false) {
+                    updates = {
+                        ...updates,
+                        ...this.executeAllRules(context)
+                    };
+                }
+            }
+            updates = {
+                ...updates,
+                ...this.executeEvent(context, evntName) as object
+            };
+            if (evntName !== 'change') {
+                trigger(action);
+            }
         }
         if (updates && Object.keys(updates).length > 0) {
             this._jsonModel = {
                 ...this._jsonModel,
                 ...updates
             };
-            trigger(action);
+            trigger(new Change(action.payload));
         }
     }
 

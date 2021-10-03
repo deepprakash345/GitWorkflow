@@ -150,7 +150,6 @@ test('submit success event should be dispatched', async () => {
         // not performed.
         expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {}, true));
     }, 100);
-
 });
 
 test('submit success event should get executed', async () => {

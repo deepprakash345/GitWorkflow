@@ -62,10 +62,10 @@ class FunctionRuntimeImpl {
         } catch (e) {
             //todo: define error payload
             console.log('error handled');
-            context.$form.controller().dispatch(new CustomEvent(error, {}));
+            context.$form.controller().dispatch(new CustomEvent(error, {}, true));
             return;
         }
-        context.$form.controller().dispatch(new CustomEvent(success, result));
+        context.$form.controller().dispatch(new CustomEvent(success, result, true));
     }
 }
 
