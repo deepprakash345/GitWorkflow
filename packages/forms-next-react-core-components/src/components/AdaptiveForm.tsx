@@ -1,13 +1,13 @@
 import { Flex } from '@adobe/react-spectrum';
-import React, {FormEventHandler, JSXElementConstructor, useEffect} from 'react';
+import React, {JSXElementConstructor, useEffect} from 'react';
 import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
-import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {callbackFn, Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@adobe/forms-next-core';
 
-const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}, onSubmit?: FormEventHandler, onCustomEvent?: FormEventHandler}) {
+const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}, onSubmit?: callbackFn, onCustomEvent?: callbackFn}) {
     const { formJson, mappings, onSubmit, onCustomEvent} = props;
     let [controller, setController] = React.useState<Controller|undefined>(undefined);
     const createForm = async (json: string) => {
@@ -15,15 +15,14 @@ const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:stri
             const data = JSON.parse(json);
             const controller = await createFormInstance(data);
             if (typeof onSubmit === 'function') {
-                // todo: have to fix this, support for subscribing events needs to be different than model update
-                controller.subscribe(() => {
+                // todo: check if submit should take action or data
+                controller.subscribe((action) => {
                     onSubmit(controller.getState()[':data']);
                 }, 'submit');
             }
-            // todo: have to handle custom events in trigger API in Form.ts later
             if (typeof onCustomEvent === 'function') {
-                controller.subscribe(() => {
-                    onCustomEvent(controller.getState()[':data']);
+                controller.subscribe((action) => {
+                    onCustomEvent(action);
                 }, 'customEvent');
             }
             setController(controller);
@@ -33,16 +32,14 @@ const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:stri
     };
     useEffect(() => {
         createForm(jsonString(formJson));
-    }, []);
+    }, [formJson]);
     return (
             <FormContext.Provider value={{mappings: mappings, controller: controller}}>
+                {(controller?.getState() !== undefined) ? (
                 <form>
-                    {(controller?.getState() !== undefined) ? (
-                    <Flex direction="column" width="size-4000" gap="size-100">
-                            {renderChildren(controller?.getState(), mappings)}
-                    </Flex>
-                    ) : 'Loading Form...'}
+                    {renderChildren(controller?.getState(), mappings)}
                 </form>
+                ) : 'Loading Form...'}
             </FormContext.Provider>
 
     );
