@@ -1,16 +1,44 @@
 import React from 'react';
 import './App.css';
-import {Grid, View} from '@adobe/react-spectrum'
-import json from './samples/wizard.json';
+import {Grid, View, Flex} from '@adobe/react-spectrum'
+import { RadioGroup, Radio } from '@adobe/react-spectrum';
+import wizard from './samples/wizard.json';
+import contentFragment from './samples/contentFragment.json';
 import mappings from './mappings'
 import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
+import {FormJson} from "@adobe/forms-next-core";
 
 function App() {
+    let [selected, setSelected] = React.useState('wizard');
+    function getFormDefintion(selection: String) {
+        let jsonDefinition : FormJson = wizard;
+        if (selection === "contentFragment") {
+            jsonDefinition = contentFragment
+        }
+        return jsonDefinition;
+    }
     return (
-        <Grid>
+        <Grid
+            areas={['header', 'content']}
+            columns={['2fr', '2fr']}
+            rows={['size-1000', 'auto']}
+            marginX="size-400"
+            marginTop="size-400"
+            gap="size-500">
+            <View gridArea="header">
+                <RadioGroup
+                    label="Select Form Model Definition"
+                    defaultValue="wizard"
+                    value={selected}
+                    onChange={setSelected}
+                    isEmphasized>
+                    <Radio value="wizard">Quarry</Radio>
+                    <Radio value="contentFragment">Content Fragment</Radio>
+                </RadioGroup>
+            </View>
             <View gridArea="content">
-                {json !== undefined ? (
-                    <AdaptiveForm formJson={json} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data))}/>
+                {getFormDefintion(selected) !== undefined ? (
+                    <AdaptiveForm formJson={getFormDefintion(selected)} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data))}/>
                 ) : 'Loading Form...'}
             </View>
         </Grid>
