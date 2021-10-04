@@ -1,11 +1,11 @@
 {
   "name": "super-component-sample",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "homepage": "/",
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.18",
-    "@adobe/forms-next-react-core-components": "^0.1.19",
+    "@adobe/forms-next-core": "^0.1.19",
+    "@adobe/forms-next-react-core-components": "^0.1.20",
     "@adobe/react-spectrum": "^3.12.0",
     "@quarry/wizard": "^1.0.2",
     "@react/react-spectrum": "^2",
