@@ -1,8 +1,10 @@
 import {jsonString} from '../utils/JsonUtils';
 import {CustomEvent} from '../controller/Controller';
-import {request, RequestOptions} from '../utils/Fetch';
+import {request as fRequest, RequestOptions} from '../utils/Fetch';
 
 declare var window: any;
+
+type HTTP_VERB = 'GET' | 'POST'
 
 class FunctionRuntimeImpl {
 
@@ -16,6 +18,11 @@ class FunctionRuntimeImpl {
             },
             submit_form: (context: any, success: string, error: string) => {
                 this.submit(context, success, error);
+                return {};
+            },
+            // todo: only supports application/json for now
+            request: (context: any, uri: string, httpVerb: HTTP_VERB, payload: object, success: string, error: string) => {
+                this.request(context, uri, httpVerb, payload, success, error, 'application/json');
                 return {};
             },
             show_message_box: (context: any, str?: String) => {
@@ -36,6 +43,28 @@ class FunctionRuntimeImpl {
         };
     }
 
+    async request(context: any, uri: string, httpVerb: HTTP_VERB, payload: object, success: string, error: string, payloadContentType: string = 'application/json') {
+        const endpoint = uri;
+        let requestOptions: RequestOptions = {
+            method: httpVerb
+        };
+        let result;
+        try {
+            if (payload && Object.keys(payload).length === 0) {
+                requestOptions['headers'] = {
+                    'Content-Type': payloadContentType // this should match content type of the payload
+                };
+            }
+            result = await fRequest(endpoint, payload, requestOptions);
+        } catch (e) {
+            //todo: define error payload
+            console.log('error handled');
+            context.$form.controller().dispatch(new CustomEvent(error, {}, true));
+            return;
+        }
+        context.$form.controller().dispatch(new CustomEvent(success, result, true));
+    }
+
     private validate (context: any) {
         return true;
     }
@@ -52,20 +81,7 @@ class FunctionRuntimeImpl {
         const formData = new FormData();
         formData.append(':data', data);
         formData.append(':contentType', 'application/json');
-        const requestOptions: RequestOptions = {
-            method: 'POST',
-            contentType : 'application/json'
-        };
-        let result;
-        try {
-            result = await request(endpoint, formData, requestOptions);
-        } catch (e) {
-            //todo: define error payload
-            console.log('error handled');
-            context.$form.controller().dispatch(new CustomEvent(error, {}, true));
-            return;
-        }
-        context.$form.controller().dispatch(new CustomEvent(success, result, true));
+        await this.request(context, endpoint, 'POST', formData, success, error, 'multipart/form-data');
     }
 }
 

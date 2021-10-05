@@ -4,6 +4,7 @@ import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
 import {Json} from '@adobe/forms-next-expression-parser';
 import {Action, Change} from './controller/Controller';
+import {mergeDeep} from "./utils/JsonUtils";
 
 class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
@@ -95,10 +96,9 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
             }
         }
         if (updates && Object.keys(updates).length > 0) {
-            this._jsonModel = {
-                ...this._jsonModel,
-                ...updates
-            };
+            // merge deep since rules like
+            // todo: fix order
+            this._jsonModel = mergeDeep(this._jsonModel, updates);
             trigger(new Change(action.payload));
         }
     }

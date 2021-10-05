@@ -96,6 +96,12 @@ export class Change extends ActionImpl {
     }
 }
 
+export class Initialize extends ActionImpl {
+    constructor(payload: any, dispatch: boolean = false) {
+        super(payload, 'initialize', {dispatch});
+    }
+}
+
 export class Click extends ActionImpl {
     constructor(payload?: any, dispatch: boolean = false) {
         super(payload, 'click', {dispatch});

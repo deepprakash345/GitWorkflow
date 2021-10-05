@@ -1,10 +1,9 @@
-import { Flex } from '@adobe/react-spectrum';
-import React, {JSXElementConstructor, useEffect} from 'react';
+import React, { JSXElementConstructor, useEffect} from 'react';
 import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
-import {callbackFn, Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {callbackFn, Controller, CustomEvent} from '@adobe/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@adobe/forms-next-core';
 
 const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}, onSubmit?: callbackFn, onCustomEvent?: callbackFn}) {
@@ -15,9 +14,8 @@ const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:stri
             const data = JSON.parse(json);
             const controller = await createFormInstance(data);
             if (typeof onSubmit === 'function') {
-                // todo: check if submit should take action or data
                 controller.subscribe((action) => {
-                    onSubmit(controller.getState()[':data']);
+                    onSubmit(new CustomEvent(action.type, controller.getState()[':data'], true));
                 }, 'submit');
             }
             if (typeof onCustomEvent === 'function') {
