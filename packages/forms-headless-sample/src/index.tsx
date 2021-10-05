@@ -3,14 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider, defaultTheme } from '@adobe/react-spectrum'
+// @ts-ignore
+import Spectrum2Provider from '@react/react-spectrum/Provider';
+import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum'
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider theme={defaultTheme}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <Spectrum2Provider>
+            <Spectrum3Provider theme={defaultTheme}>
+                <App />
+            </Spectrum3Provider>
+        </Spectrum2Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -13,6 +13,14 @@
   }
 }
 
+.spectrum-Dialog.Wizard {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  left: 0%;
+  top: 100%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

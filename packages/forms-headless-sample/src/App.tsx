@@ -1,10 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import './App.css';
-import {Grid, View, TextField, TextArea, Button, Flex} from '@adobe/react-spectrum'
-import json from './samples/statement-financial-position.json';
-import {fetchForm} from "@adobe/forms-next-core"
+import {Grid, View, TextField, TextArea, Button, Flex, ComboBox, Item} from '@adobe/react-spectrum'
+import financialPosition from './samples/statement-financial-position.json';
+import assets from './samples/assets.json';
+import contentFragment from './samples/contentFragment.json';
+import wizard from './samples/wizard.json';
+import {fetchForm, FormJson} from "@adobe/forms-next-core"
 import {jsonString} from "@adobe/forms-next-core/lib/utils/JsonUtils";
-import mappings from '@adobe/forms-next-react-core-components/lib/mappings'
+import mappings from './mappings'
 import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
 import {createFormInstance} from "@adobe/forms-next-core/lib";
 import AceEditor from "react-ace";
@@ -15,8 +18,9 @@ import Form from "@adobe/forms-next-react-core-components/lib/components/Form";
 import {DialogTrigger, Dialog} from '@adobe/react-spectrum'
 import {Heading, Divider, Content, ButtonGroup, ActionButton} from '@adobe/react-spectrum'
 import Help from "./Help";
-import {Item, TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
+import {TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
 import {Checkbox} from '@adobe/react-spectrum';
+import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
@@ -25,21 +29,26 @@ function App() {
     let [formUrl, setFormUrl] = React.useState('');
     let [token, setToken] = React.useState('');
     let [askToken, setAskToken] = React.useState(false)
-    let [form, setForm] = React.useState<any>({});
-    let [inputForm, setInputForm] = React.useState('');
+    let [form, setForm] = React.useState<any>(jsonString(financialPosition));
+    let [inputForm, setInputForm] = React.useState(jsonString(financialPosition));
     let [serverUrl, setServerUrl] = React.useState(REACT_APP_AEM_URL)
     let [authRequired, setAuthRequired] = React.useState(token_required)
+    let [modelDefinition, setModelDefinition] = React.useState('');
     const aceEditor = useRef(null);
-
-    const createForm = async (json: string) => {
-        setInputForm(json);
-        try {
-            const data = JSON.parse(json)
-            const controller = await createFormInstance(data)
-            setForm({json: controller.getState(), controller})
-        } catch (e) {
+    const getFormDefinition = (selection: String) => {
+        let jsonDefinition : any = financialPosition;
+        if (selection === "contentfragment") {
+            jsonDefinition = contentFragment
+        } else if (selection === "assets") {
+            jsonDefinition = assets
+        } else if (selection === 'quarry') {
+            jsonDefinition = wizard
+        } else if (selection === 'financialpostiion') {
+            jsonDefinition = financialPosition
         }
+        return jsonDefinition;
     }
+
     const fetchAF = async () => {
         let auth = {}
         if (token.length > 0 || !authRequired) {
@@ -49,9 +58,10 @@ function App() {
                 }
             }
             setInputForm("")
-            setForm({});
+            setForm("");
             const data = await fetchForm(serverUrl + formUrl, auth);
-            await createForm(data);
+            setInputForm(data);
+            setForm(data);
         } else if (authRequired) {
             setAskToken(true)
         }
@@ -61,15 +71,18 @@ function App() {
         fetchAF()
     }
 
-    useEffect(() => {
-        createForm(jsonString(json));
-    }, [])
-
     const tokenEntered = (close: any) => {
         close();
         setAskToken(false);
         forceRender();
     }
+
+    let comboBoxOptions = [
+        {id: 'quarry', name: 'Quarry'},
+        {id: 'contentfragment', name: 'Content Fragment'},
+        {id: 'assets', name: 'Assets'},
+        {id: 'financialpostiion', name: 'Financial Position'}
+    ]
 
     return (
         <Grid
@@ -120,24 +133,40 @@ function App() {
                     </DialogTrigger>
                     <Help/>
                 </Flex>
+                <Flex direction="row" width="100%" gap="size-200" alignItems="center">
+                    <Flex direction="column">
+                        <ComboBox
+                            label="Select Form Model Definition"
+                            defaultItems={comboBoxOptions}
+                            onSelectionChange={(key) => {
+                                setModelDefinition(key as string);
+                                const json = jsonString(getFormDefinition(key as string));
+                                setForm(json);
+                                setInputForm(json);
+                            }}>
+                            {(item) => <Item>{item.name}</Item>}
+                        </ComboBox>
+
+                    </Flex>
+                </Flex>
             </View>
             <View gridArea="sidebar" padding="size-200" paddingBottom="size-1000">
                 <Tabs>
                     <TabList>
                         <Item key="json"> Form Json </Item>
-                        <Item key="state"> Form State </Item>
                     </TabList>
                     <TabPanels>
                         <Item key="json">
                             <AceEditor mode="json"
-                                       value={inputForm}
+                                       value={form}
                                        theme="github"
                                        name="UNIQUE_ID_OF_DIV"
                                        editorProps={{$blockScrolling: true}}
                                        tabSize={2}
                                        onChange={(value: any) => {
-                                           setForm({});
-                                           createForm(value)
+                                           setForm(value);
+                                           setInputForm("");
+                                           setInputForm(value);
                                        }}
                                        setOptions={{
                                            enableBasicAutocompletion: true,
@@ -146,27 +175,13 @@ function App() {
                                        }}
                             />
                         </Item>
-                        <Item key="state">
-                            <AceEditor mode="json"
-                                       value={JSON.stringify(form.json || "loading Form", null, 2)}
-                                       theme="github"
-                                       readOnly={true}
-                                       name="UNIQUE_ID_OF_DIV"
-                                       editorProps={{$blockScrolling: true}}
-                                       tabSize={2}
-                            />
-                        </Item>
                     </TabPanels>
                 </Tabs>
 
 
             </View>
             <View gridArea="content">
-                {form?.json !== undefined ? (
-                    <FormContext.Provider value={{mappings: mappings, controller: form.controller}}>
-                        {form != null ? <Form formJson={form.controller?.getState()}></Form> : ""}
-                    </FormContext.Provider>
-                ) : 'Loading Form...'}
+                {inputForm ? <AdaptiveForm formJson={JSON.parse(inputForm)} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data.payload))}/> : 'Loading Form...'}
             </View>
         </Grid>
     );

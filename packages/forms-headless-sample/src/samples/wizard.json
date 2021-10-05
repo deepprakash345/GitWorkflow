@@ -1,0 +1,129 @@
+{
+  ":data": {},
+  ":items": {
+    "panel" : {
+      ":type": "fd/af/components/wizard",
+      ":name": "panel",
+      ":title": "Custom Wizard",
+      ":items": {
+        "step1": {
+          ":type": "fd/af/components/wizardstep",
+          ":name": "step1",
+          ":title": "Step1",
+          ":items": {
+            "employerFName": {
+              ":name": "employerFName",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employer's First Name",
+              ":default": "",
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            },
+            "employerLName": {
+              ":name": "employerLName",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employer's Last Name",
+              ":default": "",
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            },
+            "employerFullName": {
+              ":name": "employerFullName",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employer's Full Name",
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":rules": {
+                ":value": "$form.panel.step1.employerFName.value + ' ' + $form.panel.step1.employerLName.value"
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            },
+            "employer_address": {
+              ":name": "employer_address",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employer's Address",
+              ":multiline": true,
+              ":rules": {
+                ":required": "$form.employment_status.value == true"
+              },
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            }
+          }
+        },
+        "step2": {
+          ":type": "fd/af/components/wizardstep",
+          ":name": "step2",
+          ":title": "Step2",
+          ":items": {
+            "employment_position": {
+              ":name": "employment_position",
+              ":type": "fd/af/components/guidetextbox",
+              ":title": "Employment Title",
+              ":rules": {
+                ":required": "$form.employment_status.value == true"
+              },
+              ":constraints": {
+                ":dataType": "string",
+                ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            },
+            "employment_start_date": {
+              ":name": "employment_start_date",
+              ":type": "fd/af/components/guidedatefield",
+              ":title": "Employment Start Date",
+              ":constraints": {
+                ":dataType": "string",
+                ":format": "date",
+                ":required": true
+              },
+              ":constraintMessages": {
+                ":required": "The field is required"
+              }
+            }
+          }
+        }
+      }
+    },
+    "formSubmit": {
+      ":name": "formSubmit",
+      ":type": "fd/af/components/guidebutton",
+      ":title": "Submit",
+      ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      ":events": {
+        "click": "dispatch_event($form, 'submit')"
+      }
+    }
+  },
+  ":events": {
+    "submit" : "submit_form('submitSuccess', 'submitError')",
+    "submitSuccess": "show_message_box($form.thankyouMessage)"
+  },
+  "thankyouMessage": "Thank you for submitting the form",
+  ":metadata":{
+      ":grammar" : "jsonformula-af",
+      ":locale" : "en-us"
+  }
+}
