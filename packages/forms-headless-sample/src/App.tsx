@@ -8,13 +8,10 @@ import wizard from './samples/wizard.json';
 import {fetchForm, FormJson} from "@adobe/forms-next-core"
 import {jsonString} from "@adobe/forms-next-core/lib/utils/JsonUtils";
 import mappings from './mappings'
-import FormContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext'
-import {createFormInstance} from "@adobe/forms-next-core/lib";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
-import Form from "@adobe/forms-next-react-core-components/lib/components/Form";
 import {DialogTrigger, Dialog} from '@adobe/react-spectrum'
 import {Heading, Divider, Content, ButtonGroup, ActionButton} from '@adobe/react-spectrum'
 import Help from "./Help";
