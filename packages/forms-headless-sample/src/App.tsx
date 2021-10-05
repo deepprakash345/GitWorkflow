@@ -18,6 +18,7 @@ import Help from "./Help";
 import {TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
 import {Checkbox} from '@adobe/react-spectrum';
 import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
+import {Action} from "@adobe/forms-next-core/lib/controller/Controller";
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
@@ -178,7 +179,16 @@ function App() {
 
             </View>
             <View gridArea="content">
-                {inputForm ? <AdaptiveForm formJson={JSON.parse(inputForm)} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data.payload))}/> : 'Loading Form...'}
+                {inputForm ? <AdaptiveForm
+                    formJson={JSON.parse(inputForm)}
+                    mappings={mappings}
+                    onSubmit={(eventObj: Action) => window.alert(JSON.stringify(eventObj.payload))}
+                    onStateSuccess={(eventObj : Action) => {
+                        // fetch data
+                        let dataVar = "askhas"
+                        // target returns a controller which could be used to interact with the form
+                        //eventObj.target.getElement(eventObj.payload?.field).dispatch(new Change(dataVar));
+                    }}/> : 'Loading Form...'}
             </View>
         </Grid>
     );

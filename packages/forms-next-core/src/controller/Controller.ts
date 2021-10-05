@@ -108,6 +108,12 @@ export class Click extends ActionImpl {
     }
 }
 
+export class Submit extends ActionImpl {
+    constructor(payload?: any, dispatch: boolean = false) {
+        super(payload, 'submit', {dispatch});
+    }
+}
+
 export class CustomEvent extends ActionImpl {
     //todo: dispatch means bubble down, find a better name
     constructor(eventName: string, payload: any, dispatch: boolean = false) {
