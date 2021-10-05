@@ -1,5 +1,4 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
-const http = require('http');
 
 module.exports = function (app) {
     const proxy = createProxyMiddleware({
