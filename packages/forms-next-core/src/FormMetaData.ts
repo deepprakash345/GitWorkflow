@@ -3,23 +3,23 @@ import Node from './Node';
 class FormMetaData extends Node<MetaDataJson> implements FormMetaDataModel {
 
     get version(): string {
-        return this.getP(':version', '');
+        return this.getP('version', '');
     }
 
     get locale(): string {
-        return this.getP(':locale', '');
+        return this.getP('locale', '');
     }
 
     get grammarVersion(): string {
-        return this.getP(':grammarVersion', '');
+        return this.getP('grammarVersion', '');
     }
 
     get dataUrl(): string {
-        return this.getP(':dataUrl', '');
+        return this.getP('dataUrl', '');
     }
 
     get action(): string {
-        return this.getP(':action', '');
+        return this.getP('action', '');
     }
 
 }

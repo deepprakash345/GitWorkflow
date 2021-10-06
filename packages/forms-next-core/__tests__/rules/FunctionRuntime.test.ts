@@ -56,14 +56,14 @@ test('should return all the publically exposed functions', async () => {
 test('dispatch_event should invoke dispatch API', async () => {
     const formJson = create(['f', {
         'f' : {
-                ':events' : {
+                'events' : {
                     'click': "dispatch_event($form, 'event1', {x : 'y'})"
                 }
             }
         },
         {
             'f' : {
-                ':events': {
+                'events': {
                     'click': "dispatch_event('event1', {x : 'y'})"
                 }
         }
@@ -81,7 +81,7 @@ test('dispatch_event should invoke dispatch API', async () => {
 test('getData should return the current state of the form data', async () => {
     const formJson = create(['f', 'f', {
         'f' : {
-            ':events' : {
+            'events' : {
                 'click' : "dispatch_event($form, 'customEvent', get_data())"
             }
         }
@@ -106,13 +106,13 @@ test('submit should send a request to the url configured', async () => {
         .reply(200, {});
     const formJson = create(['f', 'f', {
         'f' : {
-            ':events' : {
+            events : {
                 'click' : "submit_form('event1', 'event2')"
             }
         }
     }]);
-    formJson[':metadata'] = {
-        ':action':  `${API_HOST}/my-submit-end-point`
+    formJson.metadata = {
+        action:  `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -132,13 +132,13 @@ test('submit success event should be dispatched', async () => {
         .reply(200, {});
     const formJson = create(['f', 'f', {
         'f' : {
-            ':events' : {
+            events : {
                 'click' : "submit_form('event1', 'event2')"
             }
         }
     }]);
-    formJson[':metadata'] = {
-        ':action':  `${API_HOST}/my-submit-end-point`
+    formJson.metadata = {
+        action:  `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -157,12 +157,12 @@ test('submit success event should get executed', async () => {
         .post('/my-submit-end-point')
         .reply(200, {});
     const formJson = create([{'f' : {
-            ':events' : {
-                'event1' : '{":title" : \'Thank you for submitting the form\'}'
+            events : {
+                'event1' : '{"title" : \'Thank you for submitting the form\'}'
             }
         }}, 'f', 'f']);
-    formJson[':metadata'] = {
-        ':action':  `${API_HOST}/my-submit-end-point`
+    formJson.metadata = {
+        action:  `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -171,7 +171,7 @@ test('submit success event should get executed', async () => {
     await setTimeout(() => {
         // Will throw an assertion error if meanwhile a "GET/POST" was
         // not performed.
-        expect(form.getState()[':items'].f1[':title']).toEqual('Thank you for submitting the form');
+        expect(form.getState().items.f1.title).toEqual('Thank you for submitting the form');
     }, 100);
 
 });
@@ -181,12 +181,12 @@ test('submit error event should be dispatched if service returns error', async (
         .post('/my-submit-end-point')
         .reply(404);
     const formJson = create([{'f' : {
-            ':events' : {
-                'event1' : '{":title" : \'Thank you for submitting the form\'}'
+            events : {
+                'event1' : '{"title" : \'Thank you for submitting the form\'}'
             }
         }}, 'f', 'f']);
-    formJson[':metadata'] = {
-        ':action':  `${API_HOST}/my-submit-end-point`
+    formJson.metadata = {
+        action:  `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;

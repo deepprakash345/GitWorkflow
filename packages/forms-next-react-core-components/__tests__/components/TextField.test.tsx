@@ -6,11 +6,11 @@ import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@adobe/forms-next-core/lib';
 
 const field = {
-    ':id' : 'field',
-    ':name': 'name',
-    ':value': 'john doe',
-    ':title': 'name',
-    ':visible' : true
+    'id' : 'field',
+    'name': 'name',
+    'value': 'john doe',
+    'title': 'name',
+    'visible' : true
 };
 
 export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null) => any
@@ -29,7 +29,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name : 'html in the title should be handled for non rich text title',
         field: {
             ...field,
-            ':title' : '<script>javascript</script><p>title inside p tags</p>'
+            'title' : '<script>javascript</script><p>title inside p tags</p>'
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(label?.innerHTML).toEqual('&lt;script&gt;javascript&lt;/script&gt;' +
@@ -61,8 +61,8 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
-            ':constraints': {
-                ':required': true
+            'constraints': {
+                'required': true
             }
         },
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
@@ -73,7 +73,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'label is null if title is marked as hidden in the field',
         field: {
             ...field,
-            ':hideTitle': true
+            'hideTitle': true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
             expect(label).toBeNull();
@@ -83,7 +83,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'input is marked as aria-invalid when the field is invalid',
         field: {
             ...field,
-            ':valid': false
+            'valid': false
         },
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-invalid')).toBe('true');
@@ -93,7 +93,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'input is not marked as aria-invalid when the field is valid',
         field: {
             ...field,
-            ':valid': true
+            'valid': true
         },
         expects: (label ?: HTMLLabelElement | null, input?: HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-invalid')).toBeNull();
@@ -124,11 +124,11 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
 test('value entered by user in text field is set in model', async () => {
     const f = {
         ...field,
-        ':id' : undefined
+        'id' : undefined
     };
     const form = await createForm(f);
     const wrapper = Provider(form);
-    const component = <TextField {...form.getState()[':items'].name} />;
+    const component = <TextField {...form.getState().items.name} />;
     const {container} = render(component, {wrapper});
     const input = container.querySelector('input');
     // @ts-ignore
@@ -137,7 +137,7 @@ test('value entered by user in text field is set in model', async () => {
     // @ts-ignore
     userEvent.type(input, inputValue);
     const state = form.getState();
-    expect((state[':items'].name as FieldJson)[':value']).toEqual(inputValue);
+    expect((state.items.name as FieldJson).value).toEqual(inputValue);
     expect(input?.value).toEqual(inputValue);
 });
 
@@ -147,7 +147,7 @@ test.todo('it should handle readOnly property');
 test('it should handle visible property', async () => {
     const f = {
         ...field,
-        ':visible' : false
+        'visible' : false
     };
 
     const component = <TextField {...f} />;

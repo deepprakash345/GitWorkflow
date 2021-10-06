@@ -9,7 +9,7 @@ export const createFormInstance = async (formModel: any, options?: any): Promise
         let formData;
         try {
             const data = await fetchData(f.metaData.dataUrl, options);
-            formData = JSON.parse(data?.[':data']);
+            formData = JSON.parse(data?.data);
         } catch (e) {
             console.log(e);
             formData = null;

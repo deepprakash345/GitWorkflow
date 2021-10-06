@@ -1,127 +1,128 @@
 {
-  ":data": {},
-  ":items": {
+  "$schema" : "https://git.corp.adobe.com/raw/livecycle/af2-docs/gh-pages/schema/adaptive-form.schema.json",
+  "data": {},
+  "items": {
     "office" : {
-      ":type": "fd/af/components/panel",
-      ":name": "office",
-      ":title": "Office",
-      ":items": {
+      "viewType": "panel",
+      "name": "office",
+      "title": "Office",
+      "items": {
         "title": {
-          ":name": "title",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "Title",
-          ":default": "Adobe",
-          ":dataRef": "title",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "title",
+          "viewType": "text-input",
+          "title": "Title",
+          "default": "Adobe",
+          "dataRef": "title",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "streetAddress": {
-          ":name": "streetAddress",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "Street Address",
-          ":default": "Adobe Tower, Block A, Prestige Platina Tech Park , Bangalore 560087",
-          ":multiline": true,
-          ":dataRef": "streetAddress",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "streetAddress",
+          "viewType": "text-input",
+          "title": "Street Address",
+          "default": "Adobe Tower, Block A, Prestige Platina Tech Park , Bangalore 560087",
+          "multiline": true,
+          "dataRef": "streetAddress",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "state": {
-          ":name": "state",
-          ":type": "fd/af/components/guidedropdownlist",
-          ":title": "State",
-          ":constraints" : {
-            ":dataType": "string",
-            ":options": [],
-            ":required": true
+          "name": "state",
+          "viewType": "drop-down",
+          "title": "State",
+          "constraints" : {
+            "type": "string",
+            "options": [],
+            "required": true
           },
-          ":events" : {
+          "events" : {
             "initialize" : "request('/content/states.json', 'GET', null, 'stateSuccess', 'stateError')",
-            "stateSuccess" : "{\":constraints\" : { \":options\" : $event.payload }}"
+            "stateSuccess" : "{constraints : { options : $event.payload }}"
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "city": {
-          ":name": "city",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "City",
-          ":default": "Bangalore",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "city",
+          "viewType": "text-input",
+          "title": "City",
+          "default": "Bangalore",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "postalCode": {
-          ":name": "postalcode",
-          ":type": "fd/af/components/guidenumericfield",
-          ":title": "Postal Code",
-          ":default": "560087",
-          ":constraints": {
-            ":dataType": "number",
-            ":required": true
+          "name": "postalcode",
+          "viewType": "number-input",
+          "title": "Postal Code",
+          "default": "560087",
+          "constraints": {
+            "type": "number",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "country": {
-          ":name": "country",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "Country",
-          ":default": "india",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "country",
+          "viewType": "text-input",
+          "title": "Country",
+          "default": "india",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "region": {
-          ":name": "region",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "Region",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "region",
+          "viewType": "text-input",
+          "title": "Region",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         }
       }
     },
     "formSubmit": {
-      ":name": "formSubmit",
-      ":type": "fd/af/components/guidebutton",
-      ":title": "Submit",
-      ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
-      ":events": {
+      "name": "formSubmit",
+      "viewType": "button",
+      "title": "Submit",
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "events": {
         "click": "dispatch_event($form, 'submit')"
       }
     }
   },
-  ":events": {
+  "events": {
     "submit" : "submit_form('submitSuccess', 'submitError')",
     "submitSuccess": "show_message_box($form.thankyouMessage)"
   },
   "thankyouMessage": "Thank you for submitting the form",
-  ":metadata":{
-    ":grammar" : "jsonformula-af",
-    ":locale" : "en-us"
+  "metadata":{
+    "grammar" : "jsonformula-af",
+    "locale" : "en-us"
   }
 }

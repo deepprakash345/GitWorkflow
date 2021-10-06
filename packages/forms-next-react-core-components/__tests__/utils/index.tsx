@@ -5,8 +5,8 @@ import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 
 export const createForm = async (field: any) => {
     const formJson = {
-        ':items': {
-            [field[':name']]: field
+        'items': {
+            [field.name]: field
         }
     };
     return await createFormInstance(formJson);

@@ -1,42 +1,42 @@
 import {Action, Controller} from '../../src/controller/Controller';
 
 export const oneFieldForm = {
-    ':items': {
+    items: {
         'name': {
-            ':constraints': {
-                ':dataType': 'string'
+            constraints: {
+                type: 'string'
             },
-            ':type': 'text',
-            ':name': 'name'
+            type: 'text',
+            name: 'name'
         }
     }
 };
 
 export const numberFieldForm = {
-    ':items': {
+    items: {
         'name': {
-            ':constraints' : { ':dataType' : 'number' },
-            ':type': 'numericEdit',
-            ':name': 'name'
+            constraints : { type : 'number' },
+            type: 'numericEdit',
+            name: 'name'
         }
     }
 };
 
 export const formWithPanel = {
-    ':items': {
+    items: {
         'name': {
-            ':constraints' : { ':dataType' : 'string' },
-            ':type': 'text',
-            ':name': 'name'
+            constraints : { type : 'string' },
+            type: 'text',
+            name: 'name'
         },
         'address': {
-            ':constraints' : { ':dataType' : 'object' },
-            ':name': 'address',
-            ':items': {
+            constraints : { type : 'object' },
+            name: 'address',
+            items: {
                 'zip': {
-                    ':constraints' : { ':dataType' : 'number' },
-                    ':type': 'numericEdit',
-                    ':name': 'zip'
+                    constraints : { type : 'number' },
+                    type: 'numericEdit',
+                    name: 'zip'
                 }
             }
         }
@@ -44,18 +44,18 @@ export const formWithPanel = {
 };
 
 export const nonFormComponent = {
-    ':items': {
+    items: {
         'name': {
-            ':constraints' : { ':dataType' : 'string' },
-            ':type': 'text',
-            ':name': 'name'
+            constraints : { type : 'string' },
+            type: 'text',
+            name: 'name'
         },
         'somekey': {
-            ':items': {
+            items: {
                 'zip': {
-                    ':constraints' : { ':dataType' : 'number' },
-                    ':type': 'numericEdit',
-                    ':name': 'zip'
+                    constraints : { type : 'number' },
+                    type: 'numericEdit',
+                    name: 'zip'
                 }
             }
         }
@@ -64,23 +64,23 @@ export const nonFormComponent = {
 
 
 export const formWithRules = {
-    ':items': {
+    items: {
         'firstName': {
-            ':constraints' : { ':dataType' : 'string' },
-            ':type': 'text',
-            ':name': 'firstName'
+            constraints : { type : 'string' },
+            type: 'text',
+            name: 'firstName'
         },
         'lastName': {
-            ':constraints' : { ':dataType' : 'string' },
-            ':type': 'text',
-            ':name': 'lastName'
+            constraints : { type : 'string' },
+            type: 'text',
+            name: 'lastName'
         },
         'fullName' : {
-            ':type' : 'text',
-            ':rules' : {
-                ':value' : "$form.firstName.value + ' ' + $form.lastName.value"
+            type : 'text',
+            rules : {
+                value : "$form.firstName.value + ' ' + $form.lastName.value"
             },
-            ':name' : 'fullName'
+            name : 'fullName'
         }
     }
 };
@@ -95,7 +95,7 @@ export const create = (arr: any[], nameMap: any = {p : 1}): any => {
     const createObj = (s: string) => {
         const name = s + newNameMap[s];
         return {
-            ':name' : name
+            name : name
         };
     };
 
@@ -107,7 +107,7 @@ export const create = (arr: any[], nameMap: any = {p : 1}): any => {
                 ...newNameMap,
                 p : newNameMap.p + 1
             };
-            obj[':items'] = create(curr, newNameMap)[':items'];
+            obj.items = create(curr, newNameMap).items;
         } else if (typeof curr === 'string') {
             newNameMap = {
                 ...newNameMap,
@@ -124,8 +124,8 @@ export const create = (arr: any[], nameMap: any = {p : 1}): any => {
         } else {
             throw `${curr} not support currently`;
         }
-        items[':items'][obj[':name']] = obj;
+        items.items[obj.name] = obj;
         return items;
-    }, {':items': {}});
+    }, {items: {}});
 };
 

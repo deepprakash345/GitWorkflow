@@ -3,14 +3,19 @@ import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
-import {callbackFn, Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {callbackFn, Controller, CustomEvent} from '@adobe/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@adobe/forms-next-core';
 
-interface customEventHandlers {
+type customEventHandlers = {
     [key: string]: callbackFn;
 }
 
-const AdaptiveForm = function (props: { formJson: FormJson, mappings: {[key:string]:JSXElementConstructor<any>}} & customEventHandlers) {
+type AdaptiveFormProps = customEventHandlers & {
+    formJson: FormJson,
+    mappings: {[key:string]:JSXElementConstructor<any>}
+}
+
+const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings} = props;
     let [controller, setController] = React.useState<Controller|undefined>(undefined);
     const createForm = async (json: string) => {

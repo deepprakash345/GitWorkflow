@@ -82,6 +82,10 @@ function App() {
         {id: 'financialpostiion', name: 'Financial Position'}
     ]
 
+    const onSubmit= (data: Action) => {
+        console.log(data.payload)
+    }
+
     return (
         <Grid
             areas={['header header', 'sidebar content']}
@@ -161,10 +165,12 @@ function App() {
                                        name="UNIQUE_ID_OF_DIV"
                                        editorProps={{$blockScrolling: true}}
                                        tabSize={2}
-                                       onChange={(value: any) => {
-                                           setForm(value);
-                                           setInputForm("");
-                                           setInputForm(value);
+                                       onChange={(value: string) => {
+                                           setForm(value)
+                                       }}
+                                       onBlur={(e: any, editor: any) => {
+                                           setInputForm("")
+                                           setInputForm(editor.getValue())
                                        }}
                                        setOptions={{
                                            enableBasicAutocompletion: true,
@@ -175,14 +181,12 @@ function App() {
                         </Item>
                     </TabPanels>
                 </Tabs>
-
-
             </View>
             <View gridArea="content">
                 {inputForm ? <AdaptiveForm
                     formJson={JSON.parse(inputForm)}
                     mappings={mappings}
-                    onSubmit={(eventObj: Action) => window.alert(JSON.stringify(eventObj.payload))}
+                    onSubmit={onSubmit}
                     onStateSuccess={(eventObj : Action) => {
                         // fetch data
                         let dataVar = "askhas"

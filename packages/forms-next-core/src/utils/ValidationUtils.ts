@@ -107,7 +107,7 @@ export const Constraints = {
 
     options : (constraint: OptionJson[], value: any) => {
         return {
-            valid: constraint.map(x => x[':value']).indexOf(value) > -1,
+            valid: constraint.map(x => x.value).indexOf(value) > -1,
             value
         };
     }

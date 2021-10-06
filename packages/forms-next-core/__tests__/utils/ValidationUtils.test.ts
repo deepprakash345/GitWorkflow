@@ -360,33 +360,33 @@ test('required test should fail if the value is null or empty', () => {
 
 test('options constraint should pass if value exists inside options', () => {
     let options: OptionJson[] = [{
-        ':value' : 0
+        'value' : 0
     }, {
-        ':value' :  1
+        'value' :  1
     }];
     expect(Constraints.options(options, 0).valid).toEqual(true);
 
     options = [{
-        ':value' : 'a'
+        'value' : 'a'
     }, {
-        ':value' :  'b'
+        'value' :  'b'
     }];
     expect(Constraints.options(options, 'a').valid).toEqual(true);
 });
 
 test("options constraint should fail if value doesn't exists inside options", () => {
     let options: OptionJson[] = [{
-        ':value' : 0
+        value : 0
     }, {
-        ':value' :  1
+        value :  1
     }];
     expect(Constraints.options(options, -1).valid).toEqual(false);
     expect(Constraints.options(options, 2).valid).toEqual(false);
 
     options = [{
-        ':value' : 'a'
+        value : 'a'
     }, {
-        ':value' :  'b'
+        value :  'b'
     }];
     expect(Constraints.options(options, 'c').valid).toEqual(false);
 });

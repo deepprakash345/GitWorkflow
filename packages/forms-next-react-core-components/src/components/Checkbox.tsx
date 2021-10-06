@@ -6,9 +6,9 @@ import {baseConvertor, combineConvertors, constraintConvertor, fieldConvertor} f
 
 
 const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConvertor, (a, b) => {
-    const value = a[':value'];
-    const selectedValue = a[':constraints']?.[':options']?.[0]?.[':value'];
-    const unselectedValue = a[':constraints']?.[':options']?.[1]?.[':value'];
+    const value = a.value;
+    const selectedValue = a.constraints?.options?.[0]?.value;
+    const unselectedValue = a.constraints?.options?.[1]?.value;
     return {
         selectedValue,
         unselectedValue,

@@ -7,19 +7,19 @@ import {FieldJson} from '@adobe/forms-next-core/lib';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 
 const field : FieldJson = {
-    ':id' : 'field',
-    ':name': 'EmploymentStatus',
-    ':value': true,
-    ':visible' : true,
-    ':title': 'Are you Employed',
-    ':constraints' : {
-        ':dataType' : 'boolean',
-        ':options' : [{
-            ':value' : true,
-            ':text' : 'Yes'
+    'id' : 'field',
+    'name': 'EmploymentStatus',
+    'value': true,
+    'visible' : true,
+    'title': 'Are you Employed',
+    'constraints' : {
+        'type' : 'boolean',
+        'options' : [{
+            'value' : true,
+            'text' : 'Yes'
         }, {
-            ':value' : false,
-            ':text' : 'No'
+            'value' : false,
+            'text' : 'No'
         }]
     }
 };
@@ -50,7 +50,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name : 'html in the title should be handled for non rich text title',
         field: {
             ...field,
-            ':title' : '<script>javascript</script><p>title inside p tags</p>'
+            'title' : '<script>javascript</script><p>title inside p tags</p>'
         },
         expects: ({group}) => {
             expect(group?.innerHTML).toContain('&lt;script&gt;javascript&lt;/script&gt;' +
@@ -77,9 +77,9 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
-            ':constraints': {
-                ...field[':constraints'],
-                ':required': true
+            'constraints': {
+                ...field.constraints,
+                'required': true
             }
         },
         expects: ({group}) => {
@@ -90,7 +90,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'label is empty if title is marked as hidden in the field',
         field: {
             ...field,
-            ':hideTitle': true
+            'hideTitle': true
         },
         expects: ({group}) => {
             expect(group?.textContent).not.toContain('Are you Employed');
@@ -100,7 +100,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'input is marked as aria-invalid when the field is invalid',
         field: {
             ...field,
-            ':valid': false
+            'valid': false
         },
         expects: ({group}) => {
             expect(group?.getAttribute('aria-invalid')).toBe('true');
@@ -110,7 +110,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'input is not marked as aria-invalid when the field is valid',
         field: {
             ...field,
-            ':valid': true
+            'valid': true
         },
          expects: ({group}) => {
             expect(group?.getAttribute('aria-invalid')).toBeNull();
@@ -146,7 +146,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'correct option is selected on initial render case 2',
         field: {
             ...field,
-            ':value' : false
+            'value' : false
         },
         expects: ({inputs}) => {
             expect(inputs[1]?.checked).toEqual(true);
@@ -159,7 +159,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'no option is selected on initial render when value is null',
         field: {
             ...field,
-            ':value' : null
+            'value' : null
         },
         expects: ({inputs}) => {
             expect(inputs[0]?.checked).toEqual(false);
@@ -173,16 +173,16 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         field: {
             ...field,
             'type' : 'string',
-            ':value' : 'some other option',
-            ':constraints' : {
-                ':options' : [
+            'value' : 'some other option',
+            'constraints' : {
+                'options' : [
                     {
-                        ':value' : 'option 1',
-                        ':text' : 'option 1'
+                        'value' : 'option 1',
+                        'text' : 'option 1'
                     },
                     {
-                        ':value' : 'option 2',
-                        ':text' : 'option 2'
+                        'value' : 'option 2',
+                        'text' : 'option 2'
                     }
                 ]
             }
@@ -230,20 +230,20 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
 test('option selected by user is set in the model', async () => {
     const f = {
         ...field,
-        ':id' : field[':name']
+        'id' : field.name
     };
-    f[':value'] = undefined;
+    f.value = undefined;
     const {inputs, form} = await helper(f);
     let state = form?.getState();
-    expect((state?.[':items'].EmploymentStatus as FieldJson)[':value']).toBeUndefined();
+    expect((state?.items.EmploymentStatus as FieldJson).value).toBeUndefined();
     userEvent.click(inputs[0]);
     state = form?.getState();
-    expect((state?.[':items'].EmploymentStatus as FieldJson)[':value']).toEqual(true);
+    expect((state?.items.EmploymentStatus as FieldJson).value).toEqual(true);
     expect(inputs[0]?.checked).toEqual(true);
     expect(inputs[1]?.checked).toEqual(false);
     userEvent.click(inputs[1]);
     state = form?.getState();
-    expect((state?.[':items'].EmploymentStatus as FieldJson)[':value']).toEqual(false);
+    expect((state?.items.EmploymentStatus as FieldJson).value).toEqual(false);
     expect(inputs[0]?.checked).toEqual(false);
     expect(inputs[1]?.checked).toEqual(true);
 });
@@ -251,7 +251,7 @@ test('option selected by user is set in the model', async () => {
 test('it should handle visible property', async () => {
     const f = {
         ...field,
-        ':visible' : false
+        'visible' : false
     };
 
     const {container} = await helper(f);

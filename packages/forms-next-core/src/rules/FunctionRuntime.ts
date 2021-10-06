@@ -52,7 +52,7 @@ class FunctionRuntimeImpl {
         let result;
         try {
             if (payload && Object.keys(payload).length === 0) {
-                requestOptions['headers'] = {
+                requestOptions.headers = {
                     'Content-Type': payloadContentType // this should match content type of the payload
                 };
             }
@@ -71,7 +71,7 @@ class FunctionRuntimeImpl {
     }
 
     private getData (context: any) {
-        return context.$form.controller().getState()[':data'];
+        return context.$form.controller().getState().data;
     }
 
     async submit(context: any, success: string, error: string) {

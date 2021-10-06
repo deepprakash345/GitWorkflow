@@ -18,7 +18,7 @@ const mapper = combineConvertors(baseConvertor,
     });
 
 const TextFieldComponent = function (props: FieldJson) {
-    const renderedComponent = useRenderer(props, mapper, props[':multiline'] === true ? TextArea : TextField);
+    const renderedComponent = useRenderer(props, mapper, props.multiline === true ? TextArea : TextField);
     return renderedComponent;
 };
 

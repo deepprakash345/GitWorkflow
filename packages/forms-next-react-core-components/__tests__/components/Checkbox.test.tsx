@@ -7,14 +7,14 @@ import {FieldExpectType} from './TextField.test';
 import {FieldJson} from '@adobe/forms-next-core/lib';
 
 const field = {
-    ':name': 'name',
-    ':title': 'name',
-    ':visible' : true,
-    ':constraints' : {
-        ':dataType' : 'boolean',
-        ':options': [{
-            ':value': true,
-            ':title': 'some option title'
+    'name': 'name',
+    'title': 'name',
+    'visible' : true,
+    'constraints' : {
+        'type' : 'boolean',
+        'options': [{
+            'value' : true,
+            'title': 'some option title'
         }]
     }
 };
@@ -23,10 +23,10 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     {
         name : 'a checkbox should render if there are no options',
         field : {
-            ':name': 'name',
-            ':value': 'john doe',
-            ':title': 'name',
-            ':visible' : true
+            'name': 'name',
+            'value': 'john doe',
+            'title': 'name',
+            'visible' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(label?.textContent).toEqual('name');
@@ -47,7 +47,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name : 'html in the title should be handled for non rich text title',
         field: {
             ...field,
-            ':title' : '<script>javascript</script><p>title inside p tags</p>'
+            'title' : '<script>javascript</script><p>title inside p tags</p>'
         },
         // eslint-disable-next-line no-unused-vars
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
@@ -81,8 +81,8 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
-            ':constraints': {
-                ':required': true
+            'constraints': {
+                'required' : true
             }
         },
         x :true,
@@ -94,7 +94,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'label is null if title is marked as hidden in the field',
         field: {
             ...field,
-            ':hideTitle': true
+            'hideTitle': true
         },
         // eslint-disable-next-line no-unused-vars
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
@@ -105,7 +105,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'input is marked as aria-invalid when the field is invalid',
         field: {
             ...field,
-            ':valid': false
+            'valid': false
         },
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-invalid')).toBe('true');
@@ -115,7 +115,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'input is not marked as aria-invalid when the field is valid',
         field: {
             ...field,
-            ':valid': true
+            'valid': true
         },
         expects: (label ?: HTMLLabelElement | null, input?: HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-invalid')).toBeNull();
@@ -132,7 +132,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name : 'a checkbox should be selected if value is on',
         field : {
             ...field,
-            ':value' : true
+            'value' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(input?.checked).toEqual(true);
@@ -142,14 +142,14 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name : 'a checkbox should not be selected if value is not on',
         field : {
             ...field,
-            ':constraints' : {
-                ':options' : [{
-                    ':value' : false
+            'constraints' : {
+                'options' : [{
+                    'value' : false
                 }, {
-                    ':value' : true
+                    'value' : true
                 }]
             },
-            ':value' : true
+            'value' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(input?.checked).toEqual(false);
@@ -167,9 +167,9 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     {
         name : 'a checkbox should not be selected if both value and options are undefined',
         field : {
-            ':name': 'name',
-            ':title': 'name',
-            ':visible' : true
+            'name': 'name',
+            'title': 'name',
+            'visible' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(input?.checked).toEqual(false);
@@ -210,16 +210,16 @@ ignoredTestTable(labelInputTests).forEach((v) => {
 
 test('if no options are defined then value cannot be selected', async () => {
     const f = {
-        ':name': 'name',
-        ':title': 'name',
-        ':id' : 'name',
-        ':visible' : true
+        'name' : 'name',
+        'title' : 'name',
+        'id' : 'name',
+        'visible' : true
     };
     const {input, form} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
     const state = form?.getState();
-    expect((state?.[':items'].name as FieldJson)[':value']).toEqual(undefined);
+    expect((state?.items.name as FieldJson).value).toEqual(undefined);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
     // @ts-ignore
@@ -230,13 +230,13 @@ test('if no options are defined then value cannot be selected', async () => {
 test('selection made by the user sets the value', async () => {
     const f = {
         ...field,
-        ':id' : field[':name']
+        'id' : field.name
     };
     const {input, form, label} = await helper(f);
     // @ts-ignore
     userEvent.click(label);
     const state = form?.getState();
-    expect((state?.[':items'].name as FieldJson)[':value']).toEqual(true);
+    expect((state?.items.name as FieldJson).value).toEqual(true);
     expect(input?.checked).toEqual(true);
     expect(input?.value).toEqual('true');
 });
@@ -244,19 +244,19 @@ test('selection made by the user sets the value', async () => {
 test('clicking on checkbox twice resets the value', async () => {
     const f = {
         ...field,
-        ':constraints' : {
-            ...field[':constraints'],
-            ':options' : [
+        'constraints' : {
+            ...field.constraints,
+            'options' : [
                 {
-                    ':value' : false
+                    'value' : false
                 },
                 {
-                    ':value' : true
+                    'value' : true
                 }
             ]
         },
-        ':id' : field[':name'],
-        ':value' : [true, false][Math.round(Math.random())]
+        'id' : field.name,
+        'value' : [true, false][Math.round(Math.random())]
     };
     const {input, form} = await helper(f);
     const value = input?.value;
@@ -266,7 +266,7 @@ test('clicking on checkbox twice resets the value', async () => {
     // @ts-ignore
     userEvent.click(input);
     const state = form?.getState();
-    expect((state?.[':items'].name as FieldJson)[':value']).toEqual(f[':value']);
+    expect((state?.items.name as FieldJson).value).toEqual(f.value);
     expect(input?.checked).toEqual(checked);
     expect(input?.value).toEqual(`${value}`);
 });
@@ -275,25 +275,25 @@ test('clicking on checkbox twice resets the value', async () => {
 test('deselecting the checkbox sets the value to off value', async () => {
     const f = {
         ...field,
-        ':constraints' : {
-            ...field[':constraints'],
-            ':options' : [
+        'constraints' : {
+            ...field.constraints,
+            'options' : [
                 {
-                    ':value' : false
+                    'value' : false
                 },
                 {
-                    ':value' : true
+                    'value' : true
                 }
             ]
         },
-        ':id' : field[':name'],
-        ':value' : false
+        'id' : field.name,
+        'value' : false
     };
     const {input, form} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
     const state = form?.getState();
-    expect((state?.[':items'].name as FieldJson)[':value']).toBe(true);
+    expect((state?.items.name as FieldJson).value).toBe(true);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('true');
 });
@@ -301,7 +301,7 @@ test('deselecting the checkbox sets the value to off value', async () => {
 test('it should handle visible property', async () => {
     const f = {
         ...field,
-        ':visible' : false
+        'visible' : false
     };
 
     const {input, container, label} = await helper(f);

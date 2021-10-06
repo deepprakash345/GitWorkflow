@@ -6,74 +6,74 @@ const nock = require('nock');
 
 test('single field form', async () => {
     const actual = await createFormInstance(oneFieldForm);
-    expect(actual.getState()[':items'].name).toEqual({
-        ':constraints' : { ':dataType': 'string' },
-        ':type': 'text',
-        ':name': 'name',
-        ':readOnly': false,
-        ':visible': true,
-        ':enabled': true,
-        ':id': 'name'
+    expect(actual.getState().items.name).toEqual({
+        constraints : { type: 'string' },
+        type: 'text',
+        name: 'name',
+        readOnly: false,
+        visible: true,
+        enabled: true,
+        id: 'name'
     });
 });
 
 test('single field form with number type', async () => {
     const actual = await createFormInstance(numberFieldForm);
-    expect(actual.getState()[':items'].name).toEqual({
-        ':type': 'numericEdit',
-        ':constraints' : { ':dataType': 'number' },
-        ':name': 'name',
-        ':readOnly': false,
-        ':visible': true,
-        ':enabled': true,
-        ':id': 'name'
+    expect(actual.getState().items.name).toEqual({
+        type: 'numericEdit',
+        constraints : { type: 'number' },
+        name: 'name',
+        readOnly: false,
+        visible: true,
+        enabled: true,
+        id: 'name'
     });
 });
 
 test('single field form with default', async () => {
     const form = JSON.parse(JSON.stringify(oneFieldForm));
-    form[':items'].name[':default'] = 'john doe';
+    form.items.name.default = 'john doe';
     const actual = await createFormInstance(form);
-    expect(actual.getState()[':items'].name).toEqual({
-        ':default': 'john doe',
-        ':type': 'text',
-        ':constraints' : { ':dataType': 'string' },
-        ':name': 'name',
-        ':readOnly': false,
-        ':visible': true,
-        ':enabled': true,
-        ':id': 'name',
-        ':value': 'john doe'
+    expect(actual.getState().items.name).toEqual({
+        default: 'john doe',
+        type: 'text',
+        constraints : { type: 'string' },
+        name: 'name',
+        readOnly: false,
+        visible: true,
+        enabled: true,
+        id: 'name',
+        value: 'john doe'
     });
 });
 
 test('form with panel', async () => {
     const actual = await createFormInstance(formWithPanel);
-    expect(actual.getState()[':items'].name).toEqual({
-        ':type': 'text',
-        ':constraints' : { ':dataType': 'string' },
-        ':name': 'name',
-        ':readOnly': false,
-        ':visible': true,
-        ':enabled': true,
-        ':id': 'name'
+    expect(actual.getState().items.name).toEqual({
+        type: 'text',
+        constraints : { type: 'string' },
+        name: 'name',
+        readOnly: false,
+        visible: true,
+        enabled: true,
+        id: 'name'
     });
-    expect(actual.getState()[':items'].address).toEqual({
-        ':constraints' : { ':dataType': 'object' },
-        ':name': 'address',
-        ':id': 'address',
-        ':visible' : true,
-        ':count': 1,
-        ':initialCount': 1,
-        ':items': {
+    expect(actual.getState().items.address).toEqual({
+        constraints : { type: 'object' },
+        name: 'address',
+        id: 'address',
+        visible : true,
+        count: 1,
+        initialCount: 1,
+        items: {
             'zip': {
-                ':type': 'numericEdit',
-                ':constraints' : { ':dataType': 'number' },
-                ':name': 'zip',
-                ':readOnly': false,
-                ':visible': true,
-                ':enabled': true,
-                ':id': 'address.zip'
+                type: 'numericEdit',
+                constraints : { type: 'number' },
+                name: 'zip',
+                readOnly: false,
+                visible: true,
+                enabled: true,
+                id: 'address.zip'
             }
         }
     });
@@ -81,28 +81,28 @@ test('form with panel', async () => {
 
 test('nested fields with non form component', async () => {
     const actual = await createFormInstance(nonFormComponent);
-    expect(actual.getState()[':items'].name).toEqual({
-        ':type': 'text',
-        ':constraints' : { ':dataType': 'string' },
-        ':name': 'name',
-        ':readOnly': false,
-        ':visible': true,
-        ':enabled': true,
-        ':id': 'name'
+    expect(actual.getState().items.name).toEqual({
+        type: 'text',
+        constraints : { type: 'string' },
+        name: 'name',
+        readOnly: false,
+        visible: true,
+        enabled: true,
+        id: 'name'
     });
-    expect(actual.getState()[':items'].somekey).toEqual({
-        ':count': 1,
-        ':initialCount': 1,
-        ':visible' : true,
-        ':items': {
+    expect(actual.getState().items.somekey).toEqual({
+        count: 1,
+        initialCount: 1,
+        visible : true,
+        items: {
             'zip': {
-                ':type': 'numericEdit',
-                ':constraints' : { ':dataType': 'number' },
-                ':name': 'zip',
-                ':readOnly': false,
-                ':visible': true,
-                ':enabled': true,
-                ':id': 'zip'
+                type: 'numericEdit',
+                constraints : { type: 'number' },
+                name: 'zip',
+                readOnly: false,
+                visible: true,
+                enabled: true,
+                id: 'zip'
             }
         }
     });
@@ -144,8 +144,8 @@ test('Fetch form should pass the request headers', async () => {
 
 test('Form should be prefilled from data URL', async () => {
     let json = create(['f', 'f', 'f']);
-    json[':metadata'] = {
-        ':dataUrl' : `${API_HOST}/my-test-data.json`
+    json.metadata = {
+        dataUrl : `${API_HOST}/my-test-data.json`
     };
     const data = {
         'f1' : 'x',
@@ -155,19 +155,19 @@ test('Form should be prefilled from data URL', async () => {
     nock(API_HOST)
         .post('/my-test-data.json')
         .reply(200, {
-            ':data' : jsonString(data)
+            data : jsonString(data)
         });
     const form = await createFormInstance(json);
     const state= form.getState();
-    expect(state[':data']).toEqual(data);
-    expect((state[':items'].f1 as FieldJson)[':value']).toEqual(data['f1']);
-    expect((state[':items'].f2 as FieldJson)[':value']).toEqual(data['f2']);
-    expect((state[':items'].f3 as FieldJson)[':value']).toEqual(data['f3']);
+    expect(state.data).toEqual(data);
+    expect((state.items.f1 as FieldJson).value).toEqual(data.f1);
+    expect((state.items.f2 as FieldJson).value).toEqual(data.f2);
+    expect((state.items.f3 as FieldJson).value).toEqual(data.f3);
 });
 
 test.todo('Form creation should not fail if prefill url returns no data');/*, async () => {
     let json = create(['f', 'f', 'f']);
-    json[':metadata'] = {
+    json.metadata = {
         'dataUrl' : `${API_HOST}/my-test-data.json`
     };
     nock(API_HOST)
@@ -179,8 +179,8 @@ test.todo('Form creation should not fail if prefill url returns no data');/*, as
 
 test('Form creation should not fail if prefill url returns wrong data', async () => {
     let json = create(['f', 'f', 'f']);
-    json[':metadata'] = {
-        ':dataUrl' : `${API_HOST}/my-test-data.json`
+    json.metadata = {
+        dataUrl : `${API_HOST}/my-test-data.json`
     };
     nock(API_HOST)
         .post('/my-test-data.json')
@@ -188,5 +188,5 @@ test('Form creation should not fail if prefill url returns wrong data', async ()
             'some-key' : 'some-value'
         });
     const form = await createFormInstance(json);
-    expect(form.getState()[':data']).toEqual({});
+    expect(form.getState().data).toEqual({});
 });

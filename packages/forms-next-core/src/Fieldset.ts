@@ -6,7 +6,7 @@ import {Controller} from './controller/Controller';
 export const createChild = (child: FieldsetJson | FieldJson,
                             createController: (elem: FieldModel | FieldsetModel) => Controller) => {
   let retVal: Fieldset | Field;
-  if (':items' in child) {
+  if ('items' in child) {
     retVal = new Fieldset(child as FieldsetJson, createController);
   } else {
     retVal = new Field(child as FieldJson, createController);
@@ -33,14 +33,14 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   }
 
   get visible () {
-    return this.getP(':visible', true);
+    return this.getP('visible', true);
   }
 
   public json (): any {
     return Object.assign({}, super.json(), {
-      ':count': this.count,
-      ':initialCount': this.initialCount,
-      ':visible': this.visible
+      'count': this.count,
+      'initialCount': this.initialCount,
+      'visible': this.visible
     });
   }
 
@@ -49,7 +49,7 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   }
 
   get name () {
-    return this.getP(':name', '');
+    return this.getP('name', '');
   }
 
   controller() {

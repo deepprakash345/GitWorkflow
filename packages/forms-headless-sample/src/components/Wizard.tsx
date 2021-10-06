@@ -12,7 +12,7 @@ const Wizard = function (originalProps: FieldsetJson) {
                                            confirmLabel="Confirm"
                                            mode="fullscreen"
                                            open
-                                           title={props[":title"]}
+                                           title={props.title}
                                            onClose={function noRefCheck(){}}>
         {renderChildren(props, mappings)}
     </QWizard>));

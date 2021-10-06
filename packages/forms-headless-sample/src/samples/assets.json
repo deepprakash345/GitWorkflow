@@ -1,96 +1,97 @@
 {
-  ":data": {},
-  ":items": {
+  "$schema" : "https://git.corp.adobe.com/raw/livecycle/af2-docs/gh-pages/schema/adaptive-form.schema.json",
+  "data": {},
+  "items": {
     "personal" : {
-      ":type": "fd/af/components/panel",
-      ":name": "personal",
-      ":title": "Personal Information",
-      ":items": {
+      "viewType": "panel",
+      "name": "personal",
+      "title": "Personal Information",
+      "items": {
         "firstname": {
-          ":name": "firstname",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "Firstname",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "firstname",
+          "viewType": "text-input",
+          "title": "Firstname",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "lastname": {
-          ":name": "lastname",
-          ":type": "fd/af/components/guidetextbox",
-          ":title": "Lastname",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "lastname",
+          "viewType": "text-input",
+          "title": "Lastname",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "selectone": {
-          ":name": "selectone",
-          ":type": "fd/af/components/guideradiobutton",
-          ":title": "Select One",
-          ":constraints" : {
-            ":dataType": "boolean",
-            ":options": [{
-              ":text" : "Option 1(choose me)",
-              ":value" : true
+          "name": "selectone",
+          "viewType": "radio-button",
+          "title": "Select One",
+          "constraints" : {
+            "type": "boolean",
+            "options": [{
+              "text" : "Option 1(choose me)",
+              "value" : true
             },{
-              ":text" : "Option 2",
-              ":value" : false
+              "text" : "Option 2",
+              "value" : false
             }],
-            ":required": true
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "aboutme": {
-          ":name": "aboutme",
-          ":type": "fd/af/components/guidetextbox",
-          ":multiline" : true,
-          ":title": "About me",
-          ":default": "Everything is awesome!",
-          ":constraints": {
-            ":dataType": "string",
-            ":required": true
+          "name": "aboutme",
+          "viewType": "text-input",
+          "multiline" : true,
+          "title": "About me",
+          "default": "Everything is awesome!",
+          "constraints": {
+            "type": "string",
+            "required": true
           },
-          ":constraintMessages": {
-            ":required": "The field is required"
+          "constraintMessages": {
+            "required": "The field is required"
           }
         },
         "reset": {
-          ":name": "reset",
-          ":type": "fd/af/components/guidebutton",
-          ":title": "Reset",
-          ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
-          ":events": {
+          "name": "reset",
+          "viewType": "button",
+          "title": "Reset",
+          "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+          "events": {
             "click": "dispatch_event($form, 'submit')"
           }
         },
         "submit": {
-          ":name": "submit",
-          ":type": "fd/af/components/guidebutton",
-          ":title": "Submit",
-          ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
-          ":events": {
+          "name": "submit",
+          "viewType": "button",
+          "title": "Submit",
+          "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+          "events": {
             "click": "dispatch_event($form, 'submit')"
           }
         }
       }
     }
   },
-  ":events": {
+  "events": {
     "submit" : "submit_form('submitSuccess', 'submitError')",
     "submitSuccess": "show_message_box($form.thankyouMessage)"
   },
   "thankyouMessage": "Thank you for submitting the form",
-  ":metadata":{
-    ":grammar" : "jsonformula-af",
-    ":locale" : "en-us"
+  "metadata":{
+    "grammar" : "jsonformula-af",
+    "locale" : "en-us"
   }
 }
