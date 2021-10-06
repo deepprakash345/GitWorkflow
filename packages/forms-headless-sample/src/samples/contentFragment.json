@@ -1,4 +1,5 @@
 {
+  "$schema" : "https://git.corp.adobe.com/raw/livecycle/af2-docs/gh-pages/schema/adaptive-form.schema.json",
   "data": {},
   "items": {
     "office" : {
