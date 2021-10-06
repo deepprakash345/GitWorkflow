@@ -1,60 +1,60 @@
 {
-  ":items": {
+  "items": {
     "firstName": {
-      ":name": "firstName",
-      ":title": "first name",
-      ":description": "The person's first name.",
-      ":constraints": {
-        ":dataType": "string",
-        ":required": true
+      "name": "firstName",
+      "title": "first name",
+      "description": "The person's first name.",
+      "constraints": {
+        "type": "string",
+        "required": true
       },
-      ":type": "fd/af/components/guidetextbox"
+      "viewType": "text-input"
     },
     "middleName": {
-      ":name": "middleName",
-      ":title": "middle name",
-      ":description": "The person's middle name.",
-      ":constraints": {
-        ":dataType": "string",
-        ":required": true
+      "name": "middleName",
+      "title": "middle name",
+      "description": "The person's middle name.",
+      "constraints": {
+        "type": "string",
+        "required": true
       },
-      ":type": "fd/af/components/guidetextbox"
+      "viewType": "text-input"
     },
     "lastName": {
-      ":name": "lastName",
-      ":title": "last name",
-      ":description": "The person's last name.",
-      ":constraints": {
-        ":dataType": "string",
-        ":required": true
+      "name": "lastName",
+      "title": "last name",
+      "description": "The person's last name.",
+      "constraints": {
+        "type": "string",
+        "required": true
       },
-      ":type": "fd/af/components/guidetextbox"
+      "viewType": "text-input"
     },
     "fullName": {
-      ":name": "fullName",
-      ":title": "full name",
-      ":description": "The person's full name.",
-      ":constraints": {
-        ":dataType": "string",
-        ":required": true
+      "name": "fullName",
+      "title": "full name",
+      "description": "The person's full name.",
+      "constraints": {
+        "type": "string",
+        "required": true
       },
-      ":type": "fd/af/components/guidetextbox"
+      "viewType": "text-input"
     },
     "gender": {
-      ":name": "gender",
-      ":title": "Gender",
-      ":constraints": {
-        ":dataType": "string",
-        ":options": [{
-          ":text" : "Male",
-          ":value" : "male"
+      "name": "gender",
+      "title": "Gender",
+      "constraints": {
+        "type": "string",
+        "options": [{
+          "text" : "Male",
+          "value" : "male"
         },
         {
-          ":text" : "Female",
-          ":value" : "female"
+          "text" : "Female",
+          "value" : "female"
         }]
       },
-      ":type": "fd/af/components/guideradiobutton"
+      "viewType": "radio-button"
     }
   }
 }

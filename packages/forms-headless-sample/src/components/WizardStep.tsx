@@ -9,7 +9,7 @@ const WizardStep = function (originalProps: FieldsetJson) {
     const [props] = useRuleEngine<FieldsetJson, string>(originalProps);
 
     return renderIfVisible(props,(<QWizardStep
-                                           title={props[":title"]}>
+                                           title={props.title}>
         <React.Fragment key=".0">
             {renderChildren(props, mappings)}
         </React.Fragment>

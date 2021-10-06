@@ -14,7 +14,7 @@ export type Handlers = {
 export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, Handlers] {
     const [elementState, setElementState] = useState(props);
     const context:IFormContext = useContext(formContext);
-    const id = props[':id'] as string;
+    const id = props.id as string;
     const controller = context.controller?.getElementController(id);
     useEffect(() => {
         const subscription = controller?.subscribe((action: Action) => {
@@ -41,7 +41,7 @@ export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, H
 export const useRenderer = function(props:any, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
     const [state, handlers] = useRuleEngine<FieldJson, string>(props);
     const res = propsMapper(state, handlers);
-    const errMessage = state[':errorMessage'] || '';
+    const errMessage = state.errorMessage || '';
     return (<div className={'field'}>
         <Component {...res} />
         {errMessage.length > 0 ? <div>{errMessage}</div> : null}

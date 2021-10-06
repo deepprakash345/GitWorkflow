@@ -29,47 +29,47 @@ export const baseConvertor: Convertor<FieldJson> = (a, b) => {
     };
 
     return {
-        isHidden : a[':visible'] === false,
-        name: a[':name'],
-        isDisabled : a[':enabled'] === false,
-        label: a[':hideTitle'] === true ? '' : (a[':richTextTitle'] === true ? richTextTitle(a[':title']) : a[':title']),
-        description: (a[':description'] && a[':description'].length > 0) ? richTextTitle(a[':description']) : null
+        isHidden : a.visible === false,
+        name: a.name,
+        isDisabled : a.enabled === false,
+        label: a.hideTitle === true ? '' : (a.richTextTitle === true ? richTextTitle(a.title) : a.title),
+        description: (a.description && a.description.length > 0) ? richTextTitle(a.description) : null
     };
 };
 
 export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
     return {
-        ...(a[':constraints'] && a[':constraints'][':required'] && {
+        ...(a.constraints && a.constraints.required && {
             isRequired: true,
             necessityIndicator: 'icon'
         }),
-        validationState: a[':valid'] === false ? 'invalid' : (a[':valid'] === undefined ? undefined : 'valid')
+        validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid')
     };
 };
 
 export const fieldConvertor: Convertor<FieldJson> = (a, b) => {
     return {
-        placeholder: a[':placeholder'],
-        value: a[':value'],
-        validationState: a[':valid'] === false ? 'invalid' : (a[':valid'] === undefined ? undefined : 'valid'),
+        placeholder: a.placeholder,
+        value: a.value,
+        validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
         onChange: b.dispatchChange,
-        isReadOnly : a[':readOnly'] === true
+        isReadOnly : a.readOnly === true
     };
 };
 
 export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
     return {
-        minLength: a[':constraints']?.[':minLength'],
-        maxLength: a[':constraints']?.[':maxLength'],
-        pattern: a[':constraints']?.[':pattern']
+        minLength: a.constraints?.minLength,
+        maxLength: a.constraints?.maxLength,
+        pattern: a.constraints?.pattern
     };
 };
 
 export const optionsToChildConvertor: Convertor<FieldJson> = (a, b) => {
-    const options = a[':constraints']?.[':options'] || [];
+    const options = a.constraints?.options || [];
     const radio = (option : any) => {
-        const value = option[':value'];
-        const text = option[':text'] || '';
+        const value = option.value;
+        const text = option.text || '';
         return <Radio key={JSON.stringify(option)} value={value}>{text}</Radio>;
     };
 

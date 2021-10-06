@@ -5,20 +5,20 @@ import {createForm, Provider} from '../utils';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 
 const emptyPanel = {
-    ':id' : 'emptypanel',
-    ':visible' : true,
-    ':items' : {}
+    'id' : 'emptypanel',
+    'visible' : true,
+    'items' : {}
 };
 
 const panelWithField = {
-    ':id' : 'panelWithField',
-    ':visible' : true,
-    ':items' : {
+    'id' : 'panelWithField',
+    'visible' : true,
+    'items' : {
         'f1' : {
-            ':id' : 'f1',
-            ':type' : 'text-field',
-            ':title' : 'name',
-            ':visible' : true
+            'id' : 'f1',
+            'viewType' : 'text-field',
+            'title' : 'name',
+            'visible' : true
         }
     }
 };
@@ -33,7 +33,7 @@ test('panel should get rendered if it is visible', () => {
 test('panel should not get rendered if it is invisible', () => {
     const p = {
         ...emptyPanel,
-        ':visible' : false
+        'visible' : false
     };
     const panel = <Panel {...p} />;
     const {container} = render(panel);
@@ -59,12 +59,11 @@ test('children without mapping should get rendered as undefined', async () => {
     const form = await createForm(emptyPanel);
     const wrapper = Provider(form, {});
     const {container} = render(panel, {wrapper});
-    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField[':items'].f1) + '</pre></div>';
+    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField.items.f1) + '</pre></div>';
     expect(container.innerHTML).toContain(expected);
 });
 
 test('children with mapping should render the mapped component', async () => {
-
     const MyComponent = (props: any) => {
         return <div>My Field</div>;
     };
@@ -73,7 +72,7 @@ test('children with mapping should render the mapped component', async () => {
     const form = await createForm(emptyPanel);
     const wrapper = Provider(form, {'text-field' : MyComponent});
     const {container} = render(panel, {wrapper});
-    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField[':items'].f1) + '</pre></div>';
+    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField.items.f1) + '</pre></div>';
     expect(container.innerHTML).not.toContain(expected);
     expect(container.innerHTML).toContain('<div>My Field</div>');
 });

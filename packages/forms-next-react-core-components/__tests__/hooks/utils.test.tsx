@@ -3,13 +3,13 @@ import React from 'react';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
 
 const item = {
-    ':id' : 'id',
-    ':type' : 'someType'
+    'id' : 'id',
+    'viewType' : 'someType'
 };
 
 const parent = {
-    ':id' : 'parentid',
-    ':items' : {
+    'id' : 'parentid',
+    'items' : {
         'x' : item
     }
 };
@@ -28,7 +28,7 @@ test('render children with empty mappings returns undefined elements', () => {
 test('render children with no children', () => {
     const p = {
         ...parent,
-        ':items' : {}
+        'items' : {}
     };
     const res = renderChildren(p, {});
     expect(res.length).toEqual(0);
@@ -37,7 +37,7 @@ test('render children with no children', () => {
 test.each([123, '', true, [123]])('render children with items as %p', (items) => {
     const p = {
         ...parent,
-        ':items' : items as unknown as any
+        'items' : items as unknown as any
     };
     const res = renderChildren(p, {});
     expect(res.length).toEqual(0);
@@ -58,14 +58,14 @@ test('render children with missing mapping returns undefined element', () => {
 
 test('render children with correct mappings', () => {
     const item = {
-        ':id' : 'id',
-        ':type' : 'someType',
+        'id' : 'id',
+        'viewType' : 'someType',
         'value' : 'some value'
     };
     const p = {
         ...parent,
-        ':items' : {
-            ...parent[':items'],
+        'items' : {
+            ...parent.items,
             x : item
         }
     };
@@ -85,7 +85,7 @@ test('renderIfVisible should not return if visible property is false', () => {
     const MyComponent = (props: any) => {
         return <div>{props.value}</div>;
     };
-    const val = renderIfVisible({':visible' : false}, <MyComponent value={10}/>);
+    const val = renderIfVisible({'visible' : false}, <MyComponent value={10}/>);
     expect(val).toEqual(null);
 });
 
@@ -93,7 +93,7 @@ test('renderIfVisible should return if visible property is true', () => {
     const MyComponent = (props: any) => {
         return <div>{props.value}</div>;
     };
-    const val = renderIfVisible({':visible' : true}, <MyComponent value={10}/>);
+    const val = renderIfVisible({'visible' : true}, <MyComponent value={10}/>);
     expect(val).toEqual(<MyComponent value={10}/>);
 });
 

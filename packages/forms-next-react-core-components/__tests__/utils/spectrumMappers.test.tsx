@@ -33,7 +33,7 @@ test('combineConvertor should return the value after combining all the individua
     expect(Object.values(res)).toEqual(returnValues.map(x => Object.values(x)[0]));
 });
 const base = {
-    ':id' : 'id'
+    'id' : 'id'
 };
 
 type Suite = {
@@ -49,41 +49,41 @@ type Suite = {
 
 const suites: Suite = {
     'baseConvertor' : {
-        ':visible' : {
+        'visible' : {
             func: baseConvertor,
             outProp: 'isHidden',
             tests : [[[true,undefined, 'string, null', 1], false], [false, true]]
         },
-        ':name' : {
+        'name' : {
             func: baseConvertor,
             outProp: 'name',
             tests : [[randomString(4), (inp: any) => inp]]
         },
-        ':enabled' : {
+        'enabled' : {
             func: baseConvertor,
             outProp: 'isDisabled',
             tests : [[[true,undefined, 'string, null', 1], false], [false, true]]
         },
-        ':title' : {
+        'title' : {
             func: baseConvertor,
             outProp: 'label',
             tests : [[randomString(4), (inp: any) => inp]]
         },
-        ':hideTitle' : {
+        'hideTitle' : {
             func: baseConvertor,
-            inProps : {':title' : 'some title'},
+            inProps : {'title' : 'some title'},
             outProp: 'label',
             tests : [[true, ''], [[false,undefined, 'string', null, 1], 'some title']]
         },
-        ':richTextTitle' : {
+        'richTextTitle' : {
             func: baseConvertor,
-            inProps : {':title' : '<script>some-title<script>'},
+            inProps : {'title' : '<script>some-title<script>'},
             outProp: 'label',
             tests : [[[false, undefined, 'string', null, 1], '<script>some-title<script>']]
         }
     },
     'fieldConvertor' : {
-        ':readOnly' : {
+        'readOnly' : {
             func: fieldConvertor,
             outProp: 'isReadOnly',
             tests : [[[false, undefined, 'string, null', 1], false], [true, true]]
@@ -119,7 +119,7 @@ Object.keys(suites).forEach((funcName) => {
 
 test('richTextTitle should strip script tags', () => {
     let html = '<script>text</script><b>text</b>';
-    let res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    let res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -127,13 +127,13 @@ test('richTextTitle should strip script tags', () => {
 
 test('richTextTitle should strip onerror attribute in img,video', () => {
     let html = '<img onerror="somejavascript" /><b>text</b>';
-    let res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    let res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
 
     html = '<video onerror="somejavascript" /><b>text</b>';
-    res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -141,13 +141,13 @@ test('richTextTitle should strip onerror attribute in img,video', () => {
 
 test.todo('richTextTitle should allow src attribute in img,video');/*, () => {
     let html = '<img src="someurl" /><b>text</b>';
-    let res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    let res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<img src="someurl"/><b>text</b>'}} />
     });
 
     html = '<video src="someurl" /><b>text</b>';
-    res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<video src="someurl" /><b>text</b>'}} />
     });
@@ -155,7 +155,7 @@ test.todo('richTextTitle should allow src attribute in img,video');/*, () => {
 
 test('description should strip script tags', () => {
     let html = '<script>text</script><b>text</b>';
-    let res = baseConvertor({...base, ':description': html}, mockHandler);
+    let res = baseConvertor({...base, 'description': html}, mockHandler);
     expect(res).toMatchObject({
         description: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -163,13 +163,13 @@ test('description should strip script tags', () => {
 
 test('description should strip onerror attribute in img,video', () => {
     let html = '<img onerror="somejavascript" /><b>text</b>';
-    let res = baseConvertor({...base,':description': html}, mockHandler);
+    let res = baseConvertor({...base,'description': html}, mockHandler);
     expect(res).toMatchObject({
         description: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
 
     html = '<video onerror="somejavascript" /><b>text</b>';
-    res = baseConvertor({...base, ':richTextTitle' : true, ':title': html}, mockHandler);
+    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -177,13 +177,13 @@ test('description should strip onerror attribute in img,video', () => {
 
 test.todo('description should allow src attribute in img,video');/*, () => {
     let html = '<img src="someurl" /><b>text</b>';
-    let res = baseConvertor({...base, ':description': html}, mockHandler);
+    let res = baseConvertor({...base, 'description': html}, mockHandler);
     expect(res).toMatchObject({
         description: <div dangerouslySetInnerHTML={{'__html': '<img src="someurl"/><b>text</b>'}} />
     });
 
     html = '<video src="someurl" /><b>text</b>';
-    res = baseConvertor({...base, ':description': html}, mockHandler);
+    res = baseConvertor({...base, 'description': html}, mockHandler);
     expect(res).toMatchObject({
         description: <div dangerouslySetInnerHTML={{'__html': '<video src="someurl" /><b>text</b>'}} />
     });

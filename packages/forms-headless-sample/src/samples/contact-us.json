@@ -1,150 +1,150 @@
 {
-  ":data": {},
-  ":events": {
+  "data": {},
+  "events": {
     "submit" : "submit_form('submitSuccess', 'submitError')",
     "submitSuccess": "show_message_box($form.thankyouMessage)"
   },
   "thankyouMessage": "Thank you for submitting the form",
-  ":items": {
+  "items": {
     "firstName": {
-      ":name": "firstName",
-      ":type": "fd/af/components/guidetextbox",
-      ":title": "First Name",
-      ":dataRef": "firstName",
-      ":default": "john",
+      "name": "firstName",
+      "viewType": "text-input",
+      "title": "First Name",
+      "dataRef": "firstName",
+      "default": "john",
       "constraints": {
-        ":dataType": "string",
-        ":minLength": 0,
-        ":maxLength": 30,
-        ":required": true,
-        ":expression": ""
+        "type": "string",
+        "minLength": 0,
+        "maxLength": 30,
+        "required": true,
+        "expression": ""
       },
-      ":constraintMessages": {
-        ":minLength": "Name cannot be empty",
-        ":maxLength": "Please enter only first 30 characters of your name",
-        ":required": "Name cannot be empty",
-        ":expression": "Name can not contain only spaces"
+      "constraintMessages": {
+        "minLength": "Name cannot be empty",
+        "maxLength": "Please enter only first 30 characters of your name",
+        "required": "Name cannot be empty",
+        "expression": "Name can not contain only spaces"
       },
-      ":description": "We need it to address you in our responses",
-      ":screenReaderText": "Enter your name as you like us to address you"
+      "description": "We need it to address you in our responses",
+      "screenReaderText": "Enter your name as you like us to address you"
     },
     "lastName": {
-      ":name": "lastName",
-      ":type": "fd/af/components/guidetextbox",
-      ":title": "Last Name",
-      ":dataRef": "lastName",
-      ":default": "doe",
-      ":description": "We need it to address you in our responses",
-      ":screenReaderText": "Enter your name as you like us to address you",
+      "name": "lastName",
+      "viewType": "text-input",
+      "title": "Last Name",
+      "dataRef": "lastName",
+      "default": "doe",
+      "description": "We need it to address you in our responses",
+      "screenReaderText": "Enter your name as you like us to address you",
       "constraints": {
-        ":dataType": "string",
-        ":minLength": 0,
-        ":maxLength": 30,
-        ":required": true,
-        ":expression": ""
+        "type": "string",
+        "minLength": 0,
+        "maxLength": 30,
+        "required": true,
+        "expression": ""
       },
-      ":constraintMessages": {
-        ":minLength": "Name cannot be empty",
-        ":maxLength": "Please enter only first 30 characters of your name",
-        ":required": "Name cannot be empty",
-        ":expression": "Name can not contain only spaces"
+      "constraintMessages": {
+        "minLength": "Name cannot be empty",
+        "maxLength": "Please enter only first 30 characters of your name",
+        "required": "Name cannot be empty",
+        "expression": "Name can not contain only spaces"
       }
     },
     "name": {
-      ":name": "name",
-      ":type": "fd/af/components/guidetextbox",
-      ":title": "Your Full Name",
-      ":dataRef": "name",
-      ":rules": {
-        ":value": "$form.firstName.value + ' ' + $form.lastName.value"
+      "name": "name",
+      "viewType": "text-input",
+      "title": "Your Full Name",
+      "dataRef": "name",
+      "rules": {
+        "value": "$form.firstName.value + ' ' + $form.lastName.value"
       }
     },
     "email": {
-      ":name": "email",
-      ":type": "fd/af/components/guidetextbox",
-      ":title": "Email Address",
-      ":description": "It's a promise that we will not spam you",
-      ":dataRef": "email",
-      ":screenReaderText": "Provide your email address so that we can reply to you.",
-      ":constraints": {
-        ":dataType": "string",
-        ":format": "email",
-        ":required": true,
-        ":expression": ""
+      "name": "email",
+      "viewType": "text-input",
+      "title": "Email Address",
+      "description": "It's a promise that we will not spam you",
+      "dataRef": "email",
+      "screenReaderText": "Provide your email address so that we can reply to you.",
+      "constraints": {
+        "type": "string",
+        "format": "email",
+        "required": true,
+        "expression": ""
       },
-      ":constraintMessages": {
-        ":format": "Please enter a valid email address",
-        ":required": "The email address is mandatory"
+      "constraintMessages": {
+        "format": "Please enter a valid email address",
+        "required": "The email address is mandatory"
       }
     },
     "isAnonymous": {
-      ":name": "isAnonymous",
-      ":type": "fd/af/components/guidecheckbox",
-      ":title": "Remain Anonymous",
-      ":richTextTitle": false,
-      ":hideTitle": false,
-      ":description": "In case you want to remain anonymous",
-      ":dataRef": "isAnonymous",
-      ":constraints": {
-        ":dataType": "boolean",
-        ":options": [
+      "name": "isAnonymous",
+      "viewType": "checkbox",
+      "title": "Remain Anonymous",
+      "richTextTitle": false,
+      "hideTitle": false,
+      "description": "In case you want to remain anonymous",
+      "dataRef": "isAnonymous",
+      "constraints": {
+        "type": "boolean",
+        "options": [
           {
-            ":value": true
+            "value": true
           }
         ],
-        ":required": true,
-        ":expression": ""
+        "required": true,
+        "expression": ""
       },
-      ":constraintMessages": {
-        ":dataType": "",
-        ":required": "",
-        ":expression": ""
+      "constraintMessages": {
+        "type": "",
+        "required": "",
+        "expression": ""
       }
     },
     "phone": {
-      ":name": "phone",
-      ":type": "fd/af/components/guidetextbox",
-      ":title": "Mobile Number",
-      ":description": "Your mobile number where we can reach you. But only if you want",
-      ":dataRef": "phone",
-      ":screenReaderText": "Enter you mobile number without the ISD code",
-      ":constraints": {
-        ":pattern": "/[0-9]{10}/"
+      "name": "phone",
+      "viewType": "text-input",
+      "title": "Mobile Number",
+      "description": "Your mobile number where we can reach you. But only if you want",
+      "dataRef": "phone",
+      "screenReaderText": "Enter you mobile number without the ISD code",
+      "constraints": {
+        "pattern": "/[0-9]{10}/"
       },
-      ":constraintMessages": {
-        ":pattern": "Phone number must be 10 digit long"
+      "constraintMessages": {
+        "pattern": "Phone number must be 10 digit long"
       }
     },
     "message": {
-      ":name": "message",
-      ":type": "fd/af/components/guidetextbox",
-      ":title": "Message",
-      ":dataRef": "message",
-      ":multiline": true,
-      ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
-      ":constraints": {
-        ":minLength": 50,
-        ":maxLength": 1000,
-        ":required": true
+      "name": "message",
+      "viewType": "text-input",
+      "title": "Message",
+      "dataRef": "message",
+      "multiline": true,
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "constraints": {
+        "minLength": 50,
+        "maxLength": 1000,
+        "required": true
       },
-      ":constraintMessages": {
-        ":minLength": "Enter minimum 50 characters",
-        ":maxLength": "Maximum Limit (1000 characters) reached. Please email us directly",
-        ":required": "The message is "
+      "constraintMessages": {
+        "minLength": "Enter minimum 50 characters",
+        "maxLength": "Maximum Limit (1000 characters) reached. Please email us directly",
+        "required": "The message is "
       }
     },
     "submit": {
-      ":name": "submit",
-      ":type": "fd/af/components/guidebutton",
-      ":title": "Submit",
-      ":screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
-      ":events": {
-        ":click": "dispatch_event($form, 'submit')"
+      "name": "submit",
+      "viewType": "button",
+      "title": "Submit",
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "events": {
+        "click": "dispatch_event($form, 'submit')"
       }
     }
   },
-  ":metadata": {
-    ":grammar": "jsonformula-af",
-      ":locale" : "en-us"
+  "metadata": {
+    "grammar": "jsonformula-af",
+      "locale" : "en-us"
   }
 }

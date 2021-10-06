@@ -7,7 +7,7 @@ const ButtonComp = function (originalProps: FieldJson) {
     const [props, handlers] = useRuleEngine<FieldJson, any>(originalProps);
     return (<Button variant="primary" onPress={() => {
         handlers.dispatchClick();
-    }}>{props[':title']}</Button>);
+    }}>{props.title}</Button>);
 };
 
 export default ButtonComp;
