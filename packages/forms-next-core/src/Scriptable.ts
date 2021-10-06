@@ -76,12 +76,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
                 ...updates,
                 ...this.executeEvent(context, evntName) as object
             };
-            // for submit, we create payload and send it to the caller
-            if (evntName === 'submit') {
-                trigger(new Submit(context.$form?.controller()?.getState()[':data']));
-            } else {
-                trigger(action);
-            }
+            trigger(action);
         } else {
             if (evntName === 'change') {
                 updates = this.handleValueChange(action.payload);

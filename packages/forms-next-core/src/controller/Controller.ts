@@ -146,7 +146,12 @@ class ControllerImpl implements Controller {
                 target: this._elem
             }
         };
-        const actionWithTarget = new ActionImplWithTarget(action, this);
+        let actionWithTarget : Action = new ActionImplWithTarget(action, this);
+        // for submit, we create payload and send it to the caller
+        if (action?.type === 'submit') {
+            actionWithTarget = new Submit(context.$form?.controller()?.getState()[':data']);
+        }
+
         this._elem.dispatch(actionWithTarget, context, this.trigger.bind(this));
     }
 
