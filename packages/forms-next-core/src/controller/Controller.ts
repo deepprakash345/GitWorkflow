@@ -108,6 +108,12 @@ export class Click extends ActionImpl {
     }
 }
 
+export class Submit extends ActionImpl {
+    constructor(payload?: any, dispatch: boolean = false) {
+        super(payload, 'submit', {dispatch});
+    }
+}
+
 export class CustomEvent extends ActionImpl {
     //todo: dispatch means bubble down, find a better name
     constructor(eventName: string, payload: any, dispatch: boolean = false) {
@@ -140,7 +146,12 @@ class ControllerImpl implements Controller {
                 target: this._elem
             }
         };
-        const actionWithTarget = new ActionImplWithTarget(action, this);
+        let actionWithTarget : Action = new ActionImplWithTarget(action, this);
+        // for submit, we create payload and send it to the caller
+        if (action?.type === 'submit') {
+            actionWithTarget = new Submit(context.$form?.controller()?.getState()[':data']);
+        }
+
         this._elem.dispatch(actionWithTarget, context, this.trigger.bind(this));
     }
 

@@ -8,6 +8,7 @@ import assets from './samples/assets.json';
 import mappings from './mappings'
 import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
 import {FormJson} from "@adobe/forms-next-core";
+import {Action} from "@adobe/forms-next-core/lib/controller/Controller";
 
 function App() {
     let [selected, setSelected] = React.useState('wizard');
@@ -42,7 +43,9 @@ function App() {
             </View>
             <View gridArea="content">
                 {getFormDefintion(selected) !== undefined ? (
-                    <AdaptiveForm formJson={getFormDefintion(selected)} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data.payload))}/>
+                    <AdaptiveForm formJson={getFormDefintion(selected) as any}
+                                  mappings={mappings}
+                                  onSubmit={(data : Action) => window.alert(JSON.stringify(data.payload))}/>
                 ) : 'Loading Form...'}
             </View>
         </Grid>
