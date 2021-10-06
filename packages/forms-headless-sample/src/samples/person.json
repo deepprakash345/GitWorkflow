@@ -1,0 +1,60 @@
+{
+  ":items": {
+    "firstName": {
+      ":name": "firstName",
+      ":title": "first name",
+      ":description": "The person's first name.",
+      ":constraints": {
+        ":dataType": "string",
+        ":required": true
+      },
+      ":type": "fd/af/components/guidetextbox"
+    },
+    "middleName": {
+      ":name": "middleName",
+      ":title": "middle name",
+      ":description": "The person's middle name.",
+      ":constraints": {
+        ":dataType": "string",
+        ":required": true
+      },
+      ":type": "fd/af/components/guidetextbox"
+    },
+    "lastName": {
+      ":name": "lastName",
+      ":title": "last name",
+      ":description": "The person's last name.",
+      ":constraints": {
+        ":dataType": "string",
+        ":required": true
+      },
+      ":type": "fd/af/components/guidetextbox"
+    },
+    "fullName": {
+      ":name": "fullName",
+      ":title": "full name",
+      ":description": "The person's full name.",
+      ":constraints": {
+        ":dataType": "string",
+        ":required": true
+      },
+      ":type": "fd/af/components/guidetextbox"
+    },
+    "gender": {
+      ":name": "gender",
+      ":title": "Gender",
+      ":constraints": {
+        ":dataType": "string",
+        ":options": [{
+          ":text" : "Male",
+          ":value" : "male"
+        },
+        {
+          ":text" : "Female",
+          ":value" : "female"
+        }]
+      },
+      ":type": "fd/af/components/guideradiobutton"
+    }
+  }
+}

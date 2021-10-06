@@ -26,9 +26,7 @@ const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConver
     return {
         onSelectionChange : b.dispatchChange,
         items : spectrumOptions,
-        ...(a[':default']  && {
-            defaultInputValue: a[':default']
-        }),
+        inputValue: a[':value'],
         children : options.map(item)
     };
 });
@@ -39,6 +37,8 @@ const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConver
  * @constructor
  */
 const ComboBoxComponent = function (originalProps: FieldJson) {
+    // eslint-disable-next-line no-debugger
+    debugger;
     return useRenderer(originalProps, mapper, ComboBox);
 };
 

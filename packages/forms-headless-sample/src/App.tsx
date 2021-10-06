@@ -18,6 +18,7 @@ import Help from "./Help";
 import {TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
 import {Checkbox} from '@adobe/react-spectrum';
 import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
+import {Action} from "@adobe/forms-next-core/lib/controller/Controller";
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
@@ -80,6 +81,10 @@ function App() {
         {id: 'assets', name: 'Assets'},
         {id: 'financialpostiion', name: 'Financial Position'}
     ]
+
+    const onSubmit= (data: Action) => {
+        console.log(data.payload)
+    }
 
     return (
         <Grid
@@ -160,10 +165,12 @@ function App() {
                                        name="UNIQUE_ID_OF_DIV"
                                        editorProps={{$blockScrolling: true}}
                                        tabSize={2}
-                                       onChange={(value: any) => {
-                                           setForm(value);
-                                           setInputForm("");
-                                           setInputForm(value);
+                                       onChange={(value: string) => {
+                                           setForm(value)
+                                       }}
+                                       onBlur={(e: any, editor: any) => {
+                                           setInputForm("")
+                                           setInputForm(editor.getValue())
                                        }}
                                        setOptions={{
                                            enableBasicAutocompletion: true,
@@ -174,11 +181,12 @@ function App() {
                         </Item>
                     </TabPanels>
                 </Tabs>
-
-
             </View>
             <View gridArea="content">
-                {inputForm ? <AdaptiveForm formJson={JSON.parse(inputForm)} mappings={mappings} onSubmit={(data) => window.alert(JSON.stringify(data.payload))}/> : 'Loading Form...'}
+                {inputForm ? <AdaptiveForm
+                    formJson={JSON.parse(inputForm)}
+                    mappings={mappings}
+                    onSubmit={onSubmit}/> : 'Loading Form...'}
             </View>
         </Grid>
     );

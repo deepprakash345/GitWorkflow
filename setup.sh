@@ -5,7 +5,8 @@ base=$(pwd)
 cd packages/forms-headless-sample/
 cd node_modules/react && npm link
 cd ../react-dom && npm link
+cd ../@adobe/react-spectrum && npm link
 cd ${base}/packages/forms-next-react-core-components/
-npm link react react-dom
+npm link react react-dom @adobe/react-spectrum
 # npm link installs other dependencies
 lerna bootstrap
