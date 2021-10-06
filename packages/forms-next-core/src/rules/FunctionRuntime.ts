@@ -1,5 +1,5 @@
 import {jsonString} from '../utils/JsonUtils';
-import {CustomEvent} from '../controller/Controller';
+import {CustomEvent, Submit} from '../controller/Controller';
 import {request as fRequest, RequestOptions} from '../utils/Fetch';
 
 declare var window: any;
@@ -37,7 +37,8 @@ class FunctionRuntimeImpl {
                     eventName = element;
                     dispatch = true;
                 }
-                context.$form.controller().dispatch(new CustomEvent(eventName, payload, dispatch));
+                const event = new CustomEvent(eventName, payload, dispatch);
+                context.$form.controller().dispatch(event);
                 return {};
             }
         };

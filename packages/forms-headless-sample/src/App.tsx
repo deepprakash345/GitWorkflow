@@ -186,7 +186,13 @@ function App() {
                 {inputForm ? <AdaptiveForm
                     formJson={JSON.parse(inputForm)}
                     mappings={mappings}
-                    onSubmit={onSubmit}/> : 'Loading Form...'}
+                    onSubmit={onSubmit}
+                    onStateSuccess={(eventObj : Action) => {
+                        // fetch data
+                        let dataVar = "askhas"
+                        // target returns a controller which could be used to interact with the form
+                        //eventObj.target.getElement(eventObj.payload?.field).dispatch(new Change(dataVar));
+                    }}/> : 'Loading Form...'}
             </View>
         </Grid>
     );
