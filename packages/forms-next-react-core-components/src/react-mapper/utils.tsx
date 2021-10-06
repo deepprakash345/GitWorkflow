@@ -6,7 +6,7 @@ export const renderChildren = function<T extends ContainerJson>(props: T, mappin
     if (typeof items === 'object' && !(items instanceof Array)) {
         const children = Object.values(props[':items']);
         return children.map((child: any) => {
-            const Comp = mappings?.[child[':type']];
+            const Comp = mappings?.[child[':viewType']];
             if (Comp === undefined) {
                 return <div><h4>Undefined Element</h4>
                     <pre>{JSON.stringify(child, null, 2)}</pre>

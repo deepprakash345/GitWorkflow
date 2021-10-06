@@ -19,8 +19,8 @@ class Form extends Container<FormJson> implements FormModel {
 
     constructor(n: FormJson) {
         super(n);
-        this._jsonModel[':id'] = '$form';
-        this._jsonModel[':data'] = {};
+        this._jsonModel.id = '$form';
+        this._jsonModel.data = {};
         this._controller = createController(this)();
     }
 
@@ -36,7 +36,7 @@ class Form extends Container<FormJson> implements FormModel {
             let controller = createController(this)(elem);
             controller.subscribe((e: Action) => {
                 let elem = e.target.getState();
-                if (!(':valid' in elem) || elem[':valid'] !== false) {
+                if (!('valid' in elem) || elem.valid !== false) {
                     this.updateDataDom(elem as FieldJson);
                     //todo: trigger only dependencies
                     this.controller().dispatch(new Change(undefined, true));
@@ -47,8 +47,8 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     private updateDataDom(elem: FieldJson) {
-        const dataRef: string = elem[':dataRef'] || elem[':name'] || '';
-        let data = this._jsonModel[':data'];
+        const dataRef: string = elem.dataRef || elem.name || '';
+        let data = this._jsonModel.data;
         let tokens = splitTokens(dataRef);
         let token = tokens.next();
         while (!token.done) {
@@ -57,7 +57,7 @@ class Form extends Container<FormJson> implements FormModel {
                 data[token.value] = data[token.value] || {};
                 data = data[token.value];
             } else {
-                data[token.value] = elem[':value'];
+                data[token.value] = elem.value;
             }
             token = nextToken;
         }
@@ -83,7 +83,7 @@ class Form extends Container<FormJson> implements FormModel {
      * @param [items] form element on which to apply the operation. The children of the element will also be included
      */
     setData(data: Object, items = this.items) {
-        this._jsonModel[':data'] = {...data};
+        this._jsonModel.data = {...data};
         Object.values(items).forEach(x => {
             if ('items' in x) {
                 this.setData(data, x.items);

@@ -4,7 +4,7 @@ import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
 import {Json} from '@adobe/forms-next-expression-parser';
 import {Action, Change} from './controller/Controller';
-import {mergeDeep} from "./utils/JsonUtils";
+import {mergeDeep} from './utils/JsonUtils';
 
 class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
@@ -17,7 +17,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
     } = {};
 
     get rules() {
-        return this._jsonModel[':rules'] || {};
+        return this._jsonModel.rules || {};
     }
 
     private getCompiledRule(eName: string, rule: string) {
@@ -34,7 +34,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
 
     private getCompiledEvent(eName: string) {
         if (!(eName in this._events)) {
-            let eString = this._jsonModel[':events']?.[eName];
+            let eString = this._jsonModel.events?.[eName];
             if (typeof eString === 'string' && eString.length > 0) {
                 this._events[eName] = RuleEngine.compileRule(eString);
             }
@@ -80,7 +80,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         } else {
             if (evntName === 'change') {
                 updates = this.handleValueChange(action.payload);
-                if (Object.keys(updates).length === 0 || updates[':valid'] === false) {
+                if (Object.keys(updates).length === 0 || updates.valid === false) {
                     updates = {
                         ...updates,
                         ...this.executeAllRules(context)

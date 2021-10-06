@@ -51,16 +51,16 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                                     _createController?: (elem: FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel
 
     get id() {
-        return this._jsonModel[':id'] || '';
+        return this._jsonModel.id || '';
     }
 
     protected initialize(_createController?: (elem: FieldModel | FieldsetModel) => Controller) {
-        let items = this._jsonModel[':items'];
+        let items = this._jsonModel.items;
         Object.entries(items).map(([key, item]) => {
             const name = getProperty(item, 'name', '');
             const parentId = this.id.length > 0 ? this.id + '.' : '';
             const id = name.length > 0 ? parentId + name : undefined;
-            const newItem = Object.assign(item, {':id': id});
+            const newItem = Object.assign(item, {id});
             let retVal: FieldModel | FieldsetModel = this._createChild(newItem, _createController);
             Object.defineProperty(this._children, key, {
                 get() {
@@ -68,7 +68,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 },
                 enumerable: true
             });
-            this._jsonModel[':items'][key] = retVal.json();
+            this._jsonModel.items[key] = retVal.json();
         });
     }
 
@@ -102,7 +102,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     json(): T {
         return {
             ...super.json(),
-            ':items': this.items2Json()
+            'items': this.items2Json()
         };
     }
 
