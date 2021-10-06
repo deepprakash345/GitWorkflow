@@ -37,8 +37,6 @@ const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConver
  * @constructor
  */
 const ComboBoxComponent = function (originalProps: FieldJson) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     return useRenderer(originalProps, mapper, ComboBox);
 };
 

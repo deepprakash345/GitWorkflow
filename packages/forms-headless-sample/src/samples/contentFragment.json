@@ -47,7 +47,7 @@
           },
           "events" : {
             "initialize" : "request('/content/states.json', 'GET', null, 'stateSuccess', 'stateError')",
-            "stateSuccess" : "{\"constraints\" : { \"options\" : $event.payload }}"
+            "stateSuccess" : "{constraints : { options : $event.payload }}"
           },
           "constraintMessages": {
             "required": "The field is required"
