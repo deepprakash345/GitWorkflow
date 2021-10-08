@@ -95,7 +95,6 @@
           "viewType": "number-input",
           "title":"Weekly Payment Received (after taxes)",
           "description" : "the amount of all payments actually received by you from this employment (after deduction of tax) currently per week?\n(If the amount varies from week to week, state a typical amount.)\n",
-          "dataRef": "payment_per_week",
           "rules" : {
             "required" : "$form.employment_status.value == true"
           },
@@ -113,7 +112,6 @@
         "name": "last_employment_end_date",
         "viewType": "text-input",
         "title":"On what date did your last period of employment end?",
-        "dataRef": "last_employment_end_date",
         "constraints" : {
             "type": "string",
             "format" : "date",
@@ -150,7 +148,6 @@
           "name": "employer",
           "viewType": "text-input",
           "title":"Employer's Name",
-          "dataRef": "employer",
           "rules" : {
             "required" : "$form.self_employed.value == true"
           },
@@ -167,7 +164,6 @@
           "viewType": "number-input",
           "title":"Expenditure in last financial year",
           "description" : "the total amount of expenditure incurred by you in earning income during that financial year",
-          "dataRef": "expenses_last_year",
           "rules" : {
             "required" : "$form.self_employed.value == true"
           },

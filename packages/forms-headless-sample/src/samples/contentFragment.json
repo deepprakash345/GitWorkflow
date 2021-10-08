@@ -12,7 +12,6 @@
           "viewType": "text-input",
           "title": "Title",
           "default": "Adobe",
-          "dataRef": "title",
           "constraints": {
             "type": "string",
             "required": true
@@ -27,7 +26,6 @@
           "title": "Street Address",
           "default": "Adobe Tower, Block A, Prestige Platina Tech Park , Bangalore 560087",
           "multiline": true,
-          "dataRef": "streetAddress",
           "constraints": {
             "type": "string",
             "required": true
@@ -46,7 +44,7 @@
             "required": true
           },
           "events" : {
-            "initialize" : "request('/content/states.json', 'GET', null, 'stateSuccess', 'stateError')",
+            "initialize" : "request('/content/dam/headless/options.json', 'GET', null, 'stateSuccess', 'stateError')",
             "stateSuccess" : "{constraints : { options : $event.payload }}"
           },
           "constraintMessages": {

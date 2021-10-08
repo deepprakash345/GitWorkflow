@@ -11,7 +11,6 @@
       "name": "firstName",
       "viewType": "text-input",
       "title": "First Name",
-      "dataRef": "firstName",
       "default": "john",
       "constraints": {
         "type": "string",
@@ -33,7 +32,6 @@
       "name": "lastName",
       "viewType": "text-input",
       "title": "Last Name",
-      "dataRef": "lastName",
       "default": "doe",
       "description": "We need it to address you in our responses",
       "screenReaderText": "Enter your name as you like us to address you",
@@ -55,7 +53,6 @@
       "name": "name",
       "viewType": "text-input",
       "title": "Your Full Name",
-      "dataRef": "name",
       "rules": {
         "value": "$form.firstName.value + ' ' + $form.lastName.value"
       }
@@ -65,7 +62,6 @@
       "viewType": "text-input",
       "title": "Email Address",
       "description": "It's a promise that we will not spam you",
-      "dataRef": "email",
       "screenReaderText": "Provide your email address so that we can reply to you.",
       "constraints": {
         "type": "string",
@@ -85,7 +81,6 @@
       "richTextTitle": false,
       "hideTitle": false,
       "description": "In case you want to remain anonymous",
-      "dataRef": "isAnonymous",
       "constraints": {
         "type": "boolean",
         "options": [
@@ -107,7 +102,6 @@
       "viewType": "text-input",
       "title": "Mobile Number",
       "description": "Your mobile number where we can reach you. But only if you want",
-      "dataRef": "phone",
       "screenReaderText": "Enter you mobile number without the ISD code",
       "constraints": {
         "pattern": "/[0-9]{10}/"
@@ -120,7 +114,6 @@
       "name": "message",
       "viewType": "text-input",
       "title": "Message",
-      "dataRef": "message",
       "multiline": true,
       "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
       "constraints": {
