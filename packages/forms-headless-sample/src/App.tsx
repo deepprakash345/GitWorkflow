@@ -19,6 +19,7 @@ import {TabList, TabPanels, Tabs} from '@adobe/react-spectrum'
 import {Checkbox} from '@adobe/react-spectrum';
 import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
 import {Action} from "@adobe/forms-next-core/lib/controller/Controller";
+import {createFormFromSchema} from "@adobe/forms-next-core/lib/SchemaToForm";
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
@@ -27,6 +28,7 @@ function App() {
     let [formUrl, setFormUrl] = React.useState('');
     let [token, setToken] = React.useState('');
     let [askToken, setAskToken] = React.useState(false)
+    let [useSchema, setUseSchema] = React.useState(false)
     let [form, setForm] = React.useState<any>(jsonString(financialPosition));
     let [inputForm, setInputForm] = React.useState(jsonString(financialPosition));
     let [serverUrl, setServerUrl] = React.useState(REACT_APP_AEM_URL)
@@ -104,6 +106,10 @@ function App() {
                                       setToken('');
                                       setAuthRequired(v)
                                   }}>Authenticate</Checkbox>
+                        <Checkbox isSelected={useSchema}
+                                  onChange={(v) => {
+                                      setUseSchema(v)
+                                  }}>Use JSON Schema</Checkbox>
                     </Flex>
                    <TextField label="Enter Form URL" width="500px" alignSelf="start" value={formUrl}
                                onChange={(v) => setFormUrl(v)}/>
@@ -168,9 +174,21 @@ function App() {
                                        onChange={(value: string) => {
                                            setForm(value)
                                        }}
-                                       onBlur={(e: any, editor: any) => {
-                                           setInputForm("")
-                                           setInputForm(editor.getValue())
+                                       onBlur={async (e: any, editor: any) => {
+                                           try {
+                                               let value = editor.getValue();
+                                               if (useSchema && value.length > 0) {
+                                                   value = await createFormFromSchema(JSON.parse(value))
+                                                   value = jsonString(value)
+                                               }
+                                               if (value.length > 0) {
+                                                   setInputForm("")
+                                                   setInputForm(value)
+                                               }
+                                           } catch (e) {
+                                               console.error("there is an error in the input")
+                                               console.error(e)
+                                           }
                                        }}
                                        setOptions={{
                                            enableBasicAutocompletion: true,
