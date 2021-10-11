@@ -1,12 +1,12 @@
-const { createProxyMiddleware } = require("http-proxy-middleware");
+const {createProxyMiddleware} = require("http-proxy-middleware");
 
 module.exports = function (app) {
     const proxy = createProxyMiddleware({
-        target: "http://localhost:4502",
-        changeOrigin: true,
+        target : "http://localhost:3001",
+        changeOrigin : true,
         onError : (err, req, res, target) => {
             res.writeHead(500, {
-                'Content-Type': 'text/plain',
+                'Content-Type' : 'text/plain',
             });
             console.log("error occurred");
             res.end('Something went wrong. And we are reporting a custom error message.');
@@ -16,8 +16,12 @@ module.exports = function (app) {
             console.log(`new request ${proxyReq.method} ${proxyReq.path}`)
         }
     })
-  app.use(
-    "/content",
-    proxy
-  );
+    app.use(
+        "/content",
+        proxy
+    );
+    app.use(
+        "/pages/livecycle/af2-docs",
+        proxy
+    );
 };

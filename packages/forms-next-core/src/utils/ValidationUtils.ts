@@ -1,5 +1,3 @@
-import {OptionJson} from '../types';
-
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 
 type ValidationResult = {
@@ -17,7 +15,7 @@ const isLeapYear = (year: number) => {
 };
 
 export const Constraints = {
-    dataType : (constraint: string, inputVal: string): ValidationResult => {
+    type : (constraint: string, inputVal: string): ValidationResult => {
         let value : any = inputVal;
         let valid = true;
         switch(constraint) {
@@ -105,9 +103,9 @@ export const Constraints = {
         return {valid, value};
     },
 
-    options : (constraint: OptionJson[], value: any) => {
+    enum : (constraint: any[], value: any) => {
         return {
-            valid: constraint.map(x => x.value).indexOf(value) > -1,
+            valid: constraint.indexOf(value) > -1,
             value
         };
     }

@@ -1,0 +1,83 @@
+{
+  "items": {
+    "fetchFromAEM": {
+      "name" : "fetchFromAEM",
+      "title": "Fetch From AEM",
+      "type": "boolean",
+      "enum" : [true, false],
+      "default": true,
+      "viewType" : "checkbox"
+    },
+    "aemServer": {
+      "title": "Enter Server URL",
+      "name" : "aemServer",
+      "type": "string",
+      "rules": {
+        "visible": "$form.fetchFromAEM.value == true"
+      },
+      "viewType" : "text-input"
+    },
+    "aemFormUrl": {
+      "name" : "aemFormUrl",
+      "title": "Enter Form URL",
+      "type": "string",
+      "rules": {
+        "visible": "$form.fetchFromAEM.value == true"
+      },
+      "viewType" : "text-input"
+    },
+    "aemAuthRequired": {
+      "name" : "aemAuthRequired",
+      "title": "Authentication Required",
+      "type": "boolean",
+      "enum" : [true, false],
+      "rules": {
+        "visible": "$form.fetchFromAEM.value == true"
+      },
+      "viewType" : "checkbox"
+    },
+    "aemAuthToken": {
+      "name" : "aemAuthToken",
+      "title" : "Aem Authentication Token",
+      "type": "string",
+      "rules": {
+        "visible": "$form.aemAuthRequired.value == true"
+      },
+      "viewType" : "text-input"
+    },
+    "githubForm": {
+      "name" : "githubForm",
+      "title" : "Select a Sample Form",
+      "type": "string",
+      "visible": false,
+      "rules": {
+        "visible": "$form.fetchFromAEM.value != true"
+      },
+      "events": {
+        "initialize": "request('/pages/livecycle/af2-docs/examples/index.json', 'GET', null, 'setOptions', 'error')",
+        "setOptions": "{  enum: map(&('/pages/livecycle/af2-docs/examples/' + @), values($event.payload)),  enumNames: keys($event.payload)\n}"
+      },
+      "viewType" : "drop-down"
+    },
+    "formUrl": {
+      "name" : "formUrl",
+      "title" : "Final Form Url",
+      "type": "string",
+      "rules": {
+        "value": "if($form.fetchFromAEM.value == true, $form.aemServer.value + $form.aemFormUrl.value, $form.githubForm.value)"
+      },
+      "viewType" : "text-input"
+    },
+    "fetchForm": {
+      "name" : "fetchForm",
+      "viewType": "button",
+      "title": "Fetch Form",
+      "events": {
+        "click": "request($form.formUrl.value, 'GET', null, 'loadForm', 'error')"
+      }
+    }
+  },
+  "metadata": {
+    "version": "1.0.0"
+  }
+}

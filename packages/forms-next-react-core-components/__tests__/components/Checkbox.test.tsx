@@ -10,13 +10,9 @@ const field = {
     'name': 'name',
     'title': 'name',
     'visible' : true,
-    'constraints' : {
-        'type' : 'boolean',
-        'options': [{
-            'value' : true,
-            'title': 'some option title'
-        }]
-    }
+    'type' : 'boolean',
+    'enum' : [true],
+    'enumNames' : ['some option title']
 };
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
@@ -81,9 +77,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
-            'constraints': {
-                'required' : true
-            }
+            'required' : true
         },
         x :true,
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
@@ -142,13 +136,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name : 'a checkbox should not be selected if value is not on',
         field : {
             ...field,
-            'constraints' : {
-                'options' : [{
-                    'value' : false
-                }, {
-                    'value' : true
-                }]
-            },
+            'enum' : [false, true],
             'value' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
@@ -244,17 +232,7 @@ test('selection made by the user sets the value', async () => {
 test('clicking on checkbox twice resets the value', async () => {
     const f = {
         ...field,
-        'constraints' : {
-            ...field.constraints,
-            'options' : [
-                {
-                    'value' : false
-                },
-                {
-                    'value' : true
-                }
-            ]
-        },
+        'enum' : [false, true],
         'id' : field.name,
         'value' : [true, false][Math.round(Math.random())]
     };
@@ -275,17 +253,7 @@ test('clicking on checkbox twice resets the value', async () => {
 test('deselecting the checkbox sets the value to off value', async () => {
     const f = {
         ...field,
-        'constraints' : {
-            ...field.constraints,
-            'options' : [
-                {
-                    'value' : false
-                },
-                {
-                    'value' : true
-                }
-            ]
-        },
+        'enum' : [false, true],
         'id' : field.name,
         'value' : false
     };

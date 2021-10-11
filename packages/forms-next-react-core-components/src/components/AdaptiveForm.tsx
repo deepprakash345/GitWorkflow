@@ -3,11 +3,11 @@ import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
-import {callbackFn, Controller, CustomEvent} from '@adobe/forms-next-core/lib/controller/Controller';
+import {callbackFn, Controller} from '@adobe/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@adobe/forms-next-core';
 
 type customEventHandlers = {
-    [key: string]: callbackFn;
+    [key: string]: any;
 }
 
 type AdaptiveFormProps = customEventHandlers & {

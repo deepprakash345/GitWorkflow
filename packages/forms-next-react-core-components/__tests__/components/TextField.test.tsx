@@ -61,9 +61,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
-            'constraints': {
-                'required': true
-            }
+            'required': true
         },
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-required')).toEqual('true');

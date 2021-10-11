@@ -1,4 +1,4 @@
-import { RadioGroup } from '@adobe/react-spectrum';
+import { RadioGroup, Radio } from '@adobe/react-spectrum';
 import {FieldJson} from '@adobe/forms-next-core';
 import React from 'react';
 import {useRenderer} from '../react-mapper/hooks';
@@ -7,10 +7,10 @@ import {
     combineConvertors,
     constraintConvertor,
     fieldConvertor,
-    optionsToChildConvertor
+    enumToChildConvertor
 } from '../utils/SpectrumMappers';
 
-const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor, optionsToChildConvertor);
+const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor, enumToChildConvertor(Radio));
 
 const RadioGroupComponent = function (props: FieldJson) {
     return useRenderer(props, mapper, RadioGroup);
