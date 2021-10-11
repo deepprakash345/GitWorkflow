@@ -5,7 +5,7 @@
       "title": "Fetch From AEM",
       "type": "boolean",
       "enum" : [true, false],
-      "default": true,
+      "default": false,
       "viewType" : "checkbox"
     },
     "aemServer": {
@@ -15,7 +15,8 @@
       "rules": {
         "visible": "$form.fetchFromAEM.value == true"
       },
-      "viewType" : "text-input"
+      "viewType" : "text-input",
+      "default" : "http://localhost:3000"
     },
     "aemFormUrl": {
       "name" : "aemFormUrl",
@@ -24,7 +25,8 @@
       "rules": {
         "visible": "$form.fetchFromAEM.value == true"
       },
-      "viewType" : "text-input"
+      "viewType" : "text-input",
+      "default" : "/content/core-components-examples/library/jcr:content/root/responsivegrid/formcontainer.model.json"
     },
     "aemAuthRequired": {
       "name" : "aemAuthRequired",

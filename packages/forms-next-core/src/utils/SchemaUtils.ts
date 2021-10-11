@@ -1,5 +1,6 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser';
-import {jsonString} from './utils/JsonUtils';
+import {jsonString} from './JsonUtils';
+import {FieldJson, FieldsetJson, FormJson} from '../types';
 
 const primitives = ['string', 'boolean', 'number'];
 const containers = ['object', 'array', 'number'];
@@ -73,4 +74,43 @@ const walker =  (schema: any): any => {
 export const createFormFromSchema = async (schemaObj : any) => {
     let schema = await $RefParser.dereference(schemaObj);
     return walker(schema);
+};
+
+const fieldSchema = (input: FieldJson | FieldsetJson | FormJson) : any => {
+    if ('items' in input) {
+        const fieldset = input as FieldsetJson;
+        const items = fieldset.items;
+        if (items instanceof Array) {
+            return {
+                type: 'array',
+                items : fieldSchema(items[0]),
+                minItems: fieldset?.minItems,
+                maxItems: fieldset?.maxItems
+            };
+        } else {
+            const iter = Object.entries(items);
+            return {
+                type: 'object',
+                properties: Object.fromEntries(iter.map(([key, obj]) => [key, fieldSchema(obj)])),
+                required: Object.entries(items).filter(x => x[1].required).map(x => x[0])
+            };
+        }
+    } else {
+        const field = input as FieldJson;
+        return {
+            title: field.title,
+            description: field.description,
+            type : field.type,
+            maxLength: field.maxLength,
+            minLength: field.minLength,
+            minimum: field.minimum,
+            maximum: field.maximum,
+            format: field.format,
+            pattern: field.pattern
+        };
+    }
+};
+
+export const exportDataSchema = (form : FormJson) => {
+   return fieldSchema(form);
 };

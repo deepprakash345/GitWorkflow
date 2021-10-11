@@ -11,12 +11,14 @@ import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import {TabList, TabPanels, Tabs, Item} from '@adobe/react-spectrum'
+import {exportDataSchema} from "@adobe/forms-next-core/lib/utils/SchemaUtils";
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
 
 function App() {
     let [formToRender, setFormToRender] = React.useState('');
     let [formJson, setFormJson] = React.useState('');
+    let [dataSchema, setDataSchema] = React.useState('');
 
     const onSubmit= (data: Action) => {
         console.log(data.payload)
@@ -24,20 +26,26 @@ function App() {
 
     const loadForm = (action: Action) => {
         console.log(action.target.getState());
-        const form = action.payload;
+        const form = "model" in action.payload ? action.payload.model : action.payload
         const formJson = jsonString(form)
         setFormJson(formJson)
         setFormToRender('');
         setFormToRender(formJson)
+        const dataSchema = exportDataSchema(form)
+        console.error(dataSchema)
+        setDataSchema(jsonString(dataSchema))
     }
 
     return (
         <Grid
-            areas={['sidebar content']}
+            areas={['header header', 'sidebar content']}
             columns={['2fr', '2fr']}
             marginX="size-400"
             marginTop="size-400"
             gap="size-500">
+            <View gridArea='header'>
+                <h1>Goa Playground - A place to checkout your Headless Forms!</h1>
+            </View>
             <View gridArea="sidebar" padding="size-200" paddingBottom="size-1000">
                 <h1>Choose a Form To Render</h1>
                 <Tabs>
@@ -57,7 +65,7 @@ function App() {
                             <AceEditor mode="json"
                                        value={formJson}
                                        theme="github"
-                                       name="UNIQUE_ID_OF_DIV"
+                                       name="FORM_JSON"
                                        editorProps={{$blockScrolling: true}}
                                        tabSize={2}
                                        onChange={(value: string) => {
@@ -81,7 +89,24 @@ function App() {
                             />
                         </Item>
                         <Item key="data-model">
-                            Work in Progress
+                            <AceEditor mode="json"
+                                       value={dataSchema}
+                                       theme="github"
+                                       name="DATA_JSON"
+                                       editorProps={{$blockScrolling: true}}
+                                       tabSize={2}
+                                       onChange={(value: string) => {
+                                           setDataSchema(value)
+                                       }}
+                                       onBlur={(e: any, editor: any) => {
+
+                                       }}
+                                       setOptions={{
+                                           enableBasicAutocompletion: true,
+                                           enableLiveAutocompletion: true,
+                                           enableSnippets: true
+                                       }}
+                            />
                         </Item>
                     </TabPanels>
                 </Tabs>
@@ -92,13 +117,7 @@ function App() {
                     {formToRender ? <AdaptiveForm
                         formJson={JSON.parse(formToRender)}
                         mappings={mappings}
-                        onSubmit={onSubmit}
-                        onStateSuccess={(eventObj : Action) => {
-                            // fetch data
-                            let dataVar = "askhas"
-                            // target returns a controller which could be used to interact with the form
-                            //eventObj.target.getElement(eventObj.payload?.field).dispatch(new Change(dataVar));
-                        }}/> : 'No Form Selected...'}
+                        onSubmit={onSubmit}/> : 'No Form Selected...'}
                  </View>
             </View>
         </Grid>

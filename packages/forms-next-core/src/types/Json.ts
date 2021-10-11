@@ -85,6 +85,8 @@ export type FieldsetJson = ContainerJson & {
     'type'?: 'array' | 'object'
     'count'?: number
     'initialCount'?: number;
+    'minItems'?: number;
+    'maxItems'?: number;
 }
 
 export type FormJson = ContainerJson & {
