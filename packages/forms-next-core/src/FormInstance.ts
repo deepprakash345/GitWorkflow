@@ -5,14 +5,15 @@ import {request} from './utils/Fetch';
 
 export const createFormInstance = async (formModel: any, options?: any): Promise<Controller> => {
     let f = new Form({...formModel});
-    if (f.metaData?.dataUrl) {
-        let formData;
+    if (f.metaData?.dataUrl || formModel?.data) {
+        // check if data is present as part of form model definition
+        let formData = formModel?.data;
         try {
+            // if there is data URL, fetch the form data and override the data present in the form model definition
             const data = await fetchData(f.metaData.dataUrl, options);
             formData = JSON.parse(data?.data);
         } catch (e) {
             console.log(e);
-            formData = null;
         } finally {
             if (formData) {
                 f.setData(formData);
