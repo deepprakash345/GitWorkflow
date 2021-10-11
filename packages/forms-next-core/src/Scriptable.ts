@@ -98,6 +98,13 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (updates && Object.keys(updates).length > 0) {
             // merge deep since rules like
             // todo: fix order
+            if ('value' in updates) {
+                const res = this.handleValueChange(updates.value);
+                updates = {
+                    ...updates,
+                    ...res
+                };
+            }
             this._jsonModel = mergeDeep(this._jsonModel, updates);
             trigger(new Change(action.payload));
         }

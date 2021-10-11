@@ -6,6 +6,7 @@ import RadioGroup from './components/RadioButtonGroup';
 import ComboBox from './components/DropDownList';
 const mappings = {
     'text-input' : TextField,
+    'multiline-input' : TextField,
     'checkbox' : Checkbox,
     'button' : Button,
     'panel' : Panel,

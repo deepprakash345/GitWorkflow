@@ -77,6 +77,15 @@
       "events": {
         "click": "request($form.formUrl.value, 'GET', null, 'loadForm', 'error')"
       }
+    },
+    "formContents" : {
+      "name" : "formContents",
+      "viewType": "multiline-input",
+      "title": "Form Contents",
+      "events": {
+        "loadForm": "{visible: true, value: $event.payload}"
+      },
+      "type": "string"
     }
   },
   "metadata": {
