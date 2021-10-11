@@ -83,21 +83,22 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   private evaluateConstraints(value: string) {
     let constraint = 'type';
     let elem = this._jsonModel;
-    const constraints = elem.constraints || {};
-    const res = Constraints.dataType(constraints.type || 'string', value);
+    const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type');
+    const res = Constraints.type(elem.type || 'string', value);
     if (res.valid) {
-      const invalidConstraint = Object.entries(constraints).find(([key, restriction]) => {
-        let x = key.replace(/^:/, '');
-        if (x in Constraints && x !== 'type' && typeof (Constraints as any)[x] === 'function') {
-          return !((Constraints as any)[x](restriction, res.value).valid);
-        } else if (x !== 'type') {
-          console.error('invalid constraint ' + key);
+      const invalidConstraint = supportedConstraints.find(key => {
+        if (key in elem) {
+          // @ts-ignore
+          const restriction = elem[key];
+          // @ts-ignore
+          return !Constraints[key](restriction, res.value).valid;
+        } else {
           return false;
         }
       });
       if (invalidConstraint != null) {
         res.valid = false;
-        constraint = invalidConstraint[0];
+        constraint = invalidConstraint;
       }
     }
     return {

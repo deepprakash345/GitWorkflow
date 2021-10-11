@@ -1,24 +1,18 @@
 import {FieldJson, FieldsetJson, FormJson, Items, MetaDataJson, Primitives} from './Json';
 import {Action, Controller} from '../controller/Controller';
 
-export interface BaseConstraints {
-    required?: boolean;
+interface BaseConstraints {
     expression?: string;
+    readonly type?: string
 }
 
-export interface StringConstraints extends BaseConstraints {
+interface FieldConstraints extends BaseConstraints {
     minLength?: number;
     maxLength?: number;
-}
-
-export interface NumberConstraints extends BaseConstraints {
     minimum?: number;
     maximum?: number;
-    fracDigits?: number;
-    leadDigits?: number;
+    required?: number;
 }
-
-export type FieldConstraints = StringConstraints | NumberConstraints;
 
 interface ContainerConstraints extends BaseConstraints {
     minItems?: number;
@@ -51,8 +45,7 @@ interface WithController {
     controller :() => Controller
 }
 
-interface BaseModel<T extends BaseConstraints> extends Dispatcher {
-    readonly type?: string;
+interface BaseModel extends Dispatcher, BaseConstraints {
     readonly name?: string;
     readonly dataRef?: string;
     id?: string
@@ -63,7 +56,6 @@ interface BaseModel<T extends BaseConstraints> extends Dispatcher {
     visible?: boolean;
     placeholder?: string;
     valid?: boolean
-    constraints?: T;
     multiline?: boolean;
     viewType?: string
     props?: {
@@ -73,8 +65,9 @@ interface BaseModel<T extends BaseConstraints> extends Dispatcher {
 
 }
 
-export interface FieldModel extends BaseModel<FieldConstraints>,
+export interface FieldModel extends BaseModel,
     ValueField,
+    FieldConstraints,
     ScriptableField,
     WithState<FieldJson>,
     WithController {}
@@ -93,8 +86,9 @@ export interface ContainerModel extends WithController {
     getElement: (id: string) => FieldModel | ContainerModel | undefined
 }
 
-export interface FieldsetModel extends BaseModel<ContainerConstraints>,
+export interface FieldsetModel extends BaseModel,
     ContainerModel,
+    ContainerConstraints,
     ScriptableField,
     WithState<FieldsetJson>,
     WithController {
@@ -105,6 +99,7 @@ export interface FieldsetModel extends BaseModel<ContainerConstraints>,
 
 export interface FormModel extends Dispatcher,
     ContainerModel,
+    BaseConstraints,
     ScriptableField,
     WithState<FormJson> {
     id ?: string
