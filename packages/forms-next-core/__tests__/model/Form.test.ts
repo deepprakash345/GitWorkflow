@@ -487,12 +487,14 @@ test('dataDom is updated as per the dataType of the element', async () => {
 test('custom event should be executed for all the fields', async () => {
     const formJson = create([{
         'f': {
+            'type' : 'number',
             'events': {
                 'customClick': '{"value" : 1 + 3}'
             }
         }
     }, {
         'f': {
+            'type' : 'number',
             'events': {
                 'customClick': '{"value" : 2 + 3}'
             }
@@ -509,6 +511,7 @@ test('custom event should be executed for all the fields', async () => {
 test('custom event should pass the payload to the event', async () => {
     const formJson = create([{
         'f': {
+            'type' : 'number',
             'events': {
                 'customClick1': '{"value" : 1 + $event.payload.add}'
             }
