@@ -3,7 +3,7 @@ export type Primitives = string | number | boolean | null;
 
 
 type ConstraintsJson = {
-    'type'?: 'string' | 'boolean' | 'number'
+    'type'?: string
     'required'?: boolean;
     'pattern'?: string,
     'format'?: string
@@ -14,9 +14,14 @@ type ConstraintsJson = {
     'maximum'?: number;
     'fracDigits'?: number;
     'leadDigits'?: number;
-    'options'?: OptionJson[];
-    'enforceOptions'?: boolean
+    'enum'?: any[];
+    'enumNames'?: string[]
+    'enforceEnum'?: boolean
 }
+
+const a: FieldJson  = {
+    type : 'string'
+};
 
 export type ConstraintsMessages = {
     'required'?: string;
@@ -27,7 +32,7 @@ export type ConstraintsMessages = {
     'maximum'?: string;
     'fracDigits'?: string;
     'leadDigits'?: string;
-    'enforceOptions'?: string;
+    'enforceEnum'?: string;
     'type'?: string;
 }
 
@@ -37,7 +42,7 @@ export type RulesJson = {
 }
 
 
-type BaseJson = RulesJson & {
+type BaseJson = RulesJson & ConstraintsJson & {
     'id'?: string;
     'dataRef'?: string;
     'title'?: string
@@ -47,7 +52,6 @@ type BaseJson = RulesJson & {
     'enabled'?: boolean;
     'visible'?: boolean;
     'name'?: string;
-    'constraints'?: ConstraintsJson;
     'constraintMessages'?: ConstraintsMessages;
     'viewType'?: string
     'errorMessage'?: string
@@ -86,9 +90,4 @@ export type FieldsetJson = ContainerJson & {
 export type FormJson = ContainerJson & {
     'metadata'?: MetaDataJson,
     'data'?: any
-}
-
-export type OptionJson = {
-    'value'?: Primitives
-    'text'?: string
 }

@@ -1,5 +1,4 @@
 import {Constraints} from '../../src/utils/ValidationUtils';
-import {OptionJson} from '../../src/types';
 
 type TestCase = {
     name?: string
@@ -154,7 +153,7 @@ const dataTypeValidations: { [key: string]: TestCase[] } = {
 };
 
 const testConstraint = (type: string) => ({value, valid, cval}: TestCase) => {
-    const res = Constraints.dataType(type, value);
+    const res = Constraints.type(type, value);
     expect(res.valid).toEqual(valid);
     expect(res.value).toEqual(cval);
 };
@@ -359,34 +358,18 @@ test('required test should fail if the value is null or empty', () => {
 });
 
 test('options constraint should pass if value exists inside options', () => {
-    let options: OptionJson[] = [{
-        'value' : 0
-    }, {
-        'value' :  1
-    }];
-    expect(Constraints.options(options, 0).valid).toEqual(true);
+    let options : any[] = [0, 1];
+    expect(Constraints.enum(options, 0).valid).toEqual(true);
 
-    options = [{
-        'value' : 'a'
-    }, {
-        'value' :  'b'
-    }];
-    expect(Constraints.options(options, 'a').valid).toEqual(true);
+    options = ['a', 'b'];
+    expect(Constraints.enum(options, 'a').valid).toEqual(true);
 });
 
 test("options constraint should fail if value doesn't exists inside options", () => {
-    let options: OptionJson[] = [{
-        value : 0
-    }, {
-        value :  1
-    }];
-    expect(Constraints.options(options, -1).valid).toEqual(false);
-    expect(Constraints.options(options, 2).valid).toEqual(false);
+    let options : any[] = [0, 1];
+    expect(Constraints.enum(options, -1).valid).toEqual(false);
+    expect(Constraints.enum(options, 2).valid).toEqual(false);
 
-    options = [{
-        value : 'a'
-    }, {
-        value :  'b'
-    }];
-    expect(Constraints.options(options, 'c').valid).toEqual(false);
+    options = ['a', 'b'];
+    expect(Constraints.enum(options, 'c').valid).toEqual(false);
 });

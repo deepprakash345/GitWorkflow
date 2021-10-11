@@ -12,16 +12,9 @@ const field : FieldJson = {
     'value': true,
     'visible' : true,
     'title': 'Are you Employed',
-    'constraints' : {
-        'type' : 'boolean',
-        'options' : [{
-            'value' : true,
-            'text' : 'Yes'
-        }, {
-            'value' : false,
-            'text' : 'No'
-        }]
-    }
+    'type' : 'boolean',
+    'enum' : [true, false],
+    'enumNames' : ['Yes',  'No']
 };
 
 type Input = {labels: HTMLLabelElement[],
@@ -77,10 +70,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
-            'constraints': {
-                ...field.constraints,
-                'required': true
-            }
+            'required': true
         },
         expects: ({group}) => {
             expect(group?.getAttribute('aria-required')).toEqual('true');
@@ -174,18 +164,7 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
             ...field,
             'type' : 'string',
             'value' : 'some other option',
-            'constraints' : {
-                'options' : [
-                    {
-                        'value' : 'option 1',
-                        'text' : 'option 1'
-                    },
-                    {
-                        'value' : 'option 2',
-                        'text' : 'option 2'
-                    }
-                ]
-            }
+            'enum' : ['option 1', 'option 2']
         },
         expects: ({inputs}) => {
             expect(inputs[0]?.checked).toEqual(false);

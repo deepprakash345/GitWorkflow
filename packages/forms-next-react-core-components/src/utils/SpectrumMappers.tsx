@@ -1,14 +1,13 @@
 import {FieldJson} from '@adobe/forms-next-core/lib';
 import {Handlers} from '../react-mapper/hooks';
-import {Radio} from '@adobe/react-spectrum';
-import React from 'react';
+import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
 
 export type Convertor<T> = (props: T, handlers: Handlers) => any
 
 export type FieldJsonConvertor = Convertor<FieldJson>
 
-export const combineConvertors = function combineConvertors<T>(...convertors: Convertor<T>[]) {
+export const combineConvertors = function <T>(...convertors: Convertor<T>[]) {
     const newConvertor : Convertor<T> = (a,b) => {
         return convertors.reduce<any>(function (newVal, curr) {
             return {
@@ -39,7 +38,7 @@ export const baseConvertor: Convertor<FieldJson> = (a, b) => {
 
 export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
     return {
-        ...(a.constraints && a.constraints.required && {
+        ...(a.required && {
             isRequired: true,
             necessityIndicator: 'icon'
         }),
@@ -59,21 +58,29 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b) => {
 
 export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
     return {
-        minLength: a.constraints?.minLength,
-        maxLength: a.constraints?.maxLength,
-        pattern: a.constraints?.pattern
+        minLength: a.minLength,
+        maxLength: a.maxLength,
+        pattern: a.pattern
     };
 };
 
-export const optionsToChildConvertor: Convertor<FieldJson> = (a, b) => {
-    const options = a.constraints?.options || [];
-    const radio = (option : any) => {
-        const value = option.value;
-        const text = option.text || '';
-        return <Radio key={JSON.stringify(option)} value={value}>{text}</Radio>;
+export const enumToChildConvertor = (Component: JSXElementConstructor<any>) =>  {
+    return enumConvertor('children', (text, value) => {
+        return <Component key={value} value={value}>{text}</Component>;
+    });
+};
+
+type EnumConvertor = (x: string, y: (a: string, b: string) => any) => Convertor<FieldJson>
+export const enumConvertor : EnumConvertor = (propertyName: string, callback: (text: string, value: string) => any) => (a, b) => {
+    const options = a.enum || [];
+    const optionsName = a.enumNames || options;
+    const radio = (option : any, i : number) => {
+        const value = option;
+        const text = i < optionsName.length ? optionsName[i] : option;
+        return callback(text, value);
     };
 
     return {
-        children : options.map(radio)
+        [propertyName] : options.map(radio)
     };
 };
