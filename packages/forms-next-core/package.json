@@ -32,7 +32,8 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
-    "@adobe/forms-next-expression-parser": "0.1.15"
+    "@adobe/forms-next-expression-parser": "0.1.15",
+    "@apidevtools/json-schema-ref-parser": "^9.0.9"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",

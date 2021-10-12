@@ -1,5 +1,5 @@
 import {ConstraintsMessages, FieldJson, FieldModel} from './types';
-import {filterProps, undefinedValueFilter} from './utils/JsonUtils';
+import {filterProps, jsonString, undefinedValueFilter} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
 import {Controller} from './controller/Controller';
 import Scriptable from './Scriptable';
@@ -130,7 +130,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   protected handleValueChange(payload: any) {
     if (payload !== undefined) {
       //todo : set empty string to `empty` value
-      return this.checkInput(payload != null ? payload.toString() : undefined);
+      return this.checkInput(payload != null ? typeof payload == 'object' ? jsonString(payload) : payload.toString() : undefined);
     }
     return {};
   }

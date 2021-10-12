@@ -43,10 +43,12 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     useEffect(() => {
         createForm(jsonString(formJson));
     }, [formJson]);
+    const state = controller?.getState();
     return (
             <FormContext.Provider value={{mappings: mappings, controller: controller}}>
-                {(controller?.getState() !== undefined) ? (
+                {(state !== undefined) ? (
                 <form>
+                    {state.title ?<h2>{state.title}</h2> : null}
                     {renderChildren(controller?.getState(), mappings)}
                 </form>
                 ) : 'Loading Form...'}
