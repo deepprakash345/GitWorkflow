@@ -74,7 +74,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (action.isCustomEvent) {
             updates = {
                 ...updates,
-                ...this.executeEvent(context, evntName) as object
+                ...this.executeEvent(context, `custom:${evntName}`) as object
             };
             trigger(action);
         } else {
@@ -98,7 +98,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (updates && Object.keys(updates).length > 0) {
             // merge deep since rules like
             // todo: fix order
-            if ('value' in updates) {
+            if ('value' in updates && (evntName !== 'change' || action.isCustomEvent)) {
                 const res = this.handleValueChange(updates.value);
                 updates = {
                     ...updates,

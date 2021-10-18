@@ -4,6 +4,7 @@ import {Constraints} from './utils/ValidationUtils';
 import {Controller} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {emptyController} from './controller/Controller';
+import {defaultViewTypes} from './utils/SchemaUtils';
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
   private _controller: Controller;
@@ -13,6 +14,15 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     let value = this.getP('value', undefined);
     if (value === undefined) {
       this._jsonModel.value = this.default; //TODO: see if we want to keep :
+    }
+    if (this._jsonModel.viewType === undefined) {
+      this._jsonModel.viewType = defaultViewTypes(this._jsonModel);
+    }
+    if (this._jsonModel.enum === undefined) {
+      const type = this._jsonModel.type || 'string';
+      if (type === 'boolean') {
+        this._jsonModel.enum = [true, false];
+      }
     }
     if (createController) {
       this._controller = createController(this as FieldModel);
@@ -53,8 +63,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
       'default': this.default,
       'visible': this.visible,
       'valid': this.valid,
-      'id' : this.id
-      // eslint-disable-next-line no-unused-vars
+      'id' : this.id,
+      'viewType' : this.viewType
     }), undefinedValueFilter);
   }
 
@@ -75,6 +85,13 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     return this._jsonModel.title;
   }
 
+  get viewType() {
+    return this._jsonModel.viewType || defaultViewTypes(this._jsonModel);
+  }
+
+  get enum() {
+    return this._jsonModel.enum;
+  }
 
   private getErrorMessage(constraint: keyof(ConstraintsMessages)) {
     return this._jsonModel.constraintMessages?.[constraint as keyof(ConstraintsMessages)] || 'There is an error in the field';
@@ -83,7 +100,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   private evaluateConstraints(value: string) {
     let constraint = 'type';
     let elem = this._jsonModel;
-    const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type');
+    const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum');
     const res = Constraints.type(elem.type || 'string', value);
     if (res.valid) {
       const invalidConstraint = supportedConstraints.find(key => {
@@ -99,6 +116,11 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
       if (invalidConstraint != null) {
         res.valid = false;
         constraint = invalidConstraint;
+      } else if (this._jsonModel.enforceEnum === true) {
+        let enumCheck = Constraints.enum(elem.enum || [], value);
+        res.valid = enumCheck.valid;
+        res.value = enumCheck.value;
+        constraint = 'enum';
       }
     }
     return {
@@ -130,7 +152,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   protected handleValueChange(payload: any) {
     if (payload !== undefined) {
       //todo : set empty string to `empty` value
-      return this.checkInput(payload != null ? typeof payload == 'object' ? jsonString(payload) : payload.toString() : undefined);
+      return this.checkInput(payload != null ? typeof payload == 'object' ? jsonString(payload) : payload.toString() : null);
     }
     return {};
   }

@@ -7,20 +7,30 @@ const containers = ['object', 'array', 'number'];
 
 const objToMap = (o: any) => new Map(Object.entries(o));
 
-const stringViewTypes = objToMap({'date' : 'date-input'});
+const stringViewTypes = objToMap({'date' : 'date-input'}) as Map<string, string>;
 const typeToViewTypes = objToMap({
     'number' : 'number-input',
     'boolean' : 'checkbox',
     'object' : 'panel',
     'array' : 'panel'
-});
+})  as Map<string, string>;
 
-const defaultViewTypes = (schema: any) => {
-    if (schema.type === 'string') {
-        return stringViewTypes.get(schema.format) || 'text-input';
-    }  else  {
-        return typeToViewTypes.get(schema.type) || 'text-input';
+const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
+
+export const defaultViewTypes = (schema: any): string => {
+    const type = schema.type || 'string';
+    if ('enum' in schema) {
+        const enums = schema.enum;
+        if (enums.length > 2 || arrayTypes.indexOf(type) > -1) {
+            return 'drop-down';
+        } else {
+            return 'checkbox';
+        }
     }
+    if (type === 'string') {
+        return stringViewTypes.get(schema.format) || 'text-input';
+    }
+    return typeToViewTypes.get(type) || 'text-input';
 };
 
 const processEnum = (schema: any) => {
@@ -97,16 +107,21 @@ const fieldSchema = (input: FieldJson | FieldsetJson | FormJson) : any => {
         }
     } else {
         const field = input as FieldJson;
+        const schemaProps = ['type', 'maxLength', 'minLength', 'minimum', 'maximum', 'format', 'pattern', 'step', 'enum'];
+        const schema = schemaProps.reduce<any>((acc, prop) => {
+            const p = prop as keyof FieldJson;
+            if (prop in field && field[p] != undefined) {
+                acc[prop] = field[p];
+            }
+            return acc;
+        }, {});
+        if (field.dataRef === 'none' || Object.keys(schema).length == 0) {
+            return undefined;
+        }
         return {
             title: field.title,
             description: field.description,
-            type : field.type,
-            maxLength: field.maxLength,
-            minLength: field.minLength,
-            minimum: field.minimum,
-            maximum: field.maximum,
-            format: field.format,
-            pattern: field.pattern
+            ...schema
         };
     }
 };

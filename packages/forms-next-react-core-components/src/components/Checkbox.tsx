@@ -8,7 +8,7 @@ import {baseConvertor, combineConvertors, constraintConvertor, fieldConvertor} f
 const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConvertor, (a, b) => {
     const value = a.value;
     const selectedValue = a.enum?.[0];
-    const unselectedValue = a.enum?.[1];
+    const unselectedValue = (a.enum?.length || 0) < 2 ? null : a.enum?.[1];
     return {
         selectedValue,
         unselectedValue,

@@ -57,7 +57,8 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     protected initialize(_createController?: (elem: FieldModel | FieldsetModel) => Controller) {
         let items = this._jsonModel.items;
         Object.entries(items).map(([key, item]) => {
-            const name = getProperty(item, 'name', '');
+            const name = getProperty(item, 'name', key);
+            item.name = name;
             const parentId = this.id.length > 0 ? this.id + '.' : '';
             const id = name.length > 0 ? parentId + name : undefined;
             const newItem = Object.assign(item, {id});

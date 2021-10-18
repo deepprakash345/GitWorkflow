@@ -11,8 +11,10 @@ export default class AFReservedReferenceNode implements Node {
         switch (this.name.toLowerCase()) {
             case 'form':
                 return context?.$form || null;
+            case 'field':
+                return context?.$field || null;
             case 'event':
-                return context?.['$event'] || null;
+                return context?.$event || null;
         }
         return null;
     }

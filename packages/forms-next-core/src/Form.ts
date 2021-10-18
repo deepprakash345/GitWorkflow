@@ -36,8 +36,8 @@ class Form extends Container<FormJson> implements FormModel {
             let controller = createController(this)(elem);
             controller.subscribe((e: Action) => {
                 let elem = e.target.getState();
+                this.updateDataDom(elem as FieldJson);
                 if (!('valid' in elem) || elem.valid !== false) {
-                    this.updateDataDom(elem as FieldJson);
                     //todo: trigger only dependencies
                     this.controller().dispatch(new Change(undefined, true));
                 }
@@ -48,18 +48,24 @@ class Form extends Container<FormJson> implements FormModel {
 
     private updateDataDom(elem: FieldJson) {
         const dataRef: string = elem.dataRef || elem.name || '';
-        let data = this._jsonModel.data;
-        let tokens = splitTokens(dataRef);
-        let token = tokens.next();
-        while (!token.done) {
-            let nextToken = tokens.next();
-            if (!nextToken.done) {
-                data[token.value] = data[token.value] || {};
-                data = data[token.value];
-            } else {
-                data[token.value] = elem.value;
+        if (dataRef != 'none') {
+            let data = this._jsonModel.data;
+            let tokens = splitTokens(dataRef);
+            let token = tokens.next();
+            while (!token.done) {
+                let nextToken = tokens.next();
+                if (!nextToken.done) {
+                    data[token.value] = data[token.value] || {};
+                    data = data[token.value];
+                } else {
+                    if (elem.valid !== false) {
+                        data[token.value] = elem.value;
+                    } else {
+                        data[token.value] = undefined;
+                    }
+                }
+                token = nextToken;
             }
-            token = nextToken;
         }
     }
 

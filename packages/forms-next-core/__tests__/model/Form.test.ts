@@ -421,6 +421,20 @@ test('an invalid value change should not update the data dom', async () => {
     expect(form.getState().data).toEqual({});
 });
 
+test('an invalid value should remove the old value from the data dom', async () => {
+    const formJson = create([{
+        'f': {
+            type: 'number'
+        }
+    }, 'f', 'f']);
+    let form = await createFormInstance(formJson);
+    const c = form.getElementController('f1');
+    c.dispatch(new Change(1));
+    expect(form.getState().data).toEqual({f1 : 1});
+    c.dispatch(new Change('abcd'));
+    expect(form.getState().data).toEqual({});
+});
+
 test('making a value valid resets the valid state and removes the errorMessage', async () => {
     const formJson = create([{
         'f': {
@@ -489,14 +503,14 @@ test('custom event should be executed for all the fields', async () => {
         'f': {
             'type' : 'number',
             'events': {
-                'customClick': '{"value" : 1 + 3}'
+                'custom:customClick': '{"value" : 1 + 3}'
             }
         }
     }, {
         'f': {
             'type' : 'number',
             'events': {
-                'customClick': '{"value" : 2 + 3}'
+                'custom:customClick': '{"value" : 2 + 3}'
             }
         }
     }]);
@@ -513,14 +527,14 @@ test('custom event should pass the payload to the event', async () => {
         'f': {
             'type' : 'number',
             'events': {
-                'customClick1': '{"value" : 1 + $event.payload.add}'
+                'custom:customClick1': '{"value" : 1 + $event.payload.add}'
             }
         }
     }, {
         'f': {
             'title': 'myfield',
             'events': {
-                'customClick2': '{"value" : $event.target.title}'
+                'custom:customClick2': '{"value" : $event.target.title}'
             }
         }
     }]);
@@ -533,6 +547,21 @@ test('custom event should pass the payload to the event', async () => {
     f = form.getState().items.f2;
     expect(f.value).toEqual('myfield');
 
+});
+
+test('dataRef none should not update the data dom', async () => {
+    const formJson = create([{
+        'f': {
+            'type' : 'number',
+            'dataRef' : 'none'
+        }
+    }]);
+    let form = await createFormInstance(formJson);
+    form.getElementController('f1').dispatch(new Change(5));
+    const state = form.getState();
+    let f: FieldJson = state.items.f1;
+    expect(f.value).toEqual(5);
+    expect(state.data).toEqual({});
 });
 
 test.todo('if dataRef is is invalid data should not get generated for that field');

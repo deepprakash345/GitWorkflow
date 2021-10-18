@@ -6,6 +6,7 @@ test('a field should add all the default values in its json', () => {
         id : 'someid',
         visible : true,
         readOnly : false,
+        viewType: 'text-input',
         enabled : true
     });
 });
@@ -18,6 +19,7 @@ test('a field should set the value correctly in its json from default value', ()
         readOnly : false,
         enabled : true,
         default : 'test',
-        value : 'test'
+        value : 'test',
+        viewType : 'text-input'
     });
 });

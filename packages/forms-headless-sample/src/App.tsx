@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
@@ -12,14 +12,16 @@ import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import {TabList, TabPanels, Tabs, Item} from '@adobe/react-spectrum'
 import {exportDataSchema} from "@adobe/forms-next-core/lib/utils/SchemaUtils";
+import {fetchForm} from "@adobe/forms-next-core/lib";
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
+
 
 function App() {
     let [formToRender, setFormToRender] = React.useState('');
     let [formJson, setFormJson] = React.useState('');
     let [dataSchema, setDataSchema] = React.useState('');
-
+    let [application, setApplication] = React.useState('')
     const onSubmit= (data: Action) => {
         console.log(data.payload)
     }
@@ -36,6 +38,14 @@ function App() {
         setDataSchema(jsonString(dataSchema))
     }
 
+    useEffect(() => {
+        (async () => {
+            const response = await fetch('/pages/livecycle/af2-docs/examples/generated/Application.form.json')
+            const form = await response.text()
+            setApplication(form)
+        })()
+    })
+
     return (
         <Flex gap="size-500" direction="column" marginX="size-400" >
             <h1>Goa Playground - Checkout your Headless Form Definitions</h1>
@@ -51,10 +61,10 @@ function App() {
                         </TabList>
                         <TabPanels>
                             <Item key="configuration">
-                                 <AdaptiveForm
-                                     formJson={application}
+                                {application.length > 0 ? (<AdaptiveForm
+                                     formJson={JSON.parse(application)}
                                      mappings={mappings}
-                                     onLoadForm={loadForm}/>
+                                     onLoadForm={loadForm}/>) : 'Preparing Configuration'}
                             </Item>
                             <Item key="form-model">
                                 <AceEditor mode="json"

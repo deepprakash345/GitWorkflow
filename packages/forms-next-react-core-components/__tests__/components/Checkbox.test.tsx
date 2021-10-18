@@ -272,6 +272,64 @@ test('it should handle visible property', async () => {
         'visible' : false
     };
 
-    const {input, container, label} = await helper(f);
+    const {label} = await helper(f);
     expect(label?.getAttribute('style')).toEqual('display: none;');
+});
+
+test('a checkbox with no off value should get its value undefined when not selected', async () => {
+    const f = {
+        ...field,
+        'id' : field.name
+    };
+
+    const {input, form} = await helper(f);
+    expect(input?.checked).toEqual(false);
+    expect(input?.value).toEqual('');
+    // @ts-ignore
+    userEvent.click(input);
+    let state = form?.getState();
+    expect((state?.items.name as FieldJson).value).toBe(true);
+    expect(input?.checked).toEqual(true);
+    expect(input?.value).toEqual('true');
+
+    // @ts-ignore
+    userEvent.click(input);
+    expect(input?.checked).toEqual(false);
+    expect(input?.value).toEqual('');
+    state = form?.getState();
+    expect((state?.items.name as FieldJson).value).toBe(undefined);
+});
+
+test('a checkbox with no off value should not be invalid when not required', async () => {
+    const f = {
+        ...field,
+        'id' : field.name
+    };
+
+    const {input, form} = await helper(f);
+    // @ts-ignore
+    userEvent.click(input);
+    let state = form?.getState();
+    expect(state.data.name).toEqual(true);
+    // @ts-ignore
+    userEvent.click(input);
+    state = form?.getState();
+    expect((state?.items.name as FieldJson).valid).not.toBe(false);
+
+});
+
+test('a required checkbox with null value should be invalid', async () => {
+    const f = {
+        ...field,
+        required: true,
+        'id' : field.name
+    };
+
+    const {input, form} = await helper(f);
+    // @ts-ignore
+    userEvent.click(input);
+    // @ts-ignore
+    userEvent.click(input);
+    let state = form?.getState();
+    expect((state?.items.name as FieldJson).valid).toBe(false);
 });
