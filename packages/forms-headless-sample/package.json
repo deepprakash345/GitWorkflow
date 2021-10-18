@@ -1,11 +1,11 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.1.21",
+  "version": "0.1.25",
   "private": true,
   "homepage": "/pages/livecycle/af2-web-runtime/dist",
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.21",
-    "@adobe/forms-next-react-core-components": "^0.1.22",
+    "@adobe/forms-next-core": "^0.1.25",
+    "@adobe/forms-next-react-core-components": "^0.1.26",
     "@adobe/react-spectrum": "^3.12.0",
     "@quarry/wizard": "^1.0.2",
     "@react/react-spectrum": "^2",
