@@ -27,11 +27,12 @@
   "scripts": {
     "test": "jest --silent",
     "test-ci": "jest --silent --coverage",
-    "build": "npx tsc",
+    "build": "npx ttsc",
     "clean": "rm -rf lib coverage",
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
+    "ts-reflection": "^0.3.0",
     "@adobe/forms-next-expression-parser": "0.1.15",
     "@apidevtools/json-schema-ref-parser": "^9.0.9"
   },
@@ -52,6 +53,7 @@
     "nock": "^13.1.3",
     "node-fetch": "^2.6.1",
     "ts-jest": "^27.0.3",
+    "ttypescript": "^1.5.10",
     "typescript": "^4.3.5"
   }
 }

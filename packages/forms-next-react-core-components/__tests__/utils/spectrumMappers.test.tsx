@@ -4,6 +4,7 @@ import mock = jest.mock;
 import {FieldJson} from '@adobe/forms-next-core/lib';
 import React from 'react';
 const mockHandler = {dispatchClick: () => {}, dispatchChange: (val: string) => {}};
+const formatMessage = (input: any) => (value: string) => {return input[value];};
 
 test('combineConvertor should invoke all the convertors', () => {
     const mocks = Array(3).fill(jest.fn());
@@ -11,9 +12,10 @@ test('combineConvertor should invoke all the convertors', () => {
     const input = {
         ['x' + randomString(2)] : randomString(4)
     };
-    res(input, mockHandler);
+    res(input, mockHandler, formatMessage(input));
     mocks.forEach((m) => {
-        expect(m).toHaveBeenCalledWith(input, mockHandler);
+        // third argument is an anonymous function
+        expect(m).toHaveBeenCalledWith(input, mockHandler, expect.any(Function));
     });
 });
 
@@ -28,7 +30,7 @@ test('combineConvertor should return the value after combining all the individua
     const input = {
         ['x' + randomString(2)] : randomString(4)
     };
-    const res = combined(input, mockHandler);
+    const res = combined(input, mockHandler, formatMessage(input));
     expect(Object.keys(res)).toEqual(returnValues.map(x => Object.keys(x)[0]));
     expect(Object.values(res)).toEqual(returnValues.map(x => Object.values(x)[0]));
 });
@@ -112,14 +114,15 @@ Object.keys(suites).forEach((funcName) => {
             const output = {
                 [obj.outProp] : (typeof out === 'function') ? out(inp) : out
             };
-            expect(obj.func(input, mockHandler)).toMatchObject(output);
+            expect(obj.func(input, mockHandler, formatMessage(input))).toMatchObject(output);
         });
     });
 });
 
 test('richTextTitle should strip script tags', () => {
     let html = '<script>text</script><b>text</b>';
-    let res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
+    let state = {...base, 'richTextTitle' : true, 'title': html};
+    let res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -127,13 +130,14 @@ test('richTextTitle should strip script tags', () => {
 
 test('richTextTitle should strip onerror attribute in img,video', () => {
     let html = '<img onerror="somejavascript" /><b>text</b>';
-    let res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
+    let state : any = {...base, 'richTextTitle' : true, 'title': html};
+    let res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
-
+    state = {...base, 'richTextTitle' : true, 'title': html};
     html = '<video onerror="somejavascript" /><b>text</b>';
-    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
+    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -155,7 +159,8 @@ test.todo('richTextTitle should allow src attribute in img,video');/*, () => {
 
 test('description should strip script tags', () => {
     let html = '<script>text</script><b>text</b>';
-    let res = baseConvertor({...base, 'description': html}, mockHandler);
+    let state = {...base, 'description': html};
+    let res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         description: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -163,13 +168,15 @@ test('description should strip script tags', () => {
 
 test('description should strip onerror attribute in img,video', () => {
     let html = '<img onerror="somejavascript" /><b>text</b>';
-    let res = baseConvertor({...base,'description': html}, mockHandler);
+    let state: any= {...base,'description': html};
+    let res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         description: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
 
     html = '<video onerror="somejavascript" /><b>text</b>';
-    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler);
+    state = {...base, 'richTextTitle' : true, 'title': html};
+    res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });

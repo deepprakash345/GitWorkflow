@@ -61,6 +61,41 @@
       },
       "viewType" : "drop-down"
     },
+    "locale": {
+      "name" : "locale",
+      "title" : "Select a locale",
+      "type": "string",
+      "visible": false,
+      "enumNames" : [
+        "de-DE",
+        "en-US",
+        "es-ES",
+        "fr-FR",
+        "it-IT",
+        "ja-JP",
+        "ko-KR",
+        "pt-BR",
+        "zh-CN",
+        "zh-TW"
+      ],
+      "enum" : [
+        "de-DE",
+        "en-US",
+        "es-ES",
+        "fr-FR",
+        "it-IT",
+        "ja-JP",
+        "ko-KR",
+        "pt-BR",
+        "zh-CN",
+        "zh-TW"
+      ],
+      "events" : {
+        "change": "dispatch_event($form, 'localeChange', $event.payload)",
+        "loadForm": "{visible: true}"
+      },
+      "viewType" : "drop-down"
+    },
     "formUrl": {
       "name" : "formUrl",
       "title" : "Final Form Url",

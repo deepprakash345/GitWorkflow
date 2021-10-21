@@ -1,8 +1,14 @@
+import {propertiesOf} from 'ts-reflection';
+
 export type Items<T> = { [key: string]: T }
 export type Primitives = string | number | boolean | null;
 
+type TranslationConstraintsJson = {
+    'enumNames'?: string[];
+    'enum'?: any[];
+}
 
-type ConstraintsJson = {
+type ConstraintsJson = TranslationConstraintsJson & {
     'type'?: string
     'required'?: boolean;
     'pattern'?: string,
@@ -14,8 +20,6 @@ type ConstraintsJson = {
     'maximum'?: number;
     'fracDigits'?: number;
     'leadDigits'?: number;
-    'enum'?: any[];
-    'enumNames'?: string[]
     'enforceEnum'?: boolean
 }
 
@@ -41,14 +45,17 @@ export type RulesJson = {
     'events' ?: Items<string>
 }
 
+type TranslationBaseJson = {
+    'title'?: string,
+    'description'?: string
+}
 
-type BaseJson = RulesJson & ConstraintsJson & {
+
+type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     'id'?: string;
     'dataRef'?: string;
-    'title'?: string
     'richTextTitle' ?: boolean
     'hideTitle'?: boolean
-    'description'?: string
     'enabled'?: boolean;
     'visible'?: boolean;
     'name'?: string;
@@ -57,9 +64,12 @@ type BaseJson = RulesJson & ConstraintsJson & {
     'errorMessage'?: string
 }
 
-export type FieldJson = BaseJson & {
+type TranslationFieldJson = {
+    'placeholder'?: string
+}
+
+export type FieldJson = BaseJson & TranslationFieldJson & {
     'readOnly'?: boolean;
-    'placeholder'?: string;
     'valid'?: boolean
     'default'?: Primitives
     'value'?: Primitives
@@ -93,3 +103,7 @@ export type FormJson = ContainerJson & {
     'metadata'?: MetaDataJson,
     'data'?: any
 }
+
+export type TranslationJson = TranslationBaseJson & TranslationFieldJson & TranslationConstraintsJson
+// derive props from the translation type defined, used ttsc for such reflection use-cases
+export const translationProps = propertiesOf<TranslationJson>();

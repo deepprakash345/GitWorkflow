@@ -2,13 +2,15 @@ import {JSXElementConstructor, useContext, useEffect, useState} from 'react';
 import formContext, {IFormContext} from './FormContext';
 import {FieldJson} from '@adobe/forms-next-core/lib';
 import React from 'react';
-import {Convertor} from '../utils/SpectrumMappers';
+import {Convertor, translateMessage} from '../utils/SpectrumMappers';
+import {useIntl} from 'react-intl';
 import {Action, Change, Click} from '@adobe/forms-next-core/lib/controller/Controller';
 
 export type Dispatch<T> = (x: T) => any
 export type Handlers = {
     dispatchChange: Dispatch<any>
-    dispatchClick: Dispatch<void>
+    dispatchClick: Dispatch<void>,
+    formatMessage?: any
 }
 
 export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, Handlers] {
@@ -41,7 +43,8 @@ export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, H
 
 export const useRenderer = function(props:any, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
     const [state, handlers] = useRuleEngine<FieldJson, string>(props);
-    const res = propsMapper(state, handlers);
+    const { formatMessage } = useIntl();
+    const res = propsMapper(state, handlers, translateMessage(state, formatMessage));
     const errMessage = state.errorMessage || '';
     return (<div className={'field'}>
         <Component {...res} />

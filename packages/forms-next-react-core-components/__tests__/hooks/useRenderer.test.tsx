@@ -3,6 +3,7 @@ import {useRenderer} from '../../src/react-mapper/hooks';
 import {renderHook} from '@testing-library/react-hooks';
 import React from 'react';
 import {randomString} from '../utils';
+import {IntlProvider} from 'react-intl';
 it('useRenderer should be able to render any component', () => {
     const TestComp = (props: any) => {
         return <div>{props.someKey}</div>;
@@ -18,7 +19,10 @@ it('useRenderer should be able to render any component', () => {
         return retVal;
     };
 
-    const {result} = renderHook(() => useRenderer({':name' : 'name'}, mapper, TestComp));
+    let dictionaries : any = '';
+    // @ts-ignore
+    const wrapper = ({children})=> <IntlProvider locale='en-US' messages={dictionaries}>{children}</IntlProvider>;
+    const {result} = renderHook(() => useRenderer({':name' : 'name'}, mapper, TestComp), {wrapper});
     expect(result.current.toString()).toStrictEqual((<TestComp {...retVal} />).toString());
 
 });

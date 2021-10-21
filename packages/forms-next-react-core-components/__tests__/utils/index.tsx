@@ -2,6 +2,7 @@ import FormContext from '../../src/react-mapper/FormContext';
 import React from 'react';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
 import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {IntlProvider} from 'react-intl';
 
 export const createForm = async (field: any) => {
     const formJson = {
@@ -12,13 +13,17 @@ export const createForm = async (field: any) => {
     return await createFormInstance(formJson);
 };
 
-export const Provider = (controller: Controller, mappings: any = {}) => (props: any) => {
+export const Provider = (controller: Controller, mappings: any = {}, locale: string = 'en-US', dictionaries: any = '') => (props: any) => {
     const c = {
         controller,
         mappings
     };
     const {children} = props;
-    return <FormContext.Provider value={c}>{children}</FormContext.Provider>;
+    return (
+        <IntlProvider locale={locale} messages={dictionaries}>
+            <FormContext.Provider value={c}>{children}</FormContext.Provider>
+        </IntlProvider>
+    );
 };
 
 export type TestCase<T> = T & {

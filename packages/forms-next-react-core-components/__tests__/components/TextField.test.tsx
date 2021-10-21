@@ -113,7 +113,7 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
         const input = container.querySelector('input');
         expects(label, input);
     };
-    checkExpectations(render(component));
+    //checkExpectations(render(component));
     const form = await createForm(field);
     const wrapper = Provider(form);
     checkExpectations(render(component, {wrapper}));

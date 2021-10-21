@@ -1,5 +1,10 @@
 module.exports = {
   preset: 'ts-jest',
+  globals: {
+    'ts-jest': {
+      compiler: 'ttypescript'
+    }
+  },
   coverageDirectory: 'target/coverage',
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
   testEnvironment: 'node',

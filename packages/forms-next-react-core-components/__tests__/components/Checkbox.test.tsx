@@ -186,9 +186,9 @@ const helper = async (field : any, useProvider = true) => {
 };
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
-    let x = await helper(field, false);
-    expects(x.label, x.input);
-    x = await helper(field);
+    //let x = await helper(field, false);
+    //expects(x.label, x.input);
+    let x = await helper(field);
     expects(x.label, x.input);
 });
 
