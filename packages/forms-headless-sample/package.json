@@ -1,15 +1,14 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "private": true,
   "homepage": "/pages/livecycle/af2-web-runtime/dist",
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.25",
-    "@adobe/forms-next-react-core-components": "^0.1.26",
+    "@adobe/forms-next-core": "^0.1.26",
+    "@adobe/forms-next-react-core-components": "^0.1.27",
     "@adobe/react-spectrum": "^3.12.0",
     "@quarry/wizard": "^1.0.2",
-    "react-intl": ">=5.8.4",
-    "@react-aria/i18n" : "^3.3.2",
+    "@react-aria/i18n": "^3.3.2",
     "@react/react-spectrum": "^2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -23,6 +22,7 @@
     "react": "^17.0.2",
     "react-ace": "^9.4.3",
     "react-dom": "^17.0.2",
+    "react-intl": ">=5.8.4",
     "react-scripts": "4.0.3",
     "typescript": "^4.3.5",
     "web-vitals": "^1.1.2"

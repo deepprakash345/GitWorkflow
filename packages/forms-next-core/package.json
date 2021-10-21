@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-core",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "Core Module for Forms Runtime",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -32,9 +32,9 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
-    "ts-reflection": "^0.3.0",
     "@adobe/forms-next-expression-parser": "0.1.15",
-    "@apidevtools/json-schema-ref-parser": "^9.0.9"
+    "@apidevtools/json-schema-ref-parser": "^9.0.9",
+    "ts-reflection": "^0.3.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
