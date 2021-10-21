@@ -145,6 +145,7 @@ test.todo('it should handle readOnly property');
 test('it should handle visible property', async () => {
     const f = {
         ...field,
+        'id' : undefined,
         'visible' : false
     };
 

@@ -12,10 +12,11 @@ export type Handlers = {
 }
 
 export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, Handlers] {
-    const [elementState, setElementState] = useState(props);
     const context:IFormContext = useContext(formContext);
     const id = props.id as string;
     const controller = context.controller?.getElementController(id);
+    // use the controller state, if an empty controller (like objects outside of form vocab), fallback to props
+    const [elementState, setElementState] = useState(controller?.getState() || props);
     useEffect(() => {
         const subscription = controller?.subscribe((action: Action) => {
             setElementState(Object.assign({}, action.target.getState()));
