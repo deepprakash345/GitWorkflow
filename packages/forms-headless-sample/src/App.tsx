@@ -13,8 +13,8 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import {TabList, TabPanels, Tabs, Item} from '@adobe/react-spectrum'
 import {useLocale} from '@react-aria/i18n';
 import {exportDataSchema} from "@adobe/forms-next-core/lib/utils/SchemaUtils";
+import {fetchForm, FormJson} from "@adobe/forms-next-core/lib";
 import {createTranslationObject} from "@adobe/forms-next-core/lib/utils/TranslationUtils";
-import {request} from "@adobe/forms-next-core/lib/utils/Fetch";
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
@@ -30,23 +30,33 @@ function App() {
     let {locale, direction} = useLocale();
     let [localeState, setLocaleState] = React.useState(locale);
 
+    let [application, setApplication] = React.useState<any>({})
     const onSubmit= (data: Action) => {
         console.log(data.payload)
     }
 
+    const fetchFormDictionary = async (path: string) => {
+        let result = '';
+        try {
+            const response = await fetch(path)
+            result = await response.text()
+        } catch (ex) {
+            console.log('error handled');
+        }
+        if (result) {
+            setDictionary(result);
+        }
+    };
 
     useEffect( () => {
-        const fetchFormDictionary = async (path: string) => {
-            let result = '';
-            try {
-                result = await request(path)
-            } catch (ex) {
-                console.log('error handled');
-            }
-            if (result) {
-                setDictionary(result);
-            }
-        };
+        if (Object.keys(application).length === 0) {
+            (async () => {
+                console.warn("making a get request")
+                const response = await fetch('/pages/livecycle/af2-docs/examples/generated/Application.form.json')
+                const form = await response.text()
+                setApplication(JSON.parse(form))
+            })()
+        }
         if (formJson) {
             let path = JSON.parse(formJson)?.['_links']?.['i18n']?.['href'];
             fetchFormDictionary(path);
@@ -85,13 +95,11 @@ function App() {
                         </TabList>
                         <TabPanels>
                             <Item key="configuration">
-                                 <AdaptiveForm
-                                     locale={localeState}
-                                     localizationMessages={dictionary}
-                                     formJson={application}
-                                     mappings={mappings}
-                                     onLocaleChange={loadLocale}
-                                     onLoadForm={loadForm}/>
+                                {Object.keys(application).length > 0 ? (<AdaptiveForm
+                                    onLocaleChange={loadLocale}
+                                    formJson={application}
+                                    mappings={mappings}
+                                    onLoadForm={loadForm}/>) : 'Preparing Configuration'}
                             </Item>
                             <Item key="form-model">
                                 <AceEditor mode="json"

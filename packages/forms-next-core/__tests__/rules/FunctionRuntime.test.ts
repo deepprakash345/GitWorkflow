@@ -121,7 +121,6 @@ test('submit should send a request to the url configured', async () => {
     await setTimeout(() => {
         // Will throw an assertion error if meanwhile a "GET/POST" was
         // not performed.
-        expect(false).toEqual(true);
         scope.done();
     }, 100);
 });

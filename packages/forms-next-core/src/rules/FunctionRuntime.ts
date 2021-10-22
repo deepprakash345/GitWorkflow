@@ -38,7 +38,11 @@ class FunctionRuntimeImpl {
                     dispatch = true;
                 }
                 const event = new CustomEvent(eventName, payload, dispatch);
-                context.$form.controller().dispatch(event);
+                if (typeof element === 'string') {
+                    context.$form.controller().dispatch(event);
+                } else {
+                    element.controller().dispatch(event);
+                }
                 return {};
             }
         };

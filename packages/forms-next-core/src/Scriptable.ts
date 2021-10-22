@@ -5,7 +5,7 @@ import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/no
 import {Json} from '@adobe/forms-next-expression-parser';
 import {Action, Change, Submit} from './controller/Controller';
 import {mergeDeep} from './utils/JsonUtils';
-import {invalidateTranslation} from "./utils/TranslationUtils";
+import {invalidateTranslation} from './utils/TranslationUtils';
 
 class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
@@ -69,13 +69,13 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
     }
 
     dispatch(action: Action, context: any, trigger: (e: Action) => void) {
-        console.log('new action ' + action);
+        //console.log('new action ' + action);
         let updates : any;
         const evntName = action.type;
         if (action.isCustomEvent) {
             updates = {
                 ...updates,
-                ...this.executeEvent(context, evntName) as object
+                ...this.executeEvent(context, `custom:${evntName}`) as object
             };
             trigger(action);
         } else {
@@ -101,7 +101,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
             invalidateTranslation(this._jsonModel, updates);
             // merge deep since rules like
             // todo: fix order
-            if ('value' in updates) {
+            if ('value' in updates && (evntName !== 'change' || action.isCustomEvent)) {
                 const res = this.handleValueChange(updates.value);
                 updates = {
                     ...updates,

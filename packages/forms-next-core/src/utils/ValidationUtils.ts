@@ -1,3 +1,5 @@
+import {FieldJson} from '../types';
+
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 
 type ValidationResult = {
@@ -17,6 +19,12 @@ const isLeapYear = (year: number) => {
 export const Constraints = {
     type : (constraint: string, inputVal: string): ValidationResult => {
         let value : any = inputVal;
+        if (inputVal == undefined) {
+            return {
+                valid: true,
+                value: undefined
+            };
+        }
         let valid = true;
         switch(constraint) {
             case 'string':

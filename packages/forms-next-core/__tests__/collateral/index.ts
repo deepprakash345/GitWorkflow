@@ -1,41 +1,39 @@
-import {Action, Controller} from '../../src/controller/Controller';
+import {FormJson} from '../../src/types';
 
-export const oneFieldForm = {
+export const oneFieldForm: FormJson = {
     items: {
         'name': {
-            constraints: {
-                type: 'string'
-            },
-            type: 'text',
+            type: 'string',
+            viewType: 'text-input',
             name: 'name'
         }
     }
 };
 
-export const numberFieldForm = {
+export const numberFieldForm : FormJson = {
     items: {
         'name': {
-            constraints : { type : 'number' },
-            type: 'numericEdit',
+            type : 'number',
+            viewType: 'number-input',
             name: 'name'
         }
     }
 };
 
-export const formWithPanel = {
+export const formWithPanel: FormJson = {
     items: {
         'name': {
-            constraints : { type : 'string' },
-            type: 'text',
+            type : 'string',
+            viewType: 'text-input',
             name: 'name'
         },
         'address': {
-            constraints : { type : 'object' },
+            type : 'object',
             name: 'address',
             items: {
                 'zip': {
-                    constraints : { type : 'number' },
-                    type: 'numericEdit',
+                    type : 'number',
+                    viewType: 'number-input',
                     name: 'zip'
                 }
             }
@@ -43,18 +41,18 @@ export const formWithPanel = {
     }
 };
 
-export const nonFormComponent = {
+export const nonFormComponent: FormJson = {
     items: {
         'name': {
-            constraints : { type : 'string' },
-            type: 'text',
+            type : 'string',
+            viewType: 'text-input',
             name: 'name'
         },
         'somekey': {
             items: {
                 'zip': {
-                    constraints : { type : 'number' },
-                    type: 'numericEdit',
+                    type : 'number',
+                    viewType: 'number-input',
                     name: 'zip'
                 }
             }
@@ -66,17 +64,18 @@ export const nonFormComponent = {
 export const formWithRules = {
     items: {
         'firstName': {
-            constraints : { type : 'string' },
-            type: 'text',
+            type : 'string',
+            viewType: 'text-input',
             name: 'firstName'
         },
         'lastName': {
-            constraints : { type : 'string' },
-            type: 'text',
+            type : 'string',
+            viewType: 'text-input',
             name: 'lastName'
         },
         'fullName' : {
-            type : 'text',
+            type : 'string',
+            viewType : 'text-input',
             rules : {
                 value : "$form.firstName.value + ' ' + $form.lastName.value"
             },

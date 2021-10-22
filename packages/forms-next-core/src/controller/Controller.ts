@@ -162,11 +162,11 @@ class ControllerImpl implements Controller {
     subscribe(callback: callbackFn, eventName: string = 'change') {
         this._callbacks[eventName] = this._callbacks[eventName] || [];
         this._callbacks[eventName].push(callback);
-        console.log(`subscription added : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
+        //console.log(`subscription added : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
         return {
             unsubscribe: () => {
                 this._callbacks[eventName] = this._callbacks[eventName].filter(x => x !== callback);
-                console.log(`subscription removed : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
+                //console.log(`subscription removed : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
             }
         };
     }
