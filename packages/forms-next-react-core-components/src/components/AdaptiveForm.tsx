@@ -1,4 +1,4 @@
-import React, {JSXElementConstructor, useEffect, useMemo} from 'react';
+import React, {JSXElementConstructor, useEffect} from 'react';
 import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
 import {createFormInstance} from '@adobe/forms-next-core/lib';
@@ -63,11 +63,25 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
         createForm(jsonString(formJson));
     }, [formJson]);
     const state = controller?.getState();
+    let localeDictJson = localizationMessages;
+    let localizationMessagesProp = undefined;
+    if (typeof localizationMessages === 'string') {
+        try {
+            // if messages are in incorrect format, just log an error
+            localeDictJson = JSON.parse(localizationMessages);
+        } catch(ex) {
+            console.log('Translation messages are in incorrect format');
+            localeDictJson = localizationMessages;
+        }
+    }
+    if (locale) {
+        localizationMessagesProp = localeDictJson?.[locale];
+    }
     // create adaptive form instance
     // by adding IntlProvider, numberField would auto format the number based on the locale
     return (
             <FormContext.Provider value={{mappings: mappings, controller: controller}}>
-                <IntlProvider onError={(err)=> console.log(err)} locale={locale as string} messages={localizationMessages && locale && localizationMessages[locale] ? localizationMessages[locale] : undefined}>
+                <IntlProvider onError={(err)=> console.log(err)} locale={locale as string} messages={localizationMessagesProp}>
                     {(state !== undefined) ? (
                     <form>
                         {state.title ?<h2>{state.title}</h2> : null}
