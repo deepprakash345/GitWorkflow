@@ -8,9 +8,9 @@ import {
     FieldsetModel,
     Items, RulesJson
 } from './types';
-import {getProperty, splitTokens} from './utils/JsonUtils';
+import {getProperty, resolve, splitTokens} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {Action, Controller} from './controller/Controller';
+import {Action, Change, Controller} from './controller/Controller';
 
 const findChild = (container: ContainerModel,
                    childName: string): FieldModel | FieldsetModel | undefined => {
@@ -31,6 +31,8 @@ const findChild = (container: ContainerModel,
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Dispatcher {
 
     protected _children: Items<FieldModel | FieldsetModel>
+
+    private _data: any = null
 
     constructor(params: T, _createController?: (elem: FieldModel | FieldsetModel) => Controller) {
         super(params);
@@ -122,6 +124,40 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     abstract controller(): Controller;
+
+    /**
+     * prefill the form with data on the given element
+     * @param data {object} data to prefill the form
+     * @param [items] form element on which to apply the operation. The children of the element will also be included
+     */
+    mergeDataModel(dataModel : any, parentDataModel?: any) {
+        let currentDataModel: any;
+        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
+            currentDataModel = resolve(dataModel, this._jsonModel.dataRef);
+            this._data = currentDataModel;
+        }
+        if (this._jsonModel.dataRef === 'none') {
+            currentDataModel = parentDataModel;
+        } else if ((this._jsonModel?.name || '').length > 0){
+            currentDataModel = resolve(parentDataModel, this._jsonModel.name || '') || {};
+            this._data = currentDataModel;
+        }
+        Object.values(this.items).forEach(x => {
+            if ('items' in x) {
+                this.mergeDataModel(dataModel, currentDataModel);
+            } else  {
+                let data:any;
+                if (x.dataRef != 'none' && x.dataRef !== undefined) {
+                    data = resolve(dataModel, x.dataRef);
+                } else if ((x.name || '')?.length > 0) {
+                    data = resolve(currentDataModel, x.name || '');
+                }
+                if (data !== undefined) {
+                    x.controller()?.dispatch(new Change(data));
+                }
+            }
+        });
+    }
 }
 
 export default Container;

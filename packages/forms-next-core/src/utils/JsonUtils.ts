@@ -44,17 +44,15 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     return mergeDeep(target, ...sources);
 }
 
-export function getOrElse(obj: any, jsonPath: string){
-    let currObject = obj;
-    let propChain = (jsonPath || '').split('.');
-    for (let prop of propChain) {
-        if(isObject(currObject))
-            currObject = currObject[prop];
-        else
-            currObject = undefined;
+export function resolve(obj: any, dataRef: string){
+    let tmpData = obj;
+    const tokens = splitTokens(dataRef);
+    let token = tokens.next();
+    while (!token.done && tmpData != null) {
+        tmpData = tmpData[token.value];
+        token = tokens.next();
     }
-    if(currObject)
-        return currObject;
+    return tmpData;
 }
 
 export const jsonString = (obj: any) => {

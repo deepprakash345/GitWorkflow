@@ -82,8 +82,10 @@ export interface FormMetaDataModel {
 
 export interface ContainerModel extends WithController {
     items: Items<FieldsetModel | FieldModel>
+    readonly dataRef?: string;
     isContainer: boolean
     getElement: (id: string) => FieldModel | ContainerModel | undefined
+    mergeDataModel: (dataModel: any, parentModel: any) => void
 }
 
 export interface FieldsetModel extends BaseModel,

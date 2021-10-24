@@ -3,28 +3,19 @@ import {jsonString} from './utils/JsonUtils';
 import {Controller, Change, Initialize} from './controller/Controller';
 import {request} from './utils/Fetch';
 
-export const createFormInstance = async (formModel: any, options?: any): Promise<Controller> => {
+export const createFormInstance = async (formModel: any): Promise<Controller> => {
     let f = new Form({...formModel});
-    if (f.metaData?.dataUrl || formModel?.data) {
-        // check if data is present as part of form model definition
-        let formData = formModel?.data;
-        try {
-            // if there is data URL, fetch the form data and override the data present in the form model definition
-            const data = await fetchData(f.metaData.dataUrl, options);
-            formData = JSON.parse(data?.data);
-        } catch (e) {
-            console.log(e);
-        } finally {
-            if (formData) {
-                f.setData(formData);
-            }
-        }
+    let formData = formModel?.data;
+    if (formData) {
+        f.mergeDataModel(formData);
     }
     // Once the field or panel is initialized, execute the initialization script
     // this means initialization happens after prefill and restore
     // Before execution of calcExp, visibleExp, enabledExp, validate, options, navigationChange, we execute init script
-    f.controller()?.dispatch(new Initialize(undefined, true));
-    f.controller()?.dispatch(new Change(undefined, true));
+    setTimeout(() => {
+            f.controller()?.dispatch(new Initialize(undefined, true));
+            f.controller()?.dispatch(new Change(undefined, true));
+        }, 1);
     return f.controller();
 };
 

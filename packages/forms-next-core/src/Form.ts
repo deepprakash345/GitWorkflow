@@ -8,7 +8,7 @@ import {
     FormModel,
     MetaDataJson
 } from './types';
-import {getOrElse, splitTokens} from './utils/JsonUtils';
+import {resolve, splitTokens} from './utils/JsonUtils';
 import FormMetaData from './FormMetaData';
 import {createChild} from './Fieldset';
 import {Action, Change, Controller, createController} from './controller/Controller';
@@ -46,8 +46,12 @@ class Form extends Container<FormJson> implements FormModel {
         });
     }
 
+    private getBinding(elem: FieldJson) {
+        return elem.dataRef === undefined ? (elem.name || '') : elem.dataRef;
+    }
+
     private updateDataDom(elem: FieldJson) {
-        const dataRef: string = elem.dataRef || elem.name || '';
+        const dataRef = this.getBinding(elem);
         if (dataRef != 'none') {
             let data = this._jsonModel.data;
             let tokens = splitTokens(dataRef);
@@ -69,35 +73,20 @@ class Form extends Container<FormJson> implements FormModel {
         }
     }
 
-    /*
-     * This API gets the element w.r.t to the node.
-     * Eg - path is a/b/c, then it converts the path to a.b.c and then searches for c.
-    */
-    private _getElement(node: Object, path: string, options: any) {
-        options = options || {};
-        let {index} = options;
-        let convertedPath = path;
-        if (index) {
-            convertedPath = convertedPath + '.' + index;
-        }
-        return getOrElse(node, convertedPath);
-    }
-
-    /**
-     * prefill the form with data on the given element
-     * @param data {object} data to prefill the form
-     * @param [items] form element on which to apply the operation. The children of the element will also be included
-     */
-    setData(data: Object, items = this.items) {
-        this._jsonModel.data = {...data};
-        Object.values(items).forEach(x => {
+    mergeDataModel(dataModel : any, parentDataModel?: any) {
+        this._jsonModel.data = {...dataModel};
+        Object.values(this.items).forEach(x => {
             if ('items' in x) {
-                this.setData(data, x.items);
-            } else if (x.dataRef || x.name) {
-                // todo: handle the case for panels
-                let value = this._getElement(data, x.dataRef || x.name || '', null);
-                if (value) {
-                    x.controller()?.dispatch(new Change(value));
+                x.mergeDataModel(dataModel, dataModel);
+            } else  {
+                let data:any;
+                if (x.dataRef != 'none' && x.dataRef !== undefined) {
+                    data = resolve(dataModel, x.dataRef);
+                } else if ((x.name || '')?.length > 0) {
+                    data = resolve(dataModel, x.name || '');
+                }
+                if (data !== undefined) {
+                    x.controller()?.dispatch(new Change(data));
                 }
             }
         });
