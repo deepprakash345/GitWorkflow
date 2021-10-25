@@ -1,4 +1,4 @@
-import {RulesJson, ScriptableField, translationProps} from './types';
+import {RulesJson, ScriptableField} from './types';
 import Node from './Node';
 import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
@@ -17,6 +17,10 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         [key:string] : RuleNode
     } = {};
 
+    constructor(n: T, protected _ruleEngine:RuleEngine) {
+        super(n);
+    }
+
     get rules() {
         return this._jsonModel.rules || {};
     }
@@ -25,7 +29,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (!(eName in this._rules)) {
             let eString = rule || this.rules[eName];
             if (typeof eString === 'string' && eString.length > 0) {
-                this._rules[eName] = RuleEngine.compileRule(eString);
+                this._rules[eName] = this.ruleEngine().compileRule(eString);
             } else {
                 throw new Error(`only expression strings are supported. ${typeof(eString)} types are not supported`);
             }
@@ -37,16 +41,20 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (!(eName in this._events)) {
             let eString = this._jsonModel.events?.[eName];
             if (typeof eString === 'string' && eString.length > 0) {
-                this._events[eName] = RuleEngine.compileRule(eString);
+                this._events[eName] = this.ruleEngine().compileRule(eString);
             }
         }
         return this._events[eName];
     }
 
+    private ruleEngine() {
+        return this._ruleEngine;
+    }
+
     protected executeAllRules(context: any) {
         return Object.fromEntries(Object.entries(this.rules).map(([prop, rule]) => {
             const node = this.getCompiledRule(prop, rule);
-            const newVal = node.search(this as unknown as Json, context);
+            const newVal = this.ruleEngine().execute(node, context);
             if (newVal != this.getP(prop, undefined)) {
                 return [prop, newVal];
             } else  {
@@ -56,10 +64,10 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
     }
 
     protected executeEvent(context: any, eventName: string) {
-        const event = this.getCompiledEvent(eventName);
+        const node = this.getCompiledEvent(eventName);
         let updates;
-        if (event) {
-            updates = event.search(this as unknown as Json, context);
+        if (node) {
+            updates = this.ruleEngine().execute(node, context);
         }
         return updates;
     }
@@ -68,7 +76,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         return {};
     }
 
-    dispatch(action: Action, context: any, trigger: (e: Action) => void) {
+    executeAction(action: Action, context: any, notifyDependents: (e: Action) => void) {
         //console.log('new action ' + action);
         let updates : any;
         const evntName = action.type;
@@ -77,7 +85,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
                 ...updates,
                 ...this.executeEvent(context, `custom:${evntName}`) as object
             };
-            trigger(action);
+            notifyDependents(action);
         } else {
             if (evntName === 'change') {
                 updates = this.handleValueChange(action.payload);
@@ -93,7 +101,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
                 ...this.executeEvent(context, evntName) as object
             };
             if (evntName !== 'change') {
-                trigger(action);
+                notifyDependents(action);
             }
         }
         if (updates && Object.keys(updates).length > 0) {
@@ -109,7 +117,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
                 };
             }
             this._jsonModel = mergeDeep(this._jsonModel, updates);
-            trigger(new Change(action.payload));
+            notifyDependents(new Change(action.payload));
         }
     }
 

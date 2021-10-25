@@ -51,7 +51,7 @@ type TranslationBaseJson = {
 }
 
 
-type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
+export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     'id'?: string;
     'dataRef'?: string;
     'richTextTitle' ?: boolean

@@ -1,5 +1,6 @@
 import Container from './Container';
 import {
+    BaseModel,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -8,20 +9,33 @@ import {
     FormModel,
     MetaDataJson
 } from './types';
-import {resolve, splitTokens} from './utils/JsonUtils';
+import {resolve} from './utils/JsonUtils';
 import FormMetaData from './FormMetaData';
 import {createChild} from './Fieldset';
 import {Action, Change, Controller, createController} from './controller/Controller';
+import EventQueue from './controller/EventQueue';
+import RuleEngine from './rules/RuleEngine';
 
 class Form extends Container<FormJson> implements FormModel {
 
+    // @ts-ignore
     _controller : Controller
+    // @ts-ignore
+    _eventQueue : EventQueue<BaseModel>
 
     constructor(n: FormJson) {
-        super(n);
+        super(n, new RuleEngine());
         this._jsonModel.id = '$form';
+        this._data = {};
         this._jsonModel.data = {};
-        this._controller = createController(this)();
+
+    }
+
+    protected initialize(ruleEngine: RuleEngine,
+                         _createController?: (elem: (FieldModel | FieldsetModel)) => Controller) {
+        this._eventQueue = new EventQueue<BaseModel>();
+        this._controller = createController(this as FormModel, this._eventQueue)();
+        super.initialize(ruleEngine, _createController);
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
@@ -31,65 +45,37 @@ class Form extends Container<FormJson> implements FormModel {
         return new FormMetaData(metaData);
     }
 
-    protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
-        return createChild(child, (elem) => {
-            let controller = createController(this)(elem);
+    protected _createChild(child: FieldsetJson | FieldJson, ruleEngine: RuleEngine): FieldModel | FieldsetModel {
+        return createChild(child, ruleEngine,(elem) => {
+            let controller = createController(this as FormModel, this._eventQueue)(elem);
             controller.subscribe((e: Action) => {
                 let elem = e.target.getState();
                 this.updateDataDom(elem as FieldJson);
-                if (!('valid' in elem) || elem.valid !== false) {
-                    //todo: trigger only dependencies
-                    this.controller().dispatch(new Change(undefined, true));
-                }
+                //this._eventQueue.queue(this, new Change(undefined, true));
             });
             return controller;
         });
     }
 
-    private getBinding(elem: FieldJson) {
-        return elem.dataRef === undefined ? (elem.name || '') : elem.dataRef;
-    }
-
-    private updateDataDom(elem: FieldJson) {
-        const dataRef = this.getBinding(elem);
-        if (dataRef != 'none') {
-            let data = this._jsonModel.data;
-            let tokens = splitTokens(dataRef);
-            let token = tokens.next();
-            while (!token.done) {
-                let nextToken = tokens.next();
-                if (!nextToken.done) {
-                    data[token.value] = data[token.value] || {};
-                    data = data[token.value];
-                } else {
-                    if (elem.valid !== false) {
-                        data[token.value] = elem.value;
-                    } else {
-                        data[token.value] = undefined;
-                    }
-                }
-                token = nextToken;
-            }
-        }
-    }
-
     mergeDataModel(dataModel : any, parentDataModel?: any) {
-        this._jsonModel.data = {...dataModel};
+        this._data = {...dataModel};
+        this._jsonModel.data = this._data;
         Object.values(this.items).forEach(x => {
             if ('items' in x) {
-                x.mergeDataModel(dataModel, dataModel);
+                x.mergeDataModel(this._data, this._data);
             } else  {
                 let data:any;
                 if (x.dataRef != 'none' && x.dataRef !== undefined) {
-                    data = resolve(dataModel, x.dataRef);
+                    data = resolve(this._data, x.dataRef);
                 } else if ((x.name || '')?.length > 0) {
-                    data = resolve(dataModel, x.name || '');
+                    data = resolve(this._data, x.name || '');
                 }
                 if (data !== undefined) {
-                    x.controller()?.dispatch(new Change(data));
+                    this._eventQueue.queue(x, new Change(data));
                 }
             }
         });
+        this._eventQueue.runPendingQueue();
     }
 
     /**
