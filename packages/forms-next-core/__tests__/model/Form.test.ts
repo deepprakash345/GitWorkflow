@@ -26,8 +26,8 @@ test('fetch $form from form', async () => {
 
 test('form with rules', async () => {
     const formJson: any = Object.assign({}, formWithRules);
-    formJson.items.firstName.value = 'john';
-    formJson.items.lastName.value = 'doe';
+    formJson.items.firstName.default = 'john';
+    formJson.items.lastName.default = 'doe';
     let form = await createFormInstance(formJson);
     let field = form.getState().items.fullName as FieldJson;
     expect(field.value).toEqual('john doe');
@@ -55,12 +55,12 @@ test.each(changeSpec)('$name', async ({items, field, event, expected}) => {
     expected(form);
 });
 
-test('dispatching an event on unknown field throws exception', async () => {
+test('dispatching an event on unknown field logs an exception', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
-    expect(() => {
-        form.getElementController('a1').dispatch(new Change('value1'));
-    }).toThrow("invalid action change. element doesn't exist");
+    console.error = jest.fn();
+    form.getElementController('a1').dispatch(new Change('value1'));
+    expect(console.error).toHaveBeenCalledWith("invalid action change. element doesn't exist");
 });
 
 test('dispatching an event on a field without rule should not throw exception', async () => {
@@ -565,31 +565,33 @@ test('dataRef none should not update the data dom', async () => {
 });
 
 test.todo('if dataRef is is invalid data should not get generated for that field');
-test.todo('object returned in event should be applied to the field properties');/*, async () => {
+test('object returned in event should be applied to the field properties', async () => {
     const formJson = create(['f', {
         'f' : {
+            type: 'number',
             'events' : {
                 'click' : '{"value" : 2 + 3}'
             }
         }
     }]);
     let form = await createFormInstance(formJson);
-    form.dispatch(new Click('f2', null));
+    form.getElementController('f2').dispatch(new Click());
     expect(form.getState().items.f2.value).toEqual(5);
-});*/
+});
 
-test.todo('object returned in custom event should be applied to the field properties');/*, async () => {
+test('object returned in custom event should be applied to the field properties', async () => {
     const formJson = create(['f', {
         'f' : {
+            'type' : 'number',
             'events' : {
-                'customClick' : '{"value" : 2 + 3}'
+                'custom:Click' : '{"value" : 2 + $event.payload}'
             }
         }
     }]);
     let form = await createFormInstance(formJson);
-    form.dispatch(new CustomEvent('customClick', null, 'f2'));
+    form.getElementController('f2').dispatch(new CustomEvent('Click', 3));
     expect(form.getState().items.f2.value).toEqual(5);
-});*/
+});
 
 test.todo('rules using default values should modify the data dom');/*, () => {
     const formJson = create([{
@@ -652,25 +654,24 @@ test.todo('default values should also modify the data dom');/* () => {
     });
 });*/
 
-test.todo('subscription gets invoked only for dependent fields');/*, () => {
+test('subscription gets invoked only for dependent fields', async () => {
     const formJson = create(subscriptionCollateral);
     let form = await createFormInstance(formJson);
-    let callbackc1 = jest.fn();
-    let callbackb1 = jest.fn();
-    form.getElementController('c1').subscribe( callbackc1);
-    form.getElementController('b1').subscribe( callbackb1);
+    let callbackC1 = jest.fn();
+    let callbackB1 = jest.fn();
+    form.getElementController('c1').subscribe( callbackC1);
+    form.getElementController('b1').subscribe( callbackB1);
     form.getElementController('a1').dispatch(new Change( '10'));
-    expect(callbackc1).toHaveBeenCalled();
-    expect(callbackb1).not.toHaveBeenCalled();
-});*/
+    expect(callbackC1).toHaveBeenCalled();
+    expect(callbackB1).not.toHaveBeenCalled();
+});
 
-test.todo('subscription gets invoked only if the state changes');/*, () => {
+test('subscription gets invoked only if the state changes', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
     form.getElementController('f1').subscribe( callback);
-    form.getElementController('f1').dispatch(new Change( 'value2'));
+    form.getElementController('f1').dispatch(new Change( undefined));
     expect(callback).not.toHaveBeenCalled();
-});*/
+});
 
-test.todo('dispatching a click action should trigger the click rule of the field');

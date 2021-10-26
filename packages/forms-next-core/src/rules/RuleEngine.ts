@@ -15,10 +15,10 @@ class RuleEngine {
         return formula.compile(rule as string);
     }
 
-    execute(node: RuleNode, context: any) {
+    execute(node: RuleNode, data: any, context: any) {
         const oldContext = this._context;
         this._context = context;
-        const res = node.search(this as unknown as Json, context);
+        const res = node.search(data, context);
         this._context = oldContext;
         return res;
     }

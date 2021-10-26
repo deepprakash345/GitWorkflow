@@ -54,7 +54,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
     protected executeAllRules(context: any) {
         return Object.fromEntries(Object.entries(this.rules).map(([prop, rule]) => {
             const node = this.getCompiledRule(prop, rule);
-            const newVal = this.ruleEngine().execute(node, context);
+            const newVal = this.ruleEngine().execute(node, this, context);
             if (newVal != this.getP(prop, undefined)) {
                 return [prop, newVal];
             } else  {
@@ -67,7 +67,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         const node = this.getCompiledEvent(eventName);
         let updates;
         if (node) {
-            updates = this.ruleEngine().execute(node, context);
+            updates = this.ruleEngine().execute(node, this, context);
         }
         return updates;
     }

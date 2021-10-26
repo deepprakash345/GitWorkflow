@@ -1,5 +1,5 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
+import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
 import Field from './Field';
 import {Action, Change, Controller} from './controller/Controller';
 import RuleEngine from './rules/RuleEngine';
@@ -56,10 +56,6 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
       controller.subscribe((e: Action) => {
         let elem = e.target.getState();
         this.updateDataDom(elem as FieldJson);
-        if (!('valid' in elem) || elem.valid !== false) {
-          //todo: trigger only dependencies
-          this.controller().dispatch(new Change(undefined, true));
-        }
       });
       return controller;
     });

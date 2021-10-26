@@ -221,8 +221,8 @@ export const createController = (form: FormModel, eventQueue: EventQueue<BaseMod
 
 export const emptyController = function emptyController<P, T extends WithState<P>>(elem?: T) {
     return {
-        dispatch: () => {
-            throw new Error("invalid action change. element doesn't exist");
+        dispatch: (action: Action) => {
+            console.error(`invalid action ${action.type}. element doesn't exist`);
         },
         getState: () => {
             if (elem) {

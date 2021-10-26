@@ -135,7 +135,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @param [items] form element on which to apply the operation. The children of the element will also be included
      */
     mergeDataModel(dataModel : any, parentDataModel?: any) {
-        let currentDataModel: any;
+        let currentDataModel = this._data;
         if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
             currentDataModel = resolve(dataModel, this._jsonModel.dataRef);
             this._data = currentDataModel;
@@ -148,7 +148,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
         Object.values(this.items).forEach(x => {
             if ('items' in x) {
-                this.mergeDataModel(dataModel, currentDataModel);
+                x.mergeDataModel(dataModel, currentDataModel);
             } else  {
                 let data:any;
                 if (x.dataRef != 'none' && x.dataRef !== undefined) {

@@ -27,7 +27,7 @@ class Form extends Container<FormJson> implements FormModel {
         super(n, new RuleEngine());
         this._jsonModel.id = '$form';
         this._data = {};
-        this._jsonModel.data = {};
+        this._jsonModel.data = this._data;
 
     }
 
@@ -60,21 +60,7 @@ class Form extends Container<FormJson> implements FormModel {
     mergeDataModel(dataModel : any, parentDataModel?: any) {
         this._data = {...dataModel};
         this._jsonModel.data = this._data;
-        Object.values(this.items).forEach(x => {
-            if ('items' in x) {
-                x.mergeDataModel(this._data, this._data);
-            } else  {
-                let data:any;
-                if (x.dataRef != 'none' && x.dataRef !== undefined) {
-                    data = resolve(this._data, x.dataRef);
-                } else if ((x.name || '')?.length > 0) {
-                    data = resolve(this._data, x.name || '');
-                }
-                if (data !== undefined) {
-                    this._eventQueue.queue(x, new Change(data));
-                }
-            }
-        });
+        super.mergeDataModel(this._data, this._data);
         this._eventQueue.runPendingQueue();
     }
 
