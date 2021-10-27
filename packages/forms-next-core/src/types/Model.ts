@@ -33,8 +33,8 @@ interface ValueField {
     default?: Primitives;
 }
 
-export interface Dispatcher {
-    dispatch: (action: Action, context: any, trigger: (x: Action) => void) => any
+export interface Executor {
+    executeAction: (action: Action, context: any, notifyDependents: (x: Action) => void) => any
 }
 
 export interface WithState<T> {
@@ -45,7 +45,7 @@ interface WithController {
     controller :() => Controller
 }
 
-interface BaseModel extends Dispatcher, BaseConstraints {
+export interface BaseModel extends Executor, BaseConstraints, WithController {
     readonly name?: string;
     readonly dataRef?: string;
     id?: string
@@ -69,8 +69,7 @@ export interface FieldModel extends BaseModel,
     ValueField,
     FieldConstraints,
     ScriptableField,
-    WithState<FieldJson>,
-    WithController {}
+    WithState<FieldJson>{}
 
 export interface FormMetaDataModel {
     readonly version: string
@@ -82,22 +81,23 @@ export interface FormMetaDataModel {
 
 export interface ContainerModel extends WithController {
     items: Items<FieldsetModel | FieldModel>
+    readonly dataRef?: string;
     isContainer: boolean
     getElement: (id: string) => FieldModel | ContainerModel | undefined
+    mergeDataModel: (dataModel: any, parentModel: any) => void
 }
 
 export interface FieldsetModel extends BaseModel,
     ContainerModel,
     ContainerConstraints,
     ScriptableField,
-    WithState<FieldsetJson>,
-    WithController {
+    WithState<FieldsetJson> {
     type?: 'array' | 'object'
     count?: number
     initialCount?: number;
 }
 
-export interface FormModel extends Dispatcher,
+export interface FormModel extends Executor,
     ContainerModel,
     BaseConstraints,
     ScriptableField,

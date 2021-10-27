@@ -1,9 +1,12 @@
 import {
+    BaseModel,
     ContainerModel,
     FieldJson, FieldModel,
     FieldsetJson, FieldsetModel,
     FormJson, FormModel, WithState
 } from '../types';
+import EventQueue from './EventQueue';
+import RuleEngine from '../rules/RuleEngine';
 
 export interface Action {
     type: string,
@@ -114,6 +117,12 @@ export class Submit extends ActionImpl {
     }
 }
 
+export class AddDependent extends ActionImpl {
+    constructor(payload: BaseModel) {
+        super(payload, 'AddDependent');
+    }
+}
+
 export class CustomEvent extends ActionImpl {
     //todo: dispatch means bubble down, find a better name
     constructor(eventName: string, payload: any, dispatch: boolean = false) {
@@ -131,28 +140,42 @@ class ControllerImpl implements Controller {
         [key: string]: callbackFn[]
     } = {}
 
+    private _dependents: BaseModel[] = [];
+
     constructor(private _elem: FieldModel | FieldsetModel | FormModel,
+                private _eventQueue: EventQueue<BaseModel>,
                 private _form: FormModel) {
 
     }
 
     dispatch(action: Action): void {
-        const context = {
-            '$form': this._form,
-            '$field': this._elem,
-            '$event' : {
-                type : action.type,
-                payload: action.payload,
-                target: this._elem
+        if (action.type === 'AddDependent') {
+            const dependent = action.payload;
+            if (this._dependents.indexOf(dependent) === -1) {
+                this.subscribe(() => {
+                    this._eventQueue.queue(dependent, new Change(undefined));
+                });
+                this._dependents.push(dependent);
             }
-        };
-        let actionWithTarget : Action = new ActionImplWithTarget(action, this);
-        // for submit, we create payload and send it to the caller
-        if (action?.type === 'submit') {
-            actionWithTarget = new Submit(context.$form?.controller()?.getState()[':data']);
+        } else {
+            const self = this;
+            const context = {
+                '$form': this._form,
+                '$field': this._elem,
+                '$event': {
+                    type: action.type,
+                    payload: action.payload,
+                    target: this._elem
+                }
+            };
+            let actionWithTarget: Action = new ActionImplWithTarget(action, this);
+            // for submit, we create payload and send it to the caller
+            if (action?.type === 'submit') {
+                actionWithTarget = new Submit(context.$form?.controller()?.getState()[':data']);
+            }
+            this._elem.executeAction(actionWithTarget, context, this.trigger.bind(this));
+            this._eventQueue.runPendingQueue();
         }
-
-        this._elem.dispatch(actionWithTarget, context, this.trigger.bind(this));
     }
 
     getState(): FieldJson | FieldsetJson | FormJson {
@@ -186,16 +209,20 @@ class ControllerImpl implements Controller {
             return emptyController();
         }
     }
+
+    trackDependency() {
+
+    }
 }
 
-export const createController = (form: FormModel) => (elem ?:FieldModel | FieldsetModel | FormModel) => {
-    return new ControllerImpl(elem || form, form);
+export const createController = (form: FormModel, eventQueue: EventQueue<BaseModel>) => (elem ?:FieldModel | FieldsetModel | FormModel) => {
+    return new ControllerImpl(elem || form, eventQueue, form);
 };
 
 export const emptyController = function emptyController<P, T extends WithState<P>>(elem?: T) {
     return {
-        dispatch: () => {
-            throw new Error("invalid action change. element doesn't exist");
+        dispatch: (action: Action) => {
+            console.error(`invalid action ${action.type}. element doesn't exist`);
         },
         getState: () => {
             if (elem) {

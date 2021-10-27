@@ -1,15 +1,19 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
+import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
 import Field from './Field';
-import {Controller} from './controller/Controller';
+import {Action, Change, Controller} from './controller/Controller';
+import RuleEngine from './rules/RuleEngine';
 
 export const createChild = (child: FieldsetJson | FieldJson,
+                            ruleEngine: RuleEngine,
                             createController: (elem: FieldModel | FieldsetModel) => Controller) => {
   let retVal: Fieldset | Field;
   if ('items' in child) {
-    retVal = new Fieldset(child as FieldsetJson, createController);
+    retVal = new Fieldset(child as FieldsetJson,
+        ruleEngine,
+        createController);
   } else {
-    retVal = new Field(child as FieldJson, createController);
+    retVal = new Field(child as FieldJson, ruleEngine, createController);
   }
   return retVal;
 };
@@ -19,8 +23,9 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   private _controller;
 
   public constructor (params: FieldsetJson,
+                      ruleEngine: RuleEngine,
                       _createController: (elem : FieldModel | FieldsetModel) => Controller) {
-    super(params, _createController);
+    super(params, ruleEngine, _createController);
     this._controller = _createController(this as FieldsetModel);
   }
 
@@ -44,8 +49,16 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
     });
   }
 
-  protected _createChild(child: FieldsetJson | FieldJson, _createController: (elem : FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel {
-    return createChild(child, _createController);
+  protected _createChild(child: FieldsetJson | FieldJson, ruleEngine: RuleEngine,
+                         _createController: (elem : FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel {
+    return createChild(child, ruleEngine, (elem) => {
+      let controller = _createController(elem);
+      controller.subscribe((e: Action) => {
+        let elem = e.target.getState();
+        this.updateDataDom(elem as FieldJson);
+      });
+      return controller;
+    });
   }
 
   get name () {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Key, useEffect} from 'react';
 import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
@@ -19,18 +19,22 @@ import {createTranslationObject} from "@adobe/forms-next-core/lib/utils/Translat
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
 
+let currentForm:any = null
+
 
 function App() {
-    let [formToRender, setFormToRender] = React.useState('');
+    let [formToRender, setFormToRender] = React.useState<any>({});
     let [formJson, setFormJson] = React.useState('');
     let [dictionary, setDictionary] = React.useState('' as any);
     let [dataSchema, setDataSchema] = React.useState('');
+    let [dataModel, setDataModel] = React.useState('');
     // todo: add utility to fetch locale from local storage, context, domain or path later
     // todo: today this only tries to fetch browser/system locale
     let {locale, direction} = useLocale();
     let [localeState, setLocaleState] = React.useState(locale);
 
     let [application, setApplication] = React.useState<any>({})
+
     const onSubmit= (data: Action) => {
         console.log(data.payload)
     }
@@ -57,11 +61,11 @@ function App() {
                 setApplication(JSON.parse(form))
             })()
         }
-        if (formJson) {
-            let path = JSON.parse(formJson)?.['_links']?.['i18n']?.['href'];
+        if (Object.keys(formToRender).length > 1) {
+            let path = formToRender?.['_links']?.['i18n']?.['href'];
             fetchFormDictionary(path);
         }
-    }, [formJson])
+    }, [formToRender])
 
     const loadLocale = (action: Action) => {
         if (action.payload) {
@@ -69,15 +73,23 @@ function App() {
         }
     }
     const loadForm = (action: Action) => {
-        console.log(action.target.getState());
         const form = "model" in action.payload ? action.payload.model : action.payload
         const formJson = jsonString(form)
         setFormJson(formJson)
-        setFormToRender('');
-        setFormToRender(formJson)
+        setFormToRender({});
+        setFormToRender(form)
         const dataSchema = exportDataSchema(form)
-        console.error(dataSchema)
         setDataSchema(jsonString(dataSchema))
+    }
+
+    const formInitialized = (action: Action) => {
+        currentForm = action.target
+    }
+
+    const tabChanged = (id: Key) => {
+        if (id === "data-model" && currentForm != null) {
+            setDataModel(jsonString(currentForm.getState().data))
+        }
     }
 
     return (
@@ -86,11 +98,12 @@ function App() {
             <Flex direction="row" gap="size-500" marginBottom="2rem">
                 <View width="50%">
                     <h1>Choose a Form To Render</h1>
-                    <Tabs>
+                    <Tabs onSelectionChange={tabChanged}>
                         <TabList>
                             <Item key="configuration"> Form Configuration </Item>
                             <Item key="form-model"> Form Model </Item>
                             <Item key="data-model"> Data Model </Item>
+                            <Item key="data-schema"> Data Schema </Item>
                             <Item key="references"> References </Item>
                         </TabList>
                         <TabPanels>
@@ -114,9 +127,9 @@ function App() {
                                            onBlur={(e: any, editor: any) => {
                                                const formJson = editor.getValue();
                                                try {
-                                                   JSON.parse(formJson)
-                                                   setFormToRender('');
-                                                   setFormToRender(formJson)
+                                                   const json = JSON.parse(formJson)
+                                                   setFormToRender({});
+                                                   setFormToRender(json)
                                                } catch (e) {
                                                    console.log(e)
                                                }
@@ -128,18 +141,32 @@ function App() {
                                            }}
                                 />
                             </Item>
-                            <Item key="data-model">
+                            <Item key="data-schema">
                                 <AceEditor mode="json"
                                            value={dataSchema}
                                            theme="github"
-                                           name="DATA_JSON"
+                                           name="DATA_SCHEMA_JSON"
                                            editorProps={{$blockScrolling: true}}
                                            tabSize={2}
                                            onChange={(value: string) => {
                                                setDataSchema(value)
                                            }}
-                                           onBlur={(e: any, editor: any) => {
-
+                                           setOptions={{
+                                               enableBasicAutocompletion: true,
+                                               enableLiveAutocompletion: true,
+                                               enableSnippets: true
+                                           }}
+                                />
+                            </Item>
+                            <Item key="data-model">
+                                <AceEditor mode="json"
+                                           value={dataModel}
+                                           theme="github"
+                                           name="DATA_MODEL_JSON"
+                                           editorProps={{$blockScrolling: true}}
+                                           tabSize={2}
+                                           onChange={(value: string) => {
+                                               setDataModel(value)
                                            }}
                                            setOptions={{
                                                enableBasicAutocompletion: true,
@@ -197,10 +224,11 @@ function App() {
                 <View width={"50%"} >
                     <h1>Rendered Form</h1>
                     <View marginTop={"size-200"}>
-                        {formToRender ? <AdaptiveForm
+                        {Object.keys(formToRender).length > 0 ? <AdaptiveForm
                             locale={localeState}
                             localizationMessages={dictionary}
-                            formJson={JSON.parse(formToRender)}
+                            onInitialize={formInitialized}
+                            formJson={formToRender}
                             mappings={mappings}
                             onSubmit={onSubmit}/> : 'No Form Selected...'}
                      </View>

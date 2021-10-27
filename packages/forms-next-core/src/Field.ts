@@ -5,12 +5,15 @@ import {Controller} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {emptyController} from './controller/Controller';
 import {defaultViewTypes} from './utils/SchemaUtils';
+import RuleEngine from './rules/RuleEngine';
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
   private _controller: Controller;
 
-  public constructor (params: FieldJson, createController?: (elem : FieldModel) => Controller) {
-    super(params);
+  public constructor (params: FieldJson,
+                      ruleEngine: RuleEngine,
+                      createController?: (elem : FieldModel) => Controller) {
+    super(params, ruleEngine);
     let value = this.getP('value', undefined);
     if (value === undefined) {
       this._jsonModel.value = this.default; //TODO: see if we want to keep :
@@ -69,8 +72,18 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   }
 
   get value() {
+    this._ruleEngine.trackDependency(this);
     if (this._jsonModel.value === undefined) return null;
     else return this._jsonModel.value;
+  }
+
+  valueOf() {
+    this._ruleEngine.trackDependency(this);
+    return this._jsonModel.value || null;
+  }
+
+  toString() {
+    return this._jsonModel.value?.toString() || '';
   }
 
   get name() {

@@ -1,16 +1,17 @@
 import {
     ContainerJson,
     ContainerModel,
-    Dispatcher,
+    Executor,
     FieldJson,
     FieldModel,
     FieldsetJson,
     FieldsetModel,
     Items, RulesJson
 } from './types';
-import {getProperty, splitTokens} from './utils/JsonUtils';
+import {getProperty, resolve, splitTokens} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {Action, Controller} from './controller/Controller';
+import {Action, Change, Controller} from './controller/Controller';
+import RuleEngine from './rules/RuleEngine';
 
 const findChild = (container: ContainerModel,
                    childName: string): FieldModel | FieldsetModel | undefined => {
@@ -28,14 +29,18 @@ const findChild = (container: ContainerModel,
     }
 };
 
-abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Dispatcher {
+abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
 
     protected _children: Items<FieldModel | FieldsetModel>
 
-    constructor(params: T, _createController?: (elem: FieldModel | FieldsetModel) => Controller) {
-        super(params);
+    protected _data: any = null
+
+    constructor(params: T,
+                ruleEngine: RuleEngine,
+                _createController?: (elem: FieldModel | FieldsetModel) => Controller) {
+        super(params, ruleEngine);
         this._children = {};
-        this.initialize(_createController);
+        this.initialize(ruleEngine, _createController);
     }
 
     //todo : this should not be public
@@ -48,13 +53,14 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     protected abstract _createChild(child: FieldsetJson | FieldJson,
+                                    ruleEngine: RuleEngine,
                                     _createController?: (elem: FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel
 
     get id() {
         return this._jsonModel.id || '';
     }
 
-    protected initialize(_createController?: (elem: FieldModel | FieldsetModel) => Controller) {
+    protected initialize(ruleEngine: RuleEngine, _createController?: (elem: FieldModel | FieldsetModel) => Controller) {
         let items = this._jsonModel.items;
         Object.entries(items).map(([key, item]) => {
             const name = getProperty(item, 'name', key);
@@ -62,7 +68,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             const parentId = this.id.length > 0 ? this.id + '.' : '';
             const id = name.length > 0 ? parentId + name : undefined;
             const newItem = Object.assign(item, {id});
-            let retVal: FieldModel | FieldsetModel = this._createChild(newItem, _createController);
+            let retVal: FieldModel | FieldsetModel = this._createChild(newItem, ruleEngine, _createController);
             Object.defineProperty(this._children, key, {
                 get() {
                     return retVal;
@@ -108,8 +114,8 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    dispatch(action: Action, context: any, trigger: (x: Action) => void): any {
-        super.dispatch(action, context, trigger);
+    executeAction(action: Action, context: any, trigger: (x: Action) => void): any {
+        super.executeAction(action, context, trigger);
         if (action.metadata?.dispatch) {
             this._dispatchActionToItems(context, action);
         }
@@ -122,6 +128,67 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     abstract controller(): Controller;
+
+    /**
+     * prefill the form with data on the given element
+     * @param data {object} data to prefill the form
+     * @param [items] form element on which to apply the operation. The children of the element will also be included
+     */
+    mergeDataModel(dataModel : any, parentDataModel?: any) {
+        let currentDataModel = this._data;
+        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
+            currentDataModel = resolve(dataModel, this._jsonModel.dataRef);
+            this._data = currentDataModel;
+        }
+        if (this._jsonModel.dataRef === 'none') {
+            currentDataModel = parentDataModel;
+        } else if ((this._jsonModel?.name || '').length > 0){
+            currentDataModel = resolve(parentDataModel, this._jsonModel.name || '') || {};
+            this._data = currentDataModel;
+        }
+        Object.values(this.items).forEach(x => {
+            if ('items' in x) {
+                x.mergeDataModel(dataModel, currentDataModel);
+            } else  {
+                let data:any;
+                if (x.dataRef != 'none' && x.dataRef !== undefined) {
+                    data = resolve(dataModel, x.dataRef);
+                } else if ((x.name || '')?.length > 0) {
+                    data = resolve(currentDataModel, x.name || '');
+                }
+                if (data !== undefined) {
+                    x.controller()?.dispatch(new Change(data));
+                }
+            }
+        });
+    }
+
+    private getBinding(elem: FieldJson) {
+        return elem.dataRef === undefined ? (elem.name || '') : elem.dataRef;
+    }
+
+    protected updateDataDom(elem: FieldJson) {
+        const dataRef = this.getBinding(elem);
+        let data = this._data;
+        if (dataRef != 'none' && data !== null) {
+            let tokens = splitTokens(dataRef);
+            let token = tokens.next();
+            while (!token.done) {
+                let nextToken = tokens.next();
+                if (!nextToken.done) {
+                    data[token.value] = data[token.value] || {};
+                    data = data[token.value];
+                } else {
+                    if (elem.valid !== false) {
+                        data[token.value] = elem.value;
+                    } else {
+                        data[token.value] = undefined;
+                    }
+                }
+                token = nextToken;
+            }
+        }
+    }
 }
 
 export default Container;

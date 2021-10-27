@@ -1,5 +1,6 @@
 import Container from './Container';
 import {
+    BaseModel,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -8,20 +9,33 @@ import {
     FormModel,
     MetaDataJson
 } from './types';
-import {getOrElse, splitTokens} from './utils/JsonUtils';
+import {resolve} from './utils/JsonUtils';
 import FormMetaData from './FormMetaData';
 import {createChild} from './Fieldset';
 import {Action, Change, Controller, createController} from './controller/Controller';
+import EventQueue from './controller/EventQueue';
+import RuleEngine from './rules/RuleEngine';
 
 class Form extends Container<FormJson> implements FormModel {
 
+    // @ts-ignore
     _controller : Controller
+    // @ts-ignore
+    _eventQueue : EventQueue<BaseModel>
 
     constructor(n: FormJson) {
-        super(n);
+        super(n, new RuleEngine());
         this._jsonModel.id = '$form';
-        this._jsonModel.data = {};
-        this._controller = createController(this)();
+        this._data = {};
+        this._jsonModel.data = this._data;
+
+    }
+
+    protected initialize(ruleEngine: RuleEngine,
+                         _createController?: (elem: (FieldModel | FieldsetModel)) => Controller) {
+        this._eventQueue = new EventQueue<BaseModel>();
+        this._controller = createController(this as FormModel, this._eventQueue)();
+        super.initialize(ruleEngine, _createController);
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
@@ -31,76 +45,23 @@ class Form extends Container<FormJson> implements FormModel {
         return new FormMetaData(metaData);
     }
 
-    protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
-        return createChild(child, (elem) => {
-            let controller = createController(this)(elem);
+    protected _createChild(child: FieldsetJson | FieldJson, ruleEngine: RuleEngine): FieldModel | FieldsetModel {
+        return createChild(child, ruleEngine,(elem) => {
+            let controller = createController(this as FormModel, this._eventQueue)(elem);
             controller.subscribe((e: Action) => {
                 let elem = e.target.getState();
                 this.updateDataDom(elem as FieldJson);
-                if (!('valid' in elem) || elem.valid !== false) {
-                    //todo: trigger only dependencies
-                    this.controller().dispatch(new Change(undefined, true));
-                }
+                //this._eventQueue.queue(this, new Change(undefined, true));
             });
             return controller;
         });
     }
 
-    private updateDataDom(elem: FieldJson) {
-        const dataRef: string = elem.dataRef || elem.name || '';
-        if (dataRef != 'none') {
-            let data = this._jsonModel.data;
-            let tokens = splitTokens(dataRef);
-            let token = tokens.next();
-            while (!token.done) {
-                let nextToken = tokens.next();
-                if (!nextToken.done) {
-                    data[token.value] = data[token.value] || {};
-                    data = data[token.value];
-                } else {
-                    if (elem.valid !== false) {
-                        data[token.value] = elem.value;
-                    } else {
-                        data[token.value] = undefined;
-                    }
-                }
-                token = nextToken;
-            }
-        }
-    }
-
-    /*
-     * This API gets the element w.r.t to the node.
-     * Eg - path is a/b/c, then it converts the path to a.b.c and then searches for c.
-    */
-    private _getElement(node: Object, path: string, options: any) {
-        options = options || {};
-        let {index} = options;
-        let convertedPath = path;
-        if (index) {
-            convertedPath = convertedPath + '.' + index;
-        }
-        return getOrElse(node, convertedPath);
-    }
-
-    /**
-     * prefill the form with data on the given element
-     * @param data {object} data to prefill the form
-     * @param [items] form element on which to apply the operation. The children of the element will also be included
-     */
-    setData(data: Object, items = this.items) {
-        this._jsonModel.data = {...data};
-        Object.values(items).forEach(x => {
-            if ('items' in x) {
-                this.setData(data, x.items);
-            } else if (x.dataRef || x.name) {
-                // todo: handle the case for panels
-                let value = this._getElement(data, x.dataRef || x.name || '', null);
-                if (value) {
-                    x.controller()?.dispatch(new Change(value));
-                }
-            }
-        });
+    mergeDataModel(dataModel : any, parentDataModel?: any) {
+        this._data = {...dataModel};
+        this._jsonModel.data = this._data;
+        super.mergeDataModel(this._data, this._data);
+        this._eventQueue.runPendingQueue();
     }
 
     /**
