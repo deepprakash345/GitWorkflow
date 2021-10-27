@@ -169,8 +169,8 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     protected updateDataDom(elem: FieldJson) {
         const dataRef = this.getBinding(elem);
-        if (dataRef != 'none') {
-            let data = this._data;
+        let data = this._data;
+        if (dataRef != 'none' && data !== null) {
             let tokens = splitTokens(dataRef);
             let token = tokens.next();
             while (!token.done) {
