@@ -3,26 +3,46 @@
 This is a demo site to test the headless feature. It requires a valid AEM Instance either locally or a cloud instance,
 the instructions of both are provided in the below sections
 
-# Running the demo locally
+# Try out the Playground locally
+
+The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
+headless demo instance. To run the playground locally execute the following commands in the current directory :
+
+```
+npm install
+npm run start
+```
+
+The playground is dependent on the JSON Files that are hosted on 
+[git](https://git.corp.adobe.com/livecycle/af2-docs/tree/gh-pages/examples) but due to cross origin issue, we have setup
+a proxy that enables it. To start that proxy, clone the [af2-docs](https://git.corp.adobe.com/livecycle/af2-docs/) 
+repository and then run the following commands at the root of that repo
+```
+npm install
+npm run proxy
+```
+
+# Development
+
+## Build the React APP
+
+Since we are using react hooks and there is an ongoing issue with the react hooks and lerna monorepo. See the 
+[stackoverflow question](https://stackoverflow.com/questions/62353453/how-to-resolve-multiple-react-apps-to-same-react-package-path-using-webpack-l)
+, [React Issue on Git]((https://github.com/facebook/react/issues/15097)) for more details
+
+We have created a script `setup.sh` that performs all the steps required. Execute it and you should be ready to go
 
 ## Start the React APP
 
 Navigate to `packages/forms-headless-demo` and run the command `npm run start`. 
 You can execute `lerna run start` from the project's root directory as well
 
-If you get a react hook error, then run the `npm install` command inside 
-`packages/forms-headless-demo` and then run `npm run start`. 
-
-Check the `.env` file and ensure the following variables are set
-```
-REACT_APP_AEM_URL=<point to the correct AEM instance>
-REACT_APP_AUTH_REQUIRED=<true if authentication required else false. Authentication is required for skyline author instance> 
-```
-
-**Note**: To test your changes continuously without building and releasing the dependent packages run setup.sh located
-at the root directory
+Any changes that you would do in the packages, you just need to run the `npm run build` or you can run the build
+command for all the packages at the root using lerna `npx lerna run build`
 
 # Integrate with Local AEM Instance
+
+If you are not interested in integrating with AEM, please ignore this and the next section
 
 ## One Click Installation
 
@@ -51,7 +71,7 @@ cd <repo-folder>
 mvn clean install -PautoInstallPackage
 ```
 
-### Setup Configuration
+### AEM Setup Configuration
 
 ##### Enable CORS - Cross Origin Resource Sharing for the development server
 
@@ -62,7 +82,6 @@ assumes that the app is running on http://localhost:3000 in development mode.
 2. Open the configuration for "Adobe Granite Cross-Origin Resource Sharing Policy"
 3. Create a new configuration with the following additional values:
     - Allowed Origins: http://localhost:3000
-
 
 #### Disable CSRF - Cross site request forgery for demo server
 
@@ -94,10 +113,3 @@ The steps are not yet verified but they should work
 2. Upload the
 [af2-enablement](https://artifactory.corp.adobe.com/ui/native/maven-aemforms-release-local/com/adobe/aem/af2-enablement/0.0.8/af2-enablement-0.0.8.zip)
 package to your instance via VSTS.
-
-# Testing the demo on cloud
-
-The demo app is hosted on [git-pages](https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
-headless demo instance.
-
-
