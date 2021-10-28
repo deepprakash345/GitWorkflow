@@ -29,7 +29,7 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 }
 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
-    const { formJson, mappings, locale, localizationMessages} = props;
+    const { formJson, mappings, locale, localizationMessages, onInitialize} = props;
     let [controller, setController] = React.useState<Controller|undefined>(undefined);
     const createForm = async (json: string) => {
         try {
@@ -41,9 +41,15 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
                 defineMessages(getTranslationMessages(data));
             }
             const controller = await createFormInstance(data);
+            if (typeof onInitialize === 'function') {
+                onInitialize({
+                    type : 'initialize',
+                    target: controller
+                });
+            }
             Object.keys(props)
                 .map((propKey) => {
-                    if (propKey.startsWith('on') && typeof props[propKey] === 'function') {
+                    if (propKey.startsWith('on') && propKey !== 'onInitialize' && typeof props[propKey] === 'function') {
                             // get the event name from the function
                             let eventName = propKey.substring(propKey.indexOf('on') + 2);
                             eventName = eventName.charAt(0).toLowerCase() + eventName.slice(1);
