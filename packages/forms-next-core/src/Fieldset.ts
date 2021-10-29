@@ -49,16 +49,10 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
     });
   }
 
-  protected _createChild(child: FieldsetJson | FieldJson, ruleEngine: RuleEngine,
+  protected _createChild(child: FieldsetJson | FieldJson,
+                         ruleEngine: RuleEngine,
                          _createController: (elem : FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel {
-    return createChild(child, ruleEngine, (elem) => {
-      let controller = _createController(elem);
-      controller.subscribe((e: Action) => {
-        let elem = e.target.getState();
-        this.updateDataDom(elem as FieldJson);
-      });
-      return controller;
-    });
+    return createChild(child, ruleEngine, _createController);
   }
 
   get name () {

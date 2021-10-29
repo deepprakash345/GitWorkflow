@@ -85,6 +85,15 @@ export const formWithRules = {
 };
 
 
+export const randomWord = (l: number) => {
+    const chars = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    const ret = [];
+    for (let i = 0; i<=l; i++) {
+        const randIndex = Math.floor(Math.random()*(chars.length));
+        ret.push(chars[randIndex]);
+    }
+    return ret.join('');
+};
 
 export const create = (arr: any[], nameMap: any = {p : 1}): any => {
     let newNameMap = {

@@ -40,6 +40,15 @@ class EventQueue<T extends BaseModel> {
         this._runningEventCount = {};
     }
 
+    get length() {
+       return this._pendingEvents.length;
+    }
+
+    isQueued(node: T, event: Action) {
+        const evntNode = new EventNode(node, event);
+        return this._pendingEvents.find(x => evntNode.isEqual(x)) !== undefined;
+    }
+
     queue(node : T, events: Action | Action[]) {
         if (!node || !events) {
             return;
@@ -50,8 +59,8 @@ class EventQueue<T extends BaseModel> {
         events.forEach(e => {
             const evntNode = new EventNode(node, e);
             const counter = this._runningEventCount[evntNode.valueOf()] || 0;
-            const alreadyExists = this._pendingEvents.find(evntNode.isEqual.bind(this)) !== null;
-            if (alreadyExists || counter < 10 ) {
+            const alreadyExists = this.isQueued(node, e);
+            if (!alreadyExists || counter < 10) {
                 this._pendingEvents.push(evntNode);
                 this._runningEventCount[evntNode.valueOf()] = counter + 1;
             }

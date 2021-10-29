@@ -1,4 +1,5 @@
 import {
+    BaseJson,
     BaseModel,
     ContainerModel,
     FieldJson, FieldModel,
@@ -23,10 +24,15 @@ export type Subscription = {
 }
 
 export interface Controller {
-    subscribe (callback: callbackFn, eventName?: string): Subscription
-    dispatch(action: Action) : void
+    subscribe(callback: callbackFn, eventName?: string): Subscription
+
+    dispatch(action: Action): void
+
     getState(): any
+
     getElementController(id: string): Controller
+
+    queueEvent(action: Action): void
 }
 
 class ActionImpl implements Action {
@@ -62,7 +68,8 @@ class ActionImpl implements Action {
 
 class ActionImplWithTarget implements Action {
 
-    constructor(private _action: Action, private _target: Controller) {}
+    constructor(private _action: Action, private _target: Controller) {
+    }
 
     public get type() {
         return this._action.type;
@@ -86,8 +93,8 @@ class ActionImplWithTarget implements Action {
 
     public toString() {
         return JSON.stringify({
-            payload : this.payload,
-            type : this.type,
+            payload: this.payload,
+            type: this.type,
             isCustomEvent: this.isCustomEvent
         });
     }
@@ -171,7 +178,7 @@ class ControllerImpl implements Controller {
             let actionWithTarget: Action = new ActionImplWithTarget(action, this);
             // for submit, we create payload and send it to the caller
             if (action?.type === 'submit') {
-                actionWithTarget = new Submit(context.$form?.controller()?.getState()[':data']);
+                actionWithTarget = new Submit(context.$form?.controller()?.getState().data);
             }
             this._elem.executeAction(actionWithTarget, context, this.trigger.bind(this));
             this._eventQueue.runPendingQueue();
@@ -202,44 +209,59 @@ class ControllerImpl implements Controller {
     }
 
     getElementController(id: string): Controller {
-        const elem =(this._elem as ContainerModel).getElement(id);
-        if (elem) {
-            return elem.controller();
-        } else {
-            return emptyController();
+        if (this._elem.isContainer) {
+            const elem = (this._elem as ContainerModel).getElement(id);
+            if (elem) {
+                return elem.controller();
+            }
         }
+        return new EmptyController<any>();
     }
 
     trackDependency() {
 
     }
+
+    queueEvent(action: Action) {
+        this._eventQueue.queue(this._elem, action);
+    }
 }
 
-export const createController = (form: FormModel, eventQueue: EventQueue<BaseModel>) => (elem ?:FieldModel | FieldsetModel | FormModel) => {
+export const createController = (form: FormModel, eventQueue: EventQueue<BaseModel>) =>
+    (elem ?: FieldModel | FieldsetModel | FormModel) => {
     return new ControllerImpl(elem || form, eventQueue, form);
 };
 
-export const emptyController = function emptyController<P, T extends WithState<P>>(elem?: T) {
-    return {
-        dispatch: (action: Action) => {
-            console.error(`invalid action ${action.type}. element doesn't exist`);
-        },
-        getState: () => {
-            if (elem) {
-                return elem.json();
-            } else {
-                return undefined;
-            }
-        },
-        subscribe: () => {
-            return {
-                unsubscribe : () => {
-                }
-            };
-        },
-        getElementController(id: string): Controller {
-            return emptyController<any, any>();
+export class EmptyController<T> implements Controller {
+    constructor(private _elem?: WithState<T>) {
+
+    }
+
+    dispatch(action: Action) {
+        console.error(`invalid action ${action.type}. element doesn't exist`);
+    }
+
+    getState() {
+        if (this._elem) {
+            return this._elem.json();
+        } else {
+            return undefined;
         }
-    };
-};
+    }
+
+    subscribe() {
+        return {
+            unsubscribe: () => {
+            }
+        };
+    }
+
+    getElementController(id: string): Controller {
+        return this;
+    }
+
+    queueEvent(action: Action) {
+
+    }
+}
 

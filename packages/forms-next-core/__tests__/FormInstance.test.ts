@@ -1,4 +1,4 @@
-import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent, create} from './collateral';
+import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent, create, formWithRules} from './collateral';
 import {createFormInstance, fetchForm} from '../src';
 import {jsonString} from '../src/utils/JsonUtils';
 import {FieldJson} from '../src/types';
@@ -107,6 +107,16 @@ test.skip('nested fields with non form component', async () => {
         }
     });
 });
+
+test('form with rules', async () => {
+    const formJson: any = Object.assign({}, formWithRules);
+    formJson.items.firstName.default = 'john';
+    formJson.items.lastName.default = 'doe';
+    let form = await createFormInstance(formJson);
+    let field = form.getState().items.fullName as FieldJson;
+    expect(field.value).toEqual('john doe');
+});
+
 const API_HOST = 'https://api.aem-forms.com';
 test('Fetch a form from rest API should work', async () => {
     const scope = nock(API_HOST)
@@ -141,3 +151,4 @@ test('Fetch form should pass the request headers', async () => {
     const formObj = JSON.parse(form);
     expect(formObj).toEqual(create(['f', 'f', 'f']));
 });
+
