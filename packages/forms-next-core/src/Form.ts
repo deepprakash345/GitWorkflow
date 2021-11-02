@@ -23,18 +23,17 @@ class Form extends Container<FormJson> implements FormModel {
     // @ts-ignore
     _eventQueue : EventQueue<BaseModel>
 
-    constructor(n: FormJson) {
-        super(n, new RuleEngine());
+    constructor(n: FormJson, ruleEngine: RuleEngine) {
+        super(n, ruleEngine);
         this._jsonModel.id = '$form';
         this._data = {};
         this._jsonModel.data = this._data;
-
     }
 
     protected initialize(ruleEngine: RuleEngine,
                          _createController?: (elem: (FieldModel | FieldsetModel)) => Controller) {
         this._eventQueue = new EventQueue<BaseModel>();
-        this._controller = createController(this as FormModel, this._eventQueue)();
+        this._controller = createController(this, this._eventQueue)();
         super.initialize(ruleEngine, _createController);
     }
 
@@ -46,29 +45,33 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     protected _createChild(child: FieldsetJson | FieldJson, ruleEngine: RuleEngine): FieldModel | FieldsetModel {
-        return createChild(child, ruleEngine,(elem) => {
-            let controller = createController(this as FormModel, this._eventQueue)(elem);
-            controller.subscribe((e: Action) => {
-                let elem = e.target.getState();
-                this.updateDataDom(elem as FieldJson);
-                //this._eventQueue.queue(this, new Change(undefined, true));
-            });
-            return controller;
-        });
+        return createChild(child, ruleEngine,createController(this, this._eventQueue));
     }
 
-    mergeDataModel(dataModel : any, parentDataModel?: any) {
+    importData(dataModel: any) {
         this._data = {...dataModel};
         this._jsonModel.data = this._data;
-        super.mergeDataModel(this._data, this._data);
+        this.syncDataAndFormModel(this._data, this._data);
         this._eventQueue.runPendingQueue();
+    }
+
+    exportData() {
+        this.syncDataAndFormModel(this._data, this._data, 'exportData');
+        return this._data;
     }
 
     /**
      * returns the current state of the form
      */
-    getState() {
-        return this.json();
+    json() {
+        const self = this;
+        const res = super.json();
+        Object.defineProperty(res, 'data', {
+            get() {
+                return self.exportData();
+            }
+        });
+        return res;
     }
 
     controller() {

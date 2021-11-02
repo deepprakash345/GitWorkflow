@@ -57,7 +57,9 @@ export const testController = () : Controller => {
 
         getState : jest.fn(),
 
-        getElementController : jest.fn()
+        getElementController : jest.fn(),
+
+        queueEvent: jest.fn()
     };
 };
 

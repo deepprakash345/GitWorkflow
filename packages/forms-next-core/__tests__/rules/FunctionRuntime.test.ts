@@ -61,7 +61,6 @@ test('should return all the publically exposed functions', async () => {
     expect(result.get_data).toBeInstanceOf(Function);
     expect(result.validate).toBeInstanceOf(Function);
     expect(result.submit_form).toBeInstanceOf(Function);
-    expect(result.show_message_box).toBeInstanceOf(Function);
     expect(result.dispatch_event).toBeInstanceOf(Function);
 });
 

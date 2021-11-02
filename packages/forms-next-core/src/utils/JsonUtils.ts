@@ -44,13 +44,28 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     return mergeDeep(target, ...sources);
 }
 
-export function resolve(obj: any, dataRef: string){
+export function resolve(obj: any, dataRef: string, create: any = undefined){
     let tmpData = obj;
     const tokens = splitTokens(dataRef);
     let token = tokens.next();
-    while (!token.done && tmpData != null) {
-        tmpData = tmpData[token.value];
-        token = tokens.next();
+    while (!token.done && (tmpData != null || create !== undefined) ) {
+        let nextToken = tokens.next();
+        if (!nextToken.done) {
+            if (tmpData != null) {
+                if (create) {
+                    tmpData[token.value] = tmpData[token.value] || {};
+                }
+                tmpData = tmpData[token.value];
+            }
+        } else {
+            if (tmpData != null) {
+                if (create) {
+                    tmpData[token.value] = create;
+                }
+                tmpData = tmpData[token.value];
+            }
+        }
+        token = nextToken;
     }
     return tmpData;
 }
@@ -65,16 +80,20 @@ anythingOtherThanDot = [^.]+?
 followedByDotOrEndOfString=\.|$
 idRegexString = (anythingInsideDoubleQuotes | anythingOtherThanDot)(?:followedByDotOrEndOfString)
  */
-const idRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g;
+const idRegex = /(?:"([^"]+?)"|([^.]+?))(?:\.|$)/g;
 
 export const splitTokens = function *(id: string)  {
     if (id.length > 0) {
         let match = idRegex.exec(id);
         do {
-            if (match == null || match.length < 2) {
+            if (match == null || match.length < 3 || (match[1] === undefined && match[2] === undefined)) {
                 throw new Error(`Exception while parsing id ${id}`);
             }
-            yield match[1];
+            if (match[1] !== undefined) {
+                yield match[1];
+            } else {
+                yield match[2];
+            }
             match = idRegex.exec(id);
         } while (match != null);
     }

@@ -18,9 +18,9 @@ const findChild = (container: ContainerModel,
     const entry = Object.entries(container.items).find(([key, element]) => {
         if (element.name === childName) {
             return true;
-        } else if (element.isContainer && element.name?.length === 0) {
+        } /*else if (element.isContainer && element.name?.length === 0) {
             return findChild(element as FieldsetModel, childName);
-        } else {
+        }*/ else {
             return false;
         }
     });
@@ -66,7 +66,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             const name = getProperty(item, 'name', key);
             item.name = name;
             const parentId = this.id.length > 0 ? this.id + '.' : '';
-            const id = name.length > 0 ? parentId + name : undefined;
+            const id = parentId + name; // currently name can not be empty
             const newItem = Object.assign(item, {id});
             let retVal: FieldModel | FieldsetModel = this._createChild(newItem, ruleEngine, _createController);
             Object.defineProperty(this._children, key, {
@@ -75,7 +75,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 },
                 enumerable: true
             });
-            this._jsonModel.items[key] = retVal.json();
+            this._jsonModel.items[key] = { 'id' : id };
         });
     }
 
@@ -129,65 +129,48 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     abstract controller(): Controller;
 
+    importData(dataModel: any, contextualDataModel?: any) {
+        let currentDataModel = null;
+        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
+            currentDataModel = resolve(dataModel, this._jsonModel.dataRef) || {};
+        } else if (this._jsonModel.dataRef === 'none') {
+            currentDataModel = contextualDataModel;
+        } else if ((this._jsonModel?.name || '').length > 0){
+            currentDataModel = resolve(contextualDataModel, this._jsonModel.name || '') || {};
+        }
+        this.syncDataAndFormModel(dataModel, currentDataModel, 'importData');
+    }
+
+    //todo : empty data models are getting created. We should stop that.
+    exportData(dataModel: any, contextualDataModel: any) {
+        let currentDataModel = null;
+        const name = this._jsonModel.name || '';
+        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
+            currentDataModel = resolve(dataModel, this._jsonModel.dataRef, {});
+        } else if (this._jsonModel.dataRef === 'none') {
+            currentDataModel = contextualDataModel;
+        } else if (name.length > 0) {
+            currentDataModel = resolve(contextualDataModel, name, {});
+        }
+        this.syncDataAndFormModel(dataModel, currentDataModel, 'exportData');
+    }
+
     /**
      * prefill the form with data on the given element
-     * @param data {object} data to prefill the form
-     * @param [items] form element on which to apply the operation. The children of the element will also be included
+     * @param dataModel
+     * @param contextualDataModel
+     * @param operation
      */
-    mergeDataModel(dataModel : any, parentDataModel?: any) {
-        let currentDataModel = this._data;
-        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
-            currentDataModel = resolve(dataModel, this._jsonModel.dataRef);
-            this._data = currentDataModel;
-        }
-        if (this._jsonModel.dataRef === 'none') {
-            currentDataModel = parentDataModel;
-        } else if ((this._jsonModel?.name || '').length > 0){
-            currentDataModel = resolve(parentDataModel, this._jsonModel.name || '') || {};
-            this._data = currentDataModel;
-        }
+    syncDataAndFormModel(dataModel : any, contextualDataModel: any, operation: string = 'importData') {
         Object.values(this.items).forEach(x => {
-            if ('items' in x) {
-                x.mergeDataModel(dataModel, currentDataModel);
-            } else  {
-                let data:any;
-                if (x.dataRef != 'none' && x.dataRef !== undefined) {
-                    data = resolve(dataModel, x.dataRef);
-                } else if ((x.name || '')?.length > 0) {
-                    data = resolve(currentDataModel, x.name || '');
-                }
-                if (data !== undefined) {
-                    x.controller()?.dispatch(new Change(data));
-                }
+            if (operation === 'importData') {
+                x.importData(dataModel, contextualDataModel);
+            } else if (operation == 'exportData') {
+                x.exportData(dataModel, contextualDataModel);
+            } else {
+                console.error(`Invalid sync operation ${operation}. It should be importData or exportData`);
             }
         });
-    }
-
-    private getBinding(elem: FieldJson) {
-        return elem.dataRef === undefined ? (elem.name || '') : elem.dataRef;
-    }
-
-    protected updateDataDom(elem: FieldJson) {
-        const dataRef = this.getBinding(elem);
-        let data = this._data;
-        if (dataRef != 'none' && data !== null) {
-            let tokens = splitTokens(dataRef);
-            let token = tokens.next();
-            while (!token.done) {
-                let nextToken = tokens.next();
-                if (!nextToken.done) {
-                    data[token.value] = data[token.value] || {};
-                    data = data[token.value];
-                } else {
-                    if (elem.valid !== false) {
-                        data[token.value] = elem.value;
-                    } else {
-                        data[token.value] = undefined;
-                    }
-                }
-                token = nextToken;
-            }
-        }
     }
 }
 

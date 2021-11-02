@@ -25,11 +25,6 @@ class FunctionRuntimeImpl {
                 this.request(context, uri, httpVerb, payload, success, error, 'application/json');
                 return {};
             },
-            show_message_box: (context: any, str?: String) => {
-                //todo : let it be defined using some view mechanism
-                window.alert(str);
-                return {};
-            },
             dispatch_event: (context: any, element: any, eventName: string | any, payload?: any) => {
                 let dispatch = false;
                 if (typeof element === 'string') {

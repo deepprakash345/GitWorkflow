@@ -357,7 +357,7 @@ test('required test should fail if the value is null or empty', () => {
     expect(Constraints.required(true, '').valid).toEqual(false);
 });
 
-test('options constraint should pass if value exists inside options', () => {
+test('enum constraint should pass if value exists inside options', () => {
     let options : any[] = [0, 1];
     expect(Constraints.enum(options, 0).valid).toEqual(true);
 
@@ -365,7 +365,7 @@ test('options constraint should pass if value exists inside options', () => {
     expect(Constraints.enum(options, 'a').valid).toEqual(true);
 });
 
-test("options constraint should fail if value doesn't exists inside options", () => {
+test("enum constraint should fail if value doesn't exists inside options", () => {
     let options : any[] = [0, 1];
     expect(Constraints.enum(options, -1).valid).toEqual(false);
     expect(Constraints.enum(options, 2).valid).toEqual(false);

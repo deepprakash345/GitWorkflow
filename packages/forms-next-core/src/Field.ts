@@ -1,9 +1,8 @@
 import {ConstraintsMessages, FieldJson, FieldModel} from './types';
-import {filterProps, jsonString, undefinedValueFilter} from './utils/JsonUtils';
+import {filterProps, jsonString, resolve, undefinedValueFilter} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
-import {Controller} from './controller/Controller';
+import {Change, Controller, EmptyController} from './controller/Controller';
 import Scriptable from './Scriptable';
-import {emptyController} from './controller/Controller';
 import {defaultViewTypes} from './utils/SchemaUtils';
 import RuleEngine from './rules/RuleEngine';
 
@@ -30,7 +29,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     if (createController) {
       this._controller = createController(this as FieldModel);
     } else {
-      this._controller = emptyController(this as FieldModel);
+      this._controller = new EmptyController(this as FieldModel);
     }
   }
 
@@ -58,6 +57,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     return this._jsonModel.id;
   }
 
+  get type() {
+    return this._jsonModel.type || 'string';
+  }
+
   public json (): FieldJson {
     return filterProps(Object.assign({}, super.json(), {
       'value': this._jsonModel.value,
@@ -67,7 +70,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
       'visible': this.visible,
       'valid': this.valid,
       'id' : this.id,
-      'viewType' : this.viewType
+      'viewType' : this.viewType,
+      'type' : this.type
     }), undefinedValueFilter);
   }
 
@@ -172,6 +176,28 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
 
   controller() {
     return this._controller;
+  }
+
+  importData(dataModel: any, parentDataModel: any) {
+    let data: any;
+    const name = this.name || '';
+    if (this.dataRef != 'none' && this.dataRef !== undefined) {
+      data = resolve(dataModel, this.dataRef);
+    } else if (this.dataRef !== 'none' && name.length > 0) {
+      data = resolve(parentDataModel, name);
+    }
+    if (data !== undefined) {
+      this.controller().queueEvent(new Change(data));
+    }
+  }
+
+  exportData(dataModel: any, parentDataModel: any) {
+    const name = this.name || '';
+    if (this.dataRef != 'none' && this.dataRef !== undefined) {
+      resolve(dataModel, this.dataRef, this.value);
+    } else if (this.dataRef !== 'none' && name.length > 0) {
+      resolve(parentDataModel, name, this.value);
+    }
   }
 }
 

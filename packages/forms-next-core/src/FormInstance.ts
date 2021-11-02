@@ -2,13 +2,14 @@ import Form from './Form';
 import {jsonString} from './utils/JsonUtils';
 import {Controller, Change, Initialize} from './controller/Controller';
 import {request} from './utils/Fetch';
+import RuleEngine from './rules/RuleEngine';
 
 export const createFormInstance = (formModel: any): Promise<Controller> => {
     try {
-        let f = new Form({...formModel});
+        let f = new Form({...formModel}, new RuleEngine());
         let formData = formModel?.data;
         if (formData) {
-            f.mergeDataModel(formData);
+            f.importData(formData);
         }
         // Once the field or panel is initialized, execute the initialization script
         // this means initialization happens after prefill and restore
@@ -32,11 +33,5 @@ export const fetchForm = (url: string, headers: any = {}): Promise<string> => {
             formObj = model;
         }
         return jsonString(formObj);
-    });
-};
-
-const fetchData = (url: string, data?: any) => {
-    return request(url, data, {
-        method: 'POST'
     });
 };

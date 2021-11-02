@@ -61,8 +61,9 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     props?: {
         [key: string]: any;
     }
-    isContainer: boolean
-
+    isContainer: boolean,
+    importData: (a: any, b: any) => any
+    exportData: (a: any, b: any) => any
 }
 
 export interface FieldModel extends BaseModel,
@@ -84,7 +85,7 @@ export interface ContainerModel extends WithController {
     readonly dataRef?: string;
     isContainer: boolean
     getElement: (id: string) => FieldModel | ContainerModel | undefined
-    mergeDataModel: (dataModel: any, parentModel: any) => void
+    syncDataAndFormModel: (dataModel: any, parentModel: any) => void
 }
 
 export interface FieldsetModel extends BaseModel,
@@ -105,4 +106,6 @@ export interface FormModel extends Executor,
     id ?: string
     data?: any
     metadata?: MetaDataJson
+    importData: (a: any) => any
+    exportData: () => any
 }
