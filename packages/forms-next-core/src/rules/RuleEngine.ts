@@ -25,7 +25,7 @@ class RuleEngine {
 
     trackDependency(subscriber: BaseModel) {
         if (this._context && this._context.$field !== undefined) {
-            subscriber.controller().dispatch(new AddDependent(this._context.$field));
+            subscriber.controller.dispatch(new AddDependent(this._context.$field));
         }
     }
 }

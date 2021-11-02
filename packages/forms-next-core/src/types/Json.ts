@@ -80,7 +80,7 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
 }
 
 export type ContainerJson = BaseJson & {
-    'items': Items<FieldJson | ContainerJson>
+    'items': (Items<FieldJson | ContainerJson>) | (Array<FieldJson | ContainerJson>)
 }
 
 export type MetaDataJson = {

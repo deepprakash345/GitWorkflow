@@ -1,65 +1,64 @@
 import Container from './Container';
-import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel} from './types';
+import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormModel} from './types';
 import Field from './Field';
-import {Action, Change, Controller} from './controller/Controller';
-import RuleEngine from './rules/RuleEngine';
 
-export const createChild = (child: FieldsetJson | FieldJson,
-                            ruleEngine: RuleEngine,
-                            createController: (elem: FieldModel | FieldsetModel) => Controller) => {
+export const createChild = (child: FieldsetJson | FieldJson, form: FormModel) => {
   let retVal: Fieldset | Field;
   if ('items' in child) {
-    retVal = new Fieldset(child as FieldsetJson,
-        ruleEngine,
-        createController);
+    retVal = new Fieldset(child as FieldsetJson, form);
   } else {
-    retVal = new Field(child as FieldJson, ruleEngine, createController);
+    retVal = new Field(child as FieldJson, form);
   }
   return retVal;
+};
+
+const defaults = {
+  visible: true
 };
 
 export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
 
   private _controller;
 
-  public constructor (params: FieldsetJson,
-                      ruleEngine: RuleEngine,
-                      _createController: (elem : FieldModel | FieldsetModel) => Controller) {
-    super(params, ruleEngine, _createController);
-    this._controller = _createController(this as FieldsetModel);
+  public constructor (params: FieldsetJson, private _form: FormModel) {
+    super(params);
+    this.initialize();
+    this._applyDefaults();
+    this._controller = this._form.createController(this);
   }
 
-  get count () {
-    return this.getP('count', 1);
-  }
-
-  get initialCount () {
-    return this.getP('initialCount', 1);
-  }
-
-  get visible () {
-    return this.getP('visible', true);
-  }
-
-  public json (): any {
-    return Object.assign({}, super.json(), {
-      'count': this.count,
-      'initialCount': this.initialCount,
-      'visible': this.visible
+  private _applyDefaults() {
+    Object.entries(defaults).map(([key, value]) => {
+      //@ts-ignore
+      if (this._jsonModel[key] === undefined) {
+        //@ts-ignore
+        this._jsonModel[key] = value;
+      }
     });
   }
 
-  protected _createChild(child: FieldsetJson | FieldJson,
-                         ruleEngine: RuleEngine,
-                         _createController: (elem : FieldModel | FieldsetModel) => Controller): FieldModel | FieldsetModel {
-    return createChild(child, ruleEngine, _createController);
+
+  get ruleEngine() {
+    return this._form.ruleEngine;
+  }
+
+  get form(): FormModel {
+    return this._form;
+  }
+
+  get visible () {
+    return this._jsonModel.visible;
+  }
+
+  protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
+    return createChild(child, this.form);
   }
 
   get name () {
     return this.getP('name', '');
   }
 
-  controller() {
+  get controller() {
     return this._controller;
   }
 }

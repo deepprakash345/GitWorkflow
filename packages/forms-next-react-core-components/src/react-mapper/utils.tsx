@@ -3,7 +3,7 @@ import {ContainerJson} from '@adobe/forms-next-core/lib';
 
 export const renderChildren = function<T extends ContainerJson>(props: T, mappings: any) {
     const items = props.items;
-    if (typeof items === 'object' && !(items instanceof Array)) {
+    if (typeof items === 'object') {
         const children = Object.values(props.items);
         return children.map((child: any) => {
             const Comp = mappings?.[child.viewType];

@@ -1,3 +1,6 @@
+import {FormModel} from '../types';
+import {EmptyController} from '../controller/Controller';
+import RuleEngine from '../rules/RuleEngine';
 
 export const getProperty = <P>(data: any, key: string, def: P): P => {
     if (key in data) {
@@ -33,10 +36,10 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
             if (isObject(source[key])) {
-                if (!target[key]) Object.assign(target, { [key]: {} });
+                if (!target[key]) Object.assign(target, {[key]: {}});
                 mergeDeep(target[key], source[key]);
             } else {
-                Object.assign(target, { [key]: source[key] });
+                Object.assign(target, {[key]: source[key]});
             }
         }
     }
@@ -44,11 +47,11 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     return mergeDeep(target, ...sources);
 }
 
-export function resolve(obj: any, dataRef: string, create: any = undefined){
+export function resolve(obj: any, dataRef: string, create: any = undefined) {
     let tmpData = obj;
     const tokens = splitTokens(dataRef);
     let token = tokens.next();
-    while (!token.done && (tmpData != null || create !== undefined) ) {
+    while (!token.done && (tmpData != null || create !== undefined)) {
         let nextToken = tokens.next();
         if (!nextToken.done) {
             if (tmpData != null) {
@@ -82,7 +85,7 @@ idRegexString = (anythingInsideDoubleQuotes | anythingOtherThanDot)(?:followedBy
  */
 const idRegex = /(?:"([^"]+?)"|([^.]+?))(?:\.|$)/g;
 
-export const splitTokens = function *(id: string)  {
+export const splitTokens = function* (id: string) {
     if (id.length > 0) {
         let match = idRegex.exec(id);
         do {
@@ -97,4 +100,23 @@ export const splitTokens = function *(id: string)  {
             match = idRegex.exec(id);
         } while (match != null);
     }
+};
+
+const ruleEngine = new RuleEngine();
+
+export const MockForm = () => {
+    return {
+        controller: new EmptyController(),
+        createController: jest.fn(),
+        executeAction: jest.fn(),
+        exportData: jest.fn(),
+        getElement: jest.fn(),
+        isContainer: true,
+        items: {},
+        json: jest.fn(),
+        syncDataAndFormModel: jest.fn(),
+        getUniqueId: jest.fn(),
+        ruleEngine,
+        importData: jest.fn()
+    };
 };

@@ -2,12 +2,11 @@ import {RulesJson, ScriptableField} from './types';
 import Node from './Node';
 import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
-import {Json} from '@adobe/forms-next-expression-parser';
-import {Action, Change, Submit} from './controller/Controller';
+import {Action, Change} from './controller/Controller';
 import {mergeDeep} from './utils/JsonUtils';
 import {invalidateTranslation} from './utils/TranslationUtils';
 
-class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
+abstract class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
     private _events : {
         [key:string] : RuleNode
@@ -17,9 +16,11 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         [key:string] : RuleNode
     } = {};
 
-    constructor(n: T, protected _ruleEngine:RuleEngine) {
+    constructor(n: T) {
         super(n);
     }
+
+    abstract get ruleEngine(): RuleEngine
 
     get rules() {
         return this._jsonModel.rules || {};
@@ -29,7 +30,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (!(eName in this._rules)) {
             let eString = rule || this.rules[eName];
             if (typeof eString === 'string' && eString.length > 0) {
-                this._rules[eName] = this.ruleEngine().compileRule(eString);
+                this._rules[eName] = this.ruleEngine.compileRule(eString);
             } else {
                 throw new Error(`only expression strings are supported. ${typeof(eString)} types are not supported`);
             }
@@ -41,20 +42,16 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         if (!(eName in this._events)) {
             let eString = this._jsonModel.events?.[eName];
             if (typeof eString === 'string' && eString.length > 0) {
-                this._events[eName] = this.ruleEngine().compileRule(eString);
+                this._events[eName] = this.ruleEngine.compileRule(eString);
             }
         }
         return this._events[eName];
     }
 
-    private ruleEngine() {
-        return this._ruleEngine;
-    }
-
     protected executeAllRules(context: any) {
         return Object.fromEntries(Object.entries(this.rules).map(([prop, rule]) => {
             const node = this.getCompiledRule(prop, rule);
-            const newVal = this.ruleEngine().execute(node, this, context);
+            const newVal = this.ruleEngine.execute(node, this, context);
             if (newVal != this.getP(prop, undefined)) {
                 return [prop, newVal];
             } else  {
@@ -67,7 +64,7 @@ class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField
         const node = this.getCompiledEvent(eventName);
         let updates;
         if (node) {
-            updates = this.ruleEngine().execute(node, this, context);
+            updates = this.ruleEngine.execute(node, this, context);
         }
         return updates;
     }

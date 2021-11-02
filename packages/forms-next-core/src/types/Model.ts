@@ -1,5 +1,6 @@
 import {FieldJson, FieldsetJson, FormJson, Items, MetaDataJson, Primitives} from './Json';
 import {Action, Controller} from '../controller/Controller';
+import RuleEngine from '../rules/RuleEngine';
 
 interface BaseConstraints {
     expression?: string;
@@ -26,6 +27,7 @@ export interface ScriptableField {
     events?: {
         [key: string] : string
     }
+    ruleEngine: RuleEngine
 }
 
 interface ValueField {
@@ -42,7 +44,7 @@ export interface WithState<T> {
 }
 
 interface WithController {
-    controller :() => Controller
+    controller: Controller
 }
 
 export interface BaseModel extends Executor, BaseConstraints, WithController {
@@ -81,10 +83,9 @@ export interface FormMetaDataModel {
 }
 
 export interface ContainerModel extends WithController {
-    items: Items<FieldsetModel | FieldModel>
+    items: Items<FieldsetModel | FieldModel> | Array<FieldsetModel | FieldModel>
     readonly dataRef?: string;
     isContainer: boolean
-    getElement: (id: string) => FieldModel | ContainerModel | undefined
     syncDataAndFormModel: (dataModel: any, parentModel: any) => void
 }
 
@@ -108,4 +109,7 @@ export interface FormModel extends Executor,
     metadata?: MetaDataJson
     importData: (a: any) => any
     exportData: () => any
+    createController: (elem: FieldModel | FieldsetModel) => Controller
+    getElement: (id: string) => FieldModel | ContainerModel | FormModel
+    getUniqueId() : string
 }

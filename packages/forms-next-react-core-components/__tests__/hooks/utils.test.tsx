@@ -34,7 +34,7 @@ test('render children with no children', () => {
     expect(res.length).toEqual(0);
 });
 
-test.each([123, '', true, [123]])('render children with items as %p', (items) => {
+test.each([123, '', true])('render children with items as %p', (items) => {
     const p = {
         ...parent,
         'items' : items as unknown as any

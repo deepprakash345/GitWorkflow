@@ -8,14 +8,14 @@ import Form from '../../src/Form';
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = new Form(formJson, new RuleEngine());
-    const f1 = form.getElement('f1') as FieldModel;
+    const f1 = form.getElement(form.items.f1.id) as FieldModel;
     expect(f1?.name).toEqual('f1');
 });
 
 test('fetch a nested element from form', async () => {
     const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
     let form = new Form(formJson, new RuleEngine());
-    const f1 = form.getElement('p1.p2.f2') as FieldModel;
+    const f1 = form.getElement(form.items.p1.items.p2.items.f2.id) as FieldModel;
     expect(f1?.name).toEqual('f2');
 });
 
@@ -40,7 +40,7 @@ const changeSpec = [
     {
         'name': 'update on change event for normal field',
         'items': ['f', 'f', 'f'],
-        'field': 'f1',
+        'field': (state: any) => state.items.f1.id,
         'event': new Change('value1'),
         'expected': (form: Controller) => {
             expect(form.getState().items.f1).toEqual(expect.objectContaining({
@@ -54,7 +54,7 @@ const changeSpec = [
 test.each(changeSpec)('$name', async ({items, field, event, expected}) => {
     const formJson = create(items);
     let form = await createFormInstance(formJson);
-    form.getElementController(field).dispatch(event);
+    form.getElementController(field(form.getState())).dispatch(event);
     expected(form);
 });
 
@@ -63,7 +63,7 @@ test('dispatching an event on a field without rule should not throw exception', 
     let form = await createFormInstance(formJson);
     const state = form.getState();
     const test = () => {
-        form.getElementController('f1').dispatch(new Click());
+        form.getElementController(state.items.f1.id).dispatch(new Click());
     };
     expect(test).not.toThrow();
 });

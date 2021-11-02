@@ -74,7 +74,7 @@ class EventQueue<T extends BaseModel> {
         this._isProcessing = true;
         while(this._pendingEvents.length > 0) {
             const e = this._pendingEvents[0];
-            e.node.controller().dispatch(e.event);
+            e.node.controller.dispatch(e.event);
             this._pendingEvents.shift();
         }
         this._runningEventCount = {};

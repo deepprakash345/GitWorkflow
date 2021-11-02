@@ -114,9 +114,8 @@ describe('Event Queue', () => {
 
     test('runPendingQueue dispatches the events', () => {
         const node = {
-            controller: () => {return mockController;}
+            controller: mockController
         };
-        const evnt = new Click();
         eventQueue.queue(node, new Click());
         eventQueue.runPendingQueue();
         expect(mockController.dispatch).toHaveBeenCalledWith(expect.objectContaining({
@@ -132,9 +131,7 @@ describe('Event Queue', () => {
             })
         };
         const node = {
-            controller: () => {
-                return mockController;
-            }
+            controller: mockController
         };
         eventQueue.queue(node, new Click());
         eventQueue.runPendingQueue();

@@ -18,6 +18,7 @@ class Node<T> {
     get isContainer() {
         return false;
     }
+
 }
 
 export default Node;

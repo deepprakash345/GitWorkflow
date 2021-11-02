@@ -130,6 +130,12 @@ export class AddDependent extends ActionImpl {
     }
 }
 
+export class FieldAdded extends ActionImpl {
+    constructor(payload: BaseModel) {
+        super(payload, 'FieldAdded');
+    }
+}
+
 export class CustomEvent extends ActionImpl {
     //todo: dispatch means bubble down, find a better name
     constructor(eventName: string, payload: any, dispatch: boolean = false) {
@@ -178,7 +184,7 @@ class ControllerImpl implements Controller {
             let actionWithTarget: Action = new ActionImplWithTarget(action, this);
             // for submit, we create payload and send it to the caller
             if (action?.type === 'submit') {
-                actionWithTarget = new Submit(context.$form?.controller()?.getState().data);
+                actionWithTarget = new Submit(context.$form?.controller.getState().data);
             }
             this._elem.executeAction(actionWithTarget, context, this.trigger.bind(this));
             this._eventQueue.runPendingQueue();
@@ -209,13 +215,12 @@ class ControllerImpl implements Controller {
     }
 
     getElementController(id: string): Controller {
-        if (this._elem.isContainer) {
-            const elem = (this._elem as ContainerModel).getElement(id);
-            if (elem) {
-                return elem.controller();
-            }
+        const element = this._form.getElement(id);
+        if (element != null) {
+            return element.controller;
+        } else {
+            return new EmptyController<any>();
         }
-        return new EmptyController<any>();
     }
 
     trackDependency() {

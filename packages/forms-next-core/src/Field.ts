@@ -1,21 +1,38 @@
-import {ConstraintsMessages, FieldJson, FieldModel} from './types';
-import {filterProps, jsonString, resolve, undefinedValueFilter} from './utils/JsonUtils';
+import {ConstraintsMessages, FieldJson, FieldModel, FormModel} from './types';
+import {jsonString, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
-import {Change, Controller, EmptyController} from './controller/Controller';
+import {Change, Controller} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
-import RuleEngine from './rules/RuleEngine';
+
+const defaults = {
+  readOnly : false,
+  enabled : true,
+  visible : true,
+  type : 'string'
+};
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
   private _controller: Controller;
 
   public constructor (params: FieldJson,
-                      ruleEngine: RuleEngine,
-                      createController?: (elem : FieldModel) => Controller) {
-    super(params, ruleEngine);
-    let value = this.getP('value', undefined);
+                      private _form: FormModel) {
+    super(params);
+    this._applyDefaults();
+    this._controller = _form.createController(this);
+  }
+
+  private _applyDefaults() {
+    Object.entries(defaults).map(([key, value]) => {
+      //@ts-ignore
+      if (this._jsonModel[key] === undefined) {
+        //@ts-ignore
+        this._jsonModel[key] = value;
+      }
+    });
+    let value = this._jsonModel.value;
     if (value === undefined) {
-      this._jsonModel.value = this.default; //TODO: see if we want to keep :
+      this._jsonModel.value = this._jsonModel.default;
     }
     if (this._jsonModel.viewType === undefined) {
       this._jsonModel.viewType = defaultViewTypes(this._jsonModel);
@@ -26,27 +43,18 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this._jsonModel.enum = [true, false];
       }
     }
-    if (createController) {
-      this._controller = createController(this as FieldModel);
-    } else {
-      this._controller = new EmptyController(this as FieldModel);
-    }
   }
 
   get readOnly () {
-    return this.getP('readOnly', false);
+    return this._jsonModel.readOnly;
   }
 
   get enabled () {
-    return this.getP('enabled', true);
-  }
-
-  get 'default' () {
-    return this.getP('default', undefined);
+    return this._jsonModel.enabled;
   }
 
   get visible () {
-    return this.getP('visible', true);
+    return this._jsonModel.visible;
   }
 
   get valid () {
@@ -58,36 +66,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   }
 
   get type() {
-    return this._jsonModel.type || 'string';
-  }
-
-  public json (): FieldJson {
-    return filterProps(Object.assign({}, super.json(), {
-      'value': this._jsonModel.value,
-      'readOnly': this.readOnly,
-      'enabled': this.enabled,
-      'default': this.default,
-      'visible': this.visible,
-      'valid': this.valid,
-      'id' : this.id,
-      'viewType' : this.viewType,
-      'type' : this.type
-    }), undefinedValueFilter);
-  }
-
-  get value() {
-    this._ruleEngine.trackDependency(this);
-    if (this._jsonModel.value === undefined) return null;
-    else return this._jsonModel.value;
-  }
-
-  valueOf() {
-    this._ruleEngine.trackDependency(this);
-    return this._jsonModel.value || null;
-  }
-
-  toString() {
-    return this._jsonModel.value?.toString() || '';
+    return this._jsonModel.type;
   }
 
   get name() {
@@ -103,11 +82,30 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   }
 
   get viewType() {
-    return this._jsonModel.viewType || defaultViewTypes(this._jsonModel);
+    return this._jsonModel.viewType;
   }
 
   get enum() {
     return this._jsonModel.enum;
+  }
+
+  get value() {
+    this.ruleEngine.trackDependency(this);
+    if (this._jsonModel.value === undefined) return null;
+    else return this._jsonModel.value;
+  }
+
+  valueOf() {
+    this.ruleEngine.trackDependency(this);
+    return this._jsonModel.value || null;
+  }
+
+  toString() {
+    return this._jsonModel.value?.toString() || '';
+  }
+
+  get ruleEngine() {
+    return this._form.ruleEngine;
   }
 
   private getErrorMessage(constraint: keyof(ConstraintsMessages)) {
@@ -156,7 +154,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
       'errorMessage' : ''
     };
     if (!valid) {
-      console.log(`${constraint} validation failed for ${this.id} with value ${value}`);
+      console.log(`${constraint} validation failed for ${this._jsonModel.id} with value ${value}`);
       elem.errorMessage = this.getErrorMessage(constraint as keyof ConstraintsMessages);
     } else {
       elem.value = value;
@@ -174,7 +172,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     return {};
   }
 
-  controller() {
+  get controller() {
     return this._controller;
   }
 
@@ -187,7 +185,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
       data = resolve(parentDataModel, name);
     }
     if (data !== undefined) {
-      this.controller().queueEvent(new Change(data));
+      this.controller.queueEvent(new Change(data));
     }
   }
 
