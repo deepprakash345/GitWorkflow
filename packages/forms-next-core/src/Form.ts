@@ -27,7 +27,7 @@ class Form extends Container<FormJson> implements FormModel {
     _ids: Generator<string, void, string>
 
     constructor(n: FormJson, private _ruleEngine: RuleEngine) {
-        super(Object.assign({},n));
+        super(n);
         this._ids = IdGenerator();
         this._data = {};
         this._jsonModel.data = this._data;
@@ -48,8 +48,8 @@ class Form extends Container<FormJson> implements FormModel {
         return new FormMetaData(metaData);
     }
 
-    protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
-        return createChild(child, this);
+    protected _createChild(child: FieldsetJson | FieldJson, options : any): FieldModel | FieldsetModel {
+        return createChild(child, this, options);
     }
 
     createController(elem: FieldModel | FieldsetModel): Controller {
@@ -64,8 +64,8 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     exportData() {
-        this.syncDataAndFormModel(this._data, this._data, 'exportData');
-        return this._data;
+        const data = super.exportData(this._data);
+        return {...data, ...this._data};
     }
 
     /**

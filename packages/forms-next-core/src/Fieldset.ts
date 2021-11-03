@@ -1,13 +1,13 @@
 import Container from './Container';
-import {FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormModel} from './types';
+import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormModel} from './types';
 import Field from './Field';
 
-export const createChild = (child: FieldsetJson | FieldJson, form: FormModel) => {
+export const createChild = (child: FieldsetJson | FieldJson, form: FormModel, options: {index: number, parent: ContainerModel}) => {
   let retVal: Fieldset | Field;
   if ('items' in child) {
-    retVal = new Fieldset(child as FieldsetJson, form);
+    retVal = new Fieldset(child as FieldsetJson, form, options);
   } else {
-    retVal = new Field(child as FieldJson, form);
+    retVal = new Field(child as FieldJson, form, options);
   }
   return retVal;
 };
@@ -20,12 +20,25 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
 
   private _controller;
 
-  public constructor (params: FieldsetJson, private _form: FormModel) {
+  public constructor (params: FieldsetJson, private _form: FormModel, private _options: {index: number, parent: ContainerModel}) {
     super(params);
     this.initialize();
     this._applyDefaults();
     this._controller = this._form.createController(this);
   }
+
+  get index() {
+    return this._options.index;
+  }
+
+  get parent() {
+    return this._options.parent;
+  }
+
+  get dataRef() {
+    return this._jsonModel.dataRef;
+  }
+
 
   private _applyDefaults() {
     Object.entries(defaults).map(([key, value]) => {
@@ -50,8 +63,8 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
     return this._jsonModel.visible;
   }
 
-  protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
-    return createChild(child, this.form);
+  protected _createChild(child: FieldsetJson | FieldJson, options: any): FieldModel | FieldsetModel {
+    return createChild(child, this.form, options);
   }
 
   get name () {

@@ -43,14 +43,14 @@ export interface WithState<T> {
     json : () => T
 }
 
-interface WithController {
+export interface WithController {
     controller: Controller
 }
 
 export interface BaseModel extends Executor, BaseConstraints, WithController {
     readonly name?: string;
     readonly dataRef?: string;
-    id?: string
+    id: string
     title?: string
     description?: string
     readOnly?: boolean;
@@ -65,7 +65,9 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     }
     isContainer: boolean,
     importData: (a: any, b: any) => any
-    exportData: (a: any, b: any) => any
+    exportData: (a: any) => any
+    index : number
+    parent: ContainerModel
 }
 
 export interface FieldModel extends BaseModel,

@@ -1,4 +1,4 @@
-import {ConstraintsMessages, FieldJson, FieldModel, FormModel} from './types';
+import {ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel} from './types';
 import {jsonString, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
 import {Change, Controller} from './controller/Controller';
@@ -16,10 +16,20 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   private _controller: Controller;
 
   public constructor (params: FieldJson,
-                      private _form: FormModel) {
+                      private _form: FormModel,
+                      //@ts-ignore
+                      private _options: {index: number, parent: ContainerModel} = {index: 0, parent: null}) {
     super(params);
     this._applyDefaults();
     this._controller = _form.createController(this);
+  }
+
+  get index() {
+    return this._options.index;
+  }
+
+  get parent() {
+    return this._options.parent;
   }
 
   private _applyDefaults() {
@@ -62,7 +72,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
   }
 
   get id() {
-    return this._jsonModel.id;
+    return this._jsonModel.id || '';
   }
 
   get type() {
@@ -189,12 +199,11 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
   }
 
-  exportData(dataModel: any, parentDataModel: any) {
-    const name = this.name || '';
+  exportData(dataModel: any) {
     if (this.dataRef != 'none' && this.dataRef !== undefined) {
       resolve(dataModel, this.dataRef, this.value);
-    } else if (this.dataRef !== 'none' && name.length > 0) {
-      resolve(parentDataModel, name, this.value);
+    } else if (this.dataRef !== 'none') {
+      return this.value;
     }
   }
 }

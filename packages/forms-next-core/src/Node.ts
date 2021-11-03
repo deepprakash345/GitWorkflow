@@ -1,10 +1,12 @@
-import {getProperty} from './utils/JsonUtils';
+import {deepClone, getProperty} from './utils/JsonUtils';
 
 
 class Node<T> {
 
-    constructor (protected _jsonModel: T) {
+    protected _jsonModel: T
 
+    constructor (jsonModel: T) {
+        this._jsonModel = jsonModel;
     }
 
     public json (): T {

@@ -156,7 +156,7 @@ class ControllerImpl implements Controller {
     private _dependents: BaseModel[] = [];
 
     constructor(private _elem: FieldModel | FieldsetModel | FormModel,
-                private _eventQueue: EventQueue<BaseModel>,
+                private _eventQueue: EventQueue<any>,
                 private _form: FormModel) {
 
     }
@@ -171,7 +171,6 @@ class ControllerImpl implements Controller {
                 this._dependents.push(dependent);
             }
         } else {
-            const self = this;
             const context = {
                 '$form': this._form,
                 '$field': this._elem,

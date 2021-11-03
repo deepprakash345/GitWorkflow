@@ -52,11 +52,32 @@ const resolveUtils : {input: any[], output: any}[] = [
         output: {}
     },
     {
+        input : [ {a : {'b.c' : {'c' : {'d' : 1}}}}, 'a."b.c".c', {}],
+        output: {d : 1}
+    },
+    {
+        input : [ {a : {'b.c' : {'c' : {'d' : 1}}}}, 'a."b.c".c', {'e' : 2}],
+        output: {d : 1, e : 2}
+    },
+    {
         input : [ {a : {b: 2}}, 'a."b.c".c', {}],
         output: {}
+    },
+    {
+        input : [ {a : {b: 2}}, 'a.x', 'simple'],
+        output: 'simple'
     }
 ];
 
 test.each(resolveUtils)('resolveUtils $#', ({input, output}) => {
     expect(resolve.apply(this, input as any)).toEqual(output);
+});
+
+test('resolveUtils with different data types', () => {
+    const input = {a : {'b.c' : {'c' : '1234'}}};
+    const output=  {d : 1};
+    console.warn = jest.fn();
+    const actual = resolve(input, 'a."b.c".c', {d : 1});
+    expect(console.warn).toBeCalledWith('dataRef points to an element of type {string} that can\'t be merged with {object}: Overriding');
+    expect(output).toEqual(actual);
 });

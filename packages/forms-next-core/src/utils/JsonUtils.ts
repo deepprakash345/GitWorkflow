@@ -46,24 +46,46 @@ export function mergeDeep(target: any, ...sources: any[]): any {
 
     return mergeDeep(target, ...sources);
 }
+export function deepClone(obj : any) {
+    let result:any;
+    if (obj instanceof Array) {
+        result = [];
+        result = obj.map(x => deepClone(x));
+    } else if (typeof obj === 'object') {
+        result = {};
+        Object.entries(obj).forEach(([key, value]) => {
+            result[key] = deepClone(value);
+        });
+    } else {
+        result = obj;
+    }
+    return result;
+}
 
-export function resolve(obj: any, dataRef: string, create: any = undefined) {
+export function resolve(obj: any, dataRef: string, merge: any = undefined) {
     let tmpData = obj;
     const tokens = splitTokens(dataRef);
     let token = tokens.next();
-    while (!token.done && (tmpData != null || create !== undefined)) {
+    while (!token.done && (tmpData != null || merge !== undefined)) {
         let nextToken = tokens.next();
         if (!nextToken.done) {
             if (tmpData != null) {
-                if (create) {
+                if (merge) {
                     tmpData[token.value] = tmpData[token.value] || {};
                 }
                 tmpData = tmpData[token.value];
             }
+
         } else {
             if (tmpData != null) {
-                if (create) {
-                    tmpData[token.value] = create;
+                if (merge) {
+                    const existing = tmpData[token.value];
+                    if ((typeof existing === 'object') && existing != null && !(typeof existing === 'string')) {
+                        tmpData[token.value] = {...existing, ...merge};
+                    } else {
+                        console.warn(`dataRef points to an element of type {${typeof(existing)}} that can't be merged with {${typeof(merge)}}: Overriding`);
+                        tmpData[token.value] = merge;
+                    }
                 }
                 tmpData = tmpData[token.value];
             }
