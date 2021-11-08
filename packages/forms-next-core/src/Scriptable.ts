@@ -8,12 +8,12 @@ import {invalidateTranslation} from './utils/TranslationUtils';
 
 abstract class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
 
-    private _events : {
-        [key:string] : RuleNode
+    private _events: {
+        [key: string]: RuleNode
     } = {};
 
-    private _rules : {
-        [key:string] : RuleNode
+    private _rules: {
+        [key: string]: RuleNode
     } = {};
 
     constructor(n: T) {
@@ -32,7 +32,7 @@ abstract class Scriptable<T extends RulesJson> extends Node<T> implements Script
             if (typeof eString === 'string' && eString.length > 0) {
                 this._rules[eName] = this.ruleEngine.compileRule(eString);
             } else {
-                throw new Error(`only expression strings are supported. ${typeof(eString)} types are not supported`);
+                throw new Error(`only expression strings are supported. ${typeof (eString)} types are not supported`);
             }
         }
         return this._rules[eName];
@@ -54,7 +54,7 @@ abstract class Scriptable<T extends RulesJson> extends Node<T> implements Script
             const newVal = this.ruleEngine.execute(node, this, context);
             if (newVal != this.getP(prop, undefined)) {
                 return [prop, newVal];
-            } else  {
+            } else {
                 return [];
             }
         }).filter(x => x.length == 2));
@@ -75,7 +75,7 @@ abstract class Scriptable<T extends RulesJson> extends Node<T> implements Script
 
     executeAction(action: Action, context: any, notifyDependents: (e: Action) => void) {
         //console.log('new action ' + action);
-        let updates : any;
+        let updates: any;
         const evntName = action.type;
         if (action.isCustomEvent) {
             updates = {
@@ -87,8 +87,8 @@ abstract class Scriptable<T extends RulesJson> extends Node<T> implements Script
             if (evntName === 'change') {
                 updates = this.handleValueChange(action.payload);
                 if (Object.keys(updates).length === 0 || updates.valid === false) {
+                    this._jsonModel = mergeDeep(this._jsonModel, updates);
                     updates = {
-                        ...updates,
                         ...this.executeAllRules(context)
                     };
                 }

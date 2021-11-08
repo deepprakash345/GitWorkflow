@@ -22,6 +22,7 @@ it('useRenderer should be able to render any component', () => {
     let dictionaries : any = '';
     // @ts-ignore
     const wrapper = ({children})=> <IntlProvider locale='en-US' messages={dictionaries}>{children}</IntlProvider>;
+    //@ts-ignore
     const {result} = renderHook(() => useRenderer({':name' : 'name'}, mapper, TestComp), {wrapper});
     expect(result.current.toString()).toStrictEqual((<TestComp {...retVal} />).toString());
 

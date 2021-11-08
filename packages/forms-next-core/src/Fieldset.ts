@@ -20,7 +20,7 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
 
   private _controller;
 
-  public constructor (params: FieldsetJson, private _form: FormModel, private _options: {index: number, parent: ContainerModel}) {
+  public constructor (params: FieldsetJson, private _form: FormModel, private _options: {parent: ContainerModel}) {
     super(params);
     this.initialize();
     this._applyDefaults();
@@ -28,7 +28,11 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   }
 
   get index() {
-    return this._options.index;
+    return this._jsonModel.index || 0;
+  }
+
+  set index(n: number) {
+    this._jsonModel.index = n;
   }
 
   get parent() {
@@ -38,7 +42,6 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   get dataRef() {
     return this._jsonModel.dataRef;
   }
-
 
   private _applyDefaults() {
     Object.entries(defaults).map(([key, value]) => {

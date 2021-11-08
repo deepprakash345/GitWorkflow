@@ -121,8 +121,7 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
 
 test('value entered by user in text field is set in model', async () => {
     const f = {
-        ...field,
-        'id' : undefined
+        ...field
     };
     const form = await createForm(f);
     const wrapper = Provider(form);

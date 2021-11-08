@@ -84,7 +84,7 @@ export interface FormMetaDataModel {
     readonly dataUrl: string
 }
 
-export interface ContainerModel extends WithController {
+export interface ContainerModel extends WithController, ContainerConstraints {
     items: Items<FieldsetModel | FieldModel> | Array<FieldsetModel | FieldModel>
     readonly dataRef?: string;
     isContainer: boolean
@@ -93,12 +93,9 @@ export interface ContainerModel extends WithController {
 
 export interface FieldsetModel extends BaseModel,
     ContainerModel,
-    ContainerConstraints,
     ScriptableField,
     WithState<FieldsetJson> {
     type?: 'array' | 'object'
-    count?: number
-    initialCount?: number;
 }
 
 export interface FormModel extends Executor,

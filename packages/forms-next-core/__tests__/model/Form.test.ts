@@ -244,7 +244,7 @@ test("subscription doesn't get invoked after unsubscribing", async () => {
 });
 
 const nonStringRules = [
-    {
+    /*{
         name: 'object',
         rules: {
             'prop': {}
@@ -268,7 +268,7 @@ const nonStringRules = [
         rules: {
             'prop': []
         }
-    },
+    },*/
     {
         name: 'null',
         type: 'object',

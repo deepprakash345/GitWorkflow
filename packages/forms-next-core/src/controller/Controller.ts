@@ -107,7 +107,7 @@ export class Change extends ActionImpl {
 }
 
 export class Initialize extends ActionImpl {
-    constructor(payload: any, dispatch: boolean = false) {
+    constructor(payload?: any, dispatch: boolean = false) {
         super(payload, 'initialize', {dispatch});
     }
 }
@@ -133,6 +133,18 @@ export class AddDependent extends ActionImpl {
 export class FieldAdded extends ActionImpl {
     constructor(payload: BaseModel) {
         super(payload, 'FieldAdded');
+    }
+}
+
+export class AddItem extends ActionImpl {
+    constructor(payload?: number) {
+        super(payload, 'AddItem');
+    }
+}
+
+export class RemoveItem extends ActionImpl {
+    constructor(payload?: number) {
+        super(payload, 'RemoveItem');
     }
 }
 

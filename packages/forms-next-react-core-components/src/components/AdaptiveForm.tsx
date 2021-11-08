@@ -63,6 +63,7 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
             setController(controller);
             // eslint-disable-next-line no-empty
         } catch (e) {
+            console.error('Error while creating Form' + e);
         }
     };
     useEffect(() => {
@@ -91,7 +92,9 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
                     {(state !== undefined) ? (
                     <form>
                         {state.title ?<h2>{state.title}</h2> : null}
-                        {renderChildren(controller?.getState(), mappings)}
+                        { //@ts-ignore
+                            renderChildren(controller?.getState(), mappings )
+                        }
                     </form>
                     ) : 'Loading Form...'}
                 </IntlProvider>

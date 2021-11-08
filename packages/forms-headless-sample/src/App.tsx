@@ -20,7 +20,7 @@ const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"
 
 let currentForm:any = null
-
+let currentConfig: any = null;
 
 function App() {
     let [formToRender, setFormToRender] = React.useState<any>({});
@@ -76,7 +76,6 @@ function App() {
         const form = "model" in action.payload ? action.payload.model : action.payload
         const formJson = jsonString(form)
         setFormJson(formJson)
-        setFormToRender({});
         setFormToRender(form)
         const dataSchema = exportDataSchema(form)
         setDataSchema(jsonString(dataSchema))
@@ -86,9 +85,17 @@ function App() {
         currentForm = action.target
     }
 
+    const configInitialized = (action: Action) => {
+        currentConfig = action.target
+    }
+
     const tabChanged = (id: Key) => {
         if (id === "data-model" && currentForm != null) {
             setDataModel(jsonString(currentForm.getState().data))
+        } else if (id === "configuration" && currentConfig != null) {
+            const app = application;
+            app.data = currentConfig.getState().data;
+            setApplication(app);
         }
     }
 
@@ -112,6 +119,7 @@ function App() {
                                     onLocaleChange={loadLocale}
                                     formJson={application}
                                     mappings={mappings}
+                                    onInitialize={configInitialized}
                                     onLoadForm={loadForm}/>) : 'Preparing Configuration'}
                             </Item>
                             <Item key="form-model">
@@ -125,13 +133,15 @@ function App() {
                                                setFormJson(value)
                                            }}
                                            onBlur={(e: any, editor: any) => {
-                                               const formJson = editor.getValue();
-                                               try {
-                                                   const json = JSON.parse(formJson)
-                                                   setFormToRender({});
-                                                   setFormToRender(json)
-                                               } catch (e) {
-                                                   console.log(e)
+                                               const current = editor.getValue();
+                                               if (current !== jsonString(formToRender)) {
+                                                   try {
+                                                       const json = JSON.parse(current)
+                                                       //json.data = currentForm.getState().data
+                                                       setFormToRender(json)
+                                                   } catch (e) {
+                                                       console.error(e)
+                                                   }
                                                }
                                            }}
                                            setOptions={{

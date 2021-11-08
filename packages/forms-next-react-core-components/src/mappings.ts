@@ -4,6 +4,7 @@ import Panel from './components/Panel';
 import Checkbox from './components/Checkbox';
 import RadioGroup from './components/RadioButtonGroup';
 import ComboBox from './components/DropDownList';
+import PlainText from './components/PlainText';
 const mappings = {
     'text-input' : TextField,
     'multiline-input' : TextField,
@@ -13,7 +14,8 @@ const mappings = {
     'radio-button' : RadioGroup,
     'number-input' : TextField,
     'date-input' : TextField,
-    'drop-down' : ComboBox
+    'drop-down' : ComboBox,
+    'plain-text' : PlainText
 };
 
 export default mappings;

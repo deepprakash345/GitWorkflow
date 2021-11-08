@@ -62,6 +62,7 @@ export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     'constraintMessages'?: ConstraintsMessages;
     'viewType'?: string
     'errorMessage'?: string
+    index?: number
 }
 
 type TranslationFieldJson = {
@@ -81,6 +82,9 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
 
 export type ContainerJson = BaseJson & {
     'items': (Items<FieldJson | ContainerJson>) | (Array<FieldJson | ContainerJson>)
+    'initialItems'?: number;
+    'minItems'?: number;
+    'maxItems'?: number;
 }
 
 export type MetaDataJson = {
@@ -93,10 +97,6 @@ export type MetaDataJson = {
 
 export type FieldsetJson = ContainerJson & {
     'type'?: 'array' | 'object'
-    'count'?: number
-    'initialCount'?: number;
-    'minItems'?: number;
-    'maxItems'?: number;
 }
 
 export type FormJson = ContainerJson & {

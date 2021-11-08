@@ -3,7 +3,12 @@ import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@adobe/forms-next-core/lib';
 import React from 'react';
-const mockHandler = {dispatchClick: () => {}, dispatchChange: (val: string) => {}};
+export const mockHandler = {
+    dispatchClick: () => {},
+    dispatchChange: (val?: string) => {},
+    dispatchAddItem: (id?: number) => {},
+    dispatchRemoveItem: (id?: number) => {}
+};
 const formatMessage = (input: any) => (value: string) => {return input[value];};
 
 test('combineConvertor should invoke all the convertors', () => {

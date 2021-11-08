@@ -8,9 +8,9 @@ import {
     FieldsetModel, FormModel,
     Items, RulesJson
 } from './types';
-import {deepClone, getProperty, resolve, splitTokens} from './utils/JsonUtils';
+import {deepClone, getProperty, resolve} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {Action, Change, Controller, FieldAdded} from './controller/Controller';
+import {Action, Change, Controller, FieldAdded, Initialize} from './controller/Controller';
 
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
 
@@ -42,16 +42,27 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return this._jsonModel.id || '';
     }
 
-    private _addChild(itemJson: FieldJson | ContainerJson, options : {index: number, parent: ContainerModel}) {
+    private _addChild(itemJson: FieldJson | ContainerJson, index?: number) {
         const id = this.form.getUniqueId();
-        //@ts-ignore
+        if (typeof index !== 'number' || index > this._children.length) {
+            index = this._children.length;
+        }
         const itemTemplate = {
             id,
+            index,
             ...deepClone(itemJson)
         };
         //@ts-ignore
-        let retVal = this._createChild(itemTemplate, options);
-        this._children.push(retVal);
+        let retVal = this._createChild(itemTemplate, {parent: this});
+        if (index === this._children.length) {
+            this._children.push(retVal);
+        } else {
+            this._children.splice(index, 0, retVal);
+            for (let i = index + 1; i < this._children.length; i++) {
+                this._children[i].index = i;
+                this._children[i].controller.dispatch(new Change(undefined));
+            }
+        }
         this.form.controller.dispatch(new FieldAdded(retVal));
         return retVal;
     }
@@ -61,25 +72,40 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         if (items instanceof Array) {
             if (items.length === 1) {
                 this._itemTemplate = deepClone(items[0]);
-                //@ts-ignore
-                const retVal = this._addChild(this._itemTemplate, {index: 0, parent: this});
-                //@ts-ignore
-                this._jsonModel.items[0] = {'id' : retVal.id};
+                if (typeof(this._jsonModel.minItems) !== 'number') {
+                    this._jsonModel.minItems = 0;
+                }
+                if (typeof(this._jsonModel.maxItems) !== 'number') {
+                    this._jsonModel.maxItems = -1;
+                }
+                if (typeof(this._jsonModel.initialItems) !== 'number'){
+                    this._jsonModel.initialItems = 1;
+                }
+                for (let i =0; i < this._jsonModel.initialItems; i++) {
+                    //@ts-ignore
+                    const retVal = this._addChild(this._itemTemplate);
+                    items[i] = {'id' : retVal.id};
+                }
             } else if (items.length > 1) {
                 items.forEach((item, index) => {
-                    const retVal = this._addChild(item, {index, parent: this});
+                    const retVal = this._addChild(item);
                     //@ts-ignore
                     items[index] = {'id': retVal.id};
                 });
             }
         } else {
-            Object.entries(items).forEach(([key, item], index) => {
+            Object.entries(items).forEach(([key, item]) => {
                 const name = getProperty(item, 'name', key);
                 item.name = name;
-                const retVal = this._addChild(item, {index, parent : this});
+                const retVal = this._addChild(item);
                 //@ts-ignore
                 this._jsonModel.items[key] = {'id': retVal.id};
             });
+        }
+        if (!(items instanceof Array) || items.length > 1) {
+            this._jsonModel.minItems = this._children.length;
+            this._jsonModel.maxItems = this._children.length;
+            this._jsonModel.initialItems = this._children.length;
         }
     }
 
@@ -102,8 +128,24 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     executeAction(action: Action, context: any, trigger: (x: Action) => void): any {
-        if (action.type === 'addInstance' && this._itemTemplate != null) {
-            this._addChild(this._itemTemplate, {index: this._children.length, parent : this});
+        if (action.type === 'AddItem' && this._itemTemplate != null) {
+            //@ts-ignore
+            if ((this._jsonModel.maxItems === -1) || (this._children.length < this._jsonModel.maxItems)) {
+                const retVal = this._addChild(this._itemTemplate, action.payload);
+                trigger(new Change(undefined));
+                retVal.controller.dispatch(new Initialize());
+                retVal.controller.dispatch(new Change(undefined));
+            }
+        } else if (action.type === 'RemoveItem' && this._itemTemplate != null) {
+            const index =  action.payload || this._children.length - 1;
+            //@ts-ignore
+            if (this._children.length > this._jsonModel.minItems) {
+                this._children.splice(index, 1);
+            }
+            for (let i = index; i < this._children.length; i++) {
+                this._children[i].index = i;
+                this._children[i].controller.dispatch(new Change(undefined));
+            }
             trigger(new Change(undefined));
         }
         super.executeAction(action, context, trigger);
@@ -143,10 +185,12 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 let name = x.name || '';
                 let dataRef = x.dataRef || '';
                 if (dataRef === 'none') {
-                    if (isArray) {
+                    if (isArray && data instanceof Array) {
                         currentDataModel = [...currentDataModel, ...data];
-                    } else {
+                    } else if (!isArray) {
                         currentDataModel = {...currentDataModel, ...data};
+                    } else {
+                        currentDataModel[x.index] = data;
                     }
                 } else if (name.length > 0 && !isArray) {
                     currentDataModel[name] = data;
