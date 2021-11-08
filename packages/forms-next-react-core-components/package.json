@@ -1,6 +1,6 @@
 {
   "name": "@adobe/forms-next-react-core-components",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -30,7 +30,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@adobe/forms-next-core": "^0.1.30",
+    "@adobe/forms-next-core": "^0.1.31",
     "sanitize-html": "^2.4.0"
   },
   "peerDependencies": {
