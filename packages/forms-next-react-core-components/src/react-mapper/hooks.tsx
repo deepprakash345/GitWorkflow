@@ -4,12 +4,14 @@ import {FieldJson} from '@adobe/forms-next-core/lib';
 import React from 'react';
 import {Convertor, translateMessage} from '../utils/SpectrumMappers';
 import {useIntl} from 'react-intl';
-import {Action, Change, Click} from '@adobe/forms-next-core/lib/controller/Controller';
+import {Action, AddItem, Change, Click, RemoveItem} from '@adobe/forms-next-core/lib/controller/Controller';
 
-export type Dispatch<T> = (x: T) => any
+export type Dispatch<T> = (x?: T) => any
 export type Handlers = {
     dispatchChange: Dispatch<any>
-    dispatchClick: Dispatch<void>,
+    dispatchClick: Dispatch<void>
+    dispatchAddItem: Dispatch<number>
+    dispatchRemoveItem: Dispatch<number>
     formatMessage?: any
 }
 
@@ -38,11 +40,27 @@ export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, H
         controller?.dispatch(clickAction);
     };
 
-    return [elementState, {dispatchChange, dispatchClick}];
+    const dispatchAddItem = (n?: number) => {
+        const action = new AddItem(n);
+        controller?.dispatch(action);
+    };
+
+    const dispatchRemoveItem = (n?: number) => {
+        const action = new RemoveItem(n);
+        controller?.dispatch(action);
+    };
+
+    return [elementState, {dispatchChange, dispatchClick, dispatchAddItem, dispatchRemoveItem}];
 };
 
-export const useRenderer = function(props:any, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
-    const [state, handlers] = useRuleEngine<FieldJson, string>(props);
+/**
+ * Binds the component to the Form element whose state is being provided
+ * @param formFieldState  The state of the Field received from Adaptive Form Component
+ * @param propsMapper Mapping Field State to Props of the component
+ * @param Component The component to render.
+ */
+export const useRenderer = function(formFieldState:FieldJson, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
+    const [state, handlers] = useRuleEngine<FieldJson, string>(formFieldState);
     const { formatMessage } = useIntl();
     const res = propsMapper(state, handlers, translateMessage(state, formatMessage));
     const errMessage = state.errorMessage || '';

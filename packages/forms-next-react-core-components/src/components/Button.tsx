@@ -1,17 +1,24 @@
 import { Button } from '@adobe/react-spectrum';
 import React from 'react';
-import {useRuleEngine} from '../react-mapper/hooks';
+import {useRenderer} from '../react-mapper/hooks';
 import {FieldJson} from '@adobe/forms-next-core';
-import {useIntl} from 'react-intl';
-import {translateMessage} from '../utils/SpectrumMappers';
+import {
+    baseConvertor,
+    combineConvertors,
+    richTextString
+} from '../utils/SpectrumMappers';
 
-const ButtonComp = function (originalProps: FieldJson) {
-    const [props, handlers] = useRuleEngine<FieldJson, any>(originalProps);
-    const { formatMessage } = useIntl();
-    const formatMsg = translateMessage(props, formatMessage);
-    return (<Button variant="primary" onPress={() => {
-        handlers.dispatchClick();
-    }}>{formatMsg('title')}</Button>);
-};
+const mapper = combineConvertors(baseConvertor,
+    (a: FieldJson, b, f) => {
+        let localisedTitle =f('title');
+        return {
+            children : a.hideTitle === true ? '' : (a.richTextTitle === true ? richTextString(localisedTitle) : localisedTitle),
+            variant :'primary',
+            onPress : b.dispatchClick
+        };
+    });
 
-export default ButtonComp;
+
+const ButtonFormComponent = (field: FieldJson) => useRenderer(field, mapper, Button);
+
+export default ButtonFormComponent;

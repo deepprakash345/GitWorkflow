@@ -119,7 +119,7 @@ test('panel with explicit dataRef', async () => {
 });
 
 test('data model should be created on change events', async () => {
-    let json = create(['f', ['f', 'f', ['f']], 'f']);
+    let json = create(['f', ['f', 'f', ['f']], 'f'], false);
     json.items.p1.dataRef = 'a.b.c';
     const expectedData = {
         'f1' : 'x',
@@ -137,11 +137,12 @@ test('data model should be created on change events', async () => {
         'f2' : 'b'
     };
     const form = await createFormInstance(json);
-    form.getElementController('f1').dispatch(new Change('x'));
-    form.getElementController('f2').dispatch(new Change('b'));
-    form.getElementController('p1.f2').dispatch(new Change('y'));
-    form.getElementController('p1.f3').dispatch(new Change('z'));
-    form.getElementController('p1.p2.f4').dispatch(new Change('a'));
+    const initialState = form.getState();
+    form.getElementController(initialState.items.f1.id).dispatch(new Change('x'));
+    form.getElementController(initialState.items.f2.id).dispatch(new Change('b'));
+    form.getElementController(initialState.items.p1.items.f2.id).dispatch(new Change('y'));
+    form.getElementController(initialState.items.p1.items.f3.id).dispatch(new Change('z'));
+    form.getElementController(initialState.items.p1.items.p2.items.f4.id).dispatch(new Change('a'));
     const state= form.getState();
     expect(state.data).toEqual(expectedData);
     expect((state.items.f1 as FieldJson).value).toEqual(expectedData.f1);

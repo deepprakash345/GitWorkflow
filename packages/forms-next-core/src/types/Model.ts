@@ -1,5 +1,6 @@
 import {FieldJson, FieldsetJson, FormJson, Items, MetaDataJson, Primitives} from './Json';
 import {Action, Controller} from '../controller/Controller';
+import RuleEngine from '../rules/RuleEngine';
 
 interface BaseConstraints {
     expression?: string;
@@ -26,6 +27,7 @@ export interface ScriptableField {
     events?: {
         [key: string] : string
     }
+    ruleEngine: RuleEngine
 }
 
 interface ValueField {
@@ -41,14 +43,14 @@ export interface WithState<T> {
     json : () => T
 }
 
-interface WithController {
-    controller :() => Controller
+export interface WithController {
+    controller: Controller
 }
 
 export interface BaseModel extends Executor, BaseConstraints, WithController {
     readonly name?: string;
     readonly dataRef?: string;
-    id?: string
+    id: string
     title?: string
     description?: string
     readOnly?: boolean;
@@ -63,7 +65,9 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     }
     isContainer: boolean,
     importData: (a: any, b: any) => any
-    exportData: (a: any, b: any) => any
+    exportData: (a: any) => any
+    index : number
+    parent: ContainerModel
 }
 
 export interface FieldModel extends BaseModel,
@@ -80,22 +84,18 @@ export interface FormMetaDataModel {
     readonly dataUrl: string
 }
 
-export interface ContainerModel extends WithController {
-    items: Items<FieldsetModel | FieldModel>
+export interface ContainerModel extends WithController, ContainerConstraints {
+    items: Items<FieldsetModel | FieldModel> | Array<FieldsetModel | FieldModel>
     readonly dataRef?: string;
     isContainer: boolean
-    getElement: (id: string) => FieldModel | ContainerModel | undefined
     syncDataAndFormModel: (dataModel: any, parentModel: any) => void
 }
 
 export interface FieldsetModel extends BaseModel,
     ContainerModel,
-    ContainerConstraints,
     ScriptableField,
     WithState<FieldsetJson> {
     type?: 'array' | 'object'
-    count?: number
-    initialCount?: number;
 }
 
 export interface FormModel extends Executor,
@@ -108,4 +108,7 @@ export interface FormModel extends Executor,
     metadata?: MetaDataJson
     importData: (a: any) => any
     exportData: () => any
+    createController: (elem: FieldModel | FieldsetModel) => Controller
+    getElement: (id: string) => FieldModel | ContainerModel | FormModel
+    getUniqueId() : string
 }

@@ -43,11 +43,12 @@ export const combineConvertors = function <T>(...convertors: Convertor<T>[]) {
 };
 
 
+export const richTextString = (stringMsg = '') => {
+    const htmlProp = {__html : sanitizeHTML(stringMsg)};
+    return (<div dangerouslySetInnerHTML={htmlProp} /> );
+};
+
 export const baseConvertor: Convertor<FieldJson> = (a, b, f) => {
-    const richTextTitle = (title:string = '') => {
-        const htmlProp = {__html : sanitizeHTML(title)};
-        return (<div dangerouslySetInnerHTML={htmlProp} /> );
-    };
     let localisedTitle =f('title'),
         localizedDescription = f('description');
 
@@ -55,8 +56,8 @@ export const baseConvertor: Convertor<FieldJson> = (a, b, f) => {
         isHidden : a.visible === false,
         name: a.name,
         isDisabled : a.enabled === false,
-        label: a.hideTitle === true ? '' : (a.richTextTitle === true ? richTextTitle(localisedTitle) : localisedTitle),
-        description: (localizedDescription && localizedDescription.length > 0) ? richTextTitle(localizedDescription) : null
+        label: a.hideTitle === true ? '' : (a.richTextTitle === true ? richTextString(localisedTitle) : localisedTitle),
+        description: (localizedDescription && localizedDescription.length > 0) ? richTextString(localizedDescription) : null
     };
 };
 

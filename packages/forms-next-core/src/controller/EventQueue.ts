@@ -1,8 +1,8 @@
 import Node from '../Node';
-import {BaseModel} from '../types';
+import {BaseModel, WithController} from '../types';
 import {Action} from './Controller';
 
-class EventNode<T extends BaseModel> {
+class EventNode<T extends { id: string }> {
     constructor(private _node: T, private _event: Action) {
     }
 
@@ -30,7 +30,7 @@ class EventNode<T extends BaseModel> {
     }
 }
 
-class EventQueue<T extends BaseModel> {
+class EventQueue<T extends { id: string } & WithController> {
 
     private _runningEventCount: any
     private _isProcessing: boolean = false
@@ -74,7 +74,7 @@ class EventQueue<T extends BaseModel> {
         this._isProcessing = true;
         while(this._pendingEvents.length > 0) {
             const e = this._pendingEvents[0];
-            e.node.controller().dispatch(e.event);
+            e.node.controller.dispatch(e.event);
             this._pendingEvents.shift();
         }
         this._runningEventCount = {};

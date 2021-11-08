@@ -1,7 +1,13 @@
 import React from 'react';
+import {baseConvertor} from '../utils/SpectrumMappers';
+import {useRenderer} from '../react-mapper/hooks';
+import {FieldJson} from '@adobe/forms-next-core/lib';
+
 const PlainText = function (props: any) {
-    const { title } = props.field;
-    return (<p>{title}</p>);
+    const { label } = props;
+    return (<p>{label}</p>);
 };
 
-export default PlainText;
+const FormPlainTextComponent = (field: FieldJson) => useRenderer(field, baseConvertor, PlainText);
+
+export default FormPlainTextComponent;

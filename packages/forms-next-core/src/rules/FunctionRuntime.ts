@@ -34,9 +34,9 @@ class FunctionRuntimeImpl {
                 }
                 const event = new CustomEvent(eventName, payload, dispatch);
                 if (typeof element === 'string') {
-                    context.$form.controller().dispatch(event);
+                    context.$form.controller.dispatch(event);
                 } else {
-                    element.controller().dispatch(event);
+                    element.controller.dispatch(event);
                 }
                 return {};
             }
@@ -59,10 +59,10 @@ class FunctionRuntimeImpl {
         } catch (e) {
             //todo: define error payload
             console.log('error handled');
-            context.$form.controller().dispatch(new CustomEvent(error, {}, true));
+            context.$form.controller.dispatch(new CustomEvent(error, {}, true));
             return;
         }
-        context.$form.controller().dispatch(new CustomEvent(success, result, true));
+        context.$form.controller.dispatch(new CustomEvent(success, result, true));
     }
 
     private validate (context: any) {
@@ -70,7 +70,7 @@ class FunctionRuntimeImpl {
     }
 
     private getData (context: any) {
-        return context.$form.controller().getState().data;
+        return context.$form.controller.getState().data;
     }
 
     async submit(context: any, success: string, error: string) {

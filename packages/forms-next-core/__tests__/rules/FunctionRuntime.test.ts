@@ -82,7 +82,7 @@ test('dispatch_event should invoke dispatch API', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     form.dispatch = jest.fn();
-    form.getElementController('f2')?.dispatch(new Click());
+    form.getElementController(formJson.items.f2.id)?.dispatch(new Click());
     expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, false));
 
     form.getElementController('f3')?.dispatch(new Click());
@@ -101,8 +101,8 @@ test('getData should return the current state of the form data', async () => {
     const f = FunctionRuntime;
     let callback = jest.fn();
     form.subscribe(callback, 'customEvent');
-    form.getElementController('f1').dispatch(new Change('value2'));
-    form.getElementController('f3').dispatch(new Click());
+    form.getElementController(formJson.items.f1.id).dispatch(new Change('value2'));
+    form.getElementController(formJson.items.f3.id).dispatch(new Click());
     expect(callback.mock.calls[0][0]).matchesAction({
         action : new CustomEvent('customEvent', {'f1' : 'value2'}),
         target : form

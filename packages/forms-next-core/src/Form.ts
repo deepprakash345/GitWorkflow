@@ -1,20 +1,21 @@
 import Container from './Container';
 import {
-    BaseModel,
+    BaseModel, ContainerModel,
     FieldJson,
     FieldModel,
     FieldsetJson,
     FieldsetModel,
     FormJson,
-    FormModel,
+    FormModel, Items,
     MetaDataJson
 } from './types';
-import {resolve} from './utils/JsonUtils';
 import FormMetaData from './FormMetaData';
-import {createChild} from './Fieldset';
+import {createChild, Fieldset} from './Fieldset';
 import {Action, Change, Controller, createController} from './controller/Controller';
 import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
+import {IdGenerator} from './utils/FormUtils';
+import {splitTokens} from './utils/JsonUtils';
 
 class Form extends Container<FormJson> implements FormModel {
 
@@ -22,19 +23,22 @@ class Form extends Container<FormJson> implements FormModel {
     _controller : Controller
     // @ts-ignore
     _eventQueue : EventQueue<BaseModel>
+    _fields : Items<FieldsetModel | FieldModel> = {}
+    _ids: Generator<string, void, string>
 
-    constructor(n: FormJson, ruleEngine: RuleEngine) {
-        super(n, ruleEngine);
-        this._jsonModel.id = '$form';
+    constructor(n: FormJson, private _ruleEngine: RuleEngine) {
+        super(n);
+        this._ids = IdGenerator();
         this._data = {};
         this._jsonModel.data = this._data;
-    }
-
-    protected initialize(ruleEngine: RuleEngine,
-                         _createController?: (elem: (FieldModel | FieldsetModel)) => Controller) {
         this._eventQueue = new EventQueue<BaseModel>();
         this._controller = createController(this, this._eventQueue)();
-        super.initialize(ruleEngine, _createController);
+        this.initialize();
+        this._jsonModel.id = '$form';
+    }
+
+    get ruleEngine() {
+        return this._ruleEngine;
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
@@ -44,8 +48,12 @@ class Form extends Container<FormJson> implements FormModel {
         return new FormMetaData(metaData);
     }
 
-    protected _createChild(child: FieldsetJson | FieldJson, ruleEngine: RuleEngine): FieldModel | FieldsetModel {
-        return createChild(child, ruleEngine,createController(this, this._eventQueue));
+    protected _createChild(child: FieldsetJson | FieldJson, options : any): FieldModel | FieldsetModel {
+        return createChild(child, this, options);
+    }
+
+    createController(elem: FieldModel | FieldsetModel): Controller {
+        return createController(this, this._eventQueue)(elem);
     }
 
     importData(dataModel: any) {
@@ -56,8 +64,8 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     exportData() {
-        this.syncDataAndFormModel(this._data, this._data, 'exportData');
-        return this._data;
+        const data = super.exportData(this._data);
+        return {...data, ...this._data};
     }
 
     /**
@@ -74,8 +82,31 @@ class Form extends Container<FormJson> implements FormModel {
         return res;
     }
 
-    controller() {
+    get controller() {
         return this._controller;
+    }
+
+    get form(): FormModel {
+        return this;
+    }
+
+    getUniqueId(): string {
+        return this._ids.next().value as string;
+    }
+
+    executeAction(action: Action, context: any, trigger: (x: Action) => void): any {
+        if (action.type === 'FieldAdded') {
+            this._fields[action.payload.id] = action.payload;
+        } else {
+            super.executeAction(action, context, trigger);
+        }
+    }
+
+    public getElement(id: string): FormModel | FieldModel | FieldsetModel {
+        if (id == this.id) {
+            return this;
+        }
+        return this._fields[id];
     }
 }
 

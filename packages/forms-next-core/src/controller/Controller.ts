@@ -107,7 +107,7 @@ export class Change extends ActionImpl {
 }
 
 export class Initialize extends ActionImpl {
-    constructor(payload: any, dispatch: boolean = false) {
+    constructor(payload?: any, dispatch: boolean = false) {
         super(payload, 'initialize', {dispatch});
     }
 }
@@ -127,6 +127,24 @@ export class Submit extends ActionImpl {
 export class AddDependent extends ActionImpl {
     constructor(payload: BaseModel) {
         super(payload, 'AddDependent');
+    }
+}
+
+export class FieldAdded extends ActionImpl {
+    constructor(payload: BaseModel) {
+        super(payload, 'FieldAdded');
+    }
+}
+
+export class AddItem extends ActionImpl {
+    constructor(payload?: number) {
+        super(payload, 'AddItem');
+    }
+}
+
+export class RemoveItem extends ActionImpl {
+    constructor(payload?: number) {
+        super(payload, 'RemoveItem');
     }
 }
 
@@ -150,7 +168,7 @@ class ControllerImpl implements Controller {
     private _dependents: BaseModel[] = [];
 
     constructor(private _elem: FieldModel | FieldsetModel | FormModel,
-                private _eventQueue: EventQueue<BaseModel>,
+                private _eventQueue: EventQueue<any>,
                 private _form: FormModel) {
 
     }
@@ -165,7 +183,6 @@ class ControllerImpl implements Controller {
                 this._dependents.push(dependent);
             }
         } else {
-            const self = this;
             const context = {
                 '$form': this._form,
                 '$field': this._elem,
@@ -178,7 +195,7 @@ class ControllerImpl implements Controller {
             let actionWithTarget: Action = new ActionImplWithTarget(action, this);
             // for submit, we create payload and send it to the caller
             if (action?.type === 'submit') {
-                actionWithTarget = new Submit(context.$form?.controller()?.getState().data);
+                actionWithTarget = new Submit(context.$form?.controller.getState().data);
             }
             this._elem.executeAction(actionWithTarget, context, this.trigger.bind(this));
             this._eventQueue.runPendingQueue();
@@ -209,13 +226,12 @@ class ControllerImpl implements Controller {
     }
 
     getElementController(id: string): Controller {
-        if (this._elem.isContainer) {
-            const elem = (this._elem as ContainerModel).getElement(id);
-            if (elem) {
-                return elem.controller();
-            }
+        const element = this._form.getElement(id);
+        if (element != null) {
+            return element.controller;
+        } else {
+            return new EmptyController<any>();
         }
-        return new EmptyController<any>();
     }
 
     trackDependency() {
