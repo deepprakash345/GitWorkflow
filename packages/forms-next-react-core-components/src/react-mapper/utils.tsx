@@ -35,13 +35,16 @@ export const renderChildren = function <T extends ContainerJson>(props: T, mappi
                         </div>;
                     }
                     //@ts-ignore
-                    const addRemoveRequired: boolean = (items.length < maxItems) || (items.length > minItems);
+                    const addRequired = maxItems == -1 || items.length < maxItems;
+                    //@ts-ignore
+                    const removeRequired = items.length > minItems;
+                    const addRemoveRequired: boolean = addRequired || removeRequired;
                     return (
-                        addRemoveRequired === true ?
+                        addRemoveRequired ?
                             (<Flex direction="row" gap="10" alignItems="end">
                                 <Comp key={child.id} {...child} />
                                 { //@ts-ignore
-                                    repeater(items.length < maxItems, items.length > minItems, child.index, handlers)
+                                    repeater(addRequired, removeRequired, child.index, handlers)
                                 }
                             </Flex>) : <Comp key={child.id} {...child} />);
                 })
