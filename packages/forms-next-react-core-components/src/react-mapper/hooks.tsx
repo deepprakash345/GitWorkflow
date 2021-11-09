@@ -15,6 +15,11 @@ export type Handlers = {
     formatMessage?: any
 }
 
+/**
+ * Binds the component's state to the Form and dynamically changing it depending upon
+ * the rules written for that Field in the Form
+ * @param props
+ */
 export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, Handlers] {
     const context:IFormContext = useContext(formContext);
     const id = props.id as string;

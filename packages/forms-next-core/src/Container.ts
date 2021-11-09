@@ -31,6 +31,10 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
+    protected _hasDynamicItems() {
+        return this._itemTemplate != null;
+    }
+
     get isContainer() {
         return true;
     }
