@@ -86,21 +86,20 @@ abstract class Scriptable<T extends RulesJson> extends Node<T> implements Script
         } else {
             if (evntName === 'change') {
                 updates = this.handleValueChange(action.payload);
-                this._jsonModel = mergeDeep(this._jsonModel, updates);
                 updates = {
                     ...updates,
                     ...this.executeAllRules(context)
                 };
+                this._jsonModel = mergeDeep(this._jsonModel, updates);
             }
             updates = {
-                ...updates,
                 ...this.executeEvent(context, evntName) as object
             };
             if (evntName !== 'change') {
                 notifyDependents(action);
             }
         }
-        if (updates && Object.keys(updates).length > 0) {
+        if ((updates && Object.keys(updates).length > 0) || evntName === 'change') {
             // in case of updates, invalidate translation object to remove stale value
             invalidateTranslation(this._jsonModel, updates);
             // merge deep since rules like
