@@ -669,7 +669,7 @@ test('subscription gets invoked only if the state changes', async () => {
     let callback = jest.fn();
     form.getElementController('f1').subscribe( callback);
     form.getElementController('f1').dispatch(new Change( undefined));
-    expect(callback).not.toHaveBeenCalled();
+    expect(callback).toHaveBeenCalled();
 });
 
 test('fetching element without passing id', async () => {
