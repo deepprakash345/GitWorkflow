@@ -124,7 +124,7 @@ pipeline {
                 script {
                     gitStrategy.checkout(env.BRANCH_NAME)
                     gitStrategy.impersonate("cqguides", "cqguides") {
-                        runDocker("npx lerna version patch --no-push --yes -m \":release\"")
+                        runDocker("npx lerna version minor --no-push --yes -m \":release\"")
                         runDocker("npx lerna publish from-package --yes")
                         runDocker('npx lerna exec -- npm install')
                         sh "git commit -a -m \":release Updating package-lock.json after version bump\""
