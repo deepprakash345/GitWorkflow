@@ -2,7 +2,7 @@ import React, {Key, useEffect} from 'react';
 import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
-import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
+import AdaptiveForm from "@aemforms/forms-next-react-core-components/lib/components/AdaptiveForm";
 import {Action} from "@aemforms/forms-next-core/lib/controller/Controller";
 import application from './samples/Application.json'
 import {jsonString} from "@aemforms/forms-next-core/lib/utils/JsonUtils";

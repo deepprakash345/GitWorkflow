@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
-    "@adobe/forms-next-expression-parser": "0.1.15",
+    "@aemforms/forms-next-expression-parser": "^0.1.18",
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
     "ts-reflection": "^0.3.0"
   },

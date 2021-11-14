@@ -1,5 +1,5 @@
-import {ContextMap, Node} from '@adobe/forms-next-expression-parser/dist/node';
-import {Json} from '@adobe/forms-next-expression-parser/dist/types';
+import {ContextMap, Node} from '@aemforms/forms-next-expression-parser/dist/node';
+import {Json} from '@aemforms/forms-next-expression-parser/dist/types';
 import {getProperty} from '../utils/JsonUtils';
 
 export class AFPropertyNode implements Node {
