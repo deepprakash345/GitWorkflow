@@ -1,7 +1,7 @@
 import {RulesJson, ScriptableField} from './types';
 import Node from './Node';
 import RuleEngine from './rules/RuleEngine';
-import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
+import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
 import {Action, Change} from './controller/Controller';
 import {mergeDeep} from './utils/JsonUtils';
 import {invalidateTranslation} from './utils/TranslationUtils';

@@ -1,5 +1,5 @@
-import {Node} from '@adobe/forms-next-expression-parser/dist/node';
-import {Json} from '@adobe/forms-next-expression-parser/dist/types';
+import {Node} from '@aemforms/forms-next-expression-parser/dist/node';
+import {Json} from '@aemforms/forms-next-expression-parser/dist/types';
 
 export default class AFReservedReferenceNode implements Node {
 

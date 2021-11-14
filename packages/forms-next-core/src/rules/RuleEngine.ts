@@ -1,7 +1,7 @@
-import {Json, makeFormula} from '@adobe/forms-next-expression-parser';
+import {Json, makeFormula} from '@aemforms/forms-next-expression-parser';
 import AFNodeFactory from './AFNodeFactory';
 import FunctionRuntime from './FunctionRuntime';
-import {Node as RuleNode} from '@adobe/forms-next-expression-parser/dist/node/node';
+import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
 import {BaseModel} from '../types';
 import {AddDependent} from '../controller/Controller';
 
