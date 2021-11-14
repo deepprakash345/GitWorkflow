@@ -1,8 +1,8 @@
-import {FieldJson} from '@adobe/forms-next-core/lib';
+import {FieldJson} from '@aemforms/forms-next-core/lib';
 import {Handlers} from '../react-mapper/hooks';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
-import {TRANSLATION_ID, TRANSLATION_TOKEN} from '@adobe/forms-next-core/lib/utils/TranslationUtils';
+import {TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/forms-next-core/lib/utils/TranslationUtils';
 
 export type Convertor<T> = (props: T, handlers: Handlers, localizedProperty: (propName: string) => string) => any
 
@@ -98,12 +98,11 @@ export const enumToChildConvertor = (Component: JSXElementConstructor<any>) =>  
 type EnumConvertor = (x: string, y: (a: string, b: string) => any) => Convertor<FieldJson>
 export const enumConvertor : EnumConvertor = (propertyName: string, callback: (text: string, value: string) => any) => (a, b, f) => {
     const options = a.enum || [];
-    const optionsName = a.enumNames || options;
     const localizedOptions = f('enum');
     const localizedOptionsName = f('enumNames');
     const radio = (option : any, i : number) => {
         const value = option;
-        const text = i < optionsName.length ? localizedOptionsName[i] : localizedOptions[i];
+        const text = (localizedOptionsName && i < localizedOptionsName.length) ? localizedOptionsName[i] : localizedOptions[i];
         return callback( text, value);
     };
 

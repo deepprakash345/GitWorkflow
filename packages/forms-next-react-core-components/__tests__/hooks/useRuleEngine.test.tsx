@@ -2,7 +2,7 @@ import {renderHook} from '@testing-library/react-hooks';
 import {useRuleEngine} from '../../src/react-mapper/hooks';
 import FormContext from '../../src/react-mapper/FormContext';
 import React from 'react';
-import {Controller, Change, Click} from '@adobe/forms-next-core/lib/controller/Controller';
+import {Controller, Change, Click} from '@aemforms/forms-next-core/lib/controller/Controller';
 import {testController} from '../utils';
 
 let mockController : Controller;

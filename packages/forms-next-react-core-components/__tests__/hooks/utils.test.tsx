@@ -1,6 +1,6 @@
 import {renderChildren} from '../../src/react-mapper/utils';
 import React from 'react';
-import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
+import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 import {mockHandler} from '../utils/spectrumMappers.test';
 
 const item = {

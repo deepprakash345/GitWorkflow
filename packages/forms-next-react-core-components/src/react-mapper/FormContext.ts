@@ -1,6 +1,6 @@
 import defaultMappings from '../mappings';
 import React from 'react';
-import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 
 export type IFormContext = {
     mappings: any,

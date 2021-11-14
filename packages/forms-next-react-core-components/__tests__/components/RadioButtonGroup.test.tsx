@@ -3,8 +3,8 @@ import {render} from '@testing-library/react';
 import RadioButtonGroup from '../../src/components/RadioButtonGroup';
 import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
 import userEvent from '@testing-library/user-event';
-import {FieldJson} from '@adobe/forms-next-core/lib';
-import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {FieldJson} from '@aemforms/forms-next-core/lib';
+import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 
 const field : FieldJson = {
     'id' : 'field',

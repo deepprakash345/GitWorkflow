@@ -1,10 +1,10 @@
 import {JSXElementConstructor, useContext, useEffect, useState} from 'react';
 import formContext, {IFormContext} from './FormContext';
-import {FieldJson} from '@adobe/forms-next-core/lib';
+import {FieldJson} from '@aemforms/forms-next-core/lib';
 import React from 'react';
 import {Convertor, translateMessage} from '../utils/SpectrumMappers';
 import {useIntl} from 'react-intl';
-import {Action, AddItem, Change, Click, RemoveItem} from '@adobe/forms-next-core/lib/controller/Controller';
+import {Action, AddItem, Change, Click, RemoveItem} from '@aemforms/forms-next-core/lib/controller/Controller';
 
 export type Dispatch<T> = (x?: T) => any
 export type Handlers = {

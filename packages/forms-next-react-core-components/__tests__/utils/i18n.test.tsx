@@ -1,5 +1,5 @@
 import {getTranslationMessages} from '../../src/utils/i18n';
-import {TRANSLATION_TOKEN} from '@adobe/forms-next-core/lib/utils/TranslationUtils';
+import {TRANSLATION_TOKEN} from '@aemforms/forms-next-core/lib/utils/TranslationUtils';
 
 test('i18n getTranslationMessages returns flat react-intl message format', () => {
     const actual = getTranslationMessages({

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ContainerJson} from '@adobe/forms-next-core/lib';
+import {ContainerJson} from '@aemforms/forms-next-core/lib';
 import Add from '@spectrum-icons/workflow/Add';
 import Remove from '@spectrum-icons/workflow/Remove';
 import {Handlers} from './hooks';

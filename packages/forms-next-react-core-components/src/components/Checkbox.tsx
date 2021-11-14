@@ -1,5 +1,5 @@
 import {Checkbox} from '@adobe/react-spectrum';
-import {FieldJson} from '@adobe/forms-next-core';
+import {FieldJson} from '@aemforms/forms-next-core';
 import {useRenderer} from '../react-mapper/hooks';
 import React from 'react';
 import {baseConvertor, combineConvertors, constraintConvertor, fieldConvertor} from '../utils/SpectrumMappers';

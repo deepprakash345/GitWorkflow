@@ -1,7 +1,7 @@
 import FormContext from '../../src/react-mapper/FormContext';
 import React from 'react';
-import {createFormInstance} from '@adobe/forms-next-core/lib';
-import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
+import {createFormInstance} from '@aemforms/forms-next-core/lib';
+import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 import {IntlProvider} from 'react-intl';
 
 export const createForm = async (field: any) => {

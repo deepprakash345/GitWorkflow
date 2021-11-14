@@ -1,10 +1,10 @@
 import React, {JSXElementConstructor, useEffect} from 'react';
 import {renderChildren} from '../react-mapper/utils';
 import FormContext from '../react-mapper/FormContext';
-import {createFormInstance} from '@adobe/forms-next-core/lib';
-import {jsonString} from '@adobe/forms-next-core/lib/utils/JsonUtils';
-import {Controller} from '@adobe/forms-next-core/lib/controller/Controller';
-import {FormJson} from '@adobe/forms-next-core';
+import {createFormInstance} from '@aemforms/forms-next-core/lib';
+import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
+import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
+import {FormJson} from '@aemforms/forms-next-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
 import {getTranslationMessages} from '../utils/i18n';

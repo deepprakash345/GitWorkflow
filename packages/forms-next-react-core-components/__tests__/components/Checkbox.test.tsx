@@ -4,7 +4,7 @@ import Checkbox from '../../src/components/Checkbox';
 import userEvent from '@testing-library/user-event';
 import {createForm, filterTestTable, ignoredTestTable, InputFieldTestCase, Provider} from '../utils';
 import {FieldExpectType} from './TextField.test';
-import {FieldJson} from '@adobe/forms-next-core/lib';
+import {FieldJson} from '@aemforms/forms-next-core/lib';
 
 const field = {
     'name': 'name',

@@ -1,5 +1,5 @@
 import { Wizard as QWizard } from '@quarry/wizard'
-import {FieldsetJson} from '@adobe/forms-next-core';
+import {FieldsetJson} from '@aemforms/forms-next-core';
 import formContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext';
 import React, {useContext} from 'react';
 import {renderChildren} from '@adobe/forms-next-react-core-components/lib/react-mapper/utils';

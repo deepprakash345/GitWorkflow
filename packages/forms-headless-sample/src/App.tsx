@@ -3,18 +3,18 @@ import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
 import AdaptiveForm from "@adobe/forms-next-react-core-components/lib/components/AdaptiveForm";
-import {Action} from "@adobe/forms-next-core/lib/controller/Controller";
+import {Action} from "@aemforms/forms-next-core/lib/controller/Controller";
 import application from './samples/Application.json'
-import {jsonString} from "@adobe/forms-next-core/lib/utils/JsonUtils";
+import {jsonString} from "@aemforms/forms-next-core/lib/utils/JsonUtils";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import {TabList, TabPanels, Tabs, Item} from '@adobe/react-spectrum'
 import {useLocale} from '@react-aria/i18n';
-import {exportDataSchema} from "@adobe/forms-next-core/lib/utils/SchemaUtils";
-import {fetchForm, FormJson} from "@adobe/forms-next-core/lib";
-import {createTranslationObject} from "@adobe/forms-next-core/lib/utils/TranslationUtils";
+import {exportDataSchema} from "@aemforms/forms-next-core/lib/utils/SchemaUtils";
+import {fetchForm, FormJson} from "@aemforms/forms-next-core/lib";
+import {createTranslationObject} from "@aemforms/forms-next-core/lib/utils/TranslationUtils";
 
 const {REACT_APP_AEM_URL} = process.env;
 const token_required = process.env.REACT_APP_AUTH_REQUIRED === "true"

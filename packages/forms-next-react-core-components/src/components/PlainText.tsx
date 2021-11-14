@@ -1,7 +1,7 @@
 import React from 'react';
 import {baseConvertor} from '../utils/SpectrumMappers';
 import {useRenderer} from '../react-mapper/hooks';
-import {FieldJson} from '@adobe/forms-next-core/lib';
+import {FieldJson} from '@aemforms/forms-next-core/lib';
 
 const PlainText = function (props: any) {
     const { label } = props;

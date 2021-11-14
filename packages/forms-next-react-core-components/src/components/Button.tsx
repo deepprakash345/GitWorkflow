@@ -1,7 +1,7 @@
 import { Button } from '@adobe/react-spectrum';
 import React from 'react';
 import {useRenderer} from '../react-mapper/hooks';
-import {FieldJson} from '@adobe/forms-next-core';
+import {FieldJson} from '@aemforms/forms-next-core';
 import {
     baseConvertor,
     combineConvertors,
