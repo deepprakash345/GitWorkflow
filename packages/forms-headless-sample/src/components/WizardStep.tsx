@@ -1,9 +1,9 @@
 import { WizardStep as QWizardStep } from '@quarry/wizard'
 import {FieldsetJson} from '@aemforms/forms-next-core';
-import formContext from '@adobe/forms-next-react-core-components/lib/react-mapper/FormContext';
+import formContext from '@aemforms/forms-next-react-core-components/lib/react-mapper/FormContext';
 import React, {useContext} from 'react';
-import {renderChildren} from '@adobe/forms-next-react-core-components/lib/react-mapper/utils';
-import {useRuleEngine} from '@adobe/forms-next-react-core-components/lib/react-mapper/hooks';
+import {renderChildren} from '@aemforms/forms-next-react-core-components/lib/react-mapper/utils';
+import {useRuleEngine} from '@aemforms/forms-next-react-core-components/lib/react-mapper/hooks';
 const WizardStep = function (originalProps: FieldsetJson) {
     const mappings = useContext(formContext).mappings;
     const [props, handlers] = useRuleEngine<FieldsetJson, string>(originalProps);
