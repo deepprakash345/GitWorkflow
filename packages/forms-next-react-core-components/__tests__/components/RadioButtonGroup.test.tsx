@@ -5,9 +5,9 @@ import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../util
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
+import Checkbox from '../../src/components/Checkbox';
 
 const field : FieldJson = {
-    'id' : 'field',
     'name': 'EmploymentStatus',
     'value': true,
     'visible' : true,
@@ -180,13 +180,15 @@ type Result = Input & {
 }
 
 const helper = async (field : any, useProvider = true) : Promise<Result> => {
-    const component = <RadioButtonGroup {...field} />;
     let container, form;
     if (useProvider) {
         form = await createForm(field);
+        const e = form.getState().items[0];
+        const component = <RadioButtonGroup {...e} />;
         const wrapper = Provider(form);
         container = render(component, {wrapper}).container;
     } else {
+        const component = <RadioButtonGroup {...field} />;
         container = render(component).container;
     }
     const group = container.querySelector('[role="radiogroup"]');
@@ -208,21 +210,20 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
 
 test('option selected by user is set in the model', async () => {
     const f = {
-        ...field,
-        'id' : field.name
+        ...field
     };
     f.value = undefined;
     const {inputs, form} = await helper(f);
     let state = form?.getState();
-    expect((state?.items.EmploymentStatus as FieldJson).value).toBeUndefined();
+    expect((state?.items[0] as FieldJson).value).toBeUndefined();
     userEvent.click(inputs[0]);
     state = form?.getState();
-    expect((state?.items.EmploymentStatus as FieldJson).value).toEqual(true);
+    expect((state?.items[0] as FieldJson).value).toEqual(true);
     expect(inputs[0]?.checked).toEqual(true);
     expect(inputs[1]?.checked).toEqual(false);
     userEvent.click(inputs[1]);
     state = form?.getState();
-    expect((state?.items.EmploymentStatus as FieldJson).value).toEqual(false);
+    expect((state?.items[0] as FieldJson).value).toEqual(false);
     expect(inputs[0]?.checked).toEqual(false);
     expect(inputs[1]?.checked).toEqual(true);
 });

@@ -3,12 +3,22 @@ import EventQueue from '../../src/controller/EventQueue';
 import {Change, createController} from '../../src/controller/Controller';
 import {Constraints} from '../../src/utils/ValidationUtils';
 import {MockForm} from '../../src/utils/JsonUtils';
+import {FormModel} from '../../src/types';
 
+let form: FormModel;
+let options : {parent: FormModel, form: FormModel};
+beforeEach(() => {
+    form = MockForm();
+    options = {
+        parent: form,
+        form
+    };
+});
 
 test('a field should add all the default values in its json', () => {
-    const f = new Field({id : 'someid'}, MockForm());
-    expect(f.json()).toEqual({
-        id : 'someid',
+
+    const f = new Field({}, options);
+    expect(f.json()).toMatchObject({
         visible : true,
         readOnly : false,
         viewType: 'text-input',
@@ -18,9 +28,8 @@ test('a field should add all the default values in its json', () => {
 });
 
 test('a field should set the value correctly in its json from default value', () => {
-    const f = new Field({id : 'someid', default : 'test'}, MockForm());
-    expect(f.json()).toEqual({
-        id : 'someid',
+    const f = new Field({default : 'test'}, options);
+    expect(f.json()).toMatchObject({
         visible : true,
         readOnly : false,
         enabled : true,
@@ -32,22 +41,21 @@ test('a field should set the value correctly in its json from default value', ()
 });
 
 test('a boolean field returns proper enum value', () => {
-    const f = new Field({id : 'someid', type : 'boolean'}, MockForm());
+    const f = new Field({type : 'boolean'}, options);
     expect(f.enum).toEqual([true, false]);
 });
 
 test('string conversion of field returns  its value', () => {
-    const f = new Field({id : 'someid', default : 'boolean'}, MockForm());
+    const f = new Field({default : 'boolean'}, options);
     expect(f.toString()).toEqual('boolean');
 });
 
 test('accessing field value directly works in rules', () => {
-    const form = MockForm();
     //@ts-ignore
     form.createController = (elem) => {
         return createController(form, new EventQueue())(elem);
     };
-    const f = new Field({id : 'someid', default : 'test'}, form);
+    const f = new Field({default : 'test'}, {form, parent: form});
     const ob = {
         '$field' : f
     };
@@ -58,14 +66,13 @@ test('accessing field value directly works in rules', () => {
 });
 
 describe('Field Validation', () => {
-    let form: any;
-
     beforeEach(() => {
         form = MockForm();
         //@ts-ignore
         form.createController = (elem) => {
             return createController(form, new EventQueue())(elem);
         };
+        options = {form, parent: form};
     });
 
     test('enum constraint without enforceEnum', () => {
@@ -77,10 +84,9 @@ describe('Field Validation', () => {
             };
         });
         const field = new Field({
-            id : 'someid',
             type: 'number',
             enum: [1, 2, 3]
-        }, form);
+        }, options);
         field.controller.dispatch(new Change(4));
         expect(Constraints.enum).not.toBeCalled();
         expect(field.valid).toEqual(true);
@@ -95,11 +101,10 @@ describe('Field Validation', () => {
             };
         });
         const field = new Field({
-            id : 'someid',
             type: 'number',
             enforceEnum : true,
             enum: [1, 2, 3]
-        }, form);
+        }, options);
         field.controller.dispatch(new Change(4));
         expect(Constraints.enum).toBeCalledWith([1, 2, 3], '4');
         expect(field.valid).toEqual(mockValidity);

@@ -166,13 +166,15 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
 ];
 
 const helper = async (field : any, useProvider = true) => {
-    const component = <Checkbox {...field} />;
     let container, form;
     if (useProvider) {
         form = await createForm(field);
+        const e = form.getState().items[0];
+        let component = <Checkbox {...e} />;
         const wrapper = Provider(form);
         container = render(component, {wrapper}).container;
     } else {
+        let component = <Checkbox {...field} />;
         container = render(component).container;
     }
     const input = container.querySelector('input');
@@ -200,14 +202,13 @@ test('if no options are defined then value cannot be selected', async () => {
     const f = {
         'name' : 'name',
         'title' : 'name',
-        'id' : 'name',
         'visible' : true
     };
     const {input, form} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
     const state = form?.getState();
-    expect((state?.items.name as FieldJson).value).toEqual(undefined);
+    expect((state?.items[0] as FieldJson).value).toEqual(undefined);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
     // @ts-ignore
@@ -217,14 +218,13 @@ test('if no options are defined then value cannot be selected', async () => {
 
 test('selection made by the user sets the value', async () => {
     const f = {
-        ...field,
-        'id' : field.name
+        ...field
     };
     const {input, form, label} = await helper(f);
     // @ts-ignore
     userEvent.click(label);
     const state = form?.getState();
-    expect((state?.items.name as FieldJson).value).toEqual(true);
+    expect(state?.items[0].value).toEqual(true);
     expect(input?.checked).toEqual(true);
     expect(input?.value).toEqual('true');
 });
@@ -233,7 +233,6 @@ test('clicking on checkbox twice resets the value', async () => {
     const f = {
         ...field,
         'enum' : [false, true],
-        'id' : field.name,
         'value' : [true, false][Math.round(Math.random())]
     };
     const {input, form} = await helper(f);
@@ -244,7 +243,7 @@ test('clicking on checkbox twice resets the value', async () => {
     // @ts-ignore
     userEvent.click(input);
     const state = form?.getState();
-    expect((state?.items.name as FieldJson).value).toEqual(f.value);
+    expect((state?.items[0] as FieldJson).value).toEqual(f.value);
     expect(input?.checked).toEqual(checked);
     expect(input?.value).toEqual(`${value}`);
 });
@@ -254,14 +253,13 @@ test('deselecting the checkbox sets the value to off value', async () => {
     const f = {
         ...field,
         'enum' : [false, true],
-        'id' : field.name,
         'value' : false
     };
     const {input, form} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
     const state = form?.getState();
-    expect((state?.items.name as FieldJson).value).toBe(true);
+    expect((state?.items[0] as FieldJson).value).toBe(true);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('true');
 });
@@ -278,8 +276,7 @@ test('it should handle visible property', async () => {
 
 test('a checkbox with no off value should get its value undefined when not selected', async () => {
     const f = {
-        ...field,
-        'id' : field.name
+        ...field
     };
 
     const {input, form} = await helper(f);
@@ -288,7 +285,7 @@ test('a checkbox with no off value should get its value undefined when not selec
     // @ts-ignore
     userEvent.click(input);
     let state = form?.getState();
-    expect((state?.items.name as FieldJson).value).toBe(true);
+    expect((state?.items[0] as FieldJson).value).toBe(true);
     expect(input?.checked).toEqual(true);
     expect(input?.value).toEqual('true');
 
@@ -297,13 +294,12 @@ test('a checkbox with no off value should get its value undefined when not selec
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
     state = form?.getState();
-    expect((state?.items.name as FieldJson).value).toBe(undefined);
+    expect((state?.items[0] as FieldJson).value).toBe(undefined);
 });
 
 test('a checkbox with no off value should not be invalid when not required', async () => {
     const f = {
-        ...field,
-        'id' : field.name
+        ...field
     };
 
     const {input, form} = await helper(f);
@@ -314,15 +310,14 @@ test('a checkbox with no off value should not be invalid when not required', asy
     // @ts-ignore
     userEvent.click(input);
     state = form?.getState();
-    expect((state?.items.name as FieldJson).valid).not.toBe(false);
+    expect((state?.items[0] as FieldJson).valid).not.toBe(false);
 
 });
 
 test('a required checkbox with null value should be invalid', async () => {
     const f = {
         ...field,
-        required: true,
-        'id' : field.name
+        required: true
     };
 
     const {input, form} = await helper(f);
@@ -331,5 +326,5 @@ test('a required checkbox with null value should be invalid', async () => {
     // @ts-ignore
     userEvent.click(input);
     let state = form?.getState();
-    expect((state?.items.name as FieldJson).valid).toBe(false);
+    expect((state?.items[0] as FieldJson).valid).toBe(false);
 });

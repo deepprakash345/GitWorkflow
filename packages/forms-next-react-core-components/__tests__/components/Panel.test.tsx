@@ -7,20 +7,21 @@ import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 const emptyPanel = {
     'id' : 'emptypanel',
     'visible' : true,
-    'items' : {}
+    'items' : []
 };
 
 const panelWithField = {
     'id' : 'panelWithField',
     'visible' : true,
-    'items' : {
-        'f1' : {
-            'id' : 'f1',
+    'items' : [
+        {
+            'id' : 'field',
+            'name' : 'f1',
             'viewType' : 'text-field',
             'title' : 'name',
             'visible' : true
         }
-    }
+    ]
 };
 
 
@@ -59,7 +60,7 @@ test('children without mapping should get rendered as undefined', async () => {
     const form = await createForm(emptyPanel);
     const wrapper = Provider(form, {});
     const {container} = render(panel, {wrapper});
-    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField.items.f1) + '</pre></div>';
+    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField.items[0]) + '</pre></div>';
     expect(container.innerHTML).toContain(expected);
 });
 
@@ -72,7 +73,7 @@ test('children with mapping should render the mapped component', async () => {
     const form = await createForm(emptyPanel);
     const wrapper = Provider(form, {'text-field' : MyComponent});
     const {container} = render(panel, {wrapper});
-    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField.items.f1) + '</pre></div>';
+    var expected = '<div><h4>Undefined Element</h4><pre>' + jsonString(panelWithField.items[0]) + '</pre></div>';
     expect(container.innerHTML).not.toContain(expected);
     expect(container.innerHTML).toContain('<div>My Field</div>');
 });

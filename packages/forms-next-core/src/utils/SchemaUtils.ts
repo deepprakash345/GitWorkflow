@@ -1,5 +1,4 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser';
-import {jsonString} from './JsonUtils';
 import {FieldJson, FieldsetJson, FormJson} from '../types';
 
 const primitives = ['string', 'boolean', 'number'];

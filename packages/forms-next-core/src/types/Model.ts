@@ -1,4 +1,4 @@
-import {FieldJson, FieldsetJson, FormJson, Items, MetaDataJson, Primitives} from './Json';
+import {FieldJson, FieldsetJson, FormJson, MetaDataJson, Primitives} from './Json';
 import {Action, Controller} from '../controller/Controller';
 import RuleEngine from '../rules/RuleEngine';
 

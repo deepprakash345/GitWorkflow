@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 
 const field = {
-    'id' : 'field',
     'name': 'name',
     'value': 'john doe',
     'title': 'name',
@@ -125,7 +124,7 @@ test('value entered by user in text field is set in model', async () => {
     };
     const form = await createForm(f);
     const wrapper = Provider(form);
-    const component = <TextField {...form.getState().items.name} />;
+    const component = <TextField {...form.getState().items[0]} />;
     const {container} = render(component, {wrapper});
     const input = container.querySelector('input');
     // @ts-ignore
@@ -134,7 +133,7 @@ test('value entered by user in text field is set in model', async () => {
     // @ts-ignore
     userEvent.type(input, inputValue);
     const state = form.getState();
-    expect((state.items.name as FieldJson).value).toEqual(inputValue);
+    expect((state.items[0] as FieldJson).value).toEqual(inputValue);
     expect(input?.value).toEqual(inputValue);
 });
 
@@ -144,7 +143,7 @@ test.todo('it should handle readOnly property');
 test('it should handle visible property', async () => {
     const f = {
         ...field,
-        'id' : undefined,
+        'id' : 'x',
         'visible' : false
     };
 

@@ -1,4 +1,4 @@
-import {deepClone, getProperty} from './utils/JsonUtils';
+import {getProperty} from './utils/JsonUtils';
 
 
 class Node<T> {

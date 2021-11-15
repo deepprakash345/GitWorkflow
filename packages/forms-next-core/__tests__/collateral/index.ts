@@ -1,79 +1,79 @@
 import {FormJson} from '../../src/types';
 
 export const oneFieldForm: FormJson = {
-    items: {
-        'name': {
+    items: [
+        {
             type: 'string',
             viewType: 'text-input',
             name: 'name'
-        }
-    }
+        }]
 };
 
 export const numberFieldForm : FormJson = {
-    items: {
-        'name': {
+    items: [
+        {
             type : 'number',
             viewType: 'number-input',
             name: 'name'
         }
-    }
+        ]
 };
 
 export const formWithPanel: FormJson = {
-    items: {
-        'name': {
+    items: [
+        {
             type : 'string',
             viewType: 'text-input',
             name: 'name'
         },
-        'address': {
+        {
             type : 'object',
             name: 'address',
-            items: {
-                'zip': {
+            items: [
+                {
                     type : 'number',
                     viewType: 'number-input',
                     name: 'zip'
                 }
-            }
+            ]
         }
-    }
+    ]
 };
 
 export const nonFormComponent: FormJson = {
-    items: {
-        'name': {
+    items : [
+        {
             type : 'string',
             viewType: 'text-input',
             name: 'name'
         },
-        'somekey': {
-            items: {
-                'zip': {
+        {
+            name : 'somekey',
+            items : [
+                {
                     type : 'number',
                     viewType: 'number-input',
                     name: 'zip'
                 }
-            }
+            ]
         }
-    }
+    ]
 };
 
 
 export const formWithRules = {
-    items: {
-        'firstName': {
+    items :[
+        {
             type : 'string',
             viewType: 'text-input',
             name: 'firstName'
         },
-        'lastName': {
+        {
             type : 'string',
             viewType: 'text-input',
             name: 'lastName'
         },
-        'fullName' : {
+        {
             type : 'string',
             viewType : 'text-input',
             rules : {
@@ -81,7 +81,7 @@ export const formWithRules = {
             },
             name : 'fullName'
         }
-    }
+    ]
 };
 
 
@@ -95,7 +95,7 @@ export const randomWord = (l: number) => {
     return ret.join('');
 };
 
-export const create = (arr: any[], addIds: boolean = true, nameMap: any = {p : 1}): any => {
+export const create = (arr: any[], nameMap: { [key:string] : number }  = {p : 1}): any => {
     let newNameMap = {
         ...nameMap
     };
@@ -105,9 +105,6 @@ export const create = (arr: any[], addIds: boolean = true, nameMap: any = {p : 1
         const res: any =  {
             name : name
         };
-        if (addIds) {
-            res.id = name;
-        }
         return res;
     };
 
@@ -119,7 +116,7 @@ export const create = (arr: any[], addIds: boolean = true, nameMap: any = {p : 1
                 ...newNameMap,
                 p : newNameMap.p + 1
             };
-            obj.items = create(curr, addIds, newNameMap).items;
+            obj.items = create(curr, newNameMap).items;
         } else if (typeof curr === 'string') {
             newNameMap = {
                 ...newNameMap,
@@ -136,7 +133,7 @@ export const create = (arr: any[], addIds: boolean = true, nameMap: any = {p : 1
         } else {
             throw `${curr} not support currently`;
         }
-        items.items[obj.name] = obj;
+        items.items.push(obj);
         return items;
-    }, {items: {}});
+    }, {items: []});
 };

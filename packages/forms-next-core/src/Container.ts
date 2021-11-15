@@ -10,7 +10,7 @@ import {
 } from './types';
 import {deepClone, resolve} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {Action, Change, Controller, FieldAdded, Initialize} from './controller/Controller';
+import {Action, Change, Controller, Initialize} from './controller/Controller';
 
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
 
@@ -74,7 +74,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 //@ts-ignore
                 items[i] = {'id': retVal.id};
             }
-        } else if (items.length > 1) {
+        } else if (items.length > 0) {
             items.forEach((item, index) => {
                 const retVal = this._addChild(item);
                 //@ts-ignore

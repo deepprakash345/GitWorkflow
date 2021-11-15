@@ -1,6 +1,6 @@
 import Container from './Container';
 import {
-    BaseModel, ContainerModel,
+    BaseModel,
     FieldJson,
     FieldModel,
     FieldsetJson,

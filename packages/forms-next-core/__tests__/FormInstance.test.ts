@@ -5,7 +5,7 @@ const nock = require('nock');
 
 test('single field form', async () => {
     const actual = await createFormInstance(oneFieldForm);
-    expect(actual.getState().items.name).toMatchObject({
+    expect(actual.getState().items[0]).toMatchObject({
         type: 'string',
         viewType: 'text-input',
         name: 'name',
@@ -17,7 +17,7 @@ test('single field form', async () => {
 
 test('single field form with number type', async () => {
     const actual = await createFormInstance(numberFieldForm);
-    expect(actual.getState().items.name).toMatchObject({
+    expect(actual.getState().items[0]).toMatchObject({
         viewType: 'number-input',
         type: 'number',
         name: 'name',
@@ -29,9 +29,9 @@ test('single field form with number type', async () => {
 
 test('single field form with default', async () => {
     const form = JSON.parse(JSON.stringify(oneFieldForm));
-    form.items.name.default = 'john doe';
+    form.items[0].default = 'john doe';
     const actual = await createFormInstance(form);
-    expect(actual.getState().items.name).toMatchObject({
+    expect(actual.getState().items[0]).toMatchObject({
         default: 'john doe',
         viewType: 'text-input',
         type: 'string',
@@ -45,7 +45,7 @@ test('single field form with default', async () => {
 
 test('form with panel', async () => {
     const actual = await createFormInstance(formWithPanel);
-    expect(actual.getState().items.name).toMatchObject({
+    expect(actual.getState().items[0]).toMatchObject({
         viewType: 'text-input',
         type: 'string',
         name: 'name',
@@ -53,12 +53,12 @@ test('form with panel', async () => {
         visible: true,
         enabled: true
     });
-    expect(actual.getState().items.address).toMatchObject({
+    expect(actual.getState().items[1]).toMatchObject({
         type: 'object',
         name: 'address',
         visible : true,
-        items: {
-            'zip': {
+        items : [
+            {
                 viewType: 'number-input',
                 type: 'number',
                 name: 'zip',
@@ -67,13 +67,13 @@ test('form with panel', async () => {
                 visible: true,
                 enabled: true
             }
-        }
+        ]
     });
 });
 
 test.skip('nested fields with non form component', async () => {
     const actual = await createFormInstance(nonFormComponent);
-    expect(actual.getState().items.name).toMatchObject({
+    expect(actual.getState().items[0]).toMatchObject({
         viewType: 'text-input',
         type: 'string',
         name: 'name',
@@ -81,12 +81,12 @@ test.skip('nested fields with non form component', async () => {
         visible: true,
         enabled: true
     });
-    expect(actual.getState().items.somekey).toMatchObject({
+    expect(actual.getState().items[1]).toMatchObject({
         count: 1,
         initialCount: 1,
         visible : true,
-        items: {
-            'zip': {
+        items : [
+            {
                 viewType: 'number-input',
                 type: 'number',
                 name: 'zip',
@@ -94,16 +94,16 @@ test.skip('nested fields with non form component', async () => {
                 visible: true,
                 enabled: true
             }
-        }
+        ]
     });
 });
 
 test('form with rules', async () => {
-    const formJson: any = Object.assign({}, formWithRules);
-    formJson.items.firstName.default = 'john';
-    formJson.items.lastName.default = 'doe';
+    const formJson: any = JSON.parse(JSON.stringify(formWithRules));
+    formJson.items[0].default = 'john';
+    formJson.items[1].default = 'doe';
     let form = await createFormInstance(formJson);
-    let field = form.getState().items.fullName as FieldJson;
+    let field = form.getState().items[2] as FieldJson;
     expect(field.value).toEqual('john doe');
 });
 
