@@ -40,7 +40,7 @@ export interface Executor {
 }
 
 export interface WithState<T> {
-    json : () => T
+    json : () => T & {id: string}
 }
 
 export interface WithController {
@@ -50,7 +50,7 @@ export interface WithController {
 export interface BaseModel extends Executor, BaseConstraints, WithController {
     readonly name?: string;
     readonly dataRef?: string;
-    id: string
+    readonly id : string
     title?: string
     description?: string
     readOnly?: boolean;
@@ -85,7 +85,7 @@ export interface FormMetaDataModel {
 }
 
 export interface ContainerModel extends WithController, ContainerConstraints {
-    items: Items<FieldsetModel | FieldModel> | Array<FieldsetModel | FieldModel>
+    items: Array<FieldsetModel | FieldModel>
     readonly dataRef?: string;
     isContainer: boolean
     syncDataAndFormModel: (dataModel: any, parentModel: any) => void
@@ -103,7 +103,7 @@ export interface FormModel extends Executor,
     BaseConstraints,
     ScriptableField,
     WithState<FormJson> {
-    id ?: string
+    id: string
     data?: any
     metadata?: MetaDataJson
     importData: (a: any) => any

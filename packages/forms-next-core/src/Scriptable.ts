@@ -5,8 +5,9 @@ import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node
 import {Action, Change} from './controller/Controller';
 import {mergeDeep} from './utils/JsonUtils';
 import {invalidateTranslation} from './utils/TranslationUtils';
+import {BaseNode} from './BaseNode';
 
-abstract class Scriptable<T extends RulesJson> extends Node<T> implements ScriptableField {
+abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
 
     private _events: {
         [key: string]: RuleNode
@@ -15,12 +16,6 @@ abstract class Scriptable<T extends RulesJson> extends Node<T> implements Script
     private _rules: {
         [key: string]: RuleNode
     } = {};
-
-    constructor(n: T) {
-        super(n);
-    }
-
-    abstract get ruleEngine(): RuleEngine
 
     get rules() {
         return this._jsonModel.rules || {};

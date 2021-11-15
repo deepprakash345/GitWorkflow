@@ -10,7 +10,7 @@ class Node<T> {
     }
 
     public json (): T {
-      return Object.assign({}, this._jsonModel);
+      return Object.assign({id : ''}, this._jsonModel);
     }
 
     protected getP<S>(key: string, def: S): S {

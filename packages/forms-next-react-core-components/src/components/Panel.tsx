@@ -5,9 +5,9 @@ import React, {useContext} from 'react';
 import {renderChildren} from '../react-mapper/utils';
 import {useRuleEngine} from '../react-mapper/hooks';
 
-const Panel = function (fieldset: FieldsetJson) {
+const Panel = function (fieldset: FieldsetJson & {id :string}) {
     const mappings = useContext(formContext).mappings;
-    const [props, handlers] = useRuleEngine<FieldsetJson, string>(fieldset);
+    const [props, handlers] = useRuleEngine(fieldset);
 
     if (props.visible) {
         return (<Flex direction="column" width="300px" gap="10px">

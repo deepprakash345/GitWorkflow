@@ -1,7 +1,7 @@
 import {ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel} from './types';
 import {jsonString, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
-import {Change, Controller} from './controller/Controller';
+import {Change, Controller, FieldAdded} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
 
@@ -17,12 +17,11 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     private _controller: Controller;
 
     public constructor(params: FieldJson,
-                       private _form: FormModel,
-                       //@ts-ignore
-                       private _options: { parent: ContainerModel } = {parent: null}) {
-        super(params);
+                       _options: { form: FormModel, parent: ContainerModel }) {
+        super(params, _options);
         this._applyDefaults();
-        this._controller = _form.createController(this);
+        this._controller = _options.form.createController(this);
+        this.form.controller.dispatch(new FieldAdded(this));
     }
 
     private _applyDefaults() {
@@ -48,18 +47,6 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }
     }
 
-    get index() {
-        return this._jsonModel.index || 0;
-    }
-
-    set index(n: number) {
-        this._jsonModel.index = n;
-    }
-
-    get parent() {
-        return this._options.parent;
-    }
-
     get readOnly() {
         return this._jsonModel.readOnly;
     }
@@ -68,37 +55,14 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.enabled;
     }
 
-    get visible() {
-        return this._jsonModel.visible;
-    }
-
     get valid() {
         return this._jsonModel.valid;
-    }
-
-    get id() {
-        return this._jsonModel.id || '';
-    }
-
-    get type() {
-        return this._jsonModel.type;
-    }
-
-    get name() {
-        return this._jsonModel.name;
-    }
-
-    get dataRef() {
-        return this._jsonModel.dataRef;
     }
 
     get title() {
         return this._jsonModel.title;
     }
 
-    get viewType() {
-        return this._jsonModel.viewType;
-    }
 
     get enum() {
         return this._jsonModel.enum;
@@ -120,7 +84,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     get ruleEngine() {
-        return this._form.ruleEngine;
+        return this.form.ruleEngine;
     }
 
     private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
@@ -169,7 +133,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             'errorMessage': ''
         };
         if (!valid) {
-            console.log(`${constraint} validation failed for ${this._jsonModel.id} with value ${value}`);
+            console.log(`${constraint} validation failed for ${this.id} with value ${value}`);
             elem.errorMessage = this.getErrorMessage(constraint as keyof ConstraintsMessages);
         } else {
             elem.value = value;

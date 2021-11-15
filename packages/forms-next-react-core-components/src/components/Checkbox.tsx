@@ -31,7 +31,7 @@ const SpectrumCheckboxWrapper = (props: any) => {
  * @param originalProps
  * @constructor
  */
-const CheckboxComponent = function (originalProps: FieldJson) {
+const CheckboxComponent = function (originalProps: FieldJson & {id: string}) {
     return useRenderer(originalProps, mapper, SpectrumCheckboxWrapper);
 };
 
