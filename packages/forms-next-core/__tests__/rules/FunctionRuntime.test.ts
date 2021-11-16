@@ -90,10 +90,18 @@ test('dispatch_event should invoke dispatch API', async () => {
 });
 
 test('getData should return the current state of the form data', async () => {
+    //const formJson = create(['f', 'f', {
+    //    'f' : {
+    //        'events' : {
+    //            'click' : "dispatch_event($form, 'customEvent', get_data())"
+    //        }
+    //    }
+    //}]);
     const formJson = create(['f', 'f', {
         'f' : {
             'events' : {
-                'click' : "dispatch_event($form, 'customEvent', get_data())"
+                'click' : "get_data('getDataSuccess', 'getDataError')",
+                'custom:getDataSuccess' : "dispatch_event($form, 'customEvent', $event.payload)"
             }
         }
     }]);
@@ -103,10 +111,13 @@ test('getData should return the current state of the form data', async () => {
     form.subscribe(callback, 'customEvent');
     form.getElementController(formJson.items.f1.id).dispatch(new Change('value2'));
     form.getElementController(formJson.items.f3.id).dispatch(new Click());
-    expect(callback.mock.calls[0][0]).matchesAction({
-        action : new CustomEvent('customEvent', {'f1' : 'value2'}),
-        target : form
+    await checkAfterTimeout(() => {
+        expect(callback.mock.calls[0][0]).matchesAction({
+            action : new CustomEvent('customEvent', {'f1' : 'value2'}),
+            target : form
+        });
     });
+
 });
 
 const API_HOST = 'http://api.aem-forms.com';

@@ -291,7 +291,7 @@ test('a value change updates the dataDom as well', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.getElementController('f1').dispatch(new Change('value2'));
-    expect(form.getState().data).toEqual({
+    expect(await form.getState().data).toEqual({
         'f1': 'value2'
     });
 });
@@ -304,7 +304,7 @@ test('a value change updates the nested dataDom as well', async () => {
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.getElementController('f1').dispatch(new Change('value2'));
-    expect(form.getState().data).toEqual({
+    expect(await form.getState().data).toEqual({
         a: {
             b: {
                 c: {
@@ -323,7 +323,7 @@ test('a value change updates the nested dataDom as well', async () => {
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.getElementController('f1').dispatch(new Change('value2'));
-    expect(form.getState().data).toEqual({
+    expect(await form.getState().data).toEqual({
         a: {
             b: {
                 c: {
@@ -344,7 +344,7 @@ test('multiple field changes also keep the data modified', async () => {
     form.getElementController('f1').dispatch(new Change('value2'));
     form.getElementController('f2').dispatch(new Change('value2'));
     form.getElementController('f3').dispatch(new Change('value2'));
-    expect(form.getState().data).toEqual({
+    expect(await form.getState().data).toEqual({
         a: {
             b: {
                 c: {
@@ -404,7 +404,7 @@ test('an invalid constraint in the field should not throw an exception', async (
     }, 'f', 'f']);
     let form = await createFormInstance(formJson);
     form.getElementController('f1').dispatch(new Change('-10'));
-    expect(form.getState().data).toEqual({'f1': -10});
+    expect(await form.getState().data).toEqual({'f1': -10});
 });
 
 test.skip('an invalid value change should not update the data dom', async () => {
@@ -462,7 +462,7 @@ test('rules should modify the data dom', async () => {
         }
     }]);
     let form = await createFormInstance(formJson);
-    expect(form.getState().data).toEqual({
+    expect(await form.getState().data).toEqual({
         e: 'default value'
     });
 });
@@ -488,7 +488,7 @@ test('dataDom is updated as per the dataType of the element', async () => {
     form.getElementController('f1').dispatch(new Change('10'));
     form.getElementController('f2').dispatch(new Change('value2'));
     form.getElementController('f3').dispatch(new Change('true'));
-    expect(form.getState().data).toEqual({
+    expect(await form.getState().data).toEqual({
         number: 10,
         string: 'value2',
         boolean: true
@@ -558,7 +558,7 @@ test('dataRef none should not update the data dom', async () => {
     const state = form.getState();
     let f: FieldJson = state.items.f1;
     expect(f.value).toEqual(5);
-    expect(state.data).toEqual({});
+    expect(await state.data).toEqual({});
 });
 
 test.todo('if dataRef is is invalid data should not get generated for that field');

@@ -13,8 +13,9 @@ class FunctionRuntimeImpl {
             validate : (context: any) => {
               return this.validate(context);
             },
-            get_data : (context : any) => {
-                return this.getData(context);
+            get_data : (context : any, success: string, error: string) => {
+                this.getData(context, success, error);
+                return {};
             },
             submit_form: (context: any, success: string, error: string) => {
                 this.submit(context, success, error);
@@ -69,15 +70,22 @@ class FunctionRuntimeImpl {
         return true;
     }
 
-    private getData (context: any) {
-        return context.$form.controller.getState().data;
+    private async getData (context: any, success: string, error: string) {
+        let result;
+        try {
+            result = await context.$form.controller.getState().data;
+        } catch (e) {
+            context.$form.controller.dispatch(new CustomEvent(error, {}, true));
+            return;
+        }
+        context.$form.controller.dispatch(new CustomEvent(success, result, true));
     }
 
     async submit(context: any, success: string, error: string) {
         // todo have to implement validate here
         this.validate(context);
         const endpoint = context.$form.metaData?.action;
-        const data = jsonString(this.getData(context));
+        const data = jsonString(await context.$form.controller.getState().data);
         const formData = new FormData();
         formData.append(':data', data);
         formData.append(':contentType', 'application/json');

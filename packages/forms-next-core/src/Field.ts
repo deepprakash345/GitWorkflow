@@ -25,7 +25,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this._controller = _form.createController(this);
     }
 
-    private _applyDefaults() {
+    protected _applyDefaults() {
         Object.entries(defaults).map(([key, value]) => {
             //@ts-ignore
             if (this._jsonModel[key] === undefined) {
@@ -127,7 +127,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || 'There is an error in the field';
     }
 
-    private evaluateConstraints(value: string) {
+    private evaluateConstraints(value: any) {
         let constraint = 'type';
         let elem = this._jsonModel;
         const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum');
@@ -160,7 +160,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         };
     }
 
-    private checkInput(input: string) {
+    protected checkInput(input: any) {
         //todo : execute change event
         let {valid, value, constraint} = this.evaluateConstraints(input);
         let elem = {
@@ -204,7 +204,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }
     }
 
-    exportData(dataModel: any) {
+    async exportData(dataModel: any) {
         if (this.dataRef != 'none' && this.dataRef !== undefined) {
             resolve(dataModel, this.dataRef, this.value);
         } else if (this.dataRef !== 'none') {

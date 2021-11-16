@@ -18,6 +18,8 @@ type ConstraintsJson = TranslationConstraintsJson & {
     'maxLength'?: number;
     'minimum'?: number;
     'maximum'?: number;
+    'maxFileSize'?:number;
+    'accept'?:string[];
     'fracDigits'?: number;
     'leadDigits'?: number;
     'enforceEnum'?: boolean

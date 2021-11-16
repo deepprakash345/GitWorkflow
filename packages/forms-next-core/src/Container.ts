@@ -179,12 +179,12 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     //todo : empty data models are getting created. We should stop that.
-    exportData(dataModel: any) {
+    async exportData(dataModel: any) {
         const name = this._jsonModel.name || '';
         const isArray = this._jsonModel.items instanceof Array;
         let currentDataModel:any = isArray ? [] : {};
-        this._children.forEach(x => {
-            const data = x.exportData(dataModel);
+        for (const x of this._children) {
+            const data = await x.exportData(dataModel);
             if (data != undefined) {
                 let name = x.name || '';
                 let dataRef = x.dataRef || '';
@@ -202,7 +202,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                     currentDataModel[x.index] = data;
                 }
             }
-        });
+        }
         if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
             currentDataModel = resolve(dataModel, this._jsonModel.dataRef, currentDataModel);
         } else {

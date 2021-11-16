@@ -5,6 +5,7 @@ import Checkbox from './components/Checkbox';
 import RadioGroup from './components/RadioButtonGroup';
 import ComboBox from './components/DropDownList';
 import PlainText from './components/PlainText';
+import FileUploadComponent from './components/FileUpload';
 const mappings = {
     'text-input' : TextField,
     'multiline-input' : TextField,
@@ -15,7 +16,8 @@ const mappings = {
     'number-input' : TextField,
     'date-input' : TextField,
     'drop-down' : ComboBox,
-    'plain-text' : PlainText
+    'plain-text' : PlainText,
+    'file-input' : FileUploadComponent
 };
 
 export default mappings;

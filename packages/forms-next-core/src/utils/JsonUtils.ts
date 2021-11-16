@@ -1,4 +1,4 @@
-import {FormModel} from '../types';
+import {FieldsetJson, FieldJson, FormModel} from '../types';
 import {EmptyController} from '../controller/Controller';
 import RuleEngine from '../rules/RuleEngine';
 
@@ -29,6 +29,12 @@ const isObject = function (item: any) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 };
 
+export const isFile = function (item: FieldsetJson | FieldJson) {
+    return (item?.type === 'file' || item?.type === 'file[]') ||
+        ((item?.type === 'string' || item?.type === 'string[]') &&
+            (item?.format === 'binary' || item?.format === 'data-url'));
+};
+
 /**
  * merges multiple source objects (not arrays) along with their properties into the target object
  * @param target
@@ -41,8 +47,12 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
             if (isObject(source[key])) {
-                if (!target[key]) Object.assign(target, {[key]: {}});
-                mergeDeep(target[key], source[key]);
+                if (source[key] instanceof File) {
+                    Object.assign(target, {[key]: source[key]});
+                } else {
+                    if (!target[key]) Object.assign(target, {[key]: {}});
+                    mergeDeep(target[key], source[key]);
+                }
             } else {
                 Object.assign(target, {[key]: source[key]});
             }
