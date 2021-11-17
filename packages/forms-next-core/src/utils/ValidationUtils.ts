@@ -1,6 +1,8 @@
-import {FieldJson} from '../types';
+// issue with import
+//import {FieldJson, isFileObject} from '../types';
 
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
+const dataUrlRegex = /^data:([a-z]+\/[a-z0-9-+.]+)?;(?:name=(.*);)?base64,(.*)$/;
 
 type ValidationResult = {
     valid: boolean,
@@ -16,8 +18,13 @@ const isLeapYear = (year: number) => {
     return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
 };
 
+export const isDataUrl = (str : string) => {
+    return dataUrlRegex.exec(str.trim()) != null;
+};
+
+
 export const Constraints = {
-    type : (constraint: string, inputVal: string): ValidationResult => {
+    type : (constraint: string, inputVal: any): ValidationResult => {
         let value : any = inputVal;
         if (inputVal == undefined) {
             return {
@@ -50,6 +57,14 @@ export const Constraints = {
                     value = inputVal;
                 }
                 break;
+            case 'file' || 'file[]':
+                valid = true;
+                //valid = isFileObject(value);
+                if (!valid) {
+                    console.log('dataType constraint evaluation failed. Expected File Object. Received ' + inputVal);
+                    value = inputVal;
+                }
+                break;
         }
         return {
             valid,
@@ -73,6 +88,12 @@ export const Constraints = {
                 } else {
                     valid = false;
                 }
+                break;
+            case 'data-url':
+                // todo: input is of type file, do we need this format ? since value is always of type file object
+                //res = dataUrlRegex.exec(input.trim());
+                //valid = res != null;
+                valid = true;
                 break;
         }
         return {valid, value};

@@ -1,14 +1,21 @@
 import Container from './Container';
 import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormModel} from './types';
 import Field from './Field';
+import FileUpload from './FileUpload';
 import {FieldAdded} from './controller/Controller';
+import {isFile} from './utils/JsonUtils';
 
 export const createChild = (child: FieldsetJson | FieldJson, options: {form: FormModel, parent: ContainerModel}) => {
   let retVal: Fieldset | Field;
   if ('items' in child) {
     retVal = new Fieldset(child as FieldsetJson, options);
   } else {
-    retVal = new Field(child as FieldJson, options);
+    if (isFile(child)) {
+      // @ts-ignore
+      retVal = new FileUpload(child as FieldJson, options);
+    } else {
+      retVal = new Field(child as FieldJson, options);
+    }
   }
   return retVal;
 };

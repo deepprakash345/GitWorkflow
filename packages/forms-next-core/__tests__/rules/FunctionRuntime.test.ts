@@ -98,6 +98,14 @@ test('getData should return the current state of the form data', async () => {
             }
         }
     }]);
+    //const formJson = create(['f', 'f', {
+    //    'f' : {
+    //        'events' : {
+    //            'click' : "get_data('getDataSuccess', 'getDataError')",
+    //            'custom:getDataSuccess' : "dispatch_event($form, 'customEvent', $event.payload)"
+    //        }
+    //    }
+    //}]);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     let callback = jest.fn();
@@ -105,9 +113,11 @@ test('getData should return the current state of the form data', async () => {
     const state = form.getState();
     form.getElementController(state.items[0].id).dispatch(new Change('value2'));
     form.getElementController(state.items[2].id).dispatch(new Click());
-    expect(callback.mock.calls[0][0]).matchesAction({
-        action : new CustomEvent('customEvent', {'f1' : 'value2'}),
-        target : form
+    await checkAfterTimeout(() => {
+        expect(callback.mock.calls[0][0]).matchesAction({
+            action : new CustomEvent('customEvent', {'f1' : 'value2'}),
+            target : form
+        });
     });
 });
 

@@ -306,7 +306,8 @@ test('a checkbox with no off value should not be invalid when not required', asy
     // @ts-ignore
     userEvent.click(input);
     let state = form?.getState();
-    expect(state.data.name).toEqual(true);
+    let data = await state.data;
+    expect(data.name).toEqual(true);
     // @ts-ignore
     userEvent.click(input);
     state = form?.getState();

@@ -1,6 +1,7 @@
 import {jsonString} from '../utils/JsonUtils';
 import {CustomEvent, Submit} from '../controller/Controller';
 import {request as fRequest, RequestOptions} from '../utils/Fetch';
+import {FileObject} from "../FileObject";
 
 declare var window: any;
 
@@ -50,6 +51,12 @@ class FunctionRuntimeImpl {
         };
         let result;
         try {
+            if (payload && payload instanceof FileObject && payload.data instanceof File) {
+                // todo: have to implement array type
+                let formData = new FormData();
+                formData.append(payload.name, payload.data);
+                payload = formData;
+            }
             if (payload && Object.keys(payload).length === 0) {
                 requestOptions.headers = {
                     'Content-Type': payloadContentType // this should match content type of the payload
@@ -77,7 +84,9 @@ class FunctionRuntimeImpl {
         // todo have to implement validate here
         this.validate(context);
         const endpoint = context.$form.metaData?.action;
-        const data = jsonString(this.getData(context));
+        const data = jsonString(context.$form.controller.getState().data);
+        // todo: have to implement sending of attachments here
+        const attachments = context.$form.controller.getState().attachments;
         const formData = new FormData();
         formData.append(':data', data);
         formData.append(':contentType', 'application/json');

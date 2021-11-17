@@ -55,7 +55,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             });
         }
     }
-    
+
     private _addChild(itemJson: FieldJson | ContainerJson, index?: number) {
         if (typeof index !== 'number' || index > this._children.length) {
             index = this._children.length;
@@ -173,11 +173,11 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     //todo : empty data models are getting created. We should stop that.
-    exportData(dataModel: any) {
+     exportData(dataModel: any) {
         const name = this._jsonModel.name || '';
         const isArray = this._jsonModel.type === 'array';
         let currentDataModel: any = isArray ? [] : {};
-        this._children.forEach(x => {
+         for (const x of this._children) {
             const data = x.exportData(dataModel);
             if (data != undefined) {
                 let name = x.name || '';
@@ -196,7 +196,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                     currentDataModel[x.index] = data;
                 }
             }
-        });
+        }
         if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
             currentDataModel = resolve(dataModel, this._jsonModel.dataRef, currentDataModel);
         } else {

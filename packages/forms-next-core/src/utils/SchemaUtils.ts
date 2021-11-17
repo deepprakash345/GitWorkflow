@@ -6,12 +6,14 @@ const containers = ['object', 'array', 'number'];
 
 const objToMap = (o: any) => new Map(Object.entries(o));
 
-const stringViewTypes = objToMap({'date' : 'date-input'}) as Map<string, string>;
+const stringViewTypes = objToMap({'date' : 'date-input',  'data-url' : 'file-input', 'binary' : 'file-input'}) as Map<string, string>;
 const typeToViewTypes = objToMap({
     'number' : 'number-input',
     'boolean' : 'checkbox',
     'object' : 'panel',
-    'array' : 'panel'
+    'array' : 'panel',
+    'file' : 'file-input',
+    'file[]' : 'file-input'
 })  as Map<string, string>;
 
 const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
@@ -26,7 +28,7 @@ export const defaultViewTypes = (schema: any): string => {
             return 'checkbox';
         }
     }
-    if (type === 'string') {
+    if (type === 'string' ||  type === 'string[]') {
         return stringViewTypes.get(schema.format) || 'text-input';
     }
     return typeToViewTypes.get(type) || 'text-input';

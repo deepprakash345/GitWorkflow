@@ -115,3 +115,10 @@ export interface FormModel extends Executor,
     getElement: (id: string) => FieldModel | ContainerModel | FormModel
     getUniqueId() : string
 }
+
+export interface IFileObject {
+    name: string;
+    mediaType: string
+    data? : any // can be uri or any file interface specific to channel (in web, it is file object)
+    size? : number // iec specification
+}

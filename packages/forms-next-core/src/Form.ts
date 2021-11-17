@@ -14,7 +14,8 @@ import {createChild} from './Fieldset';
 import {Action, Controller, createController} from './controller/Controller';
 import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
-import {IdGenerator} from './utils/FormUtils';
+import {getAttachments, IdGenerator} from './utils/FormUtils';
+import {splitTokens} from './utils/JsonUtils';
 
 class Form extends Container<FormJson> implements FormModel {
 
@@ -60,7 +61,8 @@ class Form extends Container<FormJson> implements FormModel {
 
     exportData() {
         const data = super.exportData(this._data);
-        return {...data, ...this._data};
+        // override new data into this._data
+        return {...this._data, ...data};
     }
 
     /**
@@ -70,8 +72,13 @@ class Form extends Container<FormJson> implements FormModel {
         const self = this;
         const res = super.json();
         Object.defineProperty(res, 'data', {
-            get() {
+            get: function() {
                 return self.exportData();
+            }
+        });
+        Object.defineProperty(res, 'attachments', {
+            get: function() {
+                return getAttachments(res);
             }
         });
         return res;
