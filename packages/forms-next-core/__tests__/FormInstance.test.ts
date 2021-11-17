@@ -1,6 +1,9 @@
 import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent, create, formWithRules} from './collateral';
 import {createFormInstance, fetchForm} from '../src';
 import {FieldJson} from '../src/types';
+import siblingAccess from '../__tests__/collateral/siblingAccess';
+import {AddItem, Change} from '../src/controller/Controller';
+
 const nock = require('nock');
 
 test('single field form', async () => {
@@ -97,6 +100,28 @@ test.skip('nested fields with non form component', async () => {
             }
         ]
     });
+});
+
+test('form with sibling access', async () => {
+    const form = await createFormInstance(siblingAccess.staticForm);
+    let state = form.getState();
+    const f = form.getElementController(state.items[0].id);
+    f.dispatch(new Change('x'));
+    state = form.getState();
+    expect(state.items[1].value).toEqual('x');
+});
+
+test('form with sibling access - dynamic form', async () => {
+    const form = await createFormInstance(siblingAccess.dynamicForm);
+    let state = form.getState();
+    const f = form.getElementController(state.items[0].id);
+    const p = form.getElementController(state.items[0].items[0].items[0].id);
+    const q = form.getElementController(state.items[0].items[0].items[1].id);
+    const t = form.getElementController(state.items[0].items[0].items[2].id);
+    p.dispatch(new Change('100'));
+    q.dispatch(new Change('10'));
+    state = t.getState();
+    expect(state.value).toEqual(1000);
 });
 
 test('form with rules', async () => {

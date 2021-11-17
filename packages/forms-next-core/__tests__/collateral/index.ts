@@ -1,4 +1,5 @@
 import {FormJson} from '../../src/types';
+export * as siblingAccess from './siblingAccess';
 
 export const oneFieldForm: FormJson = {
     items: [

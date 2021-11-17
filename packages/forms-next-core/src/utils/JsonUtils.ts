@@ -170,6 +170,7 @@ export const MockForm = ():FormModel => {
         ruleEngine,
         importData: jest.fn(),
         id : '$form',
-        getRuleNode: jest.fn()
+        getRuleNode: jest.fn(),
+        directReferences: jest.fn()
     };
 };

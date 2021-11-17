@@ -118,6 +118,10 @@ class Form extends Container<FormJson> implements FormModel {
         }
         return this._fields[id];
     }
+
+    get name() {
+        return '$form';
+    }
 }
 
 export default Form;

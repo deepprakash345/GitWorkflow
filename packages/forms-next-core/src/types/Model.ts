@@ -91,6 +91,7 @@ export interface ContainerModel extends WithController, ContainerConstraints {
     isContainer: boolean
     syncDataAndFormModel: (dataModel: any, parentModel: any) => void
     getRuleNode(): any
+    directReferences(): any
 }
 
 export interface FieldsetModel extends BaseModel,

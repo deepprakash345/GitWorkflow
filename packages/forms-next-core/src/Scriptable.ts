@@ -1,4 +1,4 @@
-import {RulesJson, ScriptableField} from './types';
+import {FieldsetModel, RulesJson, ScriptableField} from './types';
 import Node from './Node';
 import RuleEngine from './rules/RuleEngine';
 import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
@@ -44,9 +44,10 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
     }
 
     protected executeAllRules(context: any) {
+        const scope = this.getExpressionScope();
         return Object.fromEntries(Object.entries(this.rules).map(([prop, rule]) => {
             const node = this.getCompiledRule(prop, rule);
-            const newVal = this.ruleEngine.execute(node, this.getRuleNode(), context);
+            const newVal = this.ruleEngine.execute(node, scope, context);
             if (newVal != this.getP(prop, undefined)) {
                 return [prop, newVal];
             } else {
@@ -55,11 +56,80 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         }).filter(x => x.length == 2));
     }
 
+    private getSiblings() {
+        if (typeof this.parent === 'undefined') { //when this is form
+            return undefined;
+        }
+        if (this.parent.type === 'array') {
+            let parent = this.parent as FieldsetModel;
+            let name = parent.name || '';
+            while (name.length == 0) {
+                parent = parent.parent as FieldsetModel;
+                name = parent.name || '';
+            }
+            return {
+                name: parent.getRuleNode()
+            };
+        } else if (this.parent.type === 'object') {
+            let obj:any = {};
+            let parent = this.parent as FieldsetModel;
+            let name = parent.name || '';
+            let parents = [parent];
+            while (name.length == 0) {
+                parent = parent.parent as FieldsetModel;
+                name = parent.name || '';
+                if (parent.type !== 'array') {
+                    parents.push(parent);
+                }
+            }
+            obj[name] = parent.getRuleNode();
+            while (parents.length > 0) {
+                parent = parents.pop() as FieldsetModel;
+                parent.items
+                    .filter(p => (p.name || '').length > 0)
+                    .forEach( x => {
+                        //@ts-ignore
+                        obj[x.name] = x.getRuleNode();
+                    });
+            }
+            return obj;
+        }
+    }
+
+    private getExpressionScope() {
+        const target = {
+            self: this.getRuleNode(),
+            siblings: this.parent?.directReferences() || {}
+        };
+        const scope = new Proxy(target, {
+            get: (target: any, prop: string | Symbol, receiver) => {
+                prop = prop as string;
+                var selfProperty = target.self[prop];
+                if (prop.startsWith('$')) {
+                    //This will not be required once rule grammar supports $
+                    return selfProperty;
+                } else if (typeof selfProperty !== 'undefined') { //found a child
+                    return selfProperty;
+                } else if (prop in target.siblings) { // found a sibling
+                    return target.siblings[prop];
+                }
+                return selfProperty;
+            },
+            has : (target: { siblings: any; self: any }, prop: string | symbol)  => {
+                prop = prop as string;
+                var selfProperty = target.self[prop];
+                var sibling = target.siblings[prop];
+                return typeof selfProperty != 'undefined' || typeof sibling != 'undefined';
+            }
+        });
+        return scope;
+    }
+
     protected executeEvent(context: any, eventName: string) {
         const node = this.getCompiledEvent(eventName);
         let updates;
         if (node) {
-            updates = this.ruleEngine.execute(node, this.getRuleNode(), context);
+            updates = this.ruleEngine.execute(node, this.getExpressionScope(), context);
         }
         return updates;
     }

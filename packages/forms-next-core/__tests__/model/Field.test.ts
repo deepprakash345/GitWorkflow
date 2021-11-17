@@ -16,7 +16,6 @@ beforeEach(() => {
 });
 
 test('a field should add all the default values in its json', () => {
-
     const f = new Field({}, options);
     expect(f.json()).toMatchObject({
         visible : true,

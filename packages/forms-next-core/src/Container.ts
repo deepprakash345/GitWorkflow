@@ -66,10 +66,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         };
         //@ts-ignore
         let retVal = this._createChild(itemTemplate, {parent: this});
-        const name = this.type == 'array' ? index + '' : (this.type == 'object') ? retVal.name || '' : '';
-        if (name.length > 0) {
-            this._addChildToRuleNode(retVal);
-        }
+        this._addChildToRuleNode(retVal);
         if (index === this._children.length) {
             this._children.push(retVal);
         } else {

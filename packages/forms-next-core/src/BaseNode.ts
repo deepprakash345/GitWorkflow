@@ -1,4 +1,4 @@
-import {BaseJson, ContainerModel, FormModel} from './types';
+import {BaseJson, ContainerModel, FieldsetModel, FormModel} from './types';
 import Node from './Node';
 
 export abstract class BaseNode<T extends BaseJson> extends Node<T> {
@@ -102,10 +102,6 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
 
     get ruleEngine() {
         return this.form.ruleEngine;
-    }
-
-    ruleNode() {
-
     }
 
     json() {
