@@ -96,9 +96,10 @@ class FileUpload extends Field implements FieldModel {
                         };
                     } else if (typeof jFile === 'string') {
                         // case: data as external url
+                        let fileName = jFile.split('/').pop();
                         retVal = {
-                            name: 'unknown',
-                            mediaType: 'application/octet-stream',
+                            name: fileName,
+                            mediaType: 'application/octet-stream',  // todo: should we auto-deduce mime type based on file extension?
                             size : 0,
                             data: jFile
                         };

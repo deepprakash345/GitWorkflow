@@ -1,3 +1,5 @@
+import {isFile} from './JsonUtils';
+
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
 const fileSizeRegex =  /^(\d*\.?\d+)(\\?(?=[KMGT])([KMGT])(?:i?B)?|B?)$/i;
 
@@ -8,6 +10,25 @@ export const randomWord = (l: number) => {
         ret.push(chars[randIndex]);
     }
     return ret.join('');
+};
+
+export const getAttachments = (input : any) : any=> {
+    return Object.keys(input).reduce((acc, curr) => {
+        const objValue = input[curr];
+        let ret = null;
+        if(objValue && objValue instanceof Object) {
+            ret = getAttachments(objValue);
+        } else if(objValue && objValue instanceof Array) {
+            ret = getAttachments(objValue[0]);
+        } else {
+            const f1 = input;
+            if (f1?.value && isFile(f1)) {
+                ret = {}; // @ts-ignore
+                ret[f1.id] = f1.value;
+            }
+        }
+        return Object.assign(acc, ret);
+    }, {});
 };
 
 // this works as per IEC specification
@@ -56,7 +77,7 @@ export const IdGenerator = function *(initial = 50): Generator<string, void, str
 };
 
 
-export function dataURItoBlob(dataURI : string) {
+export const dataURItoBlob = (dataURI : string) => {
     // Split metadata from data
     const splitted = dataURI.split(',');
     // Split params
@@ -85,6 +106,5 @@ export function dataURItoBlob(dataURI : string) {
     }
     // Create the blob object
     const blob = new window.Blob([new Uint8Array(array)], { type });
-
     return { blob, name };
-}
+};

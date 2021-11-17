@@ -14,7 +14,7 @@ import {createChild, Fieldset} from './Fieldset';
 import {Action, Change, Controller, createController} from './controller/Controller';
 import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
-import {IdGenerator} from './utils/FormUtils';
+import {getAttachments, IdGenerator} from './utils/FormUtils';
 import {splitTokens} from './utils/JsonUtils';
 
 class Form extends Container<FormJson> implements FormModel {
@@ -78,6 +78,11 @@ class Form extends Container<FormJson> implements FormModel {
         Object.defineProperty(res, 'data', {
             get: function() {
                 return self.exportData();
+            }
+        });
+        Object.defineProperty(res, 'attachments', {
+            get: function() {
+                return getAttachments(res);
             }
         });
         return res;
