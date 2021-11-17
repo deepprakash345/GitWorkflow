@@ -11,7 +11,7 @@ test('Form should be prefilled from data', async () => {
     };
     const form = await createFormInstance(json);
     const state= form.getState();
-    expect(await state.data).toEqual(json.data);
+    expect(state.data).toEqual(json.data);
     expect((state.items.f1 as FieldJson).value).toEqual(json.data.f1);
     expect((state.items.f2 as FieldJson).value).toEqual(json.data.f2);
     expect((state.items.f3 as FieldJson).value).toEqual(json.data.f3);
@@ -32,7 +32,7 @@ test('Hierarchical structure should be honored in the data model', async () => {
     };
     const form = await createFormInstance(json);
     const state= form.getState();
-    expect(await state.data).toEqual(json.data);
+    expect(state.data).toEqual(json.data);
     expect((state.items.f1 as FieldJson).value).toEqual(json.data.f1);
     expect((state.items.p1.items.f2 as FieldJson).value).toEqual(json.data.p1.f2);
     expect((state.items.p1.items.f3 as FieldJson).value).toEqual(json.data.p1.f3);
@@ -54,7 +54,7 @@ test('dataRef none does not create hierarchy', async () => {
     };
     const form = await createFormInstance(json);
     const state= form.getState();
-    expect(await state.data).toEqual(json.data);
+    expect(state.data).toEqual(json.data);
     expect((state.items.f1 as FieldJson).value).toEqual(json.data.f1);
     expect((state.items.p1.items.f2 as FieldJson).value).toEqual(json.data.f2);
     expect((state.items.p1.items.f3 as FieldJson).value).toEqual(json.data.f3);
@@ -82,7 +82,7 @@ test('explicit dataRef can create separate data hierarchy', async () => {
     };
     const form = await createFormInstance(json);
     const state= form.getState();
-    expect(await state.data).toEqual(json.data);
+    expect(state.data).toEqual(json.data);
     expect((state.items.f1 as FieldJson).value).toEqual(json.data.f1);
     expect((state.items.p1.items.f2 as FieldJson).value).toEqual(json.data.f2);
     expect((state.items.p1.items.f3 as FieldJson).value).toEqual(json.data.f3);
@@ -110,7 +110,7 @@ test('panel with explicit dataRef', async () => {
     };
     const form = await createFormInstance(json);
     const state= form.getState();
-    expect(await state.data).toEqual(json.data);
+    expect(state.data).toEqual(json.data);
     expect((state.items.f1 as FieldJson).value).toEqual(json.data.f1);
     expect((state.items.p1.items.f2 as FieldJson).value).toEqual(json.data.a.b.c.f2);
     expect((state.items.p1.items.f3 as FieldJson).value).toEqual(json.data.a.b.c.f3);
@@ -144,7 +144,7 @@ test('data model should be created on change events', async () => {
     form.getElementController(initialState.items.p1.items.f3.id).dispatch(new Change('z'));
     form.getElementController(initialState.items.p1.items.p2.items.f4.id).dispatch(new Change('a'));
     const state= form.getState();
-    expect(await state.data).toEqual(expectedData);
+    expect(state.data).toEqual(expectedData);
     expect((state.items.f1 as FieldJson).value).toEqual(expectedData.f1);
     expect((state.items.p1.items.f2 as FieldJson).value).toEqual(expectedData.a.b.c.f2);
     expect((state.items.p1.items.f3 as FieldJson).value).toEqual(expectedData.a.b.c.f3);

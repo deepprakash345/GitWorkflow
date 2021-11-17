@@ -89,9 +89,9 @@ function App() {
         currentConfig = action.target
     }
 
-    const tabChanged = async (id: Key) => {
+    const tabChanged =  (id: Key) => {
         if (id === "data-model" && currentForm != null) {
-            let data = await currentForm.getState().data;
+            let data = currentForm.getState().data;
             setDataModel(jsonString(data))
         } else if (id === "configuration" && currentConfig != null) {
             const app = application;

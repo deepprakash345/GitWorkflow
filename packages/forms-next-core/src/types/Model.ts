@@ -65,7 +65,7 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     }
     isContainer: boolean,
     importData: (a: any, b: any) => any
-    exportData: (a: any) => Promise<any>
+    exportData: (a: any) => any
     index : number
     parent: ContainerModel
 }
@@ -113,13 +113,9 @@ export interface FormModel extends Executor,
     getUniqueId() : string
 }
 
-export interface FileObject {
-    readonly name: string
-    readonly mediaType: string
-    readonly data? : any // can be uri or any file interface specific to channel (in web, it is file object)
-    readonly size? : number
-}
-
-export function isFileObject(object: any): object is FileObject {
-    return (<FileObject>object).mediaType !== undefined;
+export interface IFileObject {
+    name: string;
+    mediaType: string
+    data? : any // can be uri or any file interface specific to channel (in web, it is file object)
+    size? : number // iec specification
 }

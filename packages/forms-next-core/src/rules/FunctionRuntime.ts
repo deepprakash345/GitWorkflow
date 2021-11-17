@@ -13,9 +13,8 @@ class FunctionRuntimeImpl {
             validate : (context: any) => {
               return this.validate(context);
             },
-            get_data : (context : any, success: string, error: string) => {
-                this.getData(context, success, error);
-                return {};
+            get_data : (context : any) => {
+                return this.getData(context);
             },
             submit_form: (context: any, success: string, error: string) => {
                 this.submit(context, success, error);
@@ -70,15 +69,8 @@ class FunctionRuntimeImpl {
         return true;
     }
 
-    private async getData (context: any, success: string, error: string) {
-        let result;
-        try {
-            result = await context.$form.controller.getState().data;
-        } catch (e) {
-            context.$form.controller.dispatch(new CustomEvent(error, {}, true));
-            return;
-        }
-        context.$form.controller.dispatch(new CustomEvent(success, result, true));
+    private getData (context: any) {
+        return context.$form.controller.getState().data;
     }
 
     async submit(context: any, success: string, error: string) {

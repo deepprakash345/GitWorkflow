@@ -30,7 +30,7 @@ const FileUpload = ({
                         ...otherProps
                     }) => {
     const fileInputField = useRef(null);
-    const [files, setFiles] = useState({});
+    const [files, setFiles] = useState(otherProps.default || {});
 
     const handleUploadBtnClick = () => {
         // @ts-ignore
@@ -99,11 +99,11 @@ const FileUpload = ({
                     {Object.keys(files).map((fileName, index) => {
                         // @ts-ignore
                         let file = files[fileName];
-                        let isImageFile = file.type.split('/')[0] === 'image';
+                        let isImageFile = file.type?.split('/')[0] === 'image';
                         return (
                             <PreviewContainer key={fileName}>
                                 <div>
-                                    {isImageFile && (
+                                    {isImageFile && file instanceof File &&  (
                                         <ImagePreview
                                             src={URL.createObjectURL(file)}
                                             alt={`file preview ${index}`}

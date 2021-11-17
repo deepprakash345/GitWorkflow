@@ -63,9 +63,10 @@ class Form extends Container<FormJson> implements FormModel {
         this._eventQueue.runPendingQueue();
     }
 
-    async exportData() {
-        const data = await super.exportData(this._data);
-        return {...data, ...this._data};
+    exportData() {
+        const data = super.exportData(this._data);
+        // override new data into this._data
+        return {...this._data, ...data};
     }
 
     /**
@@ -75,7 +76,7 @@ class Form extends Container<FormJson> implements FormModel {
         const self = this;
         const res = super.json();
         Object.defineProperty(res, 'data', {
-            get: async function() {
+            get: function() {
                 return self.exportData();
             }
         });

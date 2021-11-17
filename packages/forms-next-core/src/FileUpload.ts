@@ -1,13 +1,15 @@
-import {FieldModel, FileObject} from './types';
 import {resolve} from './utils/JsonUtils';
 import {Change} from './controller/Controller';
 import Field from './Field';
 import {dataURItoBlob} from './utils/FormUtils';
+import {isDataUrl} from './utils/ValidationUtils';
+import {FieldModel} from './types';
+import {FileObject} from './FileObject';
 
 //todo: move to a single place in Model.ts or Json.ts
 const defaults = {
     accept : ['audio/*', 'video/*', 'image/*', 'text/*', 'application/pdf'],
-    maxFileSize : 200000000
+    maxFileSize : '2MB'
 };
 
 function addNameToDataURL(dataURL: string, name: string) {
@@ -24,13 +26,13 @@ async function processFile(file : FileObject) {
     let fileObj : FileObject = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = event => {
-            resolve({
+            resolve(new FileObject({
                 // @ts-ignore
                 data: addNameToDataURL(event.target.result, name),
+                mediaType : mediaType,
                 name,
-                size,
-                mediaType : mediaType
-            });
+                size
+            }));
         };
         reader.readAsDataURL(file.data);
     });
@@ -51,27 +53,66 @@ class FileUpload extends Field implements FieldModel {
         });
     }
 
-    private static extractFileInfo(files: string[] | File[]) : FileObject[] {
-        return files
+    private static extractFileInfo(files: string[] | string | File[]) : FileObject[] {
+        return (files instanceof Array ? files : [files])
             .map((file: any) => {
-                if (file instanceof File) {
+                let retVal = null;
+                if (file instanceof FileObject) {
+                    retVal = file;
+                } else if (file instanceof File) {
                     // case: file object
-                    return {
+                    retVal =  {
                         name: file.name,
                         mediaType: file.type,
                         size : file.size,
                         data : file
                     };
-                } else {
+                } else if (typeof file === 'string' && isDataUrl(file as string)) {
                     // case: data URL
-                    const {blob, name} = dataURItoBlob(file);
-                    return {
+                    const {blob, name} = dataURItoBlob(file as string);
+                    retVal =  {
                         name: name,
                         mediaType: blob.type,
                         size : blob.size,
                         data: blob
                     };
+                } else {
+                    // case: string as file object
+                    let jFile = file;
+                    try {
+                        jFile = JSON.parse(file);
+                        retVal = jFile;
+                    } catch(ex) {
+                        // do nothing
+                    }
+                    if (typeof jFile?.data === 'string' && isDataUrl(jFile?.data)) {
+                        // case: data URL
+                        const {blob, name} = dataURItoBlob(jFile?.data);
+                        retVal =  {
+                            name: jFile?.name,
+                            mediaType: jFile?.type,
+                            size : blob.size,
+                            data: blob
+                        };
+                    } else if (typeof jFile === 'string') {
+                        // case: data as external url
+                        retVal = {
+                            name: 'unknown',
+                            mediaType: 'application/octet-stream',
+                            size : 0,
+                            data: jFile
+                        };
+                    } else if (jFile instanceof Object) {
+                        // todo: just added for ease of integration for the view layer
+                        retVal = {
+                            name : jFile?.name,
+                            mediaType : jFile?.type,
+                            size : jFile?.size,
+                            data : jFile?.data
+                        };
+                    }
                 }
+                return new FileObject(retVal);
             });
     }
 
@@ -87,48 +128,50 @@ class FileUpload extends Field implements FieldModel {
         // @ts-ignore
         this.ruleEngine.trackDependency(this);
         if (this._jsonModel.value === undefined) return null;
-        let that = this,
-            val = this._jsonModel.value;
-        // based on type, serialize
+        let val = this._jsonModel.value;
+        // always return file object irrespective of data schema
         if (val != null) {
             // @ts-ignore
             val = this.coerce((val instanceof Array ? val : [val])
                     .map(file => {
-                        if (that.type === 'file' || that.type === 'file[]') {
-                            return {
-                                'name' : file.name, 
-                                'mediaType' : file.mediaType, 
-                                'size' : file.size
+                        let retVal = file;
+                        if (!(retVal instanceof FileObject)) {
+                             retVal = {
+                                'name': file.name,
+                                'mediaType': file.mediaType,
+                                'size': file.size,
+                                'data': file.data
                             };
-                        } else if (that.type === 'string' || that.type === 'string[]') {
-                            // @ts-ignore
-                            return file.name;
                         }
+                        // define serialization here
+                        /*
+                        Object.defineProperty(retVal, 'data', {
+                            get: async function() {
+                                if (file.data instanceof File) {
+                                    return processFile(file);
+                                } else {
+                                    return file.data;
+                                }
+                            }
+                        });
+                        */
+                        return retVal;
                     }));
         }
         return val;
     }
 
     private async _serialize() {
-        let that = this,
-            val = this._jsonModel.value;
+        let val = this._jsonModel.value;
         if (val === undefined) return null;
         // @ts-ignore
         let filesInfo = await processFiles(val instanceof Array ? val : [val]);
-        return filesInfo
-                .map(file => {
-                    if (that.type === 'file' || that.type === 'file[]') {
-                        return file;
-                    } else if (that.type === 'string' || that.type === 'string[]') {
-                        // @ts-ignore
-                        return file.data;
-                    }
-                });
+        return filesInfo;
     }
 
     private coerce(val: any) {
         let retVal = val;
-        if ((this.type === 'string' || this.type === 'file') && val instanceof Array) {
+        if ((this.type === 'string' || this.type === 'file') && retVal instanceof Array) {
             // @ts-ignore
             retVal = val[0];
         }
@@ -145,10 +188,20 @@ class FileUpload extends Field implements FieldModel {
         return {};
     }
 
-    // @ts-ignore
-    async exportData(dataModel: any) {
-        let val = await this._serialize();
-        val = this.coerce(val);
+    exportData(dataModel: any) {
+        //let val = await this._serialize();
+        let that = this;
+        let val : any = this._jsonModel.value;
+        if (val === undefined) return null;
+        let retVal = (val instanceof Array ? val : [val]).map(file => {
+            if (that.type === 'file' || that.type === 'file[]') {
+                return file;
+            } else if (that.type === 'string' || that.type === 'string[]') {
+                // @ts-ignore
+                return file.data.toString();
+            }
+        });
+        val = this.coerce(retVal);
         if (this.dataRef != 'none' && this.dataRef !== undefined) {
             resolve(dataModel, this.dataRef, val);
         } else if (this.dataRef !== 'none') {
@@ -166,8 +219,9 @@ class FileUpload extends Field implements FieldModel {
             data = resolve(parentDataModel, name);
         }
         if (data !== undefined) {
-            // todo: have to implement this
-            this.controller.queueEvent(new Change(FileUpload.extractFileInfo(data)));
+            let fileObj : FileObject[] = FileUpload.extractFileInfo(data);
+            let importedData = this.coerce(fileObj);
+            this.controller.queueEvent(new Change(importedData));
         }
     }
 }

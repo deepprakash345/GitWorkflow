@@ -1,6 +1,7 @@
-import {FieldsetJson, FieldJson, FormModel} from '../types';
+import {FieldsetJson, FieldJson} from '../types';
 import {EmptyController} from '../controller/Controller';
 import RuleEngine from '../rules/RuleEngine';
+import {FileObject} from '../FileObject';
 
 export const getProperty = <P>(data: any, key: string, def: P): P => {
     if (key in data) {
@@ -47,7 +48,7 @@ export function mergeDeep(target: any, ...sources: any[]): any {
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
             if (isObject(source[key])) {
-                if (source[key] instanceof File) {
+                if (source[key] instanceof File || source[key] instanceof FileObject) {
                     Object.assign(target, {[key]: source[key]});
                 } else {
                     if (!target[key]) Object.assign(target, {[key]: {}});

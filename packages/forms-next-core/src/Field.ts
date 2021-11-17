@@ -204,7 +204,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }
     }
 
-    async exportData(dataModel: any) {
+     exportData(dataModel: any) {
         if (this.dataRef != 'none' && this.dataRef !== undefined) {
             resolve(dataModel, this.dataRef, this.value);
         } else if (this.dataRef !== 'none') {

@@ -18,6 +18,11 @@ const isLeapYear = (year: number) => {
     return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
 };
 
+export const isDataUrl = (str : string) => {
+    return dataUrlRegex.exec(str.trim()) != null;
+};
+
+
 export const Constraints = {
     type : (constraint: string, inputVal: any): ValidationResult => {
         let value : any = inputVal;

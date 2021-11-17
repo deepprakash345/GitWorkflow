@@ -1,4 +1,5 @@
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
+const fileSizeRegex =  /^(\d*\.?\d+)(\\?(?=[KMGT])([KMGT])(?:i?B)?|B?)$/i;
 
 export const randomWord = (l: number) => {
     const ret = [];
@@ -7,6 +8,25 @@ export const randomWord = (l: number) => {
         ret.push(chars[randIndex]);
     }
     return ret.join('');
+};
+
+// this works as per IEC specification
+export const getFileSizeInBytes = (str: any) => {
+    let retVal = 0;
+    if (typeof str === 'string') {
+        let matches = fileSizeRegex.exec(str.trim());
+        if (matches != null) {
+            retVal = sizeToBytes(parseFloat(matches[1]), (matches[2] || 'kb').toUpperCase());
+        }
+    }
+    return retVal;
+};
+
+export const sizeToBytes = (size: number, symbol : string) => {
+    let sizes = {'KB' : 1, 'MB' : 2, 'GB' : 3, 'TB' : 4};
+    // @ts-ignore
+    let i = Math.pow(1024, (sizes[symbol] as number));
+    return Math.round(size * i);
 };
 
 export const IdGenerator = function *(initial = 50): Generator<string, void, string> {
