@@ -169,6 +169,7 @@ export const MockForm = ():FormModel => {
         getUniqueId: jest.fn(),
         ruleEngine,
         importData: jest.fn(),
-        id : '$form'
+        id : '$form',
+        getRuleNode: jest.fn()
     };
 };

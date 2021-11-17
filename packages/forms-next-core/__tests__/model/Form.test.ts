@@ -695,3 +695,42 @@ test('fetching element without passing id', async () => {
     expect(emptyController).toBeDefined();
     expect(emptyController).toBeInstanceOf(EmptyController);
 });
+
+test('Rule Node for a Form should have correct hierarchy', async () => {
+    const formJson = create(['f', 'f', 'f']);
+    let form = new Form(formJson, new RuleEngine());
+    const r1 = form.getRuleNode();
+    expect(r1.f1.$name).toEqual('f1');
+    expect(r1.f2.$name).toEqual('f2');
+    expect(r1.f3.$name).toEqual('f3');
+});
+
+test('Rule Node for a Panel should have correct hierarchy', async () => {
+    const formJson = create(['f', ['f', 'f'], 'f']);
+    let form = new Form(formJson, new RuleEngine());
+    const r1 = form.getRuleNode();
+    expect(r1.f1.$name).toEqual('f1');
+    expect(r1.p1.f2.$name).toEqual('f2');
+    expect(r1.p1.f3.$name).toEqual('f3');
+    expect(r1.f2.$name).toEqual('f2');
+});
+
+test('Rule Node for a Panel with type array should have correct hierarchy', async () => {
+    const formJson = {
+        items : [
+            {
+                name : 'panel',
+                type : 'array',
+                items: [
+                    {
+                        name:  'field',
+                        type : 'number'
+                    }
+                ]
+            }
+        ]
+    };
+    let form = new Form(formJson, new RuleEngine());
+    const r1 = form.getRuleNode();
+    expect(r1.panel).toBeInstanceOf(Array);
+});

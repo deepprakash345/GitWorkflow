@@ -210,8 +210,8 @@ test('submit error event should be dispatched if service returns error', async (
     let state = form.getState();
     form.getElementController(state.items[2].id).dispatch(new Click());
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    state = form.getState();
     await checkAfterTimeout(() => {
+        state = form.getState();
         expect(state.items[0].title).toEqual('Form Submission Failed');
     });
 });
@@ -232,4 +232,3 @@ test.skip('submit_form should return {}', async () => {
     f.submit = jest.fn();
     expect(f.getFunctions().submit_form({'$form' : form},'e1', 'e2')).toEqual({});
 });
-

@@ -111,7 +111,7 @@ export const create = (arr: any[], nameMap: { [key:string] : number }  = {p : 1}
     return arr.reduce((items, curr) => {
         let obj:any = {};
         if (curr instanceof  Array) {
-            obj = createObj('p');
+            obj = { type: 'object', ...createObj('p')};
             newNameMap = {
                 ...newNameMap,
                 p : newNameMap.p + 1

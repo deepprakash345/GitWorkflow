@@ -5,10 +5,6 @@ import AFReservedReferenceNode from './ReservedReferenceNode';
 
 export default class AFNodeFactory extends DefaultNodeFactory {
 
-    createPropertyNode(name: string): Node {
-        return new AFPropertyNode(name);
-    }
-
     createReservedReference(name: string): Node {
         return new AFReservedReferenceNode(name);
     }

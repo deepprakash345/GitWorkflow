@@ -22,6 +22,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this._applyDefaults();
         this._controller = _options.form.createController(this);
         this.form.controller.dispatch(new FieldAdded(this));
+        this.setupRuleNode();
     }
 
     private _applyDefaults() {

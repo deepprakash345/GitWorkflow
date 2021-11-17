@@ -56,9 +56,7 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   }
 
   get items() {
-    if (this._hasDynamicItems()) {
-      this.ruleEngine.trackDependency(this);
-    }
+
     return super.items;
   }
 }

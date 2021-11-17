@@ -7,12 +7,12 @@ export default class AFReservedReferenceNode implements Node {
         // do nothing
     }
 
-    search(data: Json, context?: { [p: string]: Json }): Json {
+    search(data: Json, context?: { [p: string]: any }): Json {
         switch (this.name.toLowerCase()) {
             case 'form':
-                return context?.$form || null;
+                return context?.$form.getRuleNode() || null;
             case 'field':
-                return context?.$field || null;
+                return context?.$field.getRuleNode() || null;
             case 'event':
                 return context?.$event || null;
         }

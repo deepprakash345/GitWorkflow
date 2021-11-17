@@ -81,6 +81,10 @@ class Form extends Container<FormJson> implements FormModel {
         return this._controller;
     }
 
+    get type() {
+        return 'object';
+    }
+
     get form(): FormModel {
         return this;
     }

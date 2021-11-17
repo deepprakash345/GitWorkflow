@@ -4,7 +4,8 @@ import {FieldJson} from '../src/types';
 const nock = require('nock');
 
 test('single field form', async () => {
-    const actual = await createFormInstance(oneFieldForm);
+    const form = JSON.parse(JSON.stringify(oneFieldForm));
+    const actual = await createFormInstance(form);
     expect(actual.getState().items[0]).toMatchObject({
         type: 'string',
         viewType: 'text-input',

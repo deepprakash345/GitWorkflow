@@ -15,15 +15,21 @@ import {Action, Change, Controller, Initialize} from './controller/Controller';
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
 
     protected _children: Array<FieldModel | FieldsetModel> = []
+    //@ts-ignore
+    protected _ruleContext: any
     protected _data: any = null
     private _itemTemplate: FieldsetJson | FieldJson | null = null;
+
+    directReferences() {
+        return this._ruleContext;
+    }
 
     //todo : this should not be public
     get items() {
         return this._children;
     }
 
-    protected _hasDynamicItems() {
+    private _hasDynamicItems() {
         return this._itemTemplate != null;
     }
 
@@ -33,6 +39,23 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     protected abstract _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel
 
+    private _addChildToRuleNode(child: any) {
+        const self = this;
+        const name = this.type == 'array' ? child.index + '' : (this.type == 'object') ? child.name || '' : '';
+        if (name.length > 0) {
+            Object.defineProperty(this._ruleContext, name, {
+                get: () => {
+                    if (self._hasDynamicItems()) {
+                        self.ruleEngine.trackDependency(self);
+                    }
+                    return child.getRuleNode();
+                },
+                configurable: true,
+                enumerable: true
+            });
+        }
+    }
+    
     private _addChild(itemJson: FieldJson | ContainerJson, index?: number) {
         if (typeof index !== 'number' || index > this._children.length) {
             index = this._children.length;
@@ -43,6 +66,10 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         };
         //@ts-ignore
         let retVal = this._createChild(itemTemplate, {parent: this});
+        const name = this.type == 'array' ? index + '' : (this.type == 'object') ? retVal.name || '' : '';
+        if (name.length > 0) {
+            this._addChildToRuleNode(retVal);
+        }
         if (index === this._children.length) {
             this._children.push(retVal);
         } else {
@@ -50,6 +77,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             for (let i = index + 1; i < this._children.length; i++) {
                 this._children[i].index = i;
                 this._children[i].controller.dispatch(new Change(undefined));
+                this._addChildToRuleNode(this._children[i]);
             }
         }
         return retVal;
@@ -57,6 +85,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     protected initialize() {
         let items = this._jsonModel.items;
+        this._ruleContext = this._jsonModel.type == 'array' ? [] : {};
         if (this._jsonModel.type == 'array' && items.length === 1) {
             this._itemTemplate = deepClone(items[0]);
             if (typeof (this._jsonModel.minItems) !== 'number') {
@@ -84,6 +113,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             this._jsonModel.maxItems = this._children.length;
             this._jsonModel.initialItems = this._children.length;
         }
+        this.setupRuleNode();
     }
 
     private items2Json() {

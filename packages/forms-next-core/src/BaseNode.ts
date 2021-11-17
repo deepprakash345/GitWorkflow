@@ -1,13 +1,63 @@
 import {BaseJson, ContainerModel, FormModel} from './types';
 import Node from './Node';
 
-export class BaseNode<T extends BaseJson> extends Node<T> {
+export abstract class BaseNode<T extends BaseJson> extends Node<T> {
     private _id: string
+    //@ts-ignore
+    private _ruleNode: any
     public constructor(params: T,
                        //@ts_ignore
                        private _options: {form: FormModel, parent: ContainerModel}) {
         super(params);
         this._id = this.form.getUniqueId();
+    }
+
+    protected setupRuleNode() {
+        this._ruleNode = new Proxy(this.directReferences(), this._proxyHandler());
+    }
+
+    protected directReferences() {
+        return this;
+    }
+
+    getRuleNode() {
+        return this._ruleNode;
+    }
+
+    protected get(target: any, prop: string | Symbol) {
+        if (prop === Symbol.toPrimitive) {
+            return this.valueOf;
+        } else if (typeof(prop) === 'string') {
+            //look for property
+            if (prop.startsWith('$')) {
+                prop = prop.substr(1);
+                //@ts-ignore
+                // return only non functional properties in this object
+                if (typeof this[prop] !== 'function') {
+                    //@ts-ignore
+                    return this[prop];
+                }
+            }
+            //look in the items
+            if (typeof target[prop] !== 'undefined') {
+                return target[prop];
+            }
+            //since currently rule grammar doesn't support '$' for properties. This needs to be removed
+            //@ts-ignore
+            if (typeof this[prop] !== 'function') {
+                //@ts-ignore
+                return this[prop];
+            }
+        }
+    }
+
+    private _proxyHandler = () => {
+        return {
+            get: (target: any, prop: string, receiver: any) => {
+                const value = this.get(target, prop);
+                return value;
+            }
+        };
     }
 
     get id() {
@@ -52,6 +102,10 @@ export class BaseNode<T extends BaseJson> extends Node<T> {
 
     get ruleEngine() {
         return this.form.ruleEngine;
+    }
+
+    ruleNode() {
+
     }
 
     json() {

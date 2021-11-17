@@ -23,6 +23,10 @@ class RuleEngine {
         return res;
     }
 
+    /**
+     * Listen to subscriber for
+     * @param subscriber
+     */
     trackDependency(subscriber: BaseModel) {
         if (this._context && this._context.$field !== undefined) {
             subscriber.controller.dispatch(new AddDependent(this._context.$field));

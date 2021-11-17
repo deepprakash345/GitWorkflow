@@ -68,6 +68,7 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     exportData: (a: any) => any
     index : number
     parent: ContainerModel
+    getRuleNode(): any
 }
 
 export interface FieldModel extends BaseModel,
@@ -89,6 +90,7 @@ export interface ContainerModel extends WithController, ContainerConstraints {
     readonly dataRef?: string;
     isContainer: boolean
     syncDataAndFormModel: (dataModel: any, parentModel: any) => void
+    getRuleNode(): any
 }
 
 export interface FieldsetModel extends BaseModel,
