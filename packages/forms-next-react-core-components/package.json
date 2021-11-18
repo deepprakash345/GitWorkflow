@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-next-react-core-components",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -30,7 +30,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/forms-next-core": "^0.2.4",
+    "@aemforms/forms-next-core": "^0.2.5",
     "sanitize-html": "^2.4.0",
     "styled-components": "^5.2.1"
   },
