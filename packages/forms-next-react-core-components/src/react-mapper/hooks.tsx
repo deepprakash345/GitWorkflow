@@ -20,7 +20,7 @@ export type Handlers = {
  * the rules written for that Field in the Form
  * @param props
  */
-export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, Handlers] {
+export const useRuleEngine = function <T extends FieldJson & {id: string}, P>(props : T): [T, Handlers] {
     const context:IFormContext = useContext(formContext);
     const id = props.id as string;
     const controller = context.controller?.getElementController(id);
@@ -64,8 +64,8 @@ export const useRuleEngine = function <T extends FieldJson, P>(props : T): [T, H
  * @param propsMapper Mapping Field State to Props of the component
  * @param Component The component to render.
  */
-export const useRenderer = function(formFieldState:FieldJson, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
-    const [state, handlers] = useRuleEngine<FieldJson, string>(formFieldState);
+export const useRenderer = function(formFieldState:FieldJson & {id: string}, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
+    const [state, handlers] = useRuleEngine(formFieldState);
     const { formatMessage } = useIntl();
     const res = propsMapper(state, handlers, translateMessage(state, formatMessage));
     const errMessage = state.errorMessage || '';

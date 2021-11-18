@@ -37,7 +37,7 @@ class FunctionRuntimeImpl {
                 if (typeof element === 'string') {
                     context.$form.controller.dispatch(event);
                 } else {
-                    element.controller.dispatch(event);
+                    context.$form.getElement(element.$id).controller.dispatch(event);
                 }
                 return {};
             }

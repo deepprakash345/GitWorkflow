@@ -6,9 +6,7 @@ import {IntlProvider} from 'react-intl';
 
 export const createForm = async (field: any) => {
     const formJson = {
-        'items': {
-            [field.name]: field
-        }
+        'items': [field]
     };
     return await createFormInstance(formJson);
 };

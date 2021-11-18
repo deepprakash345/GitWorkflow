@@ -1,5 +1,4 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser';
-import {jsonString} from './JsonUtils';
 import {FieldJson, FieldsetJson, FormJson} from '../types';
 
 const primitives = ['string', 'boolean', 'number'];
@@ -92,7 +91,7 @@ const fieldSchema = (input: FieldJson | FieldsetJson | FormJson) : any => {
     if ('items' in input) {
         const fieldset = input as FieldsetJson;
         const items = fieldset.items;
-        if (items instanceof Array) {
+        if (fieldset.type === 'array') {
             return {
                 type: 'array',
                 items : fieldSchema(items[0]),
@@ -100,11 +99,11 @@ const fieldSchema = (input: FieldJson | FieldsetJson | FormJson) : any => {
                 maxItems: fieldset?.maxItems
             };
         } else {
-            const iter = Object.entries(items);
+            const iter = items.filter(x => x.name != null);
             return {
                 type: 'object',
-                properties: Object.fromEntries(iter.map(([key, obj]) => [key, fieldSchema(obj)])),
-                required: Object.entries(items).filter(x => x[1].required).map(x => x[0])
+                properties: Object.fromEntries(iter.map(item => [item.name, fieldSchema(item)])),
+                required: iter.filter(x => x.required).map(x => x.name)
             };
         }
     } else {

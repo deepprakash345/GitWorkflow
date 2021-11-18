@@ -1,6 +1,6 @@
 import Container from './Container';
 import {
-    BaseModel, ContainerModel,
+    BaseModel,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -10,8 +10,8 @@ import {
     MetaDataJson
 } from './types';
 import FormMetaData from './FormMetaData';
-import {createChild, Fieldset} from './Fieldset';
-import {Action, Change, Controller, createController} from './controller/Controller';
+import {createChild} from './Fieldset';
+import {Action, Controller, createController} from './controller/Controller';
 import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
@@ -20,25 +20,21 @@ import {splitTokens} from './utils/JsonUtils';
 class Form extends Container<FormJson> implements FormModel {
 
     // @ts-ignore
-    _controller : Controller
+    _controller: Controller
     // @ts-ignore
-    _eventQueue : EventQueue<BaseModel>
-    _fields : Items<FieldsetModel | FieldModel> = {}
+    _eventQueue: EventQueue<BaseModel>
+    _fields: Items<FieldsetModel | FieldModel> = {}
     _ids: Generator<string, void, string>
 
     constructor(n: FormJson, private _ruleEngine: RuleEngine) {
-        super(n);
+        //@ts-ignore
+        super(n, {});
         this._ids = IdGenerator();
         this._data = {};
         this._jsonModel.data = this._data;
         this._eventQueue = new EventQueue<BaseModel>();
         this._controller = createController(this, this._eventQueue)();
         this.initialize();
-        this._jsonModel.id = '$form';
-    }
-
-    get ruleEngine() {
-        return this._ruleEngine;
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
@@ -48,8 +44,8 @@ class Form extends Container<FormJson> implements FormModel {
         return new FormMetaData(metaData);
     }
 
-    protected _createChild(child: FieldsetJson | FieldJson, options : any): FieldModel | FieldsetModel {
-        return createChild(child, this, options);
+    protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
+        return createChild(child, {form: this, parent: this});
     }
 
     createController(elem: FieldModel | FieldsetModel): Controller {
@@ -92,11 +88,26 @@ class Form extends Container<FormJson> implements FormModel {
         return this._controller;
     }
 
+    get type() {
+        return 'object';
+    }
+
     get form(): FormModel {
         return this;
     }
 
+    get id() {
+        return '$form';
+    }
+
+    get ruleEngine() {
+        return this._ruleEngine;
+    }
+
     getUniqueId(): string {
+        if (this._ids == null) {
+            return '';
+        }
         return this._ids.next().value as string;
     }
 
@@ -113,6 +124,10 @@ class Form extends Container<FormJson> implements FormModel {
             return this;
         }
         return this._fields[id];
+    }
+
+    get name() {
+        return '$form';
     }
 }
 

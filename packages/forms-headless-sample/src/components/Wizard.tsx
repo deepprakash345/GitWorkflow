@@ -4,9 +4,9 @@ import formContext from '@aemforms/forms-next-react-core-components/lib/react-ma
 import React, {useContext} from 'react';
 import {renderChildren} from '@aemforms/forms-next-react-core-components/lib/react-mapper/utils';
 import {useRuleEngine} from '@aemforms/forms-next-react-core-components/lib/react-mapper/hooks';
-const Wizard = function (fieldset: FieldsetJson) {
+const Wizard = function (fieldset: FieldsetJson & {id: string}) {
     const mappings = useContext(formContext).mappings;
-    const [props, handlers] = useRuleEngine<FieldsetJson, string>(fieldset);
+    const [props, handlers] = useRuleEngine(fieldset);
 
     if(props.visible) {
         return (<QWizard cancelLabel="Cancel"

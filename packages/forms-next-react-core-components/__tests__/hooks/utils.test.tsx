@@ -10,9 +10,7 @@ const item = {
 
 const parent = {
     'id' : 'parentid',
-    'items' : {
-        'x' : item
-    }
+    'items' : [item]
 };
 
 test('render children with no mappings returns undefined elements', () => {
@@ -29,7 +27,7 @@ test('render children with empty mappings returns undefined elements', () => {
 test('render children with no children', () => {
     const p = {
         ...parent,
-        'items' : {}
+        'items' : []
     };
     const res = renderChildren(p, {}, mockHandler);
     expect(res.length).toEqual(0);
@@ -65,10 +63,10 @@ test('render children with correct mappings', () => {
     };
     const p = {
         ...parent,
-        'items' : {
+        'items' : [
             ...parent.items,
-            x : item
-        }
+            item
+        ]
     };
     const MyComponent = (props: any) => {
         return <div>{props.value}</div>;

@@ -1,4 +1,4 @@
-import {FieldsetJson, FieldJson} from '../types';
+import {FormModel, FieldsetJson, FieldJson} from '../types';
 import {EmptyController} from '../controller/Controller';
 import RuleEngine from '../rules/RuleEngine';
 import {FileObject} from '../FileObject';
@@ -166,7 +166,7 @@ export const splitTokens = function* (id: string) {
 
 const ruleEngine = new RuleEngine();
 
-export const MockForm = () => {
+export const MockForm = ():FormModel => {
     return {
         controller: new EmptyController(),
         createController: jest.fn(),
@@ -174,11 +174,14 @@ export const MockForm = () => {
         exportData: jest.fn(),
         getElement: jest.fn(),
         isContainer: true,
-        items: {},
+        items: [],
         json: jest.fn(),
         syncDataAndFormModel: jest.fn(),
         getUniqueId: jest.fn(),
         ruleEngine,
-        importData: jest.fn()
+        importData: jest.fn(),
+        id : '$form',
+        getRuleNode: jest.fn(),
+        directReferences: jest.fn()
     };
 };

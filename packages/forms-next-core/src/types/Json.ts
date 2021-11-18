@@ -54,7 +54,6 @@ type TranslationBaseJson = {
 
 
 export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
-    'id'?: string;
     'dataRef'?: string;
     'richTextTitle' ?: boolean
     'hideTitle'?: boolean
@@ -83,7 +82,7 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
 }
 
 export type ContainerJson = BaseJson & {
-    'items': (Items<FieldJson | ContainerJson>) | (Array<FieldJson | ContainerJson>)
+    'items': Array<FieldJson | ContainerJson>
     'initialItems'?: number;
     'minItems'?: number;
     'maxItems'?: number;

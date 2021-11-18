@@ -5,33 +5,31 @@ import {
     FieldJson,
     FieldModel,
     FieldsetJson,
-    FieldsetModel, FormModel,
-    Items, RulesJson
+    FieldsetModel,
+    RulesJson
 } from './types';
-import {deepClone, getProperty, resolve} from './utils/JsonUtils';
+import {deepClone, resolve} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {Action, Change, Controller, FieldAdded, Initialize} from './controller/Controller';
+import {Action, Change, Controller, Initialize} from './controller/Controller';
 
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
 
     protected _children: Array<FieldModel | FieldsetModel> = []
+    //@ts-ignore
+    protected _ruleContext: any
     protected _data: any = null
     private _itemTemplate: FieldsetJson | FieldJson | null = null;
 
-    abstract get form() : FormModel
+    directReferences() {
+        return this._ruleContext;
+    }
 
     //todo : this should not be public
     get items() {
-        if (this._jsonModel.items instanceof Array) {
-            return this._children;
-        } else {
-            return Object.fromEntries(this._children.map(c => {
-                return [c.name, c];
-            }));
-        }
+        return this._children;
     }
 
-    protected _hasDynamicItems() {
+    private _hasDynamicItems() {
         return this._itemTemplate != null;
     }
 
@@ -39,25 +37,36 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return true;
     }
 
-    protected abstract _createChild(child: FieldsetJson | FieldJson,
-                                    options : {index: number, parent: ContainerModel}): FieldModel | FieldsetModel
+    protected abstract _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel
 
-    get id() {
-        return this._jsonModel.id || '';
+    private _addChildToRuleNode(child: any) {
+        const self = this;
+        const name = this.type == 'array' ? child.index + '' : (this.type == 'object') ? child.name || '' : '';
+        if (name.length > 0) {
+            Object.defineProperty(this._ruleContext, name, {
+                get: () => {
+                    if (self._hasDynamicItems()) {
+                        self.ruleEngine.trackDependency(self);
+                    }
+                    return child.getRuleNode();
+                },
+                configurable: true,
+                enumerable: true
+            });
+        }
     }
 
     private _addChild(itemJson: FieldJson | ContainerJson, index?: number) {
-        const id = this.form.getUniqueId();
         if (typeof index !== 'number' || index > this._children.length) {
             index = this._children.length;
         }
         const itemTemplate = {
-            id,
             index,
             ...deepClone(itemJson)
         };
         //@ts-ignore
         let retVal = this._createChild(itemTemplate, {parent: this});
+        this._addChildToRuleNode(retVal);
         if (index === this._children.length) {
             this._children.push(retVal);
         } else {
@@ -65,65 +74,50 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             for (let i = index + 1; i < this._children.length; i++) {
                 this._children[i].index = i;
                 this._children[i].controller.dispatch(new Change(undefined));
+                this._addChildToRuleNode(this._children[i]);
             }
         }
-        this.form.controller.dispatch(new FieldAdded(retVal));
         return retVal;
     }
 
     protected initialize() {
         let items = this._jsonModel.items;
-        if (items instanceof Array) {
-            if (items.length === 1) {
-                this._itemTemplate = deepClone(items[0]);
-                if (typeof(this._jsonModel.minItems) !== 'number') {
-                    this._jsonModel.minItems = 0;
-                }
-                if (typeof(this._jsonModel.maxItems) !== 'number') {
-                    this._jsonModel.maxItems = -1;
-                }
-                if (typeof(this._jsonModel.initialItems) !== 'number'){
-                    this._jsonModel.initialItems = 1;
-                }
-                for (let i =0; i < this._jsonModel.initialItems; i++) {
-                    //@ts-ignore
-                    const retVal = this._addChild(this._itemTemplate);
-                    items[i] = {'id' : retVal.id};
-                }
-            } else if (items.length > 1) {
-                items.forEach((item, index) => {
-                    const retVal = this._addChild(item);
-                    //@ts-ignore
-                    items[index] = {'id': retVal.id};
-                });
+        this._ruleContext = this._jsonModel.type == 'array' ? [] : {};
+        if (this._jsonModel.type == 'array' && items.length === 1) {
+            this._itemTemplate = deepClone(items[0]);
+            if (typeof (this._jsonModel.minItems) !== 'number') {
+                this._jsonModel.minItems = 0;
             }
-        } else {
-            Object.entries(items).forEach(([key, item]) => {
-                const name = getProperty(item, 'name', key);
-                item.name = name;
+            if (typeof (this._jsonModel.maxItems) !== 'number') {
+                this._jsonModel.maxItems = -1;
+            }
+            if (typeof (this._jsonModel.initialItems) !== 'number') {
+                this._jsonModel.initialItems = 1;
+            }
+            for (let i = 0; i < this._jsonModel.initialItems; i++) {
+                //@ts-ignore
+                const retVal = this._addChild(this._itemTemplate);
+                //@ts-ignore
+                items[i] = {'id': retVal.id};
+            }
+        } else if (items.length > 0) {
+            items.forEach((item, index) => {
                 const retVal = this._addChild(item);
                 //@ts-ignore
-                this._jsonModel.items[key] = {'id': retVal.id};
+                items[index] = {'id': retVal.id};
             });
-        }
-        if (!(items instanceof Array) || items.length > 1) {
             this._jsonModel.minItems = this._children.length;
             this._jsonModel.maxItems = this._children.length;
             this._jsonModel.initialItems = this._children.length;
         }
+        this.setupRuleNode();
     }
 
     private items2Json() {
-        if (this._jsonModel.items instanceof Array) {
-            return this._children.map(elem => elem.json());
-        } else {
-            return Object.fromEntries(this._children.map(elem => {
-                return [elem.name, elem.json()];
-            }));
-        }
+        return this._children.map(elem => elem.json());
     }
 
-    json(): T {
+    json() {
         return {
             ...super.json(),
             'items': this.items2Json()
@@ -141,7 +135,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 retVal.controller.dispatch(new Change(undefined));
             }
         } else if (action.type === 'RemoveItem' && this._itemTemplate != null) {
-            const index =  action.payload || this._children.length - 1;
+            const index = action.payload || this._children.length - 1;
             //@ts-ignore
             if (this._children.length > this._jsonModel.minItems) {
                 this._children.splice(index, 1);
@@ -158,8 +152,8 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
-    _dispatchActionToItems(context: any, action: Action, items: Items<FieldModel | FieldsetModel> = this.items) {
-        Object.values(items).forEach(x => {
+    _dispatchActionToItems(context: any, action: Action, items: Array<FieldModel | FieldsetModel> = this.items) {
+        items.forEach(x => {
             x.controller.dispatch(action);
         });
     }
@@ -172,7 +166,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             currentDataModel = resolve(dataModel, this._jsonModel.dataRef) || {};
         } else if (this._jsonModel.dataRef === 'none') {
             currentDataModel = contextualDataModel;
-        } else if ((this._jsonModel?.name || '').length > 0){
+        } else if ((this._jsonModel?.name || '').length > 0) {
             currentDataModel = resolve(contextualDataModel, this._jsonModel.name || '') || {};
         }
         this.syncDataAndFormModel(dataModel, currentDataModel, 'importData');
@@ -181,9 +175,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     //todo : empty data models are getting created. We should stop that.
      exportData(dataModel: any) {
         const name = this._jsonModel.name || '';
-        const isArray = this._jsonModel.items instanceof Array;
-        let currentDataModel:any = isArray ? [] : {};
-        for (const x of this._children) {
+        const isArray = this._jsonModel.type === 'array';
+        let currentDataModel: any = isArray ? [] : {};
+         for (const x of this._children) {
             const data = x.exportData(dataModel);
             if (data != undefined) {
                 let name = x.name || '';
@@ -216,8 +210,8 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @param contextualDataModel
      * @param operation
      */
-    syncDataAndFormModel(dataModel : any, contextualDataModel: any, operation: string = 'importData') {
-        let currentData:any = {};
+    syncDataAndFormModel(dataModel: any, contextualDataModel: any, operation: string = 'importData') {
+        let currentData: any = {};
         this._children.forEach(x => {
             if (operation === 'importData') {
                 x.importData(dataModel, contextualDataModel);

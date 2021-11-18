@@ -1,4 +1,4 @@
-import {Json, makeFormula} from '@aemforms/forms-next-expression-parser';
+import {makeFormula} from '@aemforms/forms-next-expression-parser';
 import AFNodeFactory from './AFNodeFactory';
 import FunctionRuntime from './FunctionRuntime';
 import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
@@ -23,6 +23,10 @@ class RuleEngine {
         return res;
     }
 
+    /**
+     * Listen to subscriber for
+     * @param subscriber
+     */
     trackDependency(subscriber: BaseModel) {
         if (this._context && this._context.$field !== undefined) {
             subscriber.controller.dispatch(new AddDependent(this._context.$field));

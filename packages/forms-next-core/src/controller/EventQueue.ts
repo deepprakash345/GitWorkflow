@@ -1,5 +1,4 @@
-import Node from '../Node';
-import {BaseModel, WithController} from '../types';
+import {WithController} from '../types';
 import {Action} from './Controller';
 
 class EventNode<T extends { id: string }> {

@@ -1,19 +1,20 @@
 import Container from './Container';
 import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormModel} from './types';
 import Field from './Field';
-import {isFile} from './utils/JsonUtils';
 import FileUpload from './FileUpload';
+import {FieldAdded} from './controller/Controller';
+import {isFile} from './utils/JsonUtils';
 
-export const createChild = (child: FieldsetJson | FieldJson, form: FormModel, options: {index: number, parent: ContainerModel}) => {
+export const createChild = (child: FieldsetJson | FieldJson, options: {form: FormModel, parent: ContainerModel}) => {
   let retVal: Fieldset | Field;
   if ('items' in child) {
-    retVal = new Fieldset(child as FieldsetJson, form, options);
+    retVal = new Fieldset(child as FieldsetJson, options);
   } else {
     if (isFile(child)) {
       // @ts-ignore
-      retVal = new FileUpload(child as FieldJson, form, options);
+      retVal = new FileUpload(child as FieldJson, options);
     } else {
-      retVal = new Field(child as FieldJson, form, options);
+      retVal = new Field(child as FieldJson, options);
     }
   }
   return retVal;
@@ -27,27 +28,12 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
 
   private _controller;
 
-  public constructor (params: FieldsetJson, private _form: FormModel, private _options: {parent: ContainerModel}) {
-    super(params);
+  public constructor (params: FieldsetJson, _options: {form: FormModel, parent: ContainerModel}) {
+    super(params, _options);
     this.initialize();
     this._applyDefaults();
-    this._controller = this._form.createController(this);
-  }
-
-  get index() {
-    return this._jsonModel.index || 0;
-  }
-
-  set index(n: number) {
-    this._jsonModel.index = n;
-  }
-
-  get parent() {
-    return this._options.parent;
-  }
-
-  get dataRef() {
-    return this._jsonModel.dataRef;
+    this._controller = _options.form.createController(this);
+    this.form.controller.dispatch(new FieldAdded(this));
   }
 
   private _applyDefaults() {
@@ -60,25 +46,16 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
     });
   }
 
-
-  get ruleEngine() {
-    return this._form.ruleEngine;
+  get type() {
+    const ret = super.type;
+    if (ret === 'array' || ret === 'object') {
+      return ret;
+    }
+    return undefined;
   }
 
-  get form(): FormModel {
-    return this._form;
-  }
-
-  get visible () {
-    return this._jsonModel.visible;
-  }
-
-  protected _createChild(child: FieldsetJson | FieldJson, options: any): FieldModel | FieldsetModel {
-    return createChild(child, this.form, options);
-  }
-
-  get name () {
-    return this.getP('name', '');
+  protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
+    return createChild(child, {form: this.form, parent: this});
   }
 
   get controller() {
@@ -86,9 +63,7 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   }
 
   get items() {
-    if (this._hasDynamicItems()) {
-      this.ruleEngine.trackDependency(this);
-    }
+
     return super.items;
   }
 }

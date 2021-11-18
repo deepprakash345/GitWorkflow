@@ -19,6 +19,6 @@ const mapper = combineConvertors(baseConvertor,
     });
 
 
-const ButtonFormComponent = (field: FieldJson) => useRenderer(field, mapper, Button);
+const ButtonFormComponent = (field: FieldJson & {id: string}) => useRenderer(field, mapper, Button);
 
 export default ButtonFormComponent;

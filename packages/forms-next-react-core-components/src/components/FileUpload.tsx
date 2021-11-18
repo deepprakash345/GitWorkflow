@@ -6,7 +6,6 @@ import {baseConvertor, combineConvertors, constraintConvertor} from '../utils/Sp
 import {FileObject} from '@aemforms/forms-next-core/lib/FileObject';
 import {getFileSizeInBytes} from '@aemforms/forms-next-core/lib/utils/FormUtils';
 
-
 const mapper = combineConvertors(baseConvertor, constraintConvertor, (a, b) => {
     // @ts-ignore
     let val = a.value && ((a.value as any instanceof Array) ? a.value : [a.value]).map((x: FileObject) => {
@@ -45,7 +44,7 @@ const FileUploadWrapper = (props: any) => {
 };
 
 
-const FileUploadComponent = function (originalProps: FieldJson) {
+const FileUploadComponent = function (originalProps: FieldJson & {id: string}) {
     return useRenderer(originalProps, mapper, FileUploadWrapper);
 };
 

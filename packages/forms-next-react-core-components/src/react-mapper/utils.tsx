@@ -25,7 +25,7 @@ export const renderChildren = function <T extends ContainerJson>(props: T, mappi
     const maxItems = props.maxItems;
     const minItems = props.minItems;
     if (typeof items === 'object') {
-        const children = Object.values(props.items);
+        const children = props.items;
         return (
                 children.map((child: any) => {
                     const Comp = mappings?.[child.viewType];

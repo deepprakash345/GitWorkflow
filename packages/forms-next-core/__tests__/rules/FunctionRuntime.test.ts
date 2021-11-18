@@ -82,10 +82,11 @@ test('dispatch_event should invoke dispatch API', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     form.dispatch = jest.fn();
-    form.getElementController(formJson.items.f2.id)?.dispatch(new Click());
+    const state = form.getState();
+    form.getElementController(state.items[1].id)?.dispatch(new Click());
     expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, false));
 
-    form.getElementController('f3')?.dispatch(new Click());
+    form.getElementController(state.items[2].id)?.dispatch(new Click());
     expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, true));
 });
 
@@ -109,15 +110,15 @@ test('getData should return the current state of the form data', async () => {
     const f = FunctionRuntime;
     let callback = jest.fn();
     form.subscribe(callback, 'customEvent');
-    form.getElementController(formJson.items.f1.id).dispatch(new Change('value2'));
-    form.getElementController(formJson.items.f3.id).dispatch(new Click());
+    const state = form.getState();
+    form.getElementController(state.items[0].id).dispatch(new Change('value2'));
+    form.getElementController(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         expect(callback.mock.calls[0][0]).matchesAction({
             action : new CustomEvent('customEvent', {'f1' : 'value2'}),
             target : form
         });
     });
-
 });
 
 const API_HOST = 'http://api.aem-forms.com';
@@ -138,8 +139,9 @@ test('submit should send a request to the url configured', async () => {
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    form.getElementController('f1').dispatch(new Change('value2'));
-    form.getElementController('f3').dispatch(new Click());
+    const state = form.getState();
+    form.getElementController(state.items[0].id).dispatch(new Change('value2'));
+    form.getElementController(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         scope.done();
     });
@@ -161,9 +163,10 @@ test('submit success event should be dispatched', async () => {
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    form.getElementController('f1').dispatch(new Change('value2'));
+    const state = form.getState();
+    form.getElementController(state.items[0].id).dispatch(new Change('value2'));
     form.dispatch = jest.fn();
-    form.getElementController('f3').dispatch(new Click());
+    form.getElementController(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {}, true));
     });
@@ -187,11 +190,12 @@ test('submit success event should get executed', async () => {
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    form.getElementController('f2').dispatch(new Click());
+    const state = form.getState();
+    form.getElementController(state.items[1].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         // Will throw an assertion error if meanwhile a "GET/POST" was
         // not performed.
-        expect(form.getState().items.f1.title).toEqual('Thank you for submitting the form');
+        expect(form.getState().items[0].title).toEqual('Thank you for submitting the form');
     });
 });
 
@@ -213,10 +217,12 @@ test('submit error event should be dispatched if service returns error', async (
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    form.getElementController('f3').dispatch(new Click());
+    let state = form.getState();
+    form.getElementController(state.items[2].id).dispatch(new Click());
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await checkAfterTimeout(() => {
-        expect(form.getState().items.f1.title).toEqual('Form Submission Failed');
+        state = form.getState();
+        expect(state.items[0].title).toEqual('Form Submission Failed');
     });
 });
 
@@ -236,4 +242,3 @@ test.skip('submit_form should return {}', async () => {
     f.submit = jest.fn();
     expect(f.getFunctions().submit_form({'$form' : form},'e1', 'e2')).toEqual({});
 });
-
