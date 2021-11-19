@@ -1,7 +1,6 @@
-import {renderChildren} from '../../src/react-mapper/utils';
 import React from 'react';
 import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
-import {mockHandler} from '../utils/spectrumMappers.test';
+import {renderChildren} from '../src';
 
 const item = {
     'id' : 'id',
@@ -11,6 +10,13 @@ const item = {
 const parent = {
     'id' : 'parentid',
     'items' : [item]
+};
+
+export const mockHandler = {
+    dispatchClick: () => {},
+    dispatchChange: (val?: string) => {},
+    dispatchAddItem: (id?: number) => {},
+    dispatchRemoveItem: (id?: number) => {}
 };
 
 test('render children with no mappings returns undefined elements', () => {

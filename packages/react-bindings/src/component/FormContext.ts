@@ -1,4 +1,3 @@
-import defaultMappings from '../mappings';
 import React from 'react';
 import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 
@@ -8,7 +7,7 @@ export type IFormContext = {
 };
 
 const FormContext = React.createContext<IFormContext>({
-    mappings: defaultMappings
+    mappings: {}
 });
 
 export default FormContext;

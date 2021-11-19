@@ -1,7 +1,6 @@
 import { TextField, TextArea } from '@adobe/react-spectrum';
 import {FieldJson} from '@aemforms/forms-next-core';
 import React from 'react';
-import {useRenderer} from '../react-mapper/hooks';
 import {
     baseConvertor,
     combineConvertors,
@@ -9,6 +8,7 @@ import {
     fieldConvertor,
     stringConstraintConvertor
 } from '../utils/SpectrumMappers';
+import {useRenderer} from '@aemforms/forms-next-react-bindings';
 
 const mapper = combineConvertors(baseConvertor,
     fieldConvertor,

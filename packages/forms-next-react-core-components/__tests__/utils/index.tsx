@@ -1,4 +1,4 @@
-import FormContext from '../../src/react-mapper/FormContext';
+import {FormContext} from '@aemforms/forms-next-react-bindings';
 import React from 'react';
 import {createFormInstance} from '@aemforms/forms-next-core/lib';
 import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
@@ -11,7 +11,10 @@ export const createForm = async (field: any) => {
     return await createFormInstance(formJson);
 };
 
-export const Provider = (controller: Controller, mappings: any = {}, locale: string = 'en-US', dictionaries: any = '') => (props: any) => {
+export const Provider = (controller: Controller,
+                         mappings: any = {},
+                         locale: string = 'en-US',
+                         dictionaries: any = '') => (props: any) => {
     const c = {
         controller,
         mappings
@@ -44,23 +47,6 @@ export function filterTestTable<T>(tests: TestCase<T>[]) : TestCase<T>[] {
 export function ignoredTestTable<T>(tests: TestCase<T>[]) :TestCase<T>[] {
     return tests.filter(t => t.x);
 }
-
-export const testController = () : Controller => {
-    return {
-        subscribe : jest.fn().mockReturnValue({
-            unsubscribe: jest.fn()
-        }),
-
-        dispatch : jest.fn(),
-
-        getState : jest.fn(),
-
-        getElementController : jest.fn(),
-
-        queueEvent: jest.fn()
-    };
-};
-
 
 export const randomString = (length: number) => {
     let result           = '';

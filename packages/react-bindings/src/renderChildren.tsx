@@ -1,24 +1,6 @@
 import React from 'react';
 import {ContainerJson} from '@aemforms/forms-next-core/lib';
-import Add from '@spectrum-icons/workflow/Add';
-import Remove from '@spectrum-icons/workflow/Remove';
 import {Handlers} from './hooks';
-import {ActionButton, Flex, ButtonGroup} from '@adobe/react-spectrum';
-
-const repeater = (add: boolean, remove: boolean, index: number, handlers: Handlers) => {
-    return (<ButtonGroup marginStart="1rem" gap="10px">
-        {
-            add ? (<ActionButton onPress={() => handlers.dispatchAddItem(index + 1)} variant="primary">
-                <Add/>
-            </ActionButton>) : ''
-        }
-        {
-            remove ? (<ActionButton onPress={() => handlers.dispatchRemoveItem(index)}>
-                <Remove/>
-            </ActionButton>) : ''
-        }
-    </ButtonGroup>);
-};
 
 export const renderChildren = function <T extends ContainerJson>(props: T, mappings: any, handlers: Handlers) {
     const items = props.items;
@@ -39,14 +21,15 @@ export const renderChildren = function <T extends ContainerJson>(props: T, mappi
                     //@ts-ignore
                     const removeRequired = items.length > minItems;
                     const addRemoveRequired: boolean = addRequired || removeRequired;
+                    const Repeater = mappings.repeater;
                     return (
-                        addRemoveRequired ?
-                            (<Flex direction="row" gap="10" alignItems="end">
-                                <Comp key={child.id} {...child} />
-                                { //@ts-ignore
-                                    repeater(addRequired, removeRequired, child.index, handlers)
-                                }
-                            </Flex>) : <Comp key={child.id} {...child} />);
+                        addRemoveRequired && Repeater !== undefined ?
+                        (<div>
+                            <Repeater add={addRequired} remove={removeRequired} index={child.index} handlers={handlers}/>
+                            <Comp key={child.id} {...child} />
+                        </div>) :
+                        <Comp key={child.id} {...child} />
+                    );
                 })
             );
     } else {

@@ -1,13 +1,13 @@
 import React, {JSXElementConstructor, useEffect} from 'react';
-import {renderChildren} from '../react-mapper/utils';
-import FormContext from '../react-mapper/FormContext';
+import FormContext from './FormContext';
 import {createFormInstance} from '@aemforms/forms-next-core/lib';
 import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@aemforms/forms-next-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
-import {getTranslationMessages} from '../utils/i18n';
+import {getTranslationMessages} from './i18n';
+import {renderChildren} from '../renderChildren';
 
 /**
  * The minimum set of translation config that contains messages for all supported locales.

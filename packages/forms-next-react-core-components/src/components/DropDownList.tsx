@@ -1,6 +1,6 @@
 import {ComboBox, Item} from '@adobe/react-spectrum';
 import {FieldJson} from '@aemforms/forms-next-core';
-import {useRenderer} from '../react-mapper/hooks';
+import {useRenderer} from '@aemforms/forms-next-react-bindings';
 import {
     baseConvertor,
     combineConvertors,

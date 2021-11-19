@@ -1,6 +1,6 @@
 import FileUpload from './fileupload/FileUpload';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
-import {useRenderer} from '../react-mapper/hooks';
+import {useRenderer} from '@aemforms/forms-next-react-bindings';
 import React from 'react';
 import {baseConvertor, combineConvertors, constraintConvertor} from '../utils/SpectrumMappers';
 import {FileObject} from '@aemforms/forms-next-core/lib/FileObject';

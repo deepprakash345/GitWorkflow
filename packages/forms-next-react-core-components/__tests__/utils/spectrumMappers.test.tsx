@@ -1,9 +1,10 @@
-import {baseConvertor, combineConvertors, Convertor, fieldConvertor} from '../../src/utils/SpectrumMappers';
+import {baseConvertor, combineConvertors, fieldConvertor} from '../../src/utils/SpectrumMappers';
 import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 import React from 'react';
 import {resolve} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
+import { Convertor } from '@aemforms/forms-next-react-bindings';
 export const mockHandler = {
     dispatchClick: () => {},
     dispatchChange: (val?: string) => {},

@@ -1,34 +1,7 @@
 import {FieldJson} from '@aemforms/forms-next-core/lib';
-import {Handlers} from '../react-mapper/hooks';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
-import {TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/forms-next-core/lib/utils/TranslationUtils';
-
-export type Convertor<T> = (props: T, handlers: Handlers, localizedProperty: (propName: string) => string) => any
-
-export type FieldJsonConvertor = Convertor<FieldJson>
-
-export const translateMessage = (obj: any, formatMessage: any) => (propName: string) => {
-    // todo: need to handle enumNames in a special manner here
-    let value = obj[propName];
-    if (obj?.[TRANSLATION_ID]?.[propName]) {
-        let identifier = obj?.[TRANSLATION_ID]?.[propName];
-        if (value instanceof Array) {
-            value = value.map((x, index) => {
-                let tempId = `${identifier}${TRANSLATION_TOKEN}${index}`;
-                let temp = formatMessage({'id': tempId});
-                return temp === tempId ? x : temp;
-            });
-        } else {
-            value = obj[propName] ? formatMessage({'id': identifier}) : '';
-            // if id is the value, fall back to the original value
-            if (value === identifier) {
-                value = obj[propName];
-            }
-        }
-    }
-    return value;
-};
+import {Convertor} from '@aemforms/forms-next-react-bindings/lib/hooks';
 
 export const combineConvertors = function <T>(...convertors: Convertor<T>[]) {
     const newConvertor : Convertor<T> = (a,b, f) => {

@@ -1,11 +1,9 @@
 import { Wizard as QWizard } from '@quarry/wizard'
 import {FieldsetJson} from '@aemforms/forms-next-core';
-import formContext from '@aemforms/forms-next-react-core-components/lib/react-mapper/FormContext';
 import React, {useContext} from 'react';
-import {renderChildren} from '@aemforms/forms-next-react-core-components/lib/react-mapper/utils';
-import {useRuleEngine} from '@aemforms/forms-next-react-core-components/lib/react-mapper/hooks';
+import {useRuleEngine, renderChildren, FormContext} from "@aemforms/forms-next-react-bindings";
 const Wizard = function (fieldset: FieldsetJson & {id: string}) {
-    const mappings = useContext(formContext).mappings;
+    const mappings = useContext(FormContext).mappings;
     const [props, handlers] = useRuleEngine(fieldset);
 
     if(props.visible) {
