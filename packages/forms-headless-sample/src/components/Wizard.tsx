@@ -13,7 +13,7 @@ const Wizard = function (fieldset: FieldsetJson & {id: string}) {
                          confirmLabel="Confirm"
                          mode="fullscreen"
                          open
-                         title={props.title}
+                         title={props.label?.value}
                          onClose={function noRefCheck() {
                          }}>
             {renderChildren(props, mappings, handlers)}

@@ -8,7 +8,9 @@ import {FieldJson} from '@aemforms/forms-next-core/lib';
 const field = {
     'name': 'name',
     'value': 'john doe',
-    'title': 'name',
+    label: {
+        value: 'name'
+    },
     'visible' : true
 };
 
@@ -25,10 +27,12 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
-        name : 'html in the title should be handled for non rich text title',
+        name : 'html in the label should be handled for non rich text',
         field: {
             ...field,
-            'title' : '<script>javascript</script><p>title inside p tags</p>'
+            'label' : {
+                value: '<script>javascript</script><p>title inside p tags</p>'
+            }
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(label?.innerHTML).toEqual('&lt;script&gt;javascript&lt;/script&gt;' +
@@ -70,7 +74,10 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name: 'label is null if title is marked as hidden in the field',
         field: {
             ...field,
-            'hideTitle': true
+            label : {
+                ...field.label,
+                visible: false
+            }
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
             expect(label).toBeNull();

@@ -120,7 +120,7 @@ const fieldSchema = (input: FieldJson | FieldsetJson | FormJson) : any => {
             return undefined;
         }
         return {
-            title: field.title,
+            title: field.label?.value,
             description: field.description,
             ...schema
         };

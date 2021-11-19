@@ -541,9 +541,11 @@ test('custom event should pass the payload to the event', async () => {
         }
     }, {
         'f': {
-            'title': 'myfield',
+            'label': {
+                'value' : 'myfield'
+            },
             'events': {
-                'custom:customClick2': '{"value" : $event.target.title}'
+                'custom:customClick2': '{"value" : $event.target.label.value}'
             }
         }
     }]);

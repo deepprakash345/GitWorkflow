@@ -10,7 +10,7 @@ const WizardStep = function (originalProps: FieldsetJson & {id: string}) {
 
     if (props.visible) {
         return (<QWizardStep
-            title={props.title}>
+            title={props.label?.value}>
             <React.Fragment key=".0">
                 {renderChildren(props, mappings, handlers)}
             </React.Fragment>

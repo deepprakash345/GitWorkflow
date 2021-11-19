@@ -8,7 +8,9 @@ import {FieldJson} from '@aemforms/forms-next-core/lib';
 
 const field = {
     'name': 'name',
-    'title': 'name',
+    label : {
+        value : 'name'
+    },
     'visible' : true,
     'type' : 'boolean',
     'enum' : [true],
@@ -21,7 +23,9 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         field : {
             'name': 'name',
             'value': 'john doe',
-            'title': 'name',
+            'label': {
+                'value' : 'name'
+            },
             'visible' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
@@ -40,15 +44,17 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
-        name : 'html in the title should be handled for non rich text title',
+        name : 'html in the label should be handled for non rich text label',
         field: {
             ...field,
-            'title' : '<script>javascript</script><p>title inside p tags</p>'
+            'label' : {
+                'value' : '<script>javascript</script><p>label inside p tags</p>'
+            }
         },
         // eslint-disable-next-line no-unused-vars
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(label?.innerHTML).toContain('&lt;script&gt;javascript&lt;/script&gt;' +
-                '&lt;p&gt;title inside p tags&lt;/p&gt;');
+                '&lt;p&gt;label inside p tags&lt;/p&gt;');
         }
     },
     {
@@ -85,10 +91,13 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
-        name: 'label is null if title is marked as hidden in the field',
+        name: 'label is null if label is marked as invisible in the field',
         field: {
             ...field,
-            'hideTitle': true
+            'label' : {
+                ...field.label,
+                visible: false
+            }
         },
         // eslint-disable-next-line no-unused-vars
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
@@ -156,7 +165,9 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         name : 'a checkbox should not be selected if both value and options are undefined',
         field : {
             'name': 'name',
-            'title': 'name',
+            label : {
+                value : 'name'
+            },
             'visible' : true
         },
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
@@ -201,7 +212,9 @@ ignoredTestTable(labelInputTests).forEach((v) => {
 test('if no options are defined then value cannot be selected', async () => {
     const f = {
         'name' : 'name',
-        'title' : 'name',
+        'label' : {
+            value: 'name'
+        },
         'visible' : true
     };
     const {input, form} = await helper(f);

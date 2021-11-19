@@ -3,6 +3,7 @@ import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 import React from 'react';
+import {resolve} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 export const mockHandler = {
     dispatchClick: () => {},
     dispatchChange: (val?: string) => {},
@@ -39,9 +40,7 @@ test('combineConvertor should return the value after combining all the individua
     expect(Object.keys(res)).toEqual(returnValues.map(x => Object.keys(x)[0]));
     expect(Object.values(res)).toEqual(returnValues.map(x => Object.values(x)[0]));
 });
-const base = {
-    'id' : 'id'
-};
+const base = {};
 
 type Suite = {
     [key: string]: {
@@ -71,20 +70,20 @@ const suites: Suite = {
             outProp: 'isDisabled',
             tests : [[[true,undefined, 'string, null', 1], false], [false, true]]
         },
-        'title' : {
+        'label.value' : {
             func: baseConvertor,
             outProp: 'label',
             tests : [[randomString(4), (inp: any) => inp]]
         },
-        'hideTitle' : {
+        'label.visible' : {
             func: baseConvertor,
-            inProps : {'title' : 'some title'},
+            inProps : {'label' : {value: 'some title'}},
             outProp: 'label',
-            tests : [[true, ''], [[false,undefined, 'string', null, 1], 'some title']]
+            tests : [[false, ''], [[true,undefined, 'string', null, 1], 'some title']]
         },
-        'richTextTitle' : {
+        'label.richText' : {
             func: baseConvertor,
-            inProps : {'title' : '<script>some-title<script>'},
+            inProps : {'label' : {value : '<script>some-title<script>'}},
             outProp: 'label',
             tests : [[[false, undefined, 'string', null, 1], '<script>some-title<script>']]
         }
@@ -111,11 +110,20 @@ Object.keys(suites).forEach((funcName) => {
             return acc;
         }, []);
         test.each(tests)(`${funcName} should handle ${propName} %s`, (inp, out) => {
-            const input = {
-                ...base,
-                ...otherProps,
-                [propName] : inp
-            };
+            let input: any;
+            if (propName.indexOf('.') > -1) {
+                input = {
+                    ...base,
+                    ...otherProps
+                };
+                resolve(input, propName, inp);
+            } else {
+                input = {
+                    ...base,
+                    ...otherProps,
+                    [propName]: inp
+                };
+            }
             const output = {
                 [obj.outProp] : (typeof out === 'function') ? out(inp) : out
             };
@@ -126,7 +134,13 @@ Object.keys(suites).forEach((funcName) => {
 
 test('richTextTitle should strip script tags', () => {
     let html = '<script>text</script><b>text</b>';
-    let state = {...base, 'richTextTitle' : true, 'title': html};
+    let state = {
+        ...base,
+        'label' : {
+            value: html,
+            richText: true
+        }
+    };
     let res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
@@ -135,14 +149,26 @@ test('richTextTitle should strip script tags', () => {
 
 test('richTextTitle should strip onerror attribute in img,video', () => {
     let html = '<img onerror="somejavascript" /><b>text</b>';
-    let state : any = {...base, 'richTextTitle' : true, 'title': html};
+    let state = {
+        ...base,
+        'label' : {
+            value: html,
+            richText: true
+        }
+    };
     let res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
-    state = {...base, 'richTextTitle' : true, 'title': html};
+    state = {
+        ...base,
+        'label' : {
+            value: html,
+            richText: true
+        }
+    };
     html = '<video onerror="somejavascript" /><b>text</b>';
-    res = baseConvertor({...base, 'richTextTitle' : true, 'title': html}, mockHandler, formatMessage(state));
+    res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
@@ -180,7 +206,13 @@ test('description should strip onerror attribute in img,video', () => {
     });
 
     html = '<video onerror="somejavascript" /><b>text</b>';
-    state = {...base, 'richTextTitle' : true, 'title': html};
+    state = {
+        ...base,
+        'label' : {
+            value: html,
+            richText: true
+        }
+    };
     res = baseConvertor(state, mockHandler, formatMessage(state));
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
