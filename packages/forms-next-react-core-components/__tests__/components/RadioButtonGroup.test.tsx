@@ -11,7 +11,9 @@ const field : FieldJson = {
     'name': 'EmploymentStatus',
     'value': true,
     'visible' : true,
-    'title': 'Are you Employed',
+    label : {
+        value : 'Are you Employed'
+    },
     'type' : 'boolean',
     'enum' : [true, false],
     'enumNames' : ['Yes',  'No']
@@ -40,14 +42,16 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         }
     },
     {
-        name : 'html in the title should be handled for non rich text title',
+        name : 'html in the label should be handled for non rich text label',
         field: {
             ...field,
-            'title' : '<script>javascript</script><p>title inside p tags</p>'
+            'label' : {
+                value: '<script>javascript</script><p>label inside p tags</p>'
+            }
         },
         expects: ({group}) => {
             expect(group?.innerHTML).toContain('&lt;script&gt;javascript&lt;/script&gt;' +
-                '&lt;p&gt;title inside p tags&lt;/p&gt;');
+                '&lt;p&gt;label inside p tags&lt;/p&gt;');
         }
     },
     {
@@ -77,10 +81,13 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         }
     },
     {
-        name: 'label is empty if title is marked as hidden in the field',
+        name: 'label is empty if label is marked as hidden in the field',
         field: {
             ...field,
-            'hideTitle': true
+            label : {
+                ...field.label,
+                visible: false
+            }
         },
         expects: ({group}) => {
             expect(group?.textContent).not.toContain('Are you Employed');

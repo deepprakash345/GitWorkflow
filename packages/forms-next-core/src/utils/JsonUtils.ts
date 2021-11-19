@@ -98,7 +98,7 @@ export function resolve(obj: any, dataRef: string, merge: any = undefined) {
         let nextToken = tokens.next();
         if (!nextToken.done) {
             if (tmpData != null) {
-                if (merge) {
+                if (merge !== undefined) {
                     tmpData[token.value] = tmpData[token.value] || {};
                 }
                 tmpData = tmpData[token.value];
@@ -106,7 +106,7 @@ export function resolve(obj: any, dataRef: string, merge: any = undefined) {
 
         } else {
             if (tmpData != null) {
-                if (merge) {
+                if (merge !== undefined) {
                     const existing = tmpData[token.value];
                     if ((typeof existing === 'object') && existing != null && !(typeof existing === 'string')) {
                         if (merge instanceof Array && existing instanceof Array) {

@@ -5,8 +5,8 @@ export type Primitives = string | number | boolean | null;
 
 export type Label = {
     value: string
-    richText: boolean
-    visible: boolean
+    richText?: boolean
+    visible?: boolean
 }
 
 type TranslationConstraintsJson = {
