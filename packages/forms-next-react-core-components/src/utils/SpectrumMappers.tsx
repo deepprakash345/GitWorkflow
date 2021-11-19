@@ -49,14 +49,13 @@ export const richTextString = (stringMsg = '') => {
 };
 
 export const baseConvertor: Convertor<FieldJson> = (a, b, f) => {
-    let localisedTitle =f('title'),
-        localizedDescription = f('description');
+    let localizedDescription = f('description');
 
     return {
         isHidden : a.visible === false,
         name: a.name,
         isDisabled : a.enabled === false,
-        label: a.hideTitle === true ? '' : (a.richTextTitle === true ? richTextString(localisedTitle) : localisedTitle),
+        label: a.label?.visible === true ? '' : (a.label?.richText === true ? richTextString(a.label?.value) : a.label?.value),
         description: (localizedDescription && localizedDescription.length > 0) ? richTextString(localizedDescription) : null
     };
 };

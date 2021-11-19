@@ -1,4 +1,4 @@
-import {FieldJson, FieldsetJson, FormJson, MetaDataJson, Primitives} from './Json';
+import {FieldJson, FieldsetJson, FormJson, Label, MetaDataJson, Primitives} from './Json';
 import {Action, Controller} from '../controller/Controller';
 import RuleEngine from '../rules/RuleEngine';
 
@@ -51,7 +51,7 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     readonly name?: string;
     readonly dataRef?: string;
     readonly id : string
-    title?: string
+    label?: Label
     description?: string
     readOnly?: boolean;
     enabled?: boolean;

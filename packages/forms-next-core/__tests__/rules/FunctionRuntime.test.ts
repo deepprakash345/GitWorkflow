@@ -178,7 +178,7 @@ test('submit success event should get executed', async () => {
         .reply(200, {});
     const formJson = create([{'f' : {
             events : {
-                'custom:event1' : "{title : 'Thank you for submitting the form'}"
+                'custom:event1' : "{label : {value : 'Thank you for submitting the form'}}"
             }
         }}, {'f' : {
             events : {
@@ -195,7 +195,7 @@ test('submit success event should get executed', async () => {
     await checkAfterTimeout(() => {
         // Will throw an assertion error if meanwhile a "GET/POST" was
         // not performed.
-        expect(form.getState().items[0].title).toEqual('Thank you for submitting the form');
+        expect(form.getState().items[0].label.value).toEqual('Thank you for submitting the form');
     });
 });
 
@@ -205,7 +205,7 @@ test('submit error event should be dispatched if service returns error', async (
         .reply(404);
     const formJson = create([{'f' : {
             events : {
-                'custom:event2' : "{title : 'Form Submission Failed'}"
+                'custom:event2' : "{label : {value : 'Form Submission Failed'}}"
             }
         }}, 'f', {'f' : {
             events : {
@@ -222,7 +222,7 @@ test('submit error event should be dispatched if service returns error', async (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await checkAfterTimeout(() => {
         state = form.getState();
-        expect(state.items[0].title).toEqual('Form Submission Failed');
+        expect(state.items[0].label.value).toEqual('Form Submission Failed');
     });
 });
 

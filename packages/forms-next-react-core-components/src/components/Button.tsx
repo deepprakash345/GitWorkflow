@@ -10,9 +10,8 @@ import {
 
 const mapper = combineConvertors(baseConvertor,
     (a: FieldJson, b, f) => {
-        let localisedTitle =f('title');
         return {
-            children : a.hideTitle === true ? '' : (a.richTextTitle === true ? richTextString(localisedTitle) : localisedTitle),
+            children : a.label?.visible === true ? '' : (a.label?.richText === true ? richTextString(a.label?.value) : a.label?.value),
             variant :'primary',
             onPress : b.dispatchClick
         };

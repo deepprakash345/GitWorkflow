@@ -3,6 +3,12 @@ import {propertiesOf} from 'ts-reflection';
 export type Items<T> = { [key: string]: T }
 export type Primitives = string | number | boolean | null;
 
+export type Label = {
+    value: string
+    richText: boolean
+    visible: boolean
+}
+
 type TranslationConstraintsJson = {
     'enumNames'?: string[];
     'enum'?: any[];
@@ -48,15 +54,13 @@ export type RulesJson = {
 }
 
 type TranslationBaseJson = {
-    'title'?: string,
     'description'?: string
 }
 
 
 export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     'dataRef'?: string;
-    'richTextTitle' ?: boolean
-    'hideTitle'?: boolean
+    label?: Label
     'enabled'?: boolean;
     'visible'?: boolean;
     'name'?: string;

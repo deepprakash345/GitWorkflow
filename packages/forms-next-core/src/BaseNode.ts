@@ -104,6 +104,10 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
         return this.form.ruleEngine;
     }
 
+    get label() {
+        return this._jsonModel.label;
+    }
+
     json() {
         return {
             id: this.id,

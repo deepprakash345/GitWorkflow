@@ -60,10 +60,6 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.valid;
     }
 
-    get title() {
-        return this._jsonModel.title;
-    }
-
 
     get enum() {
         return this._jsonModel.enum;
