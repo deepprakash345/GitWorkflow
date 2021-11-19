@@ -56,7 +56,7 @@ function App() {
             })()
         }
         if (Object.keys(formToRender).length > 1) {
-            let path = formToRender?.['_links']?.['i18n']?.['href'];
+            let path = formToRender?.['props:links']?.['i18n']?.['href'];
             fetchFormDictionary(path);
         }
     }, [formToRender])
