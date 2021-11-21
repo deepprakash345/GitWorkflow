@@ -17,7 +17,7 @@ export const createFormInstance = (formModel: any): Promise<Controller> => {
         f.controller.dispatch(new Initialize(undefined, true));
         f.controller.dispatch(new Change(undefined, true));
         return Promise.resolve(f.controller);
-    } catch (e) {
+    } catch (e: any) {
         return Promise.reject(new Error(e));
     }
 };
