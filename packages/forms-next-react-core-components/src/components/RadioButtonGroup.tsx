@@ -1,7 +1,7 @@
 import { RadioGroup, Radio } from '@adobe/react-spectrum';
 import {FieldJson} from '@aemforms/forms-next-core';
 import React from 'react';
-import {useRenderer} from '../react-mapper/hooks';
+import {useRenderer} from '@aemforms/forms-next-react-bindings';
 import {
     baseConvertor,
     combineConvertors,

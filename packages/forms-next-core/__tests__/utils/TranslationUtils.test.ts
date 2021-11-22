@@ -1,9 +1,8 @@
 import {
     addTranslationId,
-    createTranslationObj,
     createTranslationObject,
     TRANSLATION_ID
-} from '../../lib/utils/TranslationUtils';
+} from '../../src/utils/TranslationUtils';
 
 test('returns form model json with translation id present', () => {
     const actual = addTranslationId({

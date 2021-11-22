@@ -1,9 +1,25 @@
 import {renderHook} from '@testing-library/react-hooks';
-import {useRuleEngine} from '../../src/react-mapper/hooks';
-import FormContext from '../../src/react-mapper/FormContext';
+import FormContext from '../../src/component/FormContext';
 import React from 'react';
 import {Controller, Change, Click} from '@aemforms/forms-next-core/lib/controller/Controller';
-import {testController} from '../utils';
+import {useRuleEngine} from '../../src';
+
+export const testController = () : Controller => {
+    return {
+        subscribe : jest.fn().mockReturnValue({
+            unsubscribe: jest.fn()
+        }),
+
+        dispatch : jest.fn(),
+
+        getState : jest.fn(),
+
+        getElementController : jest.fn(),
+
+        queueEvent: jest.fn()
+    };
+};
+
 
 let mockController : Controller;
 

@@ -1,6 +1,5 @@
 // todo: The API's defined in this file could move to a different package later on
-import {FieldJson, FieldsetJson, FormJson, TranslationJson} from '../types';
-import {propertiesOf} from 'ts-reflection';
+import {FieldJson, FieldsetJson, FormJson, TranslationJson, translationProps} from '../types';
 
 export const TRANSLATION_TOKEN : string = '##';
 export const TRANSLATION_ID = 'props:translationIds';
@@ -20,7 +19,6 @@ const defaultBcp47LangTags = [
 ];
 
 export const invalidateTranslation = (input: formElementJson, updates: any) => {
-    let translationProps = propertiesOf<TranslationJson>();
     translationProps.forEach((prop) => {
         if (prop in updates && input?.[TRANSLATION_ID]?.[prop]) {
             delete input?.[TRANSLATION_ID]?.[prop];
@@ -31,7 +29,7 @@ export const invalidateTranslation = (input: formElementJson, updates: any) => {
 export const addTranslationId = (input: formElementJson, additionalTranslationProps : string[] = []) : formElementJson =>  {
     // don't create a schema copy, add it to the existing
     let model = input;
-    let transProps = [...propertiesOf<TranslationJson>(), ...additionalTranslationProps];
+    let transProps = [...translationProps, ...additionalTranslationProps];
     _createTranslationId(model, '', transProps);
     return model;
 };
@@ -91,7 +89,7 @@ const _createTranslationObj = (input: formElementJson, translationObj : object, 
 
 export const createTranslationObj = (input: formElementJson, additionalTranslationProps : string[] = []) : any => {
     let obj = {};
-    let transProps = [...propertiesOf<TranslationJson>(), ...additionalTranslationProps];
+    let transProps = [...translationProps, ...additionalTranslationProps];
     _createTranslationObj(input, obj, transProps as string[]);
     return obj;
 };
@@ -106,7 +104,7 @@ export const createTranslationObj = (input: formElementJson, additionalTranslati
 export const createTranslationObject = (input: formElementJson,
                                         additionalTranslationProps : string[] = [],
                                         bcp47LangTags : string[] = []) : any => {
-    let transProps = [...propertiesOf<TranslationJson>(), ...additionalTranslationProps];
+    let transProps = [...translationProps, ...additionalTranslationProps];
     // create a copy of the input
     let inputCopy = JSON.parse(JSON.stringify(input));
     let obj = createTranslationObj(addTranslationId(inputCopy), transProps as string[]);

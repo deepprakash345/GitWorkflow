@@ -1,4 +1,3 @@
-import {propertiesOf} from 'ts-reflection';
 
 export type Items<T> = { [key: string]: T }
 export type Primitives = string | number | boolean | null;
@@ -110,5 +109,5 @@ export type FormJson = ContainerJson & {
 }
 
 export type TranslationJson = TranslationBaseJson & TranslationFieldJson & TranslationConstraintsJson
-// derive props from the translation type defined, used ttsc for such reflection use-cases
-export const translationProps = propertiesOf<TranslationJson>();
+//ts-reflection works on typescript 3 while we use 4. With latest npm package, this is causing issues
+export const translationProps = ['description', 'placeholder', 'enum', 'enumNames'];

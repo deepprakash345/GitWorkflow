@@ -1,12 +1,11 @@
 import { Flex } from '@adobe/react-spectrum';
 import {FieldsetJson} from '@aemforms/forms-next-core';
-import formContext from '../react-mapper/FormContext';
 import React, {useContext} from 'react';
-import {renderChildren} from '../react-mapper/utils';
-import {useRuleEngine} from '../react-mapper/hooks';
+
+import {useRuleEngine, renderChildren, FormContext} from '@aemforms/forms-next-react-bindings';
 
 const Panel = function (fieldset: FieldsetJson & {id :string}) {
-    const mappings = useContext(formContext).mappings;
+    const mappings = useContext(FormContext).mappings;
     const [props, handlers] = useRuleEngine(fieldset);
 
     if (props.visible) {

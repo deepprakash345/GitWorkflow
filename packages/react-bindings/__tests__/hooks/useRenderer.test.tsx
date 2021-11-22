@@ -1,9 +1,18 @@
-import {Convertor} from '../../src/utils/SpectrumMappers';
-import {useRenderer} from '../../src/react-mapper/hooks';
 import {renderHook} from '@testing-library/react-hooks';
 import React from 'react';
-import {randomString} from '../utils';
 import {IntlProvider} from 'react-intl';
+import {Convertor, useRenderer} from '../../src';
+export const randomString = (length: number) => {
+    let result           = '';
+    let characters       = 'abcdefghijklmnopqrstuvwxyz';
+    let charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+};
+
 it('useRenderer should be able to render any component', () => {
     const TestComp = (props: any) => {
         return <div>{props.someKey}</div>;

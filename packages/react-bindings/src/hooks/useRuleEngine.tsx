@@ -1,9 +1,6 @@
-import {JSXElementConstructor, useContext, useEffect, useState} from 'react';
-import formContext, {IFormContext} from './FormContext';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
-import React from 'react';
-import {Convertor, translateMessage} from '../utils/SpectrumMappers';
-import {useIntl} from 'react-intl';
+import formContext, {IFormContext} from '../component/FormContext';
+import {useContext, useEffect, useState} from 'react';
 import {Action, AddItem, Change, Click, RemoveItem} from '@aemforms/forms-next-core/lib/controller/Controller';
 
 export type Dispatch<T> = (x?: T) => any
@@ -14,6 +11,7 @@ export type Handlers = {
     dispatchRemoveItem: Dispatch<number>
     formatMessage?: any
 }
+
 
 /**
  * Binds the component's state to the Form and dynamically changing it depending upon
@@ -58,19 +56,3 @@ export const useRuleEngine = function <T extends FieldJson & {id: string}, P>(pr
     return [elementState, {dispatchChange, dispatchClick, dispatchAddItem, dispatchRemoveItem}];
 };
 
-/**
- * Binds the component to the Form element whose state is being provided
- * @param formFieldState  The state of the Field received from Adaptive Form Component
- * @param propsMapper Mapping Field State to Props of the component
- * @param Component The component to render.
- */
-export const useRenderer = function(formFieldState:FieldJson & {id: string}, propsMapper: Convertor<any>, Component: JSXElementConstructor<any>)  {
-    const [state, handlers] = useRuleEngine(formFieldState);
-    const { formatMessage } = useIntl();
-    const res = propsMapper(state, handlers, translateMessage(state, formatMessage));
-    const errMessage = state.errorMessage || '';
-    return (<div className={'field'}>
-        <Component {...res} />
-        {errMessage.length > 0 ? <div>{errMessage}</div> : null}
-    </div>);
-};
