@@ -6,6 +6,9 @@
     "publish": {
       "ignoreChanges": ["*.md"],
       "registry": "@adobe:https://artifactory.corp.adobe.com/artifactory/api/npm/npm-aem-release/"
+    },
+    "bootstrap" : {
+      "hoist" : "**"
     }
   },
   "version": "independent"
