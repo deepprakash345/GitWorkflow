@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     FileUploadContainer,
     FormField,
@@ -30,7 +30,6 @@ const FileUpload = ({
                         ...otherProps
                     }) => {
     const fileInputField = useRef(null);
-    const [files, setFiles] = useState(otherProps.default || {});
 
     const handleUploadBtnClick = () => {
         // @ts-ignore
@@ -54,6 +53,16 @@ const FileUpload = ({
         const filesAsArray = convertNestedObjectToArray(files);
         updateFilesCb(filesAsArray);
     };
+
+    const [files, setFiles] = useState({});
+    // add the default values to the initial files checking the size
+    useEffect(() => {
+        if (otherProps?.default != null) {
+            let updatedFiles: any = addNewFiles(convertNestedObjectToArray(otherProps?.default));
+            setFiles(updatedFiles);
+            callUpdateFilesCb(updatedFiles);
+        }
+    }, []);
 
     const handleNewFileUpload = (e: { target: { files: any; }; }) => {
         const { files: newFiles } = e.target;
@@ -88,8 +97,8 @@ const FileUpload = ({
                     onChange={handleNewFileUpload}
                     defaultValue=""
                     disabled={otherProps.isReadOnly || otherProps.isDisabled}
+                    required={otherProps.isRequired}
                     title=""
-                    value=""
                     {...otherProps}
                 />
             </FileUploadContainer>
@@ -105,11 +114,11 @@ const FileUpload = ({
                                 <div>
                                     {isImageFile && file instanceof File &&  (
                                         <ImagePreview
-                                            src={URL.createObjectURL(file)}
+                                            src={URL?.createObjectURL(file)}
                                             alt={`file preview ${index}`}
                                         />
                                     )}
-                                    <FileMetaData isImageFile={isImageFile}>
+                                    <FileMetaData className="file-metadata" isImageFile={isImageFile}>
                                         <span>{file.name}</span>
                                         <aside>
                                             <span>{convertBytesToKB(file.size)} kb</span>
