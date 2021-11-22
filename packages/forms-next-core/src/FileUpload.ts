@@ -1,7 +1,7 @@
 import {resolve} from './utils/JsonUtils';
 import {Change} from './controller/Controller';
 import Field from './Field';
-import {dataURItoBlob} from './utils/FormUtils';
+import {dataURItoBlob, getFileSizeInBytes} from './utils/FormUtils';
 import {isDataUrl} from './utils/ValidationUtils';
 import {FieldModel} from './types';
 import {FileObject} from './FileObject';
@@ -118,7 +118,7 @@ class FileUpload extends Field implements FieldModel {
     }
 
     get maxFileSize() {
-        return this._jsonModel.maxFileSize;
+        return getFileSizeInBytes(this._jsonModel.maxFileSize);
     }
 
     get accept() {
@@ -137,12 +137,12 @@ class FileUpload extends Field implements FieldModel {
                     .map(file => {
                         let retVal = file;
                         if (!(retVal instanceof FileObject)) {
-                             retVal = {
+                             retVal = new FileObject({
                                 'name': file.name,
                                 'mediaType': file.mediaType,
                                 'size': file.size,
                                 'data': file.data
-                            };
+                            });
                         }
                         // define serialization here
                         /*

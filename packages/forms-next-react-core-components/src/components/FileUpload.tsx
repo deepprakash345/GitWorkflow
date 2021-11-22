@@ -26,6 +26,7 @@ const mapper = combineConvertors(baseConvertor, constraintConvertor, (a, b) => {
     }).reduce((a: any, v: { name: any; }) => ({ ...a, [`${v.name}${Math.floor(Math.random() * 10000) + 1}`]: v}), {});
     return {
         isReadOnly : a.readOnly === true,
+        isRequired : a.required === true,
         updateFiles : b.dispatchChange,
         maxFileSizeInBytes : getFileSizeInBytes(a.maxFileSize),
         default : val,
