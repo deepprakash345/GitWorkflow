@@ -1,19 +1,39 @@
-## Introduction
+# Introduction
 
 Client side runtime for Headless Adaptive Form
 
-# Setup npm authentication
+# Usage
 
+Packages contained in this repository are published to the 
+[npm-aem-release](https://artifactory.corp.adobe.com/ui/#/artifacts/browse/simple/General/npm-aem-release) 
+Artifactory in the scope @aemforms. 
+The packages can be consumed as a dependency (i.e. added to the package.json of any project).
+
+Simply add the following to your ~/.npmrc (or .npmrc):
+
+```
+@aemforms:registry=https://artifactory.corp.adobe.com:443/artifactory/api/npm/npm-aem-release/
+//artifactory.corp.adobe.com:443/artifactory/api/npm/npm-adobe-release/:_auth=${NPM_TOKEN}
+```
+
+## Setup npm authentication
+
+A user needs to be authenticated to access packages from the artifactory. 
 Follow the steps mentioned in the 
 [wiki](https://wiki.corp.adobe.com/display/Artifactory/NPM#NPM-authAuthenticatingthenpmClient)
 to authenticate with npm and set the environment variables NPM_AUTH and NPM_EMAIL.
 
-The steps have been put in a script does the same which you can copy paste in your bashrc file or run on terminal
+The script below does the same which can be copied to your bashrc file or can be run on terminal
 ```
 auth=$(curl -s -u${ARTIFACTORY_USER}:${ARTIFACTORY_API_TOKEN} https://artifactory.corp.adobe.com/artifactory/api/npm/auth)
 export NPM_TOKEN=$(echo "${auth}" | grep "_auth" | awk -F " " '{ print $3 }')
 export NPM_EMAIL=$(echo "${auth}" | grep "email" | awk -F " " '{ print $3 }')
 ```
+
+## Versions
+
+Node : 16.13.0+
+NPM: 8.1.0+
 
 The steps in this guide are tested against the latest version of node (Darwin 16.13.0) and npm (8.1.0). 
 If your version is different then please try to upgrade or log an issue to see if that version can be supported.
@@ -49,11 +69,6 @@ installation of Node/NPM
 
 ### Bootstrap
 
-#### SHORTER VERSION
-run `setup.sh` in the top directory
-
-#### Longer Version
-
 Once you have cloned this repository and installed the correct version of Node/NPM, run the following command at the
 root directory of this project 
 
@@ -62,12 +77,7 @@ npm install
 npx lerna bootstrap
 ```
 
-This will install all the dependencies in all the packages and ideally you should be done here. But since we are using 
-react hooks and there is an ongoing issue with the react hooks and lerna monorepo. See the 
-[stackoverflow question](https://stackoverflow.com/questions/62353453/how-to-resolve-multiple-react-apps-to-same-react-package-path-using-webpack-l)
-, [React Issue on Git]((https://github.com/facebook/react/issues/15097)) for more details
-
-We have created a script `setup.sh` that performs all the steps required. Execute it and you should be ready to go.
+We hoist all the packages at the root project.
 
 ## Build
 
@@ -80,12 +90,12 @@ npx lerna run build
 ```
 npx lerna run test
 ```
+
 ## Start the Playground
 
 ```
 npx lerna run start
 ```
-
 
 # Contributing
 

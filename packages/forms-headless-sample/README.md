@@ -3,43 +3,6 @@
 This is a demo site to test the headless feature. It requires a valid AEM Instance either locally or a cloud instance,
 the instructions of both are provided in the below sections
 
-# Try out the Playground locally
-
-The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
-headless demo instance. To run the playground locally execute the following commands in the current directory :
-
-```
-npm install
-npm run start
-```
-
-The playground is dependent on the JSON Files that are hosted on 
-[git](https://git.corp.adobe.com/livecycle/af2-docs/tree/gh-pages/examples) but due to cross origin issue, we have setup
-a proxy that enables it. To start that proxy, clone the [af2-docs](https://git.corp.adobe.com/livecycle/af2-docs/) 
-repository and then run the following commands at the root of that repo
-```
-npm install
-npm run proxy
-```
-
-# Development
-
-## Build the React APP
-
-Since we are using react hooks and there is an ongoing issue with the react hooks and lerna monorepo. See the 
-[stackoverflow question](https://stackoverflow.com/questions/62353453/how-to-resolve-multiple-react-apps-to-same-react-package-path-using-webpack-l)
-, [React Issue on Git]((https://github.com/facebook/react/issues/15097)) for more details
-
-We have created a script `setup.sh` that performs all the steps required. Execute it and you should be ready to go
-
-## Start the React APP
-
-Navigate to `packages/forms-headless-demo` and run the command `npm run start`. 
-You can execute `lerna run start` from the project's root directory as well
-
-Any changes that you would do in the packages, you just need to run the `npm run build` or you can run the build
-command for all the packages at the root using lerna `npx lerna run build`
-
 # Integrate with Local AEM Instance
 
 If you are not interested in integrating with AEM, please ignore this and the next section
