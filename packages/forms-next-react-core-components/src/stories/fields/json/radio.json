@@ -1,0 +1,22 @@
+{
+    "items": {
+        "radio": {
+            "name": "radio",
+            "title": "Radio Group",
+            "type": "string",
+            "viewType": "radio-button",
+            "required": true,
+            "enum": [
+                "in",
+                "usa"
+            ],
+            "enumNames": [
+                "India",
+                "USA"
+            ],
+            "constraintMessages": {
+                "required": "The field is required"
+            }
+        }
+    }
+}

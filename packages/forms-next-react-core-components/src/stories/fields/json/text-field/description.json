@@ -1,0 +1,20 @@
+{
+    "items": {
+        "textInput": {
+            "name": "textInput",
+            "title": "Text input",
+            "description": "Text field description",
+            "type": "string",
+            "viewType": "text-input",
+            "required": true
+        },
+        "textNumber": {
+            "name": "textNumber",
+            "title": "Text Number",
+            "description": "Number field description",
+            "type": "number",
+            "viewType": "number-input",
+            "required": true
+        }
+    }
+}

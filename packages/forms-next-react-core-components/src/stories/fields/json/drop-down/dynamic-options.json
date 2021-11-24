@@ -1,0 +1,14 @@
+{
+    "items": {
+        "dropDown": {
+            "name": "dropDown",
+            "title": "Fetch options from api",
+            "type": "string",
+            "viewType": "drop-down",
+            "events": {
+                "initialize": "request('https://countriesnow.space/api/v0.1/countries', 'GET', null, 'stateSuccess', 'stateError')",
+                "custom:stateSuccess": "{ enum : $event.payload.data[*].country, enumNames: $event.payload.data[*].country }"
+            }
+        }
+    }
+}

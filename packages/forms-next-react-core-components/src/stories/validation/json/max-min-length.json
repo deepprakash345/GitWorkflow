@@ -1,0 +1,12 @@
+{
+    "items": {
+        "textInput": {
+            "name": "textInput",
+            "title": "Text input",
+            "type": "string",
+            "viewType": "text-input",
+            "maxLength": 5,
+            "minLength": 1
+        }
+    }
+}

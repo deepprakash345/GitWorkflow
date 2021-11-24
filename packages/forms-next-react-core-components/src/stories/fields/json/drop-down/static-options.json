@@ -1,0 +1,18 @@
+{
+    "items": {
+        "dropDown": {
+            "name": "dropDown",
+            "title": "Drop Down with static options",
+            "type": "string",
+            "viewType": "drop-down",
+            "enum": [
+                "in",
+                "usa"
+            ],
+            "enumNames": [
+                "India",
+                "USA"
+            ]
+        }
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "items": {
+        "basicdetails": {
+            "name": "basicdetails",
+            "title": "Basic Details",
+            "viewType": "panel",
+            "items": {
+                "firstName": {
+                    "name": "firstName",
+                    "title": "First Name",
+                    "type": "string",
+                    "viewType": "text-input",
+                    "required": true
+                },
+                "lastName": {
+                    "name": "lastName",
+                    "title": "Last Name",
+                    "type": "text",
+                    "viewType": "text-input",
+                    "required": true
+                }
+            }
+        },
+        "contact": {
+            "name": "contact",
+            "title": "contact",
+            "viewType": "panel",
+            "items": {
+                "mobile": {
+                    "name": "mobile",
+                    "title": "Mobile Number",
+                    "type": "string",
+                    "viewType": "number-input",
+                    "required": true
+                }
+            }
+        }
+    }
+}

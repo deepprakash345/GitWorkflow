@@ -1,0 +1,12 @@
+{
+    "items": {
+        "numberInput": {
+            "name": "numberInput",
+            "title": "Number input",
+            "type": "number",
+            "viewType": "number-input",
+            "maximum": 100,
+            "minimum": 1
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "items": {
+        "stringCheckbox": {
+            "name": "stringCheckbox",
+            "title": "String checkbox",
+            "viewType": "checkbox",
+            "type": "string",
+            "enum": [
+                "yes",
+                "no"
+            ]
+        }
+    }
+}

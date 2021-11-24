@@ -1,0 +1,9 @@
+{
+    "items": {
+        "button": {
+            "name": "button",
+            "title": "Button",
+            "viewType": "button"
+        }
+    }
+}

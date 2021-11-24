@@ -1,0 +1,24 @@
+{
+    "items": {
+        "textInput": {
+            "name": "textInput",
+            "title": "Text field",
+            "type": "string",
+            "viewType": "text-input",
+            "events": {
+                "custom:show": "{visible : true()}"
+            },
+            "rules": {
+                "visible": "false"
+            }
+        },
+        "button": {
+            "name": "button",
+            "title": "click me",
+            "viewType": "button",
+            "events": {
+                "click": "dispatch_event($form.textInput, 'show')"
+            }
+        }
+    }
+}
