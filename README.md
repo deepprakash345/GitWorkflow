@@ -97,6 +97,18 @@ npx lerna run test
 npx lerna run start
 ```
 
+## Start the Storybook
+
+```
+npx lerna run storybook
+```
+
+## Build the Storybook
+
+```
+npx lerna run build-storybook
+```
+
 # Contributing
 
 Please raise an issue and a PR.
