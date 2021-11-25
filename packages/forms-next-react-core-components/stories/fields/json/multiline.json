@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "name": "multiline",
+            "label": {
+                "value": "Multiline Text field"
+            },
+            "type": "string",
+            "viewType": "multiline-input",
+            "required": true,
+            "maxLength": 200
+        }
+    ]
+}

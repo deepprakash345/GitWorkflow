@@ -1,0 +1,13 @@
+{
+    "items": [
+        {
+            "name": "textNumber",
+            "label": {
+                "value": "Number input"
+            },
+            "type": "number",
+            "viewType": "number-input",
+            "required": true
+        }
+    ]
+}

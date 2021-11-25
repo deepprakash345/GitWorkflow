@@ -1,0 +1,23 @@
+{
+    "items": [
+        {
+            "name": "checkbox",
+            "type": "boolean",
+            "viewType": "checkbox",
+            "label": {
+                "value": "Select to make the text field required"
+            }
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "viewType": "text-input",
+            "label": {
+                "value": "Text input"
+            },
+            "rules": {
+                "required": "$form.checkbox.value == true"
+            }
+        }
+    ]
+}

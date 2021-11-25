@@ -1,0 +1,48 @@
+{
+    "items": [
+        {
+            "name": "textInput",
+            "type": "string",
+            "viewType": "text-input",
+            "required": true,
+            "label": {
+                "value": "Text input"
+            }
+        },
+        {
+            "name": "numberInput",
+            "type": "string",
+            "viewType": "number-input",
+            "required": true,
+            "label": {
+                "value": "Number input"
+            }
+        },
+        {
+            "name": "dropDown",
+            "type": "string",
+            "viewType": "drop-down",
+            "required": true,
+            "label": {
+                "value": "select field"
+            },
+            "enum": [
+                "in",
+                "usa"
+            ],
+            "enumNames": [
+                "India",
+                "USA"
+            ]
+        },
+        {
+            "name": "checkbox",
+            "type": "boolean",
+            "viewType": "checkbox",
+            "required": true,
+            "label": {
+                "value": "checkbox"
+            }
+        }
+    ]
+}
