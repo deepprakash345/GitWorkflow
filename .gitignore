@@ -196,3 +196,4 @@ lib/
 # For deployment to git pages
 tmp-dist/
 dist/
+tmp-story/
