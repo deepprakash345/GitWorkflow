@@ -63,7 +63,6 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
   }
 
   get items() {
-
     return super.items;
   }
 }

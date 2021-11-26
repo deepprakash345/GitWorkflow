@@ -147,6 +147,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh "npm run publish-story"
                     sh "git pull ${GIT_REPO_URL}"
                     runDocker('npx lerna run build --scope=forms-headless-sample')
                     sh 'mkdir tmp-dist'

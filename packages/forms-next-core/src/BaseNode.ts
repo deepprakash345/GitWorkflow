@@ -24,7 +24,7 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
         return this._ruleNode;
     }
 
-    protected get(target: any, prop: string | Symbol) {
+    private get(target: any, prop: string | Symbol) {
         if (prop === Symbol.toPrimitive) {
             return this.valueOf;
         } else if (typeof(prop) === 'string') {

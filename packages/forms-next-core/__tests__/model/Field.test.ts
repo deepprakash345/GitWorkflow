@@ -24,6 +24,12 @@ test('a field should add all the default values in its json', () => {
         type: 'string',
         enabled : true
     });
+
+    expect(f.visible).toEqual(true);
+    expect(f.ruleEngine).toEqual(form.ruleEngine);
+    expect(f.readOnly).toEqual(false);
+    expect(f.enabled).toEqual(true);
+
 });
 
 test('a field should set the value correctly in its json from default value', () => {

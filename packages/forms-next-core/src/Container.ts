@@ -11,6 +11,7 @@ import {
 import {deepClone, resolve} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
 import {Action, Change, Controller, Initialize} from './controller/Controller';
+import {resolveData, Token, tokenize} from './utils/DataRefParser';
 
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
 
@@ -18,7 +19,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     //@ts-ignore
     protected _ruleContext: any
     protected _data: any = null
+    private _parentData: any = null;
     private _itemTemplate: FieldsetJson | FieldJson | null = null;
+    private _tokens: Token[] = []
 
     directReferences() {
         return this._ruleContext;
@@ -41,14 +44,20 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     private _addChildToRuleNode(child: any) {
         const self = this;
-        const name = this.type == 'array' ? child.index + '' : (this.type == 'object') ? child.name || '' : '';
+        //the child has not been added to the array, hence using the length as new index
+        const name = this.type == 'array' ? this._children.length + '' : (this.type == 'object') ? child.name || '' : '';
         if (name.length > 0) {
             Object.defineProperty(this._ruleContext, name, {
                 get: () => {
-                    if (self._hasDynamicItems()) {
-                        self.ruleEngine.trackDependency(self);
+                    if (child.isContainer && child._hasDynamicItems()) {
+                        self.ruleEngine.trackDependency(child); //accessing dynamic panel directly
                     }
-                    return child.getRuleNode();
+                    if (self._hasDynamicItems()) {
+                        self.ruleEngine.trackDependency(self); //accessing a child of dynamic panel
+                        return this._children[name];
+                    } else {
+                        return child.getRuleNode();
+                    }
                 },
                 configurable: true,
                 enumerable: true
@@ -74,7 +83,6 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             for (let i = index + 1; i < this._children.length; i++) {
                 this._children[i].index = i;
                 this._children[i].controller.dispatch(new Change(undefined));
-                this._addChildToRuleNode(this._children[i]);
             }
         }
         return retVal;
@@ -92,7 +100,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 this._jsonModel.maxItems = -1;
             }
             if (typeof (this._jsonModel.initialItems) !== 'number') {
-                this._jsonModel.initialItems = 1;
+                this._jsonModel.initialItems = Math.max(1, this._jsonModel.minItems);
             }
             for (let i = 0; i < this._jsonModel.initialItems; i++) {
                 //@ts-ignore
@@ -144,6 +152,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 this._children[i].index = i;
                 this._children[i].controller.dispatch(new Change(undefined));
             }
+            this._ruleContext.pop();
             trigger(new Change(undefined));
         }
         super.executeAction(action, context, trigger);
@@ -161,15 +170,30 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     abstract get controller(): Controller;
 
     importData(dataModel: any, contextualDataModel?: any) {
-        let currentDataModel = null;
-        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
-            currentDataModel = resolve(dataModel, this._jsonModel.dataRef) || {};
-        } else if (this._jsonModel.dataRef === 'none') {
-            currentDataModel = contextualDataModel;
-        } else if ((this._jsonModel?.name || '').length > 0) {
-            currentDataModel = resolve(contextualDataModel, this._jsonModel.name || '') || {};
+        const type = this._jsonModel.type;
+        const instance = type === 'array' ? [] : {};
+        const dataRef = this._jsonModel.dataRef;
+        if (dataRef === null) {
+            this._data = null;
+        } else if (dataRef !== undefined) {
+            if (this._tokens.length === 0) {
+                this._tokens = tokenize(dataRef);
+            }
+            const {result, parent} = resolveData(dataModel, this._tokens, instance);
+            this._data = result;
+            this._parentData = parent;
+        } else {
+            if (contextualDataModel != null) {
+                this._parentData = contextualDataModel;
+                const name = this._jsonModel.name || '';
+                const key = contextualDataModel instanceof Array ? this.index : name;
+                if (key !== '') {
+                    this._data = this._parentData[key] || instance;
+                    this._parentData[key] = this._data;
+                }
+            }
         }
-        this.syncDataAndFormModel(dataModel, currentDataModel, 'importData');
+        this.syncDataAndFormModel(dataModel, this._data, 'importData');
     }
 
     //todo : empty data models are getting created. We should stop that.
@@ -182,7 +206,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             if (data != undefined) {
                 let name = x.name || '';
                 let dataRef = x.dataRef || '';
-                if (dataRef === 'none') {
+                if (dataRef === null) {
                     if (isArray && data instanceof Array) {
                         currentDataModel = [...currentDataModel, ...data];
                     } else if (!isArray) {
@@ -211,7 +235,26 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @param operation
      */
     syncDataAndFormModel(dataModel: any, contextualDataModel: any, operation: string = 'importData') {
-        let currentData: any = {};
+        if (this._data instanceof Array && this._itemTemplate != null) {
+            const dataLength = this._data.length;
+            const itemsLength = this._children.length;
+            const maxItems = this._jsonModel.maxItems === -1 ? dataLength : this._jsonModel.maxItems;
+            const minItems = this._jsonModel.minItems;
+            //@ts-ignore
+            let items2Add = Math.min(dataLength - itemsLength, maxItems - itemsLength);
+            //@ts-ignore
+            let items2Remove = Math.min(itemsLength - dataLength, itemsLength - minItems);
+            while (items2Add > 0) {
+                items2Add--;
+                this._addChild(this._itemTemplate);
+            }
+            if (items2Remove > 0) {
+                this._children.splice(dataLength, items2Remove);
+                for (let i = 0; i < items2Remove; i++) {
+                    this._ruleContext.pop();
+                }
+            }
+        }
         this._children.forEach(x => {
             if (operation === 'importData') {
                 x.importData(dataModel, contextualDataModel);

@@ -8,8 +8,16 @@ import Form from '../../src/Form';
 test('fetch an element from form', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = new Form(formJson, new RuleEngine());
+    expect(form.name).toEqual('$form');
     const f1 = form.getElement(form.items[0].id) as FieldModel;
     expect(f1?.name).toEqual('f1');
+});
+
+test('fetch a panel from form', async () => {
+    const formJson = create(['f', [['f', 'f'], 'f', 'f'], 'f']);
+    let form = new Form(formJson, new RuleEngine());
+    const f1 = form.getElement(form.items[1].id);
+    expect(f1.isContainer).toEqual(true);
 });
 
 test('fetch a nested element from form', async () => {
@@ -560,11 +568,11 @@ test('custom event should pass the payload to the event', async () => {
 
 });
 
-test('dataRef none should not update the data dom', async () => {
+test('dataRef null should not update the data dom', async () => {
     const formJson = create([{
         'f': {
             'type' : 'number',
-            'dataRef' : 'none'
+            'dataRef' : null
         }
     }]);
     let form = await createFormInstance(formJson);

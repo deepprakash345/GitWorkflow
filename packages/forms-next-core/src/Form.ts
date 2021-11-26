@@ -54,7 +54,7 @@ class Form extends Container<FormJson> implements FormModel {
     importData(dataModel: any) {
         this._data = {...dataModel};
         this._jsonModel.data = this._data;
-        this.syncDataAndFormModel(this._data, this._data);
+        this.syncDataAndFormModel(this._data, this._data, 'importData');
         this._eventQueue.runPendingQueue();
     }
 

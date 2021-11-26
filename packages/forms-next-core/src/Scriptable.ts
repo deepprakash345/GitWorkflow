@@ -56,46 +56,6 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         }).filter(x => x.length == 2));
     }
 
-    private getSiblings() {
-        if (typeof this.parent === 'undefined') { //when this is form
-            return undefined;
-        }
-        if (this.parent.type === 'array') {
-            let parent = this.parent as FieldsetModel;
-            let name = parent.name || '';
-            while (name.length == 0) {
-                parent = parent.parent as FieldsetModel;
-                name = parent.name || '';
-            }
-            return {
-                name: parent.getRuleNode()
-            };
-        } else if (this.parent.type === 'object') {
-            let obj:any = {};
-            let parent = this.parent as FieldsetModel;
-            let name = parent.name || '';
-            let parents = [parent];
-            while (name.length == 0) {
-                parent = parent.parent as FieldsetModel;
-                name = parent.name || '';
-                if (parent.type !== 'array') {
-                    parents.push(parent);
-                }
-            }
-            obj[name] = parent.getRuleNode();
-            while (parents.length > 0) {
-                parent = parents.pop() as FieldsetModel;
-                parent.items
-                    .filter(p => (p.name || '').length > 0)
-                    .forEach( x => {
-                        //@ts-ignore
-                        obj[x.name] = x.getRuleNode();
-                    });
-            }
-            return obj;
-        }
-    }
-
     private getExpressionScope() {
         const target = {
             self: this.getRuleNode(),

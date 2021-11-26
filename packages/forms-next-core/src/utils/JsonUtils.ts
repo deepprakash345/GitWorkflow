@@ -15,7 +15,6 @@ export const getProperty = <P>(data: any, key: string, def: P): P => {
     return def;
 };
 
-
 export const undefinedValueFilter = ([key, value]: [string, any]) => value !== undefined;
 
 export const filterProps = (data: any, filterFn: (x: [string, any]) => boolean) => {
@@ -163,6 +162,7 @@ export const splitTokens = function* (id: string) {
         } while (match != null);
     }
 };
+
 
 const ruleEngine = new RuleEngine();
 

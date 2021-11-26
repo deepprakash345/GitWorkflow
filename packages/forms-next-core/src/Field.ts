@@ -4,6 +4,7 @@ import {Constraints} from './utils/ValidationUtils';
 import {Change, Controller, FieldAdded} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
+import {resolveData, Token, tokenize} from './utils/DataRefParser';
 
 //todo: move to a single place in Model.ts or Json.ts
 const defaults = {
@@ -15,7 +16,8 @@ const defaults = {
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
     private _controller: Controller;
-
+    private _tokens: Token[] = []
+    private _parentData: any = null;
     public constructor(params: FieldJson,
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);
@@ -60,7 +62,6 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.valid;
     }
 
-
     get enum() {
         return this._jsonModel.enum;
     }
@@ -78,10 +79,6 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
 
     toString() {
         return this._jsonModel.value?.toString() || '';
-    }
-
-    get ruleEngine() {
-        return this.form.ruleEngine;
     }
 
     private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
@@ -152,23 +149,44 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._controller;
     }
 
-    importData(dataModel: any, parentDataModel: any) {
+    importData(dataModel: any, contextualDataModel: any) {
         let data: any;
-        const name = this.name || '';
-        if (this.dataRef != 'none' && this.dataRef !== undefined) {
-            data = resolve(dataModel, this.dataRef);
-        } else if (this.dataRef !== 'none' && name.length > 0) {
-            data = resolve(parentDataModel, name);
+        const curValue = this.value;
+        const dataRef = this._jsonModel.dataRef;
+        let key: string|number = '';
+        if (dataRef === null) {
+            //do nothing
+        } else if (dataRef !== undefined) {
+            if (this._tokens.length === 0) {
+                this._tokens = tokenize(dataRef);
+            }
+            const {result, parent} = resolveData(dataModel, this._tokens);
+            this._parentData = parent;
+            key = this._tokens.slice(-1)[0].value;
+            data = result;
+        } else {
+            if (contextualDataModel != null) {
+                this._parentData = contextualDataModel;
+                const name = this._jsonModel.name || '';
+                key = contextualDataModel instanceof Array ? this.index : name;
+                data = this._parentData[key];
+            }
+        }
+        if (key !== '') {
+            if (data == null) {
+                this._parentData[key] = curValue;
+            }
+            data = this._parentData[key];
         }
         if (data !== undefined) {
             this.controller.queueEvent(new Change(data));
         }
     }
 
-     exportData(dataModel: any) {
-        if (this.dataRef != 'none' && this.dataRef !== undefined) {
+    exportData(dataModel: any) {
+        if (this.dataRef != null) {
             resolve(dataModel, this.dataRef, this.value);
-        } else if (this.dataRef !== 'none') {
+        } else if (this.dataRef !== null) {
             return this.value;
         }
     }
