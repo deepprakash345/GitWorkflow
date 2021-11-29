@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-next-react-core-components",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -30,8 +30,8 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/forms-next-core": "^0.2.8",
-    "@aemforms/forms-next-react-bindings": "^0.1.1",
+    "@aemforms/forms-next-core": "^0.2.9",
+    "@aemforms/forms-next-react-bindings": "^0.1.2",
     "sanitize-html": "^2.4.0",
     "styled-components": "^5.2.1"
   },
