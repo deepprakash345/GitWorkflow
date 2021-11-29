@@ -1,3 +1,4 @@
+import {FileObject} from '../FileObject';
 import {isFile} from './JsonUtils';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
@@ -16,15 +17,27 @@ export const getAttachments = (input : any) : any=> {
     return Object.keys(input).reduce((acc, curr) => {
         const objValue = input[curr];
         let ret = null;
-        if(objValue && objValue instanceof Object) {
+        if(objValue && ((objValue instanceof Object && !Array.isArray(objValue)) && !(objValue instanceof FileObject))) {
             ret = getAttachments(objValue);
-        } else if(objValue && objValue instanceof Array) {
-            ret = getAttachments(objValue[0]);
+        } else if(objValue && objValue instanceof Array && objValue.length && !(objValue[0] instanceof FileObject)) {
+            ret = getAttachments(objValue);
         } else {
             const f1 = input;
-            if (f1?.value && isFile(f1)) {
+            if (f1?.value && curr === 'value' && isFile(f1)) {
                 ret = {}; // @ts-ignore
-                ret[f1.id] = f1.value;
+                let dataRef = (f1.dataRef !== 'none' && f1.dataRef !== undefined)
+                    ? f1.dataRef
+                    : ((f1.dataRef !== 'none' && f1.name.length > 0) ? f1.name : undefined);
+                if (f1.value instanceof Array) {
+                    // @ts-ignore
+                    ret[f1.id] = f1.value.map((x) => {
+                        return {...x, 'dataRef': dataRef};
+                    });
+                } else {
+                    // @ts-ignore
+                    ret[f1.id] = {...f1.value, 'dataRef': dataRef};
+                }
+
             }
         }
         return Object.assign(acc, ret);

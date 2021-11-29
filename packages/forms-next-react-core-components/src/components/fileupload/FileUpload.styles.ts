@@ -171,9 +171,12 @@ export const FileMetaData = styled.div`
 
 export const RemoveFileIcon = styled.i`
   cursor: pointer;
-
   &:hover {
     transform: scale(1.3);
+  }
+  &:after {
+    display: inline-block;
+    content: "\\00d7"; /* This will render the 'X' */
   }
 `;
 
