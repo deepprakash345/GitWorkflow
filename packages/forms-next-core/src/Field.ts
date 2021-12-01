@@ -1,7 +1,7 @@
-import {ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel} from './types';
-import {jsonString, resolve} from './utils/JsonUtils';
+import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel} from './types';
+import {resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
-import {Change, Controller, FieldAdded} from './controller/Controller';
+import {propertyChange} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
 import {resolveData, Token, tokenize} from './utils/DataRefParser';
@@ -15,15 +15,12 @@ const defaults = {
 };
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
-    private _controller: Controller;
     private _tokens: Token[] = []
     private _parentData: any = null;
     public constructor(params: FieldJson,
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);
         this._applyDefaults();
-        this._controller = _options.form.createController(this);
-        this.form.controller.dispatch(new FieldAdded(this));
         this.setupRuleNode();
     }
 
@@ -54,8 +51,20 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.readOnly;
     }
 
+    set readOnly(e) {
+        if (e !== this._jsonModel.readOnly) {
+            const changeAction = propertyChange('readOnly', e, this._jsonModel.enum);
+            this._jsonModel.readOnly = e;
+            this.notifyDependents(changeAction);
+        }
+    }
+
     get enabled() {
         return this._jsonModel.enabled;
+    }
+
+    set enabled(e) {
+        this._jsonModel.enabled = e;
     }
 
     get valid() {
@@ -66,10 +75,43 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.enum;
     }
 
+    set enum(e) {
+        if (e !== this._jsonModel.enum) {
+            const changeAction = propertyChange('enum', e, this._jsonModel.enum);
+            this._jsonModel.enum = e;
+            this.notifyDependents(changeAction);
+        }
+    }
+
+    get enumNames() {
+        return this._jsonModel.enumNames;
+    }
+
+    set enumNames(e) {
+        if (e !== this._jsonModel.enumNames) {
+            const changeAction = propertyChange('enum', e, this._jsonModel.enumNames);
+            this._jsonModel.enumNames = e;
+            this.notifyDependents(changeAction);
+        }
+    }
+
     get value() {
         this.ruleEngine.trackDependency(this);
         if (this._jsonModel.value === undefined) return null;
         else return this._jsonModel.value;
+    }
+
+    set value(v) {
+        const res = this.checkInput(v);
+        if (res.value !== this._jsonModel.value) {
+            const curr = this._jsonModel.value;
+            this._jsonModel.valid = res.valid;
+            this._jsonModel.errorMessage = res.errorMessage;
+            this._jsonModel.value = res.value;
+            const changeAction = propertyChange('value', res.value, curr);
+            this.dispatch(changeAction);
+            this.form.getEventQueue().runPendingQueue();
+        }
     }
 
     valueOf() {
@@ -137,16 +179,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return elem;
     }
 
-    protected handleValueChange(payload: any) {
-        if (payload !== undefined) {
-            //todo : set empty string to `empty` value
-            return this.checkInput(payload != null ? typeof payload == 'object' ? jsonString(payload) : payload.toString() : null);
-        }
-        return {};
-    }
-
-    get controller() {
-        return this._controller;
+    change(event: Action, context: any) {
+        //this.executeAllRules(context);
     }
 
     importData(dataModel: any, contextualDataModel: any) {
@@ -178,16 +212,14 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             }
             data = this._parentData[key];
         }
-        if (data !== undefined) {
-            this.controller.queueEvent(new Change(data));
-        }
+        this._jsonModel.value = data;
     }
 
     exportData(dataModel: any) {
         if (this.dataRef != null) {
-            resolve(dataModel, this.dataRef, this.value);
+            resolve(dataModel, this.dataRef, this._jsonModel.value);
         } else if (this.dataRef !== null) {
-            return this.value;
+            return this._jsonModel.value;
         }
     }
 }

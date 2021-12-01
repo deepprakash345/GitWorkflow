@@ -1,7 +1,7 @@
 import {jsonString} from '../utils/JsonUtils';
 import {CustomEvent, Submit} from '../controller/Controller';
 import {request as fRequest, RequestOptions} from '../utils/Fetch';
-import {FileObject} from "../FileObject";
+import {FileObject} from '../FileObject';
 
 declare var window: any;
 
@@ -35,9 +35,9 @@ class FunctionRuntimeImpl {
                 }
                 const event = new CustomEvent(eventName, payload, dispatch);
                 if (typeof element === 'string') {
-                    context.$form.controller.dispatch(event);
+                    context.$form.dispatch(event);
                 } else {
-                    context.$form.getElement(element.$id).controller.dispatch(event);
+                    context.$form.getElement(element.$id).dispatch(event);
                 }
                 return {};
             }
@@ -66,10 +66,10 @@ class FunctionRuntimeImpl {
         } catch (e) {
             //todo: define error payload
             console.log('error handled');
-            context.$form.controller.dispatch(new CustomEvent(error, {}, true));
+            context.$form.dispatch(new CustomEvent(error, {}, true));
             return;
         }
-        context.$form.controller.dispatch(new CustomEvent(success, result, true));
+        context.$form.dispatch(new CustomEvent(success, result, true));
     }
 
     private validate (context: any) {
@@ -77,16 +77,16 @@ class FunctionRuntimeImpl {
     }
 
     private getData (context: any) {
-        return context.$form.controller.getState().data;
+        return context.$form.getState().data;
     }
 
     async submit(context: any, success: string, error: string) {
         // todo have to implement validate here
         this.validate(context);
         const endpoint = context.$form.metaData?.action;
-        const data = jsonString(context.$form.controller.getState().data);
+        const data = jsonString(context.$form.getState().data);
         // todo: have to implement sending of attachments here
-        const attachments = context.$form.controller.getState().attachments;
+        const attachments = context.$form.getState().attachments;
         const formData = new FormData();
         formData.append(':data', data);
         formData.append(':contentType', 'application/json');

@@ -3,7 +3,6 @@ import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
 import {AdaptiveForm} from "@aemforms/forms-next-react-bindings";
-import {Action} from "@aemforms/forms-next-core/lib/controller/Controller";
 import {jsonString} from "@aemforms/forms-next-core/lib/utils/JsonUtils";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
@@ -12,6 +11,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import {TabList, TabPanels, Tabs, Item} from '@adobe/react-spectrum'
 import {useLocale} from '@react-aria/i18n';
 import {exportDataSchema} from "@aemforms/forms-next-core/lib/utils/SchemaUtils";
+import {Action} from "@aemforms/forms-next-core/lib";
 
 let currentForm:any = null
 let currentConfig: any = null;

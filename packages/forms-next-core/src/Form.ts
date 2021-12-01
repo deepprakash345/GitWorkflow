@@ -1,54 +1,43 @@
 import Container from './Container';
 import {
-    BaseModel,
+    Action, BaseModel,
     FieldJson,
     FieldModel,
     FieldsetJson,
     FieldsetModel,
     FormJson,
-    FormModel, Items,
-    MetaDataJson
+    FormModel, Items
 } from './types';
 import FormMetaData from './FormMetaData';
 import {createChild} from './Fieldset';
-import {Action, Controller, createController} from './controller/Controller';
 import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
+import {BaseNode} from './BaseNode';
 
 class Form extends Container<FormJson> implements FormModel {
 
-    // @ts-ignore
-    _controller: Controller
-    // @ts-ignore
-    _eventQueue: EventQueue<BaseModel>
     _fields: Items<FieldsetModel | FieldModel> = {}
     _ids: Generator<string, void, string>
 
-    constructor(n: FormJson, private _ruleEngine: RuleEngine) {
+    constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
         //@ts-ignore
         super(n, {});
         this._ids = IdGenerator();
         this._data = {};
         this._jsonModel.data = this._data;
-        this._eventQueue = new EventQueue<BaseModel>();
-        this._controller = createController(this, this._eventQueue)();
-        this.initialize();
+        this._initialize(n.items);
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
     get metaData(): FormMetaData {
-        let metaData = this.getP<MetaDataJson>('metadata', {});
+        let metaData = this._jsonModel.metadata || {};
         return new FormMetaData(metaData);
     }
 
     protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
         return createChild(child, {form: this, parent: this});
-    }
-
-    createController(elem: FieldModel | FieldsetModel): Controller {
-        return createController(this, this._eventQueue)(elem);
     }
 
     importData(dataModel: any) {
@@ -67,9 +56,10 @@ class Form extends Container<FormJson> implements FormModel {
     /**
      * returns the current state of the form
      */
-    json() {
+    getState() {
         const self = this;
-        const res = super.json();
+        const res = super.getState();
+        res.id = '$form';
         Object.defineProperty(res, 'data', {
             get: function() {
                 return self.exportData();
@@ -83,20 +73,12 @@ class Form extends Container<FormJson> implements FormModel {
         return res;
     }
 
-    get controller() {
-        return this._controller;
-    }
-
     get type() {
         return 'object';
     }
 
     get form(): FormModel {
         return this;
-    }
-
-    get id() {
-        return '$form';
     }
 
     get ruleEngine() {
@@ -110,23 +92,42 @@ class Form extends Container<FormJson> implements FormModel {
         return this._ids.next().value as string;
     }
 
-    executeAction(action: Action, context: any, trigger: (x: Action) => void): any {
-        if (action.type === 'FieldAdded') {
-            this._fields[action.payload.id] = action.payload;
-        } else {
-            super.executeAction(action, context, trigger);
-        }
+    fieldAdded(field: FieldModel | FieldsetModel) {
+        this._fields[field.id] = field;
     }
 
-    public getElement(id: string): FormModel | FieldModel | FieldsetModel {
+    submit() {
+        // if (action?.type === 'submit') {
+        //     action = new Submit(context.$form?.getState().data);
+        // }
+        //this._fields[action.payload.id] = action.payload;
+    }
+
+    public getElement(id: string) {
         if (id == this.id) {
             return this;
         }
         return this._fields[id];
     }
 
+    getEventQueue(): EventQueue {
+        return this._eventQueue;
+    }
+
     get name() {
         return '$form';
+    }
+
+    get value() {
+        return null;
+    }
+
+    get id() {
+        return '$form';
+    }
+
+    get title() {
+        return this._jsonModel.title || '';
     }
 }
 

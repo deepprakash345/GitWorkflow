@@ -1,10 +1,5 @@
-import {FieldsetModel, RulesJson, ScriptableField} from './types';
-import Node from './Node';
-import RuleEngine from './rules/RuleEngine';
+import {Action, RulesJson, ScriptableField} from './types';
 import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
-import {Action, Change} from './controller/Controller';
-import {mergeDeep} from './utils/JsonUtils';
-import {invalidateTranslation} from './utils/TranslationUtils';
 import {BaseNode} from './BaseNode';
 
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
@@ -43,17 +38,38 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         return this._events[eName];
     }
 
-    protected executeAllRules(context: any) {
-        const scope = this.getExpressionScope();
-        return Object.fromEntries(Object.entries(this.rules).map(([prop, rule]) => {
-            const node = this.getCompiledRule(prop, rule);
-            const newVal = this.ruleEngine.execute(node, scope, context);
-            if (newVal != this.getP(prop, undefined)) {
-                return [prop, newVal];
-            } else {
-                return [];
+    private applyUpdates(updates: any ) {
+        Object.entries(updates).forEach(([key, value]) => {
+            // @ts-ignore
+            // the first check is to disable accessing this.value & this.items property
+            // otherwise that will trigger dependency tracking
+            if (key in this._jsonModel || (key in this && typeof this[key] !== 'function')) {
+                try {
+                    // @ts-ignore
+                    this[key] = value;
+                } catch (e) {
+                    console.error(e);
+                }
             }
-        }).filter(x => x.length == 2));
+        });
+    }
+
+    protected executeAllRules(context: any) {
+        const entries = Object.entries(this.rules);
+        if (entries.length > 0) {
+            const scope = this.getExpressionScope();
+            const values = entries.map(([prop, rule]) => {
+                const node = this.getCompiledRule(prop, rule);
+                const newVal = this.ruleEngine.execute(node, scope, context);
+                //@ts-ignore
+                if (newVal != this._jsonModel[prop]) {
+                    return [prop, newVal];
+                } else {
+                    return [];
+                }
+            }).filter(x => x.length == 2);
+            this.applyUpdates(Object.fromEntries(values));
+        }
     }
 
     private getExpressionScope() {
@@ -85,62 +101,43 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         return scope;
     }
 
-    protected executeEvent(context: any, eventName: string) {
-        const node = this.getCompiledEvent(eventName);
+    private executeEvent(context: any, node: RuleNode) {
         let updates;
         if (node) {
             updates = this.ruleEngine.execute(node, this.getExpressionScope(), context);
         }
-        return updates;
-    }
-
-    protected handleValueChange(payload: string) {
-        return {};
-    }
-
-    executeAction(action: Action, context: any, notifyDependents: (e: Action) => void) {
-        //console.log('new action ' + action);
-        let updates: any;
-        const evntName = action.type;
-        if (action.isCustomEvent) {
-            updates = {
-                ...updates,
-                ...this.executeEvent(context, `custom:${evntName}`) as object
-            };
-            notifyDependents(action);
-        } else {
-            if (evntName === 'change') {
-                updates = this.handleValueChange(action.payload);
-                updates = {
-                    ...updates,
-                    ...this.executeAllRules(context)
-                };
-                this._jsonModel = mergeDeep(this._jsonModel, updates);
-            }
-            updates = {
-                ...this.executeEvent(context, evntName) as object
-            };
-            if (evntName !== 'change') {
-                notifyDependents(action);
-            }
-        }
-        if ((updates && Object.keys(updates).length > 0) || evntName === 'change') {
-            // in case of updates, invalidate translation object to remove stale value
-            invalidateTranslation(this._jsonModel, updates);
-            // merge deep since rules like
-            // todo: fix order
-            if ('value' in updates) {
-                const res = this.handleValueChange(updates.value);
-                updates = {
-                    ...updates,
-                    ...res
-                };
-            }
-            this._jsonModel = mergeDeep(this._jsonModel, updates);
-            notifyDependents(new Change(action.payload));
+        if (typeof updates !== 'undefined') {
+            this.applyUpdates(updates);
         }
     }
 
+    executeRule(event: Action, context: any) {
+        if (typeof event.payload.ruleName === 'undefined') {
+            this.executeAllRules(context);
+        }
+    }
+
+    executeAction(action: Action) {
+        const context = {
+            '$form': this.form,
+            '$field': this,
+            '$event': {
+                type: action.type,
+                payload: action.payload,
+                target: this
+            }
+        };
+        const eventName = action.isCustomEvent ? `custom:${action.type}` : action.type;
+        const funcName = action.isCustomEvent  ? `custom_${action.type}` : action.type;
+        const node = this.getCompiledEvent(eventName);
+        this.executeEvent(context, node);
+        // @ts-ignore
+        if (funcName in this && typeof this[funcName] === 'function') {
+            //@ts-ignore
+            this[funcName](action, context);
+        }
+        this.notifyDependents(action);
+    }
 }
 
 export default Scriptable;

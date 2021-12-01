@@ -1,12 +1,12 @@
 import {create} from '../collateral';
-import {createFormInstance} from '../../src';
+import {Action, BaseModel, createFormInstance, FieldModel} from '../../src';
 import FunctionRuntime from '../../src/rules/FunctionRuntime';
-import {Action, Change, Click, Controller, CustomEvent} from '../../src/controller/Controller';
 import nock from 'nock';
+import {Click, CustomEvent} from '../../src/controller/Controller';
 
 //todo : remove dupliacate code Form.test.ts
 expect.extend({
-    matchesAction(received: Action, expected: {action: Action, target: Controller}) {
+    matchesAction(received: Action, expected: {action: Action, target: BaseModel}) {
         const passes = {
             'target': received.target == expected.target,
             'type': received.type === expected.action.type,
@@ -35,11 +35,11 @@ expect.extend({
 declare global {
     namespace jest {
         interface Matchers<R> {
-            matchesAction(expected: {action: Action, target: Controller}): R;
+            matchesAction(expected: {action: Action, target: BaseModel}): R;
         }
 
         interface Expect {
-            matchesAction(expected: {action: Action, target: Controller}): void;
+            matchesAction(expected: {action: Action, target: BaseModel}): void;
         }
     }
 }
@@ -83,10 +83,10 @@ test('dispatch_event should invoke dispatch API', async () => {
     const f = FunctionRuntime;
     form.dispatch = jest.fn();
     const state = form.getState();
-    form.getElementController(state.items[1].id)?.dispatch(new Click());
+    form.getElement(state.items[1].id).dispatch(new Click());
     expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, false));
 
-    form.getElementController(state.items[2].id)?.dispatch(new Click());
+    form.getElement(state.items[2].id).dispatch(new Click());
     expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, true));
 });
 
@@ -98,21 +98,13 @@ test('getData should return the current state of the form data', async () => {
             }
         }
     }]);
-    //const formJson = create(['f', 'f', {
-    //    'f' : {
-    //        'events' : {
-    //            'click' : "get_data('getDataSuccess', 'getDataError')",
-    //            'custom:getDataSuccess' : "dispatch_event($form, 'customEvent', $event.payload)"
-    //        }
-    //    }
-    //}]);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     let callback = jest.fn();
     form.subscribe(callback, 'customEvent');
     const state = form.getState();
-    form.getElementController(state.items[0].id).dispatch(new Change('value2'));
-    form.getElementController(state.items[2].id).dispatch(new Click());
+    form.getElement(state.items[0].id).value = 'value2';
+    form.getElement(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         expect(callback.mock.calls[0][0]).matchesAction({
             action : new CustomEvent('customEvent', {'f1' : 'value2'}),
@@ -140,8 +132,8 @@ test('submit should send a request to the url configured', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     const state = form.getState();
-    form.getElementController(state.items[0].id).dispatch(new Change('value2'));
-    form.getElementController(state.items[2].id).dispatch(new Click());
+    form.getElement(state.items[0].id).value = 'value2';
+    form.getElement(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         scope.done();
     });
@@ -164,9 +156,9 @@ test('submit success event should be dispatched', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     const state = form.getState();
-    form.getElementController(state.items[0].id).dispatch(new Change('value2'));
+    form.getElement(state.items[0].id).value = 'value2';
     form.dispatch = jest.fn();
-    form.getElementController(state.items[2].id).dispatch(new Click());
+    form.getElement(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {}, true));
     });
@@ -191,11 +183,13 @@ test('submit success event should get executed', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     const state = form.getState();
-    form.getElementController(state.items[1].id).dispatch(new Click());
+    const elem = form.getElement(state.items[1].id) as FieldModel;
+    const elem1 = form.getElement(state.items[0].id) as FieldModel;
+    elem.dispatch(new Click());
     await checkAfterTimeout(() => {
         // Will throw an assertion error if meanwhile a "GET/POST" was
         // not performed.
-        expect(form.getState().items[0].label.value).toEqual('Thank you for submitting the form');
+        expect(elem1.getState().label?.value).toEqual('Thank you for submitting the form');
     });
 });
 
@@ -218,11 +212,12 @@ test('submit error event should be dispatched if service returns error', async (
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     let state = form.getState();
-    form.getElementController(state.items[2].id).dispatch(new Click());
+    const elem = form.getElement(state.items[2].id);
+    const elem1 = form.getElement(state.items[0].id);
+    elem.dispatch(new Click());
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     await checkAfterTimeout(() => {
-        state = form.getState();
-        expect(state.items[0].label.value).toEqual('Form Submission Failed');
+        expect(elem1.getState().label?.value).toEqual('Form Submission Failed');
     });
 });
 

@@ -1,7 +1,7 @@
+// @ts-nocheck
 import {create} from './collateral';
 import {createFormInstance} from '../src';
 import {deepClone} from '../src/utils/JsonUtils';
-
 const formJson = create(['f', 'f', ['f', 'f', 'f']]);
 
 test('form with simple hiearchy', async () => {
@@ -15,12 +15,11 @@ test('form with simple hiearchy', async () => {
         }
     };
     const form = await createFormInstance({data, ...formJson});
-    const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual('c');
-    expect(state.items[2].items[1].value).toEqual('d');
-    expect(state.items[2].items[2].value).toEqual('e');
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual('c');
+    expect(form.items[2].items[1].value).toEqual('d');
+    expect(form.items[2].items[2].value).toEqual('e');
 });
 
 test('Hierarchical structure should be honored in the data model', async () => {
@@ -37,12 +36,11 @@ test('Hierarchical structure should be honored in the data model', async () => {
         'f2' : 'b'
     };
     const form = await createFormInstance(json);
-    const state= form.getState();
-    expect(state.items[0].value).toEqual(json.data.f1);
-    expect(state.items[1].items[0].value).toEqual(json.data.p1.f2);
-    expect(state.items[1].items[1].value).toEqual(json.data.p1.f3);
-    expect(state.items[1].items[2].items[0].value).toEqual(json.data.p1.p2.f4);
-    expect(state.items[2].value).toEqual(json.data.f2);
+    expect(form.items[0].value).toEqual(json.data.f1);
+    expect(form.items[1].items[0].value).toEqual(json.data.p1.f2);
+    expect(form.items[1].items[1].value).toEqual(json.data.p1.f3);
+    expect(form.items[1].items[2].items[0].value).toEqual(json.data.p1.p2.f4);
+    expect(form.items[2].value).toEqual(json.data.f2);
 });
 
 test('panel with explicit dataRef', async () => {
@@ -66,11 +64,11 @@ test('panel with explicit dataRef', async () => {
     const form = await createFormInstance(json);
     const state= form.getState();
     expect(state.data).toEqual(json.data);
-    expect(state.items[0].value).toEqual(json.data.f1);
-    expect(state.items[1].items[0].value).toEqual(json.data.a.b.c.f2);
-    expect(state.items[1].items[1].value).toEqual(json.data.a.b.c.f3);
-    expect(state.items[1].items[2].items[0].value).toEqual(json.data.a.b.c.p2.f4);
-    expect(state.items[2].value).toEqual(json.data.f2);
+    expect(form.items[0].value).toEqual(json.data.f1);
+    expect(form.items[1].items[0].value).toEqual(json.data.a.b.c.f2);
+    expect(form.items[1].items[1].value).toEqual(json.data.a.b.c.f3);
+    expect(form.items[1].items[2].items[0].value).toEqual(json.data.a.b.c.p2.f4);
+    expect(form.items[2].value).toEqual(json.data.f2);
 });
 
 test.skip('form with transparent nodes', async () => {
@@ -85,11 +83,11 @@ test.skip('form with transparent nodes', async () => {
     };
     const form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual('c');
-    expect(state.items[2].items[1].value).toEqual('d');
-    expect(state.items[2].items[2].value).toEqual('e');
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual('c');
+    expect(form.items[2].items[1].value).toEqual('d');
+    expect(form.items[2].items[2].value).toEqual('e');
 });
 
 test('panel with dataRef null ensures its fields also do not bound to data', async () => {
@@ -106,11 +104,11 @@ test('panel with dataRef null ensures its fields also do not bound to data', asy
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual(undefined);
-    expect(state.items[2].items[1].value).toEqual(undefined);
-    expect(state.items[2].items[2].value).toEqual(undefined);
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual(null);
+    expect(form.items[2].items[1].value).toEqual(null);
+    expect(form.items[2].items[2].value).toEqual(null);
 
     const data2 = {
         f1: 'a',
@@ -119,12 +117,12 @@ test('panel with dataRef null ensures its fields also do not bound to data', asy
         f4: 'd',
         f5: 'e'
     };
-    form = await createFormInstance({data2, ...formJson});
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual(undefined);
-    expect(state.items[2].items[1].value).toEqual(undefined);
-    expect(state.items[2].items[2].value).toEqual(undefined);
+    form = await createFormInstance({data: data2, ...formJson});
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual(null);
+    expect(form.items[2].items[1].value).toEqual(null);
+    expect(form.items[2].items[2].value).toEqual(null);
 });
 
 test('children of unbound panel can specify explicit bindings', async () => {
@@ -144,11 +142,11 @@ test('children of unbound panel can specify explicit bindings', async () => {
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual('c');
-    expect(state.items[2].items[1].value).toEqual('d');
-    expect(state.items[2].items[2].value).toEqual('e');
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual('c');
+    expect(form.items[2].items[1].value).toEqual('d');
+    expect(form.items[2].items[2].value).toEqual('e');
 });
 
 test('Panel with array data model', async () => {
@@ -161,11 +159,11 @@ test('Panel with array data model', async () => {
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual('c');
-    expect(state.items[2].items[1].value).toEqual('d');
-    expect(state.items[2].items[2].value).toEqual('e');
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual('c');
+    expect(form.items[2].items[1].value).toEqual('d');
+    expect(form.items[2].items[2].value).toEqual('e');
 });
 
 test('Panel with array data model can also have null dataRef', async () => {
@@ -179,11 +177,11 @@ test('Panel with array data model can also have null dataRef', async () => {
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual(undefined);
-    expect(state.items[2].items[1].value).toEqual('d');
-    expect(state.items[2].items[2].value).toEqual('e');
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual(null);
+    expect(form.items[2].items[1].value).toEqual('d');
+    expect(form.items[2].items[2].value).toEqual('e');
 });
 
 test('Panel with array data model can also explicit dataRef', async () => {
@@ -199,11 +197,11 @@ test('Panel with array data model can also explicit dataRef', async () => {
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[0].value).toEqual('a');
-    expect(state.items[1].value).toEqual('b');
-    expect(state.items[2].items[0].value).toEqual(undefined);
-    expect(state.items[2].items[1].value).toEqual('c');
-    expect(state.items[2].items[2].value).toEqual('d');
+    expect(form.items[0].value).toEqual('a');
+    expect(form.items[1].value).toEqual('b');
+    expect(form.items[2].items[0].value).toEqual(null);
+    expect(form.items[2].items[1].value).toEqual('c');
+    expect(form.items[2].items[2].value).toEqual('d');
 });
 
 test('Panel with dynamic items should add items depending upon the data', async () => {
@@ -218,7 +216,7 @@ test('Panel with dynamic items should add items depending upon the data', async 
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[2].items.length).toEqual(3);
+    expect(form.items[2].items.length).toEqual(3);
 });
 
 test('Panel with dynamic items should remove items depending upon the data', async () => {
@@ -234,5 +232,5 @@ test('Panel with dynamic items should remove items depending upon the data', asy
     };
     let form = await createFormInstance({data, ...formJson});
     const state = form.getState();
-    expect(state.items[2].items.length).toEqual(3);
+    expect(form.items[2].items.length).toEqual(3);
 });

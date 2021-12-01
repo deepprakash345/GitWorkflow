@@ -1,10 +1,11 @@
 import Form from './Form';
 import {jsonString} from './utils/JsonUtils';
-import {Controller, Change, Initialize} from './controller/Controller';
+import {ExecuteRule, Initialize} from './controller/Controller';
 import {request} from './utils/Fetch';
 import RuleEngine from './rules/RuleEngine';
+import {FormModel} from './types';
 
-export const createFormInstance = (formModel: any): Promise<Controller> => {
+export const createFormInstance = (formModel: any): Promise<FormModel> => {
     try {
         let f = new Form({...formModel}, new RuleEngine());
         let formData = formModel?.data;
@@ -14,9 +15,9 @@ export const createFormInstance = (formModel: any): Promise<Controller> => {
         // Once the field or panel is initialized, execute the initialization script
         // this means initialization happens after prefill and restore
         // Before execution of calcExp, visibleExp, enabledExp, validate, options, navigationChange, we execute init script
-        f.controller.dispatch(new Initialize(undefined, true));
-        f.controller.dispatch(new Change(undefined, true));
-        return Promise.resolve(f.controller);
+        f.dispatch(new Initialize(undefined, true));
+        f.dispatch(new ExecuteRule(undefined, true));
+        return Promise.resolve(f);
     } catch (e: any) {
         return Promise.reject(new Error(e));
     }

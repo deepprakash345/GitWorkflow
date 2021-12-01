@@ -1,24 +1,16 @@
-import {FieldJson, FieldsetJson, FormJson, Label, MetaDataJson, Primitives} from './Json';
-import {Action, Controller} from '../controller/Controller';
+import {
+    ConstraintsJson,
+    ContainerJson,
+    FieldJson,
+    FieldsetJson,
+    FormJson,
+    Label,
+    MetaDataJson,
+    Primitives
+} from './Json';
 import RuleEngine from '../rules/RuleEngine';
-
-interface BaseConstraints {
-    expression?: string;
-    readonly type?: string
-}
-
-interface FieldConstraints extends BaseConstraints {
-    minLength?: number;
-    maxLength?: number;
-    minimum?: number;
-    maximum?: number;
-    required?: number;
-}
-
-interface ContainerConstraints extends BaseConstraints {
-    minItems?: number;
-    maxItems?: number;
-}
+import EventQueue from '../controller/EventQueue';
+import Field from '../Field';
 
 export interface ScriptableField {
     rules?: {
@@ -30,27 +22,46 @@ export interface ScriptableField {
     ruleEngine: RuleEngine
 }
 
-interface ValueField {
-    value: Primitives;
-    default?: Primitives;
+interface WithState<T> {
+    getState : () => State<T>
 }
 
-export interface Executor {
-    executeAction: (action: Action, context: any, notifyDependents: (x: Action) => void) => any
+interface WithContainerState<T extends ContainerJson> {
+    getState : () => T & {
+        id: string
+        items: Array<{id: string, viewType: string}>
+    }
 }
 
-export interface WithState<T> {
-    json : () => T & {id: string}
+export type State<T> =
+    T extends ContainerJson ? T & {
+    id: string,
+    items: Array<{id: string, viewType: string}> } : T & {id: string}
+
+export type Subscription = {
+    unsubscribe(): void
 }
+
+export interface Action {
+    type: string,
+    payload: any
+    metadata: any,
+    readonly isCustomEvent: boolean
+    readonly target: BaseModel
+}
+
+export type callbackFn = (action: Action) => void
 
 export interface WithController {
-    controller: Controller
+    subscribe(callback: callbackFn, eventName?: string): Subscription
+    dispatch(action: Action): void
 }
 
-export interface BaseModel extends Executor, BaseConstraints, WithController {
+export interface BaseModel extends ConstraintsJson, WithController {
     readonly name?: string;
     readonly dataRef?: string;
     readonly id : string
+    readonly index : number
     label?: Label
     description?: string
     readOnly?: boolean;
@@ -58,24 +69,26 @@ export interface BaseModel extends Executor, BaseConstraints, WithController {
     visible?: boolean;
     placeholder?: string;
     valid?: boolean
-    multiline?: boolean;
-    viewType?: string
+    readonly viewType: string
     props?: {
         [key: string]: any;
     }
-    isContainer: boolean,
-    importData: (a: any, b: any) => any
-    exportData: (a: any) => any
-    index : number
-    parent: ContainerModel
+    readonly isContainer: boolean,
+    readonly parent: ContainerModel | null
+    readonly items?: Array<FieldsetModel | FieldModel>
+    value: Primitives;
+    readonly default?: Primitives;
+    importData(a: any, b: any) : any
+    exportData(a: any) : any
     getRuleNode(): any
+    directReferences(): any
 }
 
-export interface FieldModel extends BaseModel,
-    ValueField,
-    FieldConstraints,
-    ScriptableField,
-    WithState<FieldJson>{}
+export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJson> {
+    value: Primitives;
+    default?: Primitives;
+    parent: ContainerModel
+}
 
 export interface FormMetaDataModel {
     readonly version: string
@@ -85,35 +98,28 @@ export interface FormMetaDataModel {
     readonly dataUrl: string
 }
 
-export interface ContainerModel extends WithController, ContainerConstraints {
+export interface ContainerModel extends BaseModel, ScriptableField {
     items: Array<FieldsetModel | FieldModel>
-    readonly dataRef?: string;
-    isContainer: boolean
-    syncDataAndFormModel: (dataModel: any, parentModel: any) => void
-    getRuleNode(): any
-    directReferences(): any
+    parent: ContainerModel
+    indexOf(f: FieldModel | FieldsetModel): number
 }
 
-export interface FieldsetModel extends BaseModel,
-    ContainerModel,
-    ScriptableField,
-    WithState<FieldsetJson> {
+export interface FieldsetModel extends ContainerModel, WithContainerState<FieldsetJson> {
     type?: 'array' | 'object'
 }
 
-export interface FormModel extends Executor,
-    ContainerModel,
-    BaseConstraints,
-    ScriptableField,
-    WithState<FormJson> {
-    id: string
-    data?: any
-    metadata?: MetaDataJson
-    importData: (a: any) => any
-    exportData: () => any
-    createController: (elem: FieldModel | FieldsetModel) => Controller
-    getElement: (id: string) => FieldModel | ContainerModel | FormModel
+export interface FormModel extends ContainerModel,
+    WithContainerState<FormJson> {
+    readonly id: string
+    readonly data?: any
+    readonly metadata?: MetaDataJson
+    readonly title: string
+    importData(a: any) : any
+    exportData() : any
+    getElement(id: string) : FieldModel | FormModel | FieldsetModel
     getUniqueId() : string
+    getEventQueue(): EventQueue
+    submit(): any
 }
 
 export interface IFileObject {

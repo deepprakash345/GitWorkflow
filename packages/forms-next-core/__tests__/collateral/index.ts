@@ -1,4 +1,6 @@
-import {FormJson} from '../../src/types';
+import {FormJson, FormModel} from '../../src/types';
+import RuleEngine from '../../src/rules/RuleEngine';
+import EventQueue from '../../src/controller/EventQueue';
 export * as siblingAccess from './siblingAccess';
 
 export const oneFieldForm: FormJson = {
@@ -137,4 +139,35 @@ export const create = (arr: any[], nameMap: { [key:string] : number }  = {p : 1}
         items.items.push(obj);
         return items;
     }, {items: []});
+};
+
+export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormModel => {
+    return {
+        exportData: jest.fn(),
+        getElement: jest.fn(),
+        isContainer: true,
+        items: [],
+        getState: jest.fn(),
+        getUniqueId: () => {
+            return randomWord(10);
+        },
+        ruleEngine: ruleEngine,
+        index: 0,
+        //@ts-ignore
+        parent: null,
+        //@ts-ignore
+        value: undefined,
+        viewType: '',
+        dispatch: jest.fn(),
+        getEventQueue: () => {
+            return eventQueue;
+        },
+        indexOf: jest.fn(),
+        submit: jest.fn(),
+        subscribe: jest.fn(),
+        importData: jest.fn(),
+        id : '$form',
+        getRuleNode: jest.fn(),
+        directReferences: jest.fn()
+    };
 };

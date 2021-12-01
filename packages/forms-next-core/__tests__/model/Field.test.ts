@@ -1,14 +1,16 @@
 import Field from '../../src/Field';
 import EventQueue from '../../src/controller/EventQueue';
-import {Change, createController} from '../../src/controller/Controller';
+import {Change} from '../../src/controller/Controller';
 import {Constraints} from '../../src/utils/ValidationUtils';
-import {MockForm} from '../../src/utils/JsonUtils';
 import {FormModel} from '../../src/types';
+import {create} from '../collateral';
+import Form from '../../src/Form';
+import RuleEngine from '../../src/rules/RuleEngine';
 
 let form: FormModel;
 let options : {parent: FormModel, form: FormModel};
-beforeEach(() => {
-    form = MockForm();
+beforeEach(async () => {
+    form = new Form(create(['f']), new RuleEngine());
     options = {
         parent: form,
         form
@@ -17,7 +19,7 @@ beforeEach(() => {
 
 test('a field should add all the default values in its json', () => {
     const f = new Field({}, options);
-    expect(f.json()).toMatchObject({
+    expect(f.getState()).toMatchObject({
         visible : true,
         readOnly : false,
         viewType: 'text-input',
@@ -34,7 +36,7 @@ test('a field should add all the default values in its json', () => {
 
 test('a field should set the value correctly in its json from default value', () => {
     const f = new Field({default : 'test'}, options);
-    expect(f.json()).toMatchObject({
+    expect(f.getState()).toMatchObject({
         visible : true,
         readOnly : false,
         enabled : true,
@@ -56,10 +58,6 @@ test('string conversion of field returns  its value', () => {
 });
 
 test('accessing field value directly works in rules', () => {
-    //@ts-ignore
-    form.createController = (elem) => {
-        return createController(form, new EventQueue())(elem);
-    };
     const f = new Field({default : 'test'}, {form, parent: form});
     const ob = {
         '$field' : f
@@ -72,11 +70,7 @@ test('accessing field value directly works in rules', () => {
 
 describe('Field Validation', () => {
     beforeEach(() => {
-        form = MockForm();
-        //@ts-ignore
-        form.createController = (elem) => {
-            return createController(form, new EventQueue())(elem);
-        };
+        form = new Form(create(['f']), new RuleEngine());
         options = {form, parent: form};
     });
 
@@ -92,12 +86,12 @@ describe('Field Validation', () => {
             type: 'number',
             enum: [1, 2, 3]
         }, options);
-        field.controller.dispatch(new Change(4));
+        field.value = 4;
         expect(Constraints.enum).not.toBeCalled();
         expect(field.valid).toEqual(true);
     });
 
-    test('enum constraint without enforceEnum', () => {
+    test('enum constraint with enforceEnum', () => {
         const mockValidity = [true, false][Math.floor(Math.random() * 2)];
         Constraints.enum = jest.fn().mockImplementation((c, v) => {
             return {
@@ -110,7 +104,7 @@ describe('Field Validation', () => {
             enforceEnum : true,
             enum: [1, 2, 3]
         }, options);
-        field.controller.dispatch(new Change(4));
+        field.value = '4';
         expect(Constraints.enum).toBeCalledWith([1, 2, 3], '4');
         expect(field.valid).toEqual(mockValidity);
     });

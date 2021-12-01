@@ -1,12 +1,13 @@
 import Field from '../../src/Field';
 import RuleEngine from '../../src/rules/RuleEngine';
 import {ContainerModel, FormModel} from '../../src/types';
-import {MockForm} from '../../src/utils/JsonUtils';
+import {create} from '../collateral';
+import Form from '../../src/Form';
 
 let form: FormModel;
 let options : {form: FormModel, parent: ContainerModel};
 beforeEach(() => {
-    form = MockForm();
+    form = new Form(create(['f1']), new RuleEngine());
     options = {form, parent: form};
 });
 

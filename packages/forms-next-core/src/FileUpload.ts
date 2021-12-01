@@ -1,5 +1,5 @@
 import {resolve} from './utils/JsonUtils';
-import {Change} from './controller/Controller';
+import {Change, propertyChange} from './controller/Controller';
 import Field from './Field';
 import {dataURItoBlob, getFileSizeInBytes} from './utils/FormUtils';
 import {isDataUrl} from './utils/ValidationUtils';
@@ -221,8 +221,10 @@ class FileUpload extends Field implements FieldModel {
         }
         if (data !== undefined) {
             let fileObj : FileObject[] = FileUpload.extractFileInfo(data);
-            let importedData = this.coerce(fileObj);
-            this.controller.queueEvent(new Change(importedData));
+            const newValue = this.coerce(fileObj);
+            this.form.getEventQueue().queue(this, propertyChange('value', newValue, this._jsonModel.value));
+            this._jsonModel.value = newValue;
+
         }
     }
 }
