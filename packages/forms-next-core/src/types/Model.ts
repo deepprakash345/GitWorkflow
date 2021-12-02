@@ -11,6 +11,7 @@ import {
 import RuleEngine from '../rules/RuleEngine';
 import EventQueue from '../controller/EventQueue';
 import Field from '../Field';
+import DataGroup from '../data/DataGroup';
 
 export interface ScriptableField {
     rules?: {
@@ -78,10 +79,10 @@ export interface BaseModel extends ConstraintsJson, WithController {
     readonly items?: Array<FieldsetModel | FieldModel>
     value: Primitives;
     readonly default?: Primitives;
-    importData(a: any, b: any) : any
-    exportData(a: any) : any
+    importData(a?: DataGroup) : any
     getRuleNode(): any
     directReferences(): any
+    _initialize(): any
 }
 
 export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJson> {

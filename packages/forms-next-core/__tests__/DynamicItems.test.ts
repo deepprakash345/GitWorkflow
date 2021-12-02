@@ -65,6 +65,19 @@ test('addItem event on dynamic panel adds an item', async () => {
     expect(element.getState().items.length).toEqual(2);
 });
 
+test('addItem event on dynamic panel sets the value as well in data', async () => {
+    const formJson = create(['f', ['f'], 'f']);
+    formJson.items[1].type = 'array';
+    formJson.items[1].items[0].default = 'array';
+    const form = await createFormInstance(formJson);
+    let state = form.getState();
+    const element = form.getElement(state.items[1].id) as FieldsetModel;
+    element.dispatch(new AddItem());
+    expect(form.exportData()).toEqual({
+        p1: ['array', 'array']
+    });
+});
+
 test('removeItem event on dynamic panel removes an item', async () => {
     const formJson = create(['f', ['f'], 'f']);
     formJson.items[1].type = 'array';

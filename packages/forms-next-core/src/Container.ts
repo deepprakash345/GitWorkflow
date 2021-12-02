@@ -8,21 +8,18 @@ import {
     FieldsetModel,
     RulesJson
 } from './types';
-import {deepClone, resolve} from './utils/JsonUtils';
+import {deepClone} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {resolveData, Token, tokenize} from './utils/DataRefParser';
 import {ExecuteRule, Initialize, propertyChange} from './controller/Controller';
+import DataGroup from './data/DataGroup';
 
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel {
 
     protected _children: Array<FieldModel | FieldsetModel> = []
     //@ts-ignore
     protected _ruleContext: any
-    protected _data: any = null
 
-    private _parentData: any = null;
     private _itemTemplate: FieldsetJson | FieldJson | null = null;
-    private _tokens: Token[] = []
 
     //@ts-ignore
     protected _jsonModel : T & {
@@ -90,13 +87,14 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             ...deepClone(itemJson)
         };
         //@ts-ignore
-        let retVal = this._createChild(itemTemplate, {parent: this});
+        let retVal = this._createChild(itemTemplate, {parent: this, index: index});
         this._addChildToRuleNode(retVal);
         if (index === this._children.length) {
             this._children.push(retVal);
         } else {
             this._children.splice(index, 0, retVal);
         }
+        retVal._initialize();
         return retVal;
     }
 
@@ -104,8 +102,15 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return this._children.indexOf(f);
     }
 
-    protected _initialize(items: Array<FieldJson | FieldsetJson>) {
-        //let items = this._jsonModel.items;
+    defaultDataModel(name: string) {
+        const type = this._jsonModel.type || 'object';
+        const instance = type === 'array' ? [] : {};
+        return new DataGroup(name, instance, type);
+    }
+
+    _initialize() {
+        super._initialize();
+        const items = this._jsonModel.items;
         this._jsonModel.items = [];
         this._ruleContext = this._jsonModel.type == 'array' ? [] : {};
         if (this._jsonModel.type == 'array' && items.length === 1) {
@@ -173,63 +178,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
-    importData(dataModel: any, contextualDataModel?: any) {
-        const type = this._jsonModel.type;
-        const instance = type === 'array' ? [] : {};
-        const dataRef = this._jsonModel.dataRef;
-        if (dataRef === null) {
-            this._data = null;
-        } else if (dataRef !== undefined) {
-            if (this._tokens.length === 0) {
-                this._tokens = tokenize(dataRef);
-            }
-            const {result, parent} = resolveData(dataModel, this._tokens, instance);
-            this._data = result;
-            this._parentData = parent;
-        } else {
-            if (contextualDataModel != null) {
-                this._parentData = contextualDataModel;
-                const name = this._jsonModel.name || '';
-                const key = contextualDataModel instanceof Array ? this.index : name;
-                if (key !== '') {
-                    this._data = this._parentData[key] || instance;
-                    this._parentData[key] = this._data;
-                }
-            }
-        }
-        this.syncDataAndFormModel(dataModel, this._data, 'importData');
-    }
-
-    //todo : empty data models are getting created. We should stop that.
-     exportData(dataModel: any) {
-        const name = this._jsonModel.name || '';
-        const isArray = this._jsonModel.type === 'array';
-        let currentDataModel: any = isArray ? [] : {};
-         for (const x of this._children) {
-            const data = x.exportData(dataModel);
-            if (data != undefined) {
-                let name = x.name || '';
-                let dataRef = x.dataRef || '';
-                if (dataRef === null) {
-                    if (isArray && data instanceof Array) {
-                        currentDataModel = [...currentDataModel, ...data];
-                    } else if (!isArray) {
-                        currentDataModel = {...currentDataModel, ...data};
-                    } else {
-                        currentDataModel[x.index] = data;
-                    }
-                } else if (name.length > 0 && !isArray) {
-                    currentDataModel[name] = data;
-                } else if (isArray) {
-                    currentDataModel[x.index] = data;
-                }
-            }
-        }
-        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
-            currentDataModel = resolve(dataModel, this._jsonModel.dataRef, currentDataModel);
-        } else {
-            return currentDataModel;
-        }
+    importData(contextualDataModel?: DataGroup) {
+        this._bindToDataModel(contextualDataModel);
+        this.syncDataAndFormModel(this.getDataNode() as DataGroup);
     }
 
     /**
@@ -238,9 +189,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @param contextualDataModel
      * @param operation
      */
-    syncDataAndFormModel(dataModel: any, contextualDataModel: any, operation: string = 'importData') {
-        if (this._data instanceof Array && this._itemTemplate != null) {
-            const dataLength = this._data.length;
+    syncDataAndFormModel(contextualDataModel?: DataGroup) {
+        if (contextualDataModel?.$type === 'array' && this._itemTemplate != null) {
+            const dataLength = contextualDataModel?.$value.length;
             const itemsLength = this._children.length;
             const maxItems = this._jsonModel.maxItems === -1 ? dataLength : this._jsonModel.maxItems;
             const minItems = this._jsonModel.minItems;
@@ -265,11 +216,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             }
         }
         this._children.forEach(x => {
-            if (operation === 'importData') {
-                x.importData(dataModel, contextualDataModel);
-            } else {
-                console.error(`Invalid sync operation ${operation}. It should be importData or exportData`);
-            }
+            x.importData(contextualDataModel);
         });
     }
 }

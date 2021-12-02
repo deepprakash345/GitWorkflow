@@ -1,10 +1,12 @@
-import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel} from './types';
+import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FieldsetJson, FormModel} from './types';
 import {resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
 import {propertyChange} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
-import {resolveData, Token, tokenize} from './utils/DataRefParser';
+import DataValue from './data/DataValue';
+import DataGroup from './data/DataGroup';
+import Container from './Container';
 
 //todo: move to a single place in Model.ts or Json.ts
 const defaults = {
@@ -15,12 +17,15 @@ const defaults = {
 };
 
 class Field extends Scriptable<FieldJson> implements FieldModel {
-    private _tokens: Token[] = []
-    private _parentData: any = null;
+
     public constructor(params: FieldJson,
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);
         this._applyDefaults();
+    }
+
+    _initialize(): any {
+        super._initialize();
         this.setupRuleNode();
     }
 
@@ -111,6 +116,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             const changeAction = propertyChange('value', res.value, curr);
             this.dispatch(changeAction);
             this.form.getEventQueue().runPendingQueue();
+            const dataNode = this.getDataNode();
+            if (typeof dataNode !== 'undefined') {
+                dataNode.$value = res.value;
+            }
         }
     }
 
@@ -183,44 +192,16 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         //this.executeAllRules(context);
     }
 
-    importData(dataModel: any, contextualDataModel: any) {
-        let data: any;
-        const curValue = this.value;
-        const dataRef = this._jsonModel.dataRef;
-        let key: string|number = '';
-        if (dataRef === null) {
-            //do nothing
-        } else if (dataRef !== undefined) {
-            if (this._tokens.length === 0) {
-                this._tokens = tokenize(dataRef);
-            }
-            const {result, parent} = resolveData(dataModel, this._tokens);
-            this._parentData = parent;
-            key = this._tokens.slice(-1)[0].value;
-            data = result;
-        } else {
-            if (contextualDataModel != null) {
-                this._parentData = contextualDataModel;
-                const name = this._jsonModel.name || '';
-                key = contextualDataModel instanceof Array ? this.index : name;
-                data = this._parentData[key];
-            }
+    importData(contextualDataModel: DataGroup) {
+        this._bindToDataModel(contextualDataModel);
+        const dataNode = this.getDataNode();
+        if (dataNode !== undefined) {
+            this._jsonModel.value = dataNode.$value;
         }
-        if (key !== '') {
-            if (data == null) {
-                this._parentData[key] = curValue;
-            }
-            data = this._parentData[key];
-        }
-        this._jsonModel.value = data;
     }
 
-    exportData(dataModel: any) {
-        if (this.dataRef != null) {
-            resolve(dataModel, this.dataRef, this._jsonModel.value);
-        } else if (this.dataRef !== null) {
-            return this._jsonModel.value;
-        }
+    defaultDataModel(name: string|number): DataValue {
+        return new DataValue(name, this._jsonModel.value, this.type || 'string');
     }
 }
 

@@ -3,12 +3,17 @@ import {
     BaseJson,
     BaseModel,
     callbackFn,
-    ContainerModel,
+    ContainerModel, FieldsetJson,
     FormModel,
     Primitives,
     Subscription
 } from './types';
 import {ExecuteRule} from './controller/Controller';
+import DataGroup from './data/DataGroup';
+import {resolveData, TOK_GLOBAL, Token, tokenize} from './utils/DataRefParser';
+import Form from './Form';
+import DataValue from './data/DataValue';
+import Container from './Container';
 
 class ActionImplWithTarget implements Action {
 
@@ -51,6 +56,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     private _dependents: {node: BaseModel, subscription: Subscription }[] = [];
     protected _jsonModel: T & {id: string}
+    private _tokens: Token[] = []
 
     get isContainer() {
         return false;
@@ -189,7 +195,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         };
     }
 
-    addDependent<T extends BaseJson>(action: Action) {
+    addDependent(action: Action) {
         if(this._dependents.find(({node}) => node === action.payload) === undefined) {
             const subscription = this.subscribe((change: Action) => {
                 const changes = change.payload.changes;
@@ -206,7 +212,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         }
     }
 
-    removeDependent<T extends BaseJson>(action: Action) {
+    removeDependent(action: Action) {
         const index = this._dependents.findIndex(({node}) => node === action.payload);
         if(index > -1) {
             this._dependents[index].subscription.unsubscribe();
@@ -229,6 +235,64 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         });
     }
 
-    abstract importData(a: any, b: any) : any
-    abstract exportData(a: any) : any
+    _bindToDataModel(contextualDataModel?: DataGroup) {
+        if (this.id === '$form') {
+            this._data = contextualDataModel;
+            return;
+        }
+        const dataRef = this._jsonModel.dataRef;
+        let _data: DataValue | undefined;
+        if (dataRef === null) {
+            _data = undefined;
+        } else if (dataRef !== undefined) {
+            if (this._tokens.length === 0) {
+                this._tokens = tokenize(dataRef);
+            }
+            let searchData: DataGroup | undefined = contextualDataModel;
+            if (this._tokens[0].type === TOK_GLOBAL) {
+                searchData = (this.form as Form).getDataNode() as DataGroup;
+            }
+            if (typeof searchData !== 'undefined') {
+                const name = this._tokens[this._tokens.length - 1].value;
+                const create = this.defaultDataModel(name);
+                _data = resolveData(searchData, this._tokens, create);
+            }
+        } else {
+            if (contextualDataModel != null) {
+                const name = this._jsonModel.name || '';
+                const key = contextualDataModel.$type === 'array' ? this.index : name;
+                if (key !== '') {
+                    const create = this.defaultDataModel(key);
+                    _data = contextualDataModel.$getDataNode(key) || create;
+                    contextualDataModel.$addDataNode(key, _data);
+                }
+            }
+        }
+        if (!this.isContainer) {
+            _data = _data?.$convertToDataValue();
+        }
+        _data?.$bindToField(this);
+        this._data = _data;
+    }
+
+    private _data?: DataValue
+
+    getDataNode() {
+        return this._data;
+    }
+
+    abstract defaultDataModel(name: string|number): DataValue
+
+    abstract importData(a: DataGroup) : any
+
+    /**
+     * called after the node is inserted in the parent
+     * @private
+     */
+    _initialize() {
+        if (typeof this._data === 'undefined') {
+            const dataNode = (this.parent as Container<FieldsetJson>).getDataNode();
+            this._bindToDataModel(dataNode as DataGroup);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import FileUpload from './FileUpload';
 import {isFile} from './utils/JsonUtils';
 import {ActionImpl} from './controller/Controller';
 import Form from './Form';
+import DataGroup from './data/DataGroup';
 
 export const createChild = (child: FieldsetJson | FieldJson, options: {form: FormModel, parent: ContainerModel}) => {
   let retVal: FieldsetModel | FieldModel;
@@ -30,7 +31,6 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
 
   public constructor (params: FieldsetJson, _options: {form: FormModel, parent: ContainerModel}) {
     super(params, _options);
-    this._initialize(params.items);
     this._applyDefaults();
   }
 

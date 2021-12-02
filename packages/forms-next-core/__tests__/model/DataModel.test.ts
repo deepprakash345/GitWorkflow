@@ -26,8 +26,8 @@ test('data model should be created on value change', async () => {
     form.items[1].items[0].value = 'y';
     form.items[1].items[1].value = 'z';
     form.items[1].items[2].items[0].value = 'a';
-    const state= form.getState();
-    expect(state.data).toEqual(expectedData);
+    const state= form.exportData();
+    expect(state).toEqual(expectedData);
     expect(form.items[0].value).toEqual(expectedData.f1);
     expect(form.items[1].items[0].value).toEqual(expectedData.a.b.c.f2);
     expect(form.items[1].items[1].value).toEqual(expectedData.a.b.c.f3);

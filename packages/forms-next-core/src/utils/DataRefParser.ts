@@ -1,9 +1,11 @@
+import DataGroup from '../data/DataGroup';
+import DataValue from '../data/DataValue';
 
 type TokenType = string
 
 const TOK_DOT: TokenType = 'DOT';
 const TOK_IDENTIFIER: TokenType = 'Identifier';
-const TOK_GLOBAL: TokenType = 'Global';
+export const TOK_GLOBAL: TokenType = 'Global';
 const TOK_BRACKET = 'bracket';
 const TOK_NUMBER = 'Number';
 
@@ -180,57 +182,62 @@ export const tokenize = (stream: string): Token[] => {
     return new Tokenizer(stream).tokenize();
 };
 
-export const resolveData = (data: any, input: Token[] | string, create?: any) => {
+export const resolveData = <T extends DataValue>(data: DataGroup,
+                                                 input: Token[] | string,
+                                                 create?: T): DataGroup | DataValue | undefined => {
     let tokens: Token[];
     if (typeof input === 'string') {
         tokens = tokenize(input);
     } else {
         tokens = input;
     }
-    let result = data;
-    let parentResult = data;
+    let result: DataGroup | DataValue | undefined = data;
     let i = 0;
+
+    const createIntermediateNode = (token: Token, nextToken: Token|null, create: T) => {
+        return nextToken === null ? create :
+            (nextToken.type === TOK_BRACKET)  ? new DataGroup(token.value, [], 'array') :
+                new DataGroup(token.value, {});
+    };
+
     while (i < tokens.length && result != null) {
         const token = tokens[i];
         if (token.type === TOK_GLOBAL) {
-            parentResult = data;
             result = data;
         } else if (token.type === TOK_IDENTIFIER) {
-            if (typeof result !== 'object') {
-                throw new Error(`Looking for ${token.value} in ${result}`);
-            }
-            parentResult = result;
-            if (token.value in parentResult && parentResult[token.value] !== null) {
-                result = parentResult[token.value];
-            } else if (create) {
-                const nextToken = i < tokens.length - 1? tokens[i + 1] : null;
-                const toCreate = nextToken === null ? create : (nextToken.type === TOK_BRACKET  ? [] : {});
-                parentResult[token.value] = toCreate;
-                result = parentResult[token.value];
+            if (result instanceof DataGroup && result.$type === 'object') {
+                if (result.$containsDataNode(token.value) && result.$getDataNode(token.value).$value !== null) {
+                    result = result.$getDataNode(token.value);
+                } else if (create) {
+                    const nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
+                    const toCreate = createIntermediateNode(token, nextToken, create);
+                    result.$addDataNode(token.value, toCreate);
+                    result = toCreate;
+                } else {
+                    result = undefined;
+                }
             } else {
-                result = undefined;
+                throw new Error(`Looking for ${token.value} in ${result.$value}`);
             }
         } else if (token.type === TOK_BRACKET) {
-            if (!(result instanceof Array)) {
-                throw new Error(`Looking for index ${token.value} in non array${result}`);
-            }
-            const index = token.value as number;
-            parentResult = result;
-            if (index < result.length) {
-                result = result[index];
-            } else if (create) {
-                const nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
-                const toCreate = nextToken === null ? create : (nextToken.type === TOK_BRACKET  ? [] : {});
-                parentResult[index] = toCreate;
-                result = parentResult[index];
+            if (result instanceof DataGroup && result.$type === 'array') {
+                const index = token.value as number;
+                if (index < result.$length) {
+                    //@ts-ignore
+                    result = result.$getDataNode(index);
+                } else if (create) {
+                    const nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
+                    const toCreate = createIntermediateNode(token, nextToken, create);
+                    result.$addDataNode(index, toCreate);
+                    result = toCreate;
+                } else {
+                    result = undefined;
+                }
             } else {
-                result = undefined;
+                throw new Error(`Looking for index ${token.value} in non array${result.$value}`);
             }
         }
         i += 1;
     }
-    return {
-        result: result,
-        parent: parentResult
-    };
+    return result;
 };

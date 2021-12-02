@@ -59,6 +59,7 @@ test('string conversion of field returns  its value', () => {
 
 test('accessing field value directly works in rules', () => {
     const f = new Field({default : 'test'}, {form, parent: form});
+    f._initialize();
     const ob = {
         '$field' : f
     };

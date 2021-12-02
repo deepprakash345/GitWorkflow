@@ -154,6 +154,8 @@ export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormMod
         ruleEngine: ruleEngine,
         index: 0,
         //@ts-ignore
+        getDataNode: jest.fn(),
+        //@ts-ignore
         parent: null,
         //@ts-ignore
         value: undefined,

@@ -1,6 +1,5 @@
 import Container from './Container';
 import {
-    Action, BaseModel,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -13,7 +12,7 @@ import {createChild} from './Fieldset';
 import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
-import {BaseNode} from './BaseNode';
+import DataGroup from './data/DataGroup';
 
 class Form extends Container<FormJson> implements FormModel {
 
@@ -24,9 +23,8 @@ class Form extends Container<FormJson> implements FormModel {
         //@ts-ignore
         super(n, {});
         this._ids = IdGenerator();
-        this._data = {};
-        this._jsonModel.data = this._data;
-        this._initialize(n.items);
+        this._bindToDataModel(new DataGroup('$form', {}));
+        this._initialize();
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
@@ -41,16 +39,13 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     importData(dataModel: any) {
-        this._data = {...dataModel};
-        this._jsonModel.data = this._data;
-        this.syncDataAndFormModel(this._data, this._data, 'importData');
+        this._bindToDataModel(new DataGroup('$form', dataModel));
+        this.syncDataAndFormModel(this.getDataNode() as DataGroup);
         this._eventQueue.runPendingQueue();
     }
 
     exportData() {
-        const data = super.exportData(this._data);
-        // override new data into this._data
-        return {...this._data, ...data};
+        return this.getDataNode()?.$value;
     }
 
     /**
