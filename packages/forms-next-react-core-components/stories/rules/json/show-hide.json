@@ -1,0 +1,22 @@
+{
+    "items": [
+        {
+            "name": "name",
+            "type": "string",
+            "viewType": "text-input",
+            "label": {
+                "value": "Text input"
+            }
+        },
+        {
+            "name": "button",
+            "viewType": "button",
+            "label": {
+                "value": "Submit"
+            },
+            "rules": {
+                "visible": "$form.name.value != null()"
+            }
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "items": [
+        {
+            "name": "textInput",
+            "type": "string",
+            "viewType": "text-input",
+            "pattern": "^[a-zA-Z. ]{1,30}$",
+            "label": {
+                "value": "Text input"
+            }
+        }
+    ]
+}
