@@ -10,7 +10,6 @@ import {
 } from './Json';
 import RuleEngine from '../rules/RuleEngine';
 import EventQueue from '../controller/EventQueue';
-import Field from '../Field';
 import DataGroup from '../data/DataGroup';
 
 export interface ScriptableField {

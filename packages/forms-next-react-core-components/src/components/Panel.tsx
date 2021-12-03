@@ -3,8 +3,9 @@ import {FieldsetJson} from '@aemforms/forms-next-core';
 import React, {useContext} from 'react';
 
 import {useRuleEngine, renderChildren, FormContext} from '@aemforms/forms-next-react-bindings';
+import {State} from '@aemforms/forms-next-core/lib';
 
-const Panel = function (fieldset: FieldsetJson & {id :string}) {
+const Panel = function (fieldset: State<FieldsetJson>) {
     const mappings = useContext(FormContext).mappings;
     const [props, handlers] = useRuleEngine(fieldset);
 

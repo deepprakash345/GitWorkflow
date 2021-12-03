@@ -1,8 +1,9 @@
 import {FormContext} from '@aemforms/forms-next-react-bindings';
-import React from 'react';
-import {createFormInstance} from '@aemforms/forms-next-core/lib';
-import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
+import React, {JSXElementConstructor} from 'react';
+import {createFormInstance, FieldModel, FormModel} from '@aemforms/forms-next-core/lib';
 import {IntlProvider} from 'react-intl';
+import Checkbox from '../../src/components/Checkbox';
+import {render} from '@testing-library/react';
 
 export const createForm = async (field: any) => {
     const formJson = {
@@ -11,12 +12,12 @@ export const createForm = async (field: any) => {
     return await createFormInstance(formJson);
 };
 
-export const Provider = (controller: Controller,
+export const Provider = (form: FormModel,
                          mappings: any = {},
                          locale: string = 'en-US',
                          dictionaries: any = '') => (props: any) => {
     const c = {
-        controller,
+        form,
         mappings
     };
     const {children} = props;
@@ -57,4 +58,34 @@ export const randomString = (length: number) => {
             charactersLength));
     }
     return result;
+};
+
+type ElementFetcher<T> = (e: HTMLElement) => T
+
+export const elementFetcher = (container: HTMLElement) => {
+    const input = container.querySelector('input');
+    const label = container.querySelector('label');
+    return {
+        input,
+        label
+    };
+};
+
+export const renderComponent = function<T>(Component: JSXElementConstructor<any>,
+                                           fetcher: ElementFetcher<T>) {
+    const test = async (field: any) => {
+        let container, form;
+        form = await createForm(field);
+        const e = form.items[0].getState();
+        let component = <Component {...e} />;
+        const wrapper = Provider(form);
+        container = render(component, {wrapper}).container;
+        return {
+            ...fetcher(container),
+            container,
+            form,
+            element: form?.items[0] as FieldModel
+        };
+    };
+    return test;
 };

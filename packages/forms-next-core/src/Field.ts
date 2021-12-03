@@ -1,5 +1,5 @@
 import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FieldsetJson, FormModel} from './types';
-import {resolve} from './utils/JsonUtils';
+import {jsonString, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
 import {propertyChange} from './controller/Controller';
 import Scriptable from './Scriptable';

@@ -3,7 +3,8 @@ import {FieldsetJson} from '@aemforms/forms-next-core';
 import {FormContext} from "@aemforms/forms-next-react-bindings";
 import React, {useContext} from 'react';
 import {renderChildren, useRuleEngine} from "@aemforms/forms-next-react-bindings";
-const WizardStep = function (originalProps: FieldsetJson & {id: string}) {
+import {State} from "@aemforms/forms-next-core/lib";
+const WizardStep = function (originalProps: State<FieldsetJson>) {
     const mappings = useContext(FormContext).mappings;
     const [props, handlers] = useRuleEngine(originalProps);
 

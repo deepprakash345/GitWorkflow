@@ -1,5 +1,4 @@
 import {FieldsetJson, FieldJson} from '../types';
-import RuleEngine from '../rules/RuleEngine';
 import {FileObject} from '../FileObject';
 
 export const getProperty = <P>(data: any, key: string, def: P): P => {

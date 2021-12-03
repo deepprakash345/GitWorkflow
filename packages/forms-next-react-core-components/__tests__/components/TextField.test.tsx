@@ -1,9 +1,10 @@
 import React from 'react';
 import {render, RenderResult} from '@testing-library/react';
 import TextField from '../../src/components/TextField';
-import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
+import {createForm, elementFetcher, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
+import Checkbox from '../../src/components/Checkbox';
 
 const field = {
     'name': 'name',
@@ -18,7 +19,7 @@ export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement |
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     {
-        name: 'field gets rendered without a provider',
+        name: 'field gets rendered',
         field: field,
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(label?.innerHTML).toEqual('name');
@@ -112,35 +113,25 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     }
 ];
 
+const helper = renderComponent(TextField, elementFetcher);
+
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
-    const component = <TextField {...field} />;
-    const checkExpectations = ({container}: RenderResult) => {
-        const label = container.querySelector('label');
-        const input = container.querySelector('input');
-        expects(label, input);
-    };
-    //checkExpectations(render(component));
-    const form = await createForm(field);
-    const wrapper = Provider(form);
-    checkExpectations(render(component, {wrapper}));
+    let x = await helper(field);
+    expects(x.label, x.input);
 });
 
 test('value entered by user in text field is set in model', async () => {
     const f = {
         ...field
     };
-    const form = await createForm(f);
-    const wrapper = Provider(form);
-    const component = <TextField {...form.getState().items[0]} />;
-    const {container} = render(component, {wrapper});
-    const input = container.querySelector('input');
+    let {input, element} = await helper(f);
     // @ts-ignore
     userEvent.clear(input);
     const inputValue = 'hello world';
     // @ts-ignore
     userEvent.type(input, inputValue);
-    const state = form.getState();
-    expect((state.items[0] as FieldJson).value).toEqual(inputValue);
+    const state = element.getState();
+    expect(state.value).toEqual(inputValue);
     expect(input?.value).toEqual(inputValue);
 });
 
@@ -150,14 +141,10 @@ test.todo('it should handle readOnly property');
 test('it should handle visible property', async () => {
     const f = {
         ...field,
-        'id' : 'x',
         'visible' : false
     };
 
-    const component = <TextField {...f} />;
-    const form = await createForm(field);
-    const wrapper = Provider(form);
-    const {container} = render(component, {wrapper});
+    let {container} = await helper(f);
     expect(container.innerHTML).toContain('display: none'); //todo: find a better check
 });
 test.todo('it should handle screenReaderText property');

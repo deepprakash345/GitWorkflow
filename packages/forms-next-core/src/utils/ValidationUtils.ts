@@ -46,8 +46,8 @@ export const Constraints = {
                 }
                 break;
             case 'boolean':
-                valid = ['true', true, 'false', false].indexOf(inputVal) > -1;
-                value = valid ? (inputVal === 'true') : inputVal;
+                valid = typeof inputVal === 'boolean' || inputVal === 'true' || inputVal === 'false';
+                value = typeof inputVal === 'boolean' ? inputVal : (valid ? inputVal === 'true': inputVal);
                 break;
             case 'integer':
                 value = parseFloat(inputVal);
