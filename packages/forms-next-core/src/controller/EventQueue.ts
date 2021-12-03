@@ -1,8 +1,8 @@
-import {WithController} from '../types';
-import {Action} from './Controller';
+import {Action, BaseJson} from '../types';
+import {BaseNode} from '../BaseNode';
 
-class EventNode<T extends { id: string }> {
-    constructor(private _node: T, private _event: Action) {
+class EventNode<T extends BaseJson> {
+    constructor(private _node: BaseNode<T>, private _event: Action) {
     }
 
     get node() {
@@ -29,11 +29,11 @@ class EventNode<T extends { id: string }> {
     }
 }
 
-class EventQueue<T extends { id: string } & WithController> {
+class EventQueue {
 
     private _runningEventCount: any
     private _isProcessing: boolean = false
-    private _pendingEvents: EventNode<T>[] = []
+    private _pendingEvents: EventNode<any>[] = []
 
     constructor() {
         this._runningEventCount = {};
@@ -43,12 +43,12 @@ class EventQueue<T extends { id: string } & WithController> {
        return this._pendingEvents.length;
     }
 
-    isQueued(node: T, event: Action) {
+    isQueued<T extends BaseJson>(node: BaseNode<T>, event: Action) {
         const evntNode = new EventNode(node, event);
         return this._pendingEvents.find(x => evntNode.isEqual(x)) !== undefined;
     }
 
-    queue(node : T, events: Action | Action[]) {
+    queue<T extends BaseJson>(node : BaseNode<T>, events: Action | Action[]) {
         if (!node || !events) {
             return;
         }
@@ -60,6 +60,8 @@ class EventQueue<T extends { id: string } & WithController> {
             const counter = this._runningEventCount[evntNode.valueOf()] || 0;
             const alreadyExists = this.isQueued(node, e);
             if (!alreadyExists || counter < 10) {
+                console.log(`Queued event : ${e.type} node: ${node.id} - ${node.name}`);
+                console.log(`Event Details ${e.toString()}`);
                 this._pendingEvents.push(evntNode);
                 this._runningEventCount[evntNode.valueOf()] = counter + 1;
             }
@@ -73,7 +75,9 @@ class EventQueue<T extends { id: string } & WithController> {
         this._isProcessing = true;
         while(this._pendingEvents.length > 0) {
             const e = this._pendingEvents[0];
-            e.node.controller.dispatch(e.event);
+            console.log(`Dequeued event : ${e.event.type} node: ${e.node.id} - ${e.node.name}`);
+            console.log(`Event Details ${e.event.toString()}`);
+            e.node.executeAction(e.event);
             this._pendingEvents.shift();
         }
         this._runningEventCount = {};

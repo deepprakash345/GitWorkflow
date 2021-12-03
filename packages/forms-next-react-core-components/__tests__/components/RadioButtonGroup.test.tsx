@@ -1,10 +1,9 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import RadioButtonGroup from '../../src/components/RadioButtonGroup';
-import {createForm, filterTestTable, InputFieldTestCase, Provider} from '../utils';
+import {createForm, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
-import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 import Checkbox from '../../src/components/Checkbox';
 
 const field : FieldJson = {
@@ -19,10 +18,12 @@ const field : FieldJson = {
     'enumNames' : ['Yes',  'No']
 };
 
-type Input = {labels: HTMLLabelElement[],
+type Input = {
+    labels: HTMLLabelElement[],
     inputs: HTMLInputElement[],
     group: Element | null,
-    container: Element | null}
+    container: Element | null
+}
 
 type GroupExpectType = (i : Input) => any
 
@@ -182,37 +183,17 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
     }
 ];
 
-type Result = Input & {
-    form?: Controller,
-}
-
-const helper = async (field : any, useProvider = true) : Promise<Result> => {
-    let container, form;
-    if (useProvider) {
-        form = await createForm(field);
-        const e = form.getState().items[0];
-        const component = <RadioButtonGroup {...e} />;
-        const wrapper = Provider(form);
-        container = render(component, {wrapper}).container;
-    } else {
-        const component = <RadioButtonGroup {...field} />;
-        container = render(component).container;
-    }
-    const group = container.querySelector('[role="radiogroup"]');
-    const inputs = Array.from(container.querySelectorAll('input'));
-    const labels = Array.from(container.querySelectorAll('label'));
+const helper = renderComponent(RadioButtonGroup, (container) => {
     return {
-        inputs,
-        labels,
-        container,
-        group,
-        form
+        group : container.querySelector('[role="radiogroup"]'),
+        inputs : Array.from(container.querySelectorAll('input')),
+        labels : Array.from(container.querySelectorAll('label'))
     };
-};
+});
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
     //expects(await helper(field));
-    expects(await helper(field, true));
+    expects(await helper(field));
 });
 
 test('option selected by user is set in the model', async () => {
@@ -220,17 +201,17 @@ test('option selected by user is set in the model', async () => {
         ...field
     };
     f.value = undefined;
-    const {inputs, form} = await helper(f);
-    let state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toBeUndefined();
+    const {inputs, element} = await helper(f);
+    let state = element?.getState();
+    expect(state.value).toBeUndefined();
     userEvent.click(inputs[0]);
-    state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toEqual(true);
+    state = element?.getState();
+    expect(state.value).toEqual(true);
     expect(inputs[0]?.checked).toEqual(true);
     expect(inputs[1]?.checked).toEqual(false);
     userEvent.click(inputs[1]);
-    state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toEqual(false);
+    state = element?.getState();
+    expect(state.value).toEqual(false);
     expect(inputs[0]?.checked).toEqual(false);
     expect(inputs[1]?.checked).toEqual(true);
 });

@@ -1,22 +1,83 @@
-import {BaseJson, ContainerModel, FieldsetModel, FormModel} from './types';
-import Node from './Node';
+import {
+    Action,
+    BaseJson,
+    BaseModel,
+    callbackFn,
+    ContainerModel, FieldsetJson,
+    FormModel,
+    Primitives,
+    Subscription
+} from './types';
+import {ExecuteRule} from './controller/Controller';
+import DataGroup from './data/DataGroup';
+import {resolveData, TOK_GLOBAL, Token, tokenize} from './utils/DataRefParser';
+import Form from './Form';
+import DataValue from './data/DataValue';
+import Container from './Container';
 
-export abstract class BaseNode<T extends BaseJson> extends Node<T> {
-    private _id: string
+class ActionImplWithTarget implements Action {
+
+    constructor(private _action: Action, private _target: BaseModel) {
+    }
+
+    public get type() {
+        return this._action.type;
+    }
+
+    public get payload() {
+        return this._action.payload;
+    }
+
+    public get metadata() {
+        return this._action.metadata;
+    }
+
+    public get target() {
+        return this._target;
+    }
+
+    public get isCustomEvent() {
+        return this._action.isCustomEvent;
+    }
+
+    toString() {
+        return this._action.toString();
+    }
+}
+
+
+export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     //@ts-ignore
     private _ruleNode: any
+
+    private _callbacks: {
+            [key: string]: callbackFn[]
+    } = {}
+
+    private _dependents: {node: BaseModel, subscription: Subscription }[] = [];
+    protected _jsonModel: T & {id: string}
+    private _tokens: Token[] = []
+
+    get isContainer() {
+        return false;
+    }
+
     public constructor(params: T,
                        //@ts_ignore
                        private _options: {form: FormModel, parent: ContainerModel}) {
-        super(params);
-        this._id = this.form.getUniqueId();
+        this._jsonModel = {
+            ...params,
+            id: this.form.getUniqueId()
+        };
     }
+
+    abstract value: Primitives
 
     protected setupRuleNode() {
         this._ruleNode = new Proxy(this.directReferences(), this._proxyHandler());
     }
 
-    protected directReferences() {
+    directReferences() {
         return this;
     }
 
@@ -24,7 +85,7 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
         return this._ruleNode;
     }
 
-    protected get(target: any, prop: string | Symbol) {
+    private get(target: any, prop: string | Symbol) {
         if (prop === Symbol.toPrimitive) {
             return this.valueOf;
         } else if (typeof(prop) === 'string') {
@@ -39,8 +100,9 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
                 }
             }
             //look in the items
-            if (typeof target[prop] !== 'undefined') {
-                return target[prop];
+            const res = target[prop];
+            if (typeof res !== 'undefined') {
+                return res;
             }
             //since currently rule grammar doesn't support '$' for properties. This needs to be removed
             //@ts-ignore
@@ -61,15 +123,11 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
     }
 
     get id() {
-        return this._id;
+        return this._jsonModel.id;
     }
 
-    get index() {
-        return this._jsonModel.index || 0;
-    }
-
-    set index(n: number) {
-        this._jsonModel.index = n;
+    get index(): number {
+        return this.parent.indexOf(this);
     }
 
     get parent() {
@@ -81,7 +139,7 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
     }
 
     get viewType() {
-        return this._jsonModel.viewType;
+        return this._jsonModel.viewType || 'text-input';
     }
 
     get name() {
@@ -96,6 +154,10 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
         return this._jsonModel.visible;
     }
 
+    set visible(v) {
+        this._jsonModel.visible = v;
+    }
+
     get form() {
         return this._options.form;
     }
@@ -108,10 +170,129 @@ export abstract class BaseNode<T extends BaseJson> extends Node<T> {
         return this._jsonModel.label;
     }
 
-    json() {
+    set label(l) {
+        this._jsonModel = {
+            ...this._jsonModel,
+            label: l
+        };
+    }
+
+    getState() {
         return {
-            id: this.id,
             ...this._jsonModel
         };
+    }
+
+    subscribe(callback: callbackFn, eventName: string = 'change') {
+        this._callbacks[eventName] = this._callbacks[eventName] || [];
+        this._callbacks[eventName].push(callback);
+        //console.log(`subscription added : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
+        return {
+            unsubscribe: () => {
+                this._callbacks[eventName] = this._callbacks[eventName].filter(x => x !== callback);
+                //console.log(`subscription removed : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
+            }
+        };
+    }
+
+    addDependent(action: Action) {
+        if(this._dependents.find(({node}) => node === action.payload) === undefined) {
+            const subscription = this.subscribe((change: Action) => {
+                const changes = change.payload.changes;
+                const propsToLook = ['value', 'items'];
+                // @ts-ignore
+                const isPropChanged = changes.findIndex(x => {
+                    return propsToLook.indexOf(x.propertyName) > -1;
+                }) > -1;
+                if (isPropChanged) {
+                    action.payload.dispatch(new ExecuteRule());
+                }
+            });
+            this._dependents.push({node: action.payload, subscription});
+        }
+    }
+
+    removeDependent(action: Action) {
+        const index = this._dependents.findIndex(({node}) => node === action.payload);
+        if(index > -1) {
+            this._dependents[index].subscription.unsubscribe();
+            this._dependents.splice(index, 1);
+        }
+    }
+
+    abstract executeAction(action: Action): any
+
+    dispatch(action: Action): void {
+        let actionWithTarget: Action = new ActionImplWithTarget(action, this);
+        this.form.getEventQueue().queue(this, actionWithTarget);
+        this.form.getEventQueue().runPendingQueue();
+    }
+
+    notifyDependents(action: Action) {
+        const handlers = this._callbacks[action.type] || [];
+        handlers.forEach(x => {
+            x(new ActionImplWithTarget(action, this));
+        });
+    }
+
+    _bindToDataModel(contextualDataModel?: DataGroup) {
+        if (this.id === '$form') {
+            this._data = contextualDataModel;
+            return;
+        }
+        const dataRef = this._jsonModel.dataRef;
+        let _data: DataValue | undefined;
+        if (dataRef === null) {
+            _data = undefined;
+        } else if (dataRef !== undefined) {
+            if (this._tokens.length === 0) {
+                this._tokens = tokenize(dataRef);
+            }
+            let searchData: DataGroup | undefined = contextualDataModel;
+            if (this._tokens[0].type === TOK_GLOBAL) {
+                searchData = (this.form as Form).getDataNode() as DataGroup;
+            }
+            if (typeof searchData !== 'undefined') {
+                const name = this._tokens[this._tokens.length - 1].value;
+                const create = this.defaultDataModel(name);
+                _data = resolveData(searchData, this._tokens, create);
+            }
+        } else {
+            if (contextualDataModel != null) {
+                const name = this._jsonModel.name || '';
+                const key = contextualDataModel.$type === 'array' ? this.index : name;
+                if (key !== '') {
+                    const create = this.defaultDataModel(key);
+                    _data = contextualDataModel.$getDataNode(key) || create;
+                    contextualDataModel.$addDataNode(key, _data);
+                }
+            }
+        }
+        if (!this.isContainer) {
+            _data = _data?.$convertToDataValue();
+        }
+        _data?.$bindToField(this);
+        this._data = _data;
+    }
+
+    private _data?: DataValue
+
+    getDataNode() {
+        return this._data;
+    }
+
+    abstract defaultDataModel(name: string|number): DataValue
+
+    abstract importData(a: DataGroup) : any
+
+    /**
+     * called after the node is inserted in the parent
+     * @private
+     */
+    _initialize() {
+        if (typeof this._data === 'undefined') {
+            const dataNode = (this.parent as Container<FieldsetJson>).getDataNode();
+            this._bindToDataModel(dataNode as DataGroup);
+        }
     }
 }

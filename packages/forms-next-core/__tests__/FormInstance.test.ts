@@ -1,15 +1,14 @@
 import {formWithPanel, numberFieldForm, oneFieldForm, nonFormComponent, create, formWithRules} from './collateral';
 import {createFormInstance, fetchForm} from '../src';
-import {FieldJson} from '../src/types';
 import siblingAccess from '../__tests__/collateral/siblingAccess';
-import {AddItem, Change} from '../src/controller/Controller';
+import {Change} from '../src/controller/Controller';
 
 const nock = require('nock');
 
 test('single field form', async () => {
     const form = JSON.parse(JSON.stringify(oneFieldForm));
     const actual = await createFormInstance(form);
-    expect(actual.getState().items[0]).toMatchObject({
+    expect(actual.items?.[0].getState()).toMatchObject({
         type: 'string',
         viewType: 'text-input',
         name: 'name',
@@ -21,7 +20,7 @@ test('single field form', async () => {
 
 test('single field form with number type', async () => {
     const actual = await createFormInstance(numberFieldForm);
-    expect(actual.getState().items[0]).toMatchObject({
+    expect(actual.items?.[0].getState()).toMatchObject({
         viewType: 'number-input',
         type: 'number',
         name: 'name',
@@ -35,7 +34,7 @@ test('single field form with default', async () => {
     const form = JSON.parse(JSON.stringify(oneFieldForm));
     form.items[0].default = 'john doe';
     const actual = await createFormInstance(form);
-    expect(actual.getState().items[0]).toMatchObject({
+    expect(actual.items?.[0].getState()).toMatchObject({
         default: 'john doe',
         viewType: 'text-input',
         type: 'string',
@@ -49,7 +48,7 @@ test('single field form with default', async () => {
 
 test('form with panel', async () => {
     const actual = await createFormInstance(formWithPanel);
-    expect(actual.getState().items[0]).toMatchObject({
+    expect(actual.items?.[0].getState()).toMatchObject({
         viewType: 'text-input',
         type: 'string',
         name: 'name',
@@ -57,27 +56,25 @@ test('form with panel', async () => {
         visible: true,
         enabled: true
     });
-    expect(actual.getState().items[1]).toMatchObject({
+    expect(actual.items?.[1].getState()).toMatchObject({
         type: 'object',
         name: 'address',
-        visible : true,
-        items : [
-            {
-                viewType: 'number-input',
-                type: 'number',
-                name: 'zip',
-                value: undefined,
-                readOnly: false,
-                visible: true,
-                enabled: true
-            }
-        ]
+        visible : true
+    });
+    expect(actual.items?.[1].items?.[0].getState()).toMatchObject({
+        viewType: 'number-input',
+        type: 'number',
+        name: 'zip',
+        value: undefined,
+        readOnly: false,
+        visible: true,
+        enabled: true
     });
 });
 
 test.skip('nested fields with non form component', async () => {
     const actual = await createFormInstance(nonFormComponent);
-    expect(actual.getState().items[0]).toMatchObject({
+    expect(actual.items?.[0].getState()).toMatchObject({
         viewType: 'text-input',
         type: 'string',
         name: 'name',
@@ -85,7 +82,7 @@ test.skip('nested fields with non form component', async () => {
         visible: true,
         enabled: true
     });
-    expect(actual.getState().items[1]).toMatchObject({
+    expect(actual.items?.[1].getState()).toMatchObject({
         count: 1,
         initialCount: 1,
         visible : true,
@@ -104,24 +101,21 @@ test.skip('nested fields with non form component', async () => {
 
 test('form with sibling access', async () => {
     const form = await createFormInstance(siblingAccess.staticForm);
-    let state = form.getState();
-    const f = form.getElementController(state.items[0].id);
-    f.dispatch(new Change('x'));
-    state = form.getState();
-    expect(state.items[1].value).toEqual('x');
+    const f = form.items?.[0];
+    f.value = 'x';
+    expect(form.items[1].value).toEqual('x');
 });
 
 test('form with sibling access - dynamic form', async () => {
     const form = await createFormInstance(siblingAccess.dynamicForm);
-    let state = form.getState();
-    const f = form.getElementController(state.items[0].id);
-    const p = form.getElementController(state.items[0].items[0].items[0].id);
-    const q = form.getElementController(state.items[0].items[0].items[1].id);
-    const t = form.getElementController(state.items[0].items[0].items[2].id);
-    p.dispatch(new Change('100'));
-    q.dispatch(new Change('10'));
-    state = t.getState();
-    expect(state.value).toEqual(1000);
+    const p = form.items?.[0].items?.[0].items?.[0];
+    const q = form.items?.[0].items?.[0].items?.[1];
+    const t = form.items?.[0].items?.[0].items?.[2];
+    //@ts-ignore
+    p.value = '100';
+    //@ts-ignore
+    q.value = '10';
+    expect(t?.value).toEqual(1000);
 });
 
 test('form with rules', async () => {
@@ -129,7 +123,7 @@ test('form with rules', async () => {
     formJson.items[0].default = 'john';
     formJson.items[1].default = 'doe';
     let form = await createFormInstance(formJson);
-    let field = form.getState().items[2] as FieldJson;
+    let field = form.items?.[2];
     expect(field.value).toEqual('john doe');
 });
 

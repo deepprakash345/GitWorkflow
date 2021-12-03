@@ -3,7 +3,17 @@ import AFNodeFactory from './AFNodeFactory';
 import FunctionRuntime from './FunctionRuntime';
 import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
 import {BaseModel} from '../types';
-import {AddDependent} from '../controller/Controller';
+import {ActionImpl} from '../controller/Controller';
+
+class AddDependent extends ActionImpl {
+    constructor(payload: BaseModel) {
+        super(payload, 'addDependent');
+    }
+
+    protected payloadToJson() {
+        return this.payload.getState();
+    }
+}
 
 const formula = makeFormula(FunctionRuntime.getFunctions(), new AFNodeFactory());
 
@@ -28,8 +38,8 @@ class RuleEngine {
      * @param subscriber
      */
     trackDependency(subscriber: BaseModel) {
-        if (this._context && this._context.$field !== undefined) {
-            subscriber.controller.dispatch(new AddDependent(this._context.$field));
+        if (this._context && this._context.$field !== undefined && this._context.$field !== subscriber) {
+            subscriber.dispatch(new AddDependent(this._context.$field));
         }
     }
 }

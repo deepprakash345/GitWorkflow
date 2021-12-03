@@ -2,7 +2,15 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import FileUpload from '../../src/components/FileUpload';
 import userEvent from '@testing-library/user-event';
-import {createForm, filterTestTable, ignoredTestTable, InputFieldTestCase, Provider} from '../utils';
+import {
+    createForm,
+    elementFetcher,
+    filterTestTable,
+    ignoredTestTable,
+    InputFieldTestCase,
+    Provider,
+    renderComponent
+} from '../utils';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 import {FileObject} from '@aemforms/forms-next-core/lib/FileObject';
 
@@ -239,27 +247,7 @@ const labelInputTests: InputFieldTestCase<FileUploadExpectType>[] = [
     }
 ];
 
-const helper = async (field : any, useProvider = true) => {
-    let container, form;
-    if (useProvider) {
-        form = await createForm(field);
-        const e = form.getState().items[0];
-        let component = <FileUpload {...e} />;
-        const wrapper = Provider(form);
-        container = render(component, {wrapper}).container;
-    } else {
-        let component = <FileUpload {...field} />;
-        container = render(component).container;
-    }
-    const input = container.querySelector('input');
-    const label = container.querySelector('label');
-    return {
-        input,
-        label,
-        container,
-        form
-    };
-};
+const helper = renderComponent(FileUpload, elementFetcher);
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
     //let x = await helper(field, false);
@@ -277,12 +265,11 @@ test('file input with type file[] or string[] should have correct data and model
         ...fieldWithMultipleFiles
     };
 
-    const {input, form} = await helper(f);
-    let state = form?.getState();
-    let data = state.data;
+    const {input, form, element} = await helper(f);
+    let data = form.exportData();
     expect(data.profiles).toEqual(['http://abc.com/abc.pdf', 'http://def.com/def.pdf']);
-    state = form?.getState();
-    let value = (state?.items[0] as FieldJson).value;
+    let state = element?.getState();
+    let value = state.value;
     expect(value).not.toBeUndefined();
     expect(value).toBeInstanceOf(Array);
     // @ts-ignore
@@ -292,8 +279,8 @@ test('file input with type file[] or string[] should have correct data and model
     let file = new File(['(⌐□_□)'], 'chucknorris.pdf', { type: 'application/pdf' });
     // simulate upload event
     userEvent.upload(input as HTMLInputElement, file);
-    state = form?.getState();
-    value = (state?.items[0] as FieldJson).value;
+    state = element?.getState();
+    value = state.value;
     // @ts-ignore
     expect(value.length).toEqual(3);
     // @ts-ignore
@@ -305,21 +292,19 @@ test('file input with type file should have correct data and model value', async
         ...fieldWithValueAndMaxFileSize
     };
 
-    const {input, form} = await helper(f);
-    let state = form?.getState();
-    let data = state.data;
+    const {input, form, element} = await helper(f);
+    let data = form.exportData();
     expect(data.profile_image).toEqual({'data': 'http://abc.com/abc.pdf', 'mediaType': 'application/pdf', 'name': 'abc.pdf', 'size': 2891829});
-    state = form?.getState();
-    let fieldJson = (state?.items[0] as FieldJson);
+    let state = element?.getState();
+    let fieldJson = state;
     let value = fieldJson.value;
     expect(value).not.toBeUndefined();
     // @ts-ignore
-    let controller = form?.getElementController(fieldJson?.id);
+    let controller = form?.getElement(fieldJson?.id);
     // in json, max file size is not serialized and is stored as a string
     expect(fieldJson.maxFileSize).toEqual('5MB');
-    // @ts-ignore
     // in model, maxFileSize should be as number and in bytes so that it can be used in rules
-    expect(controller._elem.maxFileSize).toEqual(5242880);
+    expect(controller.maxFileSize).toEqual(5242880);
     expect(value).toBeInstanceOf(FileObject);
 });
 
@@ -329,18 +314,19 @@ test('file input with change in view should update model', async () => {
         required: true
     };
 
-    const {input, form} = await helper(f);
+    const {input, form, element} = await helper(f);
     let file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
     // in case of png this is called
     global.URL.createObjectURL = jest.fn();
     // simulate upload event
     userEvent.upload(input as HTMLInputElement, file);
-    let state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toBeInstanceOf(FileObject);
+    let state = element?.getState();
+    expect(state.value).toBeInstanceOf(FileObject);
     // @ts-ignore
-    expect((state?.items[0] as FieldJson).value?.data).toBeInstanceOf(File);
+    expect(state.value?.data).toBeInstanceOf(File);
     expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
     // check attachments which is to be sent during submit
+    //@ts-ignore
     let attachments = form?.getState().attachments;
     expect(Object.keys(attachments).length).toEqual(1);
 });

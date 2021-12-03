@@ -1,8 +1,8 @@
 import React from 'react';
-import {ContainerJson} from '@aemforms/forms-next-core/lib';
+import {ContainerJson, State} from '@aemforms/forms-next-core/lib';
 import {Handlers} from './hooks';
 
-export const renderChildren = function <T extends ContainerJson>(props: T, mappings: any, handlers: Handlers) {
+export const renderChildren = function <P extends ContainerJson>(props: State<P>, mappings: any, handlers: Handlers) {
     const items = props.items;
     const maxItems = props.maxItems;
     const minItems = props.minItems;

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
+import {FormModel} from '@aemforms/forms-next-core/lib';
 
 export type IFormContext = {
     mappings: any,
-    controller?: Controller
+    form?: FormModel
 };
 
 const FormContext = React.createContext<IFormContext>({

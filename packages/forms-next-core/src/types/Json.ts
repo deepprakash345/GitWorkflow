@@ -13,7 +13,7 @@ type TranslationConstraintsJson = {
     'enum'?: any[];
 }
 
-type ConstraintsJson = TranslationConstraintsJson & {
+export type ConstraintsJson = TranslationConstraintsJson & {
     'type'?: string
     'required'?: boolean;
     'pattern'?: string,
@@ -28,6 +28,8 @@ type ConstraintsJson = TranslationConstraintsJson & {
     'fracDigits'?: number;
     'leadDigits'?: number;
     'enforceEnum'?: boolean
+    'minItems'?: number;
+    'maxItems'?: number;
 }
 
 const a: FieldJson  = {
@@ -66,7 +68,6 @@ export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     'constraintMessages'?: ConstraintsMessages;
     'viewType'?: string
     'errorMessage'?: string
-    index?: number
 }
 
 type TranslationFieldJson = {
@@ -87,8 +88,6 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
 export type ContainerJson = BaseJson & {
     'items': Array<FieldJson | ContainerJson>
     'initialItems'?: number;
-    'minItems'?: number;
-    'maxItems'?: number;
 }
 
 export type MetaDataJson = {
@@ -106,6 +105,7 @@ export type FieldsetJson = ContainerJson & {
 export type FormJson = ContainerJson & {
     'metadata'?: MetaDataJson,
     'data'?: any
+    title?: string
 }
 
 export type TranslationJson = TranslationBaseJson & TranslationFieldJson & TranslationConstraintsJson

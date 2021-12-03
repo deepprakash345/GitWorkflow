@@ -2,9 +2,17 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import Checkbox from '../../src/components/Checkbox';
 import userEvent from '@testing-library/user-event';
-import {createForm, filterTestTable, ignoredTestTable, InputFieldTestCase, Provider} from '../utils';
+import {
+    createForm,
+    elementFetcher,
+    filterTestTable,
+    ignoredTestTable,
+    InputFieldTestCase,
+    Provider,
+    renderComponent
+} from '../utils';
 import {FieldExpectType} from './TextField.test';
-import {FieldJson} from '@aemforms/forms-next-core/lib';
+import {FieldJson, FieldModel} from '@aemforms/forms-next-core/lib';
 
 const field = {
     'name': 'name',
@@ -176,27 +184,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     }
 ];
 
-const helper = async (field : any, useProvider = true) => {
-    let container, form;
-    if (useProvider) {
-        form = await createForm(field);
-        const e = form.getState().items[0];
-        let component = <Checkbox {...e} />;
-        const wrapper = Provider(form);
-        container = render(component, {wrapper}).container;
-    } else {
-        let component = <Checkbox {...field} />;
-        container = render(component).container;
-    }
-    const input = container.querySelector('input');
-    const label = container.querySelector('label');
-    return {
-        input,
-        label,
-        container,
-        form
-    };
-};
+const helper = renderComponent(Checkbox, elementFetcher);
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
     //let x = await helper(field, false);
@@ -217,11 +205,11 @@ test('if no options are defined then value cannot be selected', async () => {
         },
         'visible' : true
     };
-    const {input, form} = await helper(f);
+    const {input, element} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
-    const state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toEqual(undefined);
+    const state = element?.getState();
+    expect(state?.value).toEqual(undefined);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
     // @ts-ignore
@@ -233,11 +221,10 @@ test('selection made by the user sets the value', async () => {
     const f = {
         ...field
     };
-    const {input, form, label} = await helper(f);
+    const {input, label, element} = await helper(f);
     // @ts-ignore
     userEvent.click(label);
-    const state = form?.getState();
-    expect(state?.items[0].value).toEqual(true);
+    expect(element?.value).toEqual(true);
     expect(input?.checked).toEqual(true);
     expect(input?.value).toEqual('true');
 });
@@ -248,15 +235,15 @@ test('clicking on checkbox twice resets the value', async () => {
         'enum' : [false, true],
         'value' : [true, false][Math.round(Math.random())]
     };
-    const {input, form} = await helper(f);
+    const {input, form, element} = await helper(f);
     const value = input?.value;
     const checked = input?.checked;
     // @ts-ignore
     userEvent.click(input);
     // @ts-ignore
     userEvent.click(input);
-    const state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toEqual(f.value);
+    const state = element?.getState();
+    expect(state.value).toEqual(f.value);
     expect(input?.checked).toEqual(checked);
     expect(input?.value).toEqual(`${value}`);
 });
@@ -268,11 +255,11 @@ test('deselecting the checkbox sets the value to off value', async () => {
         'enum' : [false, true],
         'value' : false
     };
-    const {input, form} = await helper(f);
+    const {input, element} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
-    const state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toBe(true);
+    const state = element?.getState();
+    expect(state.value).toBe(true);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('true');
 });
@@ -292,13 +279,13 @@ test('a checkbox with no off value should get its value undefined when not selec
         ...field
     };
 
-    const {input, form} = await helper(f);
+    const {input, element} = await helper(f);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
     // @ts-ignore
     userEvent.click(input);
-    let state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toBe(true);
+    let state = element?.getState();
+    expect(state.value).toBe(true);
     expect(input?.checked).toEqual(true);
     expect(input?.value).toEqual('true');
 
@@ -306,8 +293,8 @@ test('a checkbox with no off value should get its value undefined when not selec
     userEvent.click(input);
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
-    state = form?.getState();
-    expect((state?.items[0] as FieldJson).value).toBe(undefined);
+    state = element?.getState();
+    expect(state.value).toBe(undefined);
 });
 
 test('a checkbox with no off value should not be invalid when not required', async () => {
@@ -315,16 +302,14 @@ test('a checkbox with no off value should not be invalid when not required', asy
         ...field
     };
 
-    const {input, form} = await helper(f);
+    const {input, form, element} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
-    let state = form?.getState();
-    let data = await state.data;
+    let data = form?.exportData();
     expect(data.name).toEqual(true);
     // @ts-ignore
     userEvent.click(input);
-    state = form?.getState();
-    expect((state?.items[0] as FieldJson).valid).not.toBe(false);
+    expect(element?.valid).not.toBe(false);
 
 });
 
@@ -334,11 +319,11 @@ test('a required checkbox with null value should be invalid', async () => {
         required: true
     };
 
-    const {input, form} = await helper(f);
+    const {input, element} = await helper(f);
     // @ts-ignore
     userEvent.click(input);
     // @ts-ignore
     userEvent.click(input);
-    let state = form?.getState();
-    expect((state?.items[0] as FieldJson).valid).toBe(false);
+    let state = element?.getState();
+    expect(state.valid).toBe(false);
 });

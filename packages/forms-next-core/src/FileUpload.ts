@@ -1,10 +1,11 @@
 import {resolve} from './utils/JsonUtils';
-import {Change} from './controller/Controller';
+import {Change, propertyChange} from './controller/Controller';
 import Field from './Field';
 import {dataURItoBlob, getFileSizeInBytes} from './utils/FormUtils';
 import {isDataUrl} from './utils/ValidationUtils';
 import {FieldModel} from './types';
 import {FileObject} from './FileObject';
+import DataGroup from './data/DataGroup';
 
 //todo: move to a single place in Model.ts or Json.ts
 const defaults = {
@@ -162,6 +163,38 @@ class FileUpload extends Field implements FieldModel {
         return val;
     }
 
+    set value(payload) {
+        if (payload !== undefined) {
+            // store file list here
+            let fileInfoPayload = FileUpload.extractFileInfo(payload as any);
+            fileInfoPayload = this.coerce(fileInfoPayload);
+            const res = this.checkInput(fileInfoPayload);
+            if (res.value !== this._jsonModel.value) {
+                const curr = this._jsonModel.value;
+                this._jsonModel.valid = res.valid;
+                this._jsonModel.errorMessage = res.errorMessage;
+                this._jsonModel.value = res.value;
+                const changeAction = propertyChange('value', res.value, curr);
+                this.dispatch(changeAction);
+                this.form.getEventQueue().runPendingQueue();
+                const dataNode = this.getDataNode();
+                if (typeof dataNode !== 'undefined') {
+                    let val : any = this._jsonModel.value;
+                    let retVal = (val instanceof Array ? val : [val]).map(file => {
+                        if (this.type === 'file' || this.type === 'file[]') {
+                            return file;
+                        } else if (this.type === 'string' || this.type === 'string[]') {
+                            // @ts-ignore
+                            return file.data.toString();
+                        }
+                    });
+                    val = this.coerce(retVal);
+                    dataNode.$value = val;
+                }
+            }
+        }
+    }
+
     private async _serialize() {
         let val = this._jsonModel.value;
         if (val === undefined) return null;
@@ -179,50 +212,16 @@ class FileUpload extends Field implements FieldModel {
         return retVal;
     }
 
-    protected handleValueChange(payload: any) {
-        if (payload !== undefined) {
-            // store file list here
-            let fileInfoPayload = FileUpload.extractFileInfo(payload);
-            fileInfoPayload = this.coerce(fileInfoPayload);
-            return this.checkInput(fileInfoPayload);
-        }
-        return {};
-    }
-
-    exportData(dataModel: any) {
-        //let val = await this._serialize();
-        let that = this;
-        let val : any = this._jsonModel.value;
-        if (val === undefined) return null;
-        let retVal = (val instanceof Array ? val : [val]).map(file => {
-            if (that.type === 'file' || that.type === 'file[]') {
-                return file;
-            } else if (that.type === 'string' || that.type === 'string[]') {
-                // @ts-ignore
-                return file.data.toString();
-            }
-        });
-        val = this.coerce(retVal);
-        if (this.dataRef != 'none' && this.dataRef !== undefined) {
-            resolve(dataModel, this.dataRef, val);
-        } else if (this.dataRef !== 'none') {
-            return val;
-        }
-    }
-
-
-    importData(dataModel: any, parentDataModel: any) {
-        let data: any;
-        const name = this.name || '';
-        if (this.dataRef != 'none' && this.dataRef !== undefined) {
-            data = resolve(dataModel, this.dataRef);
-        } else if (this.dataRef !== 'none' && name.length > 0) {
-            data = resolve(parentDataModel, name);
-        }
-        if (data !== undefined) {
-            let fileObj : FileObject[] = FileUpload.extractFileInfo(data);
-            let importedData = this.coerce(fileObj);
-            this.controller.queueEvent(new Change(importedData));
+    importData(dataModel?:DataGroup) {
+        this._bindToDataModel(dataModel);
+        const dataNode = this.getDataNode();
+        if (dataNode !== undefined) {
+            const value = dataNode.$value;
+            let fileObj : FileObject[] = FileUpload.extractFileInfo(value);
+            const newValue = this.coerce(fileObj);
+            // is this needed ?
+            this.form.getEventQueue().queue(this, propertyChange('value', newValue, this._jsonModel.value));
+            this._jsonModel.value = newValue;
         }
     }
 }

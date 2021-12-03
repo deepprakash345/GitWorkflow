@@ -44,9 +44,10 @@ The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecyc
 headless demo instance. To run the playground locally execute the following commands
 
 ```
-cd packages/forms-headless-sample
 npm install
-npm run start
+npx lerna bootstrap
+npx lerna build
+npx lerna run start
 ```
 
 The playground is dependent on the JSON Files that are hosted on 

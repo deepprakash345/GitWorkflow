@@ -1,24 +1,31 @@
 import {
+    Action,
     ContainerJson,
     ContainerModel,
-    Executor,
     FieldJson,
     FieldModel,
     FieldsetJson,
     FieldsetModel,
     RulesJson
 } from './types';
-import {deepClone, resolve} from './utils/JsonUtils';
+import {deepClone} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {Action, Change, Controller, Initialize} from './controller/Controller';
+import {ExecuteRule, Initialize, propertyChange} from './controller/Controller';
+import DataGroup from './data/DataGroup';
 
-abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel, Executor {
+abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel {
 
     protected _children: Array<FieldModel | FieldsetModel> = []
     //@ts-ignore
     protected _ruleContext: any
-    protected _data: any = null
+
     private _itemTemplate: FieldsetJson | FieldJson | null = null;
+
+    //@ts-ignore
+    protected _jsonModel : T & {
+        id: string,
+        items: Array<FieldJson & {id: string} | ContainerJson & {id: string}>
+    }
 
     directReferences() {
         return this._ruleContext;
@@ -37,18 +44,33 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return true;
     }
 
+    getState() {
+        return {
+            ...this._jsonModel,
+            items: this._children.map(x => {
+                return {id : x.id, viewType: x.viewType};
+            })
+        };
+    }
+
     protected abstract _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel
 
     private _addChildToRuleNode(child: any) {
         const self = this;
-        const name = this.type == 'array' ? child.index + '' : (this.type == 'object') ? child.name || '' : '';
+        //the child has not been added to the array, hence using the length as new index
+        const name = this.type == 'array' ? this._children.length + '' : (this.type == 'object') ? child.name || '' : '';
         if (name.length > 0) {
             Object.defineProperty(this._ruleContext, name, {
                 get: () => {
-                    if (self._hasDynamicItems()) {
-                        self.ruleEngine.trackDependency(self);
+                    if (child.isContainer && child._hasDynamicItems()) {
+                        self.ruleEngine.trackDependency(child); //accessing dynamic panel directly
                     }
-                    return child.getRuleNode();
+                    if (self._hasDynamicItems()) {
+                        self.ruleEngine.trackDependency(self); //accessing a child of dynamic panel
+                        return this._children[name];
+                    } else {
+                        return child.getRuleNode();
+                    }
                 },
                 configurable: true,
                 enumerable: true
@@ -65,23 +87,31 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             ...deepClone(itemJson)
         };
         //@ts-ignore
-        let retVal = this._createChild(itemTemplate, {parent: this});
+        let retVal = this._createChild(itemTemplate, {parent: this, index: index});
         this._addChildToRuleNode(retVal);
         if (index === this._children.length) {
             this._children.push(retVal);
         } else {
             this._children.splice(index, 0, retVal);
-            for (let i = index + 1; i < this._children.length; i++) {
-                this._children[i].index = i;
-                this._children[i].controller.dispatch(new Change(undefined));
-                this._addChildToRuleNode(this._children[i]);
-            }
         }
+        retVal._initialize();
         return retVal;
     }
 
-    protected initialize() {
-        let items = this._jsonModel.items;
+    indexOf(f: FieldModel | FieldsetModel): number {
+        return this._children.indexOf(f);
+    }
+
+    defaultDataModel(name: string) {
+        const type = this._jsonModel.type || 'object';
+        const instance = type === 'array' ? [] : {};
+        return new DataGroup(name, instance, type);
+    }
+
+    _initialize() {
+        super._initialize();
+        const items = this._jsonModel.items;
+        this._jsonModel.items = [];
         this._ruleContext = this._jsonModel.type == 'array' ? [] : {};
         if (this._jsonModel.type == 'array' && items.length === 1) {
             this._itemTemplate = deepClone(items[0]);
@@ -92,19 +122,15 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 this._jsonModel.maxItems = -1;
             }
             if (typeof (this._jsonModel.initialItems) !== 'number') {
-                this._jsonModel.initialItems = 1;
+                this._jsonModel.initialItems = Math.max(1, this._jsonModel.minItems);
             }
             for (let i = 0; i < this._jsonModel.initialItems; i++) {
                 //@ts-ignore
-                const retVal = this._addChild(this._itemTemplate);
-                //@ts-ignore
-                items[i] = {'id': retVal.id};
+                this._addChild(this._itemTemplate);
             }
         } else if (items.length > 0) {
             items.forEach((item, index) => {
-                const retVal = this._addChild(item);
-                //@ts-ignore
-                items[index] = {'id': retVal.id};
+                this._addChild(item);
             });
             this._jsonModel.minItems = this._children.length;
             this._jsonModel.maxItems = this._children.length;
@@ -113,95 +139,48 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         this.setupRuleNode();
     }
 
-    private items2Json() {
-        return this._children.map(elem => elem.json());
-    }
-
-    json() {
-        return {
-            ...super.json(),
-            'items': this.items2Json()
-        };
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    executeAction(action: Action, context: any, trigger: (x: Action) => void): any {
-        if (action.type === 'AddItem' && this._itemTemplate != null) {
+    addItem(action: Action, context: any) {
+        if (action.type === 'addItem' && this._itemTemplate != null) {
             //@ts-ignore
             if ((this._jsonModel.maxItems === -1) || (this._children.length < this._jsonModel.maxItems)) {
                 const retVal = this._addChild(this._itemTemplate, action.payload);
-                trigger(new Change(undefined));
-                retVal.controller.dispatch(new Initialize());
-                retVal.controller.dispatch(new Change(undefined));
+                this.notifyDependents(propertyChange('items', retVal.getState, null));
+                retVal.dispatch(new Initialize());
+                retVal.dispatch(new ExecuteRule());
             }
-        } else if (action.type === 'RemoveItem' && this._itemTemplate != null) {
+        }
+    }
+
+    removeItem(action: Action, context: any) {
+        if (action.type === 'removeItem' && this._itemTemplate != null) {
             const index = action.payload || this._children.length - 1;
+            var state = this._children[index].getState();
             //@ts-ignore
             if (this._children.length > this._jsonModel.minItems) {
+                // clear child
+                //remove field
                 this._children.splice(index, 1);
-            }
-            for (let i = index; i < this._children.length; i++) {
-                this._children[i].index = i;
-                this._children[i].controller.dispatch(new Change(undefined));
-            }
-            trigger(new Change(undefined));
-        }
-        super.executeAction(action, context, trigger);
-        if (action.metadata?.dispatch) {
-            this._dispatchActionToItems(context, action);
-        }
-    }
-
-    _dispatchActionToItems(context: any, action: Action, items: Array<FieldModel | FieldsetModel> = this.items) {
-        items.forEach(x => {
-            x.controller.dispatch(action);
-        });
-    }
-
-    abstract get controller(): Controller;
-
-    importData(dataModel: any, contextualDataModel?: any) {
-        let currentDataModel = null;
-        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
-            currentDataModel = resolve(dataModel, this._jsonModel.dataRef) || {};
-        } else if (this._jsonModel.dataRef === 'none') {
-            currentDataModel = contextualDataModel;
-        } else if ((this._jsonModel?.name || '').length > 0) {
-            currentDataModel = resolve(contextualDataModel, this._jsonModel.name || '') || {};
-        }
-        this.syncDataAndFormModel(dataModel, currentDataModel, 'importData');
-    }
-
-    //todo : empty data models are getting created. We should stop that.
-     exportData(dataModel: any) {
-        const name = this._jsonModel.name || '';
-        const isArray = this._jsonModel.type === 'array';
-        let currentDataModel: any = isArray ? [] : {};
-         for (const x of this._children) {
-            const data = x.exportData(dataModel);
-            if (data != undefined) {
-                let name = x.name || '';
-                let dataRef = x.dataRef || '';
-                if (dataRef === 'none') {
-                    if (isArray && data instanceof Array) {
-                        currentDataModel = [...currentDataModel, ...data];
-                    } else if (!isArray) {
-                        currentDataModel = {...currentDataModel, ...data};
-                    } else {
-                        currentDataModel[x.index] = data;
-                    }
-                } else if (name.length > 0 && !isArray) {
-                    currentDataModel[name] = data;
-                } else if (isArray) {
-                    currentDataModel[x.index] = data;
+                for (let i = index; i < this._children.length; i++) {
+                    this._children[i].dispatch(new ExecuteRule());
                 }
+                this._ruleContext.pop();
+                this.notifyDependents(propertyChange('items', null, state));
             }
         }
-        if (this._jsonModel.dataRef !== 'none' && this._jsonModel.dataRef !== undefined) {
-            currentDataModel = resolve(dataModel, this._jsonModel.dataRef, currentDataModel);
-        } else {
-            return currentDataModel;
+    }
+
+    dispatch(action: Action): void {
+        super.dispatch(action);
+        if (action.metadata?.dispatch) {
+            this.items.forEach(x => {
+                x.dispatch(action);
+            });
         }
+    }
+
+    importData(contextualDataModel?: DataGroup) {
+        this._bindToDataModel(contextualDataModel);
+        this.syncDataAndFormModel(this.getDataNode() as DataGroup);
     }
 
     /**
@@ -210,14 +189,34 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @param contextualDataModel
      * @param operation
      */
-    syncDataAndFormModel(dataModel: any, contextualDataModel: any, operation: string = 'importData') {
-        let currentData: any = {};
-        this._children.forEach(x => {
-            if (operation === 'importData') {
-                x.importData(dataModel, contextualDataModel);
-            } else {
-                console.error(`Invalid sync operation ${operation}. It should be importData or exportData`);
+    syncDataAndFormModel(contextualDataModel?: DataGroup) {
+        if (contextualDataModel?.$type === 'array' && this._itemTemplate != null) {
+            const dataLength = contextualDataModel?.$value.length;
+            const itemsLength = this._children.length;
+            const maxItems = this._jsonModel.maxItems === -1 ? dataLength : this._jsonModel.maxItems;
+            const minItems = this._jsonModel.minItems;
+            //@ts-ignore
+            let items2Add = Math.min(dataLength - itemsLength, maxItems - itemsLength);
+            //@ts-ignore
+            let items2Remove = Math.min(itemsLength - dataLength, itemsLength - minItems);
+            while (items2Add > 0) {
+                items2Add--;
+                this._addChild(this._itemTemplate);
             }
+            if (items2Remove > 0) {
+                this._children.splice(dataLength, items2Remove);
+                const newItems: any[] = this._jsonModel.items.slice(0, dataLength);
+                this._jsonModel = {
+                    ...this._jsonModel,
+                    items: newItems
+                };
+                for (let i = 0; i < items2Remove; i++) {
+                    this._ruleContext.pop();
+                }
+            }
+        }
+        this._children.forEach(x => {
+            x.importData(contextualDataModel);
         });
     }
 }

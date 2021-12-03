@@ -1,8 +1,7 @@
 import React, {JSXElementConstructor, useEffect} from 'react';
 import FormContext from './FormContext';
-import {createFormInstance} from '@aemforms/forms-next-core/lib';
+import {createFormInstance, FormModel} from '@aemforms/forms-next-core/lib';
 import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
-import {Controller} from '@aemforms/forms-next-core/lib/controller/Controller';
 import {FormJson} from '@aemforms/forms-next-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
@@ -30,7 +29,7 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize} = props;
-    let [controller, setController] = React.useState<Controller|undefined>(undefined);
+    let [controller, setController] = React.useState<FormModel|undefined>(undefined);
     const createForm = async (json: string) => {
         try {
             const data = JSON.parse(json);
@@ -87,13 +86,13 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     // create adaptive form instance
     // by adding IntlProvider, numberField would auto format the number based on the locale
     return (
-            <FormContext.Provider value={{mappings: mappings, controller: controller}}>
+            <FormContext.Provider value={{mappings: mappings, form: controller}}>
                 <IntlProvider onError={(err)=> console.log(err)} locale={locale as string} messages={localizationMessagesProp}>
                     {(state !== undefined) ? (
                     <form>
                         {state.title ?<h2>{state.title}</h2> : null}
                         { //@ts-ignore
-                            renderChildren(controller?.getState(), mappings )
+                            renderChildren(state, mappings )
                         }
                     </form>
                     ) : 'Loading Form...'}
