@@ -325,6 +325,10 @@ test('file input with change in view should update model', async () => {
     // @ts-ignore
     expect(state.value?.data).toBeInstanceOf(File);
     expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
+    // check attachments which is to be sent during submit
+    //@ts-ignore
+    let attachments = form?.getState().attachments;
+    expect(Object.keys(attachments).length).toEqual(1);
 });
 
 test.todo('file input with minItems');

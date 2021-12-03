@@ -62,7 +62,7 @@ class Form extends Container<FormJson> implements FormModel {
         });
         Object.defineProperty(res, 'attachments', {
             get: function() {
-                return getAttachments(res);
+                return getAttachments(self);
             }
         });
         return res;

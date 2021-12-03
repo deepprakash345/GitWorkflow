@@ -1,78 +1,80 @@
 import {renderHook} from '@testing-library/react-hooks';
 import FormContext from '../../src/component/FormContext';
 import React from 'react';
-import {Controller, Change, Click} from '@aemforms/forms-next-core/lib/controller/Controller';
 import {useRuleEngine} from '../../src';
+import RuleEngine from '@aemforms/forms-next-core/lib/rules/RuleEngine';
+import EventQueue from '@aemforms/forms-next-core/lib/controller/EventQueue';
+import {FormModel} from '@aemforms/forms-next-core/lib';
+import {randomWord} from '@aemforms/forms-next-core/lib/utils/FormUtils';
+import {AddItem, Click} from '@aemforms/forms-next-core/lib/controller/Controller';
 
-export const testController = () : Controller => {
+export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormModel => {
     return {
-        subscribe : jest.fn().mockReturnValue({
-            unsubscribe: jest.fn()
-        }),
-
-        dispatch : jest.fn(),
-
-        getState : jest.fn(),
-
-        getElementController : jest.fn(),
-
-        queueEvent: jest.fn()
+        exportData: jest.fn(),
+        getElement: jest.fn(),
+        isContainer: true,
+        items: [],
+        getState: jest.fn(),
+        getUniqueId: () => {
+            return randomWord(10);
+        },
+        ruleEngine: ruleEngine,
+        index: 0,
+        //@ts-ignore
+        getDataNode: jest.fn(),
+        //@ts-ignore
+        parent: null,
+        //@ts-ignore
+        value: undefined,
+        viewType: '',
+        dispatch: jest.fn(),
+        getEventQueue: () => {
+            return eventQueue;
+        },
+        indexOf: jest.fn(),
+        submit: jest.fn(),
+        subscribe: jest.fn(),
+        importData: jest.fn(),
+        id : '$form',
+        getRuleNode: jest.fn(),
+        directReferences: jest.fn()
     };
 };
 
-
-let mockController : Controller;
+let form: FormModel, wrapper: any;
 
 beforeEach(() => {
-    mockController = testController();
+    form = MockForm(new RuleEngine(), new EventQueue());
+    form.getElement = jest.fn().mockReturnValue(form);
+    wrapper = (props : any) => {
+        return (<FormContext.Provider
+            value={{form, mappings: {}}}>{props.children}</FormContext.Provider>);
+    };
 });
 
 test('should fetch the field controller', () => {
-    const wrapper = (props : any) => {
-        return (<FormContext.Provider
-            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
-    };
     renderHook(() => useRuleEngine({'id': 'something'}), {wrapper});
-    expect(mockController.getElementController).toHaveBeenCalledWith('something');
+    expect(form.getElement).toHaveBeenCalledWith('something');
 });
 
 test('should return the original value', () => {
-    const wrapper = (props : any) => {
-        return (<FormContext.Provider
-            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
-    };
     const {result} = renderHook(() => useRuleEngine({'id': 'something'}), {wrapper});
     expect(result.current[0]).toEqual({'id' : 'something'});
 });
 
 test('should subscribe to the form', () => {
-    mockController.getElementController = jest.fn().mockReturnValue(mockController);
-    const wrapper = (props : any) => {
-        return (<FormContext.Provider
-            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
-    };
     renderHook(() => useRuleEngine({'id': 'id'}), {wrapper});
-    expect(mockController.subscribe).toHaveBeenCalledWith(expect.anything());
+    expect(form.subscribe).toHaveBeenCalledWith(expect.anything());
 });
 
 test('should trigger the dispatch event of the form', () => {
-    mockController.getElementController = jest.fn().mockReturnValue(mockController);
-    const wrapper = (props : any) => {
-        return (<FormContext.Provider
-            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
-    };
     const {result} = renderHook(() => useRuleEngine({'id': 'id'}), {wrapper});
-    result.current[1].dispatchChange('value');
-    expect(mockController.dispatch).toHaveBeenCalledWith(new Change('value'));
+    result.current[1].dispatchAddItem();
+    expect(form.dispatch).toHaveBeenCalledWith(new AddItem());
 });
 
 test('should trigger the dispatch click event on the form', () => {
-    mockController.getElementController = jest.fn().mockReturnValue(mockController);
-    const wrapper = (props : any) => {
-        return (<FormContext.Provider
-            value={{controller: mockController, mappings: {}}}>{props.children}</FormContext.Provider>);
-    };
     const {result} = renderHook(() => useRuleEngine({'id': 'id'}), {wrapper});
     result.current[1].dispatchClick();
-    expect(mockController.dispatch).toHaveBeenCalledWith(new Click(null));
+    expect(form.dispatch).toHaveBeenCalledWith(new Click(null));
 });

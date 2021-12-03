@@ -1,4 +1,7 @@
+import {FileObject} from '../FileObject';
 import {isFile} from './JsonUtils';
+import {BaseModel, ContainerModel, FieldsetModel, FormModel} from '../types';
+import FormMetaData from '../FormMetaData';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
 const fileSizeRegex =  /^(\d*\.?\d+)(\\?(?=[KMGT])([KMGT])(?:i?B)?|B?)$/i;
@@ -12,19 +15,29 @@ export const randomWord = (l: number) => {
     return ret.join('');
 };
 
-export const getAttachments = (input : any) : any=> {
-    return Object.keys(input).reduce((acc, curr) => {
-        const objValue = input[curr];
+export const getAttachments = (input : ContainerModel) : any=> {
+    const items = input.items || [];
+    return items?.reduce((acc, item) => {
         let ret = null;
-        if(objValue && objValue instanceof Object) {
-            ret = getAttachments(objValue);
-        } else if(objValue && objValue instanceof Array) {
-            ret = getAttachments(objValue[0]);
+        if (item.isContainer) {
+            ret = getAttachments(item as ContainerModel);
         } else {
-            const f1 = input;
-            if (f1?.value && isFile(f1)) {
+            if (isFile(item.getState())) {
                 ret = {}; // @ts-ignore
-                ret[f1.id] = f1.value;
+                const name = item.name || '';
+                let dataRef = (item.dataRef != null)
+                    ? item.dataRef
+                    : (name.length > 0 ? item.name : undefined);
+                //@ts-ignore
+                if (item.value instanceof Array) {
+                    // @ts-ignore
+                    ret[input.id] = input.value.map((x) => {
+                        return {...x, 'dataRef': dataRef};
+                    });
+                } else {
+                    // @ts-ignore
+                    ret[input.id] = {...input.value, 'dataRef': dataRef};
+                }
             }
         }
         return Object.assign(acc, ret);
