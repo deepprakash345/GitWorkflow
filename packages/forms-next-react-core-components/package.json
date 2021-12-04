@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-next-react-core-components",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "/pages/livecycle/af2-web-runtime/story",
@@ -33,8 +33,8 @@
     "deploye-storybook": "gh-pages -d packages/forms-next-react-core-components/storybook-static -e story"
   },
   "dependencies": {
-    "@aemforms/forms-next-core": "^0.3.0",
-    "@aemforms/forms-next-react-bindings": "^0.2.0",
+    "@aemforms/forms-next-core": "^0.3.1",
+    "@aemforms/forms-next-react-bindings": "^0.2.1",
     "sanitize-html": "^2.4.0",
     "styled-components": "^5.2.1"
   },
