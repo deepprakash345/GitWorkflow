@@ -67,7 +67,8 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
                        private _options: {form: FormModel, parent: ContainerModel}) {
         this._jsonModel = {
             ...params,
-            id: this.form.getUniqueId()
+            //@ts-ignore
+            id: 'id' in params ? params.id : this.form.getUniqueId()
         };
     }
 
