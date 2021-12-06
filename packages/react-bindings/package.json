@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-next-react-bindings",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "React Hooks to add business logic to React Components",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
