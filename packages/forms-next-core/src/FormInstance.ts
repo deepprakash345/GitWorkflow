@@ -5,7 +5,7 @@ import {request} from './utils/Fetch';
 import RuleEngine from './rules/RuleEngine';
 import {FormModel} from './types';
 
-export const createFormInstance = (formModel: any): Promise<FormModel> => {
+export const createFormInstance = (formModel: any): FormModel => {
     try {
         let f = new Form({...formModel}, new RuleEngine());
         let formData = formModel?.data;
@@ -17,9 +17,9 @@ export const createFormInstance = (formModel: any): Promise<FormModel> => {
         // Before execution of calcExp, visibleExp, enabledExp, validate, options, navigationChange, we execute init script
         f.dispatch(new Initialize(undefined, true));
         f.dispatch(new ExecuteRule(undefined, true));
-        return Promise.resolve(f);
+        return f;
     } catch (e: any) {
-        return Promise.reject(new Error(e));
+        throw new Error(e);
     }
 };
 

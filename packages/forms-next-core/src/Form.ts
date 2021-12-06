@@ -22,7 +22,7 @@ class Form extends Container<FormJson> implements FormModel {
     constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
         //@ts-ignore
         super(n, {});
-        this._ids = IdGenerator();
+            this._ids = IdGenerator();
         this._bindToDataModel(new DataGroup('$form', {}));
         this._initialize();
     }

@@ -2,7 +2,10 @@ import React from 'react';
 import {ContainerJson, State} from '@aemforms/forms-next-core/lib';
 import {Handlers} from './hooks';
 
-export const renderChildren = function <P extends ContainerJson>(props: State<P>, mappings: any, handlers: Handlers) {
+export const renderChildren = function <P extends ContainerJson>(props: State<P>,
+                                                                 mappings: any,
+                                                                 modelId: string,
+                                                                 handlers?: Handlers) {
     const items = props.items;
     const maxItems = props.maxItems;
     const minItems = props.minItems;
@@ -26,9 +29,9 @@ export const renderChildren = function <P extends ContainerJson>(props: State<P>
                         addRemoveRequired && Repeater !== undefined ?
                         (<div>
                             <Repeater add={addRequired} remove={removeRequired} index={child.index} handlers={handlers}/>
-                            <Comp key={child.id} {...child} />
+                            <Comp key={child.id + '__' + modelId} {...child} />
                         </div>) :
-                        <Comp key={child.id} {...child} />
+                        <Comp key={child.id + '__' + modelId} {...child} />
                     );
                 })
             );

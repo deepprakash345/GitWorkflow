@@ -3,11 +3,11 @@ import {FormModel} from '@aemforms/forms-next-core/lib';
 
 export type IFormContext = {
     mappings: any,
-    form?: FormModel
+    form: FormModel,
+    modelId: string
 };
 
-const FormContext = React.createContext<IFormContext>({
-    mappings: {}
-});
+//@ts-ignore
+const FormContext = React.createContext<IFormContext>({});
 
 export default FormContext;

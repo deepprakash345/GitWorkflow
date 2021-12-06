@@ -26,6 +26,7 @@ export const useRuleEngine = function <P>(props : State<P>): [any, Handlers] {
     const context:IFormContext = useContext(formContext);
     const id = props.id as string;
     const element = context.form?.getElement(id) as FieldModel | FormModel | FieldsetModel;
+
     // use the controller state, if an empty controller (like objects outside of form vocab), fallback to props
     const [elementState, setElementState] = useState(element?.getState() || props);
     useEffect(() => {
