@@ -21,12 +21,12 @@ export const mockHandler = {
 
 test('render children with no mappings returns undefined elements', () => {
 
-    const res = renderChildren(parent, undefined, mockHandler);
+    const res = renderChildren(parent, undefined, '$form', mockHandler);
     expect(res[0]).toEqual(<div><h4>Undefined Element</h4><pre>{jsonString(item)}</pre></div>);
 });
 
 test('render children with empty mappings returns undefined elements', () => {
-    const res = renderChildren(parent, {}, mockHandler);
+    const res = renderChildren(parent, {},'$form', mockHandler);
     expect(res[0]).toEqual(<div><h4>Undefined Element</h4><pre>{jsonString(item)}</pre></div>);
 });
 
@@ -35,7 +35,7 @@ test('render children with no children', () => {
         ...parent,
         'items' : []
     };
-    const res = renderChildren(p, {}, mockHandler);
+    const res = renderChildren(p, {},'$form', mockHandler);
     expect(res.length).toEqual(0);
 });
 
@@ -44,7 +44,7 @@ test.each([123, '', true])('render children with items as %p', (items) => {
         ...parent,
         'items' : items as unknown as any
     };
-    const res = renderChildren(p, {}, mockHandler);
+    const res = renderChildren(p, {},'$form', mockHandler);
     expect(res.length).toEqual(0);
 });
 
@@ -57,7 +57,7 @@ test('render children with missing mapping returns undefined element', () => {
         'otherType' : MyComponent
     };
 
-    const res = renderChildren(parent, mappings, mockHandler);
+    const res = renderChildren(parent, mappings,'$form', mockHandler);
     expect(res[0]).toEqual(<div><h4>Undefined Element</h4><pre>{jsonString(item)}</pre></div>);
 });
 
@@ -82,6 +82,6 @@ test('render children with correct mappings', () => {
         'someType' : MyComponent
     };
 
-    const res = renderChildren(parent, mappings, mockHandler);
+    const res = renderChildren(parent, mappings,'$form', mockHandler);
     expect(res[0].toString()).toStrictEqual((<MyComponent {...item}/>).toString());
 });

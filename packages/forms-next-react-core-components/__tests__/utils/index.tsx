@@ -18,7 +18,8 @@ export const Provider = (form: FormModel,
                          dictionaries: any = '') => (props: any) => {
     const c = {
         form,
-        mappings
+        mappings,
+        modelId: '$form'
     };
     const {children} = props;
     return (

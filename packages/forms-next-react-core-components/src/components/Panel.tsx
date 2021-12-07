@@ -6,12 +6,12 @@ import {useRuleEngine, renderChildren, FormContext} from '@aemforms/forms-next-r
 import {State} from '@aemforms/forms-next-core/lib';
 
 const Panel = function (fieldset: State<FieldsetJson>) {
-    const mappings = useContext(FormContext).mappings;
+    const context = useContext(FormContext);
     const [props, handlers] = useRuleEngine(fieldset);
 
     if (props.visible) {
         return (<Flex direction="column" width="300px" gap="10px">
-            {renderChildren(props, mappings, handlers)}
+            {renderChildren(props, context.mappings, context.modelId, handlers)}
         </Flex>);
     } else {
         return null;

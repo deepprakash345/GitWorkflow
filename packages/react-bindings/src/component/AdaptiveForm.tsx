@@ -1,7 +1,6 @@
-import React, {JSXElementConstructor, useEffect} from 'react';
+import React, {JSXElementConstructor} from 'react';
 import FormContext from './FormContext';
-import {createFormInstance, FormModel} from '@aemforms/forms-next-core/lib';
-import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
+import {createFormInstance} from '@aemforms/forms-next-core/lib';
 import {FormJson} from '@aemforms/forms-next-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
@@ -29,76 +28,65 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize} = props;
-    let [controller, setController] = React.useState<FormModel|undefined>(undefined);
-    const createForm = async (json: string) => {
-        try {
-            const data = JSON.parse(json);
-            if (localizationMessages) {
-                // not using useMemo hook because createForm call is already optimized
-                // any expensive react operation should generally be inside useMemo
-                // todo: the input to defineMessages react-intl API could come from a restful end point
-                defineMessages(getTranslationMessages(data));
-            }
-            const controller = await createFormInstance(data);
-            if (typeof onInitialize === 'function') {
-                onInitialize({
-                    type : 'initialize',
-                    target: controller
-                });
-            }
-            Object.keys(props)
-                .map((propKey) => {
+    try {
+        if (localizationMessages) {
+            // not using useMemo hook because createForm call is already optimized
+            // any expensive react operation should generally be inside useMemo
+            // todo: the input to defineMessages react-intl API could come from a restful end point
+            defineMessages(getTranslationMessages(formJson));
+        }
+        const form = createFormInstance(formJson);
+        if (typeof onInitialize === 'function') {
+            onInitialize({
+                type : 'initialize',
+                target: form
+            });
+        }
+        Object.keys(props)
+            .map((propKey) => {
                     if (propKey.startsWith('on') && propKey !== 'onInitialize' && typeof props[propKey] === 'function') {
-                            // get the event name from the function
-                            let eventName = propKey.substring(propKey.indexOf('on') + 2);
-                            eventName = eventName.charAt(0).toLowerCase() + eventName.slice(1);
-                            // subscribe to the event
-                            controller.subscribe((action) => {
-                                props[propKey](action);
-                            }, eventName);
-                        }
+                        // get the event name from the function
+                        let eventName = propKey.substring(propKey.indexOf('on') + 2);
+                        eventName = eventName.charAt(0).toLowerCase() + eventName.slice(1);
+                        // subscribe to the event
+                        form.subscribe((action) => {
+                            props[propKey](action);
+                        }, eventName);
                     }
-                );
-            setController(controller);
-            // eslint-disable-next-line no-empty
-        } catch (e) {
-            console.error('Error while creating Form' + e);
+                }
+            );
+        const state = form.getState();
+        let localeDictJson = localizationMessages;
+        let localizationMessagesProp = undefined;
+        if (typeof localizationMessages === 'string') {
+            try {
+                // if messages are in incorrect format, just log an error
+                localeDictJson = JSON.parse(localizationMessages);
+            } catch(ex) {
+                console.log('Translation messages are in incorrect format');
+                localeDictJson = localizationMessages;
+            }
         }
-    };
-    useEffect(() => {
-        createForm(jsonString(formJson));
-    }, [formJson]);
-    const state = controller?.getState();
-    let localeDictJson = localizationMessages;
-    let localizationMessagesProp = undefined;
-    if (typeof localizationMessages === 'string') {
-        try {
-            // if messages are in incorrect format, just log an error
-            localeDictJson = JSON.parse(localizationMessages);
-        } catch(ex) {
-            console.log('Translation messages are in incorrect format');
-            localeDictJson = localizationMessages;
+        if (locale) {
+            localizationMessagesProp = localeDictJson?.[locale];
         }
-    }
-    if (locale) {
-        localizationMessagesProp = localeDictJson?.[locale];
-    }
-    // create adaptive form instance
-    // by adding IntlProvider, numberField would auto format the number based on the locale
-    return (
-            <FormContext.Provider value={{mappings: mappings, form: controller}}>
+        const modelId = form.getUniqueId();
+        return (
+            <FormContext.Provider value={{mappings, form, modelId}}>
                 <IntlProvider onError={(err)=> console.log(err)} locale={locale as string} messages={localizationMessagesProp}>
-                    {(state !== undefined) ? (
                     <form>
                         {state.title ?<h2>{state.title}</h2> : null}
-                        { //@ts-ignore
-                            renderChildren(state, mappings )
+                        {
+                            renderChildren(state, mappings, modelId)
                         }
                     </form>
-                    ) : 'Loading Form...'}
                 </IntlProvider>
             </FormContext.Provider>
-    );
+        );
+    } catch (e) {
+        console.error('Error while creating Form' + e);
+    }
+    return <div>Failed to Render Adaptive Form</div>;
 };
 
 export default AdaptiveForm;

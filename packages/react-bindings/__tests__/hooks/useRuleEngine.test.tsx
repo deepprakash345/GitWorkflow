@@ -48,7 +48,7 @@ beforeEach(() => {
     form.getElement = jest.fn().mockReturnValue(form);
     wrapper = (props : any) => {
         return (<FormContext.Provider
-            value={{form, mappings: {}}}>{props.children}</FormContext.Provider>);
+            value={{form, mappings: {}, modelId: '$form'}}>{props.children}</FormContext.Provider>);
     };
 });
 
