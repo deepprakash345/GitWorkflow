@@ -5,14 +5,14 @@ import React, {useContext} from 'react';
 import {renderChildren, useRuleEngine} from "@aemforms/forms-next-react-bindings";
 import {State} from "@aemforms/forms-next-core/lib";
 const WizardStep = function (originalProps: State<FieldsetJson>) {
-    const mappings = useContext(FormContext).mappings;
+    const {modelId, mappings} = useContext(FormContext);
     const [props, handlers] = useRuleEngine(originalProps);
 
     if (props.visible) {
         return (<QWizardStep
             title={props.label?.value}>
             <React.Fragment key=".0">
-                {renderChildren(props, mappings, handlers)}
+                {renderChildren(props, mappings, modelId, handlers)}
             </React.Fragment>
         </QWizardStep>)
     }

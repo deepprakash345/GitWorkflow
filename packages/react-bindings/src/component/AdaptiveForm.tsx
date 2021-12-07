@@ -86,7 +86,7 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     } catch (e) {
         console.error('Error while creating Form' + e);
     }
-    return 'Failed to Render Adaptive Form';
+    return <div>Failed to Render Adaptive Form</div>;
 };
 
 export default AdaptiveForm;

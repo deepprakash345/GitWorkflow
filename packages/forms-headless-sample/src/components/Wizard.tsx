@@ -4,7 +4,7 @@ import React, {useContext} from 'react';
 import {useRuleEngine, renderChildren, FormContext} from "@aemforms/forms-next-react-bindings";
 import {State} from "@aemforms/forms-next-core/lib";
 const Wizard = function (fieldset: State<FieldsetJson>) {
-    const mappings = useContext(FormContext).mappings;
+    const {modelId, mappings} = useContext(FormContext);
     const [props, handlers] = useRuleEngine(fieldset);
 
     if(props.visible) {
@@ -15,7 +15,7 @@ const Wizard = function (fieldset: State<FieldsetJson>) {
                          title={props.label?.value}
                          onClose={function noRefCheck() {
                          }}>
-            {renderChildren(props, mappings, handlers)}
+            {renderChildren(props, mappings, modelId, handlers)}
         </QWizard>);
     }
 };
