@@ -1,13 +1,13 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "homepage": "/pages/livecycle/af2-web-runtime/dist",
   "dependencies": {
     "@adobe/react-spectrum": "^3.12.0",
     "@aemforms/forms-next-core": "^0.3.2",
-    "@aemforms/forms-next-react-bindings": "^0.2.3",
-    "@aemforms/forms-next-react-core-components": "^0.3.4",
+    "@aemforms/forms-next-react-bindings": "^0.2.4",
+    "@aemforms/forms-next-react-core-components": "^0.3.5",
     "@quarry/wizard": "^1.0.2",
     "@react-aria/i18n": "^3.3.2",
     "@react/react-spectrum": "^2",
