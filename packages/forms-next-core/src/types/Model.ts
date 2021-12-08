@@ -119,7 +119,6 @@ export interface FormModel extends ContainerModel,
     getElement(id: string) : FieldModel | FormModel | FieldsetModel
     getUniqueId() : string
     getEventQueue(): EventQueue
-    submit(): any
 }
 
 export interface IFileObject {

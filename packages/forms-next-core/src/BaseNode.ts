@@ -223,9 +223,13 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     abstract executeAction(action: Action): any
 
-    dispatch(action: Action): void {
+    queueEvent(action: Action) {
         let actionWithTarget: Action = new ActionImplWithTarget(action, this);
         this.form.getEventQueue().queue(this, actionWithTarget);
+    }
+
+    dispatch(action: Action): void {
+        this.queueEvent(action);
         this.form.getEventQueue().runPendingQueue();
     }
 

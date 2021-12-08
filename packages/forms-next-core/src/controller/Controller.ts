@@ -57,6 +57,18 @@ export class Change extends ActionImpl {
     }
 }
 
+export class Invalid extends ActionImpl {
+    constructor(payload: any={}) {
+        super(payload, 'invalid');
+    }
+}
+
+export class Valid extends ActionImpl {
+    constructor(payload: any = {}) {
+        super(payload, 'valid');
+    }
+}
+
 export class ExecuteRule extends ActionImpl {
     constructor(payload: any = {}, dispatch: boolean = false) {
         super(payload, 'executeRule', {dispatch});
@@ -103,8 +115,6 @@ export class CustomEvent extends ActionImpl {
         return true;
     }
 }
-
-
 
 export class AddItem extends ActionImpl {
     constructor(payload?: number) {

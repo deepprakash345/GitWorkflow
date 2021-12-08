@@ -1,7 +1,7 @@
 import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FieldsetJson, FormModel} from './types';
 import {jsonString, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
-import {propertyChange} from './controller/Controller';
+import {Change, Invalid, propertyChange, Valid} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
@@ -189,7 +189,37 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     change(event: Action, context: any) {
-        //this.executeAllRules(context);
+
+    }
+
+    _checkChange(propNames: string[], updates: any) {
+        return propNames.map(propertyName => {
+            //@ts-ignore
+            const prevValue = this._jsonModel[propertyName];
+            const currentValue = updates[propertyName];
+            if (currentValue !== prevValue) {
+                return {
+                    propertyName,
+                    currentValue,
+                    prevValue
+                };
+            }
+        });
+    }
+
+    validate(event: Action, context: any) {
+        const res = this.checkInput(this.evaluateConstraints(this._jsonModel.value));
+        const changes = this._checkChange(['valid', 'errorMessage'], res);
+        if (changes.length > 0) {
+            this._jsonModel.valid = res.valid;
+            this._jsonModel.errorMessage = res.errorMessage;
+            this.notifyDependents(new Change(changes));
+        }
+        if (!res.valid) {
+            this.dispatch(new Invalid());
+        } else {
+            this.dispatch(new Valid());
+        }
     }
 
     importData(contextualDataModel: DataGroup) {

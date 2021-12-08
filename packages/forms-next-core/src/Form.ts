@@ -1,5 +1,6 @@
 import Container from './Container';
 import {
+    Action,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -13,11 +14,20 @@ import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
+import {submit} from './rules/FunctionRuntime';
+import {ActionImpl} from './controller/Controller';
+
+class Validate extends ActionImpl {
+    constructor() {
+        super({}, 'validate', {dispatch: true});
+    }
+}
 
 class Form extends Container<FormJson> implements FormModel {
 
     _fields: Items<FieldsetModel | FieldModel> = {}
     _ids: Generator<string, void, string>
+    _invalidFields: string[] = []
 
     constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
         //@ts-ignore
@@ -89,13 +99,33 @@ class Form extends Container<FormJson> implements FormModel {
 
     fieldAdded(field: FieldModel | FieldsetModel) {
         this._fields[field.id] = field;
+        field.subscribe((action) => {
+            if (this._invalidFields.indexOf(action.target.id) === -1) {
+                this._invalidFields.push(action.target.id);
+            }
+        }, 'invalid');
+        field.subscribe((action) => {
+            const index = this._invalidFields.indexOf(action.target.id);
+            if (index > -1) {
+                this._invalidFields.splice(index, 1);
+            }
+        }, 'valid');
+
     }
 
-    submit() {
-        // if (action?.type === 'submit') {
-        //     action = new Submit(context.$form?.getState().data);
-        // }
-        //this._fields[action.payload.id] = action.payload;
+    dispatch(action: Action): void {
+        if (action.type === 'submit') {
+            this.queueEvent(new Validate());
+            this._eventQueue.runPendingQueue();
+            if (this._invalidFields.length > 0) {
+                return;
+            }
+        }
+        super.dispatch(action);
+    }
+
+    submit(action: Action, context: any) {
+        submit(context, action.payload.success, action.payload.error);
     }
 
     public getElement(id: string) {

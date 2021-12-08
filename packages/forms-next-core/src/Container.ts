@@ -169,6 +169,16 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
+    queueEvent(action: Action) {
+        super.queueEvent(action);
+        if (action.metadata?.dispatch) {
+            this.items.forEach(x => {
+                //@ts-ignore
+                x.queueEvent(action);
+            });
+        }
+    }
+
     dispatch(action: Action): void {
         super.dispatch(action);
         if (action.metadata?.dispatch) {
