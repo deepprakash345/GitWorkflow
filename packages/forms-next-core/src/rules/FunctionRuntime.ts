@@ -55,8 +55,8 @@ class FunctionRuntimeImpl {
             get_data : (context : any) => {
                 return this.getData(context);
             },
-            submit_form: (context: any, success: string, error: string) => {
-                this.submit(context, success, error);
+            submit_form: (context: any,  success: string, error: string, submit_as: 'json' | 'multipart' = 'json', data: any = null) => {
+                this.submit(context, success, error, submit_as, data);
                 return {};
             },
             // todo: only supports application/json for now
@@ -88,20 +88,22 @@ class FunctionRuntimeImpl {
             method: httpVerb
         };
         let result;
+        let inputPayload: any;
         try {
             if (payload && payload instanceof FileObject && payload.data instanceof File) {
                 // todo: have to implement array type
                 let formData = new FormData();
                 formData.append(payload.name, payload.data);
-                payload = formData;
-            } else if (payload && Object.keys(payload).length > 0) {
+                inputPayload = formData;
+            } else if (payload && typeof payload === 'object' && Object.keys(payload).length > 0) {
                 if (payloadContentType.length > 0) {
                     requestOptions.headers = {
                         'Content-Type': payloadContentType // this should match content type of the payload
                     };
                 }
+                inputPayload = JSON.stringify(payload);
             }
-            result = await fRequest(endpoint, payload, requestOptions);
+            result = await fRequest(endpoint, inputPayload, requestOptions);
         } catch (e) {
             //todo: define error payload
             console.log('error handled');
@@ -121,20 +123,23 @@ class FunctionRuntimeImpl {
 
 
 
-    async submit(context: any, success: string, error: string, submitAs: 'json' | 'multipart' = 'json') {
+    async submit(context: any, success: string, error: string, submitAs: 'json' | 'multipart' = 'json', input_data: any) {
         // todo have to implement validate here
         this.validate(context);
         const endpoint = context.$form.metaData?.action;
-        const data = jsonString(context.$form.getState().data);
+        let data = input_data;
+        if (typeof data != 'object' || data == null) {
+            data = context.$form.getState().data;
+        }
         // todo: have to implement sending of attachments here
         const attachments = context.$form.getState().attachments;
         let submitContentType: string = submitAs;
         let formData: any;
         if (Object.keys(attachments).length > 0) {
-            multipartFormData(data, attachments);
+            multipartFormData(jsonString(data), attachments);
             submitContentType = 'multipart/form-data';
         } else {
-            formData = data;
+            formData = {':data' : data};
             submitContentType = 'application/json';
         }
         // note: don't send multipart/form-data let browser decide on the content type
