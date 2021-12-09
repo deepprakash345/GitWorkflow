@@ -1,0 +1,13 @@
+{
+    "items": [
+        {
+            "name": "defaultCheckbox",
+            "type": "boolean",
+            "viewType": "checkbox",
+            "required": true,
+            "label": {
+                "value": "Default checkbox"
+            }
+        }
+    ]
+}

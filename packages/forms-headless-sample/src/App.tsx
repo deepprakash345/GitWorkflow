@@ -49,7 +49,7 @@ function App() {
     useEffect( () => {
         if (Object.keys(application).length === 0) {
             (async () => {
-                console.warn("making a get request")
+                console.log("making a get request")
                 const response = await fetch('/pages/livecycle/af2-docs/examples/generated/Application.form.json')
                 const form = await response.text()
                 setApplication(JSON.parse(form))

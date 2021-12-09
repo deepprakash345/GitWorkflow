@@ -159,6 +159,21 @@ pipeline {
                 }
             }
         }
+//         stage("storybook deploye") {
+//             when {
+//                 allOf {
+//                     expression { return prepareSample }
+//                     expression { return !isPullRequest() }
+//                     branch "main"
+//                 }
+//             }
+//             steps {
+//                 script {
+//                     sh "npx lerna run build-storybook"
+//                     sh "npx lerna run deploye-storybook"
+//                 }
+//             }
+//         }
         stage("deploy sample") {
             when {
                 allOf {

@@ -1,0 +1,114 @@
+{
+    "items": [
+        {
+            "name": "firstName",
+            "viewType": "text-input",
+            "default": "john",
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 30,
+            "required": true,
+            "constraintMessages": {
+                "minLength": "Name cannot be empty",
+                "maxLength": "Please enter only first 30 characters of your name",
+                "required": "Name cannot be empty"
+            },
+            "description": "We need it to address you in our responses",
+            "screenReaderText": "'Enter your name as you like us to address you'",
+            "rules": {
+                "required": "$form.isAnonymous.value != true"
+            },
+            "label": {
+                "value": "First Name"
+            }
+        },
+        {
+            "name": "lastName",
+            "viewType": "text-input",
+            "default": "doe",
+            "description": "We need it to address you in our responses",
+            "screenReaderText": "Enter your name as you like us to address you",
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 30,
+            "required": true,
+            "constraintMessages": {
+                "minLength": "Name cannot be empty",
+                "maxLength": "Please enter only first 30 characters of your name",
+                "required": "Name cannot be empty"
+            },
+            "rules": {
+                "required": "$form.isAnonymous.value != true"
+            },
+            "label": {
+                "value": "Last Name"
+            }
+        },
+        {
+            "name": "name",
+            "viewType": "text-input",
+            "rules": {
+                "value": "$form.firstName.value + ' ' + $form.lastName.value"
+            },
+            "label": {
+                "value": "Your Full Name"
+            }
+        },
+        {
+            "name": "email",
+            "viewType": "text-input",
+            "description": "It's a promise that we will not spam you",
+            "screenReaderText": "Provide your email address so that we can reply to you.",
+            "type": "string",
+            "format": "email",
+            "required": true,
+            "constraintMessages": {
+                "format": "Please enter a valid email address",
+                "required": "The email address is mandatory"
+            },
+            "rules": {
+                "required": "$form.isAnonymous.value != true"
+            },
+            "label": {
+                "value": "Email Address"
+            }
+        },
+        {
+            "name": "isAnonymous",
+            "viewType": "checkbox",
+            "description": "In case you want to remain anonymous",
+            "type": "boolean",
+            "required": true,
+            "label": {
+                "value": "Remain Anonymous",
+                "richText": false,
+                "visible": false
+            }
+        },
+        {
+            "name": "phone",
+            "viewType": "text-input",
+            "description": "Your mobile number where we can reach you. But only if you want",
+            "screenReaderText": "Enter you mobile number without the ISD code",
+            "pattern": "/[0-9]{10}/",
+            "constraintMessages": {
+                "pattern": "Phone number must be 10 digit long"
+            },
+            "label": {
+                "value": "Mobile Number"
+            }
+        },
+        {
+            "name": "submit",
+            "viewType": "button",
+            "title": "Submit",
+            "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+            "events": {
+                "click": "dispatch_event($form, 'submit')"
+            },
+            "label": {
+                "value": "Submit"
+            }
+        }
+    ]
+}

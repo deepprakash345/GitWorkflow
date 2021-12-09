@@ -1,0 +1,23 @@
+{
+    "items": [
+        {
+            "name": "checkbox",
+            "type": "boolean",
+            "viewType": "checkbox",
+            "label": {
+                "value": "Select for enabling the text field"
+            }
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "viewType": "text-input",
+            "label": {
+                "value": "Text input"
+            },
+            "rules": {
+                "readOnly": "$form.checkbox.value != true"
+            }
+        }
+    ]
+}

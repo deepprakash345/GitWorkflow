@@ -1,0 +1,11 @@
+{
+    "items": [
+        {
+            "name": "plainText",
+            "label": {
+                "value": "Plain text"
+            },
+            "viewType": "plain-text"
+        }
+    ]
+}

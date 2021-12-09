@@ -1,0 +1,28 @@
+{
+    "items": [
+        {
+            "name": "name",
+            "type": "string",
+            "viewType": "plain-text",
+            "rules": {
+                "value": "if($form.firstName.value != null() && $form.lastName.value != null(), 'Your name is ' + $form.firstName  + ' ' +  $form.lastName , '')"
+            }
+        },
+        {
+            "name": "firstName",
+            "type": "string",
+            "viewType": "text-input",
+            "label": {
+                "value": "First Name"
+            }
+        },
+        {
+            "name": "lastName",
+            "type": "string",
+            "viewType": "text-input",
+            "label": {
+                "value": "Last Name"
+            }
+        }
+    ]
+}

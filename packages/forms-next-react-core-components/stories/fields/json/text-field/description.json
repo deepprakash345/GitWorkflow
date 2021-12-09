@@ -1,0 +1,24 @@
+{
+    "items": [
+        {
+            "name": "textInput",
+            "label": {
+                "value": "Text input"
+            },
+            "description": "Text field description",
+            "type": "string",
+            "viewType": "text-input",
+            "required": true
+        },
+        {
+            "name": "textNumber",
+            "label": {
+                "value": "Number input"
+            },
+            "description": "Number field description",
+            "type": "number",
+            "viewType": "number-input",
+            "required": true
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "name": "booleanCheckbox",
+            "viewType": "checkbox",
+            "type": "boolean",
+            "label": {
+                "value": "Boolean checkbox"
+            },
+            "enum": [
+                false,
+                true
+            ]
+        }
+    ]
+}
