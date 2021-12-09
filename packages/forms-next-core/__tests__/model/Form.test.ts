@@ -69,17 +69,18 @@ test('dispatching an event on a field without rule should not throw exception', 
 expect.extend({
     matchesAction(received: Action, expected: { action: Action, target: BaseModel }) {
         const passes = {
-            'target': received.target == expected.target,
-            'type': received.type === expected.action.type,
-            'metadata': JSON.stringify(received.metadata) === JSON.stringify(expected.action.metadata),
-            'payload': JSON.stringify(received.payload) == JSON.stringify(expected.action.payload)
+            'target': [received.target.id, expected.target.id, received.target == expected.target],
+            'type': [received.type, expected.action.type, received.type === expected.action.type],
+            'metadata': [JSON.stringify(received.metadata), JSON.stringify(expected.action.metadata), JSON.stringify(received.metadata) === JSON.stringify(expected.action.metadata)],
+            'payload': [JSON.stringify(received.payload), JSON.stringify(expected.action.payload), JSON.stringify(received.payload) == JSON.stringify(expected.action.payload)]
         };
-        const entries = Object.entries(passes).filter((key) => !key[1]);
+        const entries = Object.entries(passes).filter((key) => !key[1][2]);
         if (entries.length > 0) {
             return {
                 message: () => {
                     let msg = `expected ${Object.keys(passes).length} to match but ${entries.length} did not match. `;
                     msg = msg + entries.map((key) => key[0]).join(',') + ' did not match';
+                    msg = msg + '\n ' + entries.map((key) => key[0] + ' : ' + key[1][0] + ' !== ' + key[1][1]).join('\n');
                     return msg;
                 },
                 pass: false
@@ -114,15 +115,21 @@ test('default subscription gets invoked when value changes', async () => {
     f1.subscribe(callback);
     f1.value = 'change2';
     f1.dispatch(new Click());
-    const action = propertyChange('value', 'change2', undefined);
+    const action = new Change({
+        changes: [
+            {propertyName: 'value', currentValue: 'change2'},
+            {propertyName: 'valid', currentValue: true},
+            {propertyName: 'errorMessage', currentValue: ''}
+        ]
+    });
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback.mock.calls[0][0]).matchesAction({action, target: f1});
 });
 
 test('default subscription gets invoked only when state changes via events', async () => {
     const formJson = create([{
-        'f' : {
-            'default' : '2',
+        'f': {
+            'default': '2',
             'events': {
                 'custom:event1': "{prop1 : '1'}",
                 'custom:event2': "{value : '1'}"
@@ -136,7 +143,13 @@ test('default subscription gets invoked only when state changes via events', asy
     f1.subscribe(callback);
     f1.dispatch(new CustomEvent('event1'));
     f1.dispatch(new CustomEvent('event2'));
-    const action = propertyChange('value', '1', '2');
+    const action = new Change({
+        changes: [
+            {'propertyName':'value','currentValue':'1','prevValue':'2'},
+            {'propertyName':'valid','currentValue':true},
+            {'propertyName':'errorMessage','currentValue':''}
+        ]
+    });
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback.mock.calls[0][0]).matchesAction({action, target: f1});
 });
@@ -369,7 +382,7 @@ test('multiple field changes also keep the data modified', async () => {
     let form = await createFormInstance(formJson);
     const state = form.getState();
     form.getElement(state.items[0].id).value = 'value2';
-    form.getElement(state.items[1].id).value ='value2';
+    form.getElement(state.items[1].id).value = 'value2';
     form.getElement(state.items[2].id).value = 'value2';
     expect(await form.getState().data).toEqual({
         a: {
@@ -460,7 +473,7 @@ test.skip('an invalid value should remove the old value from the data dom', asyn
     let form = await createFormInstance(formJson);
     const c = form.getElement('f1');
     c.value = 1;
-    expect(form.getState().data).toEqual({f1 : 1});
+    expect(form.getState().data).toEqual({f1: 1});
     c.value = 'abcd';
     expect(form.getState().data).toEqual({});
 });
@@ -535,14 +548,14 @@ test('dataDom is updated as per the dataType of the element', async () => {
 test('custom event should be executed for all the fields when dispatched', async () => {
     const formJson = create([{
         'f': {
-            'type' : 'number',
+            'type': 'number',
             'events': {
                 'custom:customClick': '{"value" : 1 + 3}'
             }
         }
     }, {
         'f': {
-            'type' : 'number',
+            'type': 'number',
             'events': {
                 'custom:customClick': '{"value" : 2 + 3}'
             }
@@ -559,7 +572,7 @@ test('custom event should be executed for all the fields when dispatched', async
 test('custom event should pass the payload to the event', async () => {
     const formJson = create([{
         'f': {
-            'type' : 'number',
+            'type': 'number',
             'events': {
                 'custom:customClick1': '{"value" : 1 + $event.payload.add}'
             }
@@ -567,7 +580,7 @@ test('custom event should pass the payload to the event', async () => {
     }, {
         'f': {
             'label': {
-                'value' : 'myfield'
+                'value': 'myfield'
             },
             'events': {
                 'custom:customClick2': '{"value" : $event.target.label.value}'
@@ -588,8 +601,8 @@ test('custom event should pass the payload to the event', async () => {
 test('dataRef null should not update the data dom', async () => {
     const formJson = create([{
         'f': {
-            'type' : 'number',
-            'dataRef' : null
+            'type': 'number',
+            'dataRef': null
         }
     }]);
     let form = await createFormInstance(formJson);
@@ -603,10 +616,10 @@ test('dataRef null should not update the data dom', async () => {
 test.todo('if dataRef is is invalid data should not get generated for that field');
 test('object returned in event should be applied to the field properties', async () => {
     const formJson = create(['f', {
-        'f' : {
+        'f': {
             type: 'number',
-            'events' : {
-                'click' : '{"value" : 2 + 3}'
+            'events': {
+                'click': '{"value" : 2 + 3}'
             }
         }
     }]);
@@ -618,10 +631,10 @@ test('object returned in event should be applied to the field properties', async
 
 test('object returned in custom event should be applied to the field properties', async () => {
     const formJson = create(['f', {
-        'f' : {
-            'type' : 'number',
-            'events' : {
-                'custom:Click' : '{"value" : 2 + $event.payload}'
+        'f': {
+            'type': 'number',
+            'events': {
+                'custom:Click': '{"value" : 2 + $event.payload}'
             }
         }
     }]);
@@ -698,9 +711,9 @@ test('subscription gets invoked only for dependent fields', async () => {
     let callbackC1 = jest.fn();
     let callbackB1 = jest.fn();
     const state = form.getState();
-    form.getElement(state.items[2].id).subscribe( callbackC1);
-    form.getElement(state.items[1].id).subscribe( callbackB1);
-    form.getElement(state.items[0].id).value =  '10';
+    form.getElement(state.items[2].id).subscribe(callbackC1);
+    form.getElement(state.items[1].id).subscribe(callbackB1);
+    form.getElement(state.items[0].id).value = '10';
     expect(callbackC1).toHaveBeenCalled();
     expect(callbackB1).not.toHaveBeenCalled();
 });
@@ -734,14 +747,14 @@ test('Rule Node for a Panel should have correct hierarchy', async () => {
 
 test('Rule Node for a Panel with type array should have correct hierarchy', async () => {
     const formJson = {
-        items : [
+        items: [
             {
-                name : 'panel',
-                type : 'array',
+                name: 'panel',
+                type: 'array',
                 items: [
                     {
-                        name:  'field',
-                        type : 'number'
+                        name: 'field',
+                        type: 'number'
                     }
                 ]
             }

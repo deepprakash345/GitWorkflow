@@ -1,15 +1,18 @@
-import {isFile, jsonString} from '../utils/JsonUtils';
-import {CustomEvent, Submit} from '../controller/Controller';
+import {jsonString} from '../utils/JsonUtils';
+import {AddItem, Change, Click, CustomEvent, RemoveItem, Submit} from '../controller/Controller';
 import {request as fRequest, RequestOptions} from '../utils/Fetch';
 import {FileObject} from '../FileObject';
-import {FormModel} from '../types';
 import {getAttachments} from '../utils/FormUtils';
-
-declare var window: any;
 
 type HTTP_VERB = 'GET' | 'POST'
 
-const request = async (context: any, uri: string, httpVerb: HTTP_VERB, payload: object, success: string, error: string, payloadContentType: string = 'application/json') {
+export const request = async (context: any,
+                       uri: string,
+                       httpVerb: HTTP_VERB,
+                       payload: object,
+                       success: string,
+                       error: string,
+                       payloadContentType: string = 'application/json') => {
     const endpoint = uri;
     let requestOptions: RequestOptions = {
         method: httpVerb
@@ -38,7 +41,7 @@ const request = async (context: any, uri: string, httpVerb: HTTP_VERB, payload: 
         return;
     }
     context.$form.dispatch(new CustomEvent(success, result, true));
-}
+};
 
 const multipartFormData = (data: any, attachments: any) => {
     const formData = new FormData();
@@ -76,14 +79,18 @@ const multipartFormData = (data: any, attachments: any) => {
     return formData;
 };
 
-const submit = async (context: any, success: string, error: string, submitAs: 'json' | 'multipart' = 'json', input_data: any) {
+export const submit = async (context: any,
+                      success: string,
+                      error: string,
+                      submitAs: 'json' | 'multipart' = 'json',
+                      input_data: any = null) => {
     const endpoint = context.$form.metaData?.action;
     let data = input_data;
     if (typeof data != 'object' || data == null) {
-        data = context.$form.getState().data;
+        data = context.$form.exportData();
     }
     // todo: have to implement sending of attachments here
-    const attachments = context.$form.getState().attachments;
+    const attachments = getAttachments(context.$form);
     let submitContentType: string = submitAs;
     let formData: any;
     if (Object.keys(attachments).length > 0) {
@@ -94,8 +101,26 @@ const submit = async (context: any, success: string, error: string, submitAs: 'j
         submitContentType = 'application/json';
     }
     // note: don't send multipart/form-data let browser decide on the content type
-    await this.request(context, endpoint, 'POST', formData, success, error, submitContentType);
-}
+    await request(context, endpoint, 'POST', formData, success, error, submitContentType);
+};
+
+const createAction = (name: string, payload: any = {}, dispatch: boolean = false)  => {
+    switch (name) {
+        case 'change':
+            return new Change(payload);
+        case 'submit':
+            return new Submit(payload);
+        case 'click':
+            return new Click(payload);
+        case 'addItem':
+            return new AddItem(payload);
+        case 'removeItem':
+            return new RemoveItem(payload);
+        default:
+            console.error('invalid action');
+    }
+};
+
 
 class FunctionRuntimeImpl {
 
@@ -123,11 +148,18 @@ class FunctionRuntimeImpl {
                     eventName = element;
                     dispatch = true;
                 }
-                const event = new CustomEvent(eventName, payload, dispatch);
-                if (typeof element === 'string') {
-                    context.$form.dispatch(event);
+                let event;
+                if (eventName.startsWith('custom:')) {
+                    event = new CustomEvent(eventName.substring('custom:'.length), payload, dispatch);
                 } else {
-                    context.$form.getElement(element.$id).dispatch(event);
+                    event = createAction(eventName, payload, dispatch);
+                }
+                if (event != null) {
+                    if (typeof element === 'string') {
+                        context.$form.dispatch(event);
+                    } else {
+                        context.$form.getElement(element.$id).dispatch(event);
+                    }
                 }
                 return {};
             }

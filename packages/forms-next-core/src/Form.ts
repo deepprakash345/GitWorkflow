@@ -15,13 +15,14 @@ import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
-import {ActionImpl} from './controller/Controller';
+import {ActionImpl, ExecuteRule, Initialize} from './controller/Controller';
 
 class Validate extends ActionImpl {
     constructor() {
         super({}, 'validate', {dispatch: true});
     }
 }
+
 
 class Form extends Container<FormJson> implements FormModel {
 
@@ -32,7 +33,9 @@ class Form extends Container<FormJson> implements FormModel {
     constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
         //@ts-ignore
         super(n, {});
-            this._ids = IdGenerator();
+        this.queueEvent(new Initialize());
+        this.queueEvent(new ExecuteRule());
+        this._ids = IdGenerator();
         this._bindToDataModel(new DataGroup('$form', {}));
         this._initialize();
     }
@@ -116,12 +119,17 @@ class Form extends Container<FormJson> implements FormModel {
     dispatch(action: Action): void {
         if (action.type === 'submit') {
             this.queueEvent(new Validate());
+            super.queueEvent(action);
             this._eventQueue.runPendingQueue();
-            if (this._invalidFields.length > 0) {
-                return;
-            }
+        } else {
+            super.dispatch(action);
         }
-        super.dispatch(action);
+    }
+
+    executeAction(action: Action) {
+        if (action.type !== 'submit' || this._invalidFields.length === 0) {
+            super.executeAction(action);
+        }
     }
 
     submit(action: Action, context: any) {

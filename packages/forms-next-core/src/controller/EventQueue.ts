@@ -43,12 +43,16 @@ class EventQueue {
        return this._pendingEvents.length;
     }
 
+    get isProcessing() {
+        return this._isProcessing;
+    }
+
     isQueued<T extends BaseJson>(node: BaseNode<T>, event: Action) {
         const evntNode = new EventNode(node, event);
         return this._pendingEvents.find(x => evntNode.isEqual(x)) !== undefined;
     }
 
-    queue<T extends BaseJson>(node : BaseNode<T>, events: Action | Action[]) {
+    queue<T extends BaseJson>(node : BaseNode<T>, events: Action | Action[], priority: boolean = false) {
         if (!node || !events) {
             return;
         }
@@ -61,8 +65,13 @@ class EventQueue {
             const alreadyExists = this.isQueued(node, e);
             if (!alreadyExists || counter < 10) {
                 console.log(`Queued event : ${e.type} node: ${node.id} - ${node.name}`);
-                console.log(`Event Details ${e.toString()}`);
-                this._pendingEvents.push(evntNode);
+                //console.log(`Event Details ${e.toString()}`)
+                if (priority) {
+                    const index = this._isProcessing ? 1 : 0;
+                    this._pendingEvents.splice(index, 0, evntNode);
+                } else {
+                    this._pendingEvents.push(evntNode);
+                }
                 this._runningEventCount[evntNode.valueOf()] = counter + 1;
             }
         });
@@ -76,7 +85,7 @@ class EventQueue {
         while(this._pendingEvents.length > 0) {
             const e = this._pendingEvents[0];
             console.log(`Dequeued event : ${e.event.type} node: ${e.node.id} - ${e.node.name}`);
-            console.log(`Event Details ${e.event.toString()}`);
+            //console.log(`Event Details ${e.event.toString()}`);
             e.node.executeAction(e.event);
             this._pendingEvents.shift();
         }

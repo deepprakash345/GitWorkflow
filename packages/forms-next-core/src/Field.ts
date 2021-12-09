@@ -1,12 +1,11 @@
 import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FieldsetJson, FormModel} from './types';
 import {jsonString, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
-import {Change, Invalid, propertyChange, Valid} from './controller/Controller';
+import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
 import DataGroup from './data/DataGroup';
-import Container from './Container';
 
 //todo: move to a single place in Model.ts or Json.ts
 const defaults = {
@@ -22,6 +21,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);
         this._applyDefaults();
+        this.queueEvent(new Initialize());
+        this.queueEvent(new ExecuteRule());
     }
 
     _initialize(): any {
@@ -107,18 +108,16 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     set value(v) {
-        const res = this.checkInput(v);
-        if (res.value !== this._jsonModel.value) {
-            const curr = this._jsonModel.value;
-            this._jsonModel.valid = res.valid;
-            this._jsonModel.errorMessage = res.errorMessage;
-            this._jsonModel.value = res.value;
-            const changeAction = propertyChange('value', res.value, curr);
+        const changes = this.checkInput(v);
+        if (changes.value) {
+            if (changes.valid) {
+                this.triggerValidationEvent(changes);
+            }
+            const changeAction = new Change({changes: Object.values(changes)});
             this.dispatch(changeAction);
-            this.form.getEventQueue().runPendingQueue();
             const dataNode = this.getDataNode();
             if (typeof dataNode !== 'undefined') {
-                dataNode.$value = res.value;
+                dataNode.$value = this._jsonModel.value;
             }
         }
     }
@@ -133,7 +132,11 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
-        return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || 'There is an error in the field';
+        if (constraint) {
+            return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || 'There is an error in the field';
+        } else {
+            return '';
+        }
     }
 
     private evaluateConstraints(value: any) {
@@ -169,56 +172,59 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         };
     }
 
+    private triggerValidationEvent(changes: any) {
+        if (changes.valid) {
+            if (this.valid) {
+                this.dispatch(new Valid());
+            } else {
+                this.dispatch(new Invalid());
+            }
+        }
+    }
+
     protected checkInput(input: any) {
-        //todo : execute change event
         let {valid, value, constraint} = this.evaluateConstraints(input);
-        let elem = {
+        const elem = {
             'valid': valid,
             'value': value,
-            'errorMessage': ''
+            'errorMessage': valid ? '' : this.getErrorMessage(constraint as keyof ConstraintsMessages)
         };
-        if (!valid) {
-            console.log(`${constraint} validation failed for ${this.id} with value ${value}`);
-            elem.errorMessage = this.getErrorMessage(constraint as keyof ConstraintsMessages);
-        } else {
-            elem.value = value;
-            elem.errorMessage = '';
-            //todo : make it conditional based on valid flag
-        }
-        return elem;
+        return this._checkUpdates(['value', 'valid', 'errorMessage'], elem);
     }
 
     change(event: Action, context: any) {
 
     }
 
-    _checkChange(propNames: string[], updates: any) {
-        return propNames.map(propertyName => {
+    /**
+     * Checks whether there are any updates in the properties
+     * @param propNames
+     * @param updates
+     * @private
+     */
+    private _checkUpdates(propNames: string[], updates: any) {
+        return propNames.reduce((acc: any, propertyName) => {
             //@ts-ignore
             const prevValue = this._jsonModel[propertyName];
             const currentValue = updates[propertyName];
             if (currentValue !== prevValue) {
-                return {
+                acc[propertyName] = {
                     propertyName,
                     currentValue,
                     prevValue
                 };
+                //@ts-ignore
+                this._jsonModel[propertyName] = currentValue;
             }
-        });
+            return acc;
+        }, {});
     }
 
-    validate(event: Action, context: any) {
-        const res = this.checkInput(this.evaluateConstraints(this._jsonModel.value));
-        const changes = this._checkChange(['valid', 'errorMessage'], res);
-        if (changes.length > 0) {
-            this._jsonModel.valid = res.valid;
-            this._jsonModel.errorMessage = res.errorMessage;
-            this.notifyDependents(new Change(changes));
-        }
-        if (!res.valid) {
-            this.dispatch(new Invalid());
-        } else {
-            this.dispatch(new Valid());
+    validate(action: Action) {
+        const changes = this.checkInput(this._jsonModel.value);
+        if (changes.valid) {
+            this.triggerValidationEvent(changes);
+            this.notifyDependents(new Change(Object.values(changes)));
         }
     }
 
@@ -226,7 +232,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this._bindToDataModel(contextualDataModel);
         const dataNode = this.getDataNode();
         if (dataNode !== undefined) {
+            const changeAction = propertyChange('value', dataNode.$value, this._jsonModel.value);
             this._jsonModel.value = dataNode.$value;
+            this.queueEvent(changeAction);
         }
     }
 

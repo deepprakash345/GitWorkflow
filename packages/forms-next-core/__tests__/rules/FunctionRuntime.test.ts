@@ -68,14 +68,14 @@ test('dispatch_event should invoke dispatch API', async () => {
     const formJson = create(['f', {
         'f' : {
                 'events' : {
-                    'click': "dispatch_event($form, 'event1', {x : 'y'})"
+                    'click': "dispatch_event($form, 'custom:event1', {x : 'y'})"
                 }
             }
         },
         {
             'f' : {
                 'events': {
-                    'click': "dispatch_event('event1', {x : 'y'})"
+                    'click': "dispatch_event('custom:event1', {x : 'y'})"
                 }
         }
     }]);
@@ -94,7 +94,7 @@ test('getData should return the current state of the form data', async () => {
     const formJson = create(['f', 'f', {
         'f' : {
             'events' : {
-                'click' : "dispatch_event($form, 'customEvent', get_data())"
+                'click' : "dispatch_event($form, 'custom:customEvent', get_data())"
             }
         }
     }]);
@@ -225,15 +225,15 @@ test.skip('submit_form should call the submit api', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    f.submit = jest.fn();
+    //f.submit = jest.fn();
     f.getFunctions().submit_form({'$form' : form},'e1', 'e2');
-    expect(f.submit).toHaveBeenCalledWith('e1', 'e2');
+    //expect(f.submit).toHaveBeenCalledWith('e1', 'e2');
 });
 
 test.skip('submit_form should return {}', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    f.submit = jest.fn();
+    //f.submit = jest.fn();
     expect(f.getFunctions().submit_form({'$form' : form},'e1', 'e2')).toEqual({});
 });

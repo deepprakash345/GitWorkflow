@@ -40,6 +40,10 @@ class ActionImplWithTarget implements Action {
         return this._action.isCustomEvent;
     }
 
+    get originalAction() {
+        return this._action.originalAction;
+    }
+
     toString() {
         return this._action.toString();
     }
@@ -225,7 +229,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     queueEvent(action: Action) {
         let actionWithTarget: Action = new ActionImplWithTarget(action, this);
-        this.form.getEventQueue().queue(this, actionWithTarget);
+        this.form.getEventQueue().queue(this, actionWithTarget, ['valid', 'invalid'].indexOf(actionWithTarget.type)> -1);
     }
 
     dispatch(action: Action): void {

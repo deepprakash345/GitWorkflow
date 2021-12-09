@@ -15,8 +15,9 @@ export const createFormInstance = (formModel: any): FormModel => {
         // Once the field or panel is initialized, execute the initialization script
         // this means initialization happens after prefill and restore
         // Before execution of calcExp, visibleExp, enabledExp, validate, options, navigationChange, we execute init script
-        f.dispatch(new Initialize(undefined, true));
-        f.dispatch(new ExecuteRule(undefined, true));
+        //f.queueEvent(new Initialize(undefined, true));
+        //f.queueEvent(new ExecuteRule(undefined, true));
+        f.getEventQueue().runPendingQueue();
         return f;
     } catch (e: any) {
         throw new Error(e);

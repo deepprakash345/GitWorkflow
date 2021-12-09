@@ -48,6 +48,7 @@ export interface Action {
     metadata: any,
     readonly isCustomEvent: boolean
     readonly target: BaseModel
+    readonly originalAction?: Action
 }
 
 export type callbackFn = (action: Action) => void

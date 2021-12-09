@@ -58,14 +58,14 @@ export class Change extends ActionImpl {
 }
 
 export class Invalid extends ActionImpl {
-    constructor(payload: any={}) {
-        super(payload, 'invalid');
+    constructor(payload: any = {}) {
+        super(payload, 'invalid', {});
     }
 }
 
 export class Valid extends ActionImpl {
     constructor(payload: any = {}) {
-        super(payload, 'valid');
+        super(payload, 'valid', {});
     }
 }
 
