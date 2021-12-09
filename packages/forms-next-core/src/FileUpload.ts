@@ -168,15 +168,13 @@ class FileUpload extends Field implements FieldModel {
             // store file list here
             let fileInfoPayload = FileUpload.extractFileInfo(payload as any);
             fileInfoPayload = this.coerce(fileInfoPayload);
-            const res = this.checkInput(fileInfoPayload);
-            if (res.value !== this._jsonModel.value) {
-                const curr = this._jsonModel.value;
-                this._jsonModel.valid = res.valid;
-                this._jsonModel.errorMessage = res.errorMessage;
-                this._jsonModel.value = res.value;
-                const changeAction = propertyChange('value', res.value, curr);
+            const changes = this.checkInput(fileInfoPayload);
+            if (changes.value) {
+                if (changes.valid) {
+                    this.triggerValidationEvent(changes);
+                }
+                const changeAction = new Change({changes: Object.values(changes)});
                 this.dispatch(changeAction);
-                this.form.getEventQueue().runPendingQueue();
                 const dataNode = this.getDataNode();
                 if (typeof dataNode !== 'undefined') {
                     let val : any = this._jsonModel.value;

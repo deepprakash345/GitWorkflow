@@ -172,7 +172,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         };
     }
 
-    private triggerValidationEvent(changes: any) {
+    triggerValidationEvent(changes: any) {
         if (changes.valid) {
             if (this.valid) {
                 this.dispatch(new Valid());
