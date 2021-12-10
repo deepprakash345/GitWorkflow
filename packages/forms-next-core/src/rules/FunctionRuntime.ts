@@ -133,7 +133,12 @@ class FunctionRuntimeImpl {
                 return context.$form.exportData();
             },
             submit_form: (context: any,  success: string, error: string, submit_as: 'json' | 'multipart' = 'json', data: any = null) => {
-                submit(context, success, error, submit_as, data);
+                context.$form.dispatch(new Submit({
+                    success,
+                    error,
+                    submit_as,
+                    data
+                }));
                 return {};
             },
             // todo: only supports application/json for now

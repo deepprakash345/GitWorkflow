@@ -133,7 +133,7 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     submit(action: Action, context: any) {
-        submit(context, action.payload.success, action.payload.error);
+        submit(context, action.payload.success, action.payload.error, action.payload.submit_as, action.payload.data);
     }
 
     public getElement(id: string) {

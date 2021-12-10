@@ -28,7 +28,7 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize} = props;
-    const [model, setFormModel] = useState<FormModel | null>(null);
+    const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
         // any expensive react operation should generally be inside useMemo
@@ -70,19 +70,18 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
                     }
                 }
             );
-
-        setFormModel(form);
+        const state = {model: form, id: form.getUniqueId()};
+        setState(state);
     }, [formJson]);
-    const state = model?.getState();
-    const modelId = model?.getUniqueId();
+    const formState = state?.model?.getState();
     return (
-        model && state && modelId ?
-            (<FormContext.Provider value={{mappings, form: model, modelId}}>
+        state && formState ?
+            (<FormContext.Provider value={{mappings, form: state.model, modelId: state.id}}>
             <IntlProvider onError={(err)=> console.log(err)} locale={locale as string} messages={localizationMessagesProp}>
                 <form>
-                    {state.title ?<h2>{state.title}</h2> : null}
+                    {formState.title ?<h2>{formState.title}</h2> : null}
                     {
-                        renderChildren(state, mappings, modelId)
+                        renderChildren(formState, mappings, state.id)
                     }
                 </form>
             </IntlProvider>
