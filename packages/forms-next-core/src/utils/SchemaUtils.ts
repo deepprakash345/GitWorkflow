@@ -1,4 +1,3 @@
-import $RefParser from '@apidevtools/json-schema-ref-parser';
 import {FieldJson, FieldsetJson, FormJson} from '../types';
 
 const primitives = ['string', 'boolean', 'number'];
@@ -83,7 +82,7 @@ const walker =  (schema: any): any => {
 };
 
 export const createFormFromSchema = async (schemaObj : any) => {
-    let schema = await $RefParser.dereference(schemaObj);
+    let schema = {};
     return walker(schema);
 };
 
