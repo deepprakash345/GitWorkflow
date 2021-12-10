@@ -17,7 +17,7 @@ import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
 import {ActionImpl, ExecuteRule, Initialize} from './controller/Controller';
 
-class Validate extends ActionImpl {
+export class Validate extends ActionImpl {
     constructor() {
         super({}, 'validate', {dispatch: true});
     }
@@ -113,7 +113,10 @@ class Form extends Container<FormJson> implements FormModel {
                 this._invalidFields.splice(index, 1);
             }
         }, 'valid');
+    }
 
+    isValid() {
+        return this._invalidFields.length === 0;
     }
 
     dispatch(action: Action): void {

@@ -1,4 +1,4 @@
-import Form from './Form';
+import Form, {Validate} from './Form';
 import {jsonString} from './utils/JsonUtils';
 import {ExecuteRule, Initialize} from './controller/Controller';
 import {request} from './utils/Fetch';
@@ -19,6 +19,21 @@ export const createFormInstance = (formModel: any): FormModel => {
         //f.queueEvent(new ExecuteRule(undefined, true));
         f.getEventQueue().runPendingQueue();
         return f;
+    } catch (e: any) {
+        throw new Error(e);
+    }
+};
+
+
+export const validateFormInstance = (formModel: any, data: any): boolean => {
+    try {
+        let f = new Form({...formModel}, new RuleEngine());
+        if (data) {
+            f.importData(data);
+        }
+        f.queueEvent(new Validate());
+        f.getEventQueue().runPendingQueue();
+        return f.isValid();
     } catch (e: any) {
         throw new Error(e);
     }
