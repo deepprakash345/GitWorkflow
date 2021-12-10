@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-next-react-bindings",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "React Hooks to add business logic to React Components",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -10,7 +10,7 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "type" : "module",
+  "type": "module",
   "jest-junit": {
     "suiteName": "component tests",
     "suiteNameTemplate": "{filename}",
@@ -31,7 +31,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/forms-next-core": "^0.3.6"
+    "@aemforms/forms-next-core": "^0.3.7"
   },
   "peerDependencies": {
     "react": "^16.14.0 || ^17.0.2",
