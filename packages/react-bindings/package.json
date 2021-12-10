@@ -10,6 +10,7 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "type" : "module",
   "jest-junit": {
     "suiteName": "component tests",
     "suiteNameTemplate": "{filename}",

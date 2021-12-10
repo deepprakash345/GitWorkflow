@@ -11,6 +11,7 @@
     "source": "src",
     "test": "src/__tests__"
   },
+  "type": "module",
   "jest-junit": {
     "suiteName": "core tests",
     "suiteNameTemplate": "{filename}",

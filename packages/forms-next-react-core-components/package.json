@@ -32,6 +32,7 @@
     "build-storybook": "build-storybook",
     "deploye-storybook": "gh-pages -d packages/forms-next-react-core-components/storybook-static -e story"
   },
+  "type": "module",
   "dependencies": {
     "@aemforms/forms-next-core": "^0.3.6",
     "@aemforms/forms-next-react-bindings": "^0.2.8",
