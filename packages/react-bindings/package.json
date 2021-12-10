@@ -10,7 +10,6 @@
     "lib": "lib",
     "test": "__tests__"
   },
-  "type": "module",
   "jest-junit": {
     "suiteName": "component tests",
     "suiteNameTemplate": "{filename}",
@@ -31,7 +30,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/forms-next-core": "^0.3.7"
+    "@aemforms/forms-next-core": "^0.3.6"
   },
   "peerDependencies": {
     "react": "^16.14.0 || ^17.0.2",
