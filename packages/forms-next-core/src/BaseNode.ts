@@ -8,7 +8,7 @@ import {
     Primitives,
     Subscription
 } from './types';
-import {ExecuteRule} from './controller/Controller';
+import {ExecuteRule, propertyChange} from './controller/Controller';
 import DataGroup from './data/DataGroup';
 import {resolveData, TOK_GLOBAL, Token, tokenize} from './utils/DataRefParser';
 import Form from './Form';
@@ -160,7 +160,11 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     }
 
     set visible(v) {
-        this._jsonModel.visible = v;
+        if (v !== this._jsonModel.visible) {
+            const changeAction = propertyChange('visible', v, this._jsonModel.visible);
+            this._jsonModel.visible = v;
+            this.notifyDependents(changeAction);
+        }
     }
 
     get form() {
@@ -176,10 +180,14 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     }
 
     set label(l) {
-        this._jsonModel = {
-            ...this._jsonModel,
-            label: l
-        };
+        if (l !== this._jsonModel.label) {
+            const changeAction = propertyChange('label', l, this._jsonModel.label);
+            this._jsonModel = {
+                ...this._jsonModel,
+                label: l
+            };
+            this.notifyDependents(changeAction);
+        }
     }
 
     getState() {
