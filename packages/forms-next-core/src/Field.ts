@@ -224,7 +224,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         const changes = this.checkInput(this._jsonModel.value);
         if (changes.valid) {
             this.triggerValidationEvent(changes);
-            this.notifyDependents(new Change(Object.values(changes)));
+            this.notifyDependents(new Change({ changes: Object.values(changes) }));
         }
     }
 
