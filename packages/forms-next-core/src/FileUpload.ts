@@ -60,7 +60,7 @@ class FileUpload extends Field implements FieldModel {
                 let retVal = null;
                 if (file instanceof FileObject) {
                     retVal = file;
-                } else if (file instanceof File) {
+                } else if (typeof File !== 'undefined' && file instanceof File) {
                     // case: file object
                     retVal =  {
                         name: file.name,
