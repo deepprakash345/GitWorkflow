@@ -31,12 +31,12 @@ export const getAttachments = (input : ContainerModel) : any=> {
                 //@ts-ignore
                 if (item.value instanceof Array) {
                     // @ts-ignore
-                    ret[input.id] = input.value.map((x) => {
+                    ret[item.id] = item.value.map((x) => {
                         return {...x, 'dataRef': dataRef};
                     });
-                } else {
+                } else if (item.value != null) {
                     // @ts-ignore
-                    ret[input.id] = {...input.value, 'dataRef': dataRef};
+                    ret[item.id] = {...item.value, 'dataRef': dataRef};
                 }
             }
         }
