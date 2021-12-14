@@ -20,9 +20,9 @@ export default class DataGroup extends DataValue {
 
     get $value(): Array<any> | { [key:string] : any } {
         if (this.$type === 'array') {
-            return Object.values(this.$_items).map(x => x.$value);
+            return Object.values(this.$_items).filter(x => typeof x !== 'undefined').map(x => x.$value);
         } else {
-            return Object.fromEntries(Object.values(this.$_items).map(x => {
+            return Object.fromEntries(Object.values(this.$_items).filter(x => typeof x !== 'undefined').map(x => {
                 return [x.$name, x.$value];
             }));
         }
