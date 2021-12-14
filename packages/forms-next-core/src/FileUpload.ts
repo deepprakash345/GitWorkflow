@@ -145,7 +145,7 @@ class FileUpload extends Field implements FieldModel {
                 };
                 if (prevValue instanceof FileObject && typeof currentValue === 'object' && propertyName === 'value') {
                     // @ts-ignore
-                    this._jsonModel[propertyName] = new FileObject({...prevValue, ...currentValue});
+                    this._jsonModel[propertyName] = new FileObject({...prevValue, ...{'data' : currentValue.data}});
                 } else {
                     // @ts-ignore
                     this._jsonModel[propertyName] = currentValue;
