@@ -202,7 +202,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * @param updates
      * @private
      */
-    private _checkUpdates(propNames: string[], updates: any) {
+    protected _checkUpdates(propNames: string[], updates: any) {
         return propNames.reduce((acc: any, propertyName) => {
             //@ts-ignore
             const prevValue = this._jsonModel[propertyName];
@@ -213,13 +213,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                     currentValue,
                     prevValue
                 };
-                if (typeof currentValue === 'object') {
-                    //@ts-ignore
-                    this._jsonModel[propertyName] = mergeDeep({}, prevValue, currentValue);
-                } else {
-                    //@ts-ignore
-                    this._jsonModel[propertyName] = currentValue;
-                }
+                // @ts-ignore
+                this._jsonModel[propertyName] = currentValue;
             }
             return acc;
         }, {});

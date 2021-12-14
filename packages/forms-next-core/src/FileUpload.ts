@@ -126,6 +126,35 @@ class FileUpload extends Field implements FieldModel {
         return this._jsonModel.accept;
     }
 
+    /**
+     * Checks whether there are any updates in the properties
+     * @param propNames
+     * @param updates
+     * @private
+     */
+    protected _checkUpdates(propNames: string[], updates: any) {
+        return propNames.reduce((acc: any, propertyName) => {
+            //@ts-ignore
+            const prevValue = this._jsonModel[propertyName];
+            const currentValue = updates[propertyName];
+            if (currentValue !== prevValue) {
+                acc[propertyName] = {
+                    propertyName,
+                    currentValue,
+                    prevValue
+                };
+                if (prevValue instanceof FileObject && typeof currentValue === 'object' && propertyName === 'value') {
+                    // @ts-ignore
+                    this._jsonModel[propertyName] = new FileObject({...prevValue, ...currentValue});
+                } else {
+                    // @ts-ignore
+                    this._jsonModel[propertyName] = currentValue;
+                }
+            }
+            return acc;
+        }, {});
+    }
+
     get value() {
         // @ts-ignore
         this.ruleEngine.trackDependency(this);
