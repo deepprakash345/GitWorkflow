@@ -1,5 +1,5 @@
 import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FieldsetJson, FormModel} from './types';
-import {jsonString, resolve} from './utils/JsonUtils';
+import {jsonString, mergeDeep, resolve} from './utils/JsonUtils';
 import {Constraints} from './utils/ValidationUtils';
 import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller/Controller';
 import Scriptable from './Scriptable';
@@ -213,8 +213,13 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                     currentValue,
                     prevValue
                 };
-                //@ts-ignore
-                this._jsonModel[propertyName] = currentValue;
+                if (typeof currentValue === 'object') {
+                    //@ts-ignore
+                    this._jsonModel[propertyName] = mergeDeep({}, prevValue, currentValue);
+                } else {
+                    //@ts-ignore
+                    this._jsonModel[propertyName] = currentValue;
+                }
             }
             return acc;
         }, {});
