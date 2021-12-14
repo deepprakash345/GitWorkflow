@@ -93,13 +93,13 @@ export const submit = async (context: any,
     const attachments = getAttachments(context.$form);
     let submitContentType: string = submitAs;
     let formData: any;
-    if (Object.keys(attachments).length > 0) {
-        multipartFormData(jsonString(data), attachments);
-        submitContentType = 'multipart/form-data';
-    } else {
-        formData = {':data' : data};
-        submitContentType = 'application/json';
-    }
+    //if (Object.keys(attachments).length > 0) {
+    //    multipartFormData(jsonString(data), attachments);
+    //    submitContentType = 'multipart/form-data';
+    //} else {
+    formData = {':data' : data};
+    submitContentType = 'application/json';
+    //}
     // note: don't send multipart/form-data let browser decide on the content type
     await request(context, endpoint, 'POST', formData, success, error, submitContentType);
 };
