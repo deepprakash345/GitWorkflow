@@ -9,7 +9,7 @@ export const request = (url: string, data: any = null, options: RequestOptions =
         if (!response.ok) {
             throw new Error(response.statusText);
         }
-        if (response?.headers.get('Content-Type') === 'application/json') {
+        if (response?.headers.get('Content-Type')?.includes('application/json')) {
             return response.json();
         } else {
             return response.text();
