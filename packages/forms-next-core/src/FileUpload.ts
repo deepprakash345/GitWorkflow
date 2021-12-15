@@ -244,10 +244,14 @@ class FileUpload extends Field implements FieldModel {
         const dataNode = this.getDataNode();
         if (dataNode !== undefined) {
             const value = dataNode.$value;
-            let fileObj : FileObject[] = FileUpload.extractFileInfo(value);
-            const newValue = this.coerce(fileObj);
-            // is this needed ?
-            this.form.getEventQueue().queue(this, propertyChange('value', newValue, this._jsonModel.value));
+            let newValue = value;
+            // only if not undefined, proceed further
+            if (value != null) {
+                let fileObj: FileObject[] = FileUpload.extractFileInfo(value);
+                newValue = this.coerce(fileObj);
+                // is this needed ?
+                this.form.getEventQueue().queue(this, propertyChange('value', newValue, this._jsonModel.value));
+            }
             this._jsonModel.value = newValue;
         }
     }
