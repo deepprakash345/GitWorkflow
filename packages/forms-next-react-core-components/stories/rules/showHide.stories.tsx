@@ -6,15 +6,19 @@ import mappings from '../../src/utils/mappings';
 import formJson from './json';
 
 export default {
-  title: 'AdaptiveForm/Examples',
+  title: 'AdaptiveForm/Form Rules',
   component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
-export const Contact: ComponentStory<typeof AdaptiveForm> = (args) => (
+export const FormVisibiltyRules: ComponentStory<typeof AdaptiveForm> = (args) => (
   <Spectrum3Provider theme={defaultTheme}>
     <AdaptiveForm mappings={mappings} formJson={args.formJson} />
   </Spectrum3Provider>
 );
-Contact.args = {
-  formJson: formJson.contactJson
+
+FormVisibiltyRules.args = {
+  formJson: formJson.showHideJson
 };
+FormVisibiltyRules.storyName = 'Show/Hide';
+
+
