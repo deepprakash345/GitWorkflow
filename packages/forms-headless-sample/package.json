@@ -10,7 +10,7 @@
     "@aemforms/forms-next-react-core-components": "^0.6.0",
     "@quarry/wizard": "^1.0.2",
     "@react-aria/i18n": "^3.3.2",
-    "@react/react-spectrum": "^2",
+    "@react/react-spectrum": "^2.27.0",
     "classnames": "^2.3.1",
     "http-proxy-middleware": "^2.0.1",
     "react": "^17.0.2",

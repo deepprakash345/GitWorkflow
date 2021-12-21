@@ -48,7 +48,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return {
             ...this._jsonModel,
             items: this._children.map(x => {
-                return {id : x.id, viewType: x.viewType};
+                return { id: x.id, viewType: x.viewType, label: x.label };
             })
         };
     }

@@ -7,6 +7,8 @@ import ComboBox from '../components/DropDownList';
 import PlainText from '../components/PlainText';
 import FileUploadComponent from '../components/FileUpload';
 import Repeater from '../components/Repeater';
+import Accordion from '../components/Accordion';
+import Tabs from '../components/Tabs';
 import DateField from '../components/Date';
 
 const mappings = {
@@ -21,7 +23,9 @@ const mappings = {
     'drop-down' : ComboBox,
     'plain-text' : PlainText,
     'file-input' : FileUploadComponent,
-    'repeater' : Repeater
+    'repeater' : Repeater,
+    'accordion': Accordion,
+    'tabs': Tabs
 };
 
 export default mappings;
