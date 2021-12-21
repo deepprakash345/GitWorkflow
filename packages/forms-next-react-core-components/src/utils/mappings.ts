@@ -7,6 +7,7 @@ import ComboBox from '../components/DropDownList';
 import PlainText from '../components/PlainText';
 import FileUploadComponent from '../components/FileUpload';
 import Repeater from '../components/Repeater';
+import DateField from '../components/Date';
 
 const mappings = {
     'text-input' : TextField,
@@ -16,7 +17,7 @@ const mappings = {
     'panel' : Panel,
     'radio-button' : RadioGroup,
     'number-input' : TextField,
-    'date-input' : TextField,
+    'date-input' : DateField,
     'drop-down' : ComboBox,
     'plain-text' : PlainText,
     'file-input' : FileUploadComponent,

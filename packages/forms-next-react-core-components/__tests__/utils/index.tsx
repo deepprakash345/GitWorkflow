@@ -4,6 +4,9 @@ import {createFormInstance, FieldModel, FormModel} from '@aemforms/forms-next-co
 import {IntlProvider} from 'react-intl';
 import Checkbox from '../../src/components/Checkbox';
 import {render} from '@testing-library/react';
+// @ts-ignore
+import Spectrum2Provider from '@react/react-spectrum/Provider';
+import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 
 export const createForm = async (field: any) => {
     const formJson = {
@@ -23,11 +26,15 @@ export const Provider = (form: FormModel,
     };
     const {children} = props;
     return (
-        <IntlProvider locale={locale} messages={dictionaries}>
+      <Spectrum2Provider>
+        <Spectrum3Provider theme={defaultTheme}>
+          <IntlProvider locale={locale} messages={dictionaries}>
             <FormContext.Provider value={c}>{children}</FormContext.Provider>
-        </IntlProvider>
+          </IntlProvider>
+        </Spectrum3Provider>
+      </Spectrum2Provider>
     );
-};
+  };
 
 export type TestCase<T> = T & {
     name: string,
