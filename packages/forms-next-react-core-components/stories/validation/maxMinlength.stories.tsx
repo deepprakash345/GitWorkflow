@@ -3,18 +3,21 @@ import { AdaptiveForm } from '@aemforms/forms-next-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../src/utils/mappings';
-import formJson from './json';
+import jsonform from './json';
 
 export default {
-  title: 'AdaptiveForm/Examples',
+  title: 'AdaptiveForm/Validations',
   component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
-export const Contact: ComponentStory<typeof AdaptiveForm> = (args) => (
+export const maxminlength: ComponentStory<typeof AdaptiveForm> = (args) => (
   <Spectrum3Provider theme={defaultTheme}>
     <AdaptiveForm mappings={mappings} formJson={args.formJson} />
   </Spectrum3Provider>
 );
-Contact.args = {
-  formJson: formJson.contactJson
+
+
+maxminlength.args = {
+  formJson: jsonform.maxMinLengthJson
 };
+maxminlength.storyName = 'Max/Min Length';

@@ -6,15 +6,16 @@ import mappings from '../../src/utils/mappings';
 import formJson from './json';
 
 export default {
-  title: 'AdaptiveForm/Examples',
+  title: 'AdaptiveForm/Form Fields/Form With Text Fields',
   component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
-export const Contact: ComponentStory<typeof AdaptiveForm> = (args) => (
+export const date: ComponentStory<typeof AdaptiveForm> = (args) => (
   <Spectrum3Provider theme={defaultTheme}>
     <AdaptiveForm mappings={mappings} formJson={args.formJson} />
   </Spectrum3Provider>
 );
-Contact.args = {
-  formJson: formJson.contactJson
+
+date.args = {
+  formJson: formJson.dateInput
 };
