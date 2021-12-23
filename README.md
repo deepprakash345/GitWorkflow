@@ -101,13 +101,15 @@ npx lerna run start
 ## Start the Storybook
 
 ```
-npx lerna run storybook
+cd packages/forms-next-react-core-components
+npm run storybook
 ```
 
 ## Build the Storybook
 
 ```
-npx lerna run build-storybook
+cd packages/forms-next-react-core-components
+npm run build-storybook
 ```
 
 # Contributing
