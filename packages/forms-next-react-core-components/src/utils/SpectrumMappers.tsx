@@ -82,3 +82,11 @@ export const enumConvertor : EnumConvertor = (propertyName: string, callback: (t
         [propertyName] : options.map(radio)
     };
 };
+
+export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
+  return {
+    ...(a.type && {
+      type: a.type
+    })
+  };
+};

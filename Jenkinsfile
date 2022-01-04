@@ -159,21 +159,25 @@ pipeline {
                 }
             }
         }
-//         stage("storybook deploye") {
-//             when {
-//                 allOf {
-//                     expression { return prepareSample }
-//                     expression { return !isPullRequest() }
-//                     branch "main"
-//                 }
-//             }
-//             steps {
-//                 script {
-//                     sh "npx lerna run build-storybook"
-//                     sh "npx lerna run deploye-storybook"
-//                 }
-//             }
-//         }
+        // stage("storybook deploye") {
+        //     when {
+        //         allOf {
+        //             expression { return !isPullRequest() }
+        //             branch "main",
+        //             anyOf {
+        //                 changeset "**/stories/**/*.stories.@(js|jsx|ts|tsx)"
+        //                 changeset "**/stories/**/*.stories.mdx"
+        //             }
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             sh "cd packages/forms-next-react-core-components"
+        //             sh "npm run build-storybook"
+        //             sh "npm run deploye-storybook"
+        //         }
+        //     }
+        // }
         stage("deploy sample") {
             when {
                 allOf {
