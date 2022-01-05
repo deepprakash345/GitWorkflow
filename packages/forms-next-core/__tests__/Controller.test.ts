@@ -68,7 +68,7 @@ describe('Field Controller with Form', () => {
         const dependentField = new Field({
             default: 'text',
             rules : {
-                'prop1' : 'some mock rule'
+                'prop1' : 'field.value (mock rule)'
             },
             name: 'dependent'
         }, {form, parent: form});
@@ -83,7 +83,7 @@ describe('Field Controller with Form', () => {
         });
         field.dispatch(new Click());
         //this would call field.value = 2
-        expect(eventQueue.queue).toHaveBeenCalledTimes(4);
+        expect(eventQueue.queue).toHaveBeenCalledTimes(5);
         //@ts-ignore
         expect(eventQueue.queue.mock.calls[0][0]).toBe(field);
         //@ts-ignore
@@ -96,6 +96,13 @@ describe('Field Controller with Form', () => {
         expect(eventQueue.queue.mock.calls[1][0]).toBe(field);
         //@ts-ignore
         expect(eventQueue.queue.mock.calls[1][1]).toMatchObject({
+            type: 'valid'
+        });
+
+        //@ts-ignore
+        expect(eventQueue.queue.mock.calls[2][0]).toBe(field);
+        //@ts-ignore
+        expect(eventQueue.queue.mock.calls[2][1]).toMatchObject({
             type: 'change',
             payload: {
                 'changes': [
@@ -103,23 +110,33 @@ describe('Field Controller with Form', () => {
                         'currentValue': '2',
                         'prevValue': 'text',
                         'propertyName': 'value'
+                    },
+                    {
+                        'currentValue': true,
+                        'prevValue': undefined,
+                        'propertyName': 'valid'
+                    },
+                    {
+                        'currentValue': '',
+                        'prevValue': undefined,
+                        'propertyName': 'errorMessage'
                     }
                 ]
             }
         });
 
         //@ts-ignore
-        expect(eventQueue.queue.mock.calls[2][0]).toBe(dependentField);
+        expect(eventQueue.queue.mock.calls[3][0]).toBe(dependentField);
         //@ts-ignore
-        expect(eventQueue.queue.mock.calls[2][1]).toMatchObject({
+        expect(eventQueue.queue.mock.calls[3][1]).toMatchObject({
             type: 'executeRule',
             payload: {}
         });
 
         //@ts-ignore
-        expect(eventQueue.queue.mock.calls[3][0]).toBe(field);
+        expect(eventQueue.queue.mock.calls[4][0]).toBe(field);
         //@ts-ignore
-        expect(eventQueue.queue.mock.calls[3][1]).toMatchObject({
+        expect(eventQueue.queue.mock.calls[4][1]).toMatchObject({
             type: 'addDependent',
             payload: dependentField
         });

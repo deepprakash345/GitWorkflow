@@ -126,6 +126,35 @@ class FileUpload extends Field implements FieldModel {
         return this._jsonModel.accept;
     }
 
+    /**
+     * Checks whether there are any updates in the properties
+     * @param propNames
+     * @param updates
+     * @private
+     */
+    protected _checkUpdates(propNames: string[], updates: any) {
+        return propNames.reduce((acc: any, propertyName) => {
+            //@ts-ignore
+            const prevValue = this._jsonModel[propertyName];
+            const currentValue = updates[propertyName];
+            if (currentValue !== prevValue) {
+                acc[propertyName] = {
+                    propertyName,
+                    currentValue,
+                    prevValue
+                };
+                if (prevValue instanceof FileObject && typeof currentValue === 'object' && propertyName === 'value') {
+                    // @ts-ignore
+                    this._jsonModel[propertyName] = new FileObject({...prevValue, ...{'data' : currentValue.data}});
+                } else {
+                    // @ts-ignore
+                    this._jsonModel[propertyName] = currentValue;
+                }
+            }
+            return acc;
+        }, {});
+    }
+
     get value() {
         // @ts-ignore
         this.ruleEngine.trackDependency(this);
@@ -168,15 +197,13 @@ class FileUpload extends Field implements FieldModel {
             // store file list here
             let fileInfoPayload = FileUpload.extractFileInfo(payload as any);
             fileInfoPayload = this.coerce(fileInfoPayload);
-            const res = this.checkInput(fileInfoPayload);
-            if (res.value !== this._jsonModel.value) {
-                const curr = this._jsonModel.value;
-                this._jsonModel.valid = res.valid;
-                this._jsonModel.errorMessage = res.errorMessage;
-                this._jsonModel.value = res.value;
-                const changeAction = propertyChange('value', res.value, curr);
+            const changes = this.checkInput(fileInfoPayload);
+            if (changes.value) {
+                if (changes.valid) {
+                    this.triggerValidationEvent(changes);
+                }
+                const changeAction = new Change({changes: Object.values(changes)});
                 this.dispatch(changeAction);
-                this.form.getEventQueue().runPendingQueue();
                 const dataNode = this.getDataNode();
                 if (typeof dataNode !== 'undefined') {
                     let val : any = this._jsonModel.value;

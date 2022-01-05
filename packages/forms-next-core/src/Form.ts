@@ -1,5 +1,6 @@
 import Container from './Container';
 import {
+    Action,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -13,16 +14,28 @@ import EventQueue from './controller/EventQueue';
 import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
+import {submit} from './rules/FunctionRuntime';
+import {ActionImpl, ExecuteRule, Initialize} from './controller/Controller';
+
+export class Validate extends ActionImpl {
+    constructor() {
+        super({}, 'validate', {dispatch: true});
+    }
+}
+
 
 class Form extends Container<FormJson> implements FormModel {
 
     _fields: Items<FieldsetModel | FieldModel> = {}
     _ids: Generator<string, void, string>
+    _invalidFields: string[] = []
 
     constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
         //@ts-ignore
         super(n, {});
-            this._ids = IdGenerator();
+        this.queueEvent(new Initialize());
+        this.queueEvent(new ExecuteRule());
+        this._ids = IdGenerator();
         this._bindToDataModel(new DataGroup('$form', {}));
         this._initialize();
     }
@@ -89,13 +102,41 @@ class Form extends Container<FormJson> implements FormModel {
 
     fieldAdded(field: FieldModel | FieldsetModel) {
         this._fields[field.id] = field;
+        field.subscribe((action) => {
+            if (this._invalidFields.indexOf(action.target.id) === -1) {
+                this._invalidFields.push(action.target.id);
+            }
+        }, 'invalid');
+        field.subscribe((action) => {
+            const index = this._invalidFields.indexOf(action.target.id);
+            if (index > -1) {
+                this._invalidFields.splice(index, 1);
+            }
+        }, 'valid');
     }
 
-    submit() {
-        // if (action?.type === 'submit') {
-        //     action = new Submit(context.$form?.getState().data);
-        // }
-        //this._fields[action.payload.id] = action.payload;
+    isValid() {
+        return this._invalidFields.length === 0;
+    }
+
+    dispatch(action: Action): void {
+        if (action.type === 'submit') {
+            this.queueEvent(new Validate());
+            super.queueEvent(action);
+            this._eventQueue.runPendingQueue();
+        } else {
+            super.dispatch(action);
+        }
+    }
+
+    executeAction(action: Action) {
+        if (action.type !== 'submit' || this._invalidFields.length === 0) {
+            super.executeAction(action);
+        }
+    }
+
+    submit(action: Action, context: any) {
+        submit(context, action.payload.success, action.payload.error, action.payload.submit_as, action.payload.data);
     }
 
     public getElement(id: string) {

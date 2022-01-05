@@ -2,11 +2,11 @@ import {create} from '../collateral';
 import {Action, BaseModel, createFormInstance, FieldModel} from '../../src';
 import FunctionRuntime from '../../src/rules/FunctionRuntime';
 import nock from 'nock';
-import {Click, CustomEvent} from '../../src/controller/Controller';
+import {Click, CustomEvent, Submit} from '../../src/controller/Controller';
 
 //todo : remove dupliacate code Form.test.ts
 expect.extend({
-    matchesAction(received: Action, expected: {action: Action, target: BaseModel}) {
+    matchesAction(received: Action, expected: { action: Action, target: BaseModel }) {
         const passes = {
             'target': received.target == expected.target,
             'type': received.type === expected.action.type,
@@ -21,11 +21,11 @@ expect.extend({
                     msg = msg + entries.map((key) => key[0]).join(',') + ' did not match';
                     return msg;
                 },
-                pass : false
+                pass: false
             };
         } else {
             return {
-                pass : true,
+                pass: true,
                 message: () => 'actions matched'
             };
         }
@@ -35,11 +35,11 @@ expect.extend({
 declare global {
     namespace jest {
         interface Matchers<R> {
-            matchesAction(expected: {action: Action, target: BaseModel}): R;
+            matchesAction(expected: { action: Action, target: BaseModel }): R;
         }
 
         interface Expect {
-            matchesAction(expected: {action: Action, target: BaseModel}): void;
+            matchesAction(expected: { action: Action, target: BaseModel }): void;
         }
     }
 }
@@ -66,35 +66,35 @@ test('should return all the publically exposed functions', async () => {
 
 test('dispatch_event should invoke dispatch API', async () => {
     const formJson = create(['f', {
-        'f' : {
-                'events' : {
-                    'click': "dispatch_event($form, 'event1', {x : 'y'})"
+        'f': {
+            'events': {
+                'click': "dispatch_event($form, 'custom:event1', {x : 'y'})"
+            }
+        }
+    },
+        {
+            'f': {
+                'events': {
+                    'click': "dispatch_event('custom:event1', {x : 'y'})"
                 }
             }
-        },
-        {
-            'f' : {
-                'events': {
-                    'click': "dispatch_event('event1', {x : 'y'})"
-                }
-        }
-    }]);
+        }]);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     form.dispatch = jest.fn();
     const state = form.getState();
     form.getElement(state.items[1].id).dispatch(new Click());
-    expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, false));
+    expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x: 'y'}, false));
 
     form.getElement(state.items[2].id).dispatch(new Click());
-    expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x : 'y'}, true));
+    expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x: 'y'}, true));
 });
 
 test('getData should return the current state of the form data', async () => {
     const formJson = create(['f', 'f', {
-        'f' : {
-            'events' : {
-                'click' : "dispatch_event($form, 'customEvent', get_data())"
+        'f': {
+            'events': {
+                'click': "dispatch_event($form, 'custom:customEvent', get_data())"
             }
         }
     }]);
@@ -107,8 +107,8 @@ test('getData should return the current state of the form data', async () => {
     form.getElement(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
         expect(callback.mock.calls[0][0]).matchesAction({
-            action : new CustomEvent('customEvent', {'f1' : 'value2'}),
-            target : form
+            action: new CustomEvent('customEvent', {'f1': 'value2'}),
+            target: form
         });
     });
 });
@@ -120,14 +120,14 @@ test('submit should send a request to the url configured', async () => {
         .post('/my-submit-end-point')
         .reply(200, {});
     const formJson = create(['f', 'f', {
-        'f' : {
-            events : {
-                'click' : "submit_form('event1', 'event2')"
+        'f': {
+            events: {
+                'click': "submit_form('event1', 'event2')"
             }
         }
     }]);
     formJson.metadata = {
-        action:  `${API_HOST}/my-submit-end-point`
+        action: `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -139,19 +139,19 @@ test('submit should send a request to the url configured', async () => {
     });
 });
 
-test('submit success event should be dispatched', async () => {
+test('submit event should be dispatched on submit_form', async () => {
     nock(API_HOST)
         .post('/my-submit-end-point')
         .reply(200, {});
     const formJson = create(['f', 'f', {
-        'f' : {
-            events : {
-                'click' : "submit_form('event1', 'event2')"
+        'f': {
+            events: {
+                'click': "submit_form('event1', 'event2')"
             }
         }
     }]);
     formJson.metadata = {
-        action:  `${API_HOST}/my-submit-end-point`
+        action: `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -160,7 +160,12 @@ test('submit success event should be dispatched', async () => {
     form.dispatch = jest.fn();
     form.getElement(state.items[2].id).dispatch(new Click());
     await checkAfterTimeout(() => {
-        expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {}, true));
+        expect(form.dispatch).toHaveBeenCalledWith(new Submit({
+            'data': null,
+            'error': 'event2',
+            'submit_as': 'json',
+            'success': 'event1'
+        }, false));
     });
 });
 
@@ -168,17 +173,21 @@ test('submit success event should get executed', async () => {
     nock(API_HOST)
         .post('/my-submit-end-point')
         .reply(200, {});
-    const formJson = create([{'f' : {
-            events : {
-                'custom:event1' : "{label : {value : 'Thank you for submitting the form'}}"
+    const formJson = create([{
+        'f': {
+            events: {
+                'custom:event1': "{label : {value : 'Thank you for submitting the form'}}"
             }
-        }}, {'f' : {
-            events : {
-                'click' : "submit_form('event1', 'event2')"
+        }
+    }, {
+        'f': {
+            events: {
+                'click': "submit_form('event1', 'event2')"
             }
-        }}, 'f']);
+        }
+    }, 'f']);
     formJson.metadata = {
-        action:  `${API_HOST}/my-submit-end-point`
+        action: `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -194,20 +203,24 @@ test('submit success event should get executed', async () => {
 });
 
 test('submit error event should be dispatched if service returns error', async () => {
-    nock(API_HOST)
+    nock('http://abc.com')
         .post('/my-submit-end-point')
         .reply(404);
-    const formJson = create([{'f' : {
-            events : {
-                'custom:event2' : "{label : {value : 'Form Submission Failed'}}"
+    const formJson = create([{
+        'f': {
+            events: {
+                'custom:event2': "{label : {value : 'Form Submission Failed'}}"
             }
-        }}, 'f', {'f' : {
-            events : {
-                'click' : "submit_form('event1', 'event2')"
+        }
+    }, 'f', {
+        'f': {
+            events: {
+                'click': "submit_form('event1', 'event2')"
             }
-        }}]);
+        }
+    }]);
     formJson.metadata = {
-        action:  `${API_HOST}/my-submit-end-point`
+        action: 'http://abc.com/my-submit-end-point'
     };
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
@@ -225,15 +238,15 @@ test.skip('submit_form should call the submit api', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    f.submit = jest.fn();
-    f.getFunctions().submit_form({'$form' : form},'e1', 'e2');
-    expect(f.submit).toHaveBeenCalledWith('e1', 'e2');
+    //f.submit = jest.fn();
+    f.getFunctions().submit_form({'$form': form}, 'e1', 'e2');
+    //expect(f.submit).toHaveBeenCalledWith('e1', 'e2');
 });
 
 test.skip('submit_form should return {}', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
-    f.submit = jest.fn();
-    expect(f.getFunctions().submit_form({'$form' : form},'e1', 'e2')).toEqual({});
+    //f.submit = jest.fn();
+    expect(f.getFunctions().submit_form({'$form': form}, 'e1', 'e2')).toEqual({});
 });

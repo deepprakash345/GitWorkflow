@@ -48,6 +48,7 @@ export interface Action {
     metadata: any,
     readonly isCustomEvent: boolean
     readonly target: BaseModel
+    readonly originalAction?: Action
 }
 
 export type callbackFn = (action: Action) => void
@@ -119,7 +120,6 @@ export interface FormModel extends ContainerModel,
     getElement(id: string) : FieldModel | FormModel | FieldsetModel
     getUniqueId() : string
     getEventQueue(): EventQueue
-    submit(): any
 }
 
 export interface IFileObject {

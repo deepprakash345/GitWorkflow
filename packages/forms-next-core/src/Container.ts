@@ -36,6 +36,21 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return this._children;
     }
 
+    set maxItems(m: number) {
+        this._jsonModel.maxItems = m;
+        const minItems = this._jsonModel.minItems || 1;
+        const itemsLength = this._children.length;
+        let items2Remove = Math.min(itemsLength - m, itemsLength - minItems);
+        if (items2Remove > 0) {
+            const elems = this._children.splice(m, items2Remove);
+            for (let i = 0; i < items2Remove; i++) {
+                (this.getDataNode() as DataGroup).$removeDataNode(m + i);
+                this._ruleContext.pop();
+            }
+            this.notifyDependents(propertyChange('items', elems, null));
+        }
+    }
+
     private _hasDynamicItems() {
         return this._itemTemplate != null;
     }
@@ -91,8 +106,10 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         this._addChildToRuleNode(retVal);
         if (index === this._children.length) {
             this._children.push(retVal);
+            //(this.getDataNode() as DataGroup).$addDataNode(index);
         } else {
             this._children.splice(index, 0, retVal);
+            //(this.getDataNode() as DataGroup).$addDataNode();
         }
         retVal._initialize();
         return retVal;
@@ -160,12 +177,23 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 // clear child
                 //remove field
                 this._children.splice(index, 1);
+                (this.getDataNode() as DataGroup).$removeDataNode(index);
                 for (let i = index; i < this._children.length; i++) {
                     this._children[i].dispatch(new ExecuteRule());
                 }
                 this._ruleContext.pop();
                 this.notifyDependents(propertyChange('items', null, state));
             }
+        }
+    }
+
+    queueEvent(action: Action) {
+        super.queueEvent(action);
+        if (action.metadata?.dispatch) {
+            this.items.forEach(x => {
+                //@ts-ignore
+                x.queueEvent(action);
+            });
         }
     }
 
@@ -205,11 +233,6 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             }
             if (items2Remove > 0) {
                 this._children.splice(dataLength, items2Remove);
-                const newItems: any[] = this._jsonModel.items.slice(0, dataLength);
-                this._jsonModel = {
-                    ...this._jsonModel,
-                    items: newItems
-                };
                 for (let i = 0; i < items2Remove; i++) {
                     this._ruleContext.pop();
                 }

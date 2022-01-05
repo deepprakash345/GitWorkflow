@@ -110,11 +110,11 @@ export const Constraints = {
     },
 
     minLength : (constraint: number, value: string) => {
-        return {...Constraints.minimum(constraint, value.length), value};
+        return {...Constraints.minimum(constraint, typeof value === 'string' ? value.length : 0), value};
     },
 
     maxLength : (constraint: number, value: string) => {
-        return {...Constraints.maximum(constraint, value.length), value};
+        return {...Constraints.maximum(constraint, typeof value === 'string' ? value.length : 0), value};
     },
 
     pattern : (constraint: RegExp | string, value: string) => {
