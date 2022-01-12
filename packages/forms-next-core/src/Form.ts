@@ -15,11 +15,20 @@ import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
-import {ActionImpl, ExecuteRule, Initialize} from './controller/Controller';
+import {ActionImpl, ChangePayload, ExecuteRule, Initialize} from './controller/Controller';
 
 export class Validate extends ActionImpl {
     constructor() {
         super({}, 'validate', {dispatch: true});
+    }
+}
+
+export class FieldChanged extends ActionImpl {
+    constructor(changes: ChangePayload, field: string) {
+        super({
+            field,
+            changes
+        }, 'fieldChanged');
     }
 }
 
@@ -113,6 +122,11 @@ class Form extends Container<FormJson> implements FormModel {
                 this._invalidFields.splice(index, 1);
             }
         }, 'valid');
+        field.subscribe((action) => {
+            const field = action.target.name || '';
+            const fieldChangedAction = new FieldChanged(action.payload.changes, field);
+            this.dispatch(fieldChangedAction);
+        });
     }
 
     isValid() {

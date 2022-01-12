@@ -51,8 +51,16 @@ export class ActionImpl implements Action {
     }
 }
 
+export type ChangePayload = {
+    changes : Array<{
+        propertyName: string,
+        prevValue?: any,
+        currentValue: any
+    }>
+}
+
 export class Change extends ActionImpl {
-    constructor(payload: any, dispatch: boolean = false) {
+    constructor(payload: ChangePayload, dispatch: boolean = false) {
         super(payload, 'change', {dispatch});
     }
 }
@@ -75,7 +83,7 @@ export class ExecuteRule extends ActionImpl {
     }
 }
 
-export const propertyChange = (propertyName: string, currentValue: any, prevValue: any) => {
+export const propertyChange = (propertyName: string, currentValue: any, prevValue?: any) => {
     return new Change({
         changes: [
             {

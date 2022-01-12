@@ -58,11 +58,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     set readOnly(e) {
-        if (e !== this._jsonModel.readOnly) {
-            const changeAction = propertyChange('readOnly', e, this._jsonModel.enum);
-            this._jsonModel.readOnly = e;
-            this.notifyDependents(changeAction);
-        }
+        this._setProperty('readOnly', e);
     }
 
     get enabled() {
@@ -82,11 +78,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     set enum(e) {
-        if (e !== this._jsonModel.enum) {
-            const changeAction = propertyChange('enum', e, this._jsonModel.enum);
-            this._jsonModel.enum = e;
-            this.notifyDependents(changeAction);
-        }
+        this._setProperty('enum', e);
     }
 
     get enumNames() {
@@ -94,11 +86,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     set enumNames(e) {
-        if (e !== this._jsonModel.enumNames) {
-            const changeAction = propertyChange('enum', e, this._jsonModel.enumNames);
-            this._jsonModel.enumNames = e;
-            this.notifyDependents(changeAction);
-        }
+        this._setProperty('enumNames', e);
     }
 
     get value() {

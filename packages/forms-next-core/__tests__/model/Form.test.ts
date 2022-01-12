@@ -174,7 +174,7 @@ test('click subscription gets invoked only when that click event is triggered', 
     let callback = jest.fn();
     const f1 = form.getElement(form.getState().items[0].id);
     f1.subscribe(callback, 'click');
-    const action = new Change('value2');
+    const action = propertyChange('value', 'something');
     f1.dispatch(action);
     f1.dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
@@ -189,7 +189,7 @@ test('multiple subscription can be registered for a field', async () => {
     const f1 = form.getElement(form.getState().items[0].id);
     f1.subscribe(callback, 'change');
     f1.subscribe(callback1, 'click');
-    const action = new Change('value2');
+    const action = propertyChange('value', 'value2');
     f1.dispatch(action);
     f1.dispatch(new Click());
     expect(callback).toHaveBeenCalledTimes(1);
