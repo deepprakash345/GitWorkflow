@@ -34,8 +34,8 @@ export const translateMessage = (obj: any, formatMessage: any) => (propName: str
  * @param Component The component to render.
  */
 export const useRenderer = function(formFieldState:FieldJson & {id: string},
-                                    propsMapper: Convertor<any>,
-                                    Component: JSXElementConstructor<any>)  {
+                                    Component: JSXElementConstructor<any>,
+                                    propsMapper: Convertor<any> = (a, b, c) => a)  {
     const [state, handlers] = useRuleEngine(formFieldState);
     let obj: any;
     try {

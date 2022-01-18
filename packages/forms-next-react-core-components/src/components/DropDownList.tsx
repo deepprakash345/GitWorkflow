@@ -30,7 +30,7 @@ const mapper = combineConvertors(baseConvertor,
  * @constructor
  */
 const ComboBoxComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, mapper, ComboBox);
+    return useRenderer(originalProps, ComboBox, mapper);
 };
 
 

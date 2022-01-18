@@ -46,7 +46,7 @@ const FileUploadWrapper = (props: any) => {
 
 
 const FileUploadComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, mapper, FileUploadWrapper);
+    return useRenderer(originalProps, FileUploadWrapper, mapper);
 };
 
 

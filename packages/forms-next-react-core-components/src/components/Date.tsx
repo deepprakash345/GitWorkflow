@@ -22,7 +22,7 @@ const mapper = combineConvertors(baseConvertor,
 // Date component using TextField with input type date,
 // to be replaced with react-spectrum datepicker after release    
 const DateField = function (props: FieldJson & { id: string }) {
-  const renderedComponent = useRenderer(props, mapper, TextField);
+  const renderedComponent = useRenderer(props, TextField, mapper);
   return renderedComponent;
 };
 

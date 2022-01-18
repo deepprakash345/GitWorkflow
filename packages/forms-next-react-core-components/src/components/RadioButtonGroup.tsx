@@ -13,7 +13,7 @@ import {
 const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor, enumToChildConvertor(Radio));
 
 const RadioGroupComponent = function (props: FieldJson & {id: string}) {
-    return useRenderer(props, mapper, RadioGroup);
+    return useRenderer(props, RadioGroup, mapper);
 };
 
 

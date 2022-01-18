@@ -14,7 +14,7 @@ const mapper = combineConvertors(baseConvertor,
   constraintConvertor);
 
 const NumberComp = function (props: FieldJson & { id: string }) {
-  return useRenderer(props, mapper, NumberField);
+  return useRenderer(props, NumberField, mapper);
 };
 
 export default NumberComp;
