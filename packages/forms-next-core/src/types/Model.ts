@@ -11,6 +11,7 @@ import {
 import RuleEngine from '../rules/RuleEngine';
 import EventQueue from '../controller/EventQueue';
 import DataGroup from '../data/DataGroup';
+import {Fieldset} from '../Fieldset';
 
 export interface ScriptableField {
     rules?: {
@@ -47,7 +48,7 @@ export interface Action {
     payload: any
     metadata: any,
     readonly isCustomEvent: boolean
-    readonly target: BaseModel
+    readonly target: FormModel | FieldModel | FieldsetModel
     readonly originalAction?: Action
 }
 

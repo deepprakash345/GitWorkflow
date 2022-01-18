@@ -1,6 +1,7 @@
 import {Action, RulesJson, ScriptableField} from './types';
 import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
 import {BaseNode} from './BaseNode';
+import {propertyChange} from './controller/Controller';
 
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
 
@@ -137,6 +138,17 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             this[funcName](action, context);
         }
         this.notifyDependents(action);
+    }
+
+    _setProperty<T>(prop: string, newValue: T) {
+        //@ts-ignore
+        const oldValue = this._jsonModel[prop];
+        if (oldValue !== newValue) {
+            const changeAction = propertyChange(prop, newValue, oldValue);
+            //@ts-ignore
+            this._jsonModel[prop] = newValue;
+            this.notifyDependents(changeAction);
+        }
     }
 }
 

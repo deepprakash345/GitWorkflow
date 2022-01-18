@@ -1,5 +1,5 @@
 import EventQueue from '../src/controller/EventQueue';
-import {Change, Click} from '../src/controller/Controller';
+import {Change, Click, propertyChange} from '../src/controller/Controller';
 import mock = jest.mock;
 
 describe('Event Queue', () => {
@@ -49,7 +49,7 @@ describe('Event Queue', () => {
     test('isQueued returns false for the element with different event type', () => {
         const evnt = new Click();
         eventQueue.queue(mockNode, evnt);
-        expect(eventQueue.isQueued(mockNode, new Change(1))).toEqual(false);
+        expect(eventQueue.isQueued(mockNode, propertyChange('value', 1))).toEqual(false);
     });
 
     test.skip('isQueued returns false for the element with same event type but different payload', () => {
@@ -59,15 +59,15 @@ describe('Event Queue', () => {
     });
 
     test('queue multiple events', () => {
-        const evnts = [new Click(), new Change(1)];
+        const evnts = [new Click(), propertyChange('value', 1)];
         eventQueue.queue(mockNode, evnts);
         expect(eventQueue.length).toEqual(2);
         expect(eventQueue.isQueued(mockNode, new Click())).toEqual(true);
-        expect(eventQueue.isQueued(mockNode, new Change(1))).toEqual(true);
+        expect(eventQueue.isQueued(mockNode, propertyChange('value', 1))).toEqual(true);
     });
 
     test('queue when events or node is missing should do nothing', () => {
-        const evnts = [new Click(), new Change(1)];
+        const evnts = [new Click(), propertyChange('value', 1)];
         // @ts-ignore
         eventQueue.queue(mockNode);
         expect(eventQueue.length).toEqual(0);

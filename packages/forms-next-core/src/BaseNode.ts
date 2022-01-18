@@ -3,7 +3,7 @@ import {
     BaseJson,
     BaseModel,
     callbackFn,
-    ContainerModel, FieldsetJson,
+    ContainerModel, FieldModel, FieldsetJson, FieldsetModel,
     FormModel,
     Primitives,
     Subscription
@@ -17,7 +17,7 @@ import Container from './Container';
 
 class ActionImplWithTarget implements Action {
 
-    constructor(private _action: Action, private _target: BaseModel) {
+    constructor(private _action: Action, private _target: FieldModel | FormModel | FieldsetModel) {
     }
 
     public get type() {

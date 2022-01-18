@@ -90,7 +90,7 @@
             "viewType": "text-input",
             "description": "Your mobile number where we can reach you. But only if you want",
             "screenReaderText": "Enter you mobile number without the ISD code",
-            "pattern": "/[0-9]{10}/",
+            "pattern": "[0-9]{10}",
             "constraintMessages": {
                 "pattern": "Phone number must be 10 digit long"
             },
