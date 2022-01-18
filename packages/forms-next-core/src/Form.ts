@@ -1,6 +1,6 @@
 import Container from './Container';
 import {
-    Action,
+    Action, BaseJson,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -24,7 +24,7 @@ export class Validate extends ActionImpl {
 }
 
 export class FieldChanged extends ActionImpl {
-    constructor(changes: ChangePayload, field: string) {
+    constructor(changes: ChangePayload, field: BaseJson) {
         super({
             field,
             changes
@@ -123,7 +123,8 @@ class Form extends Container<FormJson> implements FormModel {
             }
         }, 'valid');
         field.subscribe((action) => {
-            const field = action.target.name || '';
+            //@ts-ignore
+            const field = action.target.getState() || {};
             const fieldChangedAction = new FieldChanged(action.payload.changes, field);
             this.dispatch(fieldChangedAction);
         });

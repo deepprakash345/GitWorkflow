@@ -13,7 +13,7 @@ test('changes to a field\'s value triggers a FieldChanged Event', async () => {
     const f1 = form.items[0];
     f1.value = 'something';
     const action = new ActionImpl({
-        field: 'f1',
+        field: form.items[0].getState(),
         changes : [{
             propertyName: 'value',
             currentValue: 'something'
@@ -39,7 +39,7 @@ test('changes to a field\'s property triggers a FieldChanged Event', async () =>
     const f1 = form.items[0];
     f1.enum = ['something'];
     const action = new ActionImpl({
-        field: 'f1',
+        field: form.items[0].getState(),
         changes : [{
             propertyName: 'enum',
             currentValue: ['something']

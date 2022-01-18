@@ -1,13 +1,13 @@
 import {
     Action,
-    BaseModel
+    FieldModel, FieldsetModel, FormModel
 } from '../types';
 
 export class ActionImpl implements Action {
     protected _type: string
     private _payload?: any
     //@ts-ignore
-    private _target: BaseModel
+    private _target: FieldModel | FormModel | FieldsetModel
 
     constructor(payload: any, type: string, private _metadata?: any) {
         this._payload = payload;
