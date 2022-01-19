@@ -8,7 +8,7 @@ import {
   constraintConvertor,
   fieldConvertor,
   stringConstraintConvertor,
-  inputTypeConvertor
+  inputTypeConvertor, withErrorMessage
 } from '../utils/SpectrumMappers';
 
 const mapper = combineConvertors(baseConvertor,
@@ -19,10 +19,12 @@ const mapper = combineConvertors(baseConvertor,
     return { width: '300px' };
   });
 
+const FormDate = withErrorMessage(TextField);
+
 // Date component using TextField with input type date,
 // to be replaced with react-spectrum datepicker after release    
 const DateField = function (props: FieldJson & { id: string }) {
-  const renderedComponent = useRenderer(props, TextField, mapper);
+  const renderedComponent = useRenderer(props, FormDate, mapper);
   return renderedComponent;
 };
 

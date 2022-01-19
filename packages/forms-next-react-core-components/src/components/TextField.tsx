@@ -6,7 +6,7 @@ import {
     combineConvertors,
     constraintConvertor,
     fieldConvertor,
-    stringConstraintConvertor
+    stringConstraintConvertor, withErrorMessage
 } from '../utils/SpectrumMappers';
 import {useRenderer} from '@aemforms/forms-next-react-bindings';
 
@@ -17,8 +17,12 @@ const mapper = combineConvertors(baseConvertor,
         return {width: '300px'};
     });
 
+const FormTextField = withErrorMessage(TextField);
+const FormTextArea = withErrorMessage(TextArea);
+
 const TextFieldComponent = function (props: FieldJson & {id: string}) {
-    const renderedComponent = useRenderer(props, props.viewType === 'multiline-input' ? TextArea : TextField, mapper);
+    const component = props.viewType === 'multiline-input' ? FormTextArea : FormTextField;
+    const renderedComponent = useRenderer(props, component, mapper);
     return renderedComponent;
 };
 

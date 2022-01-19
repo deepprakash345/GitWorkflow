@@ -110,6 +110,17 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         expects: (label ?: HTMLLabelElement | null, input?: HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-invalid')).toBeNull();
         }
+    },
+    {
+        name: 'error message is visible when the field is invalid',
+        field: {
+            ...field,
+            'valid': false,
+            'errorMessage' : 'there is an error in the field'
+        },
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+            expect(input?.getAttribute('aria-invalid')).toBe('true');
+        }
     }
 ];
 

@@ -49,7 +49,8 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
         value: a.value,
         validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
         onChange: b.dispatchChange,
-        isReadOnly : a.readOnly === true
+        isReadOnly : a.readOnly === true,
+        errorMessage: a.errorMessage
     };
 };
 
@@ -89,4 +90,11 @@ export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
       type: a.type
     })
   };
+};
+
+export const withErrorMessage = (Component: JSXElementConstructor<any>) => (props: any) => {
+    return (<div className={'field'}>
+        <Component {...props} />
+        {(props.errorMessage || '').length > 0 ? <div className={'field-errorMessage'}>{props.errorMessage}</div> : null}
+    </div>);
 };

@@ -48,9 +48,5 @@ export const useRenderer = function(formFieldState:FieldJson & {id: string},
        };
     }
     const res = propsMapper(state, handlers, translateMessage(state, obj.formatMessage));
-    const errMessage = state.errorMessage || '';
-    return (<div className={'field'}>
-        <Component {...res} />
-        {errMessage.length > 0 ? <div>{errMessage}</div> : null}
-    </div>);
+    return <Component {...res} />;
 };
