@@ -1,0 +1,79 @@
+{
+  "items": [
+    {
+      "viewType": "custom:vertical-flex",
+      "name": "flex",
+      "label": {
+        "value": "Tabs title"
+      },
+      "items": [
+        {
+          "viewType": "custom:horizontal-flex",
+          "items": [
+            {
+              "name": "textInput1",
+              "label": {
+                "value": "Text input 1"
+              },
+              "type": "string",
+              "viewType": "text-input"
+            },
+            {
+              "name": "textInput2",
+              "label": {
+                "value": "Text input 2"
+              },
+              "type": "string",
+              "viewType": "text-input"
+            },
+            {
+              "name": "textInput3",
+              "label": {
+                "value": "Text input 3"
+              },
+              "type": "string",
+              "viewType": "text-input"
+            }
+          ]
+        },
+        {
+          "name": "textInput4",
+          "label": {
+            "value": "Text input 4"
+          },
+          "type": "string",
+          "viewType": "text-input"
+        },
+        {
+          "viewType": "custom:horizontal-flex",
+          "items": [
+            {
+              "name": "textInput5",
+              "label": {
+                "value": "Text input 5"
+              },
+              "type": "string",
+              "viewType": "text-input"
+            },
+            {
+              "name": "textInput6",
+              "label": {
+                "value": "Text input 6"
+              },
+              "type": "string",
+              "viewType": "text-input"
+            }
+          ]
+        },
+        {
+          "name": "textInput8",
+          "label": {
+            "value": "Text input 7"
+          },
+          "type": "string",
+          "viewType": "text-input"
+        }
+      ]
+    }
+  ]
+}

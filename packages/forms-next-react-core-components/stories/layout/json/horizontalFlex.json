@@ -1,0 +1,45 @@
+{
+  "items": [
+    {
+      "viewType": "custom:horizontal-flex",
+      "name": "flex",
+      "label": {
+        "value": "Horizontal Flex Title"
+      },
+      "items": [
+        {
+          "name": "textInput1",
+          "label": {
+            "value": "Text Input 1"
+          },
+          "type": "string",
+          "viewType": "text-input"
+        },
+        {
+          "name": "textInput2",
+          "label": {
+            "value": "Text Input 2"
+          },
+          "type": "string",
+          "viewType": "text-input"
+        },
+        {
+          "name": "textInput3",
+          "label": {
+            "value": "Text Input 4"
+          },
+          "type": "string",
+          "viewType": "text-input"
+        },
+        {
+          "name": "textInput4",
+          "label": {
+            "value": "Text Input 4"
+          },
+          "type": "string",
+          "viewType": "text-input"
+        }
+      ]
+    }
+  ]
+}

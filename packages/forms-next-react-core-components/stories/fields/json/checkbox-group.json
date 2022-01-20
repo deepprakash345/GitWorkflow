@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "name": "checkbox",
+      "viewType": "checkbox-group",
+      "label": {
+        "value": "checkbox group"
+      },
+      "default": [
+        2,
+        3
+      ],
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "enumNames": [
+        "checkbox 1",
+        "checkbox 2",
+        "checkbox 3",
+        "checkbox 4",
+        "checkbox 5"
+      ]
+    }
+  ]
+}

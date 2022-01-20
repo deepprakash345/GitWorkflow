@@ -1,13 +1,10 @@
 import { Flex, Tabs, TabList, TabPanels, Item } from '@adobe/react-spectrum';
-import { FieldsetJson } from '@aemforms/forms-next-core';
 import React, { useContext, useCallback } from 'react';
-import { useRuleEngine, FormContext } from '@aemforms/forms-next-react-bindings';
-import { State } from '@aemforms/forms-next-core/lib';
+import { FormContext } from '@aemforms/forms-next-react-bindings';
 
-const TabsWrapper = function (fieldset: State<FieldsetJson>) {
+const TabWrapper = function (props: any) {
   const mappings = useContext(FormContext).mappings;
-  const [props] = useRuleEngine(fieldset);
-  const { items, visible, label, id } = props;
+  const { items, label, id, visible, orientation } = props;
 
   const getTabPanels = useCallback(() => {
     return (
@@ -26,8 +23,9 @@ const TabsWrapper = function (fieldset: State<FieldsetJson>) {
     <Flex gap="size-150" wrap>
       <span id={id}>{label.value}</span>
       <Tabs
-        orientation={props['props:orientation']}
-        aria-labelledby={id}>
+        aria-labelledby={id}
+        orientation={orientation}
+      >
         <TabList>{items.map((item: any) => (<Item key={item?.label?.value}>{item?.label?.value}</Item>))}</TabList>
         <TabPanels>{getTabPanels()}</TabPanels>
       </Tabs>
@@ -35,4 +33,5 @@ const TabsWrapper = function (fieldset: State<FieldsetJson>) {
   ) : (null);
 };
 
-export default TabsWrapper;
+
+export default TabWrapper;
