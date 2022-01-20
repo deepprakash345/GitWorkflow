@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import Date from '../../src/components/Date';
-import { createForm, filterTestTable, InputFieldTestCase, Provider } from '../utils';
+import {createForm, elementFetcher, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
+import {FieldExpectType} from './TextField.test';
+import TextField from '../../src/components/TextField';
 
 const field = {
   'id': 'field',
@@ -11,8 +13,6 @@ const field = {
   'visible': true,
   'type': 'date'
 };
-
-export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null) => any
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
   {
@@ -103,19 +103,41 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     expects: (label?: HTMLLabelElement | null, input?: HTMLInputElement | null) => {
       expect(input?.getAttribute('aria-invalid')).toBeNull();
     }
+  },
+  {
+    name: 'error message element exists when the field is invalid',
+    field: {
+      ...field,
+      'valid': false,
+      'errorMessage' : 'there is an error in the field'
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+      const err = container.querySelector('.field-errorMessage');
+      expect(err).not.toBeNull();
+      //@ts-ignore
+      expect(err.textContent).toEqual('there is an error in the field');
+    }
+  },
+  {
+    name: 'error message doesn\'t exists when there is no error',
+    field: {
+      ...field,
+      'valid': false
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+      const err = container.querySelector('.field-errorMessage');
+      expect(err).toBeNull();
+    }
   }
 ];
 
-test.each(filterTestTable(labelInputTests))('$name', async ({ field, expects }) => {
-  const checkExpectations = ({ container }: RenderResult) => {
-    const label = container.querySelector('label');
-    const input = container.querySelector('input');
-    expects(label, input);
-  };
-  const form = await createForm(field);
-  const wrapper = Provider(form);
-  const component = <Date {...field} />;
-  checkExpectations(render(component, { wrapper }));
+const helper = renderComponent(Date, elementFetcher);
+
+test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+  //let x = await helper(field, false);
+  //expects(x.label, x.input);
+  let x = await helper(field);
+  expects(x.label, x.input, x.container);
 });
 
 test('value entered by user in date field is set in model', async () => {
@@ -123,11 +145,7 @@ test('value entered by user in date field is set in model', async () => {
     ...field,
     'id': 'x'
   };
-  const form = await createForm(f);
-  const wrapper = Provider(form);
-  const component = <Date {...form.getState().items[0]} />;
-  const { container } = render(component, { wrapper });
-  const input = container.querySelector('input');
+  let {input} = await helper(f);
   const inputValue = '02-02-2021';
   expect(input?.getAttribute('value')).toEqual(inputValue);
 });
@@ -138,10 +156,6 @@ test('it should handle visible property', async () => {
     'id': 'x',
     'visible': false
   };
-
-  const component = <Date {...f} />;
-  const form = await createForm(field);
-  const wrapper = Provider(form);
-  const { container } = render(component, { wrapper });
+  let {container} = await helper(f);
   expect(container.innerHTML).toContain('display: none'); //todo: find a better check
 });

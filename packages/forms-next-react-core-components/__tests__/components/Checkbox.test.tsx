@@ -1,18 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
 import Checkbox from '../../src/components/Checkbox';
 import userEvent from '@testing-library/user-event';
 import {
-    createForm,
     elementFetcher,
     filterTestTable,
     ignoredTestTable,
     InputFieldTestCase,
-    Provider,
     renderComponent
 } from '../utils';
 import {FieldExpectType} from './TextField.test';
-import {FieldJson, FieldModel} from '@aemforms/forms-next-core/lib';
 
 const field = {
     'name': 'name',
@@ -181,6 +177,31 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
             expect(input?.checked).toEqual(false);
         }
+    },
+    {
+        name: 'error message element exists when the field is invalid',
+        field: {
+            ...field,
+            'valid': false,
+            'errorMessage' : 'there is an error in the field'
+        },
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+            const err = container.querySelector('.field-errorMessage');
+            expect(err).not.toBeNull();
+            //@ts-ignore
+            expect(err.textContent).toEqual('there is an error in the field');
+        }
+    },
+    {
+        name: 'error message doesn\'t exists when there is no error',
+        field: {
+            ...field,
+            'valid': false
+        },
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+            const err = container.querySelector('.field-errorMessage');
+            expect(err).toBeNull();
+        }
     }
 ];
 
@@ -190,7 +211,7 @@ test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) =>
     //let x = await helper(field, false);
     //expects(x.label, x.input);
     let x = await helper(field);
-    expects(x.label, x.input);
+    expects(x.label, x.input, x.container);
 });
 
 ignoredTestTable(labelInputTests).forEach((v) => {

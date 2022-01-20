@@ -22,7 +22,7 @@ type Input = {
     labels: HTMLLabelElement[],
     inputs: HTMLInputElement[],
     group: Element | null,
-    container: Element | null
+    container: HTMLElement | null
 }
 
 type GroupExpectType = (i : Input) => any
@@ -179,6 +179,31 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
             expect(inputs[0]?.value).toEqual('option 1');
             expect(inputs[1]?.checked).toEqual(false);
             expect(inputs[1]?.value).toEqual('option 2');
+        }
+    },
+    {
+        name: 'error message element exists when the field is invalid',
+        field: {
+            ...field,
+            'valid': false,
+            'errorMessage' : 'there is an error in the field'
+        },
+        expects: ({container}) => {
+            const err = container?.querySelector('.field-errorMessage');
+            expect(err).not.toBeNull();
+            //@ts-ignore
+            expect(err.textContent).toEqual('there is an error in the field');
+        }
+    },
+    {
+        name: 'error message doesn\'t exists when there is no error',
+        field: {
+            ...field,
+            'valid': false
+        },
+        expects: ({container}) => {
+            const err = container?.querySelector('.field-errorMessage');
+            expect(err).toBeNull();
         }
     }
 ];

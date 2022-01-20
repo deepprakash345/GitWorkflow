@@ -15,7 +15,7 @@ const field = {
     'visible' : true
 };
 
-export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null) => any
+export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null, c: HTMLElement) => any
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     {
@@ -112,14 +112,28 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
-        name: 'error message is visible when the field is invalid',
+        name: 'error message element exists when the field is invalid',
         field: {
             ...field,
             'valid': false,
             'errorMessage' : 'there is an error in the field'
         },
-        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
-            expect(input?.getAttribute('aria-invalid')).toBe('true');
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+            const err = container.querySelector('.field-errorMessage');
+            expect(err).not.toBeNull();
+            //@ts-ignore
+            expect(err.textContent).toEqual('there is an error in the field');
+        }
+    },
+    {
+        name: 'error message doesn\'t exists when there is no error',
+        field: {
+            ...field,
+            'valid': false
+        },
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+            const err = container.querySelector('.field-errorMessage');
+            expect(err).toBeNull();
         }
     }
 ];
@@ -128,7 +142,7 @@ const helper = renderComponent(TextField, elementFetcher);
 
 test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
     let x = await helper(field);
-    expects(x.label, x.input);
+    expects(x.label, x.input, x.container);
 });
 
 test('value entered by user in text field is set in model', async () => {
