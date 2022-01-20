@@ -1,9 +1,11 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import NumberField from '../../src/components/NumberField';
-import { createForm, filterTestTable, InputFieldTestCase, Provider } from '../utils';
+import {createForm, elementFetcher, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
 import userEvent from '@testing-library/user-event';
 import { FieldJson } from '@aemforms/forms-next-core/lib';
+import {FieldExpectType} from './TextField.test';
+import Date from '../../src/components/Date';
 
 const field = {
   'name': 'birthYear',
@@ -15,8 +17,6 @@ const field = {
 };
 
 
-export type FieldExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null) => any
-
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
   {
     name: 'field gets rendered without a provider',
@@ -25,19 +25,40 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
       expect(label?.innerHTML).toEqual('birthYear');
       expect(input?.value).toEqual('1,992');
     }
+  },
+  {
+    name: 'error message element exists when the field is invalid',
+    field: {
+      ...field,
+      'valid': false,
+      'errorMessage' : 'there is an error in the field'
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+      const err = container.querySelector('.field-errorMessage');
+      expect(err).not.toBeNull();
+      //@ts-ignore
+      expect(err.textContent).toEqual('there is an error in the field');
+    }
+  },
+  {
+    name: 'error message doesn\'t exists when there is no error',
+    field: {
+      ...field,
+      'valid': false
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+      const err = container.querySelector('.field-errorMessage');
+      expect(err).toBeNull();
+    }
   }
 ];
 
+const helper = renderComponent(NumberField, elementFetcher);
+
+
 test.each(filterTestTable(labelInputTests))('$name', async ({ field, expects }) => {
-  const checkExpectations = ({ container }: RenderResult) => {
-    const label = container.querySelector('label');
-    const input = container.querySelector('input');
-    expects(label, input);
-  };
-  const form = await createForm(field);
-  const wrapper = Provider(form);
-  const component = <NumberField {...field} />;
-  checkExpectations(render(component, { wrapper }));
+  let x = await helper(field);
+  expects(x.label, x.input, x.container);
 });
 
 test('value entered by user in number field is set in model', async () => {
@@ -45,11 +66,7 @@ test('value entered by user in number field is set in model', async () => {
     ...field,
     'id': 'x'
   };
-  const form = await createForm(f);
-  const wrapper = Provider(form);
-  const component = <NumberField {...form?.items[0]} />;
-  const { container } = render(component, { wrapper });
-  const input = container.querySelector('input');
+  const { input, form } = await helper(f);
   // @ts-ignore
   userEvent.clear(input);
   const inputValue = '1992';
@@ -67,10 +84,6 @@ test('it should handle visible property', async () => {
     'id': 'x',
     'visible': false
   };
-
-  const component = <NumberField {...f} />;
-  const form = await createForm(field);
-  const wrapper = Provider(form);
-  const { container } = render(component, { wrapper });
+  const { container } = await helper(f);
   expect(container.innerHTML).toContain('display: none'); //todo: find a better check
 });

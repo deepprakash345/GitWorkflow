@@ -135,6 +135,31 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
       expect(inputs[2]?.checked).toEqual(false);
       expect(inputs[2]?.value).toEqual('3');
     }
+  },
+  {
+    name: 'error message element exists when the field is invalid',
+    field: {
+      ...field,
+      'valid': false,
+      'errorMessage' : 'there is an error in the field'
+    },
+    expects: ({container}) => {
+      const err = container?.querySelector('.field-errorMessage');
+      expect(err).not.toBeNull();
+      //@ts-ignore
+      expect(err.textContent).toEqual('there is an error in the field');
+    }
+  },
+  {
+    name: 'error message doesn\'t exists when there is no error',
+    field: {
+      ...field,
+      'valid': false
+    },
+    expects: ({container}) => {
+      const err = container?.querySelector('.field-errorMessage');
+      expect(err).toBeNull();
+    }
   }
 ];
 
