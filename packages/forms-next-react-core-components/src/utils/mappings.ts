@@ -11,6 +11,7 @@ import NumberField from '../components/NumberField';
 import Accordion from '../components/Accordion';
 import Tabs from '../components/Tabs';
 import DateField from '../components/Date';
+import CheckboxGroup from '../components/CheckboxGroup';
 
 const mappings = {
     'text-input' : TextField,
@@ -26,7 +27,8 @@ const mappings = {
     'file-input' : FileUploadComponent,
     'repeater' : Repeater,
     'accordion': Accordion,
-    'tabs': Tabs
+    'tabs': Tabs,
+    'custom:checkbox-group': CheckboxGroup
 };
 
 export default mappings;
