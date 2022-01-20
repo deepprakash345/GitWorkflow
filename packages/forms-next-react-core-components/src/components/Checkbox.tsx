@@ -1,8 +1,14 @@
-import {Checkbox} from '@adobe/react-spectrum';
+import {Checkbox, ComboBox} from '@adobe/react-spectrum';
 import {FieldJson} from '@aemforms/forms-next-core';
 import {useRenderer} from '@aemforms/forms-next-react-bindings';
 import React from 'react';
-import {baseConvertor, combineConvertors, constraintConvertor, fieldConvertor} from '../utils/SpectrumMappers';
+import {
+    baseConvertor,
+    combineConvertors,
+    constraintConvertor,
+    fieldConvertor,
+    withErrorMessage
+} from '../utils/SpectrumMappers';
 
 
 const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConvertor, (a, b) => {
@@ -24,6 +30,7 @@ const SpectrumCheckboxWrapper = (props: any) => {
     return <Checkbox {...props} onChange={handleChange}>{props.label}</Checkbox>;
 };
 
+const FormCheckbox = withErrorMessage(SpectrumCheckboxWrapper);
 
 /**
  * The checkbox component follows the convention that the first value of option is used as selected value
@@ -32,7 +39,7 @@ const SpectrumCheckboxWrapper = (props: any) => {
  * @constructor
  */
 const CheckboxComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, mapper, SpectrumCheckboxWrapper);
+    return useRenderer(originalProps, FormCheckbox, mapper);
 };
 
 

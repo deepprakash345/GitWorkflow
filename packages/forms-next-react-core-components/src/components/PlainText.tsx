@@ -8,6 +8,6 @@ const PlainText = function (props: any) {
     return (<p>{label}</p>);
 };
 
-const FormPlainTextComponent = (field: FieldJson & {id: string}) => useRenderer(field, baseConvertor, PlainText);
+const FormPlainTextComponent = (field: FieldJson & {id: string}) => useRenderer(field, PlainText, baseConvertor);
 
 export default FormPlainTextComponent;

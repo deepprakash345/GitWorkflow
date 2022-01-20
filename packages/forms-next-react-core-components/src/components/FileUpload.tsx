@@ -2,7 +2,7 @@ import FileUpload from './fileupload/FileUpload';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 import {useRenderer} from '@aemforms/forms-next-react-bindings';
 import React from 'react';
-import {baseConvertor, combineConvertors, constraintConvertor} from '../utils/SpectrumMappers';
+import {baseConvertor, combineConvertors, constraintConvertor, withErrorMessage} from '../utils/SpectrumMappers';
 import {FileObject} from '@aemforms/forms-next-core/lib/FileObject';
 import {getFileSizeInBytes} from '@aemforms/forms-next-core/lib/utils/FormUtils';
 
@@ -44,9 +44,10 @@ const FileUploadWrapper = (props: any) => {
     return <FileUpload {...props} updateFilesCb={handleChange}/>;
 };
 
+const FormFileUpload = withErrorMessage(FileUploadWrapper);
 
 const FileUploadComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, mapper, FileUploadWrapper);
+    return useRenderer(originalProps, FormFileUpload, mapper);
 };
 
 
