@@ -12,6 +12,7 @@ import button from './button.json';
 import multiline from './multiline.json';
 import panel from './panel.json';
 import plainText from './plainText.json';
+import checkboxGroup from './checkbox-group.json';
 
 export default {
     textInput,
@@ -27,5 +28,6 @@ export default {
     multiline,
     panel,
     plainText,
-    description
+    description,
+    checkboxGroup
 };

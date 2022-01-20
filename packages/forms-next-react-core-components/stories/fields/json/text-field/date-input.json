@@ -5,8 +5,7 @@
             "label": {
                 "value": "Date input"
             },
-            "type": "string",
-            "format": "date",
+            "type": "date",
             "viewType": "date-input",
             "required": true
         }

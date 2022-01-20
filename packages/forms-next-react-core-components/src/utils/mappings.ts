@@ -9,9 +9,12 @@ import FileUploadComponent from '../components/FileUpload';
 import Repeater from '../components/Repeater';
 import NumberField from '../components/NumberField';
 import Accordion from '../components/Accordion';
-import Tabs from '../components/Tabs';
 import DateField from '../components/Date';
 import CheckboxGroup from '../components/CheckboxGroup';
+import HorizontalFlex from '../components/flex/HorizontalFlex';
+import VerticalFlex from '../components/flex/VerticalFlex';
+import HorizontalTab from '../components/tabs/HorizontalTabs';
+import VerticalTab from '../components/tabs/VerticalTabs';
 
 const mappings = {
     'text-input' : TextField,
@@ -26,9 +29,12 @@ const mappings = {
     'plain-text' : PlainText,
     'file-input' : FileUploadComponent,
     'repeater' : Repeater,
-    'accordion': Accordion,
-    'tabs': Tabs,
-    'custom:checkbox-group': CheckboxGroup
+    'custom:accordion': Accordion,
+    'custom:checkbox-group': CheckboxGroup,
+    'custom:vertical-flex': VerticalFlex,
+    'custom:horizontal-flex': HorizontalFlex,
+    'custom:vertical-tab': VerticalTab,
+    'custom:horizontal-tab': HorizontalTab
 };
 
 export default mappings;

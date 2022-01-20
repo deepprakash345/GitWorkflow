@@ -14,7 +14,7 @@ const mapper = combineConvertors(baseConvertor,
     fieldConvertor,
     constraintConvertor,
     stringConstraintConvertor, (a, b) => {
-        return {width: '300px'};
+        return {width: '100%'};
     });
 
 const FormTextField = withErrorMessage(TextField);
