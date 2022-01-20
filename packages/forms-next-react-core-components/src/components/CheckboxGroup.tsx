@@ -7,7 +7,7 @@ import {
   combineConvertors,
   constraintConvertor,
   fieldConvertor,
-  enumToChildConvertor
+  enumToChildConvertor, withErrorMessage
 } from '../utils/SpectrumMappers';
 
 const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor, enumToChildConvertor(Checkbox), (a, b) => {
@@ -16,8 +16,10 @@ const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConver
   };
 });
 
+const Comp = withErrorMessage(CheckboxGroup);
+
 const CheckboxGroupComponent = function (props: FieldJson & { id: string }) {
-  return useRenderer(props, mapper, CheckboxGroup);
+  return useRenderer(props, Comp, mapper);
 };
 
 
