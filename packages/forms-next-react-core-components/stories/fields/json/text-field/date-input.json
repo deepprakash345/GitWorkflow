@@ -1,13 +1,13 @@
 {
-    "items": [
-        {
-            "name": "dateInput",
-            "label": {
-                "value": "Date input"
-            },
-            "type": "date",
-            "viewType": "date-input",
-            "required": true
-        }
-    ]
+  "items": [
+    {
+      "name": "dateInput",
+      "label": {
+        "value": "Date input"
+      },
+      "type": "string",
+      "viewType": "date-input",
+      "required": true
+    }
+  ]
 }

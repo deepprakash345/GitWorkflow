@@ -16,7 +16,7 @@ const mapper = combineConvertors(baseConvertor,
   constraintConvertor,
   inputTypeConvertor,
   stringConstraintConvertor, (a, b) => {
-    return { width: '100%' };
+    return { width: '100%', type: 'date' };
   });
 
 const FormDate = withErrorMessage(TextField);
