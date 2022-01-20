@@ -30,7 +30,7 @@ const mappings = {
     'file-input' : FileUploadComponent,
     'repeater' : Repeater,
     'custom:accordion': Accordion,
-    'custom:checkbox-group': CheckboxGroup,
+    'checkbox-group': CheckboxGroup,
     'custom:vertical-flex': VerticalFlex,
     'custom:horizontal-flex': HorizontalFlex,
     'custom:vertical-tab': VerticalTab,

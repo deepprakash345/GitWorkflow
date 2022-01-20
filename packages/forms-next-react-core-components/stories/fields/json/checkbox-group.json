@@ -2,7 +2,7 @@
   "items": [
     {
       "name": "checkbox",
-      "viewType": "custom:checkbox-group",
+      "viewType": "checkbox-group",
       "label": {
         "value": "checkbox group"
       },
