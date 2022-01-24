@@ -1,6 +1,8 @@
 // issue with import
 //import {FieldJson, isFileObject} from '../types';
 
+import Field from '../Field';
+
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 const dataUrlRegex = /^data:([a-z]+\/[a-z0-9-+.]+)?;(?:name=(.*);)?base64,(.*)$/;
 

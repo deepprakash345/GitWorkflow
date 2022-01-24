@@ -127,9 +127,18 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }
     }
 
+    /**
+     *
+     * @private
+     */
+    _getConstraintObject() {
+        return Constraints;
+    }
+
     private evaluateConstraints(value: any) {
         let constraint = 'type';
         let elem = this._jsonModel;
+        const Constraints = this._getConstraintObject();
         const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum');
         const res = Constraints.type(elem.type || 'string', value);
         if (res.valid) {

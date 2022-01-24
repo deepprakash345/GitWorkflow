@@ -88,8 +88,8 @@ export const formWithRules = {
 };
 
 
-export const randomWord = (l: number) => {
-    const chars = 'abcdefghijklmnopqrstuvwxyz'.split('');
+export const randomWord = (l: number, ex: string = '') => {
+    const chars = 'abcdefghijklmnopqrstuvwxyz'.split('').filter(x => !ex.includes(x));
     const ret = [];
     for (let i = 0; i<=l; i++) {
         const randIndex = Math.floor(Math.random()*(chars.length));
@@ -97,7 +97,11 @@ export const randomWord = (l: number) => {
     }
     return ret.join('');
 };
-
+/**
+ * Create a Form JSON
+ * @param arr
+ * @param nameMap
+ */
 export const create = (arr: any[], nameMap: { [key:string] : number }  = {p : 1}): any => {
     let newNameMap = {
         ...nameMap

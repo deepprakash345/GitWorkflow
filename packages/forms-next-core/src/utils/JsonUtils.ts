@@ -1,5 +1,6 @@
 import {FieldsetJson, FieldJson} from '../types';
 import {FileObject} from '../FileObject';
+import {defaultViewTypes} from './SchemaUtils';
 
 export const getProperty = <P>(data: any, key: string, def: P): P => {
     if (key in data) {
@@ -31,6 +32,11 @@ export const isFile = function (item: FieldsetJson | FieldJson) {
     return (item?.type === 'file' || item?.type === 'file[]') ||
         ((item?.type === 'string' || item?.type === 'string[]') &&
             (item?.format === 'binary' || item?.format === 'data-url'));
+};
+
+export const isCheckbox = function (item: FieldsetJson | FieldJson) {
+    const viewType = item?.viewType || defaultViewTypes(item);
+    return viewType === 'checkbox';
 };
 
 /**

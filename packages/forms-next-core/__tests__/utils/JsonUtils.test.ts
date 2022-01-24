@@ -1,4 +1,5 @@
-import {deepClone, getProperty, resolve} from '../../src/utils/JsonUtils';
+import {deepClone, getProperty, isCheckbox, resolve} from '../../src/utils/JsonUtils';
+import {randomWord} from '../collateral';
 
 test('getProperty returns exact name property', () => {
     const actual = getProperty({
@@ -138,4 +139,43 @@ test('deepClone an object with null value', () => {
     //@ts-ignore
     input.b.x.a = 3;
     expect(output.b.x.a).toEqual(null);
+});
+
+test('isCheckbox should return true for fields whose viewType map to checkbox', () => {
+    expect(isCheckbox({
+        type: 'boolean'
+    })).toEqual(true);
+
+    expect(isCheckbox({
+        enum: ['0', '1']
+    })).toEqual(true);
+
+    expect(isCheckbox({
+        enum: ['0']
+    })).toEqual(true);
+});
+
+test('isCheckbox should return true for checkbox', () => {
+    expect(isCheckbox({
+       viewType: 'checkbox'
+    })).toEqual(true);
+});
+
+test('isCheckbox should not return true non checkbox viewTypes', () => {
+    const x = randomWord(1, 'c') + randomWord(Math.random()*10);
+    expect(isCheckbox({
+        viewType: x
+    })).toEqual(false);
+
+    expect(isCheckbox({
+        type: 'string'
+    })).toEqual(false);
+
+    expect(isCheckbox({
+        type: 'number'
+    })).toEqual(false);
+
+    expect(isCheckbox({
+        enum: ['0', '1', '2']
+    })).toEqual(false);
 });

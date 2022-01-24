@@ -334,6 +334,23 @@ test('a checkbox with no off value should not be invalid when not required', asy
 
 });
 
+test('a required checkbox with off value should be invalid when unselected', async () => {
+    const f = {
+        ...field,
+        required: true,
+        enum : [true, false]
+    };
+
+    const {input, form, element, container} = await helper(f);
+    // @ts-ignore
+    userEvent.click(input);
+    // @ts-ignore
+    userEvent.click(input);
+    const err = container.querySelector('.field-errorMessage');
+    expect(element?.valid).toBe(false);
+    expect(err).not.toBeNull();
+});
+
 test('a required checkbox with null value should be invalid', async () => {
     const f = {
         ...field,
