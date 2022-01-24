@@ -51,7 +51,7 @@ export type ConstraintsMessages = {
 
 export type RulesJson = {
     'rules' ?: Items<string>
-    'events' ?: Items<string>
+    'events' ?: Items<string[]|string>
 }
 
 type TranslationBaseJson = {

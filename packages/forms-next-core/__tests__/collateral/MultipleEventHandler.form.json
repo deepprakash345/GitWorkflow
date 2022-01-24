@@ -1,0 +1,54 @@
+{
+  "adaptiveform": "0.0.17-pre",
+  "items" : [
+    {
+      "viewType": "button",
+      "label": {
+        "value": "Trigger Event A"
+      },
+      "events": {
+        "click": "dispatch_event('custom:a')"
+      }
+    },
+    {
+      "viewType": "button",
+      "label": {
+        "value": "Trigger Event B"
+      },
+      "events": {
+        "click": "dispatch_event('custom:b')"
+      }
+    },
+    {
+      "viewType": "button",
+      "label": {
+        "value": "Trigger Both Events A and B"
+      },
+      "events": {
+        "click": ["dispatch_event('custom:a')","dispatch_event('custom:b')"]
+      }
+    },
+    {
+      "viewType": "text-input",
+      "label": {
+        "value": "Event A Listener"
+      },
+      "events": {
+        "custom:a": "{value: 'a'}"
+      }
+    },
+    {
+      "viewType": "text-input",
+      "label": {
+        "value": "Event B Listener"
+      },
+      "events": {
+        "custom:b": "{value: 'b'}"
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "grammar": "json-formula-1.0.0"
+  }
+}

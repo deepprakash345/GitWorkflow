@@ -6,7 +6,7 @@ import {propertyChange} from './controller/Controller';
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
 
     private _events: {
-        [key: string]: RuleNode
+        [key: string]: RuleNode[]
     } = {};
 
     private _rules: {
@@ -33,10 +33,13 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         if (!(eName in this._events)) {
             let eString = this._jsonModel.events?.[eName];
             if (typeof eString === 'string' && eString.length > 0) {
-                this._events[eName] = this.ruleEngine.compileRule(eString);
+                eString = [eString];
+            }
+            if (typeof  eString !== 'undefined' && eString.length > 0) {
+                this._events[eName] = (eString as string[]).map(this.ruleEngine.compileRule);
             }
         }
-        return this._events[eName];
+        return this._events[eName] || [];
     }
 
     private applyUpdates(updates: any ) {
@@ -131,7 +134,9 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         const eventName = action.isCustomEvent ? `custom:${action.type}` : action.type;
         const funcName = action.isCustomEvent  ? `custom_${action.type}` : action.type;
         const node = this.getCompiledEvent(eventName);
-        this.executeEvent(context, node);
+        //todo: apply all the updates at the end  or
+        // not trigger the change event until the execution is finished
+        node.forEach(n => this.executeEvent(context, n));
         // @ts-ignore
         if (funcName in this && typeof this[funcName] === 'function') {
             //@ts-ignore
