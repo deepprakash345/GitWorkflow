@@ -37,10 +37,10 @@ export const request = async (context: any,
     } catch (e) {
         //todo: define error payload
         console.log('error handled');
-        context.$form.dispatch(new CustomEvent(error, {}, true));
+        context.form.dispatch(new CustomEvent(error, {}, true));
         return;
     }
-    context.$form.dispatch(new CustomEvent(success, result, true));
+    context.form.dispatch(new CustomEvent(success, result, true));
 };
 
 const multipartFormData = (data: any, attachments: any) => {
@@ -84,10 +84,10 @@ export const submit = async (context: any,
                       error: string,
                       submitAs: 'json' | 'multipart' = 'json',
                       input_data: any = null) => {
-    const endpoint = context.$form.metaData?.action;
+    const endpoint = context.form.metaData?.action;
     let data = input_data;
     if (typeof data != 'object' || data == null) {
-        data = context.$form.exportData();
+        data = context.form.exportData();
     }
     // todo: have to implement sending of attachments here
     const attachments = getAttachments(context.$form);
@@ -125,53 +125,100 @@ const createAction = (name: string, payload: any = {}, dispatch: boolean = false
 class FunctionRuntimeImpl {
 
     getFunctions () {
+        // todo: remove these once json-formula exposes a way to call them from custom functions
+        function isArray(obj: unknown) {
+            if (obj !== null) {
+                return Object.prototype.toString.call(obj) === '[object Array]';
+            }
+            return false;
+        }
+
+        function valueOf(a: any): any {
+            if (a === null || a === undefined) return a;
+            if (isArray(a)) {
+                return (a as []).map(i => valueOf(i));
+            }
+            return a.valueOf();
+        }
+
+        function toString(a: any): string {
+            if (a === null || a === undefined) return '';
+            return a.toString();
+        }
+
         return {
-            validate : (context: any) => {
-              return true;
+            validate : {
+                _func:  () => {
+                    return true;
+                },
+                _signature: []
             },
-            get_data : (context : any) => {
-                return context.$form.exportData();
+            get_data : {
+                _func: (args: unknown, data: unknown, interpreter: any) => {
+                    return interpreter.globals.form.exportData();
+                },
+                _signature: []
             },
-            submit_form: (context: any,  success: string, error: string, submit_as: 'json' | 'multipart' = 'json', data: any = null) => {
-                context.$form.dispatch(new Submit({
-                    success,
-                    error,
-                    submit_as,
-                    data
-                }));
-                return {};
+            submit_form: {
+                _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
+                    // success: string, error: string, submit_as: 'json' | 'multipart' = 'json', data: any = null
+                    const success: string = toString(args[0]);
+                    const error: string = toString(args[1]);
+                    const submit_as = args.length > 2 ? toString(args[2]) : 'json';
+                    const submit_data = args.length > 3 ? valueOf(args[3]) : null;
+                    interpreter.globals.form.dispatch(new Submit({
+                        success,
+                        error,
+                        submit_as,
+                        data: submit_data
+                    }));
+                    return {};
+                },
+                _signature: []
             },
             // todo: only supports application/json for now
-            request: (context: any, uri: string, httpVerb: HTTP_VERB, payload: object, success: string, error: string) => {
-                request(context, uri, httpVerb, payload, success, error, 'application/json');
-                return {};
+            request: {
+                _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
+                    const uri: string = toString(args[0]);
+                    const httpVerb: HTTP_VERB = toString(args[1]) as HTTP_VERB;
+                    const payload: object = valueOf(args[2]);
+                    const success: string = valueOf(args[3]);
+                    const error: string = valueOf(args[4]);
+                    request(interpreter.globals, uri, httpVerb, payload, success, error, 'application/json');
+                    return {};
+                },
+                _signature: []
             },
-            dispatch_event: (context: any, element: any, eventName: string | any, payload?: any) => {
-                let dispatch = false;
-                if (typeof element === 'string') {
-                    payload = eventName;
-                    eventName = element;
-                    dispatch = true;
-                }
-                let event;
-                if (eventName.startsWith('custom:')) {
-                    event = new CustomEvent(eventName.substring('custom:'.length), payload, dispatch);
-                } else {
-                    event = createAction(eventName, payload, dispatch);
-                }
-                if (event != null) {
+            dispatch_event: {
+                _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
+                    const element: any = valueOf(args[0]);
+                    let eventName: string | any = valueOf(args[1]);
+                    let payload: any = args.length > 2 ? valueOf(args[2]) : undefined;
+                    let dispatch = false;
                     if (typeof element === 'string') {
-                        context.$form.dispatch(event);
-                    } else {
-                        context.$form.getElement(element.id).dispatch(event);
+                        payload = eventName;
+                        eventName = element;
+                        dispatch = true;
                     }
-                }
-                return {};
+                    let event;
+                    if (eventName.startsWith('custom:')) {
+                        event = new CustomEvent(eventName.substring('custom:'.length), payload, dispatch);
+                    } else {
+                        event = createAction(eventName, payload, dispatch);
+                    }
+                    if (event != null) {
+                        if (typeof element === 'string') {
+                            interpreter.globals.form.dispatch(event);
+                        } else {
+                            interpreter.globals.form.getElement(element.id).dispatch(event);
+                        }
+                    }
+                    return {};
+                },
+                _signature: []
             }
         };
     }
-
-
 }
 
 const FunctionRuntime = new FunctionRuntimeImpl();
