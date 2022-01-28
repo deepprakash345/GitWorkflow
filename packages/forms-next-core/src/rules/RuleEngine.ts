@@ -1,9 +1,7 @@
-import {makeFormula} from '@aemforms/forms-next-expression-parser';
-import AFNodeFactory from './AFNodeFactory';
-import FunctionRuntime from './FunctionRuntime';
-import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
 import {BaseModel} from '../types';
 import {ActionImpl} from '../controller/Controller';
+import {Formula} from '@aemforms/json-formula';
+import FunctionRuntime from "./FunctionRuntime";
 
 class AddDependent extends ActionImpl {
     constructor(payload: BaseModel) {
@@ -15,20 +13,24 @@ class AddDependent extends ActionImpl {
     }
 }
 
-const formula = makeFormula(FunctionRuntime.getFunctions(), new AFNodeFactory());
-
 class RuleEngine {
     //todo: somehow get rid of this state
     private _context: any
+    private _globalNames = [
+        '$form',
+        '$field',
+        '$event'
+    ];
 
     compileRule(rule: string) {
-        return formula.compile(rule as string);
+        const customFunctions = FunctionRuntime.getFunctions();
+        return new Formula(rule as string, customFunctions, undefined, this._globalNames);
     }
 
-    execute(node: RuleNode, data: any, context: any) {
+    execute(node: any, data: any, globals: any) {
         const oldContext = this._context;
-        this._context = context;
-        const res = node.search(data, context);
+        this._context = globals;
+        const res = node.search(data, globals);
         this._context = oldContext;
         return res;
     }
@@ -38,8 +40,8 @@ class RuleEngine {
      * @param subscriber
      */
     trackDependency(subscriber: BaseModel) {
-        if (this._context && this._context.$field !== undefined && this._context.$field !== subscriber) {
-            subscriber.dispatch(new AddDependent(this._context.$field));
+        if (this._context && this._context.field !== undefined && this._context.field !== subscriber) {
+            subscriber.dispatch(new AddDependent(this._context.field));
         }
     }
 }

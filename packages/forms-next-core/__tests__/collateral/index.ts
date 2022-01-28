@@ -80,7 +80,7 @@ export const formWithRules = {
             type : 'string',
             viewType : 'text-input',
             rules : {
-                value : "$form.firstName.value + ' ' + $form.lastName.value"
+                value : "$form.firstName.value & ' ' & $form.lastName.value"
             },
             name : 'fullName'
         }

@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
-    "@aemforms/forms-next-expression-parser": "0.1.21"
+    "@aemforms/json-formula": "0.1.15"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",

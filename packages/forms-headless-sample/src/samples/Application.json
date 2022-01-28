@@ -13,7 +13,7 @@
       "name" : "aemServer",
       "type": "string",
       "rules": {
-        "visible": "$form.fetchFromAEM.value == true"
+        "visible": "$form.fetchFromAEM.value == true()"
       },
       "viewType" : "text-input",
       "default" : "http://localhost:3000"
@@ -23,7 +23,7 @@
       "title": "Enter Form URL",
       "type": "string",
       "rules": {
-        "visible": "$form.fetchFromAEM.value == true"
+        "visible": "$form.fetchFromAEM.value == true()"
       },
       "viewType" : "text-input",
       "default" : "/content/core-components-examples/library/jcr:content/root/responsivegrid/formcontainer.model.json"
@@ -34,7 +34,7 @@
       "type": "boolean",
       "enum" : [true, false],
       "rules": {
-        "visible": "$form.fetchFromAEM.value == true"
+        "visible": "$form.fetchFromAEM.value == true()"
       },
       "viewType" : "checkbox"
     },
@@ -43,7 +43,7 @@
       "title" : "Aem Authentication Token",
       "type": "string",
       "rules": {
-        "visible": "$form.aemAuthRequired.value == true"
+        "visible": "$form.aemAuthRequired.value == true()"
       },
       "viewType" : "text-input"
     },
@@ -53,11 +53,11 @@
       "type": "string",
       "visible": false,
       "rules": {
-        "visible": "$form.fetchFromAEM.value != true"
+        "visible": "$form.fetchFromAEM.value != true()"
       },
       "events": {
         "initialize": "request('/pages/livecycle/af2-docs/examples/index.json', 'GET', null, 'setOptions', 'error')",
-        "setOptions": "{  enum: map(&('/pages/livecycle/af2-docs/examples/' + @), values($event.payload)),  enumNames: keys($event.payload)\n}"
+        "setOptions": "{  enum: map(&('/pages/livecycle/af2-docs/examples/' & @), values($event.payload)),  enumNames: keys($event.payload)\n}"
       },
       "viewType" : "drop-down"
     },
@@ -92,7 +92,7 @@
       ],
       "events" : {
         "change": "dispatch_event($form, 'localeChange', $event.payload)",
-        "loadForm": "{visible: true}"
+        "loadForm": "{visible: true()}"
       },
       "viewType" : "drop-down"
     },
@@ -101,7 +101,7 @@
       "title" : "Final Form Url",
       "type": "string",
       "rules": {
-        "value": "if($form.fetchFromAEM.value == true, $form.aemServer.value + $form.aemFormUrl.value, $form.githubForm.value)"
+        "value": "if($form.fetchFromAEM.value == true(), $form.aemServer.value & $form.aemFormUrl.value, $form.githubForm.value)"
       },
       "viewType" : "text-input"
     },
@@ -118,7 +118,7 @@
       "viewType": "multiline-input",
       "title": "Form Contents",
       "events": {
-        "loadForm": "{visible: true, value: $event.payload}"
+        "loadForm": "{visible: true(), value: $event.payload}"
       },
       "type": "string"
     }

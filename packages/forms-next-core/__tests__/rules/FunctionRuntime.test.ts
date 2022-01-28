@@ -1,6 +1,7 @@
 import {create} from '../collateral';
 import {Action, BaseModel, createFormInstance, FieldModel} from '../../src';
 import FunctionRuntime from '../../src/rules/FunctionRuntime';
+// @ts-ignore
 import nock from 'nock';
 import {Click, CustomEvent, Submit} from '../../src/controller/Controller';
 
@@ -45,6 +46,7 @@ declare global {
 }
 
 const checkAfterTimeout = (callback: () => void) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return new Promise((resolve, reject) => {
         setTimeout(
             () => {
@@ -58,10 +60,10 @@ const checkAfterTimeout = (callback: () => void) => {
 
 test('should return all the publically exposed functions', async () => {
     const result = FunctionRuntime.getFunctions();
-    expect(result.get_data).toBeInstanceOf(Function);
-    expect(result.validate).toBeInstanceOf(Function);
-    expect(result.submit_form).toBeInstanceOf(Function);
-    expect(result.dispatch_event).toBeInstanceOf(Function);
+    expect(result.get_data._func).toBeInstanceOf(Function);
+    expect(result.validate._func).toBeInstanceOf(Function);
+    expect(result.submit_form._func).toBeInstanceOf(Function);
+    expect(result.dispatch_event._func).toBeInstanceOf(Function);
 });
 
 test('dispatch_event should invoke dispatch API', async () => {
@@ -80,7 +82,6 @@ test('dispatch_event should invoke dispatch API', async () => {
             }
         }]);
     let form = await createFormInstance(formJson);
-    const f = FunctionRuntime;
     form.dispatch = jest.fn();
     const state = form.getState();
     form.getElement(state.items[1].id).dispatch(new Click());
@@ -99,7 +100,6 @@ test('getData should return the current state of the form data', async () => {
         }
     }]);
     let form = await createFormInstance(formJson);
-    const f = FunctionRuntime;
     let callback = jest.fn();
     form.subscribe(callback, 'customEvent');
     const state = form.getState();
@@ -130,7 +130,6 @@ test('submit should send a request to the url configured', async () => {
         action: `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
-    const f = FunctionRuntime;
     const state = form.getState();
     form.getElement(state.items[0].id).value = 'value2';
     form.getElement(state.items[2].id).dispatch(new Click());
@@ -154,7 +153,6 @@ test('submit event should be dispatched on submit_form', async () => {
         action: `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
-    const f = FunctionRuntime;
     const state = form.getState();
     form.getElement(state.items[0].id).value = 'value2';
     form.dispatch = jest.fn();
@@ -190,7 +188,6 @@ test('submit success event should get executed', async () => {
         action: `${API_HOST}/my-submit-end-point`
     };
     let form = await createFormInstance(formJson);
-    const f = FunctionRuntime;
     const state = form.getState();
     const elem = form.getElement(state.items[1].id) as FieldModel;
     const elem1 = form.getElement(state.items[0].id) as FieldModel;
@@ -223,7 +220,6 @@ test('submit error event should be dispatched if service returns error', async (
         action: 'http://abc.com/my-submit-end-point'
     };
     let form = await createFormInstance(formJson);
-    const f = FunctionRuntime;
     let state = form.getState();
     const elem = form.getElement(state.items[2].id);
     const elem1 = form.getElement(state.items[0].id);
@@ -239,7 +235,8 @@ test.skip('submit_form should call the submit api', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     //f.submit = jest.fn();
-    f.getFunctions().submit_form({'$form': form}, 'e1', 'e2');
+    f.getFunctions().submit_form._func(['e1', 'e2'], {}, {globals: {'$form': form.getRuleNode()}});
+
     //expect(f.submit).toHaveBeenCalledWith('e1', 'e2');
 });
 
@@ -248,5 +245,5 @@ test.skip('submit_form should return {}', async () => {
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     //f.submit = jest.fn();
-    expect(f.getFunctions().submit_form({'$form': form}, 'e1', 'e2')).toEqual({});
+    expect(f.getFunctions().submit_form._func(['e1', 'e2'], {}, {globals: {'$form': form.getRuleNode()}})).toEqual({});
 });

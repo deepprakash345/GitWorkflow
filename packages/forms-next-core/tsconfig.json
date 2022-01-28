@@ -17,7 +17,8 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src"
+    "src",
+    "decs.d.ts"
   ],
   "exclude": [
     "src/__tests__/*",

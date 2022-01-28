@@ -60,12 +60,12 @@ test('string conversion of field returns  its value', () => {
 test('accessing field value directly works in rules', () => {
     const f = new Field({default : 'test'}, {form, parent: form});
     f._initialize();
-    const ob = {
-        '$field' : f
+    const globals = {
+        '$field' : f.getRuleNode(),
     };
-    const rule = "$field + ' a'";
+    const rule = "$field & ' a'";
     const node = form.ruleEngine.compileRule(rule);
-    const result = form.ruleEngine.execute(node, this, ob);
+    const result = form.ruleEngine.execute(node, {}, globals);
     expect(result).toEqual('test a');
 });
 

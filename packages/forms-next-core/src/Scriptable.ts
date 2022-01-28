@@ -1,16 +1,14 @@
 import {Action, RulesJson, ScriptableField} from './types';
-import {Node as RuleNode} from '@aemforms/forms-next-expression-parser/dist/node/node';
 import {BaseNode} from './BaseNode';
 import {propertyChange} from './controller/Controller';
 
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
-
     private _events: {
-        [key: string]: RuleNode
+        [key: string]: any
     } = {};
 
     private _rules: {
-        [key: string]: RuleNode
+        [key: string]: any
     } = {};
 
     get rules() {
@@ -80,6 +78,9 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         };
         const scope = new Proxy(target, {
             get: (target: any, prop: string | Symbol, receiver) => {
+                if (prop === Symbol.toStringTag) {
+                    return 'Object';
+                }
                 prop = prop as string;
                 var selfProperty = target.self[prop];
                 if (prop.startsWith('$')) {
@@ -102,7 +103,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         return scope;
     }
 
-    private executeEvent(context: any, node: RuleNode) {
+    private executeEvent(context: any, node: any) {
         let updates;
         if (node) {
             updates = this.ruleEngine.execute(node, this.getExpressionScope(), context);
@@ -120,8 +121,10 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
 
     executeAction(action: Action) {
         const context = {
-            '$form': this.form,
-            '$field': this,
+            'form': this.form,
+            '$form': this.form.getRuleNode(),
+            '$field': this.getRuleNode(),
+            'field': this,
             '$event': {
                 type: action.type,
                 payload: action.payload,
