@@ -46,7 +46,7 @@ headless demo instance. To run the playground locally execute the following comm
 ```
 npm install
 npx lerna bootstrap
-npx lerna build
+npx lerna run build
 npx lerna run start
 ```
 
