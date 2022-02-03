@@ -132,6 +132,8 @@ function App() {
                                                if (current !== jsonString(formToRender)) {
                                                    try {
                                                        const json = JSON.parse(current)
+                                                       const dataSchema = exportDataSchema(json)
+                                                       setDataSchema(jsonString(dataSchema))
                                                        //json.data = currentForm.getState().data
                                                        setFormToRender(json)
                                                    } catch (e) {

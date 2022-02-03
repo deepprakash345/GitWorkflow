@@ -21,7 +21,7 @@ const TabWrapper = function (props: any) {
 
   return visible && items.length ? (
     <Flex gap="size-150" wrap>
-      <span id={id}>{label.value}</span>
+        {label && label.value && label.visible !== false ? <span id={id}>{label.value }</span> : ''}
       <Tabs
         aria-labelledby={id}
         orientation={orientation}
