@@ -1,0 +1,3 @@
+[submodule "docs"]
+	path = docs
+	url = git@git.corp.adobe.com:livecycle/af2-docs.git
