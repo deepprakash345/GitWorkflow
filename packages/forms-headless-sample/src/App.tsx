@@ -96,7 +96,7 @@ function App() {
 
     return (
         <Flex gap="size-500" direction="column" marginX="size-400" >
-            <h1>Goa Playground - Checkout your Headless Form Definitions</h1>
+            <h1>CRISPR Playground - Checkout your Headless Form Definitions</h1>
             <Flex direction="row" gap="size-500" marginBottom="2rem">
                 <View width="50%">
                     <h1>Choose a Form To Render</h1>
