@@ -1,6 +1,6 @@
 # Introduction
 
-Client side runtime for Headless Adaptive Form
+Client side runtime for Headless Adaptive Form. The headless adaptive form is based on the [adaptive form specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/), which acts as the guiding principle for creating the JSON for headless forms.
 
 # Usage
 
