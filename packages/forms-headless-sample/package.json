@@ -1,6 +1,6 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "private": true,
   "homepage": "/pages/livecycle/af2-web-runtime/dist",
   "dependencies": {
