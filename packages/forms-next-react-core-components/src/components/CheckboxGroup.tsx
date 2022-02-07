@@ -16,10 +16,8 @@ const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConver
   };
 });
 
-const Comp = withErrorMessage(CheckboxGroup);
-
 const CheckboxGroupComponent = function (props: FieldJson & { id: string }) {
-  return useRenderer(props, Comp, mapper);
+  return useRenderer(props, CheckboxGroup, mapper);
 };
 
 

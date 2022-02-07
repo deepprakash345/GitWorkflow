@@ -6,6 +6,7 @@ import {
 import formContext, {IFormContext} from '../component/FormContext';
 import {useContext, useEffect, useState} from 'react';
 import {AddItem, Click, RemoveItem} from '@aemforms/forms-next-core/lib/controller/Controller';
+import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 
 export type Dispatch<T> = (x?: T) => any
 export type Handlers = {
@@ -27,7 +28,7 @@ export const useRuleEngine = function <P>(props : State<P>): [any, Handlers] {
     const id = props.id as string;
     const element = context.form?.getElement(id) as FieldModel | FormModel | FieldsetModel;
 
-    // use the controller state, if an empty controller (like objects outside of form vocab), fallback to props
+    // use the state, if an empty controller (like objects outside of form vocab), fallback to props
     const [elementState, setElementState] = useState(element?.getState() || props);
     useEffect(() => {
         const subscription = element?.subscribe(() => {
@@ -36,7 +37,7 @@ export const useRuleEngine = function <P>(props : State<P>): [any, Handlers] {
         return () => {
             subscription?.unsubscribe();
         };
-    });
+    }, [id]);
 
     const dispatchChange = (val: any) => {
         if (!element?.isContainer) {

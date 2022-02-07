@@ -6,7 +6,7 @@
                 "value": "Radio Group"
             },
             "type": "string",
-            "viewType": "radio-button",
+            "viewType": "radio-group",
             "required": true,
             "enum": [
                 "in",

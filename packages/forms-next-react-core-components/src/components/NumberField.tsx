@@ -13,10 +13,8 @@ const mapper = combineConvertors(baseConvertor,
   fieldConvertor,
   constraintConvertor);
 
-const FormNumberField = withErrorMessage(NumberField);
-
 const NumberComp = function (props: FieldJson & { id: string }) {
-  return useRenderer(props, FormNumberField, mapper);
+  return useRenderer(props, NumberField, mapper);
 };
 
 export default NumberComp;

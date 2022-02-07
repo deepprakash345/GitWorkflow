@@ -27,6 +27,20 @@ export const translateMessage = (obj: any, formatMessage: any) => (propName: str
     return value;
 };
 
+export const useFormIntl = function () {
+    let obj: any;
+    try {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        obj = useIntl();
+    } catch (e) {
+        console.warn('Use Intl Failed. Localization would not work');
+        obj = {
+            formatMessage:  (a:any) => { return a;}
+        };
+    }
+    return obj;
+};
+
 /**
  * Binds the component to the Form element whose state is being provided
  * @param formFieldState  The state of the Field received from Adaptive Form Component
@@ -37,16 +51,7 @@ export const useRenderer = function(formFieldState:FieldJson & {id: string},
                                     Component: JSXElementConstructor<any>,
                                     propsMapper: Convertor<any> = (a, b, c) => a)  {
     const [state, handlers] = useRuleEngine(formFieldState);
-    let obj: any;
-    try {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        obj = useIntl();
-    } catch (e) {
-       console.warn('Use Intl Failed. Localization would not work');
-       obj = {
-           formatMessage:  (a:any) => { return a;}
-       };
-    }
-    const res = propsMapper(state, handlers, translateMessage(state, obj.formatMessage));
+    const i18n = useFormIntl();
+    const res = propsMapper(state, handlers, translateMessage(state, i18n.formatMessage));
     return <Component {...res} />;
 };

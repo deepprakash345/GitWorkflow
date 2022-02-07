@@ -44,10 +44,8 @@ const FileUploadWrapper = (props: any) => {
     return <FileUpload {...props} updateFilesCb={handleChange}/>;
 };
 
-const FormFileUpload = withErrorMessage(FileUploadWrapper);
-
 const FileUploadComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, FormFileUpload, mapper);
+    return useRenderer(originalProps, FileUploadWrapper, mapper);
 };
 
 

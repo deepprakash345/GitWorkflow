@@ -11,10 +11,8 @@ import {
 } from '../utils/SpectrumMappers';
 const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor, enumToChildConvertor(Radio));
 
-const FormRadioGroup = withErrorMessage(RadioGroup);
-
 const RadioGroupComponent = function (props: FieldJson & {id: string}) {
-    return useRenderer(props, FormRadioGroup, mapper);
+    return useRenderer(props, RadioGroup, mapper);
 };
 
 

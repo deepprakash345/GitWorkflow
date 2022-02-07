@@ -46,7 +46,7 @@ export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
 export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
     return {
         placeholder: f('placeholder'),
-        value: a.value,
+        value: a.value == null ? '' : a.value,
         validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
         onChange: b.dispatchChange,
         isReadOnly : a.readOnly === true,
@@ -91,6 +91,7 @@ export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
     })
   };
 };
+
 
 export const withErrorMessage = (Component: JSXElementConstructor<any>) => (props: any) => {
     return (<div className={'field'}>
