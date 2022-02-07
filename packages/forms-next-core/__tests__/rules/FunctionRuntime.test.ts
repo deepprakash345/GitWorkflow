@@ -126,9 +126,7 @@ test('submit should send a request to the url configured', async () => {
             }
         }
     }]);
-    formJson.metadata = {
-        action: `${API_HOST}/my-submit-end-point`
-    };
+    formJson.action = `${API_HOST}/my-submit-end-point`;
     let form = await createFormInstance(formJson);
     const state = form.getState();
     form.getElement(state.items[0].id).value = 'value2';
@@ -184,9 +182,8 @@ test('submit success event should get executed', async () => {
             }
         }
     }, 'f']);
-    formJson.metadata = {
-        action: `${API_HOST}/my-submit-end-point`
-    };
+    formJson.action = `${API_HOST}/my-submit-end-point`;
+
     let form = await createFormInstance(formJson);
     const state = form.getState();
     const elem = form.getElement(state.items[1].id) as FieldModel;

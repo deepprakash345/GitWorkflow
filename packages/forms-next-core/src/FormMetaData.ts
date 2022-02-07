@@ -17,11 +17,6 @@ class FormMetaData extends Node<MetaDataJson> implements FormMetaDataModel {
     get dataUrl(): string {
         return this.getP('dataUrl', '');
     }
-
-    get action(): string {
-        return this.getP('action', '');
-    }
-
 }
 
 export default FormMetaData;

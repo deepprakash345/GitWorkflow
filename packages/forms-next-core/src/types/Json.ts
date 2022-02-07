@@ -93,8 +93,7 @@ export type ContainerJson = BaseJson & {
 export type MetaDataJson = {
     'version'?: string
     'grammarVersion'?: string
-    'locale'?: string,
-    'dataUrl'?: string
+    'locale'?: string
 }
 
 export type FieldsetJson = ContainerJson & {

@@ -95,9 +95,7 @@ export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJ
 export interface FormMetaDataModel {
     readonly version: string
     readonly grammarVersion: string
-    readonly locale: string,
-    readonly action: string,
-    readonly dataUrl: string
+    readonly locale: string
 }
 
 export interface ContainerModel extends BaseModel, ScriptableField {
