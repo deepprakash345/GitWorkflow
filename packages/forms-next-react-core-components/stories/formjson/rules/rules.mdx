@@ -13,7 +13,7 @@ valid JSON Formula expression that gets computed dynamically whenever the value 
 change.
 
 For example, the below JSON will produce two fields `fieldA` and `fieldB` and whenver a user enters the value in
-`fieldA`, the value of `fieldB` will become its square
+`fieldA`, the value of `fieldB` will become the square of the value of fieldA
 ```json
 {
 "items": [
@@ -24,7 +24,7 @@ For example, the below JSON will produce two fields `fieldA` and `fieldB` and wh
     {
       "name" :"fieldB",
       "rules" : {
-         "value" : "fieldA*fieldA"
+         "value" : "fieldA * fieldA"
       }
     }
 ]
