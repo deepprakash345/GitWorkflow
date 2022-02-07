@@ -22,7 +22,7 @@ const mappings = {
     'checkbox' : Checkbox,
     'button' : Button,
     'panel' : Panel,
-    'radio-button' : RadioGroup,
+    'radio-group' : RadioGroup,
     'number-input' : NumberField,
     'date-input' : DateField,
     'drop-down' : ComboBox,

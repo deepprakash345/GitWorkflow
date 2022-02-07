@@ -38,7 +38,7 @@ const form = {
             },
             {
                 'name': 'selectone',
-                'viewType': 'radio-button',
+                'viewType': 'radio-group',
                 'type': 'boolean',
                 'enum': [
                     true,

@@ -84,7 +84,7 @@ export const submit = async (context: any,
                       error: string,
                       submitAs: 'json' | 'multipart' = 'json',
                       input_data: any = null) => {
-    const endpoint = context.form.metaData?.action;
+    const endpoint = context.form.action;
     let data = input_data;
     if (typeof data != 'object' || data == null) {
         data = context.form.exportData();
