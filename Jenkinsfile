@@ -105,6 +105,14 @@ pipeline {
                 checkCoverage(COVERAGE_CHECKS)
             }
         }
+        stage("performance test") {
+          when {
+                expression { return isPullRequest() }
+          }
+          steps {
+            runDocker('lhci autorun')
+          }
+        }
         stage("publish") {
             when {
                 allOf {

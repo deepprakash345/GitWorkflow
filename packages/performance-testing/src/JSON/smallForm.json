@@ -1,0 +1,82 @@
+{
+  "adaptiveform": "0.0.17-pre",
+  "data": {},
+  "items": [
+    {
+      "name": "firstname",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "Firstname"
+      }
+    },
+    {
+      "name": "lastname",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "lastname"
+      }
+    },
+    {
+      "name": "email",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "email"
+      }
+    },
+    {
+      "name": "mobile",
+      "viewType": "number-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "mobile"
+      }
+    },
+    {
+      "name": "address",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "address"
+      }
+    },
+    {
+      "name": "city",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "city"
+      }
+    },
+    {
+      "name": "state",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "state"
+      }
+    },
+    {
+      "name": "country",
+      "viewType": "text-input",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "country"
+      }
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}
