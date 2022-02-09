@@ -1,7 +1,8 @@
 import CheckboxGroup from '../../src/components/CheckboxGroup';
-import { filterTestTable, InputFieldTestCase, renderComponent } from '../utils';
+import {filterTestTable, InputFieldTestCase, jest26CompatibleTable, renderComponent} from '../utils';
 import userEvent from '@testing-library/user-event';
 import { FieldJson } from '@aemforms/forms-next-core/lib';
+import {DEFAULT_ERROR_MESSAGE} from './RadioButtonGroup.test';
 
 const field: FieldJson = {
   'name': 'checkbox',
@@ -9,6 +10,7 @@ const field: FieldJson = {
   label: {
     value: 'Checkbox group'
   },
+  viewType: 'checkbox-group',
   'enum': [1, 2, 3],
   'enumNames': ['checkbox 1', 'checkbox 2', 'checkbox 3']
 };
@@ -137,28 +139,40 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
     }
   },
   {
-    name: 'error message element exists when the field is invalid',
+    name: 'helpText div doesn\'t exists when there is no error and no description',
+    field: {
+      ...field
+    },
+    expects: ({container}) => {
+      const err = container?.querySelector('.formField__helpText');
+      expect(err).toBeNull();
+    }
+  },
+  {
+    name: 'helpText div exists when there is a description',
+    field: {
+      ...field,
+      description: 'some description'
+    },
+    expects: ({container}) => {
+      const err = container?.querySelector('.formField__helpText');
+      expect(err).not.toBeNull();
+      // @ts-ignore
+      expect(err.textContent).toEqual('some description');
+    }
+  },
+  {
+    name: 'help text exists when the field is invalid',
     field: {
       ...field,
       'valid': false,
       'errorMessage' : 'there is an error in the field'
     },
     expects: ({container}) => {
-      const err = container?.querySelector('.field-errorMessage');
+      const err = container?.querySelector('.formField__helpText');
       expect(err).not.toBeNull();
       //@ts-ignore
       expect(err.textContent).toEqual('there is an error in the field');
-    }
-  },
-  {
-    name: 'error message doesn\'t exists when there is no error',
-    field: {
-      ...field,
-      'valid': false
-    },
-    expects: ({container}) => {
-      const err = container?.querySelector('.field-errorMessage');
-      expect(err).toBeNull();
     }
   }
 ];
@@ -171,7 +185,7 @@ const helper = renderComponent(CheckboxGroup, (container) => {
   };
 });
 
-test.each(filterTestTable(labelInputTests))('$name', async ({ field, expects }) => {
+test.each(jest26CompatibleTable(filterTestTable(labelInputTests)))('%s', async (name, { field, expects }) => {
   expects(await helper(field));
 });
 
@@ -208,6 +222,28 @@ test('it should handle visible property', async () => {
 
   const x = await helper(field);
   expect(x.container?.innerHTML).not.toContain('display: none;');
+});
+
+test('help text content changes when field becomes invalid', async () => {
+  const f = {
+    ...field,
+    description: 'some description',
+    'required' : true
+  };
+
+  const {container, element} = await helper(f);
+  const err = container?.querySelector('.formField__helpText');
+  // @ts-ignore
+  expect(err.textContent).toEqual('some description');
+
+  //@ts-ignore
+  element.value = [1];
+  // @ts-ignore
+  expect(err.textContent).toEqual('some description');
+
+  element.value = null;
+  // @ts-ignore
+  expect(err.textContent).toEqual(DEFAULT_ERROR_MESSAGE);
 });
 
 test.todo('it should handle disable property');

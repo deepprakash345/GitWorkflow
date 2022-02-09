@@ -1,14 +1,18 @@
 import React from 'react';
-import {render, RenderResult} from '@testing-library/react';
 import TextField from '../../src/components/TextField';
-import {createForm, elementFetcher, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
+import {
+    elementFetcher,
+    filterTestTable,
+    InputFieldTestCase,
+    jest26CompatibleTable,
+    renderComponent
+} from '../utils';
 import userEvent from '@testing-library/user-event';
-import {FieldJson} from '@aemforms/forms-next-core/lib';
-import Checkbox from '../../src/components/Checkbox';
+import {DEFAULT_ERROR_MESSAGE} from './RadioButtonGroup.test';
 
 const field = {
     'name': 'name',
-    'value': 'john doe',
+    'default': 'john doe',
     label: {
         value: 'name'
     },
@@ -112,6 +116,18 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
+        name: 'description exists when the field is valid',
+        field: {
+            ...field,
+            'valid': true,
+            'description' : 'some description'
+        },
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+            //@ts-ignore
+            expect(container.textContent).toContain('some description');
+        }
+    },
+    {
         name: 'error message element exists when the field is invalid',
         field: {
             ...field,
@@ -119,28 +135,25 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
             'errorMessage' : 'there is an error in the field'
         },
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
-            const err = container.querySelector('.field-errorMessage');
-            expect(err).not.toBeNull();
-            //@ts-ignore
-            expect(err.textContent).toEqual('there is an error in the field');
+            expect(container.textContent).toContain('there is an error in the field');
         }
     },
     {
         name: 'error message doesn\'t exists when there is no error',
         field: {
             ...field,
-            'valid': false
+            'valid': true,
+            'errorMessage' : DEFAULT_ERROR_MESSAGE
         },
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
-            const err = container.querySelector('.field-errorMessage');
-            expect(err).toBeNull();
+            expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
         }
     }
 ];
 
 const helper = renderComponent(TextField, elementFetcher);
 
-test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+test.each(jest26CompatibleTable(filterTestTable(labelInputTests)))('%s', async (name, {field, expects}) => {
     let x = await helper(field);
     expects(x.label, x.input, x.container);
 });
@@ -159,6 +172,30 @@ test('value entered by user in text field is set in model', async () => {
     expect(state.value).toEqual(inputValue);
     expect(input?.value).toEqual(inputValue);
 });
+
+test('help text content changes when field becomes invalid', async () => {
+    const f = {
+        ...field,
+        description: 'some description',
+        'required' : true
+    };
+
+    const {container, input} = await helper(f);
+
+    // @ts-ignore
+    expect(container.textContent).toContain('some description');
+    expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
+    // @ts-ignore
+    userEvent.clear(input);
+    expect(container.textContent).toContain(DEFAULT_ERROR_MESSAGE);
+    expect(container.textContent).not.toContain('some description');
+    // @ts-ignore
+    userEvent.type(input, 'some value');
+    // @ts-ignore
+    expect(container.textContent).toContain('some description');
+    expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
+});
+
 
 test.todo('it should handle disable property');
 test.todo('it should handle richTextTitle property');

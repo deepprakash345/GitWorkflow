@@ -78,8 +78,8 @@ export interface BaseModel extends ConstraintsJson, WithController {
     readonly isContainer: boolean,
     readonly parent: ContainerModel | null
     readonly items?: Array<FieldsetModel | FieldModel>
-    value: Primitives;
-    readonly default?: Primitives;
+    value: any;
+    readonly default?: any;
     importData(a?: DataGroup) : any
     getRuleNode(): any
     directReferences(): any
@@ -95,9 +95,7 @@ export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJ
 export interface FormMetaDataModel {
     readonly version: string
     readonly grammarVersion: string
-    readonly locale: string,
-    readonly action: string,
-    readonly dataUrl: string
+    readonly locale: string
 }
 
 export interface ContainerModel extends BaseModel, ScriptableField {

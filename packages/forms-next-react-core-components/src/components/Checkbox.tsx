@@ -6,8 +6,7 @@ import {
     baseConvertor,
     combineConvertors,
     constraintConvertor,
-    fieldConvertor,
-    withErrorMessage
+    fieldConvertor, withErrorMessage
 } from '../utils/SpectrumMappers';
 
 
@@ -30,8 +29,7 @@ const SpectrumCheckboxWrapper = (props: any) => {
     return <Checkbox {...props} onChange={handleChange}>{props.label}</Checkbox>;
 };
 
-const FormCheckbox = withErrorMessage(SpectrumCheckboxWrapper);
-
+const Comp = withErrorMessage(SpectrumCheckboxWrapper);
 /**
  * The checkbox component follows the convention that the first value of option is used as selected value
  * while the second option is used as deselected value. Any other option value is ignored.
@@ -39,7 +37,7 @@ const FormCheckbox = withErrorMessage(SpectrumCheckboxWrapper);
  * @constructor
  */
 const CheckboxComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, FormCheckbox, mapper);
+    return useRenderer(originalProps, Comp, mapper);
 };
 
 

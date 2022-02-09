@@ -56,6 +56,10 @@ class Form extends Container<FormJson> implements FormModel {
         return new FormMetaData(metaData);
     }
 
+    get action() {
+        return this._jsonModel.action;
+    }
+
     protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
         return createChild(child, {form: this, parent: this});
     }

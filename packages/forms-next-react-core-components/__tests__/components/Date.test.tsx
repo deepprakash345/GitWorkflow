@@ -1,17 +1,25 @@
 import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
 import Date from '../../src/components/Date';
-import {createForm, elementFetcher, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
+import {
+  elementFetcher,
+  filterTestTable,
+  InputFieldTestCase,
+  jest26CompatibleTable,
+  renderComponent
+} from '../utils';
 import {FieldExpectType} from './TextField.test';
-import TextField from '../../src/components/TextField';
+import userEvent from '@testing-library/user-event';
+import {DEFAULT_ERROR_MESSAGE} from './RadioButtonGroup.test';
 
 const field = {
   'id': 'field',
   'name': 'birthDate',
-  'value': '02-02-2021',
+  'default': '2021-01-01',
   'label': { 'value': 'date' },
   'visible': true,
-  'type': 'date'
+  'type': 'string',
+  'format' : 'date',
+  'viewType' : 'date-input'
 };
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
@@ -21,7 +29,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     expects: (label: HTMLLabelElement | null, input: HTMLInputElement | null) => {
       expect(label?.innerHTML).toEqual('date');
       expect(input?.getAttribute('name')).toEqual('birthDate');
-      expect(input?.getAttribute('value')).toEqual('02-02-2021');
+      expect(input?.getAttribute('value')).toEqual('2021-01-01');
     }
   },
   {
@@ -105,6 +113,18 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     }
   },
   {
+    name: 'description exists when the field is valid',
+    field: {
+      ...field,
+      'valid': true,
+      'description' : 'some description'
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
+      //@ts-ignore
+      expect(container.textContent).toContain('some description');
+    }
+  },
+  {
     name: 'error message element exists when the field is invalid',
     field: {
       ...field,
@@ -112,28 +132,25 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
       'errorMessage' : 'there is an error in the field'
     },
     expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
-      const err = container.querySelector('.field-errorMessage');
-      expect(err).not.toBeNull();
-      //@ts-ignore
-      expect(err.textContent).toEqual('there is an error in the field');
+      expect(container.textContent).toContain('there is an error in the field');
     }
   },
   {
     name: 'error message doesn\'t exists when there is no error',
     field: {
       ...field,
-      'valid': false
+      'valid': true,
+      'errorMessage' : DEFAULT_ERROR_MESSAGE
     },
     expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
-      const err = container.querySelector('.field-errorMessage');
-      expect(err).toBeNull();
+      expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
     }
   }
 ];
 
 const helper = renderComponent(Date, elementFetcher);
 
-test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+test.each(jest26CompatibleTable(filterTestTable(labelInputTests)))('%s', async (name, {field, expects}) => {
   //let x = await helper(field, false);
   //expects(x.label, x.input);
   let x = await helper(field);
@@ -145,9 +162,11 @@ test('value entered by user in date field is set in model', async () => {
     ...field,
     'id': 'x'
   };
-  let {input} = await helper(f);
-  const inputValue = '02-02-2021';
-  expect(input?.getAttribute('value')).toEqual(inputValue);
+  let {input, element} = await helper(f);
+  const inputValue = '2021-01-01';
+  //@ts-ignore
+  userEvent.type(input, inputValue);
+  expect(element.value).toEqual(inputValue);
 });
 
 test('it should handle visible property', async () => {
@@ -158,4 +177,26 @@ test('it should handle visible property', async () => {
   };
   let {container} = await helper(f);
   expect(container.innerHTML).toContain('display: none'); //todo: find a better check
+});
+
+test('help text content changes when field becomes invalid', async () => {
+  const f = {
+    ...field,
+    description: 'some description',
+    'required' : true
+  };
+
+  const {container, input} = await helper(f);
+
+  expect(container.textContent).toContain('some description');
+  expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
+  // @ts-ignore
+  userEvent.clear(input);
+  expect(container.textContent).toContain(DEFAULT_ERROR_MESSAGE);
+  expect(container.textContent).not.toContain('some description');
+  // @ts-ignore
+  userEvent.type(input, '2010-10-10');
+  // @ts-ignore
+  expect(container.textContent).toContain('some description');
+  expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
 });

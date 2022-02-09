@@ -2,6 +2,8 @@ import {FieldJson} from '@aemforms/forms-next-core/lib';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
 import {Convertor} from '@aemforms/forms-next-react-bindings/lib/hooks';
+import '../styles.css';
+import clsx from 'clsx';
 
 export const combineConvertors = function <T>(...convertors: Convertor<T>[]) {
     const newConvertor : Convertor<T> = (a,b, f) => {
@@ -46,7 +48,7 @@ export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
 export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
     return {
         placeholder: f('placeholder'),
-        value: a.value,
+        value: a.value == null ? '' : a.value,
         validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
         onChange: b.dispatchChange,
         isReadOnly : a.readOnly === true,
@@ -92,9 +94,13 @@ export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
   };
 };
 
+
 export const withErrorMessage = (Component: JSXElementConstructor<any>) => (props: any) => {
-    return (<div className={'field'}>
+    const invalid = props.validationState === 'invalid';
+    const helpText = invalid ? props.errorMessage || '' : props.description;
+    const hasHelpText = (typeof helpText === 'string' && helpText.length > 0) || helpText != null;
+    return (<div className={clsx('formField', invalid && 'formField--invalid')}>
         <Component {...props} />
-        {(props.errorMessage || '').length > 0 ? <div className={'field-errorMessage'}>{props.errorMessage}</div> : null}
+        { hasHelpText ? <div className={'formField__helpText'}>{helpText}</div> : null}
     </div>);
 };

@@ -1,10 +1,15 @@
 import React from 'react';
-import {render} from '@testing-library/react';
 import RadioButtonGroup from '../../src/components/RadioButtonGroup';
-import {createForm, filterTestTable, InputFieldTestCase, Provider, renderComponent} from '../utils';
+import {
+    filterTestTable,
+    InputFieldTestCase,
+    jest26CompatibleTable,
+    renderComponent
+} from '../utils';
 import userEvent from '@testing-library/user-event';
 import {FieldJson} from '@aemforms/forms-next-core/lib';
-import Checkbox from '../../src/components/Checkbox';
+
+export const DEFAULT_ERROR_MESSAGE = 'There is an error in the field';
 
 const field : FieldJson = {
     'name': 'EmploymentStatus',
@@ -13,6 +18,7 @@ const field : FieldJson = {
     label : {
         value : 'Are you Employed'
     },
+    'viewType' : 'radio-group',
     'type' : 'boolean',
     'enum' : [true, false],
     'enumNames' : ['Yes',  'No']
@@ -182,28 +188,40 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
         }
     },
     {
-        name: 'error message element exists when the field is invalid',
+        name: 'helpText div doesn\'t exists when there is no error and no description',
+        field: {
+            ...field
+        },
+        expects: ({container}) => {
+            const err = container?.querySelector('.formField__helpText');
+            expect(err).toBeNull();
+        }
+    },
+    {
+        name: 'helpText div exists when there is a description',
+        field: {
+            ...field,
+            description: 'some description'
+        },
+        expects: ({container}) => {
+            const err = container?.querySelector('.formField__helpText');
+            expect(err).not.toBeNull();
+            // @ts-ignore
+            expect(err.textContent).toEqual('some description');
+        }
+    },
+    {
+        name: 'help text exists when the field is invalid',
         field: {
             ...field,
             'valid': false,
             'errorMessage' : 'there is an error in the field'
         },
         expects: ({container}) => {
-            const err = container?.querySelector('.field-errorMessage');
+            const err = container?.querySelector('.formField__helpText');
             expect(err).not.toBeNull();
             //@ts-ignore
             expect(err.textContent).toEqual('there is an error in the field');
-        }
-    },
-    {
-        name: 'error message doesn\'t exists when there is no error',
-        field: {
-            ...field,
-            'valid': false
-        },
-        expects: ({container}) => {
-            const err = container?.querySelector('.field-errorMessage');
-            expect(err).toBeNull();
         }
     }
 ];
@@ -216,7 +234,7 @@ const helper = renderComponent(RadioButtonGroup, (container) => {
     };
 });
 
-test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+test.each(jest26CompatibleTable(filterTestTable(labelInputTests)))('%s', async (name, {field, expects}) => {
     //expects(await helper(field));
     expects(await helper(field));
 });
@@ -253,6 +271,28 @@ test('it should handle visible property', async () => {
     const x = await helper(field);
     expect(x.container?.innerHTML).not.toContain('display: none;');
 });
+
+test('help text content changes when field becomes invalid', async () => {
+    const f = {
+        ...field,
+        description: 'some description',
+        'required' : true
+    };
+
+    const {container, element} = await helper(f);
+    const err = container?.querySelector('.formField__helpText');
+    // @ts-ignore
+    expect(err.textContent).toEqual('some description');
+
+    element.value = true;
+    // @ts-ignore
+    expect(err.textContent).toEqual('some description');
+
+    element.value = null;
+    // @ts-ignore
+    expect(err.textContent).toEqual(DEFAULT_ERROR_MESSAGE);
+});
+
 
 
 test.todo('it should handle disable property');

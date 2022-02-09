@@ -7,7 +7,7 @@ import {
     elementFetcher,
     filterTestTable,
     ignoredTestTable,
-    InputFieldTestCase,
+    InputFieldTestCase, jest26CompatibleTable,
     Provider,
     renderComponent
 } from '../utils';
@@ -249,7 +249,7 @@ const labelInputTests: InputFieldTestCase<FileUploadExpectType>[] = [
 
 const helper = renderComponent(FileUpload, elementFetcher);
 
-test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+test.each(jest26CompatibleTable(filterTestTable(labelInputTests)))('%s', async (name, {field, expects}) => {
     //let x = await helper(field, false);
     //expects(x.label, x.input);
     let x = await helper(field);

@@ -17,12 +17,9 @@ const mapper = combineConvertors(baseConvertor,
         return {width: '100%'};
     });
 
-const FormTextField = withErrorMessage(TextField);
-const FormTextArea = withErrorMessage(TextArea);
-
 const TextFieldComponent = function (props: FieldJson & {id: string}) {
-    const component = props.viewType === 'multiline-input' ? FormTextArea : FormTextField;
-    const renderedComponent = useRenderer(props, component, mapper);
+    const component = props.viewType === 'multiline-input' ? TextArea : TextField;
+    const renderedComponent = useRenderer(props, component, mapper, true);
     return renderedComponent;
 };
 

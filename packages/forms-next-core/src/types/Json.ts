@@ -93,9 +93,7 @@ export type ContainerJson = BaseJson & {
 export type MetaDataJson = {
     'version'?: string
     'grammarVersion'?: string
-    'locale'?: string,
-    'action'?: string,
-    'dataUrl'?: string
+    'locale'?: string
 }
 
 export type FieldsetJson = ContainerJson & {
@@ -106,6 +104,7 @@ export type FormJson = ContainerJson & {
     'metadata'?: MetaDataJson,
     'data'?: any
     title?: string
+    action ?: string
 }
 
 export type TranslationJson = TranslationBaseJson & TranslationFieldJson & TranslationConstraintsJson

@@ -6,14 +6,6 @@ import {defaultViewTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
 import DataGroup from './data/DataGroup';
 
-//todo: move to a single place in Model.ts or Json.ts
-const defaults = {
-    readOnly: false,
-    enabled: true,
-    visible: true,
-    type: 'string'
-};
-
 class Field extends Scriptable<FieldJson> implements FieldModel {
 
     public constructor(params: FieldJson,
@@ -29,8 +21,17 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this.setupRuleNode();
     }
 
+    protected _getDefaults() {
+        return {
+            readOnly: false,
+            enabled: true,
+            visible: true,
+            type: 'string'
+        };
+    }
+
     protected _applyDefaults() {
-        Object.entries(defaults).map(([key, value]) => {
+        Object.entries(this._getDefaults()).map(([key, value]) => {
             //@ts-ignore
             if (this._jsonModel[key] === undefined) {
                 //@ts-ignore

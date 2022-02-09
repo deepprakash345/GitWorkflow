@@ -27,26 +27,33 @@ export const translateMessage = (obj: any, formatMessage: any) => (propName: str
     return value;
 };
 
-/**
- * Binds the component to the Form element whose state is being provided
- * @param formFieldState  The state of the Field received from Adaptive Form Component
- * @param propsMapper Mapping Field State to Props of the component
- * @param Component The component to render.
- */
-export const useRenderer = function(formFieldState:FieldJson & {id: string},
-                                    Component: JSXElementConstructor<any>,
-                                    propsMapper: Convertor<any> = (a, b, c) => a)  {
-    const [state, handlers] = useRuleEngine(formFieldState);
+export const useFormIntl = function () {
     let obj: any;
     try {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         obj = useIntl();
     } catch (e) {
-       console.warn('Use Intl Failed. Localization would not work');
-       obj = {
-           formatMessage:  (a:any) => { return a;}
-       };
+        console.warn('Use Intl Failed. Localization would not work');
+        obj = {
+            formatMessage:  (a:any) => { return a;}
+        };
     }
-    const res = propsMapper(state, handlers, translateMessage(state, obj.formatMessage));
-    return <Component {...res} />;
+    return obj;
+};
+
+/**
+ * Binds the component to the Form element whose state is being provided
+ * @param formFieldState  The state of the Field received from Adaptive Form Component
+ * @param propsMapper Mapping Field State to Props of the component
+ * @param Component The component to render.
+ * @param wrap
+ */
+export const useRenderer = function(formFieldState:FieldJson & {id: string},
+                                    Component: JSXElementConstructor<any>,
+                                    propsMapper: Convertor<any> = (a, b, c) => a,
+                                    wrap:boolean = false)  {
+    const [state, handlers] = useRuleEngine(formFieldState);
+    const i18n = useFormIntl();
+    const res = propsMapper(state, handlers, translateMessage(state, i18n.formatMessage));
+    return (wrap ? (<div className={'field'}><Component {...res} /></div>) : <Component {...res} />);
 };
