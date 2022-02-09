@@ -46,7 +46,7 @@ class ActionImplWithTarget implements Action {
 
     toString() {
         return this._action.toString();
-    }
+    } 
 }
 
 

@@ -61,7 +61,7 @@ export interface WithController {
 
 export interface BaseModel extends ConstraintsJson, WithController {
     readonly name?: string;
-    readonly dataRef?: string;
+    readonly dataRef?: string | null;
     readonly id : string
     readonly index : number
     label?: Label

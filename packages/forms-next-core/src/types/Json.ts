@@ -60,7 +60,7 @@ type TranslationBaseJson = {
 
 
 export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
-    'dataRef'?: string;
+    dataRef?: string | null;
     label?: Label
     'enabled'?: boolean;
     'visible'?: boolean;
