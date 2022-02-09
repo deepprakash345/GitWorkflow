@@ -147,7 +147,7 @@ describe('Field Validation', () => {
             enum: [1, 2, 3]
         }, options);
         field.value = '4';
-        expect(Constraints.enum).toBeCalledWith([1, 2, 3], '4');
+        expect(Constraints.enum).toBeCalledWith([1, 2, 3], 4);
         expect(field.valid).toEqual(mockValidity);
     });
 

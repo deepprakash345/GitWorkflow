@@ -156,9 +156,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                 res.valid = false;
                 constraint = invalidConstraint;
             } else if (this._jsonModel.enforceEnum === true) {
-                let enumCheck = Constraints.enum(elem.enum || [], value);
+                let enumCheck = Constraints.enum(elem.enum || [], res.value);
                 res.valid = enumCheck.valid;
-                res.value = enumCheck.value;
+                res.value = res.valid ? enumCheck.value : value;
                 constraint = 'enum';
             }
         }

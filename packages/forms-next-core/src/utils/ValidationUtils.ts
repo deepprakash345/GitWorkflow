@@ -24,6 +24,67 @@ export const isDataUrl = (str : string) => {
     return dataUrlRegex.exec(str.trim()) != null;
 };
 
+/**
+ *
+ * checks whether inputVal is valid number value or not
+ * @param inputVal
+ */
+const checkNumber = (inputVal: string) => {
+    let value:any = parseFloat(inputVal);
+    const valid = !isNaN(value);
+    if (!valid) {
+        console.log('dataType constraint evaluation failed. Expected Integer. Received ' + inputVal);
+        value = inputVal;
+    }
+    return {
+        value, valid
+    };
+};
+
+/**
+ * wraps a non-null value and not an array value into an array
+ * @param inputVal
+ */
+const toArray = (inputVal: any) => {
+    if (inputVal != null && !(inputVal instanceof Array)) {
+        return [inputVal];
+    }
+    return inputVal;
+};
+
+/**
+ * checks whether inputVal is valid boolean value or not
+ * @param inputVal
+ */
+const checkBool = (inputVal: any) => {
+    const valid = typeof inputVal === 'boolean' || inputVal === 'true' || inputVal === 'false';
+    const value = typeof inputVal === 'boolean' ? inputVal : (valid ? inputVal === 'true': inputVal);
+    return {valid, value};
+};
+
+
+
+/**
+ * Validates an array of values using a validator function.
+ * @param inputVal
+ * @param validatorFn
+ * @return an array containing two arrays, the first one with all the valid values and the second one with one invalid
+ * value (if there is).
+ */
+const validateArray = (inputVal: any[], validatorFn: (x: any) => ValidationResult) => {
+    const value = toArray(inputVal);
+    if (value == null) {
+        return [[], [value]];
+    }
+    return value.reduce((acc: [any, any], x: any) => {
+        if (acc[1].length == 0) {
+            const r = validatorFn(x);
+            const index = r.valid ? 0: 1;
+            acc[index].push(r.value);
+        }
+        return acc;
+    },[[],[]]);
+};
 
 export const Constraints = {
     type : (constraint: string, inputVal: any): ValidationResult => {
@@ -34,22 +95,23 @@ export const Constraints = {
                 value: undefined
             };
         }
-        let valid = true;
+        let valid = true, res;
         switch(constraint) {
             case 'string':
                 valid = true;
                 break;
+            case 'string[]':
+                value = toArray(inputVal);
+                break;
             case 'number':
-                value = parseFloat(inputVal);
-                valid = !isNaN(value);
-                if (!valid) {
-                    console.log('dataType constraint evaluation failed. Expected Integer. Received ' + inputVal);
-                    value = inputVal;
-                }
+                res = checkNumber(inputVal);
+                value = res.value;
+                valid = res.valid;
                 break;
             case 'boolean':
-                valid = typeof inputVal === 'boolean' || inputVal === 'true' || inputVal === 'false';
-                value = typeof inputVal === 'boolean' ? inputVal : (valid ? inputVal === 'true': inputVal);
+                res = checkBool(inputVal);
+                valid = res.valid;
+                value = res.value;
                 break;
             case 'integer':
                 value = parseFloat(inputVal);
@@ -66,6 +128,16 @@ export const Constraints = {
                     console.log('dataType constraint evaluation failed. Expected File Object. Received ' + inputVal);
                     value = inputVal;
                 }
+                break;
+            case 'number[]':
+                res = validateArray(inputVal, checkNumber);
+                valid = res[1].length === 0;
+                value = valid ? res[0] : inputVal;
+                break;
+            case 'boolean[]':
+                res = validateArray(inputVal, checkBool);
+                valid = res[1].length === 0;
+                value = valid ? res[0] : inputVal;
                 break;
         }
         return {

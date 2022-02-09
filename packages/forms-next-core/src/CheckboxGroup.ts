@@ -14,12 +14,15 @@ class CheckboxGroup extends Field {
         }
     }
 
-    get enum() {
-       return super.enum || [];
+    protected _getDefaults() {
+        return {
+            ...super._getDefaults(),
+            enforceEnum: true
+        };
     }
 
-    get type() {
-        return this._jsonModel.type || 'string[]';
+    get enum() {
+       return super.enum || [];
     }
 }
 
