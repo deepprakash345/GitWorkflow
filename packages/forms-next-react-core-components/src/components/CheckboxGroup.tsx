@@ -10,14 +10,18 @@ import {
   enumToChildConvertor, withErrorMessage
 } from '../utils/SpectrumMappers';
 
-const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor, enumToChildConvertor(Checkbox), (a, b) => {
-  return {
-    defaultValue: a.default || []
-  };
+const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor,
+    enumToChildConvertor(Checkbox), (a) => {
+      const isArray = (a.type || '[]').indexOf('[]') >  -1;
+      return {
+        value: a.value == null ? isArray ? [] : '' : a.value
+      };
 });
 
+const Comp = withErrorMessage(CheckboxGroup);
+
 const CheckboxGroupComponent = function (props: FieldJson & { id: string }) {
-  return useRenderer(props, CheckboxGroup, mapper);
+  return useRenderer(props, Comp, mapper);
 };
 
 

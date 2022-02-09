@@ -5,7 +5,7 @@ import {
     baseConvertor,
     combineConvertors,
     constraintConvertor,
-    fieldConvertor, enumToChildConvertor, enumConvertor, withErrorMessage
+    fieldConvertor, enumToChildConvertor
 } from '../utils/SpectrumMappers';
 import React from 'react';
 
@@ -30,7 +30,7 @@ const mapper = combineConvertors(baseConvertor,
  * @constructor
  */
 const ComboBoxComponent = function (originalProps: FieldJson & {id: string}) {
-    return useRenderer(originalProps, ComboBox, mapper);
+    return useRenderer(originalProps, ComboBox, mapper, true);
 };
 
 

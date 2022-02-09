@@ -5,16 +5,18 @@ import {
     elementFetcher,
     filterTestTable,
     ignoredTestTable,
-    InputFieldTestCase,
+    InputFieldTestCase, jest26CompatibleTable,
     renderComponent
 } from '../utils';
 import {FieldExpectType} from './TextField.test';
+import {DEFAULT_ERROR_MESSAGE} from './RadioButtonGroup.test';
 
 const field = {
     'name': 'name',
     label : {
         value : 'name'
     },
+    viewType: 'checkbox',
     'visible' : true,
     'type' : 'boolean',
     'enum' : [true],
@@ -179,35 +181,47 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
-        name: 'error message element exists when the field is invalid',
+        name: 'helpText div doesn\'t exists when there is no error and no description',
+        field: {
+            ...field
+        },
+        expects: (label, input, container) => {
+            const err = container?.querySelector('.formField__helpText');
+            expect(err).toBeNull();
+        }
+    },
+    {
+        name: 'helpText div exists when there is a description',
+        field: {
+            ...field,
+            description: 'some description'
+        },
+        expects: (label, input, container) => {
+            const err = container?.querySelector('.formField__helpText');
+            expect(err).not.toBeNull();
+            // @ts-ignore
+            expect(err.textContent).toEqual('some description');
+        }
+    },
+    {
+        name: 'help text exists when the field is invalid',
         field: {
             ...field,
             'valid': false,
             'errorMessage' : 'there is an error in the field'
         },
-        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
-            const err = container.querySelector('.field-errorMessage');
+        expects: (label, input, container) => {
+            const err = container?.querySelector('.formField__helpText');
             expect(err).not.toBeNull();
             //@ts-ignore
             expect(err.textContent).toEqual('there is an error in the field');
-        }
-    },
-    {
-        name: 'error message doesn\'t exists when there is no error',
-        field: {
-            ...field,
-            'valid': false
-        },
-        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
-            const err = container.querySelector('.field-errorMessage');
-            expect(err).toBeNull();
         }
     }
 ];
 
 const helper = renderComponent(Checkbox, elementFetcher);
 
-test.each(filterTestTable(labelInputTests))('$name', async ({field, expects}) => {
+test.each(jest26CompatibleTable(filterTestTable(labelInputTests)))('%s', async (name, {field, expects}) => {
     //let x = await helper(field, false);
     //expects(x.label, x.input);
     let x = await helper(field);
@@ -346,9 +360,10 @@ test('a required checkbox with off value should be invalid when unselected', asy
     userEvent.click(input);
     // @ts-ignore
     userEvent.click(input);
-    const err = container.querySelector('.field-errorMessage');
+    const err = container.querySelector('.formField__helpText');
     expect(element?.valid).toBe(false);
-    expect(err).not.toBeNull();
+    // @ts-ignore
+    expect(err.textContent).toEqual(DEFAULT_ERROR_MESSAGE);
 });
 
 test('a required checkbox with null value should be invalid', async () => {

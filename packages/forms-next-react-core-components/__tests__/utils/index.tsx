@@ -55,6 +55,12 @@ export function filterTestTable<T>(tests: TestCase<T>[]) : TestCase<T>[] {
     return testsToRun;
 }
 
+export function jest26CompatibleTable<T>(tests: TestCase<T>[]) : [string, TestCase<T>][] {
+    return tests.map(t => {
+        return [t.name, t];
+    });
+}
+
 export function ignoredTestTable<T>(tests: TestCase<T>[]) :TestCase<T>[] {
     return tests.filter(t => t.x);
 }

@@ -1,4 +1,4 @@
-import {deepClone, getProperty, isCheckbox, resolve} from '../../src/utils/JsonUtils';
+import {deepClone, getProperty, isCheckbox, isCheckboxGroup, resolve} from '../../src/utils/JsonUtils';
 import {randomWord} from '../collateral';
 
 test('getProperty returns exact name property', () => {
@@ -161,7 +161,7 @@ test('isCheckbox should return true for checkbox', () => {
     })).toEqual(true);
 });
 
-test('isCheckbox should not return true non checkbox viewTypes', () => {
+test('isCheckbox should not return true for non checkbox viewTypes', () => {
     const x = randomWord(1, 'c') + randomWord(Math.random()*10);
     expect(isCheckbox({
         viewType: x
@@ -176,6 +176,35 @@ test('isCheckbox should not return true non checkbox viewTypes', () => {
     })).toEqual(false);
 
     expect(isCheckbox({
+        enum: ['0', '1', '2']
+    })).toEqual(false);
+});
+
+test('isCheckboxGroup should return true for checkbox-group', () => {
+    expect(isCheckboxGroup({
+        viewType: 'checkbox-group'
+    })).toEqual(true);
+});
+
+test('isCheckboxGroup should not return true non checkbox-group viewTypes', () => {
+    const x = randomWord(1, 'c') + randomWord(Math.random()*10);
+    expect(isCheckboxGroup({
+        viewType: x
+    })).toEqual(false);
+
+    expect(isCheckboxGroup({
+        viewType: 'checkbox'
+    })).toEqual(false);
+
+    expect(isCheckboxGroup({
+        type: 'string'
+    })).toEqual(false);
+
+    expect(isCheckboxGroup({
+        type: 'number'
+    })).toEqual(false);
+
+    expect(isCheckboxGroup({
         enum: ['0', '1', '2']
     })).toEqual(false);
 });

@@ -46,12 +46,14 @@ export const useFormIntl = function () {
  * @param formFieldState  The state of the Field received from Adaptive Form Component
  * @param propsMapper Mapping Field State to Props of the component
  * @param Component The component to render.
+ * @param wrap
  */
 export const useRenderer = function(formFieldState:FieldJson & {id: string},
                                     Component: JSXElementConstructor<any>,
-                                    propsMapper: Convertor<any> = (a, b, c) => a)  {
+                                    propsMapper: Convertor<any> = (a, b, c) => a,
+                                    wrap:boolean = false)  {
     const [state, handlers] = useRuleEngine(formFieldState);
     const i18n = useFormIntl();
     const res = propsMapper(state, handlers, translateMessage(state, i18n.formatMessage));
-    return <Component {...res} />;
+    return (wrap ? (<div className={'field'}><Component {...res} /></div>) : <Component {...res} />);
 };

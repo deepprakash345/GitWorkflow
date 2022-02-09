@@ -2,10 +2,11 @@ import Container from './Container';
 import {ContainerModel, FieldJson, FieldModel, FieldsetJson, FieldsetModel, FormModel} from './types';
 import Field from './Field';
 import FileUpload from './FileUpload';
-import {isCheckbox, isFile} from './utils/JsonUtils';
+import {isCheckbox, isCheckboxGroup, isFile} from './utils/JsonUtils';
 import {ExecuteRule, Initialize} from './controller/Controller';
 import Form from './Form';
 import Checkbox from './Checkbox';
+import CheckboxGroup from './CheckboxGroup';
 
 export const createChild = (child: FieldsetJson | FieldJson, options: {form: FormModel, parent: ContainerModel}) => {
   let retVal: FieldsetModel | FieldModel;
@@ -17,7 +18,10 @@ export const createChild = (child: FieldsetJson | FieldJson, options: {form: For
       retVal = new FileUpload(child as FieldJson, options);
     } else if (isCheckbox(child)) {
       retVal = new Checkbox(child, options);
-    } else  {
+    } else if (isCheckboxGroup(child)) {
+      retVal = new CheckboxGroup(child, options);
+    }
+    else  {
       retVal = new Field(child as FieldJson, options);
     }
   }

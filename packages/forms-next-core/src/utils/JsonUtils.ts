@@ -39,6 +39,11 @@ export const isCheckbox = function (item: FieldsetJson | FieldJson) {
     return viewType === 'checkbox';
 };
 
+export const isCheckboxGroup = function (item: FieldsetJson | FieldJson) {
+    const viewType = item?.viewType || defaultViewTypes(item);
+    return viewType === 'checkbox-group';
+};
+
 /**
  * merges multiple source objects (not arrays) along with their properties into the target object
  * @param target

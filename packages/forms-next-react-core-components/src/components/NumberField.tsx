@@ -5,7 +5,7 @@ import {
   baseConvertor,
   combineConvertors,
   constraintConvertor,
-  fieldConvertor, withErrorMessage
+  fieldConvertor
 } from '../utils/SpectrumMappers';
 import { useRenderer } from '@aemforms/forms-next-react-bindings';
 
@@ -14,7 +14,7 @@ const mapper = combineConvertors(baseConvertor,
   constraintConvertor);
 
 const NumberComp = function (props: FieldJson & { id: string }) {
-  return useRenderer(props, NumberField, mapper);
+  return useRenderer(props, NumberField, mapper, true);
 };
 
 export default NumberComp;

@@ -19,7 +19,7 @@ const mapper = combineConvertors(baseConvertor,
 
 const TextFieldComponent = function (props: FieldJson & {id: string}) {
     const component = props.viewType === 'multiline-input' ? TextArea : TextField;
-    const renderedComponent = useRenderer(props, component, mapper);
+    const renderedComponent = useRenderer(props, component, mapper, true);
     return renderedComponent;
 };
 
