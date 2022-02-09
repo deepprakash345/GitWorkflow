@@ -1,0 +1,457 @@
+{
+  "adaptiveform": "0.0.16-next",
+  "items": [
+    {
+      "viewType": "custom:vertical-flex",
+      "name": "pi",
+      "items": [
+        {
+          "viewType": "plain-text",
+          "label": {
+            "value": "Persona Infromation"
+          }
+        },
+        {
+          "type": "string",
+          "name": "firstName",
+          "required": true,
+          "label": {
+            "value": "first name"
+          }
+        },
+        {
+          "type": "string",
+          "name": "middleName",
+          "label": {
+            "value": "middle name"
+          }
+        },
+        {
+          "type": "string",
+          "name": "lastName",
+          "required": true,
+          "label": {
+            "value": "last name"
+          }
+        },
+        {
+          "type": "string",
+          "name": "fullName",
+          "label": {
+            "value": "Full Name"
+          }
+        },
+        {
+          "name": "mobile",
+          "viewType": "text-input",
+          "type": "string",
+          "required": true,
+          "pattern": "^(?:(?:\\+|0{0,2})91(\\s*[\\ -]\\s*)?|[0]?)?[789]\\d{9}|(\\d[ -]?){10}\\d$",
+          "label": {
+            "value": "Mobile Number"
+          }
+        },
+        {
+          "type": "string",
+          "format": "date",
+          "name": "birthDate",
+          "label": {
+            "value": "Birth date(YYYY-MM-DD)"
+          }
+        },
+        {
+          "type": "string",
+          "pattern": "[0-1][0-9]-[0-9][0-9]",
+          "name": "birthDayAndMonth",
+          "label": {
+            "value": "Birth date (MM-DD)"
+          }
+        },
+        {
+          "viewType": "number-input",
+          "type": "number",
+          "minimum": 1,
+          "maximum": 32767,
+          "name": "birthYear",
+          "label": {
+            "value": "Birth year"
+          }
+        },
+        {
+          "viewType": "text-input",
+          "type": "string",
+          "enum": [
+            "male",
+            "female",
+            "not_specified",
+            "non_specific"
+          ],
+          "enumNames": [
+            "Male",
+            "Female",
+            "Not Specified",
+            "Non Specific"
+          ],
+          "default": "not_specified",
+          "name": "gender",
+          "label": {
+            "value": "Gender"
+          }
+        },
+        {
+          "viewType": "text-input",
+          "type": "string",
+          "enum": [
+            "married",
+            "single",
+            "divorced",
+            "widowed",
+            "not_specified"
+          ],
+          "enumNames": [
+            "Married",
+            "Single",
+            "Divorced",
+            "Widowed",
+            "Not Specified"
+          ],
+          "default": "not_specified",
+          "name": "maritalStatus",
+          "required": true,
+          "label": {
+            "value": "Marital Status"
+          }
+        },
+        {
+          "viewType": "text-input",
+          "type": "string",
+          "name": "spouseName",
+          "label": {
+            "value": "Spouse Name"
+          }
+        },
+        {
+          "viewType": "text-input",
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "name": "nationality",
+          "label": {
+            "value": "Nationality"
+          }
+        },
+        {
+          "viewType": "text-input",
+          "type": "string",
+          "name": "taxId",
+          "label": {
+            "value": "Tax ID"
+          }
+        }
+      ]
+    },
+    {
+      "viewType": "custom:vertical-flex",
+      "name": "address",
+      "items": [
+        {
+          "viewType": "plain-text",
+          "label": {
+            "value": "Address"
+          }
+        },
+        {
+          "name": "a1",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "Address 1"
+          }
+        },
+        {
+          "name": "a2",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "Address 2"
+          }
+        },
+        {
+          "name": "city",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "City"
+          }
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "State"
+          }
+        },
+        {
+          "name": "pin",
+          "type": "string",
+          "viewType": "number-input",
+          "label": {
+            "value": "Pin Code"
+          }
+        },
+        {
+          "name": "country",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "Country"
+          }
+        }
+      ]
+    },
+    {
+      "viewType": "custom:vertical-flex",
+      "name": "ed",
+      "items": [
+        {
+          "viewType": "plain-text",
+          "label": {
+            "value": "Education Infromation"
+          }
+        },
+        {
+          "name": "hq",
+          "type": "string",
+          "viewType": "drop-down",
+          "enum": [
+            "PG",
+            "Batchelor"
+          ],
+          "label": {
+            "value": "Highest Qualification"
+          }
+        },
+        {
+          "name": "degree",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "Highest Degree"
+          }
+        },
+        {
+          "name": "py",
+          "type": "string",
+          "viewType": "number-input",
+          "label": {
+            "value": "Passing Year"
+          }
+        },
+        {
+          "name": "cn",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "College Name"
+          }
+        },
+        {
+          "name": "grade",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "CGPA"
+          }
+        },
+        {
+          "name": "ca",
+          "type": "string",
+          "viewType": "text-input",
+          "label": {
+            "value": "College Address"
+          }
+        }
+      ]
+    },
+    {
+      "viewType": "custom:vertical-flex",
+      "name": "ed",
+      "items": [
+        {
+          "viewType": "plain-text",
+          "label": {
+            "value": "Dummy for testing pupose"
+          }
+        },
+        {
+          "name": "textfield_simple",
+          "type": "string",
+          "label": {
+            "value": "A simple Text Field"
+          }
+        },
+        {
+          "name": "textfield_with_calculatedValue",
+          "type": "string",
+          "rules": {
+            "value": "$form.textfield_simple.value"
+          },
+          "label": {
+            "value": "Text Field Mirrors simple Textfield"
+          }
+        },
+        {
+          "name": "textfield_with_helpText",
+          "type": "string",
+          "description": "This is a help text for the Text Field",
+          "label": {
+            "value": "Text Field with description"
+          }
+        },
+        {
+          "name": "textfield_required",
+          "type": "string",
+          "required": true,
+          "label": {
+            "value": "Required Text Field"
+          }
+        },
+        {
+          "name": "textfield_custom_requiredMessage",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The Field's required message has been modified"
+          },
+          "label": {
+            "value": "Required Text Field With custom Message"
+          }
+        },
+        {
+          "name": "textfield_minLength",
+          "type": "string",
+          "minLength": 5,
+          "label": {
+            "value": "Text Field with min length 5"
+          }
+        },
+        {
+          "name": "textfield_minLength_message",
+          "type": "string",
+          "minLength": 5,
+          "description": "This has a custom error message as well",
+          "constraintMessages": {
+            "minLength": "Please enter atleast 5 characters"
+          },
+          "label": {
+            "value": "Text Field with min length"
+          }
+        },
+        {
+          "name": "textfield_maxLength",
+          "type": "string",
+          "maxLength": 5,
+          "label": {
+            "value": "Text Field with max length 5"
+          }
+        },
+        {
+          "name": "textfield_maxLength_message",
+          "type": "string",
+          "maxLength": 5,
+          "description": "This has a custom error message as well",
+          "constraintMessages": {
+            "maxLength": "Please enter atmost 5 characters"
+          },
+          "label": {
+            "value": "Text Field with max length"
+          }
+        },
+        {
+          "name": "textfield_pattern",
+          "type": "string",
+          "pattern": "^a[b-z]{2}[0-9]{3}$",
+          "constraintMessages": {
+            "pattern": "The value should start with character `a` followed by 2 characters from the character set b-z and followed by 3 numbers"
+          },
+          "label": {
+            "value": "Text Field with pattern"
+          }
+        },
+        {
+          "name": "checkbox_simplest",
+          "type": "boolean",
+          "label": {
+            "value": "Default Boolean checkbox"
+          }
+        },
+        {
+          "name": "checkbox_required",
+          "type": "boolean",
+          "required": true,
+          "label": {
+            "value": "Required Checkbox with boolean"
+          }
+        },
+        {
+          "name": "checkbox_required_no_off_value",
+          "type": "boolean",
+          "required": true,
+          "enum": [
+            true
+          ],
+          "label": {
+            "value": "Required Checkbox with no off value"
+          }
+        },
+        {
+          "name": "checkbox_boolean_reversed",
+          "type": "boolean",
+          "enum": [
+            false,
+            true
+          ],
+          "label": {
+            "value": "Boolean checkbox with false as selected value"
+          }
+        },
+        {
+          "name": "checkbox_no_off_value",
+          "type": "boolean",
+          "enum": [
+            true
+          ],
+          "label": {
+            "value": "Checkbox with no value when deselected"
+          }
+        },
+        {
+          "name": "checkbox_numeric",
+          "type": "number",
+          "enum": [
+            0,
+            1
+          ],
+          "label": {
+            "value": "Checkbox with number value"
+          }
+        },
+        {
+          "name": "checkbox_string",
+          "type": "string",
+          "enum": [
+            "a",
+            "b"
+          ],
+          "label": {
+            "value": "Checkbox with string values"
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}
