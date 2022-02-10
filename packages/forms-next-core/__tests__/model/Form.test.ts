@@ -438,7 +438,7 @@ test('an invalid datatype value should set the correct error message on the fiel
     element.value = 'abcd';
     const state = element.getState();
     expect(state.valid).toEqual(false);
-    expect(state.errorMessage).toEqual('There is an error in the field');
+    expect(state.errorMessage).toEqual('');
 });
 
 test('an invalid constraint in the field should not throw an exception', async () => {

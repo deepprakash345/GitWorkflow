@@ -62,8 +62,10 @@ function App() {
     }, [formToRender])
 
     const loadLocale = (action: Action) => {
-        if (action.payload) {
-            setLocaleState(action.payload);
+        if (action.payload && action.payload.changes) {
+            const { changes = [] } = action.payload;
+            const field = changes.find((field: any) => field.propertyName === 'value') || {}
+            setLocaleState(field.currentValue);
         }
     }
     const loadForm = (action: Action) => {
