@@ -59,7 +59,7 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
         onChange: b.dispatchChange,
         isReadOnly : a.readOnly === true,
         errorMessage
-  };
+    };
 };
 
 export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
@@ -105,7 +105,7 @@ export const withErrorMessage = (Component: JSXElementConstructor<any>) => (prop
     const helpText = invalid ? props.errorMessage || '' : props.description;
     const hasHelpText = (typeof helpText === 'string' && helpText.length > 0) || helpText != null;
     return (<div className={clsx('formField', invalid && 'formField--invalid')}>
-      <Component {...props} />
-      {hasHelpText ? <div className={'formField__helpText'}>{helpText}</div> : null}
+        <Component {...props} />
+        { hasHelpText ? <div className={'formField__helpText'}>{helpText}</div> : null}
     </div>);
 };
