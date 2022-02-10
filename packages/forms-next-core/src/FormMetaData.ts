@@ -13,10 +13,6 @@ class FormMetaData extends Node<MetaDataJson> implements FormMetaDataModel {
     get grammarVersion(): string {
         return this.getP('grammarVersion', '');
     }
-
-    get dataUrl(): string {
-        return this.getP('dataUrl', '');
-    }
 }
 
 export default FormMetaData;

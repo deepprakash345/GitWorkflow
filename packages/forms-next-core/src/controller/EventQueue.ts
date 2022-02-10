@@ -14,10 +14,7 @@ class EventNode<T extends BaseJson> {
     }
 
     isEqual(that: EventNode<T>) {
-        if (that === null || that === undefined) {
-            return false;
-        }
-        return this._node == that._node && this._event.type  == that._event.type;
+        return that !== null && that !== undefined && this._node == that._node && this._event.type  == that._event.type;
     }
 
     toString() {

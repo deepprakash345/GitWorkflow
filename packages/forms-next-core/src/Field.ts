@@ -46,7 +46,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             this._jsonModel.viewType = defaultViewTypes(this._jsonModel);
         }
         if (this._jsonModel.enum === undefined) {
-            const type = this._jsonModel.type || 'string';
+            const type = this._jsonModel.type;
             if (type === 'boolean') {
                 this._jsonModel.enum = [true, false];
             }
@@ -120,11 +120,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
-        if (constraint) {
-            return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || 'There is an error in the field';
-        } else {
-            return '';
-        }
+        return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || 'There is an error in the field';
     }
 
     /**
