@@ -18,7 +18,7 @@
   },
   "include": [
     "src",
-    "decs.d.ts"
+    "json-formula.d.ts"
   ],
   "exclude": [
     "src/__tests__/*",
