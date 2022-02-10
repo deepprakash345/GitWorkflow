@@ -4,7 +4,9 @@ import sanitizeHTML from 'sanitize-html';
 import {Convertor} from '@aemforms/forms-next-react-bindings/lib/hooks';
 import '../styles.css';
 import clsx from 'clsx';
-import { FormattedMessage } from 'react-intl';
+import { useFormIntl } from '@aemforms/forms-next-react-bindings';
+
+const DEFAULT_ERROR_MESSAGE = 'There is an error in the field';
 
 export const combineConvertors = function <T>(...convertors: Convertor<T>[]) {
     const newConvertor : Convertor<T> = (a,b, f) => {
@@ -47,14 +49,17 @@ export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
 };
 
 export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
+  const i18n = useFormIntl();
+  const formatedMessage = i18n.formatMessage({ id: 'defaultErrorMessage', defaultMessage: DEFAULT_ERROR_MESSAGE })
+  const errorMessage = a.errorMessage === '' && a.valid === false ? formatedMessage : a.errorMessage
     return {
         placeholder: f('placeholder'),
         value: a.value == null ? '' : a.value,
         validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
         onChange: b.dispatchChange,
         isReadOnly : a.readOnly === true,
-        errorMessage: a.errorMessage
-    };
+        errorMessage
+  };
 };
 
 export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
@@ -95,15 +100,12 @@ export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
   };
 };
 
-const getFormattedMessage = (message: string) => <FormattedMessage id='defaultErrorMessage' defaultMessage={message} />
-
 export const withErrorMessage = (Component: JSXElementConstructor<any>) => (props: any) => {
     const invalid = props.validationState === 'invalid';
     const helpText = invalid ? props.errorMessage || '' : props.description;
     const hasHelpText = (typeof helpText === 'string' && helpText.length > 0) || helpText != null;
-    const isDefaultMsg = helpText === 'There is an error in the field';
     return (<div className={clsx('formField', invalid && 'formField--invalid')}>
-        <Component {...props} />
-        { hasHelpText ? <div className={'formField__helpText'}>{isDefaultMsg ? getFormattedMessage(helpText) : helpText}</div> : null}
+      <Component {...props} />
+      {hasHelpText ? <div className={'formField__helpText'}>{helpText}</div> : null}
     </div>);
 };

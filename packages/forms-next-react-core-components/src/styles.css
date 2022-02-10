@@ -2,11 +2,11 @@
 
 }
 
-.formField--invalid .formField__helpText {
-    color: var(--spectrum-global-color-red-600);
-}
-
 .formField .formField__helpText {
     color: var(--spectrum-global-color-gray-700);
+}
+
+.formField--invalid .formField__helpText {
+  color: var(--spectrum-global-color-red-600);
 }
 

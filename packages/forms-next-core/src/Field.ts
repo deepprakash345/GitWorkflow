@@ -121,7 +121,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
 
     private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
         if (constraint) {
-            return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || 'There is an error in the field';
+            return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || '';
         } else {
             return '';
         }
