@@ -9,6 +9,7 @@ import {renderChildren} from '../renderChildren';
 // @ts-ignore
 import packageJson from '../../package.json';
 import {useAdoption} from '@quarry/eim-provider';
+import afLocalizationJson from '../i18n.json';
 
 /**
  * The minimum set of translation config that contains messages for all supported locales.
@@ -49,8 +50,13 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
             localeDictJson = localizationMessages;
         }
     }
+    let afLocalization: any = {...afLocalizationJson};
     if (locale) {
         localizationMessagesProp = localeDictJson?.[locale];
+        if (localizationMessagesProp) {
+            afLocalization = afLocalization?.[locale] || {}
+            localizationMessagesProp = {...localizationMessagesProp, ...afLocalization}
+         }
     }
     // this logs event only if used inside unified shell
     // name aligns to the string used in quarry external docs

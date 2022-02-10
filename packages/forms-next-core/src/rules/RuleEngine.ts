@@ -1,7 +1,7 @@
 import {BaseModel} from '../types';
 import {ActionImpl} from '../controller/Controller';
-import {Formula} from '@aemforms/json-formula';
-import FunctionRuntime from "./FunctionRuntime";
+import {Formula} from '@adobe/json-formula';
+import FunctionRuntime from './FunctionRuntime';
 
 class AddDependent extends ActionImpl {
     constructor(payload: BaseModel) {
