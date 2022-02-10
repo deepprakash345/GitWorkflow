@@ -56,7 +56,6 @@ pipeline {
     agent {
         label 'centos'
     }
-
     stages {
         stage("build - environment") {
             steps {
@@ -167,25 +166,6 @@ pipeline {
                 }
             }
         }
-        // stage("storybook deploye") {
-        //     when {
-        //         allOf {
-        //             expression { return !isPullRequest() }
-        //             branch "main",
-        //             anyOf {
-        //                 changeset "**/stories/**/*.stories.@(js|jsx|ts|tsx)"
-        //                 changeset "**/stories/**/*.stories.mdx"
-        //             }
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             sh "cd packages/forms-next-react-core-components"
-        //             sh "npm run build-storybook"
-        //             sh "npm run deploye-storybook"
-        //         }
-        //     }
-        // }
         stage("deploy sample") {
             when {
                 allOf {
@@ -201,6 +181,40 @@ pipeline {
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         gitStrategy.push('gh-pages')
                     }
+                }
+            }
+        }
+        stage("storybook deploy") {
+            when {
+                allOf {
+                    expression { return !isPullRequest() }
+                    branch "main"
+                    anyOf {
+                        changeset "**/stories/**/*.stories.@(js|jsx|ts|tsx)"
+                        changeset "**/stories/**/*.stories.mdx"
+                        changeset "**/src/**/*.css"
+                        changeset "**/src/**/*.js"
+                        changeset "**/src/**/*.ts"
+                        changeset "**/src/**/*.tsx"
+                        changeset "**/package.json"
+                    }
+                }
+            }
+            steps {
+                script {
+                  sh "git pull ${GIT_REPO_URL}"
+                  runDocker("npx lerna run build-storybook")
+                  sh 'mkdir tmp-story'
+                  sh "cp -R packages/forms-next-react-core-components/storybook-static/* tmp-story"
+                  sh 'git checkout .'
+                  sh 'git checkout gh-pages'
+                  sh 'rm -r story'
+                  sh 'mv tmp-story story'
+                  sh 'git add -A .'
+                  sh 'git commit -m "deploying storybook to git pages" || 1'
+                  gitStrategy.impersonate("cqguides", "cqguides") {
+                    gitStrategy.push('gh-pages')
+                  }
                 }
             }
         }
