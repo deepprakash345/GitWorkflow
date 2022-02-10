@@ -18,9 +18,7 @@ const field = {
     },
     viewType: 'checkbox',
     'visible' : true,
-    'type' : 'boolean',
-    'enum' : [true],
-    'enumNames' : ['some option title']
+    'type' : 'boolean'
 };
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
@@ -159,7 +157,7 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         }
     },
     {
-        name : 'a checkbox should be selected if value is undefined',
+        name : 'a checkbox should not be selected if value is undefined',
         field : {
             ...field
         },
@@ -311,7 +309,8 @@ test('it should handle visible property', async () => {
 
 test('a checkbox with no off value should get its value undefined when not selected', async () => {
     const f = {
-        ...field
+        ...field,
+        enum: [true]
     };
 
     const {input, element} = await helper(f);
@@ -332,9 +331,10 @@ test('a checkbox with no off value should get its value undefined when not selec
     expect(state.value).toBe(undefined);
 });
 
-test('a checkbox with no off value should not be invalid when not required', async () => {
+test('a checkbox with no off value should be valid when not required', async () => {
     const f = {
-        ...field
+        ...field,
+        enum: [true]
     };
 
     const {input, form, element} = await helper(f);
@@ -348,11 +348,11 @@ test('a checkbox with no off value should not be invalid when not required', asy
 
 });
 
-test('a required checkbox with off value should be invalid when unselected', async () => {
+test('a required checkbox with off value should be invalid when unchecked', async () => {
     const f = {
         ...field,
-        required: true,
-        enum : [true, false]
+        enum: [true, false],
+        required: true
     };
 
     const {input, form, element, container} = await helper(f);
@@ -366,9 +366,10 @@ test('a required checkbox with off value should be invalid when unselected', asy
     expect(err.textContent).toEqual(DEFAULT_ERROR_MESSAGE);
 });
 
-test('a required checkbox with null value should be invalid', async () => {
+test('a required checkbox with no off value should be invalid when unchecked', async () => {
     const f = {
         ...field,
+        enum: [true],
         required: true
     };
 

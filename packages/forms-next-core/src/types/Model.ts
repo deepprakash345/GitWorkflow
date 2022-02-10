@@ -87,8 +87,6 @@ export interface BaseModel extends ConstraintsJson, WithController {
 }
 
 export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJson> {
-    value: Primitives;
-    default?: Primitives;
     parent: ContainerModel
 }
 

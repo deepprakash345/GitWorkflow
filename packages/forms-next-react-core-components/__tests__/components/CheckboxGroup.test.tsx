@@ -193,7 +193,6 @@ test('option selected by user is set in the model', async () => {
   const f = {
     ...field
   };
-  f.value = undefined;
   const { inputs, element } = await helper(f);
   let state = element?.getState();
   expect(state.value).toBeUndefined();
@@ -210,6 +209,31 @@ test('option selected by user is set in the model', async () => {
   expect(inputs[0]?.checked).toEqual(true);
   expect(inputs[1]?.checked).toEqual(true);
   expect(inputs[2]?.checked).toEqual(false);
+});
+
+test('value set in the model selects the checkbox', async () => {
+  const f = {
+    ...field
+  };
+  const { inputs, element } = await helper(f);
+  expect(inputs[0]?.checked).toEqual(false);
+  expect(inputs[1]?.checked).toEqual(false);
+  expect(inputs[2]?.checked).toEqual(false);
+
+  element.value = [1];
+  expect(inputs[0]?.checked).toEqual(true);
+  expect(inputs[1]?.checked).toEqual(false);
+  expect(inputs[2]?.checked).toEqual(false);
+
+  element.value = [2];
+  expect(inputs[0]?.checked).toEqual(false);
+  expect(inputs[1]?.checked).toEqual(true);
+  expect(inputs[2]?.checked).toEqual(false);
+
+  element.value = [1,3];
+  expect(inputs[0]?.checked).toEqual(true);
+  expect(inputs[1]?.checked).toEqual(false);
+  expect(inputs[2]?.checked).toEqual(true);
 });
 
 test('it should handle visible property', async () => {

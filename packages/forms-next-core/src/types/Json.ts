@@ -77,8 +77,8 @@ type TranslationFieldJson = {
 export type FieldJson = BaseJson & TranslationFieldJson & {
     'readOnly'?: boolean;
     'valid'?: boolean
-    'default'?: Primitives
-    'value'?: Primitives
+    'default'?: any
+    'value'?: any
     'multiline'?: boolean;
     'props'?: {
         [key: string]: any;

@@ -71,7 +71,7 @@ const checkBool = (inputVal: any) => {
  * @return an array containing two arrays, the first one with all the valid values and the second one with one invalid
  * value (if there is).
  */
-const validateArray = (inputVal: any[], validatorFn: (x: any) => ValidationResult) => {
+const partitionArray = (inputVal: any[], validatorFn: (x: any) => ValidationResult) => {
     const value = toArray(inputVal);
     if (value == null) {
         return [[], [value]];
@@ -130,12 +130,12 @@ export const Constraints = {
                 }
                 break;
             case 'number[]':
-                res = validateArray(inputVal, checkNumber);
+                res = partitionArray(inputVal, checkNumber);
                 valid = res[1].length === 0;
                 value = valid ? res[0] : inputVal;
                 break;
             case 'boolean[]':
-                res = validateArray(inputVal, checkBool);
+                res = partitionArray(inputVal, checkBool);
                 valid = res[1].length === 0;
                 value = valid ? res[0] : inputVal;
                 break;

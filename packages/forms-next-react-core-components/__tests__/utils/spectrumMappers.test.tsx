@@ -3,7 +3,6 @@ import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@aemforms/forms-next-core/lib';
 import React from 'react';
-import {resolve} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 import { Convertor } from '@aemforms/forms-next-react-bindings';
 export const mockHandler = {
     dispatchClick: () => {},
@@ -53,6 +52,28 @@ type Suite = {
         }
     }
 }
+
+const set = (obj: any, propName: string, value: any) => {
+    if (propName.indexOf('.') > -1) {
+        const props = propName.split('.');
+        props.reduce((acc, str, index) => {
+            if (index === props.length - 1) {
+                acc[str] = value;
+                return acc;
+            } else {
+                const tmp = acc[str] || {};
+                acc[str] = tmp;
+                return tmp;
+            }
+        }, obj);
+        return obj;
+    } else {
+        return {
+            ...obj,
+            [propName] : value
+        };
+    }
+};
 
 const suites: Suite = {
     'baseConvertor' : {
@@ -104,31 +125,17 @@ Object.keys(suites).forEach((funcName) => {
         const otherProps = obj.inProps || {};
         const tests: any[] = obj.tests.reduce((acc, test) => {
             if (test[0] instanceof Array) {
-                test[0].map(x => [x, test[1]]).forEach(x => acc.push(x));
+                return  acc.concat(test[0].map(x => [x, test[1]]));
             } else {
-                acc.push(test);
+                return acc.concat([test]);
             }
-            return acc;
         }, []);
-        test.each(tests)(`${funcName} should handle ${propName} %s`, (inp, out) => {
-            let input: any;
-            if (propName.indexOf('.') > -1) {
-                input = {
-                    ...base,
-                    ...otherProps
-                };
-                resolve(input, propName, inp);
-            } else {
-                input = {
-                    ...base,
-                    ...otherProps,
-                    [propName]: inp
-                };
-            }
+        test.each(tests)(`${funcName} should handle ${propName} %s`, (inputValue, expectedValue) => {
+            const fieldObject = set({...base, ...otherProps}, propName, inputValue);
             const output = {
-                [obj.outProp] : (typeof out === 'function') ? out(inp) : out
+                [obj.outProp] : (typeof expectedValue === 'function') ? expectedValue(inputValue) : expectedValue
             };
-            expect(obj.func(input, mockHandler, formatMessage(input))).toMatchObject(output);
+            expect(obj.func(fieldObject, mockHandler, formatMessage(fieldObject))).toMatchObject(output);
         });
     });
 });
