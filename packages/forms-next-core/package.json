@@ -32,7 +32,7 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
-    "@aemforms/json-formula": "0.1.15"
+    "@adobe/json-formula": "git://github.com/adobe/json-formula.git#1f3bc888840df6f337bc693ee46cf12a80660181"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",

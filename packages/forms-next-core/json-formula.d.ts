@@ -1,4 +1,4 @@
-declare module '@aemforms/json-formula' {
+declare module '@adobe/json-formula' {
     export function jsonFormula(
         json,
         globals,
