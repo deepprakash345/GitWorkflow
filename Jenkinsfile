@@ -112,6 +112,12 @@ pipeline {
             runDocker('lhci autorun')
           }
         }
+        stage("docs") {
+            steps {
+                runDocker('npx lerna run docs')
+                archiveArtifacts artifacts: "packages/forms-next-core/target/docs/**"
+            }
+        }
         stage("publish") {
             when {
                 allOf {
