@@ -130,6 +130,8 @@ pipeline {
                         changeset "**/src/**/*.ts"
                         changeset "**/src/**/*.tsx"
                         changeset "**/package.json"
+                        changeset "**/stories/**/*.stories.@(js|jsx|ts|tsx)"
+                        changeset "**/stories/**/*.stories.mdx"
                     }
                 }
             }
@@ -162,12 +164,17 @@ pipeline {
                 script {
                     sh "git pull ${GIT_REPO_URL}"
                     runDocker('npx lerna run build --scope=forms-headless-sample')
+                    runDocker("npx lerna run build-storybook")
                     sh 'mkdir tmp-dist'
+                    sh 'mkdir tmp-story'
                     sh 'cp -R packages/forms-headless-sample/build/* tmp-dist '
+                    sh 'cp -R packages/forms-next-react-core-components/storybook-static/* tmp-story'
                     sh 'git checkout .'
                     sh 'git checkout gh-pages'
                     sh 'rm -r dist'
                     sh 'mv tmp-dist dist'
+                    sh 'rm -r story'
+                    sh 'mv tmp-story story'
                     sh 'git add -A .'
                 }
             }
@@ -187,59 +194,6 @@ pipeline {
                     gitStrategy.impersonate("cqguides", "cqguides") {
                         gitStrategy.push('gh-pages')
                     }
-                }
-            }
-        }
-        stage("storybook deploy") {
-            // when {
-            //     allOf {
-            //         expression { return !isPullRequest() }
-            //         branch "main"
-            //         anyOf {
-            //             changeset "**/stories/**/*.stories.@(js|jsx|ts|tsx)"
-            //             changeset "**/stories/**/*.stories.mdx"
-            //             changeset "**/src/**/*.css"
-            //             changeset "**/src/**/*.js"
-            //             changeset "**/src/**/*.ts"
-            //             changeset "**/src/**/*.tsx"
-            //             changeset "**/package.json"
-            //         }
-            //     }
-            // }
-            steps {
-                script {
-                    sh 'git checkout .'
-                    sh 'git checkout main'
-                    runDocker("npx lerna run build-storybook")
-                    sh "git clone -b gh-pages ${GIT_REPO_URL} tmp-story"
-                    dir("tmp-story"){
-                      sh "mkdir tmp-dist"
-                      sh "ls"
-                      sh "cp -R ../packages/forms-next-react-core-components/storybook-static/* tmp-dist"
-                      sh "ls"
-                      sh 'rm -r story'
-                      sh 'mv tmp-dist story'
-                      sh "ls"
-                      // sh 'git add -A .'
-                      // sh 'git commit -m ":release deploying storybook to git pages" || 1'
-                      // gitStrategy.impersonate("cqguides", "cqguides") {
-                      //   gitStrategy.push('gh-pages')
-                      // }
-                    }
-                    sh "rm -r tmp-story"
-                  // sh "git pull ${GIT_REPO_URL}"
-                  // runDocker("npx lerna run build-storybook")
-                  // sh 'mkdir tmp-story'
-                  // sh "cp -R packages/forms-next-react-core-components/storybook-static/* tmp-story"
-                  // sh 'git checkout .'
-                  // sh 'git checkout gh-pages'
-                  // sh 'rm -r story'
-                  // sh 'mv tmp-story story'
-                  // sh 'git add -A .'
-                  // sh 'git commit -m "deploying storybook to git pages" || 1'
-                  // gitStrategy.impersonate("cqguides", "cqguides") {
-                  //   gitStrategy.push('gh-pages')
-                  // }
                 }
             }
         }
