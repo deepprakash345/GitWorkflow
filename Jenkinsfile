@@ -86,9 +86,10 @@ pipeline {
 //                 ])
                 archiveArtifacts artifacts: "packages/forms-next-react-core-components/target/**"
                 archiveArtifacts artifacts: "packages/forms-next-core/target/**"
+                archiveArtifacts artifacts: "packages/react-bindings/target/**"
                 junit "packages/forms-next-core/target/test-reports/junit.xml"
                 junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
-
+                junit "packages/react-bindings/target/test-reports/junit.xml"
            }
 //             post {
 //                 always {
