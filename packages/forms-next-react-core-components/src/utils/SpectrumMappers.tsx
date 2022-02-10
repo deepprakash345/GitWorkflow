@@ -4,6 +4,7 @@ import sanitizeHTML from 'sanitize-html';
 import {Convertor} from '@aemforms/forms-next-react-bindings/lib/hooks';
 import '../styles.css';
 import clsx from 'clsx';
+import { FormattedMessage } from 'react-intl';
 
 export const combineConvertors = function <T>(...convertors: Convertor<T>[]) {
     const newConvertor : Convertor<T> = (a,b, f) => {
@@ -94,13 +95,15 @@ export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
   };
 };
 
+const getFormattedMessage = (message: string) => <FormattedMessage id='defaultErrorMessage' defaultMessage={message} />
 
 export const withErrorMessage = (Component: JSXElementConstructor<any>) => (props: any) => {
     const invalid = props.validationState === 'invalid';
     const helpText = invalid ? props.errorMessage || '' : props.description;
     const hasHelpText = (typeof helpText === 'string' && helpText.length > 0) || helpText != null;
+    const isDefaultMsg = helpText === 'There is an error in the field';
     return (<div className={clsx('formField', invalid && 'formField--invalid')}>
         <Component {...props} />
-        { hasHelpText ? <div className={'formField__helpText'}>{helpText}</div> : null}
+        { hasHelpText ? <div className={'formField__helpText'}>{isDefaultMsg ? getFormattedMessage(helpText) : helpText}</div> : null}
     </div>);
 };
