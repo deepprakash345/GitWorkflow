@@ -5,6 +5,7 @@ import {
 } from '@aemforms/forms-next-core/lib';
 import formContext, {IFormContext} from '../component/FormContext';
 import {useContext, useEffect, useState} from 'react';
+//@ts-ignore
 import {AddItem, Click, RemoveItem} from '@aemforms/forms-next-core/lib/controller/Controller';
 import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
 
