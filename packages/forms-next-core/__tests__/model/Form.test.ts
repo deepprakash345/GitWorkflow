@@ -532,16 +532,37 @@ test('dataDom is updated as per the dataType of the element', async () => {
             type: 'boolean',
             'dataRef': 'boolean'
         }
+    }, {
+        'f': {
+            type: 'string[]',
+            'dataRef': '"string[]"'
+        }
+    }, {
+        'f': {
+            type: 'number[]',
+            'dataRef': '"number[]"'
+        }
+    }, {
+        'f': {
+            type: 'boolean[]',
+            'dataRef': '"boolean[]"'
+        }
     }]);
     let form = await createFormInstance(formJson);
     const state = form.getState();
     form.getElement(state.items[0].id).value = '10';
     form.getElement(state.items[1].id).value = 'value2';
     form.getElement(state.items[2].id).value = 'true';
+    form.items[3].value = 'value2';
+    form.items[4].value = '10';
+    form.items[5].value = 'true';
     expect(await form.getState().data).toEqual({
         number: 10,
         string: 'value2',
-        boolean: true
+        boolean: true,
+        'number[]': [10],
+        'string[]': ['value2'],
+        'boolean[]': [true]
     });
 });
 

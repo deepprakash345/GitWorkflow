@@ -146,6 +146,12 @@ export const create = (arr: any[], nameMap: { [key:string] : number }  = {p : 1}
     }, {items: []});
 };
 
+export function jest26CompatibleTable<T>(tests: T[], mapper: (x:T) => string) : [string, T][] {
+    return tests.map(t => {
+        return [mapper(t), t];
+    });
+}
+
 export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormModel => {
     return {
         exportData: jest.fn(),

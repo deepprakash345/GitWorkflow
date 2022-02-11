@@ -1,14 +1,15 @@
 import Field from '../../src/Field';
-import EventQueue from '../../src/controller/EventQueue';
-import {Change} from '../../src/controller/Controller';
 import {Constraints} from '../../src/utils/ValidationUtils';
 import {FormModel} from '../../src/types';
 import {create} from '../collateral';
 import Form from '../../src/Form';
 import RuleEngine from '../../src/rules/RuleEngine';
+import customMatchers from '../collateral/actions';
+import {Change} from '../../src/controller/Controller';
 
 let form: FormModel;
 let options : {parent: FormModel, form: FormModel};
+expect.extend(customMatchers);
 beforeEach(async () => {
     form = new Form(create(['f']), new RuleEngine());
     options = {
@@ -47,6 +48,33 @@ test('a field should set the value correctly in its json from default value', ()
     });
 });
 
+test('a field should return correct dataRef value', () => {
+    const f = new Field({default : 'test'}, options);
+    expect(f.dataRef).toEqual(undefined);
+
+    const f1 = new Field({default : 'test', dataRef: '$abcd'}, options);
+    expect(f1.dataRef).toEqual('$abcd');
+
+    const f2 = new Field({default : 'test', dataRef : null}, options);
+    expect(f2.dataRef).toEqual(null);
+});
+
+test('visibility of a field should trigger the subscription', () => {
+    const f = new Field({default : 'test'}, options);
+    const fn = jest.fn();
+    f.subscribe(fn);
+    f.visible = false;
+    expect(fn).toBeCalled();
+    const action = new Change({
+        changes : [{
+            propertyName: 'visible',
+            currentValue: false,
+            prevValue: true
+        }]
+    });
+    expect(fn.mock.calls[0][0]).matchesAction({action, target: f});
+});
+
 test('a boolean field returns proper enum value', () => {
     const f = new Field({type : 'boolean'}, options);
     expect(f.enum).toEqual([true, false]);
@@ -61,9 +89,22 @@ test('accessing field value directly works in rules', () => {
     const f = new Field({default : 'test'}, {form, parent: form});
     f._initialize();
     const globals = {
-        '$field' : f.getRuleNode(),
+        '$field' : f.getRuleNode()
     };
     const rule = "$field & ' a'";
+    const node = form.ruleEngine.compileRule(rule);
+    const result = form.ruleEngine.execute(node, {}, globals);
+    expect(result).toEqual('test a');
+});
+
+
+test('accessing field property via $ works', () => {
+    const f = new Field({default : 'test'}, {form, parent: form});
+    f._initialize();
+    const globals = {
+        '$field' : f.getRuleNode()
+    };
+    const rule = "$field.$value & ' a'";
     const node = form.ruleEngine.compileRule(rule);
     const result = form.ruleEngine.execute(node, {}, globals);
     expect(result).toEqual('test a');
@@ -106,7 +147,7 @@ describe('Field Validation', () => {
             enum: [1, 2, 3]
         }, options);
         field.value = '4';
-        expect(Constraints.enum).toBeCalledWith([1, 2, 3], '4');
+        expect(Constraints.enum).toBeCalledWith([1, 2, 3], 4);
         expect(field.valid).toEqual(mockValidity);
     });
 

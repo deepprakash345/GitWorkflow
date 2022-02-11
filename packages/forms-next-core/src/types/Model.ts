@@ -61,7 +61,7 @@ export interface WithController {
 
 export interface BaseModel extends ConstraintsJson, WithController {
     readonly name?: string;
-    readonly dataRef?: string;
+    readonly dataRef?: string | null;
     readonly id : string
     readonly index : number
     label?: Label
@@ -87,8 +87,6 @@ export interface BaseModel extends ConstraintsJson, WithController {
 }
 
 export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJson> {
-    value: Primitives;
-    default?: Primitives;
     parent: ContainerModel
 }
 

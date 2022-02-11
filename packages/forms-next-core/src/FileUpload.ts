@@ -1,4 +1,3 @@
-import {resolve} from './utils/JsonUtils';
 import {Change, propertyChange} from './controller/Controller';
 import Field from './Field';
 import {dataURItoBlob, getFileSizeInBytes} from './utils/FormUtils';

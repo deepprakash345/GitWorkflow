@@ -46,7 +46,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             this._jsonModel.viewType = defaultViewTypes(this._jsonModel);
         }
         if (this._jsonModel.enum === undefined) {
-            const type = this._jsonModel.type || 'string';
+            const type = this._jsonModel.type;
             if (type === 'boolean') {
                 this._jsonModel.enum = [true, false];
             }
@@ -120,11 +120,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
-        if (constraint) {
-            return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || '';
-        } else {
-            return '';
-        }
+        return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || '';
     }
 
     /**
@@ -140,14 +136,21 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         let elem = this._jsonModel;
         const Constraints = this._getConstraintObject();
         const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum');
-        const res = Constraints.type(elem.type || 'string', value);
+        const typeRes = Constraints.type(elem.type || 'string', value);
+        const res = typeRes;
+        const isArrayType = this.type ? this.type.indexOf('[]') > -1 : false;
         if (res.valid) {
             const invalidConstraint = supportedConstraints.find(key => {
                 if (key in elem) {
                     // @ts-ignore
                     const restriction = elem[key];
                     // @ts-ignore
-                    return !Constraints[key](restriction, res.value).valid;
+                    const fn = Constraints[key];
+                    if (res.value instanceof Array && isArrayType) {
+                        return res.value.some(x => !(fn(restriction, value).valid));
+                    } else {
+                        return !fn(restriction, res.value).valid;
+                    }
                 } else {
                     return false;
                 }
@@ -155,10 +158,15 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             if (invalidConstraint != null) {
                 res.valid = false;
                 constraint = invalidConstraint;
-            } else if (this._jsonModel.enforceEnum === true) {
-                let enumCheck = Constraints.enum(elem.enum || [], value);
-                res.valid = enumCheck.valid;
-                res.value = enumCheck.value;
+            } else if (this._jsonModel.enforceEnum === true && res.value != null) {
+                const fn = Constraints.enum;
+                let enumCheck;
+                if (res.value instanceof Array && isArrayType) {
+                    enumCheck = res.value.every(x => fn(elem.enum || [], x).valid);
+                } else {
+                    enumCheck =  fn(elem.enum || [], res.value).valid;
+                }
+                res.valid = enumCheck;
                 constraint = 'enum';
             }
         }

@@ -9,7 +9,7 @@ const requiredConstraint = (offValue: any) => (constraint: boolean, value: any) 
 class Checkbox extends Field {
 
     private offValue() {
-        const opts = this.enum || [];
+        const opts = this.enum;
         return opts.length > 1 ? opts[1] : null;
     }
 
@@ -17,6 +17,17 @@ class Checkbox extends Field {
         const baseConstraints =  {...super._getConstraintObject()};
         baseConstraints.required = requiredConstraint(this.offValue());
         return baseConstraints;
+    }
+
+    protected _getDefaults() {
+        return {
+            ...super._getDefaults(),
+            enforceEnum: true
+        };
+    }
+
+    get enum() {
+        return this._jsonModel.enum || [];
     }
 }
 

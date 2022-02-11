@@ -35,4 +35,29 @@ test("A required checkbox with type boolean value should be invalid when it's va
     expect(form.items[0].valid).toEqual(true);
 });
 
+test('A checkbox without enum property should return an empty array', () => {
+    const formJson = {
+        items: [{
+            name: 'f1',
+            viewType: 'checkbox',
+            type: 'number',
+            required: true
+        }]
+    };
+    const form = new Form(formJson, new RuleEngine());
+    expect(form.items[0].enum).toEqual([]);
+});
 
+test('A checkbox without enum property should remain invalid', () => {
+    const formJson = {
+        items: [{
+            name: 'f1',
+            viewType: 'checkbox',
+            type: 'number',
+            required: true
+        }]
+    };
+    const form = new Form(formJson, new RuleEngine());
+    form.items[0].value = 1;
+    expect(form.items[0].valid).toEqual(false);
+});

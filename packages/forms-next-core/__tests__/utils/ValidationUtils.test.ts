@@ -1,8 +1,8 @@
 import {Constraints} from '../../src/utils/ValidationUtils';
-
+import {jest26CompatibleTable as j26} from '../collateral/index';
 type TestCase = {
     name?: string
-    value: string,
+    value: string | string[] | boolean[] | number[],
     valid: boolean,
     cval: any
 }
@@ -149,18 +149,99 @@ const dataTypeValidations: { [key: string]: TestCase[] } = {
             valid: false,
             cval: ''
         }
+    ],
+    'string[]' : [
+        {
+            value : ['1', '2'],
+            valid: true,
+            cval: ['1', '2']
+        },
+        {
+            value : ['', ''],
+            valid: true,
+            cval: ['', '']
+        },
+        {
+            value : 'abcd',
+            valid: true,
+            cval: ['abcd']
+        }
+    ],
+    'number[]' : [
+        {
+            value : ['123', '123.01', '12e10', '12e-5', '-123', '-123.01','-12e10', '-12e-5'],
+            valid: true,
+            cval : [123, 123.01, 12e10, 12e-5, -123, -123.01,-12e10, -12e-5]
+        },
+        {
+            value : ['true', '123.01', '12e10', '12e-5', '-123', '-123.01','-12e10', '-12e-5'],
+            valid: false,
+            cval : ['true', '123.01', '12e10', '12e-5', '-123', '-123.01','-12e10', '-12e-5']
+        },
+        {
+            value : ['true', 'false', '', 'a12e-5', '-x123'],
+            valid: false,
+            cval : ['true', 'false', '', 'a12e-5', '-x123']
+        }
+    ],
+    'boolean[]': [
+        {
+            'value': ['true'],
+            valid: true,
+            cval: [true]
+        },
+        {
+            'value': ['false', 'true'],
+            valid: true,
+            cval: [false, true]
+        },
+        {
+            'value': ['', '21'],
+            valid: false,
+            cval: ['', '21']
+        },
+        {
+            'value': ['false', '10'],
+            valid: false,
+            cval: ['false', '10']
+        },
+        {
+            'value': 'string',
+            valid: false,
+            cval: 'string'
+        }
     ]
 };
 
-const testConstraint = (type: string) => ({value, valid, cval}: TestCase) => {
+const convertToArrayTest = function (x:string) {
+    const n = dataTypeValidations[x].map(x => {
+        if (x.valid) {
+            return {
+                ...x,
+                cval: [x.cval]
+            };
+        } else return x;
+    });
+    dataTypeValidations[`${x}[]`] = dataTypeValidations[`${x}[]`].concat(n);
+};
+
+convertToArrayTest('number');
+convertToArrayTest('boolean');
+
+const testConstraint = (type: string) => (name: string, {value, valid, cval}: TestCase) => {
     const res = Constraints.type(type, value);
     expect(res.valid).toEqual(valid);
     expect(res.value).toEqual(cval);
 };
-test.each(dataTypeValidations.string)('string: $value should return $valid', testConstraint('string'));
-test.each(dataTypeValidations.number)('number: $value should return $valid', testConstraint('number'));
-test.each(dataTypeValidations.boolean)('boolean: $value should return $valid', testConstraint('boolean'));
-test.each(dataTypeValidations.integer)('integer: $value should return $valid', testConstraint('integer'));
+
+const mapper = (s: string) => (x:TestCase) => {
+    return x.name || (s + ': ' + x.value + ' === ' + x.valid);
+};
+
+['string', 'number', 'boolean', 'integer', 'string[]', 'number[]', 'boolean[]'].forEach(x => {
+    const table = j26(dataTypeValidations[x], mapper(x));
+    test.each(table)('%s', testConstraint(x));
+});
 
 describe('formatTest - valid dates', () => {
      const tests = ['2010-10-10',

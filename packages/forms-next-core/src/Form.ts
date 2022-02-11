@@ -128,9 +128,11 @@ class Form extends Container<FormJson> implements FormModel {
         }, 'valid');
         field.subscribe((action) => {
             //@ts-ignore
-            const field = action.target.getState() || {};
-            const fieldChangedAction = new FieldChanged(action.payload.changes, field);
-            this.dispatch(fieldChangedAction);
+            const field = action.target.getState();
+            if (field) {
+                const fieldChangedAction = new FieldChanged(action.payload.changes, field);
+                this.dispatch(fieldChangedAction);
+            }
         });
     }
 
