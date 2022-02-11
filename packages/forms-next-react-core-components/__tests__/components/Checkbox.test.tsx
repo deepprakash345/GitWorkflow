@@ -328,7 +328,7 @@ test('a checkbox with no off value should get its value undefined when not selec
     expect(input?.checked).toEqual(false);
     expect(input?.value).toEqual('');
     state = element?.getState();
-    expect(state.value).toBe(undefined);
+    expect(state.value).toBe(null);
 });
 
 test('a checkbox with no off value should be valid when not required', async () => {

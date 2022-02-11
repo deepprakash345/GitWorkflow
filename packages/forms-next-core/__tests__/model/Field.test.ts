@@ -151,7 +151,43 @@ describe('Field Validation', () => {
         expect(field.valid).toEqual(mockValidity);
     });
 
-    test.todo('required constraint');
+    test('A required field should be invalid if value is not empty', () => {
+        const types = ['number', 'string', 'boolean', 'number[]', 'string[]', 'boolean[]'];
+        const values = [1, '2', true, [1], ['2'], [true]];
+        const randomIndex = Math.floor(Math.random() * 6);
+        const field =  new Field({
+            type: types[randomIndex],
+            required: true
+        }, options);
+        field.value = values[randomIndex];
+        expect(field.valid).toEqual(true);
+
+        field.value = null;
+        expect(field.valid).toEqual(false);
+
+        field.value = values[randomIndex];
+        expect(field.valid).toEqual(true);
+
+        field.value = '';
+        expect(field.valid).toEqual(false);
+
+    });
+
+    test('A required field of array type should be invalid if value is not empty Array', () => {
+        const types = ['number[]', 'string[]', 'boolean[]'];
+        const values = [[1], ['2'], [true]];
+        const randomIndex = Math.floor(Math.random() * 3);
+        const field =  new Field({
+            type: types[randomIndex],
+            required: true
+        }, options);
+        field.value = values[randomIndex];
+        expect(field.valid).toEqual(true);
+
+        field.value = [];
+        expect(field.valid).toEqual(false);
+    });
+
     test.todo('type constraint');
     test.todo('minimum constraint');
     test.todo('maximum constraint');

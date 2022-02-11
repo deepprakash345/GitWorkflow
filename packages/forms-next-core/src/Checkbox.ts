@@ -2,7 +2,7 @@ import Field from './Field';
 import {Constraints} from './utils/ValidationUtils';
 
 const requiredConstraint = (offValue: any) => (constraint: boolean, value: any) => {
-    const valid =  Constraints.required(constraint, value) && value != offValue;
+    const valid =  Constraints.required(constraint, value) && (!constraint || value != offValue);
     return {valid, value};
 };
 

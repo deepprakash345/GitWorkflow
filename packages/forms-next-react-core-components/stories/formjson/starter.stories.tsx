@@ -11,7 +11,7 @@ import withPlaceholder from '../../../../docs/examples/starter/withPlaceholder.f
 import withMultipleFields from '../../../../docs/examples/starter/multipleFields.form.json';
 
 export default {
-    title: 'Form JSON/Basic',
+    title: 'Form JSON',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
@@ -21,17 +21,17 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     </Spectrum3Provider>
 );
 
-export const SingleField = Template.bind({});
-SingleField.args = {formJson: fieldWithLabel};
+export const oneFieldForm = Template.bind({});
+oneFieldForm.args = {formJson: fieldWithLabel};
 
-export const WithCaptionAndDescription = Template.bind({});
-WithCaptionAndDescription.args = {formJson: fieldWithLabelAndDescription};
-
-export const WithDefaultValue = Template.bind({});
-WithDefaultValue.args = {formJson: withDefaultValue};
-
-export const WithPlaceholder = Template.bind({});
-WithPlaceholder.args = {formJson: withPlaceholder};
+// export const WithCaptionAndDescription = Template.bind({});
+// WithCaptionAndDescription.args = {formJson: fieldWithLabelAndDescription};
+//
+// export const WithDefaultValue = Template.bind({});
+// WithDefaultValue.args = {formJson: withDefaultValue};
+//
+// export const WithPlaceholder = Template.bind({});
+// WithPlaceholder.args = {formJson: withPlaceholder};
 
 export const WithMultipleFields = Template.bind({});
 WithMultipleFields.args = {formJson: withMultipleFields};
