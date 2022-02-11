@@ -1,11 +1,11 @@
-# `@adobe/forms-next-react-core-components`
+# `@aemforms/forms-next-react-core-components`
 
 > TODO: description
 
 ## Usage
 
 ```
-const formsNextReactCoreComponents = require('@adobe/forms-next-react-core-components');
+const formsNextReactCoreComponents = require('@aemforms/forms-next-react-core-components');
 
 // TODO: DEMONSTRATE API
 ```

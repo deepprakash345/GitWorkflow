@@ -1,11 +1,11 @@
-# `@adobe/forms-next-core`
+# `@aemforms/forms-next-core`
 
 > TODO: description
 
 ## Usage
 
 ```
-const formsNextCore = require('@adobe/forms-next-core');
+const formsNextCore = require('@aemforms/forms-next-core');
 
 // TODO: DEMONSTRATE API
 ```
