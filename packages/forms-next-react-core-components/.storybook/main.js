@@ -13,6 +13,7 @@ module.exports = {
           prettierConfig: { printWidth: 80, singleQuote: false }
         },
       },
-    }
+    },
+    '@storybook/addon-a11y'
   ]
 }
