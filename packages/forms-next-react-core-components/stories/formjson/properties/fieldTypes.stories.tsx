@@ -48,7 +48,7 @@ export const [textInput, multilineInput, dateInput, numberInput, fileInput ] =
 });
 
 export const [dropDown, radioGroup, checkboxGroup] =
-    ['drop-down', 'radio-group' , 'checkboxGroup'].map(x => {
+    ['drop-down', 'radio-group' , 'checkbox-group'].map(x => {
     const j1 = {
         ...json,
         items: [{
@@ -64,7 +64,7 @@ export const [dropDown, radioGroup, checkboxGroup] =
     return y;
 });
 
-const checkbox = Template.bind({});
+export const checkbox = Template.bind({});
 const checkboxJson = {
     ...json,
     items: [{
@@ -75,7 +75,7 @@ const checkboxJson = {
 };
 checkbox.args = {formJson: checkboxJson};
 
-const text = Template.bind({});
+export const text = Template.bind({});
 const textJson = {
     ...json,
     items: [{
@@ -85,12 +85,15 @@ const textJson = {
     }]
 };
 text.args = {formJson: textJson};
-const button = Template.bind({});
+export const button = Template.bind({});
 const buttonJson = {
     ...json,
     items: [{
         ...item,
-        viewType: 'button'
+        viewType: 'button',
+        label: {
+            value: 'click me'
+        }
     }]
 };
 button.args = {formJson: buttonJson};
