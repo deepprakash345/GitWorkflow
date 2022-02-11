@@ -130,8 +130,6 @@ pipeline {
                         changeset "**/src/**/*.ts"
                         changeset "**/src/**/*.tsx"
                         changeset "**/package.json"
-                        changeset "**/stories/**/*.stories.@(js|jsx|ts|tsx)"
-                        changeset "**/stories/**/*.stories.mdx"
                     }
                 }
             }
