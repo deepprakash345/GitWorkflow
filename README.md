@@ -2,6 +2,8 @@
 
 Client side runtime for Headless Adaptive Form. The headless adaptive form is based on the [adaptive form specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/), which acts as the guiding principle for creating the JSON for headless forms.
 
+Documentation site: https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/story/
+
 # Usage
 
 Packages contained in this repository are published to the 
@@ -28,6 +30,13 @@ The script below does the same which can be copied to your bashrc file or can be
 auth=$(curl -s -u${ARTIFACTORY_USER}:${ARTIFACTORY_API_TOKEN} https://artifactory.corp.adobe.com/artifactory/api/npm/auth)
 export NPM_TOKEN=$(echo "${auth}" | grep "_auth" | awk -F " " '{ print $3 }')
 export NPM_EMAIL=$(echo "${auth}" | grep "email" | awk -F " " '{ print $3 }')
+```
+
+## Using Adaptive Form Super Component
+
+To use adaptive form super component, add the following dependency,
+```
+npm i @aemforms/forms-next-react-bindings @aemforms/forms-next-react-core-components
 ```
 
 ## Versions
