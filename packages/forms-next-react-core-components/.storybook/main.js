@@ -14,6 +14,14 @@ module.exports = {
         },
       },
     },
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        sourceLoaderOptions: {
+          injectStoryParameters: false,
+        }
+      }
+    },
     '@storybook/addon-a11y'
   ]
 }
