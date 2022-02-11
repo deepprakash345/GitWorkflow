@@ -85,6 +85,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.enumNames;
     }
 
+    get required() {
+        return this._jsonModel.required || false;
+    }
+
     set enumNames(e) {
         this._setProperty('enumNames', e);
     }
@@ -135,10 +139,15 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         let constraint = 'type';
         let elem = this._jsonModel;
         const Constraints = this._getConstraintObject();
-        const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum');
+        const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum' && x != 'required');
         const typeRes = Constraints.type(elem.type || 'string', value);
         const res = typeRes;
         const isArrayType = this.type ? this.type.indexOf('[]') > -1 : false;
+        if (res.valid) {
+            res.valid = Constraints.required(this.required, res.value).valid &&
+                (isArrayType && this.required ? res.value.length > 0 : true);
+            constraint = 'required';
+        }
         if (res.valid) {
             const invalidConstraint = supportedConstraints.find(key => {
                 if (key in elem) {

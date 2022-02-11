@@ -92,7 +92,7 @@ export const Constraints = {
         if (inputVal == undefined) {
             return {
                 valid: true,
-                value: undefined
+                value: inputVal
             };
         }
         let valid = true, res;

@@ -77,6 +77,15 @@ This will start a proxy server hosting all the examples that are needed by the P
 Our recommendation is to use [Node Version Manager](https://github.com/nvm-sh/nvm) so that you can manage multiple
 installation of Node/NPM
 
+### Clone the repository
+
+Use `git clone` command to clone the repository. To run the storybook locally, you might need to initialize the 
+git submodule that contains the examples used in the storybook. The commands to do that are
+`git submodule init` && `git submodule update`
+
+There are other ways to do that but for that you need to refer to the [git reference](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+
 ### Bootstrap
 
 Once you have cloned this repository and installed the correct version of Node/NPM, run the following command at the
@@ -111,13 +120,6 @@ npx lerna run start
 
 ```
 npx lerna run storybook
-```
-
-## Build the Storybook
-
-```
-cd packages/forms-next-react-core-components
-npm run build-storybook
 ```
 
 # Contributing
