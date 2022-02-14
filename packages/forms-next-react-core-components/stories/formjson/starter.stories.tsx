@@ -31,6 +31,15 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 export const oneFieldForm = Template.bind({});
 oneFieldForm.args = {formJson: fieldWithLabel};
 
+// export const WithCaptionAndDescription = Template.bind({});
+// WithCaptionAndDescription.args = {formJson: fieldWithLabelAndDescription};
+//
+// export const WithDefaultValue = Template.bind({});
+// WithDefaultValue.args = {formJson: withDefaultValue};
+//
+// export const WithPlaceholder = Template.bind({});
+// WithPlaceholder.args = {formJson: withPlaceholder};
+
 export const WithMultipleFields = Template.bind({});
 WithMultipleFields.args = {formJson: withMultipleFields};
 

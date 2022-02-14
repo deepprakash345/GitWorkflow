@@ -27,6 +27,15 @@ module.exports = {
           prettierConfig: { printWidth: 80, singleQuote: false }
         }
       },
-    }
+    },
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        sourceLoaderOptions: {
+          injectStoryParameters: false,
+        }
+      }
+    },
+    '@storybook/addon-a11y'
   ]
 }
