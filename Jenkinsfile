@@ -59,6 +59,8 @@ pipeline {
     stages {
         stage("build - environment") {
             steps {
+                sh "git submodule init"
+                sh "git submodule update"
                 sh "sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt ."
             }
         }
