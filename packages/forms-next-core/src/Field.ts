@@ -105,12 +105,12 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             if (changes.valid) {
                 this.triggerValidationEvent(changes);
             }
-            const changeAction = new Change({changes: Object.values(changes)});
-            this.dispatch(changeAction);
             const dataNode = this.getDataNode();
             if (typeof dataNode !== 'undefined') {
                 dataNode.$value = this._jsonModel.value;
             }
+            const changeAction = new Change({changes: Object.values(changes)});
+            this.dispatch(changeAction);
         }
     }
 
@@ -211,7 +211,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     /**
-     * Checks whether there are any updates in the properties
+     * Checks whether there are any updates in the properties. If there are applies them to the
+     * json model as well.
      * @param propNames
      * @param updates
      * @private

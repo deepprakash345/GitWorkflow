@@ -24,6 +24,7 @@ export class Validate extends ActionImpl {
 }
 
 export class FieldChanged extends ActionImpl {
+
     constructor(changes: ChangePayload, field: BaseJson) {
         super({
             field,
