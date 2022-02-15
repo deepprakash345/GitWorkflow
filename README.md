@@ -53,16 +53,14 @@ The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecyc
 headless demo instance. To run the playground locally execute the following commands
 
 ```
-npm install
-npx lerna bootstrap
-npx lerna run build
-npx lerna run start
+npm run bootstrap
+npm run build
+npm run start
 ```
 
 The playground is dependent on the JSON Files that are hosted on 
 [git](https://git.corp.adobe.com/livecycle/af2-docs/tree/gh-pages/examples) but due to cross origin issue, we have setup
-a proxy that does it. To start that proxy, clone the [af2-docs](https://git.corp.adobe.com/livecycle/af2-docs/) 
-repository and then run the following commands at the root of that repo
+a proxy that does it. To start that proxy, navigate to the `docs` folder and run the following command
 ```
 npm install
 npm run proxy
@@ -92,8 +90,7 @@ Once you have cloned this repository and installed the correct version of Node/N
 root directory of this project 
 
 ```
-npm install
-npx lerna bootstrap
+npm run bootstrap
 ```
 
 We hoist all the packages at the root project.
@@ -101,25 +98,25 @@ We hoist all the packages at the root project.
 ## Build
 
 ```
-npx lerna run build
+npm run build
 ```
 
 ## Tests
 
 ```
-npx lerna run test
+npm run test
 ```
 
 ## Start the Playground
 
 ```
-npx lerna run start
+npm run start
 ```
 
 ## Start the Storybook
 
 ```
-npx lerna run storybook
+npm run story
 ```
 
 # Contributing
