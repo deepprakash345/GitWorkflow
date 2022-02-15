@@ -8,14 +8,6 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     {
-      name: '@storybook/addon-docs',
-      options: {
-        sourceLoaderOptions: {
-          injectStoryParameters: false,
-        },
-      },
-    },
-    {
       name: '@storybook/addon-storysource',
       options: {
         rule: {
