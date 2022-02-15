@@ -11,6 +11,11 @@ const item = {
     'name' : 'textInput'
 };
 
+const options = {
+    enumNames: ['option 1', 'option 2'],
+    enum: [0, 1]
+};
+
 const json:any = {
     'adaptiveform': '0.0.17-pre',
     'action': 'http://www.google.com/',
@@ -32,37 +37,63 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     </Spectrum3Provider>
 );
 
-export const [textInput, multilineInput, dateInput, numberInput, fileInput ] =
-    ['text-input', 'multiline-input', 'date-input', 'number-input', 'file-input' ].map(x => {
-    const j1 = {
-        ...json,
+const getJson = (viewType: string) => {
+    return {
+    ...json,
         items: [{
-            ...item,
-            viewType: x
-        }]
+        ...item,
+        viewType
+    }]
     };
-    const y = Template.bind({});
-    y.storyName = x;
-    y.args = {formJson: j1};
-    return y;
-});
+};
 
-export const [dropDown, radioGroup, checkboxGroup] =
-    ['drop-down', 'radio-group' , 'checkbox-group'].map(x => {
-    const j1 = {
+const getOptionsJson = (viewType: string) => {
+    return {
         ...json,
         items: [{
             ...item,
-            viewType: x,
-            enumNames: ['option 1', 'option 2'],
-            enum: [0, 1]
+            viewType,
+            ...options
         }]
     };
-    const y = Template.bind({});
-    y.storyName = x;
-    y.args = {formJson: j1};
-    return y;
-});
+};
+
+export const textInput = Template.bind({});
+textInput.storyName = 'text-input';
+textInput.args = {formJson: getJson('text-input')};
+
+export const multilineInput = Template.bind({});
+multilineInput.storyName = 'multiline-input';
+multilineInput.args = {formJson: getJson('multiline-input')};
+
+export const dateInput = Template.bind({});
+dateInput.storyName = 'date-input';
+dateInput.args = {formJson: getJson('date-input')};
+
+
+export const numberInput = Template.bind({});
+numberInput.storyName = 'number-input';
+numberInput.args = {formJson: getJson('number-input')};
+
+
+export const fileInput = Template.bind({});
+fileInput.storyName = 'file-input';
+fileInput.args = {formJson: getJson('file-input')};
+
+
+export const dropDown = Template.bind({});
+dropDown.storyName = 'drop-down';
+dropDown.args = {formJson: getOptionsJson('drop-down')};
+
+
+export const radioGroup = Template.bind({});
+radioGroup.storyName = 'radio-group';
+radioGroup.args = {formJson: getOptionsJson('radio-group')};
+
+
+export const checkboxGroup = Template.bind({});
+checkboxGroup.storyName = 'checkbox-group';
+checkboxGroup.args = {formJson: getOptionsJson('checkbox-group')};
 
 export const checkbox = Template.bind({});
 const checkboxJson = {

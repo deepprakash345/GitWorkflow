@@ -1,6 +1,6 @@
 import React, {JSXElementConstructor, useEffect, useState} from 'react';
 import FormContext from './FormContext';
-import {createFormInstance, FormModel} from '@aemforms/forms-next-core/lib';
+import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/forms-next-core/lib';
 import {FormJson} from '@aemforms/forms-next-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
@@ -10,6 +10,7 @@ import {renderChildren} from '../renderChildren';
 import packageJson from '../../package.json';
 import {useAdoption} from '@quarry/eim-provider';
 import afLocalizationJson from '../i18n.json';
+import {ChangePayload} from '@aemforms/forms-next-core/lib/controller/Controller';
 
 /**
  * The minimum set of translation config that contains messages for all supported locales.
@@ -25,8 +26,30 @@ type customEventHandlers = {
     [key: string]: any;
 }
 
+type InitializeAction = Action & {
+    type: 'initialize',
+    target: FormModel
+}
+
+type FieldChanged = Action & {
+    target: FormModel,
+    type: 'fieldChanged',
+    payload: {
+        field: FieldJson,
+        changes: ChangePayload
+    }
+}
+
+type Submit = Action & {
+    target: FormModel,
+    type: 'submit'
+}
+
 type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages & {
     formJson: FormJson,
+    onInitialize?: (a: InitializeAction) => any
+    onFieldChanged?: (a: FieldChanged) => any
+    onSubmit?: (a:Submit) => any
     mappings: {[key:string]:JSXElementConstructor<any>}
 }
 
@@ -54,8 +77,8 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     if (locale) {
         localizationMessagesProp = localeDictJson?.[locale];
         if (localizationMessagesProp) {
-            afLocalization = afLocalization?.[locale] || {}
-            localizationMessagesProp = {...localizationMessagesProp, ...afLocalization}
+            afLocalization = afLocalization?.[locale] || {};
+            localizationMessagesProp = {...localizationMessagesProp, ...afLocalization};
          }
     }
     // this logs event only if used inside unified shell
@@ -66,7 +89,10 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
         if (typeof onInitialize === 'function') {
             onInitialize({
                 type : 'initialize',
-                target: form
+                target: form,
+                payload: undefined,
+                metadata: undefined,
+                isCustomEvent: false
             });
         }
         Object.keys(props)
