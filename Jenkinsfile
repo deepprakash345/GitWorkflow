@@ -13,12 +13,21 @@ def prepareSample = false
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
 BUILDER_DOCKER_NAME="af2-web-runtime-builder"
+BUILDER_DOCKER_NAME_14="af2-web-runtime-builder_14"
 GIT_REPO_URL="git@git.corp.adobe.com:livecycle/forms-next-web-runtime.git"
 def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
     ]) {
         sh "docker run -u `id -u` -e REACT_APP_AEM_URL -e REACT_APP_AUTH_REQUIRED -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
+    }
+}
+
+def runDocker14(String command) {
+    withCredentials(bindings: [
+            usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
+    ]) {
+        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c '$command'"
     }
 }
 
@@ -62,10 +71,21 @@ pipeline {
                 sh "git submodule init"
                 sh "git submodule update"
                 sh "sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt ."
+                sh "sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt ."
+            }
+        }
+        stage("test - node14") {
+            steps {
+                runDocker14('npm ci')
+                runDocker14('npx lerna bootstrap --ci --hoist --strict')
+                runDocker14('npx lerna run build')
+                runDocker14('npx lerna run test')
             }
         }
         stage("build - packages") {
             steps {
+                sh "sudo rm -rf node_modules packages/*/node_modules packages/*/lib packages/*/build packages/*/target"
+                sh "git checkout ."
                 runDocker('npm ci')
                 runDocker('npx lerna bootstrap --ci --hoist --strict')
                 runDocker('npx lerna run build')
@@ -74,17 +94,6 @@ pipeline {
         stage("test") {
             steps {
                 runDocker('npx lerna run test-ci')
-                // need to aggregate the reports, until then no reporting
-//                 step([
-//                   $class: 'CloverPublisher',
-//                   cloverReportDir: 'packages/forms-next-core/target/coverage',
-//                   cloverReportFileName: 'clover.xml'
-//                 ])
-//                 step([
-//                   $class: 'CloverPublisher',
-//                   cloverReportDir: 'packages/forms-next-react-core-components/target/coverage',
-//                   cloverReportFileName: 'clover.xml'
-//                 ])
                 archiveArtifacts artifacts: "packages/forms-next-react-core-components/target/**"
                 archiveArtifacts artifacts: "packages/forms-next-core/target/**"
                 archiveArtifacts artifacts: "packages/react-bindings/target/**"
@@ -92,12 +101,6 @@ pipeline {
                 junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
                 junit "packages/react-bindings/target/test-reports/junit.xml"
            }
-//             post {
-//                 always {
-//                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-core/coverage/cobertura-coverage.xml'])
-//                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-react-core-components/coverage/cobertura-coverage.xml'])
-//                 }
-//               }
         }
         stage("diff coverage") {
             when {

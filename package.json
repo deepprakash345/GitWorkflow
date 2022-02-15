@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts" : {
-    "clean" : "lerna clean && rm -rf node_modules packages/*/lib packages/*/node_modules packages/*/build",
+    "clean" : "lerna clean --yes && rm -rf packages/*/lib packages/*/build",
     "build" : "lerna run build",
     "start" : "lerna run start",
     "story" : "lerna run storybook",
