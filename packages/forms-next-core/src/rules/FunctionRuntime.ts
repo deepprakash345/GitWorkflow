@@ -6,6 +6,17 @@ import {getAttachments} from '../utils/FormUtils';
 
 type HTTP_VERB = 'GET' | 'POST'
 
+/**
+ * Implementation of generic request API. This API can be used to make external web request
+ * @param context                   expression execution context(consists of current form, current field, current event)
+ * @param uri                       request URI
+ * @param httpVerb                  http verb (for example, GET or POST)
+ * @param payload                   request payload
+ * @param success                   success handler
+ * @param error                     error handler
+ * @param payloadContentType        content type of the request
+ * @private
+ */
 export const request = async (context: any,
                        uri: string,
                        httpVerb: HTTP_VERB,
@@ -43,6 +54,12 @@ export const request = async (context: any,
     context.form.dispatch(new CustomEvent(success, result, true));
 };
 
+/**
+ * Create multi part form data using form data and form attachments
+ * @param data              form data
+ * @param attachments       form events
+ * @private
+ */
 const multipartFormData = (data: any, attachments: any) => {
     const formData = new FormData();
     formData.append(':data', data);
@@ -104,6 +121,13 @@ export const submit = async (context: any,
     await request(context, endpoint, 'POST', formData, success, error, submitContentType);
 };
 
+/**
+ * Helper function to create an action
+ * @param name          name of the event
+ * @param payload       event payload
+ * @param dispatch      true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
+ * @private
+ */
 const createAction = (name: string, payload: any = {}, dispatch: boolean = false)  => {
     switch (name) {
         case 'change':
@@ -121,7 +145,10 @@ const createAction = (name: string, payload: any = {}, dispatch: boolean = false
     }
 };
 
-
+/**
+ * Implementation of function runtime
+ * @private
+ */
 class FunctionRuntimeImpl {
 
     getFunctions () {

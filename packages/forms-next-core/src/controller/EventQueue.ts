@@ -1,6 +1,10 @@
 import {Action, BaseJson} from '../types';
 import {BaseNode} from '../BaseNode';
 
+/**
+ * Implementation of event node
+ * @private
+ */
 class EventNode<T extends BaseJson> {
     constructor(private _node: BaseNode<T>, private _event: Action) {
     }
@@ -26,6 +30,11 @@ class EventNode<T extends BaseJson> {
     }
 }
 
+/**
+ * Implementation of event queue. When a user event, like change or click, is captured the expression to be evaluated
+ * must be put in an Event Queue and then evaluated.
+ * @private
+ */
 class EventQueue {
 
     private _runningEventCount: any

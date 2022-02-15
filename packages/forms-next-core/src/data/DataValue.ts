@@ -1,5 +1,8 @@
 import {FieldModel} from '../types';
 
+/**
+ * @private
+ */
 export default class DataValue {
 
     private $_fields: Array<FieldModel> = []

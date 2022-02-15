@@ -213,6 +213,10 @@ export interface BaseModel extends ConstraintsJson, WithController {
     _initialize(): any
 }
 
+/**
+ * Generic field model interface.
+ * Defines properties that each form field should have
+ */
 export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJson> {
     parent: ContainerModel
 }
@@ -235,12 +239,20 @@ export interface FormMetaDataModel {
     readonly locale: string
 }
 
+/**
+ * Generic container model interface.
+ * Defines properties that each container should have
+ */
 export interface ContainerModel extends BaseModel, ScriptableField {
     items: Array<FieldsetModel | FieldModel>
     parent: ContainerModel
     indexOf(f: FieldModel | FieldsetModel): number
 }
 
+/**
+ * Generic field set model interface.
+ * Defines properties that each field set should have
+ */
 export interface FieldsetModel extends ContainerModel, WithContainerState<FieldsetJson> {
     type?: 'array' | 'object'
 }

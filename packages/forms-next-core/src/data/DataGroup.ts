@@ -1,5 +1,8 @@
 import DataValue from './DataValue';
 
+/**
+ * @private
+ */
 export default class DataGroup extends DataValue {
 
     $_items: { [key: string|number]: DataValue | DataGroup } = {}

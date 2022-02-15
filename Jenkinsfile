@@ -118,7 +118,6 @@ pipeline {
         stage("docs") {
             steps {
                 runDocker('npx lerna run docs')
-                archiveArtifacts artifacts: "packages/forms-next-core/target/docs/**"
             }
         }
         stage("publish") {
@@ -140,8 +139,12 @@ pipeline {
                 script {
                     gitStrategy.checkout(env.BRANCH_NAME)
                     gitStrategy.impersonate("cqguides", "cqguides") {
+                        runDocker("npx lerna run docs")
                         runDocker("npx lerna version patch --no-push --yes -m \":release\"")
                         runDocker("npx lerna publish from-package --yes")
+                        sh "git add -A ."
+                        /** doing single commit to avoid multiple build runs **/
+                        sh "git commit -a --amend --no-edit"
 /*
                         runDocker('npx lerna exec -- npm install')
                         sh "git commit -a -m \":release Updating package-lock.json after version bump\""
