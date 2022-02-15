@@ -3,6 +3,10 @@ import {ActionImpl} from '../controller/Controller';
 import {Formula} from '@adobe/json-formula';
 import FunctionRuntime from './FunctionRuntime';
 
+/**
+ * Implementation of AddDependant event
+ * @private
+ */
 class AddDependent extends ActionImpl {
     constructor(payload: BaseModel) {
         super(payload, 'addDependent');
@@ -13,6 +17,10 @@ class AddDependent extends ActionImpl {
     }
 }
 
+/**
+ * Implementation of rule engine
+ * @private
+ */
 class RuleEngine {
     //todo: somehow get rid of this state
     private _context: any
