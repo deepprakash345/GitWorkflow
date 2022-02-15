@@ -8,7 +8,8 @@
       "registry": "@adobe:https://artifactory.corp.adobe.com/artifactory/api/npm/npm-aem-release/"
     },
     "bootstrap" : {
-      "hoist" : "**"
+      "hoist" : "**",
+      "npmClientArgs": ["--legacy-peer-deps"]
     }
   },
   "version": "independent"
