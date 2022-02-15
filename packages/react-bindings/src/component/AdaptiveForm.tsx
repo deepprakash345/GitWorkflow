@@ -26,12 +26,12 @@ type customEventHandlers = {
     [key: string]: any;
 }
 
-type InitializeAction = {
+type InitializeAction = Action & {
     type: 'initialize',
     target: FormModel
 }
 
-type FieldChanged = {
+type FieldChanged = Action & {
     target: FormModel,
     type: 'fieldChanged',
     payload: {
@@ -40,16 +40,16 @@ type FieldChanged = {
     }
 }
 
-type Submit = {
+type Submit = Action & {
     target: FormModel,
     type: 'submit'
 }
 
 type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages & {
     formJson: FormJson,
-    onInitialize: (a: InitializeAction) => any
-    onFieldChanged: (a: FieldChanged) => any
-    onSubmit: (a:Submit) => any
+    onInitialize?: (a: InitializeAction) => any
+    onFieldChanged?: (a: FieldChanged) => any
+    onSubmit?: (a:Submit) => any
     mappings: {[key:string]:JSXElementConstructor<any>}
 }
 
@@ -89,7 +89,10 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
         if (typeof onInitialize === 'function') {
             onInitialize({
                 type : 'initialize',
-                target: form
+                target: form,
+                payload: undefined,
+                metadata: undefined,
+                isCustomEvent: false
             });
         }
         Object.keys(props)
