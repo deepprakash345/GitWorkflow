@@ -1,6 +1,6 @@
 # Class: Change
 
-[controller/Controller](../modules/controller_Controller.md).Change
+[Events](../modules/Events.md).Change
 
 Implementation of change event. The change event is triggered on the field whenever the value of the field is changed
 
@@ -12,37 +12,22 @@ Implementation of change event. The change event is triggered on the field whene
 
 ## Table of contents
 
-### Properties
-
-- [\_type](controller_Controller.Change.md#_type)
-
 ### Constructors
 
-- [constructor](controller_Controller.Change.md#constructor)
+- [constructor](Events.Change.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](controller_Controller.Change.md#iscustomevent)
-- [metadata](controller_Controller.Change.md#metadata)
-- [payload](controller_Controller.Change.md#payload)
-- [target](controller_Controller.Change.md#target)
-- [type](controller_Controller.Change.md#type)
+- [isCustomEvent](Events.Change.md#iscustomevent)
+- [metadata](Events.Change.md#metadata)
+- [payload](Events.Change.md#payload)
+- [target](Events.Change.md#target)
+- [type](Events.Change.md#type)
 
 ### Methods
 
-- [payloadToJson](controller_Controller.Change.md#payloadtojson)
-- [toJson](controller_Controller.Change.md#tojson)
-- [toString](controller_Controller.Change.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
+- [toJson](Events.Change.md#tojson)
+- [toString](Events.Change.md#tostring)
 
 ## Constructors
 
@@ -54,7 +39,7 @@ ActionImpl.\_type
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `payload` | [`ChangePayload`](../modules/controller_Controller.md#changepayload) | `undefined` |
+| `payload` | [`ChangePayload`](../modules/Events.md#changepayload) | `undefined` |
 | `dispatch` | `boolean` | `false` |
 
 #### Overrides
@@ -107,11 +92,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -132,20 +117,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

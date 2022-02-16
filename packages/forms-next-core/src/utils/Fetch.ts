@@ -1,3 +1,9 @@
+/**
+ * Defines utilities to make external web request
+ * @module
+ * @private
+ */
+
 declare var fetch: any;
 
 export const request = (url: string, data: any = null, options: RequestOptions = {}) => {

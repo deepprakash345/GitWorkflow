@@ -10,10 +10,6 @@
 
 ## Table of contents
 
-### Properties
-
-- [\_type](Form.Validate.md#_type)
-
 ### Constructors
 
 - [constructor](Form.Validate.md#constructor)
@@ -28,19 +24,8 @@
 
 ### Methods
 
-- [payloadToJson](Form.Validate.md#payloadtojson)
 - [toJson](Form.Validate.md#tojson)
 - [toString](Form.Validate.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
 
 ## Constructors
 
@@ -98,11 +83,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -123,20 +108,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

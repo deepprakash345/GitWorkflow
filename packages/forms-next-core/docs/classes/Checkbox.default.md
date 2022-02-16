@@ -12,20 +12,16 @@
 
 ### Methods
 
-- [\_applyDefaults](Checkbox.default.md#_applydefaults)
 - [\_bindToDataModel](Checkbox.default.md#_bindtodatamodel)
 - [\_getConstraintObject](Checkbox.default.md#_getconstraintobject)
-- [\_getDefaults](Checkbox.default.md#_getdefaults)
 - [\_initialize](Checkbox.default.md#_initialize)
 - [\_setProperty](Checkbox.default.md#_setproperty)
 - [addDependent](Checkbox.default.md#adddependent)
 - [change](Checkbox.default.md#change)
-- [checkInput](Checkbox.default.md#checkinput)
 - [defaultDataModel](Checkbox.default.md#defaultdatamodel)
 - [directReferences](Checkbox.default.md#directreferences)
 - [dispatch](Checkbox.default.md#dispatch)
 - [executeAction](Checkbox.default.md#executeaction)
-- [executeAllRules](Checkbox.default.md#executeallrules)
 - [executeRule](Checkbox.default.md#executerule)
 - [getDataNode](Checkbox.default.md#getdatanode)
 - [getRuleNode](Checkbox.default.md#getrulenode)
@@ -34,16 +30,11 @@
 - [notifyDependents](Checkbox.default.md#notifydependents)
 - [queueEvent](Checkbox.default.md#queueevent)
 - [removeDependent](Checkbox.default.md#removedependent)
-- [setupRuleNode](Checkbox.default.md#setuprulenode)
 - [subscribe](Checkbox.default.md#subscribe)
 - [toString](Checkbox.default.md#tostring)
 - [triggerValidationEvent](Checkbox.default.md#triggervalidationevent)
 - [validate](Checkbox.default.md#validate)
 - [valueOf](Checkbox.default.md#valueof)
-
-### Properties
-
-- [\_jsonModel](Checkbox.default.md#_jsonmodel)
 
 ### Constructors
 
@@ -73,20 +64,6 @@
 - [visible](Checkbox.default.md#visible)
 
 ## Methods
-
-### \_applyDefaults
-
-▸ `Protected` **_applyDefaults**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[_applyDefaults](Field.default.md#_applydefaults)
-
-___
 
 ### \_bindToDataModel
 
@@ -131,28 +108,6 @@ ___
 #### Overrides
 
 Field.\_getConstraintObject
-
-___
-
-### \_getDefaults
-
-▸ `Protected` **_getDefaults**(): `Object`
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `enabled` | `boolean` |
-| `enforceEnum` | `boolean` |
-| `readOnly` | `boolean` |
-| `type` | `string` |
-| `visible` | `boolean` |
-
-#### Overrides
-
-[default](Field.default.md).[_getDefaults](Field.default.md#_getdefaults)
 
 ___
 
@@ -205,7 +160,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -225,7 +180,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `event` | [`Action`](../interfaces/types_Model.Action.md) |
+| `event` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
@@ -235,26 +190,6 @@ ___
 #### Inherited from
 
 [default](Field.default.md).[change](Field.default.md#change)
-
-___
-
-### checkInput
-
-▸ `Protected` **checkInput**(`input`): `any`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `input` | `any` |
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[default](Field.default.md).[checkInput](Field.default.md#checkinput)
 
 ___
 
@@ -300,7 +235,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -320,7 +255,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -332,26 +267,6 @@ ___
 
 ___
 
-### executeAllRules
-
-▸ `Protected` **executeAllRules**(`context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[executeAllRules](Field.default.md#executeallrules)
-
-___
-
 ### executeRule
 
 ▸ **executeRule**(`event`, `context`): `void`
@@ -360,7 +275,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `event` | [`Action`](../interfaces/types_Model.Action.md) |
+| `event` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
@@ -403,11 +318,11 @@ ___
 
 ### getState
 
-▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
 
 #### Returns
 
-`TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+`TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
 
 #### Inherited from
 
@@ -443,7 +358,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -463,7 +378,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -483,7 +398,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -492,20 +407,6 @@ ___
 #### Inherited from
 
 [default](Field.default.md).[removeDependent](Field.default.md#removedependent)
-
-___
-
-### setupRuleNode
-
-▸ `Protected` **setupRuleNode**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[setupRuleNode](Field.default.md#setuprulenode)
 
 ___
 
@@ -576,7 +477,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -600,16 +501,6 @@ ___
 
 [default](Field.default.md).[valueOf](Field.default.md#valueof)
 
-## Properties
-
-### \_jsonModel
-
-• `Protected` **\_jsonModel**: `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
-
-#### Inherited from
-
-[default](Field.default.md).[_jsonModel](Field.default.md#_jsonmodel)
-
 ## Constructors
 
 ### constructor
@@ -620,10 +511,10 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `params` | [`FieldJson`](../modules/types_Json.md#fieldjson) |
+| `params` | [`FieldJson`](../modules/FormJsonTypes.md#fieldjson) |
 | `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/types_Model.FormModel.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/types_Model.ContainerModel.md) |
+| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
+| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
 
 #### Inherited from
 
@@ -721,11 +612,11 @@ ___
 
 ### form
 
-• `get` **form**(): [`FormModel`](../interfaces/types_Model.FormModel.md)
+• `get` **form**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Inherited from
 
@@ -777,11 +668,11 @@ ___
 
 ### label
 
-• `get` **label**(): `undefined` \| [`Label`](../modules/types_Json.md#label)
+• `get` **label**(): `undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Returns
 
-`undefined` \| [`Label`](../modules/types_Json.md#label)
+`undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Inherited from
 
@@ -793,7 +684,7 @@ Field.label
 
 | Name | Type |
 | :------ | :------ |
-| `l` | `undefined` \| [`Label`](../modules/types_Json.md#label) |
+| `l` | `undefined` \| [`Label`](../modules/FormJsonTypes.md#label) |
 
 #### Returns
 
@@ -821,11 +712,11 @@ ___
 
 ### parent
 
-• `get` **parent**(): [`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+• `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Returns
 
-[`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+[`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Inherited from
 
@@ -893,11 +784,11 @@ ___
 
 ### rules
 
-• `get` **rules**(): [`Items`](../modules/types_Json.md#items)<`string`\>
+• `get` **rules**(): [`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 #### Returns
 
-[`Items`](../modules/types_Json.md#items)<`string`\>
+[`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 #### Inherited from
 

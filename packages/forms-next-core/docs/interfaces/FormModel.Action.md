@@ -1,6 +1,6 @@
 # Interface: Action
 
-[types/Model](../modules/types_Model.md).Action
+[FormModel](../modules/FormModel.md).Action
 
 Generic Action/Event interface.
 Defines common properties that each action/event should have
@@ -9,12 +9,12 @@ Defines common properties that each action/event should have
 
 ### Properties
 
-- [isCustomEvent](types_Model.Action.md#iscustomevent)
-- [metadata](types_Model.Action.md#metadata)
-- [originalAction](types_Model.Action.md#originalaction)
-- [payload](types_Model.Action.md#payload)
-- [target](types_Model.Action.md#target)
-- [type](types_Model.Action.md#type)
+- [isCustomEvent](FormModel.Action.md#iscustomevent)
+- [metadata](FormModel.Action.md#metadata)
+- [originalAction](FormModel.Action.md#originalaction)
+- [payload](FormModel.Action.md#payload)
+- [target](FormModel.Action.md#target)
+- [type](FormModel.Action.md#type)
 
 ## Properties
 
@@ -36,7 +36,7 @@ ___
 
 ### originalAction
 
-• `Optional` `Readonly` **originalAction**: [`Action`](types_Model.Action.md)
+• `Optional` `Readonly` **originalAction**: [`Action`](FormModel.Action.md)
 
 Original event. If the event is dispatched, this refers the original event
 
@@ -52,7 +52,7 @@ ___
 
 ### target
 
-• `Readonly` **target**: [`FormModel`](types_Model.FormModel.md) \| [`FieldModel`](types_Model.FieldModel.md) \| [`FieldsetModel`](types_Model.FieldsetModel.md)
+• `Readonly` **target**: [`FormModel`](FormModel.FormModel-1.md) \| [`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md)
 
 The field element on which the event is triggered.
 

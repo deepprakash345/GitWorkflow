@@ -1,20 +1,25 @@
-# Module: utils/ValidationUtils
+# Module: ValidationUtils
+
+Defines generic utilities to validate form runtime model based on the constraints defined
+as per `crispr form specification`
 
 ## Table of contents
 
 ### Variables
 
-- [Constraints](utils_ValidationUtils.md#constraints)
+- [Constraints](ValidationUtils.md#constraints)
 
 ### Functions
 
-- [isDataUrl](utils_ValidationUtils.md#isdataurl)
+- [isDataUrl](ValidationUtils.md#isdataurl)
 
 ## Variables
 
 ### Constraints
 
 • **Constraints**: `Object`
+
+Implementation of all constraints defined by `crispr form specification`
 
 #### Type declaration
 

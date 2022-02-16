@@ -1,6 +1,6 @@
 # Class: Submit
 
-[controller/Controller](../modules/controller_Controller.md).Submit
+[Events](../modules/Events.md).Submit
 
 Implementation of submit event. The submit event is triggered on the Form.
 To trigger the submit event, submit function needs to be invoked or one can invoke dispatchEvent API.
@@ -13,37 +13,22 @@ To trigger the submit event, submit function needs to be invoked or one can invo
 
 ## Table of contents
 
-### Properties
-
-- [\_type](controller_Controller.Submit.md#_type)
-
 ### Constructors
 
-- [constructor](controller_Controller.Submit.md#constructor)
+- [constructor](Events.Submit.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](controller_Controller.Submit.md#iscustomevent)
-- [metadata](controller_Controller.Submit.md#metadata)
-- [payload](controller_Controller.Submit.md#payload)
-- [target](controller_Controller.Submit.md#target)
-- [type](controller_Controller.Submit.md#type)
+- [isCustomEvent](Events.Submit.md#iscustomevent)
+- [metadata](Events.Submit.md#metadata)
+- [payload](Events.Submit.md#payload)
+- [target](Events.Submit.md#target)
+- [type](Events.Submit.md#type)
 
 ### Methods
 
-- [payloadToJson](controller_Controller.Submit.md#payloadtojson)
-- [toJson](controller_Controller.Submit.md#tojson)
-- [toString](controller_Controller.Submit.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
+- [toJson](Events.Submit.md#tojson)
+- [toString](Events.Submit.md#tostring)
 
 ## Constructors
 
@@ -108,11 +93,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -133,20 +118,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

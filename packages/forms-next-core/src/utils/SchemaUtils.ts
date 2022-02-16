@@ -1,3 +1,7 @@
+/**
+ * Defines generic utilities to convert form model definition to json schema
+ * @module SchemaUtils
+ */
 import {FieldJson, FieldsetJson, FormJson} from '../types';
 
 const primitives = ['string', 'boolean', 'number'];
@@ -17,6 +21,11 @@ const typeToViewTypes = objToMap({
 
 const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
 
+/**
+ * Returns the default view type for a given form field object based on `crispr form specification`
+ * @param schema    schema item for which default view type is to found
+ * @returns default view type
+ */
 export const defaultViewTypes = (schema: any): string => {
     const type = schema.type || 'string';
     if ('enum' in schema) {
@@ -73,6 +82,11 @@ const fieldSchema = (input: FieldJson | FieldsetJson | FormJson) : any => {
     }
 };
 
+/**
+ * Creates a json schema from form model definition
+ * @param form {@link FormJson | form model definition}
+ * @returns json schema of form model definition
+ */
 export const exportDataSchema = (form : FormJson) => {
    return fieldSchema(form);
 };

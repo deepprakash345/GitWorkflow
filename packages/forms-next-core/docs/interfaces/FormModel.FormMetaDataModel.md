@@ -1,6 +1,6 @@
 # Interface: FormMetaDataModel
 
-[types/Model](../modules/types_Model.md).FormMetaDataModel
+[FormModel](../modules/FormModel.md).FormMetaDataModel
 
 Defines form meta data properties
 
@@ -12,9 +12,9 @@ Defines form meta data properties
 
 ### Properties
 
-- [grammarVersion](types_Model.FormMetaDataModel.md#grammarversion)
-- [locale](types_Model.FormMetaDataModel.md#locale)
-- [version](types_Model.FormMetaDataModel.md#version)
+- [grammarVersion](FormModel.FormMetaDataModel.md#grammarversion)
+- [locale](FormModel.FormMetaDataModel.md#locale)
+- [version](FormModel.FormMetaDataModel.md#version)
 
 ## Properties
 

@@ -12,7 +12,7 @@
 
 ### createFormInstance
 
-▸ `Const` **createFormInstance**(`formModel`): [`FormModel`](../interfaces/types_Model.FormModel.md)
+▸ `Const` **createFormInstance**(`formModel`): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Parameters
 
@@ -22,7 +22,7 @@
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 ___
 

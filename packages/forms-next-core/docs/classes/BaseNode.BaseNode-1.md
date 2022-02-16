@@ -6,7 +6,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`BaseJson`](../modules/types_Json.md#basejson) |
+| `T` | extends [`BaseJson`](../modules/FormJsonTypes.md#basejson) |
 
 ## Hierarchy
 
@@ -16,7 +16,7 @@
 
 ## Implements
 
-- [`BaseModel`](../interfaces/types_Model.BaseModel.md)
+- [`BaseModel`](../interfaces/FormModel.BaseModel.md)
 
 ## Table of contents
 
@@ -35,13 +35,7 @@
 - [notifyDependents](BaseNode.BaseNode-1.md#notifydependents)
 - [queueEvent](BaseNode.BaseNode-1.md#queueevent)
 - [removeDependent](BaseNode.BaseNode-1.md#removedependent)
-- [setupRuleNode](BaseNode.BaseNode-1.md#setuprulenode)
 - [subscribe](BaseNode.BaseNode-1.md#subscribe)
-
-### Properties
-
-- [\_jsonModel](BaseNode.BaseNode-1.md#_jsonmodel)
-- [value](BaseNode.BaseNode-1.md#value)
 
 ### Constructors
 
@@ -61,6 +55,10 @@
 - [type](BaseNode.BaseNode-1.md#type)
 - [viewType](BaseNode.BaseNode-1.md#viewtype)
 - [visible](BaseNode.BaseNode-1.md#visible)
+
+### Properties
+
+- [value](BaseNode.BaseNode-1.md#value)
 
 ## Methods
 
@@ -88,7 +86,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -134,7 +132,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -142,7 +140,7 @@ ___
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[dispatch](../interfaces/types_Model.BaseModel.md#dispatch)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[dispatch](../interfaces/FormModel.BaseModel.md#dispatch)
 
 ___
 
@@ -154,7 +152,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -224,7 +222,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -240,7 +238,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -256,17 +254,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### setupRuleNode
-
-▸ `Protected` **setupRuleNode**(): `void`
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -295,25 +283,7 @@ ___
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[subscribe](../interfaces/types_Model.BaseModel.md#subscribe)
-
-## Properties
-
-### \_jsonModel
-
-• `Protected` **\_jsonModel**: `T` & { `id`: `string`  }
-
-___
-
-### value
-
-• `Abstract` **value**: [`Primitives`](../modules/types_Json.md#primitives)
-
-The current value of the Field. The property is serialized in the Data Model.
-
-#### Implementation of
-
-[BaseModel](../interfaces/types_Model.BaseModel.md).[value](../interfaces/types_Model.BaseModel.md#value)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[subscribe](../interfaces/FormModel.BaseModel.md#subscribe)
 
 ## Constructors
 
@@ -325,7 +295,7 @@ The current value of the Field. The property is serialized in the Data Model.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`BaseJson`](../modules/types_Json.md#basejson) |
+| `T` | extends [`BaseJson`](../modules/FormJsonTypes.md#basejson) |
 
 #### Parameters
 
@@ -333,8 +303,8 @@ The current value of the Field. The property is serialized in the Data Model.
 | :------ | :------ |
 | `params` | `T` |
 | `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/types_Model.FormModel.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/types_Model.ContainerModel.md) |
+| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
+| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
 
 ## Accessors
 
@@ -350,17 +320,17 @@ To map the field’s value to a property in the data model.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[dataRef](../interfaces/types_Model.BaseModel.md#dataref)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[dataRef](../interfaces/FormModel.BaseModel.md#dataref)
 
 ___
 
 ### form
 
-• `get` **form**(): [`FormModel`](../interfaces/types_Model.FormModel.md)
+• `get` **form**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 ___
 
@@ -376,7 +346,7 @@ Unique id of the form field.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[id](../interfaces/types_Model.BaseModel.md#id)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[id](../interfaces/FormModel.BaseModel.md#id)
 
 ___
 
@@ -392,7 +362,7 @@ The index of the Field within its parent.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[index](../interfaces/types_Model.BaseModel.md#index)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[index](../interfaces/FormModel.BaseModel.md#index)
 
 ___
 
@@ -408,23 +378,23 @@ Whether the form field is container or not
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[isContainer](../interfaces/types_Model.BaseModel.md#iscontainer)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[isContainer](../interfaces/FormModel.BaseModel.md#iscontainer)
 
 ___
 
 ### label
 
-• `get` **label**(): `undefined` \| [`Label`](../modules/types_Json.md#label)
+• `get` **label**(): `undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 Label to be used for the field.
 
 #### Returns
 
-`undefined` \| [`Label`](../modules/types_Json.md#label)
+`undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[label](../interfaces/types_Model.BaseModel.md#label)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[label](../interfaces/FormModel.BaseModel.md#label)
 
 • `set` **label**(`l`): `void`
 
@@ -434,7 +404,7 @@ Label to be used for the field.
 
 | Name | Type |
 | :------ | :------ |
-| `l` | `undefined` \| [`Label`](../modules/types_Json.md#label) |
+| `l` | `undefined` \| [`Label`](../modules/FormJsonTypes.md#label) |
 
 #### Returns
 
@@ -442,7 +412,7 @@ Label to be used for the field.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[label](../interfaces/types_Model.BaseModel.md#label)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[label](../interfaces/FormModel.BaseModel.md#label)
 
 ___
 
@@ -458,23 +428,23 @@ Name of the form field.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[name](../interfaces/types_Model.BaseModel.md#name)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[name](../interfaces/FormModel.BaseModel.md#name)
 
 ___
 
 ### parent
 
-• `get` **parent**(): [`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+• `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 The Parent Panel of the Field/Panel.
 
 #### Returns
 
-[`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+[`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[parent](../interfaces/types_Model.BaseModel.md#parent)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[parent](../interfaces/FormModel.BaseModel.md#parent)
 
 ___
 
@@ -498,7 +468,7 @@ ___
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[type](../interfaces/types_Model.BaseModel.md#type)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[type](../interfaces/FormModel.BaseModel.md#type)
 
 ___
 
@@ -514,7 +484,7 @@ Type of widget to show to the user for capturing the data..
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[viewType](../interfaces/types_Model.BaseModel.md#viewtype)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[viewType](../interfaces/FormModel.BaseModel.md#viewtype)
 
 ___
 
@@ -530,7 +500,7 @@ Whether the field should be visible to author or not.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[visible](../interfaces/types_Model.BaseModel.md#visible)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[visible](../interfaces/FormModel.BaseModel.md#visible)
 
 • `set` **visible**(`v`): `void`
 
@@ -548,4 +518,16 @@ Whether the field should be visible to author or not.
 
 #### Implementation of
 
-[BaseModel](../interfaces/types_Model.BaseModel.md).[visible](../interfaces/types_Model.BaseModel.md#visible)
+[BaseModel](../interfaces/FormModel.BaseModel.md).[visible](../interfaces/FormModel.BaseModel.md#visible)
+
+## Properties
+
+### value
+
+• `Abstract` **value**: [`Primitives`](../modules/FormJsonTypes.md#primitives)
+
+The current value of the Field. The property is serialized in the Data Model.
+
+#### Implementation of
+
+[BaseModel](../interfaces/FormModel.BaseModel.md).[value](../interfaces/FormModel.BaseModel.md#value)

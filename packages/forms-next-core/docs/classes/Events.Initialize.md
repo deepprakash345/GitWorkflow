@@ -1,6 +1,6 @@
 # Class: Initialize
 
-[controller/Controller](../modules/controller_Controller.md).Initialize
+[Events](../modules/Events.md).Initialize
 
 Implementation of initialize event. The event is triggered on all the fields when the form initialisation is complete
 
@@ -12,37 +12,22 @@ Implementation of initialize event. The event is triggered on all the fields whe
 
 ## Table of contents
 
-### Properties
-
-- [\_type](controller_Controller.Initialize.md#_type)
-
 ### Constructors
 
-- [constructor](controller_Controller.Initialize.md#constructor)
+- [constructor](Events.Initialize.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](controller_Controller.Initialize.md#iscustomevent)
-- [metadata](controller_Controller.Initialize.md#metadata)
-- [payload](controller_Controller.Initialize.md#payload)
-- [target](controller_Controller.Initialize.md#target)
-- [type](controller_Controller.Initialize.md#type)
+- [isCustomEvent](Events.Initialize.md#iscustomevent)
+- [metadata](Events.Initialize.md#metadata)
+- [payload](Events.Initialize.md#payload)
+- [target](Events.Initialize.md#target)
+- [type](Events.Initialize.md#type)
 
 ### Methods
 
-- [payloadToJson](controller_Controller.Initialize.md#payloadtojson)
-- [toJson](controller_Controller.Initialize.md#tojson)
-- [toString](controller_Controller.Initialize.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
+- [toJson](Events.Initialize.md#tojson)
+- [toString](Events.Initialize.md#tostring)
 
 ## Constructors
 
@@ -107,11 +92,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -132,20 +117,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

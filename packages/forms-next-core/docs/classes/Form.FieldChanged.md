@@ -10,10 +10,6 @@
 
 ## Table of contents
 
-### Properties
-
-- [\_type](Form.FieldChanged.md#_type)
-
 ### Constructors
 
 - [constructor](Form.FieldChanged.md#constructor)
@@ -28,19 +24,8 @@
 
 ### Methods
 
-- [payloadToJson](Form.FieldChanged.md#payloadtojson)
 - [toJson](Form.FieldChanged.md#tojson)
 - [toString](Form.FieldChanged.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
 
 ## Constructors
 
@@ -52,8 +37,8 @@ ActionImpl.\_type
 
 | Name | Type |
 | :------ | :------ |
-| `changes` | [`ChangePayload`](../modules/controller_Controller.md#changepayload) |
-| `field` | [`BaseJson`](../modules/types_Json.md#basejson) |
+| `changes` | [`ChangePayload`](../modules/Events.md#changepayload) |
+| `field` | [`BaseJson`](../modules/FormJsonTypes.md#basejson) |
 
 #### Overrides
 
@@ -105,11 +90,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -130,20 +115,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

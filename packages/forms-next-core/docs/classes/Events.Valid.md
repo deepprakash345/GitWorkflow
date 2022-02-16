@@ -1,6 +1,6 @@
 # Class: Valid
 
-[controller/Controller](../modules/controller_Controller.md).Valid
+[Events](../modules/Events.md).Valid
 
 Implementation of valid event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
 
@@ -12,37 +12,22 @@ Implementation of valid event. The valid event is triggered whenever the field�
 
 ## Table of contents
 
-### Properties
-
-- [\_type](controller_Controller.Valid.md#_type)
-
 ### Constructors
 
-- [constructor](controller_Controller.Valid.md#constructor)
+- [constructor](Events.Valid.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](controller_Controller.Valid.md#iscustomevent)
-- [metadata](controller_Controller.Valid.md#metadata)
-- [payload](controller_Controller.Valid.md#payload)
-- [target](controller_Controller.Valid.md#target)
-- [type](controller_Controller.Valid.md#type)
+- [isCustomEvent](Events.Valid.md#iscustomevent)
+- [metadata](Events.Valid.md#metadata)
+- [payload](Events.Valid.md#payload)
+- [target](Events.Valid.md#target)
+- [type](Events.Valid.md#type)
 
 ### Methods
 
-- [payloadToJson](controller_Controller.Valid.md#payloadtojson)
-- [toJson](controller_Controller.Valid.md#tojson)
-- [toString](controller_Controller.Valid.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
+- [toJson](Events.Valid.md#tojson)
+- [toString](Events.Valid.md#tostring)
 
 ## Constructors
 
@@ -106,11 +91,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -131,20 +116,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

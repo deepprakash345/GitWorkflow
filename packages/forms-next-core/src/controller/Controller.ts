@@ -1,3 +1,7 @@
+/**
+ * Defines all form events
+ * @module Events
+ */
 import {
     Action,
     FieldModel, FieldsetModel, FormModel

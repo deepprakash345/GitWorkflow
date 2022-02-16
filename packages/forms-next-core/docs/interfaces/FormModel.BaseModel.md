@@ -1,21 +1,21 @@
 # Interface: BaseModel
 
-[types/Model](../modules/types_Model.md).BaseModel
+[FormModel](../modules/FormModel.md).BaseModel
 
 Generic base model interface.
 Defines common properties that each form field should have
 
 ## Hierarchy
 
-- [`ConstraintsJson`](../modules/types_Json.md#constraintsjson)
+- [`ConstraintsJson`](../modules/FormJsonTypes.md#constraintsjson)
 
 - `WithController`
 
   ↳ **`BaseModel`**
 
-  ↳↳ [`FieldModel`](types_Model.FieldModel.md)
+  ↳↳ [`FieldModel`](FormModel.FieldModel.md)
 
-  ↳↳ [`ContainerModel`](types_Model.ContainerModel.md)
+  ↳↳ [`ContainerModel`](FormModel.ContainerModel.md)
 
 ## Implemented by
 
@@ -25,47 +25,47 @@ Defines common properties that each form field should have
 
 ### Properties
 
-- [accept](types_Model.BaseModel.md#accept)
-- [dataRef](types_Model.BaseModel.md#dataref)
-- [default](types_Model.BaseModel.md#default)
-- [description](types_Model.BaseModel.md#description)
-- [enabled](types_Model.BaseModel.md#enabled)
-- [enforceEnum](types_Model.BaseModel.md#enforceenum)
-- [enum](types_Model.BaseModel.md#enum)
-- [enumNames](types_Model.BaseModel.md#enumnames)
-- [expression](types_Model.BaseModel.md#expression)
-- [format](types_Model.BaseModel.md#format)
-- [fracDigits](types_Model.BaseModel.md#fracdigits)
-- [id](types_Model.BaseModel.md#id)
-- [index](types_Model.BaseModel.md#index)
-- [isContainer](types_Model.BaseModel.md#iscontainer)
-- [items](types_Model.BaseModel.md#items)
-- [label](types_Model.BaseModel.md#label)
-- [leadDigits](types_Model.BaseModel.md#leaddigits)
-- [maxFileSize](types_Model.BaseModel.md#maxfilesize)
-- [maxItems](types_Model.BaseModel.md#maxitems)
-- [maxLength](types_Model.BaseModel.md#maxlength)
-- [maximum](types_Model.BaseModel.md#maximum)
-- [minItems](types_Model.BaseModel.md#minitems)
-- [minLength](types_Model.BaseModel.md#minlength)
-- [minimum](types_Model.BaseModel.md#minimum)
-- [name](types_Model.BaseModel.md#name)
-- [parent](types_Model.BaseModel.md#parent)
-- [pattern](types_Model.BaseModel.md#pattern)
-- [placeholder](types_Model.BaseModel.md#placeholder)
-- [props](types_Model.BaseModel.md#props)
-- [readOnly](types_Model.BaseModel.md#readonly)
-- [required](types_Model.BaseModel.md#required)
-- [type](types_Model.BaseModel.md#type)
-- [valid](types_Model.BaseModel.md#valid)
-- [value](types_Model.BaseModel.md#value)
-- [viewType](types_Model.BaseModel.md#viewtype)
-- [visible](types_Model.BaseModel.md#visible)
+- [accept](FormModel.BaseModel.md#accept)
+- [dataRef](FormModel.BaseModel.md#dataref)
+- [default](FormModel.BaseModel.md#default)
+- [description](FormModel.BaseModel.md#description)
+- [enabled](FormModel.BaseModel.md#enabled)
+- [enforceEnum](FormModel.BaseModel.md#enforceenum)
+- [enum](FormModel.BaseModel.md#enum)
+- [enumNames](FormModel.BaseModel.md#enumnames)
+- [expression](FormModel.BaseModel.md#expression)
+- [format](FormModel.BaseModel.md#format)
+- [fracDigits](FormModel.BaseModel.md#fracdigits)
+- [id](FormModel.BaseModel.md#id)
+- [index](FormModel.BaseModel.md#index)
+- [isContainer](FormModel.BaseModel.md#iscontainer)
+- [items](FormModel.BaseModel.md#items)
+- [label](FormModel.BaseModel.md#label)
+- [leadDigits](FormModel.BaseModel.md#leaddigits)
+- [maxFileSize](FormModel.BaseModel.md#maxfilesize)
+- [maxItems](FormModel.BaseModel.md#maxitems)
+- [maxLength](FormModel.BaseModel.md#maxlength)
+- [maximum](FormModel.BaseModel.md#maximum)
+- [minItems](FormModel.BaseModel.md#minitems)
+- [minLength](FormModel.BaseModel.md#minlength)
+- [minimum](FormModel.BaseModel.md#minimum)
+- [name](FormModel.BaseModel.md#name)
+- [parent](FormModel.BaseModel.md#parent)
+- [pattern](FormModel.BaseModel.md#pattern)
+- [placeholder](FormModel.BaseModel.md#placeholder)
+- [props](FormModel.BaseModel.md#props)
+- [readOnly](FormModel.BaseModel.md#readonly)
+- [required](FormModel.BaseModel.md#required)
+- [type](FormModel.BaseModel.md#type)
+- [valid](FormModel.BaseModel.md#valid)
+- [value](FormModel.BaseModel.md#value)
+- [viewType](FormModel.BaseModel.md#viewtype)
+- [visible](FormModel.BaseModel.md#visible)
 
 ### Methods
 
-- [dispatch](types_Model.BaseModel.md#dispatch)
-- [subscribe](types_Model.BaseModel.md#subscribe)
+- [dispatch](FormModel.BaseModel.md#dispatch)
+- [subscribe](FormModel.BaseModel.md#subscribe)
 
 ## Properties
 
@@ -197,7 +197,7 @@ ___
 
 ### items
 
-• `Optional` `Readonly` **items**: ([`FieldModel`](types_Model.FieldModel.md) \| [`FieldsetModel`](types_Model.FieldsetModel.md))[]
+• `Optional` `Readonly` **items**: ([`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md))[]
 
 Array containing Fields or Panels.
 
@@ -205,7 +205,7 @@ ___
 
 ### label
 
-• `Optional` **label**: [`Label`](../modules/types_Json.md#label)
+• `Optional` **label**: [`Label`](../modules/FormJsonTypes.md#label)
 
 Label to be used for the field.
 
@@ -301,7 +301,7 @@ ___
 
 ### parent
 
-• `Readonly` **parent**: ``null`` \| [`ContainerModel`](types_Model.ContainerModel.md)
+• `Readonly` **parent**: ``null`` \| [`ContainerModel`](FormModel.ContainerModel.md)
 
 The Parent Panel of the Field/Panel.
 
@@ -405,7 +405,7 @@ Whether the field should be visible to author or not.
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](types_Model.Action.md) |
+| `action` | [`Action`](FormModel.Action.md) |
 
 #### Returns
 

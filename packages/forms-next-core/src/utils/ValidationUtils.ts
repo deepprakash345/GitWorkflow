@@ -1,3 +1,9 @@
+/**
+ * Defines generic utilities to validate form runtime model based on the constraints defined
+ * as per `crispr form specification`
+ * @module ValidationUtils
+ */
+
 // issue with import
 //import {FieldJson, isFileObject} from '../types';
 
@@ -6,6 +12,7 @@ import Field from '../Field';
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 const dataUrlRegex = /^data:([a-z]+\/[a-z0-9-+.]+)?;(?:name=(.*);)?base64,(.*)$/;
 
+/** Validation result type **/
 type ValidationResult = {
     valid: boolean,
     value: any
@@ -25,9 +32,20 @@ export const isDataUrl = (str : string) => {
 };
 
 /**
+ * Checks whether inputVal is valid number value or not
  *
- * checks whether inputVal is valid number value or not
- * @param inputVal
+ * ```
+ * const x = checkNumber('12')
+ * ```
+ * would return
+ * ```
+ * {
+ *     value : 12,
+ *     valid : true
+ * }
+ * ```
+ * @param inputVal input value
+ * @returns {@link ValidationResult | Validation result}
  */
 const checkNumber = (inputVal: string) => {
     let value:any = parseFloat(inputVal);
@@ -42,19 +60,33 @@ const checkNumber = (inputVal: string) => {
 };
 
 /**
- * wraps a non-null value and not an array value into an array
- * @param inputVal
+ * Wraps a non-null value and not an array value into an array
+ * @param inputVal input value
+ * @returns wraps the input value into an array
  */
-const toArray = (inputVal: any) => {
+const toArray = (inputVal: any) : Array<any> => {
     if (inputVal != null && !(inputVal instanceof Array)) {
         return [inputVal];
     }
     return inputVal;
 };
 
+
 /**
- * checks whether inputVal is valid boolean value or not
- * @param inputVal
+ * Checks whether inputVal is valid boolean value or not
+ *
+ * ```
+ * const x = checkBool('false')
+ * ```
+ * would return
+ * ```
+ * {
+ *     value : false,
+ *     valid : true
+ * }
+ * ```
+ * @param inputVal input value
+ * @returns {@link ValidationResult | Validation result}
  */
 const checkBool = (inputVal: any) => {
     const valid = typeof inputVal === 'boolean' || inputVal === 'true' || inputVal === 'false';
@@ -86,7 +118,16 @@ const partitionArray = (inputVal: any[], validatorFn: (x: any) => ValidationResu
     },[[],[]]);
 };
 
+/**
+ * Implementation of all constraints defined by `crispr form specification`
+ */
 export const Constraints = {
+    /**
+     * Implementation of type constraint
+     * @param constraint    `type` property of the form object
+     * @param inputVal      value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     type : (constraint: string, inputVal: any): ValidationResult => {
         let value : any = inputVal;
         if (inputVal == undefined) {
@@ -146,6 +187,12 @@ export const Constraints = {
         };
     },
 
+    /**
+     * Implementation of format constraint
+     * @param constraint    `format` property of the form object
+     * @param input         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     format : (constraint: string, input: string) => {
         let valid = true;
         let value = input;
@@ -174,23 +221,53 @@ export const Constraints = {
     },
 
     //todo : add support for date
+    /**
+     * Implementation of minimum constraint
+     * @param constraint    `minimum` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     minimum : (constraint: number, value: number) => {
         return {valid :value > constraint, value};
     },
 
     //todo : add support for date
+    /**
+     * Implementation of maximum constraint
+     * @param constraint    `maximum` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     maximum : (constraint: number, value: number) => {
         return {valid : value < constraint, value};
     },
 
+    /**
+     * Implementation of minLength constraint
+     * @param constraint    `minLength` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     minLength : (constraint: number, value: string) => {
         return {...Constraints.minimum(constraint, typeof value === 'string' ? value.length : 0), value};
     },
 
+    /**
+     * Implementation of maxLength constraint
+     * @param constraint    `maxLength` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     maxLength : (constraint: number, value: string) => {
         return {...Constraints.maximum(constraint, typeof value === 'string' ? value.length : 0), value};
     },
 
+    /**
+     * Implementation of pattern constraint
+     * @param constraint    `pattern` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     pattern : (constraint: RegExp | string, value: string) => {
         let regex: RegExp;
         if (typeof constraint === 'string') {
@@ -201,17 +278,28 @@ export const Constraints = {
         return {valid: regex.test(value), value};
     },
 
+    /**
+     * Implementation of required constraint
+     * @param constraint    `required` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     required : (constraint: boolean, value: any) => {
         const valid = constraint ? value != null && value !== '' : true;
         return {valid, value};
     },
 
+    /**
+     * Implementation of enum constraint
+     * @param constraint    `enum` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
     enum : (constraint: any[], value: any) => {
         return {
             valid: constraint.indexOf(value) > -1,
             value
         };
     }
-
 };
 

@@ -1,3 +1,8 @@
+/**
+ * Implementation of function runtime in rule engine
+ * @module
+ * @private
+ */
 import {jsonString} from '../utils/JsonUtils';
 import {AddItem, Change, Click, CustomEvent, RemoveItem, Submit} from '../controller/Controller';
 import {request as fRequest, RequestOptions} from '../utils/Fetch';

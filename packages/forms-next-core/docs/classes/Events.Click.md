@@ -1,6 +1,6 @@
 # Class: Click
 
-[controller/Controller](../modules/controller_Controller.md).Click
+[Events](../modules/Events.md).Click
 
 Implementation of click event. The event is triggered when user clicks on an element.
 
@@ -12,37 +12,22 @@ Implementation of click event. The event is triggered when user clicks on an ele
 
 ## Table of contents
 
-### Properties
-
-- [\_type](controller_Controller.Click.md#_type)
-
 ### Constructors
 
-- [constructor](controller_Controller.Click.md#constructor)
+- [constructor](Events.Click.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](controller_Controller.Click.md#iscustomevent)
-- [metadata](controller_Controller.Click.md#metadata)
-- [payload](controller_Controller.Click.md#payload)
-- [target](controller_Controller.Click.md#target)
-- [type](controller_Controller.Click.md#type)
+- [isCustomEvent](Events.Click.md#iscustomevent)
+- [metadata](Events.Click.md#metadata)
+- [payload](Events.Click.md#payload)
+- [target](Events.Click.md#target)
+- [type](Events.Click.md#type)
 
 ### Methods
 
-- [payloadToJson](controller_Controller.Click.md#payloadtojson)
-- [toJson](controller_Controller.Click.md#tojson)
-- [toString](controller_Controller.Click.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
+- [toJson](Events.Click.md#tojson)
+- [toString](Events.Click.md#tostring)
 
 ## Constructors
 
@@ -107,11 +92,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -132,20 +117,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

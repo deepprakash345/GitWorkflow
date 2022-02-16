@@ -1,6 +1,6 @@
 # Interface: IFileObject
 
-[types/Model](../modules/types_Model.md).IFileObject
+[FormModel](../modules/FormModel.md).IFileObject
 
 Defines file object interface.
 
@@ -12,10 +12,10 @@ Defines file object interface.
 
 ### Properties
 
-- [data](types_Model.IFileObject.md#data)
-- [mediaType](types_Model.IFileObject.md#mediatype)
-- [name](types_Model.IFileObject.md#name)
-- [size](types_Model.IFileObject.md#size)
+- [data](FormModel.IFileObject.md#data)
+- [mediaType](FormModel.IFileObject.md#mediatype)
+- [name](FormModel.IFileObject.md#name)
+- [size](FormModel.IFileObject.md#size)
 
 ## Properties
 

@@ -14,17 +14,17 @@
 
 ### createChild
 
-▸ `Const` **createChild**(`child`, `options`): [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+▸ `Const` **createChild**(`child`, `options`): [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `child` | [`FieldJson`](types_Json.md#fieldjson) \| [`FieldsetJson`](types_Json.md#fieldsetjson) |
+| `child` | [`FieldJson`](FormJsonTypes.md#fieldjson) \| [`FieldsetJson`](FormJsonTypes.md#fieldsetjson) |
 | `options` | `Object` |
-| `options.form` | [`FormModel`](../interfaces/types_Model.FormModel.md) |
-| `options.parent` | [`ContainerModel`](../interfaces/types_Model.ContainerModel.md) |
+| `options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
+| `options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
 
 #### Returns
 
-[`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)

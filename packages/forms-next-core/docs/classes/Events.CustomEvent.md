@@ -1,6 +1,6 @@
 # Class: CustomEvent
 
-[controller/Controller](../modules/controller_Controller.md).CustomEvent
+[Events](../modules/Events.md).CustomEvent
 
 Implementation of custom event.
 
@@ -12,37 +12,22 @@ Implementation of custom event.
 
 ## Table of contents
 
-### Properties
-
-- [\_type](controller_Controller.CustomEvent.md#_type)
-
 ### Constructors
 
-- [constructor](controller_Controller.CustomEvent.md#constructor)
+- [constructor](Events.CustomEvent.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](controller_Controller.CustomEvent.md#iscustomevent)
-- [metadata](controller_Controller.CustomEvent.md#metadata)
-- [payload](controller_Controller.CustomEvent.md#payload)
-- [target](controller_Controller.CustomEvent.md#target)
-- [type](controller_Controller.CustomEvent.md#type)
+- [isCustomEvent](Events.CustomEvent.md#iscustomevent)
+- [metadata](Events.CustomEvent.md#metadata)
+- [payload](Events.CustomEvent.md#payload)
+- [target](Events.CustomEvent.md#target)
+- [type](Events.CustomEvent.md#type)
 
 ### Methods
 
-- [payloadToJson](controller_Controller.CustomEvent.md#payloadtojson)
-- [toJson](controller_Controller.CustomEvent.md#tojson)
-- [toString](controller_Controller.CustomEvent.md#tostring)
-
-## Properties
-
-### \_type
-
-• `Protected` **\_type**: `string`
-
-#### Inherited from
-
-ActionImpl.\_type
+- [toJson](Events.CustomEvent.md#tojson)
+- [toString](Events.CustomEvent.md#tostring)
 
 ## Constructors
 
@@ -110,11 +95,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md) \| [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
 
 #### Inherited from
 
@@ -135,20 +120,6 @@ ___
 ActionImpl.type
 
 ## Methods
-
-### payloadToJson
-
-▸ `Protected` **payloadToJson**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-ActionImpl.payloadToJson
-
-___
 
 ### toJson
 

@@ -4,7 +4,7 @@
 
 ## Implements
 
-- [`IFileObject`](../interfaces/types_Model.IFileObject.md)
+- [`IFileObject`](../interfaces/FormModel.IFileObject.md)
 
 ## Table of contents
 
@@ -45,7 +45,7 @@ Data of the file attachment. It can be uri or any file interface specific to cha
 
 #### Implementation of
 
-[IFileObject](../interfaces/types_Model.IFileObject.md).[data](../interfaces/types_Model.IFileObject.md#data)
+[IFileObject](../interfaces/FormModel.IFileObject.md).[data](../interfaces/FormModel.IFileObject.md#data)
 
 ___
 
@@ -57,7 +57,7 @@ Media type of the file data
 
 #### Implementation of
 
-[IFileObject](../interfaces/types_Model.IFileObject.md).[mediaType](../interfaces/types_Model.IFileObject.md#mediatype)
+[IFileObject](../interfaces/FormModel.IFileObject.md).[mediaType](../interfaces/FormModel.IFileObject.md#mediatype)
 
 ___
 
@@ -69,7 +69,7 @@ Name of the file
 
 #### Implementation of
 
-[IFileObject](../interfaces/types_Model.IFileObject.md).[name](../interfaces/types_Model.IFileObject.md#name)
+[IFileObject](../interfaces/FormModel.IFileObject.md).[name](../interfaces/FormModel.IFileObject.md#name)
 
 ___
 
@@ -81,7 +81,7 @@ Size of the file binary as per iec specification.
 
 #### Implementation of
 
-[IFileObject](../interfaces/types_Model.IFileObject.md).[size](../interfaces/types_Model.IFileObject.md#size)
+[IFileObject](../interfaces/FormModel.IFileObject.md).[size](../interfaces/FormModel.IFileObject.md#size)
 
 ## Methods
 

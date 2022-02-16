@@ -6,7 +6,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`ContainerJson`](../modules/types_Json.md#containerjson) & [`RulesJson`](../modules/types_Json.md#rulesjson) |
+| `T` | extends [`ContainerJson`](../modules/FormJsonTypes.md#containerjson) & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) |
 
 ## Hierarchy
 
@@ -20,14 +20,13 @@
 
 ## Implements
 
-- [`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+- [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 ## Table of contents
 
 ### Methods
 
 - [\_bindToDataModel](Container.default.md#_bindtodatamodel)
-- [\_createChild](Container.default.md#_createchild)
 - [\_initialize](Container.default.md#_initialize)
 - [\_setProperty](Container.default.md#_setproperty)
 - [addDependent](Container.default.md#adddependent)
@@ -36,7 +35,6 @@
 - [directReferences](Container.default.md#directreferences)
 - [dispatch](Container.default.md#dispatch)
 - [executeAction](Container.default.md#executeaction)
-- [executeAllRules](Container.default.md#executeallrules)
 - [executeRule](Container.default.md#executerule)
 - [getDataNode](Container.default.md#getdatanode)
 - [getRuleNode](Container.default.md#getrulenode)
@@ -47,16 +45,8 @@
 - [queueEvent](Container.default.md#queueevent)
 - [removeDependent](Container.default.md#removedependent)
 - [removeItem](Container.default.md#removeitem)
-- [setupRuleNode](Container.default.md#setuprulenode)
 - [subscribe](Container.default.md#subscribe)
 - [syncDataAndFormModel](Container.default.md#syncdataandformmodel)
-
-### Properties
-
-- [\_children](Container.default.md#_children)
-- [\_jsonModel](Container.default.md#_jsonmodel)
-- [\_ruleContext](Container.default.md#_rulecontext)
-- [value](Container.default.md#value)
 
 ### Constructors
 
@@ -80,6 +70,10 @@
 - [viewType](Container.default.md#viewtype)
 - [visible](Container.default.md#visible)
 
+### Properties
+
+- [value](Container.default.md#value)
+
 ## Methods
 
 ### \_bindToDataModel
@@ -99,22 +93,6 @@
 #### Inherited from
 
 [default](Scriptable.default.md).[_bindToDataModel](Scriptable.default.md#_bindtodatamodel)
-
-___
-
-### \_createChild
-
-▸ `Protected` `Abstract` **_createChild**(`child`): [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `child` | [`FieldJson`](../modules/types_Json.md#fieldjson) \| [`FieldsetJson`](../modules/types_Json.md#fieldsetjson) |
-
-#### Returns
-
-[`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
 
 ___
 
@@ -171,7 +149,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -191,7 +169,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
@@ -246,7 +224,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -254,7 +232,7 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[dispatch](../interfaces/types_Model.ContainerModel.md#dispatch)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[dispatch](../interfaces/FormModel.ContainerModel.md#dispatch)
 
 #### Overrides
 
@@ -270,7 +248,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -282,26 +260,6 @@ ___
 
 ___
 
-### executeAllRules
-
-▸ `Protected` **executeAllRules**(`context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[executeAllRules](Scriptable.default.md#executeallrules)
-
-___
-
 ### executeRule
 
 ▸ **executeRule**(`event`, `context`): `void`
@@ -310,7 +268,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `event` | [`Action`](../interfaces/types_Model.Action.md) |
+| `event` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
@@ -401,7 +359,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md) |
+| `f` | [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md) |
 
 #### Returns
 
@@ -409,7 +367,7 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[indexOf](../interfaces/types_Model.ContainerModel.md#indexof)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[indexOf](../interfaces/FormModel.ContainerModel.md#indexof)
 
 ___
 
@@ -421,7 +379,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -441,7 +399,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -461,7 +419,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -481,26 +439,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
 
 `void`
-
-___
-
-### setupRuleNode
-
-▸ `Protected` **setupRuleNode**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[setupRuleNode](Scriptable.default.md#setuprulenode)
 
 ___
 
@@ -525,7 +469,7 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[subscribe](../interfaces/types_Model.ContainerModel.md#subscribe)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[subscribe](../interfaces/FormModel.ContainerModel.md#subscribe)
 
 #### Inherited from
 
@@ -549,44 +493,6 @@ prefill the form with data on the given element
 
 `void`
 
-## Properties
-
-### \_children
-
-• `Protected` **\_children**: ([`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md))[] = `[]`
-
-___
-
-### \_jsonModel
-
-• `Protected` **\_jsonModel**: `T` & { `id`: `string` ; `items`: (`TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  } \| `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/types_Json.md#containerjson) \| [`FieldJson`](../modules/types_Json.md#fieldjson))[]  } & { `id`: `string`  })[]  }
-
-#### Overrides
-
-[default](Scriptable.default.md).[_jsonModel](Scriptable.default.md#_jsonmodel)
-
-___
-
-### \_ruleContext
-
-• `Protected` **\_ruleContext**: `any`
-
-___
-
-### value
-
-• `Abstract` **value**: [`Primitives`](../modules/types_Json.md#primitives)
-
-The current value of the Field. The property is serialized in the Data Model.
-
-#### Implementation of
-
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[value](../interfaces/types_Model.ContainerModel.md#value)
-
-#### Inherited from
-
-[default](Scriptable.default.md).[value](Scriptable.default.md#value)
-
 ## Constructors
 
 ### constructor
@@ -597,7 +503,7 @@ The current value of the Field. The property is serialized in the Data Model.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/types_Json.md#containerjson) \| [`FieldJson`](../modules/types_Json.md#fieldjson))[]  } |
+| `T` | extends `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/FormJsonTypes.md#containerjson) \| [`FieldJson`](../modules/FormJsonTypes.md#fieldjson))[]  } |
 
 #### Parameters
 
@@ -605,8 +511,8 @@ The current value of the Field. The property is serialized in the Data Model.
 | :------ | :------ |
 | `params` | `T` |
 | `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/types_Model.FormModel.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/types_Model.ContainerModel.md) |
+| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
+| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
 
 #### Inherited from
 
@@ -626,7 +532,7 @@ To map the field’s value to a property in the data model.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[dataRef](../interfaces/types_Model.ContainerModel.md#dataref)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[dataRef](../interfaces/FormModel.ContainerModel.md#dataref)
 
 #### Inherited from
 
@@ -636,11 +542,11 @@ ___
 
 ### form
 
-• `get` **form**(): [`FormModel`](../interfaces/types_Model.FormModel.md)
+• `get` **form**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Inherited from
 
@@ -660,7 +566,7 @@ Unique id of the form field.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[id](../interfaces/types_Model.ContainerModel.md#id)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[id](../interfaces/FormModel.ContainerModel.md#id)
 
 #### Inherited from
 
@@ -680,7 +586,7 @@ The index of the Field within its parent.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[index](../interfaces/types_Model.ContainerModel.md#index)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[index](../interfaces/FormModel.ContainerModel.md#index)
 
 #### Inherited from
 
@@ -700,7 +606,7 @@ Whether the form field is container or not
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[isContainer](../interfaces/types_Model.ContainerModel.md#iscontainer)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[isContainer](../interfaces/FormModel.ContainerModel.md#iscontainer)
 
 #### Overrides
 
@@ -710,33 +616,33 @@ ___
 
 ### items
 
-• `get` **items**(): ([`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md))[]
+• `get` **items**(): ([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
 Array containing Fields or Panels.
 
 #### Returns
 
-([`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md))[]
+([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[items](../interfaces/types_Model.ContainerModel.md#items)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[items](../interfaces/FormModel.ContainerModel.md#items)
 
 ___
 
 ### label
 
-• `get` **label**(): `undefined` \| [`Label`](../modules/types_Json.md#label)
+• `get` **label**(): `undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 Label to be used for the field.
 
 #### Returns
 
-`undefined` \| [`Label`](../modules/types_Json.md#label)
+`undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[label](../interfaces/types_Model.ContainerModel.md#label)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[label](../interfaces/FormModel.ContainerModel.md#label)
 
 #### Inherited from
 
@@ -750,7 +656,7 @@ Label to be used for the field.
 
 | Name | Type |
 | :------ | :------ |
-| `l` | `undefined` \| [`Label`](../modules/types_Json.md#label) |
+| `l` | `undefined` \| [`Label`](../modules/FormJsonTypes.md#label) |
 
 #### Returns
 
@@ -758,7 +664,7 @@ Label to be used for the field.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[label](../interfaces/types_Model.ContainerModel.md#label)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[label](../interfaces/FormModel.ContainerModel.md#label)
 
 #### Inherited from
 
@@ -782,7 +688,7 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[maxItems](../interfaces/types_Model.ContainerModel.md#maxitems)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[maxItems](../interfaces/FormModel.ContainerModel.md#maxitems)
 
 ___
 
@@ -798,7 +704,7 @@ Name of the form field.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[name](../interfaces/types_Model.ContainerModel.md#name)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[name](../interfaces/FormModel.ContainerModel.md#name)
 
 #### Inherited from
 
@@ -808,17 +714,17 @@ ___
 
 ### parent
 
-• `get` **parent**(): [`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+• `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 The Parent Panel of the Field/Panel.
 
 #### Returns
 
-[`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+[`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[parent](../interfaces/types_Model.ContainerModel.md#parent)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[parent](../interfaces/FormModel.ContainerModel.md#parent)
 
 #### Inherited from
 
@@ -846,17 +752,17 @@ ___
 
 ### rules
 
-• `get` **rules**(): [`Items`](../modules/types_Json.md#items)<`string`\>
+• `get` **rules**(): [`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 Rules that modify the property of the object dynamically. The rules are evaluated whenever the dependency changes.
 
 #### Returns
 
-[`Items`](../modules/types_Json.md#items)<`string`\>
+[`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[rules](../interfaces/types_Model.ContainerModel.md#rules)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[rules](../interfaces/FormModel.ContainerModel.md#rules)
 
 #### Inherited from
 
@@ -874,7 +780,7 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[type](../interfaces/types_Model.ContainerModel.md#type)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[type](../interfaces/FormModel.ContainerModel.md#type)
 
 #### Inherited from
 
@@ -894,7 +800,7 @@ Type of widget to show to the user for capturing the data..
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[viewType](../interfaces/types_Model.ContainerModel.md#viewtype)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[viewType](../interfaces/FormModel.ContainerModel.md#viewtype)
 
 #### Inherited from
 
@@ -914,7 +820,7 @@ Whether the field should be visible to author or not.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[visible](../interfaces/types_Model.ContainerModel.md#visible)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[visible](../interfaces/FormModel.ContainerModel.md#visible)
 
 #### Inherited from
 
@@ -936,8 +842,24 @@ Whether the field should be visible to author or not.
 
 #### Implementation of
 
-[ContainerModel](../interfaces/types_Model.ContainerModel.md).[visible](../interfaces/types_Model.ContainerModel.md#visible)
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[visible](../interfaces/FormModel.ContainerModel.md#visible)
 
 #### Inherited from
 
 Scriptable.visible
+
+## Properties
+
+### value
+
+• `Abstract` **value**: [`Primitives`](../modules/FormJsonTypes.md#primitives)
+
+The current value of the Field. The property is serialized in the Data Model.
+
+#### Implementation of
+
+[ContainerModel](../interfaces/FormModel.ContainerModel.md).[value](../interfaces/FormModel.ContainerModel.md#value)
+
+#### Inherited from
+
+[default](Scriptable.default.md).[value](Scriptable.default.md#value)
