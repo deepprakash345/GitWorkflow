@@ -6,8 +6,16 @@ import {defaultViewTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
 import DataGroup from './data/DataGroup';
 
+/**
+ * Defines a form object field which implements {@link FieldModel | field model} interface
+ */
 class Field extends Scriptable<FieldJson> implements FieldModel {
 
+    /**
+     * @param params
+     * @param _options
+     * @private
+     */
     public constructor(params: FieldJson,
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);
@@ -16,6 +24,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this.queueEvent(new ExecuteRule());
     }
 
+    /**
+     * @private
+     */
     _initialize(): any {
         super._initialize();
         this.setupRuleNode();
@@ -135,6 +146,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return Constraints;
     }
 
+    /**
+     * @private
+     */
     private evaluateConstraints(value: any) {
         let constraint = 'type';
         let elem = this._jsonModel;
@@ -235,6 +249,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }, {});
     }
 
+    /**
+     * Validates the current form object
+     */
     validate(action: Action) {
         const changes = this.checkInput(this._jsonModel.value);
         if (changes.valid) {
@@ -253,6 +270,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }
     }
 
+    /**
+     * @param name
+     * @private
+     */
     defaultDataModel(name: string|number): DataValue {
         return new DataValue(name, this._jsonModel.value, this.type || 'string');
     }

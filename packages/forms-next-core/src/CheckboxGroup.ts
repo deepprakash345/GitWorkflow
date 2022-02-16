@@ -1,8 +1,16 @@
 import Field from './Field';
 import {ContainerModel, FieldJson, FormModel} from './types';
 
+/**
+ * Implementation of CheckBoxGroup runtime model which extends from {@link Field | field}
+ */
 class CheckboxGroup extends Field {
 
+    /**
+     * @param params
+     * @param _options
+     * @private
+     */
     public constructor(params: FieldJson,
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);

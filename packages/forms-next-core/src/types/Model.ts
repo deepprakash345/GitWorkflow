@@ -43,14 +43,19 @@ export interface ScriptableField {
 }
 
 /**
- * @private
+ * Generic interface which defines {@link State | form object state}.
+ * @typeparam T type of the form object (for example, {@link FieldJson | form field}
  */
 interface WithState<T> {
+    /**
+     * {@link State | state} of the form object
+     */
     getState : () => State<T>
 }
 
 /**
- * @private
+ * Generic interface which defines container state
+ * @typeparam T type of the form object which extends from {@link ContainerJson | container}
  */
 interface WithContainerState<T extends ContainerJson> {
     getState : () => T & {
@@ -59,9 +64,7 @@ interface WithContainerState<T extends ContainerJson> {
     }
 }
 
-/**
- * @private
- */
+/** Generic type for a form object state */
 export type State<T> =
     T extends ContainerJson ? T & {
     id: string,
@@ -114,7 +117,17 @@ export type callbackFn = (action: Action) => void
  * @private
  */
 export interface WithController {
+    /**
+     * @param callback
+     * @param eventName
+     * @private
+     */
     subscribe(callback: callbackFn, eventName?: string): Subscription
+
+    /**
+     * @param action
+     * @private
+     */
     dispatch(action: Action): void
 }
 
@@ -223,6 +236,9 @@ export interface BaseModel extends ConstraintsJson, WithController {
  * Defines properties that each form field should have
  */
 export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJson> {
+    /**
+     * Parent of the current field
+     */
     parent: ContainerModel
 }
 
@@ -249,8 +265,19 @@ export interface FormMetaDataModel {
  * Defines properties that each container should have
  */
 export interface ContainerModel extends BaseModel, ScriptableField {
+    /**
+     * Defines the children/items of the container
+     */
     items: Array<FieldsetModel | FieldModel>
+    /**
+     * Defines the parent of the container
+     */
     parent: ContainerModel
+    /**
+     * Returns the index of the {@link FieldModel | child item} or the {@link FieldsetModel | child container}
+     * @param f child item
+     * @returns `index` of the item
+     */
     indexOf(f: FieldModel | FieldsetModel): number
 }
 

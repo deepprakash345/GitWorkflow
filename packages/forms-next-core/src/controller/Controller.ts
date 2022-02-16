@@ -3,7 +3,7 @@
  * @module Events
  */
 import {
-    Action,
+    Action, BaseJson,
     FieldModel, FieldsetModel, FormModel
 } from '../types';
 
@@ -83,7 +83,7 @@ export type ChangePayload = {
 }
 
 /**
- * Implementation of change event. The change event is triggered on the field whenever the value of the field is changed
+ * Implementation of `change` event. The change event is triggered on the field whenever the value of the field is changed
  */
 export class Change extends ActionImpl {
     /**
@@ -97,7 +97,7 @@ export class Change extends ActionImpl {
 }
 
 /**
- * Implementation of invalid event. The invalid event is triggered when a Field’s value becomes invalid after a change event or whenever its value property change
+ * Implementation of `invalid` event. The invalid event is triggered when a Field’s value becomes invalid after a change event or whenever its value property change
  */
 export class Invalid extends ActionImpl {
     /**
@@ -110,7 +110,7 @@ export class Invalid extends ActionImpl {
 }
 
 /**
- * Implementation of valid event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
+ * Implementation of `valid` event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
  */
 export class Valid extends ActionImpl {
     /**
@@ -158,7 +158,7 @@ export const propertyChange = (propertyName: string, currentValue: any, prevValu
 };
 
 /**
- * Implementation of initialize event. The event is triggered on all the fields when the form initialisation is complete
+ * Implementation of `initialize` event. The event is triggered on all the fields when the form initialisation is complete
  */
 export class Initialize extends ActionImpl {
     /**
@@ -172,7 +172,7 @@ export class Initialize extends ActionImpl {
 }
 
 /**
- * Implementation of click event. The event is triggered when user clicks on an element.
+ * Implementation of `click` event. The event is triggered when user clicks on an element.
  */
 export class Click extends ActionImpl {
     /**
@@ -186,7 +186,7 @@ export class Click extends ActionImpl {
 }
 
 /**
- * Implementation of submit event. The submit event is triggered on the Form.
+ * Implementation of `submit` event. The submit event is triggered on the Form.
  * To trigger the submit event, submit function needs to be invoked or one can invoke dispatchEvent API.
  */
 export class Submit extends ActionImpl {
@@ -199,9 +199,29 @@ export class Submit extends ActionImpl {
         super(payload, 'submit', {dispatch});
     }
 }
+/**
+ * Implementation of `validate` event. The validate event is triggered on the Form once any field is validated.
+ */
+export class Validate extends ActionImpl {
+    constructor() {
+        super({}, 'validate', {dispatch: true});
+    }
+}
 
 /**
- * Implementation of custom event.
+ * Implementation of `fieldChanged` event. The field changed event is triggered on the field which it has changed.
+ */
+export class FieldChanged extends ActionImpl {
+    constructor(changes: ChangePayload, field: BaseJson) {
+        super({
+            field,
+            changes
+        }, 'fieldChanged');
+    }
+}
+
+/**
+ * Implementation of `custom event`.
  */
 export class CustomEvent extends ActionImpl {
     /**
@@ -223,7 +243,7 @@ export class CustomEvent extends ActionImpl {
 }
 
 /**
- * Implementation of additem event. The event is triggered on a panel to add a new instance of items inside it.
+ * Implementation of `addItem` event. The event is triggered on a panel to add a new instance of items inside it.
  */
 export class AddItem extends ActionImpl {
     /**
@@ -236,7 +256,7 @@ export class AddItem extends ActionImpl {
 }
 
 /**
- * Implementation of removeitem event. The event is triggered on a panel to remove an instance of items inside it.
+ * Implementation of `removeItem` event. The event is triggered on a panel to remove an instance of items inside it.
  */
 export class RemoveItem extends ActionImpl {
     /**

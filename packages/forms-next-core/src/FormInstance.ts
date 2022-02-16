@@ -1,10 +1,15 @@
-import Form, {Validate} from './Form';
+import Form from './Form';
 import {jsonString} from './utils/JsonUtils';
-import {ExecuteRule, Initialize} from './controller/Controller';
 import {request} from './utils/Fetch';
 import RuleEngine from './rules/RuleEngine';
 import {FormModel} from './types';
+import {Validate} from './controller/Controller';
 
+/**
+ * Creates form instance using form model definition as per `crispr form specification`
+ * @param formModel form model definition
+ * @returns {@link FormModel | form model}
+ */
 export const createFormInstance = (formModel: any): FormModel => {
     try {
         let f = new Form({...formModel}, new RuleEngine());
@@ -25,6 +30,12 @@ export const createFormInstance = (formModel: any): FormModel => {
 };
 
 
+/**
+ * Validates Form model definition with the given data
+ * @param formModel     form model definition
+ * @param data          form data
+ * @returns `true`, if form is valid against the given form data, `false` otherwise
+ */
 export const validateFormInstance = (formModel: any, data: any): boolean => {
     try {
         let f = new Form({...formModel}, new RuleEngine());
@@ -39,6 +50,12 @@ export const validateFormInstance = (formModel: any, data: any): boolean => {
     }
 };
 
+/**
+ * Helper API to fetch form model definition from an AEM instance
+ * @param url       URL of the instance
+ * @param headers   HTTP headers to pass to the aem instance
+ * @returns promise which resolves to the form model definition
+ */
 export const fetchForm = (url: string, headers: any = {}): Promise<string> => {
     let headerObj = new Headers();
     Object.entries(headers).forEach(([key, value]) => {

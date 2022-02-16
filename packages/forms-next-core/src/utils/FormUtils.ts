@@ -26,8 +26,8 @@ export const randomWord = (l: number) => {
 };
 
 /**
- *
  * @param input
+ * @private
  */
 export const getAttachments = (input : ContainerModel) : any=> {
     const items = input.items || [];
@@ -78,7 +78,7 @@ export const getFileSizeInBytes = (str: any) => {
  * Converts number to bytes based on the symbol as per IEC specification
  * @param size      size as number
  * @param symbol    symbol to use (for example, kb, mb, gb or tb)
- * @return number as bytes based on the symbol
+ * @returns number as bytes based on the symbol
  */
 export const sizeToBytes = (size: number, symbol : string) => {
     let sizes = {'KB' : 1, 'MB' : 2, 'GB' : 3, 'TB' : 4};

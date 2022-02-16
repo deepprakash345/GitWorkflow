@@ -15,6 +15,10 @@ import Form from './Form';
 import DataValue from './data/DataValue';
 import Container from './Container';
 
+/**
+ * Implementation of action with target
+ * @private
+ */
 class ActionImplWithTarget implements Action {
 
     constructor(private _action: Action, private _target: FieldModel | FormModel | FieldsetModel) {
@@ -50,6 +54,10 @@ class ActionImplWithTarget implements Action {
 }
 
 
+/**
+ * Defines a generic base class which all objects of form runtime model should extend from.
+ * @typeparam T type of the form object which extends from {@link BaseJson | base type}
+ */
 export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     //@ts-ignore
     private _ruleNode: any
@@ -82,10 +90,16 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         this._ruleNode = new Proxy(this.directReferences(), this._proxyHandler());
     }
 
+    /**
+     * @private
+     */
     directReferences() {
         return this;
     }
 
+    /**
+     * @private
+     */
     getRuleNode() {
         return this._ruleNode;
     }
@@ -235,6 +249,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     abstract executeAction(action: Action): any
 
+    /**
+     * @private
+     */
     queueEvent(action: Action) {
         let actionWithTarget: Action = new ActionImplWithTarget(action, this);
         this.form.getEventQueue().queue(this, actionWithTarget, ['valid', 'invalid'].indexOf(actionWithTarget.type)> -1);
@@ -245,6 +262,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         this.form.getEventQueue().runPendingQueue();
     }
 
+    /**
+     * @private
+     */
     notifyDependents(action: Action) {
         const handlers = this._callbacks[action.type] || [];
         handlers.forEach(x => {
@@ -252,6 +272,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         });
     }
 
+    /**
+     * @private
+     */
     _bindToDataModel(contextualDataModel?: DataGroup) {
         if (this.id === '$form') {
             this._data = contextualDataModel;
@@ -294,6 +317,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     private _data?: DataValue
 
+    /**
+     * @private
+     */
     getDataNode() {
         return this._data;
     }
