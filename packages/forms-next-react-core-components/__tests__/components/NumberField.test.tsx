@@ -73,7 +73,105 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container: HTMLElement) => {
       expect(container.textContent).not.toContain(DEFAULT_ERROR_MESSAGE);
     }
-  }];
+  },
+  {
+    name: 'aria-label property is present if label is hidden',
+    field: {
+      ...field,
+      'label' : {
+        ...field.label,
+        visible: false
+      }
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+      expect(input?.getAttribute('aria-label')).toEqual(field.label.value);
+    }
+  },
+  {
+    name : 'html in the label should be handled for non rich text',
+    field: {
+      ...field,
+      'label' : {
+        value: '<script>javascript</script><p>title inside p tags</p>'
+      }
+    },
+    expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null) => {
+      expect(label?.innerHTML).toEqual('&lt;script&gt;javascript&lt;/script&gt;' +
+          '&lt;p&gt;title inside p tags&lt;/p&gt;');
+    }
+  },
+  {
+    name: 'labels and inputs are linked with for and id attribute',
+    field: field,
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+      expect(input?.getAttribute('id')).toEqual(label?.getAttribute('for'));
+    }
+  },
+  {
+    name: 'labels and inputs are also linked with aria-labelledBy attribute',
+    field: field,
+    expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
+      expect(label?.getAttribute('id')).toEqual(input?.getAttribute('aria-labelledBy'));
+    }
+  },
+  {
+    name: 'accessibility attributes are properly set for required field',
+    field: field,
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+      expect(label?.getAttribute('id')).toEqual(input?.getAttribute('aria-labelledBy'));
+    }
+  },
+  {
+    name: 'accessibility attributes are properly set for required field',
+    field: {
+      ...field,
+      'required': true
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+      expect(input?.getAttribute('aria-required')).toEqual('true');
+    }
+  },
+  {
+    name: 'label is null if title is marked as hidden in the field',
+    field: {
+      ...field,
+      label : {
+        ...field.label,
+        visible: false
+      }
+    },
+    expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
+      expect(label).toBeNull();
+    }
+  },
+  {
+    name: 'input is marked as aria-invalid when the field is invalid',
+    field: {
+      ...field,
+      'valid': false
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+      expect(input?.getAttribute('aria-invalid')).toBe('true');
+    }
+  },
+  {
+    name: 'input is not marked as aria-invalid when the field is valid',
+    field: {
+      ...field,
+      'valid': true
+    },
+    expects: (label ?: HTMLLabelElement | null, input?: HTMLInputElement | null) => {
+      expect(input?.getAttribute('aria-invalid')).toBeNull();
+    }
+  },
+  {
+    name: "input is not marked as aria-invalid when the field's valid state is undefined",
+    field,
+    expects: (label ?: HTMLLabelElement | null, input?: HTMLInputElement | null) => {
+      expect(input?.getAttribute('aria-invalid')).toBeNull();
+    }
+  },
+];
 
 const helper = renderComponent(NumberField, elementFetcher);
 

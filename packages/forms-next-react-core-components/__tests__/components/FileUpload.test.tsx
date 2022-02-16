@@ -131,19 +131,11 @@ const labelInputTests: InputFieldTestCase<FileUploadExpectType>[] = [
     },
     {
         name: 'accessibility attributes are properly set for required field',
-        field: fieldWithValueAndMaxFileSize,
-        x: true,
-        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container : HTMLElement | null) => {
-            //expect(label?.getAttribute('id')).toEqual(input?.getAttribute('aria-labelledBy'));
-        }
-    },
-    {
-        name: 'accessibility attributes are properly set for required field',
         field: {
             ...fieldWithValueAndMaxFileSize,
             'required' : true
         },
-        x :true,
+        x:true,
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null, container : HTMLElement | null) => {
             expect(input?.getAttribute('aria-required')).toEqual('true');
         }
@@ -160,6 +152,20 @@ const labelInputTests: InputFieldTestCase<FileUploadExpectType>[] = [
         // eslint-disable-next-line no-unused-vars
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null, container : HTMLElement | null) => {
             expect(label?.textContent).toEqual('');
+        }
+    },
+    {
+        name: 'aria-label property is present if label is hidden',
+        field: {
+            ...field,
+            'label' : {
+                ...field.label,
+                visible: false
+            }
+        },
+        x: true,
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+            expect(input?.getAttribute('aria-label')).toEqual(field.label);
         }
     },
     {

@@ -2,18 +2,21 @@ import { ComponentMeta } from '@storybook/react';
 import { AdaptiveForm } from '@aemforms/forms-next-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
+import fieldWithLabel from '../../../../../docs/examples/starter/fieldWithLabel.form.json';
 import mappings from '../../../src/utils/mappings';
 import {Action} from "@aemforms/forms-next-core/lib";
 import { action } from '@storybook/addon-actions';
 
-const formJson:any = (name, label, description) => {
+const formJson:any = (label, description, visible = undefined, richText = undefined) => {
     return {
         'adaptiveform': '0.0.17-pre',
         items: [
             {
-                'name' : name,
+                'name' : 'field',
                 'label' : {
-                    'value' : label
+                    'value' : label,
+                    visible,
+                    richText
                 },
                 'description': description,
                 'viewType' : 'text-input'
@@ -29,7 +32,7 @@ const formJson:any = (name, label, description) => {
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Properties/name',
+    title: 'Form JSON/Properties/label',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
@@ -39,17 +42,16 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     </Spectrum3Provider>
 );
 
-export const alphabets = Template.bind({});
-alphabets.args = {formJson : formJson("someName", "Field with some name", "The name property determines the key in the json data")};
+export const FieldWithLabel = Template.bind({});
+FieldWithLabel.args = {formJson: fieldWithLabel};
 
-export const alphaNumeric = Template.bind({});
-alphaNumeric.args = {formJson: formJson("specialName123_$", "Field with special characters in name", "The name property can contain numeric and special characters as well")};
+export const FieldWithoutLabel = Template.bind({});
+FieldWithoutLabel.args = {formJson: formJson(undefined, 'Field has no label and is not accessible')};
 
-export const numeric = Template.bind({});
-numeric.args = {formJson: formJson("1234", "Field with numeric name", "The name property can be all numbers")};
+export const hiddenLabel = Template.bind({});
+hiddenLabel.args = {formJson : formJson("Hidden Label", "The Caption of the fields is not visible but is accessible",false, undefined)};
 
-export const special = Template.bind({});
-special.args = {formJson : formJson("_$!&", "No alphabets and no numbers", "The name property must not begin with $ and :")};
-
-export const noName = Template.bind({});
-noName.args = {formJson : formJson(undefined, "Field with no name", "Field without name will not have its data captured")};
+export const richTextLabel = Template.bind({});
+richTextLabel.args = {formJson: formJson("The <strong>Label</strong> has <strong>bold</strong> and <em>italics</em> styling",
+        "For rich text we use sanitize-html package with default options. https://www.npmjs.com/package/sanitize-html#default-options",
+        undefined, true)};

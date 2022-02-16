@@ -75,21 +75,13 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
             expect(label?.getAttribute('id')).toEqual(input?.getAttribute('aria-labelledBy'));
         }
     },
-    {
-        name: 'accessibility attributes are properly set for required field',
-        field: field,
-        x: true,
-        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
-            //expect(label?.getAttribute('id')).toEqual(input?.getAttribute('aria-labelledBy'));
-        }
-    },
+
     {
         name: 'accessibility attributes are properly set for required field',
         field: {
             ...field,
             'required' : true
         },
-        x :true,
         expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
             expect(input?.getAttribute('aria-required')).toEqual('true');
         }
@@ -106,6 +98,19 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
         // eslint-disable-next-line no-unused-vars
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement | null) => {
             expect(label?.textContent).toEqual('');
+        }
+    },
+    {
+        name: 'aria-label property is present if label is hidden',
+        field: {
+            ...field,
+            'label' : {
+                ...field.label,
+                visible: false
+            }
+        },
+        expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+            expect(input?.getAttribute('aria-label')).toEqual(field.label.value);
         }
     },
     {
