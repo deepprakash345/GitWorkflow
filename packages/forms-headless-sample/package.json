@@ -1,13 +1,13 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.9.21",
+  "version": "0.9.22",
   "private": true,
   "homepage": "/pages/livecycle/af2-web-runtime/dist",
   "dependencies": {
     "@adobe/react-spectrum": "^3.15.1",
-    "@aemforms/forms-next-core": "^0.6.15",
-    "@aemforms/forms-next-react-bindings": "^0.5.17",
-    "@aemforms/forms-next-react-core-components": "^0.9.19",
+    "@aemforms/forms-next-core": "^0.6.16",
+    "@aemforms/forms-next-react-bindings": "^0.5.18",
+    "@aemforms/forms-next-react-core-components": "^0.9.20",
     "@react-aria/i18n": "^3.3.2",
     "@react/react-spectrum": "^2.27.0",
     "classnames": "^2.3.1",
@@ -20,8 +20,6 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
-    "babel-loader": "8.1.0",
-    "webpack": "4.44.2",
     "@adobe/exc-app": "^1.0.5",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/react": "^12.0.0",
@@ -31,9 +29,11 @@
     "@types/node": "^12.20.16",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
+    "babel-loader": "8.1.0",
     "jest": "26.6.0",
     "ts-jest": "26.5.6",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "webpack": "4.44.2"
   },
   "scripts": {
     "start": "react-scripts start",

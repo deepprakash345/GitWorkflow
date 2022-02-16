@@ -1,4 +1,4 @@
-# @aemforms/forms-next-core - v0.6.14
+# @aemforms/forms-next-core - v0.6.16
 
 ## Table of contents
 
