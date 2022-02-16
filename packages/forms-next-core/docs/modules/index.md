@@ -32,8 +32,16 @@
 - [createFormInstance](index.md#createforminstance)
 - [createTranslationObj](index.md#createtranslationobj)
 - [createTranslationObject](index.md#createtranslationobject)
+- [deepClone](index.md#deepclone)
+- [defaultViewTypes](index.md#defaultviewtypes)
+- [exportDataSchema](index.md#exportdataschema)
 - [fetchForm](index.md#fetchform)
+- [getProperty](index.md#getproperty)
 - [invalidateTranslation](index.md#invalidatetranslation)
+- [isCheckbox](index.md#ischeckbox)
+- [isCheckboxGroup](index.md#ischeckboxgroup)
+- [isFile](index.md#isfile)
+- [jsonString](index.md#jsonstring)
 - [translationProps](index.md#translationprops)
 - [validateFormInstance](index.md#validateforminstance)
 
@@ -207,15 +215,63 @@ Re-exports [createTranslationObject](utils_TranslationUtils.md#createtranslation
 
 ___
 
+### deepClone
+
+Re-exports [deepClone](utils_JsonUtils.md#deepclone)
+
+___
+
+### defaultViewTypes
+
+Re-exports [defaultViewTypes](utils_SchemaUtils.md#defaultviewtypes)
+
+___
+
+### exportDataSchema
+
+Re-exports [exportDataSchema](utils_SchemaUtils.md#exportdataschema)
+
+___
+
 ### fetchForm
 
 Re-exports [fetchForm](FormInstance.md#fetchform)
 
 ___
 
+### getProperty
+
+Re-exports [getProperty](utils_JsonUtils.md#getproperty)
+
+___
+
 ### invalidateTranslation
 
 Re-exports [invalidateTranslation](utils_TranslationUtils.md#invalidatetranslation)
+
+___
+
+### isCheckbox
+
+Re-exports [isCheckbox](utils_JsonUtils.md#ischeckbox)
+
+___
+
+### isCheckboxGroup
+
+Re-exports [isCheckboxGroup](utils_JsonUtils.md#ischeckboxgroup)
+
+___
+
+### isFile
+
+Re-exports [isFile](utils_JsonUtils.md#isfile)
+
+___
+
+### jsonString
+
+Re-exports [jsonString](utils_JsonUtils.md#jsonstring)
 
 ___
 
