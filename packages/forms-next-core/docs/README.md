@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.18
+# @aemforms/crispr-core - v0.6.20
 
 ## Table of contents
 
@@ -20,7 +20,6 @@
 - [FormMetaData](modules/FormMetaData.md)
 - [FormModel](modules/FormModel.md)
 - [FormUtils](modules/FormUtils.md)
-- [Node](modules/Node.md)
 - [SchemaUtils](modules/SchemaUtils.md)
 - [Scriptable](modules/Scriptable.md)
 - [TranslationUtils](modules/TranslationUtils.md)

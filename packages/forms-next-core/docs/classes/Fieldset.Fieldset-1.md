@@ -2,6 +2,8 @@
 
 [Fieldset](../modules/Fieldset.md).Fieldset
 
+Defines a field set class which extends from [container](../modules/Container.md)
+
 ## Hierarchy
 
 - [`default`](Container.default.md)<[`FieldsetJson`](../modules/FormJsonTypes.md#fieldsetjson)\>
@@ -16,7 +18,6 @@
 
 ### Methods
 
-- [\_bindToDataModel](Fieldset.Fieldset-1.md#_bindtodatamodel)
 - [\_initialize](Fieldset.Fieldset-1.md#_initialize)
 - [\_setProperty](Fieldset.Fieldset-1.md#_setproperty)
 - [addDependent](Fieldset.Fieldset-1.md#adddependent)
@@ -25,22 +26,13 @@
 - [directReferences](Fieldset.Fieldset-1.md#directreferences)
 - [dispatch](Fieldset.Fieldset-1.md#dispatch)
 - [executeAction](Fieldset.Fieldset-1.md#executeaction)
-- [executeRule](Fieldset.Fieldset-1.md#executerule)
-- [getDataNode](Fieldset.Fieldset-1.md#getdatanode)
-- [getRuleNode](Fieldset.Fieldset-1.md#getrulenode)
 - [getState](Fieldset.Fieldset-1.md#getstate)
 - [importData](Fieldset.Fieldset-1.md#importdata)
 - [indexOf](Fieldset.Fieldset-1.md#indexof)
-- [notifyDependents](Fieldset.Fieldset-1.md#notifydependents)
 - [queueEvent](Fieldset.Fieldset-1.md#queueevent)
 - [removeDependent](Fieldset.Fieldset-1.md#removedependent)
 - [removeItem](Fieldset.Fieldset-1.md#removeitem)
 - [subscribe](Fieldset.Fieldset-1.md#subscribe)
-- [syncDataAndFormModel](Fieldset.Fieldset-1.md#syncdataandformmodel)
-
-### Constructors
-
-- [constructor](Fieldset.Fieldset-1.md#constructor)
 
 ### Accessors
 
@@ -63,29 +55,11 @@
 
 ## Methods
 
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[_bindToDataModel](Container.default.md#_bindtodatamodel)
-
-___
-
 ### \_initialize
 
 ▸ **_initialize**(): `void`
+
+private
 
 #### Returns
 
@@ -152,6 +126,8 @@ ___
 
 ▸ **addItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -173,6 +149,8 @@ ___
 
 ▸ **defaultDataModel**(`name`): `default`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -193,6 +171,8 @@ ___
 
 ▸ **directReferences**(): `any`
 
+private
+
 #### Returns
 
 `any`
@@ -211,6 +191,8 @@ ___
 
 ▸ **dispatch**(`action`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -223,7 +205,7 @@ ___
 
 #### Implementation of
 
-[FieldsetModel](../interfaces/FormModel.FieldsetModel.md).[dispatch](../interfaces/FormModel.FieldsetModel.md#dispatch)
+FieldsetModel.dispatch
 
 #### Inherited from
 
@@ -235,11 +217,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -251,62 +235,11 @@ ___
 
 ___
 
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[executeRule](Container.default.md#executerule)
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Container.default.md).[getDataNode](Container.default.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FieldsetModel.getRuleNode
-
-#### Inherited from
-
-[default](Container.default.md).[getRuleNode](Container.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/FormJsonTypes.md#containerjson) \| [`FieldJson`](../modules/FormJsonTypes.md#fieldjson))[]  } & { `type?`: ``"object"`` \| ``"array"``  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+
+Returns the current container state
 
 #### Returns
 
@@ -325,6 +258,8 @@ ___
 ### importData
 
 ▸ **importData**(`contextualDataModel?`): `void`
+
+private
 
 #### Parameters
 
@@ -350,6 +285,8 @@ ___
 
 ▸ **indexOf**(`f`): `number`
 
+Returns the index of the [child item](../interfaces/FormModel.FieldModel.md) or the [child container](../interfaces/FormModel.FieldsetModel.md)
+
 #### Parameters
 
 | Name | Type |
@@ -370,29 +307,11 @@ ___
 
 ___
 
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[notifyDependents](Container.default.md#notifydependents)
-
-___
-
 ### queueEvent
 
 ▸ **queueEvent**(`action`): `void`
+
+private
 
 #### Parameters
 
@@ -434,6 +353,8 @@ ___
 
 ▸ **removeItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -472,52 +393,11 @@ ___
 
 #### Implementation of
 
-[FieldsetModel](../interfaces/FormModel.FieldsetModel.md).[subscribe](../interfaces/FormModel.FieldsetModel.md#subscribe)
+FieldsetModel.subscribe
 
 #### Inherited from
 
 [default](Container.default.md).[subscribe](Container.default.md#subscribe)
-
-___
-
-### syncDataAndFormModel
-
-▸ **syncDataAndFormModel**(`contextualDataModel?`): `void`
-
-prefill the form with data on the given element
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[syncDataAndFormModel](Container.default.md#syncdataandformmodel)
-
-## Constructors
-
-### constructor
-
-• **new Fieldset**(`params`, `_options`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | [`FieldsetJson`](../modules/FormJsonTypes.md#fieldsetjson) |
-| `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
-
-#### Overrides
-
-[default](Container.default.md).[constructor](Container.default.md#constructor)
 
 ## Accessors
 
@@ -619,7 +499,7 @@ ___
 
 • `get` **items**(): ([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
-Array containing Fields or Panels.
+Defines the children/items of the container
 
 #### Returns
 
@@ -725,7 +605,7 @@ ___
 
 • `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Defines the parent of the container
 
 #### Returns
 

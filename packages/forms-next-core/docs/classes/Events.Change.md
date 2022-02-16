@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).Change
 
-Implementation of change event. The change event is triggered on the field whenever the value of the field is changed
+Implementation of `change` event. The change event is triggered on the field whenever the value of the field is changed
 
 ## Hierarchy
 

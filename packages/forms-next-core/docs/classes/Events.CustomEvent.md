@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).CustomEvent
 
-Implementation of custom event.
+Implementation of `custom event`.
 
 ## Hierarchy
 

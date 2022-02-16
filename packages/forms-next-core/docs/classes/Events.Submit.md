@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).Submit
 
-Implementation of submit event. The submit event is triggered on the Form.
+Implementation of `submit` event. The submit event is triggered on the Form.
 To trigger the submit event, submit function needs to be invoked or one can invoke dispatchEvent API.
 
 ## Hierarchy

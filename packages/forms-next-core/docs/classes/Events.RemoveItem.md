@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).RemoveItem
 
-Implementation of removeitem event. The event is triggered on a panel to remove an instance of items inside it.
+Implementation of `removeItem` event. The event is triggered on a panel to remove an instance of items inside it.
 
 ## Hierarchy
 

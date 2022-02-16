@@ -62,11 +62,6 @@ Defines common properties that each form field should have
 - [viewType](FormModel.BaseModel.md#viewtype)
 - [visible](FormModel.BaseModel.md#visible)
 
-### Methods
-
-- [dispatch](FormModel.BaseModel.md#dispatch)
-- [subscribe](FormModel.BaseModel.md#subscribe)
-
 ## Properties
 
 ### accept
@@ -394,44 +389,3 @@ ___
 • `Optional` **visible**: `boolean`
 
 Whether the field should be visible to author or not.
-
-## Methods
-
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-WithController.dispatch
-
-___
-
-### subscribe
-
-▸ **subscribe**(`callback`, `eventName?`): `Subscription`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | `callbackFn` |
-| `eventName?` | `string` |
-
-#### Returns
-
-`Subscription`
-
-#### Inherited from
-
-WithController.subscribe

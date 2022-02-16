@@ -15,3 +15,21 @@ Defines generic interface's for form runtime model
 - [FormModel](../interfaces/FormModel.FormModel-1.md)
 - [IFileObject](../interfaces/FormModel.IFileObject.md)
 - [ScriptableField](../interfaces/FormModel.ScriptableField.md)
+
+### Type aliases
+
+- [State](FormModel.md#state)
+
+## Type aliases
+
+### State
+
+Ƭ **State**<`T`\>: `T` extends [`ContainerJson`](FormJsonTypes.md#containerjson) ? `T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  } : `T` & { `id`: `string`  }
+
+Generic type for a form object state
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |

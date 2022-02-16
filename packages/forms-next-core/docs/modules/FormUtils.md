@@ -7,7 +7,6 @@ Defines generic utilities to interact with form runtime model
 ### Functions
 
 - [dataURItoBlob](FormUtils.md#datauritoblob)
-- [getAttachments](FormUtils.md#getattachments)
 - [getFileSizeInBytes](FormUtils.md#getfilesizeinbytes)
 - [randomWord](FormUtils.md#randomword)
 - [sizeToBytes](FormUtils.md#sizetobytes)
@@ -36,22 +35,6 @@ Utility to convert data URI to a `blob` object
 | :------ | :------ |
 | `blob` | `Blob` |
 | `name` | `string` |
-
-___
-
-### getAttachments
-
-▸ `Const` **getAttachments**(`input`): `any`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `input` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
-
-#### Returns
-
-`any`
 
 ___
 

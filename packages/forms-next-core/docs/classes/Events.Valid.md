@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).Valid
 
-Implementation of valid event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
+Implementation of `valid` event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
 
 ## Hierarchy
 

@@ -2,6 +2,9 @@
 
 [Scriptable](../modules/Scriptable.md).default
 
+Defines scriptable aspects (ie rules, events) of form runtime model. Any form runtime object which requires
+execution of rules/events should extend from this class.
+
 ## Type parameters
 
 | Name | Type |
@@ -26,20 +29,13 @@
 
 ### Methods
 
-- [\_bindToDataModel](Scriptable.default.md#_bindtodatamodel)
 - [\_setProperty](Scriptable.default.md#_setproperty)
 - [addDependent](Scriptable.default.md#adddependent)
 - [defaultDataModel](Scriptable.default.md#defaultdatamodel)
-- [directReferences](Scriptable.default.md#directreferences)
 - [dispatch](Scriptable.default.md#dispatch)
 - [executeAction](Scriptable.default.md#executeaction)
-- [executeRule](Scriptable.default.md#executerule)
-- [getDataNode](Scriptable.default.md#getdatanode)
-- [getRuleNode](Scriptable.default.md#getrulenode)
 - [getState](Scriptable.default.md#getstate)
 - [importData](Scriptable.default.md#importdata)
-- [notifyDependents](Scriptable.default.md#notifydependents)
-- [queueEvent](Scriptable.default.md#queueevent)
 - [removeDependent](Scriptable.default.md#removedependent)
 - [subscribe](Scriptable.default.md#subscribe)
 
@@ -68,26 +64,6 @@
 - [value](Scriptable.default.md#value)
 
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[_bindToDataModel](BaseNode.BaseNode-1.md#_bindtodatamodel)
-
-___
 
 ### \_setProperty
 
@@ -152,20 +128,6 @@ ___
 
 ___
 
-### directReferences
-
-▸ **directReferences**(): [`default`](Scriptable.default.md)<`T`\>
-
-#### Returns
-
-[`default`](Scriptable.default.md)<`T`\>
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[directReferences](BaseNode.BaseNode-1.md#directreferences)
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -190,11 +152,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -203,51 +167,6 @@ ___
 #### Overrides
 
 [BaseNode](BaseNode.BaseNode-1.md).[executeAction](BaseNode.BaseNode-1.md#executeaction)
-
-___
-
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[getDataNode](BaseNode.BaseNode-1.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[getRuleNode](BaseNode.BaseNode-1.md#getrulenode)
 
 ___
 
@@ -282,46 +201,6 @@ ___
 #### Inherited from
 
 [BaseNode](BaseNode.BaseNode-1.md).[importData](BaseNode.BaseNode-1.md#importdata)
-
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[notifyDependents](BaseNode.BaseNode-1.md#notifydependents)
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[queueEvent](BaseNode.BaseNode-1.md#queueevent)
 
 ___
 

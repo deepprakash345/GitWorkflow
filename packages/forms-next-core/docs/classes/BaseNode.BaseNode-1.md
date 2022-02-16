@@ -2,11 +2,13 @@
 
 [BaseNode](../modules/BaseNode.md).BaseNode
 
+Defines a generic base class which all objects of form runtime model should extend from.
+
 ## Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`BaseJson`](../modules/FormJsonTypes.md#basejson) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends [`BaseJson`](../modules/FormJsonTypes.md#basejson) | type of the form object which extends from [base type](../modules/FormJsonTypes.md#basejson) |
 
 ## Hierarchy
 
@@ -22,18 +24,12 @@
 
 ### Methods
 
-- [\_bindToDataModel](BaseNode.BaseNode-1.md#_bindtodatamodel)
 - [addDependent](BaseNode.BaseNode-1.md#adddependent)
 - [defaultDataModel](BaseNode.BaseNode-1.md#defaultdatamodel)
-- [directReferences](BaseNode.BaseNode-1.md#directreferences)
 - [dispatch](BaseNode.BaseNode-1.md#dispatch)
 - [executeAction](BaseNode.BaseNode-1.md#executeaction)
-- [getDataNode](BaseNode.BaseNode-1.md#getdatanode)
-- [getRuleNode](BaseNode.BaseNode-1.md#getrulenode)
 - [getState](BaseNode.BaseNode-1.md#getstate)
 - [importData](BaseNode.BaseNode-1.md#importdata)
-- [notifyDependents](BaseNode.BaseNode-1.md#notifydependents)
-- [queueEvent](BaseNode.BaseNode-1.md#queueevent)
 - [removeDependent](BaseNode.BaseNode-1.md#removedependent)
 - [subscribe](BaseNode.BaseNode-1.md#subscribe)
 
@@ -61,22 +57,6 @@
 - [value](BaseNode.BaseNode-1.md#value)
 
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-___
 
 ### addDependent
 
@@ -110,20 +90,6 @@ ___
 
 ___
 
-### directReferences
-
-▸ **directReferences**(): [`BaseNode`](BaseNode.BaseNode-1.md)<`T`\>
-
-#### Returns
-
-[`BaseNode`](BaseNode.BaseNode-1.md)<`T`\>
-
-#### Implementation of
-
-BaseModel.directReferences
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -140,7 +106,7 @@ ___
 
 #### Implementation of
 
-[BaseModel](../interfaces/FormModel.BaseModel.md).[dispatch](../interfaces/FormModel.BaseModel.md#dispatch)
+BaseModel.dispatch
 
 ___
 
@@ -157,30 +123,6 @@ ___
 #### Returns
 
 `any`
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-BaseModel.getRuleNode
 
 ___
 
@@ -211,38 +153,6 @@ ___
 #### Implementation of
 
 BaseModel.importData
-
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
 
 ___
 
@@ -283,7 +193,7 @@ ___
 
 #### Implementation of
 
-[BaseModel](../interfaces/FormModel.BaseModel.md).[subscribe](../interfaces/FormModel.BaseModel.md#subscribe)
+BaseModel.subscribe
 
 ## Constructors
 

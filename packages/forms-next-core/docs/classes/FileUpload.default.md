@@ -2,6 +2,8 @@
 
 [FileUpload](../modules/FileUpload.md).default
 
+Implementation of FileUpload runtime model which extends from [field](../modules/Field.md)
+
 ## Hierarchy
 
 - [`default`](Field.default.md)
@@ -16,22 +18,13 @@
 
 ### Methods
 
-- [\_bindToDataModel](FileUpload.default.md#_bindtodatamodel)
-- [\_initialize](FileUpload.default.md#_initialize)
 - [\_setProperty](FileUpload.default.md#_setproperty)
 - [addDependent](FileUpload.default.md#adddependent)
 - [change](FileUpload.default.md#change)
-- [defaultDataModel](FileUpload.default.md#defaultdatamodel)
-- [directReferences](FileUpload.default.md#directreferences)
 - [dispatch](FileUpload.default.md#dispatch)
 - [executeAction](FileUpload.default.md#executeaction)
-- [executeRule](FileUpload.default.md#executerule)
-- [getDataNode](FileUpload.default.md#getdatanode)
-- [getRuleNode](FileUpload.default.md#getrulenode)
 - [getState](FileUpload.default.md#getstate)
 - [importData](FileUpload.default.md#importdata)
-- [notifyDependents](FileUpload.default.md#notifydependents)
-- [queueEvent](FileUpload.default.md#queueevent)
 - [removeDependent](FileUpload.default.md#removedependent)
 - [subscribe](FileUpload.default.md#subscribe)
 - [toString](FileUpload.default.md#tostring)
@@ -64,49 +57,7 @@
 - [viewType](FileUpload.default.md#viewtype)
 - [visible](FileUpload.default.md#visible)
 
-### Constructors
-
-- [constructor](FileUpload.default.md#constructor)
-
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[_bindToDataModel](Field.default.md#_bindtodatamodel)
-
-___
-
-### \_initialize
-
-▸ **_initialize**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FieldModel.\_initialize
-
-#### Inherited from
-
-[default](Field.default.md).[_initialize](Field.default.md#_initialize)
-
-___
 
 ### \_setProperty
 
@@ -176,44 +127,6 @@ ___
 
 ___
 
-### defaultDataModel
-
-▸ **defaultDataModel**(`name`): `default`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` \| `number` |
-
-#### Returns
-
-`default`
-
-#### Inherited from
-
-[default](Field.default.md).[defaultDataModel](Field.default.md#defaultdatamodel)
-
-___
-
-### directReferences
-
-▸ **directReferences**(): [`default`](FileUpload.default.md)
-
-#### Returns
-
-[`default`](FileUpload.default.md)
-
-#### Implementation of
-
-FieldModel.directReferences
-
-#### Inherited from
-
-[default](Field.default.md).[directReferences](Field.default.md#directreferences)
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -230,7 +143,7 @@ ___
 
 #### Implementation of
 
-[FieldModel](../interfaces/FormModel.FieldModel.md).[dispatch](../interfaces/FormModel.FieldModel.md#dispatch)
+FieldModel.dispatch
 
 #### Inherited from
 
@@ -242,11 +155,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -258,62 +173,11 @@ ___
 
 ___
 
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[executeRule](Field.default.md#executerule)
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Field.default.md).[getDataNode](Field.default.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FieldModel.getRuleNode
-
-#### Inherited from
-
-[default](Field.default.md).[getRuleNode](Field.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+
+[state](../modules/FormModel.md#state) of the form object
 
 #### Returns
 
@@ -350,46 +214,6 @@ FieldModel.importData
 #### Overrides
 
 [default](Field.default.md).[importData](Field.default.md#importdata)
-
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[notifyDependents](Field.default.md#notifydependents)
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[queueEvent](Field.default.md#queueevent)
 
 ___
 
@@ -434,7 +258,7 @@ ___
 
 #### Implementation of
 
-[FieldModel](../interfaces/FormModel.FieldModel.md).[subscribe](../interfaces/FormModel.FieldModel.md#subscribe)
+FieldModel.subscribe
 
 #### Inherited from
 
@@ -480,6 +304,8 @@ ___
 
 ▸ **validate**(`action`): `void`
 
+Validates the current form object
+
 #### Parameters
 
 | Name | Type |
@@ -513,6 +339,8 @@ ___
 ### accept
 
 • `get` **accept**(): `undefined` \| `string`[]
+
+Returns the list of mime types which file attachment can accept
 
 #### Returns
 
@@ -782,6 +610,8 @@ ___
 
 • `get` **maxFileSize**(): `number`
 
+Returns the max file size in bytes as per IEC specification
+
 #### Returns
 
 `number`
@@ -816,7 +646,7 @@ ___
 
 • `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Parent of the current field
 
 #### Returns
 
@@ -1069,22 +899,3 @@ Whether the field should be visible to author or not.
 #### Inherited from
 
 Field.visible
-
-## Constructors
-
-### constructor
-
-• **new default**(`params`, `_options`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | [`FieldJson`](../modules/FormJsonTypes.md#fieldjson) |
-| `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
-
-#### Inherited from
-
-[default](Field.default.md).[constructor](Field.default.md#constructor)

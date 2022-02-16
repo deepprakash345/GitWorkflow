@@ -64,13 +64,11 @@ Defines the interface for form model
 
 ### Methods
 
-- [dispatch](FormModel.FormModel-1.md#dispatch)
 - [exportData](FormModel.FormModel-1.md#exportdata)
 - [getElement](FormModel.FormModel-1.md#getelement)
 - [getState](FormModel.FormModel-1.md#getstate)
 - [importData](FormModel.FormModel-1.md#importdata)
 - [indexOf](FormModel.FormModel-1.md#indexof)
-- [subscribe](FormModel.FormModel-1.md#subscribe)
 
 ## Properties
 
@@ -256,7 +254,7 @@ ___
 
 • **items**: ([`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md))[]
 
-Array containing Fields or Panels.
+Defines the children/items of the container
 
 #### Inherited from
 
@@ -380,7 +378,7 @@ ___
 
 • **parent**: [`ContainerModel`](FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Defines the parent of the container
 
 #### Inherited from
 
@@ -530,26 +528,6 @@ Whether the field should be visible to author or not.
 
 ## Methods
 
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[ContainerModel](FormModel.ContainerModel.md).[dispatch](FormModel.ContainerModel.md#dispatch)
-
-___
-
 ### exportData
 
 ▸ **exportData**(): `any`
@@ -620,37 +598,20 @@ ___
 
 ▸ **indexOf**(`f`): `number`
 
+Returns the index of the [child item](FormModel.FieldModel.md) or the [child container](FormModel.FieldsetModel.md)
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `f` | [`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `f` | [`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md) | child item |
 
 #### Returns
 
 `number`
 
+`index` of the item
+
 #### Inherited from
 
 [ContainerModel](FormModel.ContainerModel.md).[indexOf](FormModel.ContainerModel.md#indexof)
-
-___
-
-### subscribe
-
-▸ **subscribe**(`callback`, `eventName?`): `Subscription`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | `callbackFn` |
-| `eventName?` | `string` |
-
-#### Returns
-
-`Subscription`
-
-#### Inherited from
-
-[ContainerModel](FormModel.ContainerModel.md).[subscribe](FormModel.ContainerModel.md#subscribe)

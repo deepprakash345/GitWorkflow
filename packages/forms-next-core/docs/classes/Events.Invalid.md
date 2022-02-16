@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).Invalid
 
-Implementation of invalid event. The invalid event is triggered when a Field’s value becomes invalid after a change event or whenever its value property change
+Implementation of `invalid` event. The invalid event is triggered when a Field’s value becomes invalid after a change event or whenever its value property change
 
 ## Hierarchy
 

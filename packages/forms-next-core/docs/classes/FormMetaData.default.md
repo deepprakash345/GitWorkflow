@@ -2,9 +2,11 @@
 
 [FormMetaData](../modules/FormMetaData.md).default
 
+Defines form metadata which implements [Form MetaData Model](../interfaces/FormModel.FormMetaDataModel.md)
+
 ## Hierarchy
 
-- [`default`](Node.default.md)<[`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson)\>
+- `Node`<[`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson)\>
 
   ↳ **`default`**
 
@@ -39,7 +41,7 @@
 
 #### Inherited from
 
-[default](Node.default.md).[constructor](Node.default.md#constructor)
+Node<MetaDataJson\>.constructor
 
 ## Accessors
 

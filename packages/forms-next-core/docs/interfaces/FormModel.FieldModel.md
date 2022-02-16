@@ -65,9 +65,7 @@ Defines properties that each form field should have
 
 ### Methods
 
-- [dispatch](FormModel.FieldModel.md#dispatch)
 - [getState](FormModel.FieldModel.md#getstate)
-- [subscribe](FormModel.FieldModel.md#subscribe)
 
 ## Properties
 
@@ -361,7 +359,7 @@ ___
 
 • **parent**: [`ContainerModel`](FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Parent of the current field
 
 #### Overrides
 
@@ -503,55 +501,16 @@ Whether the field should be visible to author or not.
 
 ## Methods
 
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseModel](FormModel.BaseModel.md).[dispatch](FormModel.BaseModel.md#dispatch)
-
-___
-
 ### getState
 
-▸ **getState**(): `State`<`T`\>
+▸ **getState**(): [`State`](../modules/FormModel.md#state)<`T`\>
+
+[state](../modules/FormModel.md#state) of the form object
 
 #### Returns
 
-`State`<`T`\>
+[`State`](../modules/FormModel.md#state)<`T`\>
 
 #### Inherited from
 
 WithState.getState
-
-___
-
-### subscribe
-
-▸ **subscribe**(`callback`, `eventName?`): `Subscription`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | `callbackFn` |
-| `eventName?` | `string` |
-
-#### Returns
-
-`Subscription`
-
-#### Inherited from
-
-[BaseModel](FormModel.BaseModel.md).[subscribe](FormModel.BaseModel.md#subscribe)

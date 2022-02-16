@@ -2,6 +2,8 @@
 
 [CheckboxGroup](../modules/CheckboxGroup.md).default
 
+Implementation of CheckBoxGroup runtime model which extends from [field](../modules/Field.md)
+
 ## Hierarchy
 
 - [`default`](Field.default.md)
@@ -12,32 +14,19 @@
 
 ### Methods
 
-- [\_bindToDataModel](CheckboxGroup.default.md#_bindtodatamodel)
-- [\_initialize](CheckboxGroup.default.md#_initialize)
 - [\_setProperty](CheckboxGroup.default.md#_setproperty)
 - [addDependent](CheckboxGroup.default.md#adddependent)
 - [change](CheckboxGroup.default.md#change)
-- [defaultDataModel](CheckboxGroup.default.md#defaultdatamodel)
-- [directReferences](CheckboxGroup.default.md#directreferences)
 - [dispatch](CheckboxGroup.default.md#dispatch)
 - [executeAction](CheckboxGroup.default.md#executeaction)
-- [executeRule](CheckboxGroup.default.md#executerule)
-- [getDataNode](CheckboxGroup.default.md#getdatanode)
-- [getRuleNode](CheckboxGroup.default.md#getrulenode)
 - [getState](CheckboxGroup.default.md#getstate)
 - [importData](CheckboxGroup.default.md#importdata)
-- [notifyDependents](CheckboxGroup.default.md#notifydependents)
-- [queueEvent](CheckboxGroup.default.md#queueevent)
 - [removeDependent](CheckboxGroup.default.md#removedependent)
 - [subscribe](CheckboxGroup.default.md#subscribe)
 - [toString](CheckboxGroup.default.md#tostring)
 - [triggerValidationEvent](CheckboxGroup.default.md#triggervalidationevent)
 - [validate](CheckboxGroup.default.md#validate)
 - [valueOf](CheckboxGroup.default.md#valueof)
-
-### Constructors
-
-- [constructor](CheckboxGroup.default.md#constructor)
 
 ### Accessors
 
@@ -63,40 +52,6 @@
 - [visible](CheckboxGroup.default.md#visible)
 
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[_bindToDataModel](Field.default.md#_bindtodatamodel)
-
-___
-
-### \_initialize
-
-▸ **_initialize**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[default](Field.default.md).[_initialize](Field.default.md#_initialize)
-
-___
 
 ### \_setProperty
 
@@ -166,40 +121,6 @@ ___
 
 ___
 
-### defaultDataModel
-
-▸ **defaultDataModel**(`name`): `default`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` \| `number` |
-
-#### Returns
-
-`default`
-
-#### Inherited from
-
-[default](Field.default.md).[defaultDataModel](Field.default.md#defaultdatamodel)
-
-___
-
-### directReferences
-
-▸ **directReferences**(): [`default`](CheckboxGroup.default.md)
-
-#### Returns
-
-[`default`](CheckboxGroup.default.md)
-
-#### Inherited from
-
-[default](Field.default.md).[directReferences](Field.default.md#directreferences)
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -224,11 +145,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -240,58 +163,11 @@ ___
 
 ___
 
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[executeRule](Field.default.md#executerule)
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Field.default.md).[getDataNode](Field.default.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[default](Field.default.md).[getRuleNode](Field.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+
+[state](../modules/FormModel.md#state) of the form object
 
 #### Returns
 
@@ -320,46 +196,6 @@ ___
 #### Inherited from
 
 [default](Field.default.md).[importData](Field.default.md#importdata)
-
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[notifyDependents](Field.default.md#notifydependents)
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[queueEvent](Field.default.md#queueevent)
 
 ___
 
@@ -446,6 +282,8 @@ ___
 
 ▸ **validate**(`action`): `void`
 
+Validates the current form object
+
 #### Parameters
 
 | Name | Type |
@@ -473,25 +311,6 @@ ___
 #### Inherited from
 
 [default](Field.default.md).[valueOf](Field.default.md#valueof)
-
-## Constructors
-
-### constructor
-
-• **new default**(`params`, `_options`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | [`FieldJson`](../modules/FormJsonTypes.md#fieldjson) |
-| `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
-
-#### Overrides
-
-[default](Field.default.md).[constructor](Field.default.md#constructor)
 
 ## Accessors
 

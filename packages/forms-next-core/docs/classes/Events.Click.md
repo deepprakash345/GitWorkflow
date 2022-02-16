@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).Click
 
-Implementation of click event. The event is triggered when user clicks on an element.
+Implementation of `click` event. The event is triggered when user clicks on an element.
 
 ## Hierarchy
 

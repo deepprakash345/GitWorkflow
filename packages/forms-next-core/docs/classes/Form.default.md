@@ -2,6 +2,8 @@
 
 [Form](../modules/Form.md).default
 
+Defines `form model` which implements [form model](../modules/FormModel.md)
+
 ## Hierarchy
 
 - [`default`](Container.default.md)<[`FormJson`](../modules/FormJsonTypes.md#formjson)\>
@@ -14,42 +16,31 @@
 
 ## Table of contents
 
+### Properties
+
+- [\_fields](Form.default.md#_fields)
+- [\_ids](Form.default.md#_ids)
+- [\_invalidFields](Form.default.md#_invalidfields)
+
 ### Methods
 
-- [\_bindToDataModel](Form.default.md#_bindtodatamodel)
 - [\_initialize](Form.default.md#_initialize)
 - [\_setProperty](Form.default.md#_setproperty)
 - [addDependent](Form.default.md#adddependent)
 - [addItem](Form.default.md#additem)
 - [defaultDataModel](Form.default.md#defaultdatamodel)
 - [directReferences](Form.default.md#directreferences)
-- [dispatch](Form.default.md#dispatch)
-- [executeAction](Form.default.md#executeaction)
-- [executeRule](Form.default.md#executerule)
 - [exportData](Form.default.md#exportdata)
-- [fieldAdded](Form.default.md#fieldadded)
-- [getDataNode](Form.default.md#getdatanode)
 - [getElement](Form.default.md#getelement)
-- [getEventQueue](Form.default.md#geteventqueue)
-- [getRuleNode](Form.default.md#getrulenode)
 - [getState](Form.default.md#getstate)
 - [getUniqueId](Form.default.md#getuniqueid)
 - [importData](Form.default.md#importdata)
 - [indexOf](Form.default.md#indexof)
 - [isValid](Form.default.md#isvalid)
-- [notifyDependents](Form.default.md#notifydependents)
 - [queueEvent](Form.default.md#queueevent)
 - [removeDependent](Form.default.md#removedependent)
 - [removeItem](Form.default.md#removeitem)
-- [submit](Form.default.md#submit)
 - [subscribe](Form.default.md#subscribe)
-- [syncDataAndFormModel](Form.default.md#syncdataandformmodel)
-
-### Properties
-
-- [\_fields](Form.default.md#_fields)
-- [\_ids](Form.default.md#_ids)
-- [\_invalidFields](Form.default.md#_invalidfields)
 
 ### Accessors
 
@@ -73,35 +64,31 @@
 - [viewType](Form.default.md#viewtype)
 - [visible](Form.default.md#visible)
 
-### Constructors
+## Properties
 
-- [constructor](Form.default.md#constructor)
+### \_fields
 
-## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[_bindToDataModel](Container.default.md#_bindtodatamodel)
+• **\_fields**: [`Items`](../modules/FormJsonTypes.md#items)<[`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)\> = `{}`
 
 ___
+
+### \_ids
+
+• **\_ids**: `Generator`<`string`, `void`, `string`\>
+
+___
+
+### \_invalidFields
+
+• **\_invalidFields**: `string`[] = `[]`
+
+## Methods
 
 ### \_initialize
 
 ▸ **_initialize**(): `void`
+
+private
 
 #### Returns
 
@@ -168,6 +155,8 @@ ___
 
 ▸ **addItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -189,6 +178,8 @@ ___
 
 ▸ **defaultDataModel**(`name`): `default`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -209,6 +200,8 @@ ___
 
 ▸ **directReferences**(): `any`
 
+private
+
 #### Returns
 
 `any`
@@ -220,71 +213,6 @@ FormModel.directReferences
 #### Inherited from
 
 [default](Container.default.md).[directReferences](Container.default.md#directreferences)
-
-___
-
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Implementation of
-
-[FormModel](../interfaces/FormModel.FormModel-1.md).[dispatch](../interfaces/FormModel.FormModel-1.md#dispatch)
-
-#### Overrides
-
-[default](Container.default.md).[dispatch](Container.default.md#dispatch)
-
-___
-
-### executeAction
-
-▸ **executeAction**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Overrides
-
-[default](Container.default.md).[executeAction](Container.default.md#executeaction)
-
-___
-
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[executeRule](Container.default.md#executerule)
 
 ___
 
@@ -301,36 +229,6 @@ Exports the form data
 #### Implementation of
 
 [FormModel](../interfaces/FormModel.FormModel-1.md).[exportData](../interfaces/FormModel.FormModel-1.md#exportdata)
-
-___
-
-### fieldAdded
-
-▸ **fieldAdded**(`field`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `field` | [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Container.default.md).[getDataNode](Container.default.md#getdatanode)
 
 ___
 
@@ -356,43 +254,18 @@ Get form element model based on the id of the form element
 
 ___
 
-### getEventQueue
-
-▸ **getEventQueue**(): `EventQueue`
-
-#### Returns
-
-`EventQueue`
-
-#### Implementation of
-
-FormModel.getEventQueue
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FormModel.getRuleNode
-
-#### Inherited from
-
-[default](Container.default.md).[getRuleNode](Container.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/FormJsonTypes.md#containerjson) \| [`FieldJson`](../modules/FormJsonTypes.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
-returns the current state of the form
+Returns the current state of the form
+
+To access the form data and attachments, one needs to use the `data` and `attachments` property.
+For example,
+```
+const data = form.getState().data
+const attachments = form.getState().attachments
+```
 
 #### Returns
 
@@ -452,6 +325,8 @@ ___
 
 ▸ **indexOf**(`f`): `number`
 
+Returns the index of the [child item](../interfaces/FormModel.FieldModel.md) or the [child container](../interfaces/FormModel.FieldsetModel.md)
+
 #### Parameters
 
 | Name | Type |
@@ -476,35 +351,21 @@ ___
 
 ▸ **isValid**(): `boolean`
 
+Checks if the given form is valid or not
+
 #### Returns
 
 `boolean`
 
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[notifyDependents](Container.default.md#notifydependents)
+`true`, if form is valid, `false` otherwise
 
 ___
 
 ### queueEvent
 
 ▸ **queueEvent**(`action`): `void`
+
+private
 
 #### Parameters
 
@@ -546,6 +407,8 @@ ___
 
 ▸ **removeItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -560,23 +423,6 @@ ___
 #### Inherited from
 
 [default](Container.default.md).[removeItem](Container.default.md#removeitem)
-
-___
-
-### submit
-
-▸ **submit**(`action`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
 
 ___
 
@@ -601,51 +447,11 @@ ___
 
 #### Implementation of
 
-[FormModel](../interfaces/FormModel.FormModel-1.md).[subscribe](../interfaces/FormModel.FormModel-1.md#subscribe)
+FormModel.subscribe
 
 #### Inherited from
 
 [default](Container.default.md).[subscribe](Container.default.md#subscribe)
-
-___
-
-### syncDataAndFormModel
-
-▸ **syncDataAndFormModel**(`contextualDataModel?`): `void`
-
-prefill the form with data on the given element
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[syncDataAndFormModel](Container.default.md#syncdataandformmodel)
-
-## Properties
-
-### \_fields
-
-• **\_fields**: [`Items`](../modules/FormJsonTypes.md#items)<[`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)\> = `{}`
-
-___
-
-### \_ids
-
-• **\_ids**: `Generator`<`string`, `void`, `string`\>
-
-___
-
-### \_invalidFields
-
-• **\_invalidFields**: `string`[] = `[]`
 
 ## Accessors
 
@@ -757,7 +563,7 @@ ___
 
 • `get` **items**(): ([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
-Array containing Fields or Panels.
+Defines the children/items of the container
 
 #### Returns
 
@@ -873,7 +679,7 @@ ___
 
 • `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Defines the parent of the container
 
 #### Returns
 
@@ -1040,21 +846,3 @@ Whether the field should be visible to author or not.
 #### Inherited from
 
 Container.visible
-
-## Constructors
-
-### constructor
-
-• **new default**(`n`, `_ruleEngine`, `_eventQueue?`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `n` | [`FormJson`](../modules/FormJsonTypes.md#formjson) |
-| `_ruleEngine` | `RuleEngine` |
-| `_eventQueue` | `EventQueue` |
-
-#### Overrides
-
-[default](Container.default.md).[constructor](Container.default.md#constructor)

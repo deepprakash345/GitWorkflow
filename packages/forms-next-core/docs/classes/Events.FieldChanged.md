@@ -1,37 +1,46 @@
-# Class: Validate
+# Class: FieldChanged
 
-[Form](../modules/Form.md).Validate
+[Events](../modules/Events.md).FieldChanged
+
+Implementation of `fieldChanged` event. The field changed event is triggered on the field which it has changed.
 
 ## Hierarchy
 
 - `ActionImpl`
 
-  ↳ **`Validate`**
+  ↳ **`FieldChanged`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Form.Validate.md#constructor)
+- [constructor](Events.FieldChanged.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Form.Validate.md#iscustomevent)
-- [metadata](Form.Validate.md#metadata)
-- [payload](Form.Validate.md#payload)
-- [target](Form.Validate.md#target)
-- [type](Form.Validate.md#type)
+- [isCustomEvent](Events.FieldChanged.md#iscustomevent)
+- [metadata](Events.FieldChanged.md#metadata)
+- [payload](Events.FieldChanged.md#payload)
+- [target](Events.FieldChanged.md#target)
+- [type](Events.FieldChanged.md#type)
 
 ### Methods
 
-- [toJson](Form.Validate.md#tojson)
-- [toString](Form.Validate.md#tostring)
+- [toJson](Events.FieldChanged.md#tojson)
+- [toString](Events.FieldChanged.md#tostring)
 
 ## Constructors
 
 ### constructor
 
-• **new Validate**()
+• **new FieldChanged**(`changes`, `field`)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `changes` | [`ChangePayload`](../modules/Events.md#changepayload) |
+| `field` | [`BaseJson`](../modules/FormJsonTypes.md#basejson) |
 
 #### Overrides
 

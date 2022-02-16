@@ -66,9 +66,7 @@ Defines properties that each container should have
 
 ### Methods
 
-- [dispatch](FormModel.ContainerModel.md#dispatch)
 - [indexOf](FormModel.ContainerModel.md#indexof)
-- [subscribe](FormModel.ContainerModel.md#subscribe)
 
 ## Properties
 
@@ -246,7 +244,7 @@ ___
 
 • **items**: ([`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md))[]
 
-Array containing Fields or Panels.
+Defines the children/items of the container
 
 #### Overrides
 
@@ -362,7 +360,7 @@ ___
 
 • **parent**: [`ContainerModel`](FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Defines the parent of the container
 
 #### Overrides
 
@@ -504,57 +502,20 @@ Whether the field should be visible to author or not.
 
 ## Methods
 
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseModel](FormModel.BaseModel.md).[dispatch](FormModel.BaseModel.md#dispatch)
-
-___
-
 ### indexOf
 
 ▸ **indexOf**(`f`): `number`
 
+Returns the index of the [child item](FormModel.FieldModel.md) or the [child container](FormModel.FieldsetModel.md)
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `f` | [`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `f` | [`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md) | child item |
 
 #### Returns
 
 `number`
 
-___
-
-### subscribe
-
-▸ **subscribe**(`callback`, `eventName?`): `Subscription`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `callback` | `callbackFn` |
-| `eventName?` | `string` |
-
-#### Returns
-
-`Subscription`
-
-#### Inherited from
-
-[BaseModel](FormModel.BaseModel.md).[subscribe](FormModel.BaseModel.md#subscribe)
+`index` of the item

@@ -10,11 +10,13 @@ Defines all form events
 - [Change](../classes/Events.Change.md)
 - [Click](../classes/Events.Click.md)
 - [CustomEvent](../classes/Events.CustomEvent.md)
+- [FieldChanged](../classes/Events.FieldChanged.md)
 - [Initialize](../classes/Events.Initialize.md)
 - [Invalid](../classes/Events.Invalid.md)
 - [RemoveItem](../classes/Events.RemoveItem.md)
 - [Submit](../classes/Events.Submit.md)
 - [Valid](../classes/Events.Valid.md)
+- [Validate](../classes/Events.Validate.md)
 
 ### Type aliases
 

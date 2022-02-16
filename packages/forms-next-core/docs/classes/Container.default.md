@@ -2,11 +2,13 @@
 
 [Container](../modules/Container.md).default
 
+Defines a generic container class which any form container should extend from.
+
 ## Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`ContainerJson`](../modules/FormJsonTypes.md#containerjson) & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends [`ContainerJson`](../modules/FormJsonTypes.md#containerjson) & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) | type of the node which extends [ContainerJson](../modules/FormJsonTypes.md#containerjson) and [RulesJson](../modules/FormJsonTypes.md#rulesjson) |
 
 ## Hierarchy
 
@@ -26,7 +28,6 @@
 
 ### Methods
 
-- [\_bindToDataModel](Container.default.md#_bindtodatamodel)
 - [\_initialize](Container.default.md#_initialize)
 - [\_setProperty](Container.default.md#_setproperty)
 - [addDependent](Container.default.md#adddependent)
@@ -35,18 +36,13 @@
 - [directReferences](Container.default.md#directreferences)
 - [dispatch](Container.default.md#dispatch)
 - [executeAction](Container.default.md#executeaction)
-- [executeRule](Container.default.md#executerule)
-- [getDataNode](Container.default.md#getdatanode)
-- [getRuleNode](Container.default.md#getrulenode)
 - [getState](Container.default.md#getstate)
 - [importData](Container.default.md#importdata)
 - [indexOf](Container.default.md#indexof)
-- [notifyDependents](Container.default.md#notifydependents)
 - [queueEvent](Container.default.md#queueevent)
 - [removeDependent](Container.default.md#removedependent)
 - [removeItem](Container.default.md#removeitem)
 - [subscribe](Container.default.md#subscribe)
-- [syncDataAndFormModel](Container.default.md#syncdataandformmodel)
 
 ### Constructors
 
@@ -76,29 +72,11 @@
 
 ## Methods
 
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[_bindToDataModel](Scriptable.default.md#_bindtodatamodel)
-
-___
-
 ### \_initialize
 
 ▸ **_initialize**(): `void`
+
+private
 
 #### Returns
 
@@ -165,6 +143,8 @@ ___
 
 ▸ **addItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
@@ -181,6 +161,8 @@ ___
 ### defaultDataModel
 
 ▸ **defaultDataModel**(`name`): `default`
+
+private
 
 #### Parameters
 
@@ -202,6 +184,8 @@ ___
 
 ▸ **directReferences**(): `any`
 
+private
+
 #### Returns
 
 `any`
@@ -212,13 +196,15 @@ ContainerModel.directReferences
 
 #### Overrides
 
-[default](Scriptable.default.md).[directReferences](Scriptable.default.md#directreferences)
+Scriptable.directReferences
 
 ___
 
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
+
+private
 
 #### Parameters
 
@@ -232,7 +218,7 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/FormModel.ContainerModel.md).[dispatch](../interfaces/FormModel.ContainerModel.md#dispatch)
+ContainerModel.dispatch
 
 #### Overrides
 
@@ -244,11 +230,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -260,62 +248,11 @@ ___
 
 ___
 
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[executeRule](Scriptable.default.md#executerule)
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[getDataNode](Scriptable.default.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-ContainerModel.getRuleNode
-
-#### Inherited from
-
-[default](Scriptable.default.md).[getRuleNode](Scriptable.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+
+Returns the current container state
 
 #### Returns
 
@@ -330,6 +267,8 @@ ___
 ### importData
 
 ▸ **importData**(`contextualDataModel?`): `void`
+
+private
 
 #### Parameters
 
@@ -355,6 +294,8 @@ ___
 
 ▸ **indexOf**(`f`): `number`
 
+Returns the index of the [child item](../interfaces/FormModel.FieldModel.md) or the [child container](../interfaces/FormModel.FieldsetModel.md)
+
 #### Parameters
 
 | Name | Type |
@@ -371,29 +312,11 @@ ___
 
 ___
 
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[notifyDependents](Scriptable.default.md#notifydependents)
-
-___
-
 ### queueEvent
 
 ▸ **queueEvent**(`action`): `void`
+
+private
 
 #### Parameters
 
@@ -407,7 +330,7 @@ ___
 
 #### Overrides
 
-[default](Scriptable.default.md).[queueEvent](Scriptable.default.md#queueevent)
+Scriptable.queueEvent
 
 ___
 
@@ -434,6 +357,8 @@ ___
 ### removeItem
 
 ▸ **removeItem**(`action`, `context`): `void`
+
+private
 
 #### Parameters
 
@@ -469,29 +394,11 @@ ___
 
 #### Implementation of
 
-[ContainerModel](../interfaces/FormModel.ContainerModel.md).[subscribe](../interfaces/FormModel.ContainerModel.md#subscribe)
+ContainerModel.subscribe
 
 #### Inherited from
 
 [default](Scriptable.default.md).[subscribe](Scriptable.default.md#subscribe)
-
-___
-
-### syncDataAndFormModel
-
-▸ **syncDataAndFormModel**(`contextualDataModel?`): `void`
-
-prefill the form with data on the given element
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
 
 ## Constructors
 
@@ -618,7 +525,7 @@ ___
 
 • `get` **items**(): ([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
-Array containing Fields or Panels.
+Defines the children/items of the container
 
 #### Returns
 
@@ -716,7 +623,7 @@ ___
 
 • `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Defines the parent of the container
 
 #### Returns
 

@@ -2,6 +2,8 @@
 
 [Checkbox](../modules/Checkbox.md).default
 
+Implementation of check box runtime model which extends from [field](../modules/Field.md) model
+
 ## Hierarchy
 
 - [`default`](Field.default.md)
@@ -12,33 +14,19 @@
 
 ### Methods
 
-- [\_bindToDataModel](Checkbox.default.md#_bindtodatamodel)
-- [\_getConstraintObject](Checkbox.default.md#_getconstraintobject)
-- [\_initialize](Checkbox.default.md#_initialize)
 - [\_setProperty](Checkbox.default.md#_setproperty)
 - [addDependent](Checkbox.default.md#adddependent)
 - [change](Checkbox.default.md#change)
-- [defaultDataModel](Checkbox.default.md#defaultdatamodel)
-- [directReferences](Checkbox.default.md#directreferences)
 - [dispatch](Checkbox.default.md#dispatch)
 - [executeAction](Checkbox.default.md#executeaction)
-- [executeRule](Checkbox.default.md#executerule)
-- [getDataNode](Checkbox.default.md#getdatanode)
-- [getRuleNode](Checkbox.default.md#getrulenode)
 - [getState](Checkbox.default.md#getstate)
 - [importData](Checkbox.default.md#importdata)
-- [notifyDependents](Checkbox.default.md#notifydependents)
-- [queueEvent](Checkbox.default.md#queueevent)
 - [removeDependent](Checkbox.default.md#removedependent)
 - [subscribe](Checkbox.default.md#subscribe)
 - [toString](Checkbox.default.md#tostring)
 - [triggerValidationEvent](Checkbox.default.md#triggervalidationevent)
 - [validate](Checkbox.default.md#validate)
 - [valueOf](Checkbox.default.md#valueof)
-
-### Constructors
-
-- [constructor](Checkbox.default.md#constructor)
 
 ### Accessors
 
@@ -64,66 +52,6 @@
 - [visible](Checkbox.default.md#visible)
 
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[_bindToDataModel](Field.default.md#_bindtodatamodel)
-
-___
-
-### \_getConstraintObject
-
-▸ **_getConstraintObject**(): `Object`
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `enum` | (`constraint`: `any`[], `value`: `any`) => { `valid`: `boolean` ; `value`: `any`  } |
-| `format` | (`constraint`: `string`, `input`: `string`) => { `valid`: `boolean` ; `value`: `string`  } |
-| `maxLength` | (`constraint`: `number`, `value`: `string`) => { `valid`: `boolean` ; `value`: `string`  } |
-| `maximum` | (`constraint`: `number`, `value`: `number`) => { `valid`: `boolean` ; `value`: `number`  } |
-| `minLength` | (`constraint`: `number`, `value`: `string`) => { `valid`: `boolean` ; `value`: `string`  } |
-| `minimum` | (`constraint`: `number`, `value`: `number`) => { `valid`: `boolean` ; `value`: `number`  } |
-| `pattern` | (`constraint`: `string` \| `RegExp`, `value`: `string`) => { `valid`: `boolean` ; `value`: `string`  } |
-| `required` | (`constraint`: `boolean`, `value`: `any`) => { `valid`: `boolean` ; `value`: `any`  } |
-| `type` | (`constraint`: `string`, `inputVal`: `any`) => `ValidationResult` |
-
-#### Overrides
-
-Field.\_getConstraintObject
-
-___
-
-### \_initialize
-
-▸ **_initialize**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[default](Field.default.md).[_initialize](Field.default.md#_initialize)
-
-___
 
 ### \_setProperty
 
@@ -193,40 +121,6 @@ ___
 
 ___
 
-### defaultDataModel
-
-▸ **defaultDataModel**(`name`): `default`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` \| `number` |
-
-#### Returns
-
-`default`
-
-#### Inherited from
-
-[default](Field.default.md).[defaultDataModel](Field.default.md#defaultdatamodel)
-
-___
-
-### directReferences
-
-▸ **directReferences**(): [`default`](Checkbox.default.md)
-
-#### Returns
-
-[`default`](Checkbox.default.md)
-
-#### Inherited from
-
-[default](Field.default.md).[directReferences](Field.default.md#directreferences)
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -251,11 +145,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -267,58 +163,11 @@ ___
 
 ___
 
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[executeRule](Field.default.md#executerule)
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Field.default.md).[getDataNode](Field.default.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[default](Field.default.md).[getRuleNode](Field.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+
+[state](../modules/FormModel.md#state) of the form object
 
 #### Returns
 
@@ -347,46 +196,6 @@ ___
 #### Inherited from
 
 [default](Field.default.md).[importData](Field.default.md#importdata)
-
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[notifyDependents](Field.default.md#notifydependents)
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Field.default.md).[queueEvent](Field.default.md#queueevent)
 
 ___
 
@@ -473,6 +282,8 @@ ___
 
 ▸ **validate**(`action`): `void`
 
+Validates the current form object
+
 #### Parameters
 
 | Name | Type |
@@ -500,25 +311,6 @@ ___
 #### Inherited from
 
 [default](Field.default.md).[valueOf](Field.default.md#valueof)
-
-## Constructors
-
-### constructor
-
-• **new default**(`params`, `_options`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | [`FieldJson`](../modules/FormJsonTypes.md#fieldjson) |
-| `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
-
-#### Inherited from
-
-[default](Field.default.md).[constructor](Field.default.md#constructor)
 
 ## Accessors
 
@@ -569,6 +361,8 @@ ___
 ### enum
 
 • `get` **enum**(): `any`[]
+
+Returns the `enum` constraints from the json
 
 #### Returns
 

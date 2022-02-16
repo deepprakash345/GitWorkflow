@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).AddItem
 
-Implementation of additem event. The event is triggered on a panel to add a new instance of items inside it.
+Implementation of `addItem` event. The event is triggered on a panel to add a new instance of items inside it.
 
 ## Hierarchy
 

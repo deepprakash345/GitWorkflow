@@ -2,6 +2,8 @@
 
 [Field](../modules/Field.md).default
 
+Defines a form object field which implements [field model](../interfaces/FormModel.FieldModel.md) interface
+
 ## Hierarchy
 
 - [`default`](Scriptable.default.md)<[`FieldJson`](../modules/FormJsonTypes.md#fieldjson)\>
@@ -22,32 +24,19 @@
 
 ### Methods
 
-- [\_bindToDataModel](Field.default.md#_bindtodatamodel)
-- [\_initialize](Field.default.md#_initialize)
 - [\_setProperty](Field.default.md#_setproperty)
 - [addDependent](Field.default.md#adddependent)
 - [change](Field.default.md#change)
-- [defaultDataModel](Field.default.md#defaultdatamodel)
-- [directReferences](Field.default.md#directreferences)
 - [dispatch](Field.default.md#dispatch)
 - [executeAction](Field.default.md#executeaction)
-- [executeRule](Field.default.md#executerule)
-- [getDataNode](Field.default.md#getdatanode)
-- [getRuleNode](Field.default.md#getrulenode)
 - [getState](Field.default.md#getstate)
 - [importData](Field.default.md#importdata)
-- [notifyDependents](Field.default.md#notifydependents)
-- [queueEvent](Field.default.md#queueevent)
 - [removeDependent](Field.default.md#removedependent)
 - [subscribe](Field.default.md#subscribe)
 - [toString](Field.default.md#tostring)
 - [triggerValidationEvent](Field.default.md#triggervalidationevent)
 - [validate](Field.default.md#validate)
 - [valueOf](Field.default.md#valueof)
-
-### Constructors
-
-- [constructor](Field.default.md#constructor)
 
 ### Accessors
 
@@ -73,44 +62,6 @@
 - [visible](Field.default.md#visible)
 
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[_bindToDataModel](Scriptable.default.md#_bindtodatamodel)
-
-___
-
-### \_initialize
-
-▸ **_initialize**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FieldModel.\_initialize
-
-#### Overrides
-
-Scriptable.\_initialize
-
-___
 
 ### \_setProperty
 
@@ -176,44 +127,6 @@ ___
 
 ___
 
-### defaultDataModel
-
-▸ **defaultDataModel**(`name`): `default`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` \| `number` |
-
-#### Returns
-
-`default`
-
-#### Overrides
-
-[default](Scriptable.default.md).[defaultDataModel](Scriptable.default.md#defaultdatamodel)
-
-___
-
-### directReferences
-
-▸ **directReferences**(): [`default`](Field.default.md)
-
-#### Returns
-
-[`default`](Field.default.md)
-
-#### Implementation of
-
-FieldModel.directReferences
-
-#### Inherited from
-
-[default](Scriptable.default.md).[directReferences](Scriptable.default.md#directreferences)
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -230,7 +143,7 @@ ___
 
 #### Implementation of
 
-[FieldModel](../interfaces/FormModel.FieldModel.md).[dispatch](../interfaces/FormModel.FieldModel.md#dispatch)
+FieldModel.dispatch
 
 #### Inherited from
 
@@ -242,11 +155,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -258,62 +173,11 @@ ___
 
 ___
 
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/FormModel.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[executeRule](Scriptable.default.md#executerule)
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[getDataNode](Scriptable.default.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FieldModel.getRuleNode
-
-#### Inherited from
-
-[default](Scriptable.default.md).[getRuleNode](Scriptable.default.md#getrulenode)
-
-___
-
 ### getState
 
 ▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+
+[state](../modules/FormModel.md#state) of the form object
 
 #### Returns
 
@@ -350,46 +214,6 @@ FieldModel.importData
 #### Overrides
 
 [default](Scriptable.default.md).[importData](Scriptable.default.md#importdata)
-
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[notifyDependents](Scriptable.default.md#notifydependents)
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/FormModel.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Scriptable.default.md).[queueEvent](Scriptable.default.md#queueevent)
 
 ___
 
@@ -434,7 +258,7 @@ ___
 
 #### Implementation of
 
-[FieldModel](../interfaces/FormModel.FieldModel.md).[subscribe](../interfaces/FormModel.FieldModel.md#subscribe)
+FieldModel.subscribe
 
 #### Inherited from
 
@@ -472,6 +296,8 @@ ___
 
 ▸ **validate**(`action`): `void`
 
+Validates the current form object
+
 #### Parameters
 
 | Name | Type |
@@ -491,25 +317,6 @@ ___
 #### Returns
 
 `any`
-
-## Constructors
-
-### constructor
-
-• **new default**(`params`, `_options`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `params` | [`FieldJson`](../modules/FormJsonTypes.md#fieldjson) |
-| `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
-
-#### Overrides
-
-[default](Scriptable.default.md).[constructor](Scriptable.default.md#constructor)
 
 ## Accessors
 
@@ -767,7 +574,7 @@ ___
 
 • `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Parent of the current field
 
 #### Returns
 

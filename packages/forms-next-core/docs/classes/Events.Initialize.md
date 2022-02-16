@@ -2,7 +2,7 @@
 
 [Events](../modules/Events.md).Initialize
 
-Implementation of initialize event. The event is triggered on all the fields when the form initialisation is complete
+Implementation of `initialize` event. The event is triggered on all the fields when the form initialisation is complete
 
 ## Hierarchy
 

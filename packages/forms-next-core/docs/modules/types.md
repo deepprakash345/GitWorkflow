@@ -25,6 +25,7 @@
 - [Primitives](types.md#primitives)
 - [RulesJson](types.md#rulesjson)
 - [ScriptableField](types.md#scriptablefield)
+- [State](types.md#state)
 - [TranslationJson](types.md#translationjson)
 - [translationProps](types.md#translationprops)
 
@@ -153,6 +154,12 @@ ___
 ### ScriptableField
 
 Re-exports [ScriptableField](../interfaces/FormModel.ScriptableField.md)
+
+___
+
+### State
+
+Re-exports [State](FormModel.md#state)
 
 ___
 
