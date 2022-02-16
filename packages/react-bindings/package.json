@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/crispr-react-bindings",
-  "version": "0.5.20",
+  "version": "0.5.21",
   "description": "React Hooks to add business logic to React Components",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
