@@ -116,8 +116,12 @@ pipeline {
           }
         }
         stage("docs") {
+            when {
+                expression { return isPullRequest() }
+            }
             steps {
                 runDocker('npx lerna run docs')
+                sh 'git checkout .'
             }
         }
         stage("publish") {
