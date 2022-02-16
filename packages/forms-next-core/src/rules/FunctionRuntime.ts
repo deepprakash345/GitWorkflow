@@ -218,7 +218,7 @@ class FunctionRuntimeImpl {
             },
             dispatch_event: {
                 _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
-                    const element: any = valueOf(args[0]);
+                    const element: any = args[0];
                     let eventName: string | any = valueOf(args[1]);
                     let payload: any = args.length > 2 ? valueOf(args[2]) : undefined;
                     let dispatch = false;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 // @ts-ignore
-import mappings from "@aemforms/forms-next-react-core-components/lib/utils/mappings";
+import { mappings } from "@aemforms/forms-next-react-core-components";
 // @ts-ignore
 import { AdaptiveForm } from "@aemforms/forms-next-react-bindings";
 // import formJson from "./JSON/form.json";
