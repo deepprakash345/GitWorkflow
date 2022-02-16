@@ -1,5 +1,5 @@
-import {FieldJson, FieldsetJson, FormJson, translationProps} from '@aemforms/forms-next-core';
-import {TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/forms-next-core/lib/utils/TranslationUtils';
+import {FieldJson, FieldsetJson, FormJson, translationProps} from '@aemforms/crispr-core';
+import {TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core/lib/utils/TranslationUtils';
 
 export const getTranslationMessages = (input: FieldJson | FieldsetJson | FormJson | any) : any => {
     return Object.keys(input).reduce((acc, curr) => {

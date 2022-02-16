@@ -226,7 +226,7 @@ export interface FieldModel extends BaseModel, ScriptableField, WithState<FieldJ
  */
 export interface FormMetaDataModel {
     /**
-     * Version of the adaptive form specification
+     * Version of the crispr form specification
      */
     readonly version: string
     /**

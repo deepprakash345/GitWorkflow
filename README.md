@@ -1,6 +1,6 @@
 # Introduction
 
-Client side runtime for Headless Adaptive Form. The headless adaptive form is based on the [adaptive form specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/), which acts as the guiding principle for creating the JSON for headless forms.
+Client side runtime for Headless Adaptive Form. The headless adaptive form is based on the [crispr form specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/), which acts as the guiding principle for creating the JSON for headless forms.
 
 Documentation site: https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/story/
 
@@ -36,7 +36,7 @@ export NPM_EMAIL=$(echo "${auth}" | grep "email" | awk -F " " '{ print $3 }')
 
 To use adaptive form super component, add the following dependency,
 ```
-npm i @aemforms/forms-next-react-bindings @aemforms/forms-next-react-core-components
+npm i @aemforms/crispr-react-bindings @aemforms/crispr-react-core-components
 ```
 
 ## Versions

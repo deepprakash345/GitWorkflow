@@ -1,4 +1,4 @@
-# @aemforms/forms-next-core - v0.6.17
+# @aemforms/crispr-core - v0.6.17
 
 ## Table of contents
 

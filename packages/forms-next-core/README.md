@@ -1,11 +1,11 @@
-# `@aemforms/forms-next-core`
+# `@aemforms/crispr-core`
 
 > TODO: description
 
 ## Usage
 
 ```
-const formsNextCore = require('@aemforms/forms-next-core');
+const formsNextCore = require('@aemforms/crispr-core');
 
 // TODO: DEMONSTRATE API
 ```

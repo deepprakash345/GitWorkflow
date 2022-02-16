@@ -1,11 +1,11 @@
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/forms-next-react-bindings';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../src/utils/mappings';
 import jsonform from '../example/json';
 import { action } from '@storybook/addon-actions';
-import {Action} from '@aemforms/forms-next-core/lib';
+import {Action} from '@aemforms/crispr-core/lib';
 export default {
     title: 'AdaptiveForm/SuperComponent',
     component: AdaptiveForm,
