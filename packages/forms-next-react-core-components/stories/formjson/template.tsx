@@ -20,3 +20,11 @@ export const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
         <AdaptiveForm mappings={mappings} formJson={args.formJson} onFieldChanged={args.onFieldChanged}/>
     </Spectrum3Provider>
 );
+
+export const base = {
+    'adaptiveform': '0.0.17-pre',
+    'metadata': {
+        'grammar': 'json-formula-1.0.0',
+        'version': '1.0.0'
+    }
+}

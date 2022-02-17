@@ -38,7 +38,7 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const BasicDescription = Template.bind({});
-BasicDescription.args = {formJson:  formJson("Basic description of the Field")};
+BasicDescription.args = {formJson:  formJson("Basic description of the Field. Description is applicable for all the fields")};
 
 export const richTextDescription = Template.bind({});
 richTextDescription.args = {formJson: formJson("For <strong>rich text</strong> we use sanitize-html package with <a href='https://www.npmjs.com/package/sanitize-html#default-options'> default options</a>")};

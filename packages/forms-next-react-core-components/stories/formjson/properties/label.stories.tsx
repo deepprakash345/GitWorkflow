@@ -43,13 +43,21 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const FieldWithLabel = Template.bind({});
-FieldWithLabel.args = {formJson: fieldWithLabel};
+FieldWithLabel.args = {formJson: {
+        ...fieldWithLabel,
+        items: [
+            {
+                ...fieldWithLabel.items[0],
+                description: "Label is applicable for all the field types"
+            }
+        ]
+    }};
 
 export const FieldWithoutLabel = Template.bind({});
 FieldWithoutLabel.args = {formJson: formJson(undefined, 'Field has no label and is not accessible')};
 
 export const hiddenLabel = Template.bind({});
-hiddenLabel.args = {formJson : formJson("Hidden Label", "The Caption of the fields is not visible but is accessible",false, undefined)};
+hiddenLabel.args = {formJson : formJson("Hidden Label", "The Caption of the fields is not visible but is accessible", false, undefined)};
 
 export const richTextLabel = Template.bind({});
 richTextLabel.args = {formJson: formJson("The <strong>Label</strong> has <strong>bold</strong> and <em>italics</em> styling",

@@ -8,7 +8,7 @@ export const parameters = {
   },
   options: {
     storySort : {
-      order : ['Form JSON', ['Basic', 'Properties'],'*']
+      order : ['Form JSON', ['Properties', ['name', 'label', 'description', 'viewType', 'enum', "*"]],'*']
     }
   }
 }
