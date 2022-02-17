@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/crispr-react-core-components",
-  "version": "0.9.26",
+  "version": "0.9.27",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "/pages/livecycle/af2-web-runtime/story",
@@ -34,8 +34,8 @@
     "deploye-storybook": "gh-pages -d storybook-static -e story"
   },
   "dependencies": {
-    "@aemforms/crispr-core": "^0.6.22",
-    "@aemforms/crispr-react-bindings": "^0.5.24",
+    "@aemforms/crispr-core": "^0.6.23",
+    "@aemforms/crispr-react-bindings": "^0.5.25",
     "clsx": "^1.1.1",
     "sanitize-html": "^2.4.0",
     "styled-components": "^5.2.1"
