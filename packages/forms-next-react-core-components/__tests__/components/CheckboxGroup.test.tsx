@@ -86,6 +86,21 @@ const labelInputTests: InputFieldTestCase<GroupExpectType>[] = [
     }
   },
   {
+    name: 'individual labels are present if label is hidden',
+    field: {
+      ...field,
+      'label' : {
+        ...field.label,
+        visible: false
+      }
+    },
+    expects: ({labels , inputs}) => {
+      expect(labels[0]?.getAttribute('id')).toEqual(inputs[0]?.getAttribute('aria-labelledBy'));
+      expect(labels[1]?.getAttribute('id')).toEqual(inputs[1]?.getAttribute('aria-labelledBy'));
+      expect(labels[2]?.getAttribute('id')).toEqual(inputs[2]?.getAttribute('aria-labelledBy'));
+    }
+  },
+  {
     name: 'input is not marked as aria-invalid when the field is valid',
     field: {
       ...field,

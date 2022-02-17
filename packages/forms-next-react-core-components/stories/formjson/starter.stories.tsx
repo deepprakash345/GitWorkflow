@@ -1,6 +1,7 @@
 import { ComponentMeta } from '@storybook/react';
 import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import fieldWithLabel from '../../../../docs/examples/starter/fieldWithLabel.form.json';
+import fieldWithLabelAndDescription from '../../../../docs/examples/starter/fieldWithLabelAndDescription.form.json'
 import withSubmitButton from '../../../../docs/examples/starter/withSubmitButton.form.json';
 import withMultipleFields from '../../../../docs/examples/starter/multipleFields.form.json';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
@@ -31,8 +32,8 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 export const oneFieldForm = Template.bind({});
 oneFieldForm.args = {formJson: fieldWithLabel};
 
-// export const WithCaptionAndDescription = Template.bind({});
-// WithCaptionAndDescription.args = {formJson: fieldWithLabelAndDescription};
+export const WithCaptionAndDescription = Template.bind({});
+WithCaptionAndDescription.args = {formJson: fieldWithLabelAndDescription};
 //
 // export const WithDefaultValue = Template.bind({});
 // WithDefaultValue.args = {formJson: withDefaultValue};

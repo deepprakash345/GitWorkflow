@@ -4,6 +4,7 @@
   "scripts" : {
     "clean" : "lerna clean --yes && rm -rf packages/*/lib packages/*/build",
     "build" : "lerna run build",
+    "build:libs" : "lerna run build-libs",
     "start" : "lerna run start",
     "story" : "lerna run storybook",
     "test" : "lerna run test",

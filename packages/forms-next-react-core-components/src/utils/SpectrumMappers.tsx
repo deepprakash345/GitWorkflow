@@ -34,7 +34,8 @@ export const baseConvertor: Convertor<FieldJson> = (a, b, f) => {
         name: a.name,
         isDisabled : a.enabled === false,
         label: a.label?.visible === false ? '' : (a.label?.richText === true ? richTextString(a.label?.value) : a.label?.value),
-        description: (localizedDescription && localizedDescription.length > 0) ? richTextString(localizedDescription) : null
+        description: (localizedDescription && localizedDescription.length > 0) ? richTextString(localizedDescription) : null,
+        "aria-label" : a.label?.visible === false ? a.label?.value : undefined
     };
 };
 

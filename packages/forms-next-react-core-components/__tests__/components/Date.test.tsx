@@ -86,6 +86,19 @@ const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [
     }
   },
   {
+    name: 'aria-label property is present if label is hidden',
+    field: {
+      ...field,
+      'label' : {
+        ...field.label,
+        visible: false
+      }
+    },
+    expects: (label : HTMLLabelElement | null, input : HTMLInputElement | null) => {
+      expect(input?.getAttribute('aria-label')).toEqual(field.label.value);
+    }
+  },
+  {
     name: 'input is marked as aria-invalid when the field is invalid',
     field: {
       ...field,
