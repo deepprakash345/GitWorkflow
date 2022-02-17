@@ -1,10 +1,5 @@
 # Class: FieldChanged
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.FieldChanged.md
-[Events](../modules/Events.md).FieldChanged
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/FieldChanged.md
 Implementation of `fieldChanged` event. The field changed event is triggered on the field which it has changed.
 
 ## Hierarchy
@@ -17,22 +12,6 @@ Implementation of `fieldChanged` event. The field changed event is triggered on 
 
 ### Constructors
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.FieldChanged.md
-- [constructor](Events.FieldChanged.md#constructor)
-
-### Accessors
-
-- [isCustomEvent](Events.FieldChanged.md#iscustomevent)
-- [metadata](Events.FieldChanged.md#metadata)
-- [payload](Events.FieldChanged.md#payload)
-- [target](Events.FieldChanged.md#target)
-- [type](Events.FieldChanged.md#type)
-
-### Methods
-
-- [toJson](Events.FieldChanged.md#tojson)
-- [toString](Events.FieldChanged.md#tostring)
-=======
 - [constructor](FieldChanged.md#constructor)
 
 ### Accessors
@@ -47,7 +26,6 @@ Implementation of `fieldChanged` event. The field changed event is triggered on 
 
 - [toJson](FieldChanged.md#tojson)
 - [toString](FieldChanged.md#tostring)
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/FieldChanged.md
 
 ## Constructors
 

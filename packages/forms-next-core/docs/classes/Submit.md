@@ -1,10 +1,5 @@
 # Class: Submit
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Submit.md
-[Events](../modules/Events.md).Submit
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Submit.md
 Implementation of `submit` event. The submit event is triggered on the Form.
 To trigger the submit event, submit function needs to be invoked or one can invoke dispatchEvent API.
 

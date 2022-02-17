@@ -2,8 +2,6 @@
 
 Defines a file object which implements the [file object interface](../interfaces/IFileObject.md)
 
-Defines a file object which implements the [file object interface](../interfaces/FormModel.IFileObject.md)
-
 ## Implements
 
 - [`IFileObject`](../interfaces/IFileObject.md)

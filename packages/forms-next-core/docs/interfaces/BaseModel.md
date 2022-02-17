@@ -23,44 +23,6 @@ Defines common properties that each form field should have
 
 ### Properties
 
-<<<<<<< HEAD:packages/forms-next-core/docs/interfaces/FormModel.BaseModel.md
-- [accept](FormModel.BaseModel.md#accept)
-- [dataRef](FormModel.BaseModel.md#dataref)
-- [default](FormModel.BaseModel.md#default)
-- [description](FormModel.BaseModel.md#description)
-- [enabled](FormModel.BaseModel.md#enabled)
-- [enforceEnum](FormModel.BaseModel.md#enforceenum)
-- [enum](FormModel.BaseModel.md#enum)
-- [enumNames](FormModel.BaseModel.md#enumnames)
-- [expression](FormModel.BaseModel.md#expression)
-- [format](FormModel.BaseModel.md#format)
-- [fracDigits](FormModel.BaseModel.md#fracdigits)
-- [id](FormModel.BaseModel.md#id)
-- [index](FormModel.BaseModel.md#index)
-- [isContainer](FormModel.BaseModel.md#iscontainer)
-- [items](FormModel.BaseModel.md#items)
-- [label](FormModel.BaseModel.md#label)
-- [leadDigits](FormModel.BaseModel.md#leaddigits)
-- [maxFileSize](FormModel.BaseModel.md#maxfilesize)
-- [maxItems](FormModel.BaseModel.md#maxitems)
-- [maxLength](FormModel.BaseModel.md#maxlength)
-- [maximum](FormModel.BaseModel.md#maximum)
-- [minItems](FormModel.BaseModel.md#minitems)
-- [minLength](FormModel.BaseModel.md#minlength)
-- [minimum](FormModel.BaseModel.md#minimum)
-- [name](FormModel.BaseModel.md#name)
-- [parent](FormModel.BaseModel.md#parent)
-- [pattern](FormModel.BaseModel.md#pattern)
-- [placeholder](FormModel.BaseModel.md#placeholder)
-- [props](FormModel.BaseModel.md#props)
-- [readOnly](FormModel.BaseModel.md#readonly)
-- [required](FormModel.BaseModel.md#required)
-- [type](FormModel.BaseModel.md#type)
-- [valid](FormModel.BaseModel.md#valid)
-- [value](FormModel.BaseModel.md#value)
-- [viewType](FormModel.BaseModel.md#viewtype)
-- [visible](FormModel.BaseModel.md#visible)
-=======
 - [accept](BaseModel.md#accept)
 - [dataRef](BaseModel.md#dataref)
 - [default](BaseModel.md#default)
@@ -97,7 +59,6 @@ Defines common properties that each form field should have
 - [value](BaseModel.md#value)
 - [viewType](BaseModel.md#viewtype)
 - [visible](BaseModel.md#visible)
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/interfaces/BaseModel.md
 
 ## Properties
 

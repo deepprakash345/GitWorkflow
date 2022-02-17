@@ -1,10 +1,5 @@
 # Class: Invalid
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Invalid.md
-[Events](../modules/Events.md).Invalid
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Invalid.md
 Implementation of `invalid` event. The invalid event is triggered when a Field’s value becomes invalid after a change event or whenever its value property change
 
 ## Hierarchy

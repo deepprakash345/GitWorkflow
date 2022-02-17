@@ -1,10 +1,5 @@
 # Class: Validate
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Validate.md
-[Events](../modules/Events.md).Validate
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Validate.md
 Implementation of `validate` event. The validate event is triggered on the Form once any field is validated.
 
 ## Hierarchy
@@ -17,22 +12,6 @@ Implementation of `validate` event. The validate event is triggered on the Form 
 
 ### Constructors
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Validate.md
-- [constructor](Events.Validate.md#constructor)
-
-### Accessors
-
-- [isCustomEvent](Events.Validate.md#iscustomevent)
-- [metadata](Events.Validate.md#metadata)
-- [payload](Events.Validate.md#payload)
-- [target](Events.Validate.md#target)
-- [type](Events.Validate.md#type)
-
-### Methods
-
-- [toJson](Events.Validate.md#tojson)
-- [toString](Events.Validate.md#tostring)
-=======
 - [constructor](Validate.md#constructor)
 
 ### Accessors
@@ -47,7 +26,6 @@ Implementation of `validate` event. The validate event is triggered on the Form 
 
 - [toJson](Validate.md#tojson)
 - [toString](Validate.md#tostring)
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Validate.md
 
 ## Constructors
 

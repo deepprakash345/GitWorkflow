@@ -1,10 +1,5 @@
 # Class: RemoveItem
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.RemoveItem.md
-[Events](../modules/Events.md).RemoveItem
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/RemoveItem.md
 Implementation of `removeItem` event. The event is triggered on a panel to remove an instance of items inside it.
 
 ## Hierarchy

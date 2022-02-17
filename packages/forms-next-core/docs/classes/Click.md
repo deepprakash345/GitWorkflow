@@ -1,10 +1,5 @@
 # Class: Click
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Click.md
-[Events](../modules/Events.md).Click
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Click.md
 Implementation of `click` event. The event is triggered when user clicks on an element.
 
 ## Hierarchy

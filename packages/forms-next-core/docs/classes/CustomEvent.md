@@ -1,10 +1,5 @@
 # Class: CustomEvent
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.CustomEvent.md
-[Events](../modules/Events.md).CustomEvent
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/CustomEvent.md
 Implementation of `custom event`.
 
 ## Hierarchy

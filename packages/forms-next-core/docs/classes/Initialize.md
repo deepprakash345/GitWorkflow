@@ -1,10 +1,5 @@
 # Class: Initialize
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Initialize.md
-[Events](../modules/Events.md).Initialize
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Initialize.md
 Implementation of `initialize` event. The event is triggered on all the fields when the form initialisation is complete
 
 ## Hierarchy

@@ -1,34 +1,4 @@
-<<<<<<< HEAD
-# @aemforms/crispr-core - v0.6.21
-
-## Table of contents
-
-### Modules
-
-- [BaseNode](modules/BaseNode.md)
-- [Checkbox](modules/Checkbox.md)
-- [CheckboxGroup](modules/CheckboxGroup.md)
-- [Container](modules/Container.md)
-- [Events](modules/Events.md)
-- [Field](modules/Field.md)
-- [Fieldset](modules/Fieldset.md)
-- [FileObject](modules/FileObject.md)
-- [FileUpload](modules/FileUpload.md)
-- [Form](modules/Form.md)
-- [FormInstance](modules/FormInstance.md)
-- [FormJsonTypes](modules/FormJsonTypes.md)
-- [FormJsonUtils](modules/FormJsonUtils.md)
-- [FormMetaData](modules/FormMetaData.md)
-- [FormModel](modules/FormModel.md)
-- [FormUtils](modules/FormUtils.md)
-- [SchemaUtils](modules/SchemaUtils.md)
-- [Scriptable](modules/Scriptable.md)
-- [TranslationUtils](modules/TranslationUtils.md)
-- [ValidationUtils](modules/ValidationUtils.md)
-- [index](modules/index.md)
-- [types](modules/types.md)
-=======
-# @aemforms/crispr-core - v0.6.19
+# @aemforms/crispr-core - v0.6.22
 
 ## Table of contents
 
@@ -565,4 +535,3 @@ Validates Form model definition with the given data
 `boolean`
 
 `true`, if form is valid against the given form data, `false` otherwise
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules)

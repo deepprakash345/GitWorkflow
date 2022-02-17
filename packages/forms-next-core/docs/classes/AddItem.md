@@ -1,10 +1,5 @@
 # Class: AddItem
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.AddItem.md
-[Events](../modules/Events.md).AddItem
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/AddItem.md
 Implementation of `addItem` event. The event is triggered on a panel to add a new instance of items inside it.
 
 ## Hierarchy

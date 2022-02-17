@@ -1,10 +1,5 @@
 # Class: Change
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Change.md
-[Events](../modules/Events.md).Change
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Change.md
 Implementation of `change` event. The change event is triggered on the field whenever the value of the field is changed
 
 ## Hierarchy

@@ -1,10 +1,5 @@
 # Class: Valid
 
-<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Valid.md
-[Events](../modules/Events.md).Valid
-
-=======
->>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Valid.md
 Implementation of `valid` event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
 
 ## Hierarchy
