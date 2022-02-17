@@ -1,10 +1,10 @@
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/forms-next-react-bindings';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import fieldWithLabel from '../../../../../docs/examples/starter/fieldWithLabel.form.json';
 import mappings from '../../../src/utils/mappings';
-import {Action} from "@aemforms/forms-next-core/lib";
+import {Action} from "@aemforms/crispr-core/lib";
 import { action } from '@storybook/addon-actions';
 
 const formJson:any = (label, description, visible = undefined, richText = undefined) => {
