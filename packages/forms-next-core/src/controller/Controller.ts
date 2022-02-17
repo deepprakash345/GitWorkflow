@@ -198,14 +198,7 @@ export class Submit extends ActionImpl {
         super(payload, 'submit', {dispatch});
     }
 }
-/**
- * Implementation of `validate` event. The validate event is triggered on the Form once any field is validated.
- */
-export class Validate extends ActionImpl {
-    constructor() {
-        super({}, 'validate', {dispatch: true});
-    }
-}
+
 
 /**
  * Implementation of `fieldChanged` event. The field changed event is triggered on the field which it has changed.

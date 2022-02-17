@@ -15,7 +15,7 @@ import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
-import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, Validate} from './controller/Controller';
+import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize} from './controller/Controller';
 
 
 /**
@@ -164,7 +164,6 @@ class Form extends Container<FormJson> implements FormModel {
      */
     dispatch(action: Action): void {
         if (action.type === 'submit') {
-            this.queueEvent(new Validate());
             super.queueEvent(action);
             this._eventQueue.runPendingQueue();
         } else {
@@ -188,7 +187,10 @@ class Form extends Container<FormJson> implements FormModel {
      * @private
      */
     submit(action: Action, context: any) {
-        submit(context, action.payload.success, action.payload.error, action.payload.submit_as, action.payload.data);
+        // if no errors, only then submit
+        if (this.validate().length === 0) {
+            submit(context, action.payload.success, action.payload.error, action.payload.submit_as, action.payload.data);
+        }
     }
 
     public getElement(id: string) {

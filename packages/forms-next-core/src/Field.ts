@@ -1,4 +1,4 @@
-import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel} from './types';
+import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel, ValidationError} from './types';
 import {Constraints} from './utils/ValidationUtils';
 import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller/Controller';
 import Scriptable from './Scriptable';
@@ -217,7 +217,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             'value': value,
             'errorMessage': valid ? '' : this.getErrorMessage(constraint as keyof ConstraintsMessages)
         };
-        return this._checkUpdates(['value', 'valid', 'errorMessage'], elem);
+        return this._applyUpdates(['value', 'valid', 'errorMessage'], elem);
     }
 
     change(event: Action, context: any) {
@@ -231,7 +231,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * @param updates
      * @private
      */
-    protected _checkUpdates(propNames: string[], updates: any) {
+    protected _applyUpdates(propNames: string[], updates: any) {
         return propNames.reduce((acc: any, propertyName) => {
             //@ts-ignore
             const prevValue = this._jsonModel[propertyName];
@@ -252,12 +252,13 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     /**
      * Validates the current form object
      */
-    validate(action: Action) {
+    validate() {
         const changes = this.checkInput(this._jsonModel.value);
         if (changes.valid) {
             this.triggerValidationEvent(changes);
             this.notifyDependents(new Change({ changes: Object.values(changes) }));
         }
+        return this.valid ? [new ValidationError()]: [new ValidationError(this.id, [this._jsonModel.errorMessage])];
     }
 
     importData(contextualDataModel: DataGroup) {
