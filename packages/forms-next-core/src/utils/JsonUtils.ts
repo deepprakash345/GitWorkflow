@@ -1,6 +1,5 @@
 /**
  * Defines generic utilities to interact with form model definition which is represented as json
- * @module FormJsonUtils
  */
 
 import {FieldsetJson, FieldJson} from '../types';

@@ -1,7 +1,5 @@
 /**
  * Defines data group
- * @module
- * @private
  */
 import DataValue from './DataValue';
 

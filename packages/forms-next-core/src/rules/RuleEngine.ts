@@ -1,7 +1,5 @@
 /**
  * Implementation of rule engine
- * @module
- * @private
  */
 import {BaseModel} from '../types';
 import {ActionImpl} from '../controller/Controller';

@@ -1,6 +1,5 @@
 /**
  * Defines generic utilities to convert form model definition to json schema
- * @module SchemaUtils
  */
 import {FieldJson, FieldsetJson, FormJson} from '../types';
 

@@ -33,7 +33,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     directReferences() {
         return this._ruleContext;
@@ -131,7 +131,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     defaultDataModel(name: string) {
         const type = this._jsonModel.type || 'object';
@@ -140,7 +140,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     _initialize() {
         super._initialize();
@@ -174,7 +174,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     addItem(action: Action, context: any) {
         if (action.type === 'addItem' && this._itemTemplate != null) {
@@ -189,7 +189,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     removeItem(action: Action, context: any) {
         if (action.type === 'removeItem' && this._itemTemplate != null) {
@@ -211,7 +211,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     queueEvent(action: Action) {
         super.queueEvent(action);
@@ -224,7 +224,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     dispatch(action: Action): void {
         super.dispatch(action);
@@ -236,7 +236,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     /**
-     * private
+     * @private
      */
     importData(contextualDataModel?: DataGroup) {
         this._bindToDataModel(contextualDataModel);

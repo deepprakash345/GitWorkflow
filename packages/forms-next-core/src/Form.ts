@@ -23,9 +23,18 @@ import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, Valida
  */
 class Form extends Container<FormJson> implements FormModel {
 
-    _fields: Items<FieldsetModel | FieldModel> = {}
+    /**
+     * @private
+     */
+    private _fields: Items<FieldsetModel | FieldModel> = {}
+    /**
+     * @private
+     */
     _ids: Generator<string, void, string>
-    _invalidFields: string[] = []
+    /**
+     * @private
+     */
+    private _invalidFields: string[] = []
 
     /**
      * @param n

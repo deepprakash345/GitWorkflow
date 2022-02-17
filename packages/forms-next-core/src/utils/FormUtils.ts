@@ -1,6 +1,5 @@
 /**
  * Defines generic utilities to interact with form runtime model
- * @module FormUtils
  */
 
 import {FileObject} from '../FileObject';

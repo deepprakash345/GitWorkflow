@@ -1,21 +1,19 @@
 # Interface: IFileObject
 
-[FormModel](../modules/FormModel.md).IFileObject
-
 Defines file object interface.
 
 ## Implemented by
 
-- [`FileObject`](../classes/FileObject.FileObject-1.md)
+- [`FileObject`](../classes/FileObject.md)
 
 ## Table of contents
 
 ### Properties
 
-- [data](FormModel.IFileObject.md#data)
-- [mediaType](FormModel.IFileObject.md#mediatype)
-- [name](FormModel.IFileObject.md#name)
-- [size](FormModel.IFileObject.md#size)
+- [data](IFileObject.md#data)
+- [mediaType](IFileObject.md#mediatype)
+- [name](IFileObject.md#name)
+- [size](IFileObject.md#size)
 
 ## Properties
 

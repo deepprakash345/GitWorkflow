@@ -1,7 +1,5 @@
 /**
  * Defines utilities to parse form data
- * @module
- * @private
  */
 
 import DataGroup from '../data/DataGroup';

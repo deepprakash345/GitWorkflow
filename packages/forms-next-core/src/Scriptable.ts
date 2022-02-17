@@ -162,6 +162,11 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         this.notifyDependents(action);
     }
 
+    /**
+     * @param prop
+     * @param newValue
+     * @private
+     */
     _setProperty<T>(prop: string, newValue: T) {
         //@ts-ignore
         const oldValue = this._jsonModel[prop];

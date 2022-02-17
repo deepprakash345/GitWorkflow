@@ -1,39 +1,42 @@
-# Class: Valid
+# Class: Invalid
 
-[Events](../modules/Events.md).Valid
+<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Invalid.md
+[Events](../modules/Events.md).Invalid
 
-Implementation of `valid` event. The valid event is triggered whenever the field’s valid state is changed from invalid to valid.
+=======
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Invalid.md
+Implementation of `invalid` event. The invalid event is triggered when a Field’s value becomes invalid after a change event or whenever its value property change
 
 ## Hierarchy
 
 - `ActionImpl`
 
-  ↳ **`Valid`**
+  ↳ **`Invalid`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Events.Valid.md#constructor)
+- [constructor](Invalid.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Events.Valid.md#iscustomevent)
-- [metadata](Events.Valid.md#metadata)
-- [payload](Events.Valid.md#payload)
-- [target](Events.Valid.md#target)
-- [type](Events.Valid.md#type)
+- [isCustomEvent](Invalid.md#iscustomevent)
+- [metadata](Invalid.md#metadata)
+- [payload](Invalid.md#payload)
+- [target](Invalid.md#target)
+- [type](Invalid.md#type)
 
 ### Methods
 
-- [toJson](Events.Valid.md#tojson)
-- [toString](Events.Valid.md#tostring)
+- [toJson](Invalid.md#tojson)
+- [toString](Invalid.md#tostring)
 
 ## Constructors
 
 ### constructor
 
-• **new Valid**(`payload?`)
+• **new Invalid**(`payload?`)
 
 #### Parameters
 
@@ -91,11 +94,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+• `get` **target**(): [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+[`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Inherited from
 

@@ -1,29 +1,29 @@
 # Class: FileObject
 
-[FileObject](../modules/FileObject.md).FileObject
+Defines a file object which implements the [file object interface](../interfaces/IFileObject.md)
 
 Defines a file object which implements the [file object interface](../interfaces/FormModel.IFileObject.md)
 
 ## Implements
 
-- [`IFileObject`](../interfaces/FormModel.IFileObject.md)
+- [`IFileObject`](../interfaces/IFileObject.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](FileObject.FileObject-1.md#constructor)
+- [constructor](FileObject.md#constructor)
 
 ### Properties
 
-- [data](FileObject.FileObject-1.md#data)
-- [mediaType](FileObject.FileObject-1.md#mediatype)
-- [name](FileObject.FileObject-1.md#name)
-- [size](FileObject.FileObject-1.md#size)
+- [data](FileObject.md#data)
+- [mediaType](FileObject.md#mediatype)
+- [name](FileObject.md#name)
+- [size](FileObject.md#size)
 
 ### Methods
 
-- [toJSON](FileObject.FileObject-1.md#tojson)
+- [toJSON](FileObject.md#tojson)
 
 ## Constructors
 
@@ -35,7 +35,7 @@ Defines a file object which implements the [file object interface](../interfaces
 
 | Name | Type |
 | :------ | :------ |
-| `init?` | `Partial`<[`FileObject`](FileObject.FileObject-1.md)\> |
+| `init?` | `Partial`<[`FileObject`](FileObject.md)\> |
 
 ## Properties
 
@@ -47,7 +47,7 @@ Data of the file attachment. It can be uri or any file interface specific to cha
 
 #### Implementation of
 
-[IFileObject](../interfaces/FormModel.IFileObject.md).[data](../interfaces/FormModel.IFileObject.md#data)
+[IFileObject](../interfaces/IFileObject.md).[data](../interfaces/IFileObject.md#data)
 
 ___
 
@@ -59,7 +59,7 @@ Media type of the file data
 
 #### Implementation of
 
-[IFileObject](../interfaces/FormModel.IFileObject.md).[mediaType](../interfaces/FormModel.IFileObject.md#mediatype)
+[IFileObject](../interfaces/IFileObject.md).[mediaType](../interfaces/IFileObject.md#mediatype)
 
 ___
 
@@ -71,7 +71,7 @@ Name of the file
 
 #### Implementation of
 
-[IFileObject](../interfaces/FormModel.IFileObject.md).[name](../interfaces/FormModel.IFileObject.md#name)
+[IFileObject](../interfaces/IFileObject.md).[name](../interfaces/IFileObject.md#name)
 
 ___
 
@@ -83,7 +83,7 @@ Size of the file binary as per iec specification.
 
 #### Implementation of
 
-[IFileObject](../interfaces/FormModel.IFileObject.md).[size](../interfaces/FormModel.IFileObject.md#size)
+[IFileObject](../interfaces/IFileObject.md).[size](../interfaces/IFileObject.md#size)
 
 ## Methods
 

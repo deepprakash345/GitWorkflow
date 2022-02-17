@@ -1,0 +1,586 @@
+# Class: Form
+
+Defines `form model` which implements [form model](../interfaces/FormModel.md)
+
+## Hierarchy
+
+- [`Container`](Container.md)<[`FormJson`](../README.md#formjson)\>
+
+  ↳ **`Form`**
+
+## Implements
+
+- [`FormModel`](../interfaces/FormModel.md)
+
+## Table of contents
+
+### Accessors
+
+- [action](Form.md#action)
+- [dataRef](Form.md#dataref)
+- [form](Form.md#form)
+- [id](Form.md#id)
+- [index](Form.md#index)
+- [isContainer](Form.md#iscontainer)
+- [items](Form.md#items)
+- [label](Form.md#label)
+- [maxItems](Form.md#maxitems)
+- [metaData](Form.md#metadata)
+- [name](Form.md#name)
+- [parent](Form.md#parent)
+- [ruleEngine](Form.md#ruleengine)
+- [rules](Form.md#rules)
+- [title](Form.md#title)
+- [type](Form.md#type)
+- [value](Form.md#value)
+- [viewType](Form.md#viewtype)
+- [visible](Form.md#visible)
+
+### Methods
+
+- [exportData](Form.md#exportdata)
+- [getElement](Form.md#getelement)
+- [getState](Form.md#getstate)
+- [getUniqueId](Form.md#getuniqueid)
+- [importData](Form.md#importdata)
+- [indexOf](Form.md#indexof)
+- [isValid](Form.md#isvalid)
+
+## Accessors
+
+### action
+
+• `get` **action**(): `undefined` \| `string`
+
+#### Returns
+
+`undefined` \| `string`
+
+___
+
+### dataRef
+
+• `get` **dataRef**(): `undefined` \| ``null`` \| `string`
+
+To map the field’s value to a property in the data model.
+
+#### Returns
+
+`undefined` \| ``null`` \| `string`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[dataRef](../interfaces/FormModel.md#dataref)
+
+#### Inherited from
+
+Container.dataRef
+
+___
+
+### form
+
+• `get` **form**(): [`FormModel`](../interfaces/FormModel.md)
+
+#### Returns
+
+[`FormModel`](../interfaces/FormModel.md)
+
+#### Overrides
+
+Container.form
+
+___
+
+### id
+
+• `get` **id**(): `string`
+
+Id of the form.
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[id](../interfaces/FormModel.md#id)
+
+#### Overrides
+
+Container.id
+
+___
+
+### index
+
+• `get` **index**(): `number`
+
+The index of the Field within its parent.
+
+#### Returns
+
+`number`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[index](../interfaces/FormModel.md#index)
+
+#### Inherited from
+
+Container.index
+
+___
+
+### isContainer
+
+• `get` **isContainer**(): `boolean`
+
+Whether the form field is container or not
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[isContainer](../interfaces/FormModel.md#iscontainer)
+
+#### Inherited from
+
+Container.isContainer
+
+___
+
+### items
+
+• `get` **items**(): ([`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md))[]
+
+Defines the children/items of the container
+
+#### Returns
+
+([`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md))[]
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[items](../interfaces/FormModel.md#items)
+
+#### Inherited from
+
+Container.items
+
+___
+
+### label
+
+• `get` **label**(): `undefined` \| [`Label`](../README.md#label)
+
+Label to be used for the field.
+
+#### Returns
+
+`undefined` \| [`Label`](../README.md#label)
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[label](../interfaces/FormModel.md#label)
+
+#### Inherited from
+
+Container.label
+
+• `set` **label**(`l`): `void`
+
+Label to be used for the field.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `l` | `undefined` \| [`Label`](../README.md#label) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[label](../interfaces/FormModel.md#label)
+
+#### Inherited from
+
+Container.label
+
+___
+
+### maxItems
+
+• `set` **maxItems**(`m`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `m` | `number` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[maxItems](../interfaces/FormModel.md#maxitems)
+
+#### Inherited from
+
+Container.maxItems
+
+___
+
+### metaData
+
+• `get` **metaData**(): [`FormMetaData`](FormMetaData.md)
+
+#### Returns
+
+[`FormMetaData`](FormMetaData.md)
+
+___
+
+### name
+
+• `get` **name**(): `string`
+
+Name of the form field.
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[name](../interfaces/FormModel.md#name)
+
+#### Overrides
+
+Container.name
+
+___
+
+### parent
+
+• `get` **parent**(): [`ContainerModel`](../interfaces/ContainerModel.md)
+
+Defines the parent of the container
+
+#### Returns
+
+[`ContainerModel`](../interfaces/ContainerModel.md)
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[parent](../interfaces/FormModel.md#parent)
+
+#### Inherited from
+
+Container.parent
+
+___
+
+### ruleEngine
+
+• `get` **ruleEngine**(): `RuleEngine`
+
+#### Returns
+
+`RuleEngine`
+
+#### Implementation of
+
+FormModel.ruleEngine
+
+#### Overrides
+
+Container.ruleEngine
+
+___
+
+### rules
+
+• `get` **rules**(): [`Items`](../README.md#items)<`string`\>
+
+Rules that modify the property of the object dynamically. The rules are evaluated whenever the dependency changes.
+
+#### Returns
+
+[`Items`](../README.md#items)<`string`\>
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[rules](../interfaces/FormModel.md#rules)
+
+#### Inherited from
+
+Container.rules
+
+___
+
+### title
+
+• `get` **title**(): `string`
+
+Form title.
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[title](../interfaces/FormModel.md#title)
+
+___
+
+### type
+
+• `get` **type**(): `string`
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[type](../interfaces/FormModel.md#type)
+
+#### Overrides
+
+Container.type
+
+___
+
+### value
+
+• `get` **value**(): ``null``
+
+The current value of the Field. The property is serialized in the Data Model.
+
+#### Returns
+
+``null``
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[value](../interfaces/FormModel.md#value)
+
+#### Overrides
+
+Container.value
+
+___
+
+### viewType
+
+• `get` **viewType**(): `string`
+
+Type of widget to show to the user for capturing the data..
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[viewType](../interfaces/FormModel.md#viewtype)
+
+#### Inherited from
+
+Container.viewType
+
+___
+
+### visible
+
+• `get` **visible**(): `undefined` \| `boolean`
+
+Whether the field should be visible to author or not.
+
+#### Returns
+
+`undefined` \| `boolean`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[visible](../interfaces/FormModel.md#visible)
+
+#### Inherited from
+
+Container.visible
+
+• `set` **visible**(`v`): `void`
+
+Whether the field should be visible to author or not.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `undefined` \| `boolean` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[visible](../interfaces/FormModel.md#visible)
+
+#### Inherited from
+
+Container.visible
+
+## Methods
+
+### exportData
+
+▸ **exportData**(): `any`
+
+Exports the form data
+
+#### Returns
+
+`any`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[exportData](../interfaces/FormModel.md#exportdata)
+
+___
+
+### getElement
+
+▸ **getElement**(`id`): [`Form`](Form.md) \| [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md)
+
+Get form element model based on the id of the form element
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `string` |
+
+#### Returns
+
+[`Form`](Form.md) \| [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md)
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[getElement](../interfaces/FormModel.md#getelement)
+
+___
+
+### getState
+
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+
+Returns the current state of the form
+
+To access the form data and attachments, one needs to use the `data` and `attachments` property.
+For example,
+```
+const data = form.getState().data
+const attachments = form.getState().attachments
+```
+
+#### Returns
+
+`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[getState](../interfaces/FormModel.md#getstate)
+
+#### Overrides
+
+[Container](Container.md).[getState](Container.md#getstate)
+
+___
+
+### getUniqueId
+
+▸ **getUniqueId**(): `string`
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+FormModel.getUniqueId
+
+___
+
+### importData
+
+▸ **importData**(`dataModel`): `void`
+
+Imports the given form data
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dataModel` | `any` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[importData](../interfaces/FormModel.md#importdata)
+
+#### Overrides
+
+Container.importData
+
+___
+
+### indexOf
+
+▸ **indexOf**(`f`): `number`
+
+Returns the index of the [child item](../interfaces/FieldModel.md) or the [child container](../interfaces/FieldsetModel.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `f` | [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) |
+
+#### Returns
+
+`number`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[indexOf](../interfaces/FormModel.md#indexof)
+
+#### Inherited from
+
+[Container](Container.md).[indexOf](Container.md#indexof)
+
+___
+
+### isValid
+
+▸ **isValid**(): `boolean`
+
+Checks if the given form is valid or not
+
+#### Returns
+
+`boolean`
+
+`true`, if form is valid, `false` otherwise

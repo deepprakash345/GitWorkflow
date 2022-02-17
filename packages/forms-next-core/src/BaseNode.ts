@@ -20,7 +20,12 @@ import Container from './Container';
  * @private
  */
 class ActionImplWithTarget implements Action {
-
+    /**
+     * @constructor
+     * @param _action
+     * @param _target
+     * @private
+     */
     constructor(private _action: Action, private _target: FieldModel | FormModel | FieldsetModel) {
     }
 
@@ -74,6 +79,12 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         return false;
     }
 
+    /**
+     * @constructor
+     * @param params
+     * @param _options
+     * @private
+     */
     public constructor(params: T,
                        //@ts_ignore
                        private _options: {form: FormModel, parent: ContainerModel}) {
@@ -210,6 +221,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         };
     }
 
+    /**
+     * @private
+     */
     subscribe(callback: callbackFn, eventName: string = 'change') {
         this._callbacks[eventName] = this._callbacks[eventName] || [];
         this._callbacks[eventName].push(callback);
@@ -222,6 +236,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         };
     }
 
+    /**
+     * @private
+     */
     addDependent(action: Action) {
         if(this._dependents.find(({node}) => node === action.payload) === undefined) {
             const subscription = this.subscribe((change: Action) => {
@@ -239,6 +256,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         }
     }
 
+    /**
+     * @private
+     */
     removeDependent(action: Action) {
         const index = this._dependents.findIndex(({node}) => node === action.payload);
         if(index > -1) {
@@ -323,6 +343,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     getDataNode() {
         return this._data;
     }
+
 
     abstract defaultDataModel(name: string|number): DataValue
 

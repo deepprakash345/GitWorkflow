@@ -1,7 +1,5 @@
 /**
  * Defines utilities to make external web request
- * @module
- * @private
  */
 
 declare var fetch: any;

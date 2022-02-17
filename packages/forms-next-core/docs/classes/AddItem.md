@@ -1,7 +1,10 @@
 # Class: AddItem
 
+<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.AddItem.md
 [Events](../modules/Events.md).AddItem
 
+=======
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/AddItem.md
 Implementation of `addItem` event. The event is triggered on a panel to add a new instance of items inside it.
 
 ## Hierarchy
@@ -14,20 +17,20 @@ Implementation of `addItem` event. The event is triggered on a panel to add a ne
 
 ### Constructors
 
-- [constructor](Events.AddItem.md#constructor)
+- [constructor](AddItem.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Events.AddItem.md#iscustomevent)
-- [metadata](Events.AddItem.md#metadata)
-- [payload](Events.AddItem.md#payload)
-- [target](Events.AddItem.md#target)
-- [type](Events.AddItem.md#type)
+- [isCustomEvent](AddItem.md#iscustomevent)
+- [metadata](AddItem.md#metadata)
+- [payload](AddItem.md#payload)
+- [target](AddItem.md#target)
+- [type](AddItem.md#type)
 
 ### Methods
 
-- [toJson](Events.AddItem.md#tojson)
-- [toString](Events.AddItem.md#tostring)
+- [toJson](AddItem.md#tojson)
+- [toString](AddItem.md#tostring)
 
 ## Constructors
 
@@ -91,11 +94,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+• `get` **target**(): [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+[`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Inherited from
 

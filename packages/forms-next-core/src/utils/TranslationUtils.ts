@@ -1,6 +1,5 @@
 /**
  * Defines generic utilities to translated form model definition
- * @module TranslationUtils
  */
 // todo: The API's defined in this file could move to a different package later on
 import {FieldJson, FieldsetJson, FormJson, TranslationJson, translationProps} from '../types';

@@ -1,8 +1,3 @@
-/**
- * @module
- * @private
- */
-
 import {getProperty} from './utils/JsonUtils';
 
 /**

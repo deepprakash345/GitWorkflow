@@ -1,5 +1,5 @@
 module.exports = {
-    entryPoints: ['src'],
+    entryPoints: ['./src/index.ts'],
     entryPointStrategy : 'Expand',
     exclude : ['**/test/**/*', '**/*.spec.ts'],
     out: 'docs',

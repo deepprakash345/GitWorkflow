@@ -1,20 +1,18 @@
 # Interface: FormMetaDataModel
 
-[FormModel](../modules/FormModel.md).FormMetaDataModel
-
 Defines form meta data properties
 
 ## Implemented by
 
-- [`default`](../classes/FormMetaData.default.md)
+- [`FormMetaData`](../classes/FormMetaData.md)
 
 ## Table of contents
 
 ### Properties
 
-- [grammarVersion](FormModel.FormMetaDataModel.md#grammarversion)
-- [locale](FormModel.FormMetaDataModel.md#locale)
-- [version](FormModel.FormMetaDataModel.md#version)
+- [grammarVersion](FormMetaDataModel.md#grammarversion)
+- [locale](FormMetaDataModel.md#locale)
+- [version](FormMetaDataModel.md#version)
 
 ## Properties
 

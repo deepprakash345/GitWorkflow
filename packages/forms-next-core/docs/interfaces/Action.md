@@ -1,7 +1,5 @@
 # Interface: Action
 
-[FormModel](../modules/FormModel.md).Action
-
 Generic Action/Event interface.
 Defines common properties that each action/event should have
 
@@ -9,12 +7,12 @@ Defines common properties that each action/event should have
 
 ### Properties
 
-- [isCustomEvent](FormModel.Action.md#iscustomevent)
-- [metadata](FormModel.Action.md#metadata)
-- [originalAction](FormModel.Action.md#originalaction)
-- [payload](FormModel.Action.md#payload)
-- [target](FormModel.Action.md#target)
-- [type](FormModel.Action.md#type)
+- [isCustomEvent](Action.md#iscustomevent)
+- [metadata](Action.md#metadata)
+- [originalAction](Action.md#originalaction)
+- [payload](Action.md#payload)
+- [target](Action.md#target)
+- [type](Action.md#type)
 
 ## Properties
 
@@ -36,7 +34,7 @@ ___
 
 ### originalAction
 
-• `Optional` `Readonly` **originalAction**: [`Action`](FormModel.Action.md)
+• `Optional` `Readonly` **originalAction**: [`Action`](Action.md)
 
 Original event. If the event is dispatched, this refers the original event
 
@@ -52,7 +50,7 @@ ___
 
 ### target
 
-• `Readonly` **target**: [`FormModel`](FormModel.FormModel-1.md) \| [`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md)
+• `Readonly` **target**: [`FieldsetModel`](FieldsetModel.md) \| [`FieldModel`](FieldModel.md) \| [`FormModel`](FormModel.md)
 
 The field element on which the event is triggered.
 

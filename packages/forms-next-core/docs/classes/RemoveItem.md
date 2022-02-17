@@ -1,7 +1,10 @@
 # Class: RemoveItem
 
+<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.RemoveItem.md
 [Events](../modules/Events.md).RemoveItem
 
+=======
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/RemoveItem.md
 Implementation of `removeItem` event. The event is triggered on a panel to remove an instance of items inside it.
 
 ## Hierarchy
@@ -14,20 +17,20 @@ Implementation of `removeItem` event. The event is triggered on a panel to remov
 
 ### Constructors
 
-- [constructor](Events.RemoveItem.md#constructor)
+- [constructor](RemoveItem.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Events.RemoveItem.md#iscustomevent)
-- [metadata](Events.RemoveItem.md#metadata)
-- [payload](Events.RemoveItem.md#payload)
-- [target](Events.RemoveItem.md#target)
-- [type](Events.RemoveItem.md#type)
+- [isCustomEvent](RemoveItem.md#iscustomevent)
+- [metadata](RemoveItem.md#metadata)
+- [payload](RemoveItem.md#payload)
+- [target](RemoveItem.md#target)
+- [type](RemoveItem.md#type)
 
 ### Methods
 
-- [toJson](Events.RemoveItem.md#tojson)
-- [toString](Events.RemoveItem.md#tostring)
+- [toJson](RemoveItem.md#tojson)
+- [toString](RemoveItem.md#tostring)
 
 ## Constructors
 
@@ -91,11 +94,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+• `get` **target**(): [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+[`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Inherited from
 

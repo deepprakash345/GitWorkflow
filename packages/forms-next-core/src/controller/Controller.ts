@@ -1,6 +1,5 @@
 /**
  * Defines all form events
- * @module Events
  */
 import {
     Action, BaseJson,

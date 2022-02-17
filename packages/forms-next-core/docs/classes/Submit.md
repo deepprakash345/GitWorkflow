@@ -1,39 +1,43 @@
-# Class: Initialize
+# Class: Submit
 
-[Events](../modules/Events.md).Initialize
+<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Submit.md
+[Events](../modules/Events.md).Submit
 
-Implementation of `initialize` event. The event is triggered on all the fields when the form initialisation is complete
+=======
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Submit.md
+Implementation of `submit` event. The submit event is triggered on the Form.
+To trigger the submit event, submit function needs to be invoked or one can invoke dispatchEvent API.
 
 ## Hierarchy
 
 - `ActionImpl`
 
-  ↳ **`Initialize`**
+  ↳ **`Submit`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Events.Initialize.md#constructor)
+- [constructor](Submit.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Events.Initialize.md#iscustomevent)
-- [metadata](Events.Initialize.md#metadata)
-- [payload](Events.Initialize.md#payload)
-- [target](Events.Initialize.md#target)
-- [type](Events.Initialize.md#type)
+- [isCustomEvent](Submit.md#iscustomevent)
+- [metadata](Submit.md#metadata)
+- [payload](Submit.md#payload)
+- [target](Submit.md#target)
+- [type](Submit.md#type)
 
 ### Methods
 
-- [toJson](Events.Initialize.md#tojson)
-- [toString](Events.Initialize.md#tostring)
+- [toJson](Submit.md#tojson)
+- [toString](Submit.md#tostring)
 
 ## Constructors
 
 ### constructor
 
-• **new Initialize**(`payload?`, `dispatch?`)
+• **new Submit**(`payload?`, `dispatch?`)
 
 #### Parameters
 
@@ -92,11 +96,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+• `get` **target**(): [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+[`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Inherited from
 

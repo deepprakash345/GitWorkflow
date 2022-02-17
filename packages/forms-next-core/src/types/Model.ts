@@ -1,6 +1,5 @@
 /**
  * Defines generic interface's for form runtime model
- * @module FormModel
  */
 
 import {

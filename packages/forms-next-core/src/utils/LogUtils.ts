@@ -1,7 +1,5 @@
 /**
  * Defines utilities for logging
- * @module
- * @private
  */
 
 import {callbackFn} from '../types';

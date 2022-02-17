@@ -1,7 +1,6 @@
 /**
  * Defines generic utilities to validate form runtime model based on the constraints defined
  * as per `crispr form specification`
- * @module ValidationUtils
  */
 
 // issue with import

@@ -1,6 +1,5 @@
 /**
  * Defines generic types based on `crispr form specification`
- * @module FormJsonTypes
  */
 
 /** Type for `items property` based on `crispr form specification` */

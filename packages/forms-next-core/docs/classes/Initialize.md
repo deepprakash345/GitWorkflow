@@ -1,46 +1,48 @@
-# Class: CustomEvent
+# Class: Initialize
 
-[Events](../modules/Events.md).CustomEvent
+<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Initialize.md
+[Events](../modules/Events.md).Initialize
 
-Implementation of `custom event`.
+=======
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Initialize.md
+Implementation of `initialize` event. The event is triggered on all the fields when the form initialisation is complete
 
 ## Hierarchy
 
 - `ActionImpl`
 
-  ↳ **`CustomEvent`**
+  ↳ **`Initialize`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Events.CustomEvent.md#constructor)
+- [constructor](Initialize.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Events.CustomEvent.md#iscustomevent)
-- [metadata](Events.CustomEvent.md#metadata)
-- [payload](Events.CustomEvent.md#payload)
-- [target](Events.CustomEvent.md#target)
-- [type](Events.CustomEvent.md#type)
+- [isCustomEvent](Initialize.md#iscustomevent)
+- [metadata](Initialize.md#metadata)
+- [payload](Initialize.md#payload)
+- [target](Initialize.md#target)
+- [type](Initialize.md#type)
 
 ### Methods
 
-- [toJson](Events.CustomEvent.md#tojson)
-- [toString](Events.CustomEvent.md#tostring)
+- [toJson](Initialize.md#tojson)
+- [toString](Initialize.md#tostring)
 
 ## Constructors
 
 ### constructor
 
-• **new CustomEvent**(`eventName`, `payload?`, `dispatch?`)
+• **new Initialize**(`payload?`, `dispatch?`)
 
 #### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `eventName` | `string` | `undefined` |
-| `payload` | `any` | `{}` |
+| `payload?` | `any` | `undefined` |
 | `dispatch` | `boolean` | `false` |
 
 #### Overrides
@@ -53,13 +55,11 @@ ActionImpl.constructor
 
 • `get` **isCustomEvent**(): `boolean`
 
-Defines if the event is custom
-
 #### Returns
 
 `boolean`
 
-#### Overrides
+#### Inherited from
 
 ActionImpl.isCustomEvent
 
@@ -95,11 +95,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+• `get` **target**(): [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+[`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Inherited from
 

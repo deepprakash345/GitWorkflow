@@ -1,45 +1,48 @@
-# Class: Change
+# Class: Click
 
-[Events](../modules/Events.md).Change
+<<<<<<< HEAD:packages/forms-next-core/docs/classes/Events.Click.md
+[Events](../modules/Events.md).Click
 
-Implementation of `change` event. The change event is triggered on the field whenever the value of the field is changed
+=======
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/classes/Click.md
+Implementation of `click` event. The event is triggered when user clicks on an element.
 
 ## Hierarchy
 
 - `ActionImpl`
 
-  ↳ **`Change`**
+  ↳ **`Click`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Events.Change.md#constructor)
+- [constructor](Click.md#constructor)
 
 ### Accessors
 
-- [isCustomEvent](Events.Change.md#iscustomevent)
-- [metadata](Events.Change.md#metadata)
-- [payload](Events.Change.md#payload)
-- [target](Events.Change.md#target)
-- [type](Events.Change.md#type)
+- [isCustomEvent](Click.md#iscustomevent)
+- [metadata](Click.md#metadata)
+- [payload](Click.md#payload)
+- [target](Click.md#target)
+- [type](Click.md#type)
 
 ### Methods
 
-- [toJson](Events.Change.md#tojson)
-- [toString](Events.Change.md#tostring)
+- [toJson](Click.md#tojson)
+- [toString](Click.md#tostring)
 
 ## Constructors
 
 ### constructor
 
-• **new Change**(`payload`, `dispatch?`)
+• **new Click**(`payload?`, `dispatch?`)
 
 #### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `payload` | [`ChangePayload`](../modules/Events.md#changepayload) | `undefined` |
+| `payload?` | `any` | `undefined` |
 | `dispatch` | `boolean` | `false` |
 
 #### Overrides
@@ -92,11 +95,11 @@ ___
 
 ### target
 
-• `get` **target**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+• `get` **target**(): [`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/FormModel.FormModel-1.md) \| [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)
+[`FieldsetModel`](../interfaces/FieldsetModel.md) \| [`FieldModel`](../interfaces/FieldModel.md) \| [`FormModel`](../interfaces/FormModel.md)
 
 #### Inherited from
 

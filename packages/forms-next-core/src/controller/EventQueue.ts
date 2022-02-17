@@ -1,7 +1,5 @@
 /**
  * Defines event queue and event node
- * @module
- * @private
  */
 import {Action, BaseJson} from '../types';
 import {BaseNode} from '../BaseNode';

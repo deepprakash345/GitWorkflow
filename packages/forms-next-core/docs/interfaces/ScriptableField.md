@@ -1,7 +1,5 @@
 # Interface: ScriptableField
 
-[FormModel](../modules/FormModel.md).ScriptableField
-
 Generic Scriptable field interface. All non-transparent fields which support rule/events
 should implement this interface
 
@@ -9,20 +7,20 @@ should implement this interface
 
 - **`ScriptableField`**
 
-  ↳ [`FieldModel`](FormModel.FieldModel.md)
+  ↳ [`FieldModel`](FieldModel.md)
 
-  ↳ [`ContainerModel`](FormModel.ContainerModel.md)
+  ↳ [`ContainerModel`](ContainerModel.md)
 
 ## Implemented by
 
-- [`default`](../classes/Scriptable.default.md)
+- [`Scriptable`](../classes/Scriptable.md)
 
 ## Table of contents
 
 ### Properties
 
-- [events](FormModel.ScriptableField.md#events)
-- [rules](FormModel.ScriptableField.md#rules)
+- [events](ScriptableField.md#events)
+- [rules](ScriptableField.md#rules)
 
 ## Properties
 

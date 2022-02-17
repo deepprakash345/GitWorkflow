@@ -1,30 +1,29 @@
 # Interface: BaseModel
 
-[FormModel](../modules/FormModel.md).BaseModel
-
 Generic base model interface.
 Defines common properties that each form field should have
 
 ## Hierarchy
 
-- [`ConstraintsJson`](../modules/FormJsonTypes.md#constraintsjson)
+- [`ConstraintsJson`](../README.md#constraintsjson)
 
 - `WithController`
 
   ↳ **`BaseModel`**
 
-  ↳↳ [`FieldModel`](FormModel.FieldModel.md)
+  ↳↳ [`FieldModel`](FieldModel.md)
 
-  ↳↳ [`ContainerModel`](FormModel.ContainerModel.md)
+  ↳↳ [`ContainerModel`](ContainerModel.md)
 
 ## Implemented by
 
-- [`BaseNode`](../classes/BaseNode.BaseNode-1.md)
+- [`BaseNode`](../classes/BaseNode.md)
 
 ## Table of contents
 
 ### Properties
 
+<<<<<<< HEAD:packages/forms-next-core/docs/interfaces/FormModel.BaseModel.md
 - [accept](FormModel.BaseModel.md#accept)
 - [dataRef](FormModel.BaseModel.md#dataref)
 - [default](FormModel.BaseModel.md#default)
@@ -61,6 +60,44 @@ Defines common properties that each form field should have
 - [value](FormModel.BaseModel.md#value)
 - [viewType](FormModel.BaseModel.md#viewtype)
 - [visible](FormModel.BaseModel.md#visible)
+=======
+- [accept](BaseModel.md#accept)
+- [dataRef](BaseModel.md#dataref)
+- [default](BaseModel.md#default)
+- [description](BaseModel.md#description)
+- [enabled](BaseModel.md#enabled)
+- [enforceEnum](BaseModel.md#enforceenum)
+- [enum](BaseModel.md#enum)
+- [enumNames](BaseModel.md#enumnames)
+- [expression](BaseModel.md#expression)
+- [format](BaseModel.md#format)
+- [fracDigits](BaseModel.md#fracdigits)
+- [id](BaseModel.md#id)
+- [index](BaseModel.md#index)
+- [isContainer](BaseModel.md#iscontainer)
+- [items](BaseModel.md#items)
+- [label](BaseModel.md#label)
+- [leadDigits](BaseModel.md#leaddigits)
+- [maxFileSize](BaseModel.md#maxfilesize)
+- [maxItems](BaseModel.md#maxitems)
+- [maxLength](BaseModel.md#maxlength)
+- [maximum](BaseModel.md#maximum)
+- [minItems](BaseModel.md#minitems)
+- [minLength](BaseModel.md#minlength)
+- [minimum](BaseModel.md#minimum)
+- [name](BaseModel.md#name)
+- [parent](BaseModel.md#parent)
+- [pattern](BaseModel.md#pattern)
+- [placeholder](BaseModel.md#placeholder)
+- [props](BaseModel.md#props)
+- [readOnly](BaseModel.md#readonly)
+- [required](BaseModel.md#required)
+- [type](BaseModel.md#type)
+- [valid](BaseModel.md#valid)
+- [value](BaseModel.md#value)
+- [viewType](BaseModel.md#viewtype)
+- [visible](BaseModel.md#visible)
+>>>>>>> afd5b1f (CQ-4339307 Fixed code documentation by removing modules):packages/forms-next-core/docs/interfaces/BaseModel.md
 
 ## Properties
 
@@ -192,7 +229,7 @@ ___
 
 ### items
 
-• `Optional` `Readonly` **items**: ([`FieldModel`](FormModel.FieldModel.md) \| [`FieldsetModel`](FormModel.FieldsetModel.md))[]
+• `Optional` `Readonly` **items**: ([`FieldsetModel`](FieldsetModel.md) \| [`FieldModel`](FieldModel.md))[]
 
 Array containing Fields or Panels.
 
@@ -200,7 +237,7 @@ ___
 
 ### label
 
-• `Optional` **label**: [`Label`](../modules/FormJsonTypes.md#label)
+• `Optional` **label**: [`Label`](../README.md#label)
 
 Label to be used for the field.
 
@@ -296,7 +333,7 @@ ___
 
 ### parent
 
-• `Readonly` **parent**: ``null`` \| [`ContainerModel`](FormModel.ContainerModel.md)
+• `Readonly` **parent**: ``null`` \| [`ContainerModel`](ContainerModel.md)
 
 The Parent Panel of the Field/Panel.
 
