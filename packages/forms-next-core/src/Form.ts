@@ -15,31 +15,24 @@ import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
-import {ActionImpl, ChangePayload, ExecuteRule, Initialize} from './controller/Controller';
-
-export class Validate extends ActionImpl {
-    constructor() {
-        super({}, 'validate', {dispatch: true});
-    }
-}
-
-export class FieldChanged extends ActionImpl {
-
-    constructor(changes: ChangePayload, field: BaseJson) {
-        super({
-            field,
-            changes
-        }, 'fieldChanged');
-    }
-}
+import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, Validate} from './controller/Controller';
 
 
+/**
+ * Defines `form model` which implements {@link FormModel | form model}
+ */
 class Form extends Container<FormJson> implements FormModel {
 
     _fields: Items<FieldsetModel | FieldModel> = {}
     _ids: Generator<string, void, string>
     _invalidFields: string[] = []
 
+    /**
+     * @param n
+     * @param _ruleEngine
+     * @param _eventQueue
+     * @private
+     */
     constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
         //@ts-ignore
         super(n, {});
@@ -76,7 +69,14 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     /**
-     * returns the current state of the form
+     * Returns the current state of the form
+     *
+     * To access the form data and attachments, one needs to use the `data` and `attachments` property.
+     * For example,
+     * ```
+     * const data = form.getState().data
+     * const attachments = form.getState().attachments
+     * ```
      */
     getState() {
         const self = this;
@@ -114,6 +114,10 @@ class Form extends Container<FormJson> implements FormModel {
         return this._ids.next().value as string;
     }
 
+    /**
+     * @param field
+     * @private
+     */
     fieldAdded(field: FieldModel | FieldsetModel) {
         this._fields[field.id] = field;
         field.subscribe((action) => {
@@ -137,10 +141,18 @@ class Form extends Container<FormJson> implements FormModel {
         });
     }
 
+    /**
+     * Checks if the given form is valid or not
+     * @returns `true`, if form is valid, `false` otherwise
+     */
     isValid() {
         return this._invalidFields.length === 0;
     }
 
+    /**
+     * @param field
+     * @private
+     */
     dispatch(action: Action): void {
         if (action.type === 'submit') {
             this.queueEvent(new Validate());
@@ -151,12 +163,21 @@ class Form extends Container<FormJson> implements FormModel {
         }
     }
 
+    /**
+     * @param action
+     * @private
+     */
     executeAction(action: Action) {
         if (action.type !== 'submit' || this._invalidFields.length === 0) {
             super.executeAction(action);
         }
     }
 
+    /**
+     * @param action
+     * @param context
+     * @private
+     */
     submit(action: Action, context: any) {
         submit(context, action.payload.success, action.payload.error, action.payload.submit_as, action.payload.data);
     }
@@ -168,6 +189,9 @@ class Form extends Container<FormJson> implements FormModel {
         return this._fields[id];
     }
 
+    /**
+     * @private
+     */
     getEventQueue(): EventQueue {
         return this._eventQueue;
     }

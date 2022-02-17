@@ -1,7 +1,7 @@
 import { TextField } from '@adobe/react-spectrum';
-import { FieldJson } from '@aemforms/forms-next-core';
+import { FieldJson } from '@aemforms/crispr-core';
 import React from 'react';
-import { useRenderer } from '@aemforms/forms-next-react-bindings';
+import { useRenderer } from '@aemforms/crispr-react-bindings';
 import {
   baseConvertor,
   combineConvertors,

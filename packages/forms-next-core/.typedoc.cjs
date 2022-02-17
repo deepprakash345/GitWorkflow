@@ -9,6 +9,7 @@ module.exports = {
     includeVersion: true,
     excludeExternals: true,
     excludePrivate : true,
+    excludeProtected : true,
     disableSources: true,
     plugin: 'typedoc-plugin-markdown',
     hideBreadcrumbs: true,

@@ -1,10 +1,10 @@
-import {FieldJson} from '@aemforms/forms-next-core/lib';
+import {FieldJson} from '@aemforms/crispr-core/lib';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
-import {Convertor} from '@aemforms/forms-next-react-bindings/lib/hooks';
+import {Convertor} from '@aemforms/crispr-react-bindings/lib/hooks';
 import '../styles.css';
 import clsx from 'clsx';
-import { useFormIntl } from '@aemforms/forms-next-react-bindings';
+import { useFormIntl } from '@aemforms/crispr-react-bindings';
 
 const DEFAULT_ERROR_MESSAGE = 'There is an error in the field';
 

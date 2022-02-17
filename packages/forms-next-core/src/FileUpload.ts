@@ -39,6 +39,9 @@ async function processFile(file : FileObject) {
     return fileObj;
 }
 
+/**
+ * Implementation of FileUpload runtime model which extends from {@link Field | field}
+ */
 class FileUpload extends Field implements FieldModel {
     //private _files: FileObject[];
 
@@ -117,10 +120,16 @@ class FileUpload extends Field implements FieldModel {
             });
     }
 
+    /**
+     * Returns the max file size in bytes as per IEC specification
+     */
     get maxFileSize() {
         return getFileSizeInBytes(this._jsonModel.maxFileSize);
     }
 
+    /**
+     * Returns the list of mime types which file attachment can accept
+     */
     get accept() {
         return this._jsonModel.accept;
     }

@@ -1,6 +1,6 @@
 import {ComboBox, Item} from '@adobe/react-spectrum';
-import {FieldJson} from '@aemforms/forms-next-core';
-import {useRenderer} from '@aemforms/forms-next-react-bindings';
+import {FieldJson} from '@aemforms/crispr-core';
+import {useRenderer} from '@aemforms/crispr-react-bindings';
 import {
     baseConvertor,
     combineConvertors,

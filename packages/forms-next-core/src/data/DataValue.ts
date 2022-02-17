@@ -1,3 +1,8 @@
+/**
+ * Defines data value
+ * @module
+ * @private
+ */
 import {FieldModel} from '../types';
 
 /**

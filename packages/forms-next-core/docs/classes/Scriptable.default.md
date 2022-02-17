@@ -2,11 +2,14 @@
 
 [Scriptable](../modules/Scriptable.md).default
 
+Defines scriptable aspects (ie rules, events) of form runtime model. Any form runtime object which requires
+execution of rules/events should extend from this class.
+
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`RulesJson`](../modules/types_Json.md#rulesjson) |
+| `T` | extends [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) |
 
 ## Hierarchy
 
@@ -20,35 +23,21 @@
 
 ## Implements
 
-- [`ScriptableField`](../interfaces/types_Model.ScriptableField.md)
+- [`ScriptableField`](../interfaces/FormModel.ScriptableField.md)
 
 ## Table of contents
 
 ### Methods
 
-- [\_bindToDataModel](Scriptable.default.md#_bindtodatamodel)
 - [\_setProperty](Scriptable.default.md#_setproperty)
 - [addDependent](Scriptable.default.md#adddependent)
 - [defaultDataModel](Scriptable.default.md#defaultdatamodel)
-- [directReferences](Scriptable.default.md#directreferences)
 - [dispatch](Scriptable.default.md#dispatch)
 - [executeAction](Scriptable.default.md#executeaction)
-- [executeAllRules](Scriptable.default.md#executeallrules)
-- [executeRule](Scriptable.default.md#executerule)
-- [getDataNode](Scriptable.default.md#getdatanode)
-- [getRuleNode](Scriptable.default.md#getrulenode)
 - [getState](Scriptable.default.md#getstate)
 - [importData](Scriptable.default.md#importdata)
-- [notifyDependents](Scriptable.default.md#notifydependents)
-- [queueEvent](Scriptable.default.md#queueevent)
 - [removeDependent](Scriptable.default.md#removedependent)
-- [setupRuleNode](Scriptable.default.md#setuprulenode)
 - [subscribe](Scriptable.default.md#subscribe)
-
-### Properties
-
-- [\_jsonModel](Scriptable.default.md#_jsonmodel)
-- [value](Scriptable.default.md#value)
 
 ### Constructors
 
@@ -70,27 +59,11 @@
 - [viewType](Scriptable.default.md#viewtype)
 - [visible](Scriptable.default.md#visible)
 
+### Properties
+
+- [value](Scriptable.default.md#value)
+
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[_bindToDataModel](BaseNode.BaseNode-1.md#_bindtodatamodel)
-
-___
 
 ### \_setProperty
 
@@ -123,7 +96,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -155,20 +128,6 @@ ___
 
 ___
 
-### directReferences
-
-▸ **directReferences**(): [`default`](Scriptable.default.md)<`T`\>
-
-#### Returns
-
-[`default`](Scriptable.default.md)<`T`\>
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[directReferences](BaseNode.BaseNode-1.md#directreferences)
-
-___
-
 ### dispatch
 
 ▸ **dispatch**(`action`): `void`
@@ -177,7 +136,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -193,11 +152,13 @@ ___
 
 ▸ **executeAction**(`action`): `void`
 
+Executes the given action
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) | [event object](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -206,67 +167,6 @@ ___
 #### Overrides
 
 [BaseNode](BaseNode.BaseNode-1.md).[executeAction](BaseNode.BaseNode-1.md#executeaction)
-
-___
-
-### executeAllRules
-
-▸ `Protected` **executeAllRules**(`context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-___
-
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/types_Model.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[getDataNode](BaseNode.BaseNode-1.md#getdatanode)
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[getRuleNode](BaseNode.BaseNode-1.md#getrulenode)
 
 ___
 
@@ -304,46 +204,6 @@ ___
 
 ___
 
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[notifyDependents](BaseNode.BaseNode-1.md#notifydependents)
-
-___
-
-### queueEvent
-
-▸ **queueEvent**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[queueEvent](BaseNode.BaseNode-1.md#queueevent)
-
-___
-
 ### removeDependent
 
 ▸ **removeDependent**(`action`): `void`
@@ -352,7 +212,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -361,20 +221,6 @@ ___
 #### Inherited from
 
 [BaseNode](BaseNode.BaseNode-1.md).[removeDependent](BaseNode.BaseNode-1.md#removedependent)
-
-___
-
-### setupRuleNode
-
-▸ `Protected` **setupRuleNode**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[setupRuleNode](BaseNode.BaseNode-1.md#setuprulenode)
 
 ___
 
@@ -401,28 +247,6 @@ ___
 
 [BaseNode](BaseNode.BaseNode-1.md).[subscribe](BaseNode.BaseNode-1.md#subscribe)
 
-## Properties
-
-### \_jsonModel
-
-• `Protected` **\_jsonModel**: `T` & { `id`: `string`  }
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[_jsonModel](BaseNode.BaseNode-1.md#_jsonmodel)
-
-___
-
-### value
-
-• `Abstract` **value**: [`Primitives`](../modules/types_Json.md#primitives)
-
-The current value of the Field. The property is serialized in the Data Model.
-
-#### Inherited from
-
-[BaseNode](BaseNode.BaseNode-1.md).[value](BaseNode.BaseNode-1.md#value)
-
 ## Constructors
 
 ### constructor
@@ -433,7 +257,7 @@ The current value of the Field. The property is serialized in the Data Model.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends [`RulesJson`](../modules/types_Json.md#rulesjson) |
+| `T` | extends [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) |
 
 #### Parameters
 
@@ -441,8 +265,8 @@ The current value of the Field. The property is serialized in the Data Model.
 | :------ | :------ |
 | `params` | `T` |
 | `_options` | `Object` |
-| `_options.form` | [`FormModel`](../interfaces/types_Model.FormModel.md) |
-| `_options.parent` | [`ContainerModel`](../interfaces/types_Model.ContainerModel.md) |
+| `_options.form` | [`FormModel`](../interfaces/FormModel.FormModel-1.md) |
+| `_options.parent` | [`ContainerModel`](../interfaces/FormModel.ContainerModel.md) |
 
 #### Inherited from
 
@@ -466,11 +290,11 @@ ___
 
 ### form
 
-• `get` **form**(): [`FormModel`](../interfaces/types_Model.FormModel.md)
+• `get` **form**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Inherited from
 
@@ -522,11 +346,11 @@ ___
 
 ### label
 
-• `get` **label**(): `undefined` \| [`Label`](../modules/types_Json.md#label)
+• `get` **label**(): `undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Returns
 
-`undefined` \| [`Label`](../modules/types_Json.md#label)
+`undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Inherited from
 
@@ -538,7 +362,7 @@ BaseNode.label
 
 | Name | Type |
 | :------ | :------ |
-| `l` | `undefined` \| [`Label`](../modules/types_Json.md#label) |
+| `l` | `undefined` \| [`Label`](../modules/FormJsonTypes.md#label) |
 
 #### Returns
 
@@ -566,11 +390,11 @@ ___
 
 ### parent
 
-• `get` **parent**(): [`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+• `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Returns
 
-[`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+[`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Inherited from
 
@@ -598,17 +422,17 @@ ___
 
 ### rules
 
-• `get` **rules**(): [`Items`](../modules/types_Json.md#items)<`string`\>
+• `get` **rules**(): [`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 Rules that modify the property of the object dynamically. The rules are evaluated whenever the dependency changes.
 
 #### Returns
 
-[`Items`](../modules/types_Json.md#items)<`string`\>
+[`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 #### Implementation of
 
-[ScriptableField](../interfaces/types_Model.ScriptableField.md).[rules](../interfaces/types_Model.ScriptableField.md#rules)
+[ScriptableField](../interfaces/FormModel.ScriptableField.md).[rules](../interfaces/FormModel.ScriptableField.md#rules)
 
 ___
 
@@ -667,3 +491,15 @@ BaseNode.visible
 #### Inherited from
 
 BaseNode.visible
+
+## Properties
+
+### value
+
+• `Abstract` **value**: [`Primitives`](../modules/FormJsonTypes.md#primitives)
+
+The current value of the Field. The property is serialized in the Data Model.
+
+#### Inherited from
+
+[BaseNode](BaseNode.BaseNode-1.md).[value](BaseNode.BaseNode-1.md#value)

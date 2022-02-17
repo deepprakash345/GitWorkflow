@@ -1,3 +1,9 @@
+/**
+ * Defines utilities for logging
+ * @module
+ * @private
+ */
+
 import {callbackFn} from '../types';
 
 export const logFormCallbacks = (callbacks: {[key: string] : callbackFn[]}) => {

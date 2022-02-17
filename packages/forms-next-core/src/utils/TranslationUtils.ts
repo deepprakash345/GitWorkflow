@@ -1,7 +1,13 @@
+/**
+ * Defines generic utilities to translated form model definition
+ * @module TranslationUtils
+ */
 // todo: The API's defined in this file could move to a different package later on
 import {FieldJson, FieldsetJson, FormJson, TranslationJson, translationProps} from '../types';
 
+/** Token used while creating translation specific properties from `crispr form specification` */
 export const TRANSLATION_TOKEN : string = '##';
+/** Name of the object which holds all translation specific properties */
 export const TRANSLATION_ID = 'props:translationIds';
 type formElementJson = FieldJson | FieldsetJson | FormJson | any
 
@@ -18,6 +24,9 @@ const defaultBcp47LangTags = [
     'zh-TW'
 ];
 
+/**
+ * @private
+ */
 export const invalidateTranslation = (input: formElementJson, updates: any) => {
     translationProps.forEach((prop) => {
         if (prop in updates && input?.[TRANSLATION_ID]?.[prop]) {
@@ -26,6 +35,9 @@ export const invalidateTranslation = (input: formElementJson, updates: any) => {
     });
 };
 
+/**
+ * @private
+ */
 export const addTranslationId = (input: formElementJson, additionalTranslationProps : string[] = []) : formElementJson =>  {
     // don't create a schema copy, add it to the existing
     let model = input;
@@ -34,6 +46,9 @@ export const addTranslationId = (input: formElementJson, additionalTranslationPr
     return model;
 };
 
+/**
+ * @private
+ */
 const _createTranslationId = (input: formElementJson, path: string, transProps: string[]) : formElementJson => {
     Object.entries(input).forEach(([key, value]) => {
         if (typeof value == 'object') {
@@ -62,6 +77,12 @@ const _createTranslationId = (input: formElementJson, path: string, transProps: 
 
 };
 
+/**
+ * @param input
+ * @param translationObj
+ * @param translationProps
+ * @private
+ */
 const _createTranslationObj = (input: formElementJson, translationObj : object, translationProps : string[]) : any => {
     Object.entries(input).forEach(([key, value]) => {
         if (typeof value == 'object') {
@@ -87,6 +108,11 @@ const _createTranslationObj = (input: formElementJson, translationObj : object, 
     });
 };
 
+/**
+ * @param input
+ * @param additionalTranslationProps
+ * @private
+ */
 export const createTranslationObj = (input: formElementJson, additionalTranslationProps : string[] = []) : any => {
     let obj = {};
     let transProps = [...translationProps, ...additionalTranslationProps];
@@ -95,11 +121,12 @@ export const createTranslationObj = (input: formElementJson, additionalTranslati
 };
 
 /**
- * Creates translation object with BCP 47 language tags as key and value is a translation object. Key of translation object is
+ * Creates translation object with [BCP 47](https://tools.ietf.org/search/bcp47) language tags as key and value is a translation object. Key of translation object is
  * generated based on the form hierarchy and it is separated by "##" token to signify that the id is machine generated (ie its not a human generated string)
  * @param input             form model definition
  * @param additionalTranslationProps    optional properties which needs to be translated, by default, only OOTB properties of form model definition is translated
  * @param bcp47LangTags     optional additional language tags
+ * @returns translation object for each bcp 47 language tag
  */
 export const createTranslationObject = (input: formElementJson,
                                         additionalTranslationProps : string[] = [],

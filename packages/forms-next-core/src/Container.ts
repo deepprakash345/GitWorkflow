@@ -13,6 +13,11 @@ import Scriptable from './Scriptable';
 import {ExecuteRule, Initialize, propertyChange} from './controller/Controller';
 import DataGroup from './data/DataGroup';
 
+
+/**
+ * Defines a generic container class which any form container should extend from.
+ * @typeparam T type of the node which extends {@link ContainerJson} and {@link RulesJson}
+ */
 abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable<T> implements ContainerModel {
 
     protected _children: Array<FieldModel | FieldsetModel> = []
@@ -27,6 +32,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         items: Array<FieldJson & {id: string} | ContainerJson & {id: string}>
     }
 
+    /**
+     * private
+     */
     directReferences() {
         return this._ruleContext;
     }
@@ -59,6 +67,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return true;
     }
 
+    /**
+     * Returns the current container state
+     */
     getState() {
         return {
             ...this._jsonModel,
@@ -119,12 +130,18 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return this._children.indexOf(f);
     }
 
+    /**
+     * private
+     */
     defaultDataModel(name: string) {
         const type = this._jsonModel.type || 'object';
         const instance = type === 'array' ? [] : {};
         return new DataGroup(name, instance, type);
     }
 
+    /**
+     * private
+     */
     _initialize() {
         super._initialize();
         const items = this._jsonModel.items;
@@ -156,6 +173,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         this.setupRuleNode();
     }
 
+    /**
+     * private
+     */
     addItem(action: Action, context: any) {
         if (action.type === 'addItem' && this._itemTemplate != null) {
             //@ts-ignore
@@ -168,6 +188,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
+    /**
+     * private
+     */
     removeItem(action: Action, context: any) {
         if (action.type === 'removeItem' && this._itemTemplate != null) {
             const index = action.payload || this._children.length - 1;
@@ -187,6 +210,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
+    /**
+     * private
+     */
     queueEvent(action: Action) {
         super.queueEvent(action);
         if (action.metadata?.dispatch) {
@@ -197,6 +223,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
+    /**
+     * private
+     */
     dispatch(action: Action): void {
         super.dispatch(action);
         if (action.metadata?.dispatch) {
@@ -206,6 +235,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
+    /**
+     * private
+     */
     importData(contextualDataModel?: DataGroup) {
         this._bindToDataModel(contextualDataModel);
         this.syncDataAndFormModel(this.getDataNode() as DataGroup);
@@ -216,6 +248,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @param dataModel
      * @param contextualDataModel
      * @param operation
+     * @private
      */
     syncDataAndFormModel(contextualDataModel?: DataGroup) {
         if (contextualDataModel?.$type === 'array' && this._itemTemplate != null) {

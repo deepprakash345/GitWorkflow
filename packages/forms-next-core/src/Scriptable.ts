@@ -2,6 +2,10 @@ import {Action, RulesJson, ScriptableField} from './types';
 import {BaseNode} from './BaseNode';
 import {propertyChange} from './controller/Controller';
 
+/**
+ * Defines scriptable aspects (ie rules, events) of form runtime model. Any form runtime object which requires
+ * execution of rules/events should extend from this class.
+ */
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
     private _events: {
         [key: string]: any
@@ -116,12 +120,22 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         }
     }
 
+    /**
+     * Executes the given rule
+     * @param event
+     * @param context
+     * @private
+     */
     executeRule(event: Action, context: any) {
         if (typeof event.payload.ruleName === 'undefined') {
             this.executeAllRules(context);
         }
     }
 
+    /**
+     * Executes the given action
+     * @param action    {@link Action | event object}
+     */
     executeAction(action: Action) {
         const context = {
             'form': this.form,

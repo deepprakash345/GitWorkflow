@@ -13,12 +13,21 @@ def prepareSample = false
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
 BUILDER_DOCKER_NAME="af2-web-runtime-builder"
+BUILDER_DOCKER_NAME_14="af2-web-runtime-builder_14"
 GIT_REPO_URL="git@git.corp.adobe.com:livecycle/forms-next-web-runtime.git"
 def runDocker(String command) {
     withCredentials(bindings: [
             usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
     ]) {
         sh "docker run -u `id -u` -e REACT_APP_AEM_URL -e REACT_APP_AUTH_REQUIRED -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c '$command'"
+    }
+}
+
+def runDocker14(String command) {
+    withCredentials(bindings: [
+            usernamePassword(credentialsId: NPM_CREDENTIAL_ID, usernameVariable:"NPM_EMAIL", passwordVariable: "NPM_TOKEN")
+    ]) {
+        sh "docker run -e NPM_EMAIL -e NPM_TOKEN --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c '$command'"
     }
 }
 
@@ -62,10 +71,21 @@ pipeline {
                 sh "git submodule init"
                 sh "git submodule update"
                 sh "sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt ."
+                sh "sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt ."
+            }
+        }
+        stage("test - node14") {
+            steps {
+                runDocker14('npm ci')
+                runDocker14('npx lerna bootstrap --ci --hoist --strict')
+                runDocker14('npx lerna run build')
+                runDocker14('npx lerna run test')
             }
         }
         stage("build - packages") {
             steps {
+                sh "sudo rm -rf node_modules packages/*/node_modules packages/*/lib packages/*/build packages/*/target"
+                sh "git checkout ."
                 runDocker('npm ci')
                 runDocker('npx lerna bootstrap --ci --hoist --strict')
                 runDocker('npx lerna run build')
@@ -74,17 +94,6 @@ pipeline {
         stage("test") {
             steps {
                 runDocker('npx lerna run test-ci')
-                // need to aggregate the reports, until then no reporting
-//                 step([
-//                   $class: 'CloverPublisher',
-//                   cloverReportDir: 'packages/forms-next-core/target/coverage',
-//                   cloverReportFileName: 'clover.xml'
-//                 ])
-//                 step([
-//                   $class: 'CloverPublisher',
-//                   cloverReportDir: 'packages/forms-next-react-core-components/target/coverage',
-//                   cloverReportFileName: 'clover.xml'
-//                 ])
                 archiveArtifacts artifacts: "packages/forms-next-react-core-components/target/**"
                 archiveArtifacts artifacts: "packages/forms-next-core/target/**"
                 archiveArtifacts artifacts: "packages/react-bindings/target/**"
@@ -92,12 +101,6 @@ pipeline {
                 junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
                 junit "packages/react-bindings/target/test-reports/junit.xml"
            }
-//             post {
-//                 always {
-//                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-core/coverage/cobertura-coverage.xml'])
-//                   step([$class: 'CoberturaPublisher', coberturaReportFile: 'packages/forms-next-react-core-components/coverage/cobertura-coverage.xml'])
-//                 }
-//               }
         }
         stage("diff coverage") {
             when {
@@ -116,8 +119,12 @@ pipeline {
           }
         }
         stage("docs") {
+            when {
+                expression { return isPullRequest() }
+            }
             steps {
                 runDocker('npx lerna run docs')
+                sh 'git checkout .'
             }
         }
         stage("publish") {
@@ -139,16 +146,12 @@ pipeline {
                 script {
                     gitStrategy.checkout(env.BRANCH_NAME)
                     gitStrategy.impersonate("cqguides", "cqguides") {
-                        runDocker("npx lerna run docs")
                         runDocker("npx lerna version patch --no-push --yes -m \":release\"")
                         runDocker("npx lerna publish from-package --yes")
+                        runDocker("npm run docs")
                         sh "git add -A ."
                         /** doing single commit to avoid multiple build runs **/
                         sh "git commit -a --amend --no-edit"
-/*
-                        runDocker('npx lerna exec -- npm install')
-                        sh "git commit -a -m \":release Updating package-lock.json after version bump\""
- */
                         sh "git push ${GIT_REPO_URL} --tags"
                         gitStrategy.push(env.BRANCH_NAME)
                     }

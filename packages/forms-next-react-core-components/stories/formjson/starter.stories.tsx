@@ -1,12 +1,12 @@
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/forms-next-react-bindings';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import fieldWithLabel from '../../../../docs/examples/starter/fieldWithLabel.form.json';
 import fieldWithLabelAndDescription from '../../../../docs/examples/starter/fieldWithLabelAndDescription.form.json'
 import withSubmitButton from '../../../../docs/examples/starter/withSubmitButton.form.json';
 import withMultipleFields from '../../../../docs/examples/starter/multipleFields.form.json';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../src/utils/mappings';
-import {Action} from '@aemforms/forms-next-core/lib';
+import {Action} from '@aemforms/crispr-core/lib';
 import { action } from '@storybook/addon-actions';
 import { ComponentStory } from '@storybook/react';
 

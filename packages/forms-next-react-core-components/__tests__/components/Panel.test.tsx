@@ -2,7 +2,7 @@ import Panel from '../../src/components/Panel';
 import React from 'react';
 import {render} from '@testing-library/react';
 import {createForm, Provider} from '../utils';
-import {jsonString} from '@aemforms/forms-next-core/lib/utils/JsonUtils';
+import {jsonString} from '@aemforms/crispr-core/lib/utils/JsonUtils';
 
 const emptyPanel = {
     'id' : 'emptypanel',

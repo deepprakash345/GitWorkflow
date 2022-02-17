@@ -1,9 +1,9 @@
 import { Flex } from '@adobe/react-spectrum';
-import {FieldsetJson} from '@aemforms/forms-next-core';
+import {FieldsetJson} from '@aemforms/crispr-core';
 import React, {useContext} from 'react';
 
-import {useRuleEngine, renderChildren, FormContext} from '@aemforms/forms-next-react-bindings';
-import {State} from '@aemforms/forms-next-core/lib';
+import {useRuleEngine, renderChildren, FormContext} from '@aemforms/crispr-react-bindings';
+import {State} from '@aemforms/crispr-core/lib';
 
 const Panel = function (fieldset: State<FieldsetJson>) {
     const context = useContext(FormContext);

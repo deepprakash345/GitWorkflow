@@ -1,5 +1,5 @@
 
-import {TRANSLATION_TOKEN} from '@aemforms/forms-next-core/lib/utils/TranslationUtils';
+import {TRANSLATION_TOKEN} from '@aemforms/crispr-core/lib/utils/TranslationUtils';
 import {getTranslationMessages} from '../../src/component/i18n';
 
 test('i18n getTranslationMessages returns flat react-intl message format', () => {

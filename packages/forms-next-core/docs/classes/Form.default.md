@@ -2,60 +2,45 @@
 
 [Form](../modules/Form.md).default
 
+Defines `form model` which implements [form model](../modules/FormModel.md)
+
 ## Hierarchy
 
-- [`default`](Container.default.md)<[`FormJson`](../modules/types_Json.md#formjson)\>
+- [`default`](Container.default.md)<[`FormJson`](../modules/FormJsonTypes.md#formjson)\>
 
   ↳ **`default`**
 
 ## Implements
 
-- [`FormModel`](../interfaces/types_Model.FormModel.md)
+- [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 ## Table of contents
 
+### Properties
+
+- [\_fields](Form.default.md#_fields)
+- [\_ids](Form.default.md#_ids)
+- [\_invalidFields](Form.default.md#_invalidfields)
+
 ### Methods
 
-- [\_bindToDataModel](Form.default.md#_bindtodatamodel)
-- [\_createChild](Form.default.md#_createchild)
 - [\_initialize](Form.default.md#_initialize)
 - [\_setProperty](Form.default.md#_setproperty)
 - [addDependent](Form.default.md#adddependent)
 - [addItem](Form.default.md#additem)
 - [defaultDataModel](Form.default.md#defaultdatamodel)
 - [directReferences](Form.default.md#directreferences)
-- [dispatch](Form.default.md#dispatch)
-- [executeAction](Form.default.md#executeaction)
-- [executeAllRules](Form.default.md#executeallrules)
-- [executeRule](Form.default.md#executerule)
 - [exportData](Form.default.md#exportdata)
-- [fieldAdded](Form.default.md#fieldadded)
-- [getDataNode](Form.default.md#getdatanode)
 - [getElement](Form.default.md#getelement)
-- [getEventQueue](Form.default.md#geteventqueue)
-- [getRuleNode](Form.default.md#getrulenode)
 - [getState](Form.default.md#getstate)
 - [getUniqueId](Form.default.md#getuniqueid)
 - [importData](Form.default.md#importdata)
 - [indexOf](Form.default.md#indexof)
 - [isValid](Form.default.md#isvalid)
-- [notifyDependents](Form.default.md#notifydependents)
 - [queueEvent](Form.default.md#queueevent)
 - [removeDependent](Form.default.md#removedependent)
 - [removeItem](Form.default.md#removeitem)
-- [setupRuleNode](Form.default.md#setuprulenode)
-- [submit](Form.default.md#submit)
 - [subscribe](Form.default.md#subscribe)
-- [syncDataAndFormModel](Form.default.md#syncdataandformmodel)
-
-### Properties
-
-- [\_children](Form.default.md#_children)
-- [\_fields](Form.default.md#_fields)
-- [\_ids](Form.default.md#_ids)
-- [\_invalidFields](Form.default.md#_invalidfields)
-- [\_jsonModel](Form.default.md#_jsonmodel)
-- [\_ruleContext](Form.default.md#_rulecontext)
 
 ### Accessors
 
@@ -79,55 +64,31 @@
 - [viewType](Form.default.md#viewtype)
 - [visible](Form.default.md#visible)
 
-### Constructors
+## Properties
 
-- [constructor](Form.default.md#constructor)
+### \_fields
+
+• **\_fields**: [`Items`](../modules/FormJsonTypes.md#items)<[`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md)\> = `{}`
+
+___
+
+### \_ids
+
+• **\_ids**: `Generator`<`string`, `void`, `string`\>
+
+___
+
+### \_invalidFields
+
+• **\_invalidFields**: `string`[] = `[]`
 
 ## Methods
-
-### \_bindToDataModel
-
-▸ **_bindToDataModel**(`contextualDataModel?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[_bindToDataModel](Container.default.md#_bindtodatamodel)
-
-___
-
-### \_createChild
-
-▸ `Protected` **_createChild**(`child`): [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `child` | [`FieldJson`](../modules/types_Json.md#fieldjson) \| [`FieldsetJson`](../modules/types_Json.md#fieldsetjson) |
-
-#### Returns
-
-[`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)
-
-#### Overrides
-
-[default](Container.default.md).[_createChild](Container.default.md#_createchild)
-
-___
 
 ### \_initialize
 
 ▸ **_initialize**(): `void`
+
+private
 
 #### Returns
 
@@ -178,7 +139,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -194,11 +155,13 @@ ___
 
 ▸ **addItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
@@ -214,6 +177,8 @@ ___
 ### defaultDataModel
 
 ▸ **defaultDataModel**(`name`): `default`
+
+private
 
 #### Parameters
 
@@ -235,6 +200,8 @@ ___
 
 ▸ **directReferences**(): `any`
 
+private
+
 #### Returns
 
 `any`
@@ -246,91 +213,6 @@ FormModel.directReferences
 #### Inherited from
 
 [default](Container.default.md).[directReferences](Container.default.md#directreferences)
-
-___
-
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Implementation of
-
-[FormModel](../interfaces/types_Model.FormModel.md).[dispatch](../interfaces/types_Model.FormModel.md#dispatch)
-
-#### Overrides
-
-[default](Container.default.md).[dispatch](Container.default.md#dispatch)
-
-___
-
-### executeAction
-
-▸ **executeAction**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Overrides
-
-[default](Container.default.md).[executeAction](Container.default.md#executeaction)
-
-___
-
-### executeAllRules
-
-▸ `Protected` **executeAllRules**(`context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[executeAllRules](Container.default.md#executeallrules)
-
-___
-
-### executeRule
-
-▸ **executeRule**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/types_Model.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[executeRule](Container.default.md#executerule)
 
 ___
 
@@ -346,43 +228,13 @@ Exports the form data
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[exportData](../interfaces/types_Model.FormModel.md#exportdata)
-
-___
-
-### fieldAdded
-
-▸ **fieldAdded**(`field`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `field` | [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md) |
-
-#### Returns
-
-`void`
-
-___
-
-### getDataNode
-
-▸ **getDataNode**(): `undefined` \| `default`
-
-#### Returns
-
-`undefined` \| `default`
-
-#### Inherited from
-
-[default](Container.default.md).[getDataNode](Container.default.md#getdatanode)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[exportData](../interfaces/FormModel.FormModel-1.md#exportdata)
 
 ___
 
 ### getElement
 
-▸ **getElement**(`id`): [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md) \| [`default`](Form.default.md)
+▸ **getElement**(`id`): [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md) \| [`default`](Form.default.md)
 
 Get form element model based on the id of the form element
 
@@ -394,59 +246,34 @@ Get form element model based on the id of the form element
 
 #### Returns
 
-[`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md) \| [`default`](Form.default.md)
+[`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md) \| [`default`](Form.default.md)
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[getElement](../interfaces/types_Model.FormModel.md#getelement)
-
-___
-
-### getEventQueue
-
-▸ **getEventQueue**(): `EventQueue`
-
-#### Returns
-
-`EventQueue`
-
-#### Implementation of
-
-FormModel.getEventQueue
-
-___
-
-### getRuleNode
-
-▸ **getRuleNode**(): `any`
-
-#### Returns
-
-`any`
-
-#### Implementation of
-
-FormModel.getRuleNode
-
-#### Inherited from
-
-[default](Container.default.md).[getRuleNode](Container.default.md#getrulenode)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[getElement](../interfaces/FormModel.FormModel-1.md#getelement)
 
 ___
 
 ### getState
 
-▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/types_Json.md#containerjson) \| [`FieldJson`](../modules/types_Json.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../modules/types_Json.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/FormJsonTypes.md#containerjson) \| [`FieldJson`](../modules/FormJsonTypes.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
-returns the current state of the form
+Returns the current state of the form
+
+To access the form data and attachments, one needs to use the `data` and `attachments` property.
+For example,
+```
+const data = form.getState().data
+const attachments = form.getState().attachments
+```
 
 #### Returns
 
-`TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/types_Json.md#containerjson) \| [`FieldJson`](../modules/types_Json.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../modules/types_Json.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+`TranslationBaseJson` & [`RulesJson`](../modules/FormJsonTypes.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/FormJsonTypes.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/FormJsonTypes.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/FormJsonTypes.md#containerjson) \| [`FieldJson`](../modules/FormJsonTypes.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[getState](../interfaces/types_Model.FormModel.md#getstate)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[getState](../interfaces/FormModel.FormModel-1.md#getstate)
 
 #### Overrides
 
@@ -486,7 +313,7 @@ Imports the given form data
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[importData](../interfaces/types_Model.FormModel.md#importdata)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[importData](../interfaces/FormModel.FormModel-1.md#importdata)
 
 #### Overrides
 
@@ -498,11 +325,13 @@ ___
 
 ▸ **indexOf**(`f`): `number`
 
+Returns the index of the [child item](../interfaces/FormModel.FieldModel.md) or the [child container](../interfaces/FormModel.FieldsetModel.md)
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `f` | [`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md) |
+| `f` | [`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md) |
 
 #### Returns
 
@@ -510,7 +339,7 @@ ___
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[indexOf](../interfaces/types_Model.FormModel.md#indexof)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[indexOf](../interfaces/FormModel.FormModel-1.md#indexof)
 
 #### Inherited from
 
@@ -522,29 +351,13 @@ ___
 
 ▸ **isValid**(): `boolean`
 
+Checks if the given form is valid or not
+
 #### Returns
 
 `boolean`
 
-___
-
-### notifyDependents
-
-▸ **notifyDependents**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[notifyDependents](Container.default.md#notifydependents)
+`true`, if form is valid, `false` otherwise
 
 ___
 
@@ -552,11 +365,13 @@ ___
 
 ▸ **queueEvent**(`action`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -576,7 +391,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 
 #### Returns
 
@@ -592,11 +407,13 @@ ___
 
 ▸ **removeItem**(`action`, `context`): `void`
 
+private
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
+| `action` | [`Action`](../interfaces/FormModel.Action.md) |
 | `context` | `any` |
 
 #### Returns
@@ -606,37 +423,6 @@ ___
 #### Inherited from
 
 [default](Container.default.md).[removeItem](Container.default.md#removeitem)
-
-___
-
-### setupRuleNode
-
-▸ `Protected` **setupRuleNode**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[setupRuleNode](Container.default.md#setuprulenode)
-
-___
-
-### submit
-
-▸ **submit**(`action`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/types_Model.Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
 
 ___
 
@@ -661,81 +447,11 @@ ___
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[subscribe](../interfaces/types_Model.FormModel.md#subscribe)
+FormModel.subscribe
 
 #### Inherited from
 
 [default](Container.default.md).[subscribe](Container.default.md#subscribe)
-
-___
-
-### syncDataAndFormModel
-
-▸ **syncDataAndFormModel**(`contextualDataModel?`): `void`
-
-prefill the form with data on the given element
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel?` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[default](Container.default.md).[syncDataAndFormModel](Container.default.md#syncdataandformmodel)
-
-## Properties
-
-### \_children
-
-• `Protected` **\_children**: ([`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md))[] = `[]`
-
-#### Inherited from
-
-[default](Container.default.md).[_children](Container.default.md#_children)
-
-___
-
-### \_fields
-
-• **\_fields**: [`Items`](../modules/types_Json.md#items)<[`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md)\> = `{}`
-
-___
-
-### \_ids
-
-• **\_ids**: `Generator`<`string`, `void`, `string`\>
-
-___
-
-### \_invalidFields
-
-• **\_invalidFields**: `string`[] = `[]`
-
-___
-
-### \_jsonModel
-
-• `Protected` **\_jsonModel**: `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/types_Json.md#containerjson) \| [`FieldJson`](../modules/types_Json.md#fieldjson))[]  } & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../modules/types_Json.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: (`TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  } \| `TranslationBaseJson` & [`RulesJson`](../modules/types_Json.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../modules/types_Json.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../modules/types_Json.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../modules/types_Json.md#containerjson) \| [`FieldJson`](../modules/types_Json.md#fieldjson))[]  } & { `id`: `string`  })[]  }
-
-#### Inherited from
-
-[default](Container.default.md).[_jsonModel](Container.default.md#_jsonmodel)
-
-___
-
-### \_ruleContext
-
-• `Protected` **\_ruleContext**: `any`
-
-#### Inherited from
-
-[default](Container.default.md).[_ruleContext](Container.default.md#_rulecontext)
 
 ## Accessors
 
@@ -761,7 +477,7 @@ To map the field’s value to a property in the data model.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[dataRef](../interfaces/types_Model.FormModel.md#dataref)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[dataRef](../interfaces/FormModel.FormModel-1.md#dataref)
 
 #### Inherited from
 
@@ -771,11 +487,11 @@ ___
 
 ### form
 
-• `get` **form**(): [`FormModel`](../interfaces/types_Model.FormModel.md)
+• `get` **form**(): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
 
 #### Overrides
 
@@ -795,7 +511,7 @@ Id of the form.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[id](../interfaces/types_Model.FormModel.md#id)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[id](../interfaces/FormModel.FormModel-1.md#id)
 
 #### Overrides
 
@@ -815,7 +531,7 @@ The index of the Field within its parent.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[index](../interfaces/types_Model.FormModel.md#index)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[index](../interfaces/FormModel.FormModel-1.md#index)
 
 #### Inherited from
 
@@ -835,7 +551,7 @@ Whether the form field is container or not
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[isContainer](../interfaces/types_Model.FormModel.md#iscontainer)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[isContainer](../interfaces/FormModel.FormModel-1.md#iscontainer)
 
 #### Inherited from
 
@@ -845,17 +561,17 @@ ___
 
 ### items
 
-• `get` **items**(): ([`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md))[]
+• `get` **items**(): ([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
-Array containing Fields or Panels.
+Defines the children/items of the container
 
 #### Returns
 
-([`FieldModel`](../interfaces/types_Model.FieldModel.md) \| [`FieldsetModel`](../interfaces/types_Model.FieldsetModel.md))[]
+([`FieldModel`](../interfaces/FormModel.FieldModel.md) \| [`FieldsetModel`](../interfaces/FormModel.FieldsetModel.md))[]
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[items](../interfaces/types_Model.FormModel.md#items)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[items](../interfaces/FormModel.FormModel-1.md#items)
 
 #### Inherited from
 
@@ -865,17 +581,17 @@ ___
 
 ### label
 
-• `get` **label**(): `undefined` \| [`Label`](../modules/types_Json.md#label)
+• `get` **label**(): `undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 Label to be used for the field.
 
 #### Returns
 
-`undefined` \| [`Label`](../modules/types_Json.md#label)
+`undefined` \| [`Label`](../modules/FormJsonTypes.md#label)
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[label](../interfaces/types_Model.FormModel.md#label)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[label](../interfaces/FormModel.FormModel-1.md#label)
 
 #### Inherited from
 
@@ -889,7 +605,7 @@ Label to be used for the field.
 
 | Name | Type |
 | :------ | :------ |
-| `l` | `undefined` \| [`Label`](../modules/types_Json.md#label) |
+| `l` | `undefined` \| [`Label`](../modules/FormJsonTypes.md#label) |
 
 #### Returns
 
@@ -897,7 +613,7 @@ Label to be used for the field.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[label](../interfaces/types_Model.FormModel.md#label)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[label](../interfaces/FormModel.FormModel-1.md#label)
 
 #### Inherited from
 
@@ -921,7 +637,7 @@ ___
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[maxItems](../interfaces/types_Model.FormModel.md#maxitems)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[maxItems](../interfaces/FormModel.FormModel-1.md#maxitems)
 
 #### Inherited from
 
@@ -951,7 +667,7 @@ Name of the form field.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[name](../interfaces/types_Model.FormModel.md#name)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[name](../interfaces/FormModel.FormModel-1.md#name)
 
 #### Overrides
 
@@ -961,17 +677,17 @@ ___
 
 ### parent
 
-• `get` **parent**(): [`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+• `get` **parent**(): [`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
-The Parent Panel of the Field/Panel.
+Defines the parent of the container
 
 #### Returns
 
-[`ContainerModel`](../interfaces/types_Model.ContainerModel.md)
+[`ContainerModel`](../interfaces/FormModel.ContainerModel.md)
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[parent](../interfaces/types_Model.FormModel.md#parent)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[parent](../interfaces/FormModel.FormModel-1.md#parent)
 
 #### Inherited from
 
@@ -999,17 +715,17 @@ ___
 
 ### rules
 
-• `get` **rules**(): [`Items`](../modules/types_Json.md#items)<`string`\>
+• `get` **rules**(): [`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 Rules that modify the property of the object dynamically. The rules are evaluated whenever the dependency changes.
 
 #### Returns
 
-[`Items`](../modules/types_Json.md#items)<`string`\>
+[`Items`](../modules/FormJsonTypes.md#items)<`string`\>
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[rules](../interfaces/types_Model.FormModel.md#rules)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[rules](../interfaces/FormModel.FormModel-1.md#rules)
 
 #### Inherited from
 
@@ -1029,7 +745,7 @@ Form title.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[title](../interfaces/types_Model.FormModel.md#title)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[title](../interfaces/FormModel.FormModel-1.md#title)
 
 ___
 
@@ -1043,7 +759,7 @@ ___
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[type](../interfaces/types_Model.FormModel.md#type)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[type](../interfaces/FormModel.FormModel-1.md#type)
 
 #### Overrides
 
@@ -1063,7 +779,7 @@ The current value of the Field. The property is serialized in the Data Model.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[value](../interfaces/types_Model.FormModel.md#value)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[value](../interfaces/FormModel.FormModel-1.md#value)
 
 #### Overrides
 
@@ -1083,7 +799,7 @@ Type of widget to show to the user for capturing the data..
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[viewType](../interfaces/types_Model.FormModel.md#viewtype)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[viewType](../interfaces/FormModel.FormModel-1.md#viewtype)
 
 #### Inherited from
 
@@ -1103,7 +819,7 @@ Whether the field should be visible to author or not.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[visible](../interfaces/types_Model.FormModel.md#visible)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[visible](../interfaces/FormModel.FormModel-1.md#visible)
 
 #### Inherited from
 
@@ -1125,26 +841,8 @@ Whether the field should be visible to author or not.
 
 #### Implementation of
 
-[FormModel](../interfaces/types_Model.FormModel.md).[visible](../interfaces/types_Model.FormModel.md#visible)
+[FormModel](../interfaces/FormModel.FormModel-1.md).[visible](../interfaces/FormModel.FormModel-1.md#visible)
 
 #### Inherited from
 
 Container.visible
-
-## Constructors
-
-### constructor
-
-• **new default**(`n`, `_ruleEngine`, `_eventQueue?`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `n` | [`FormJson`](../modules/types_Json.md#formjson) |
-| `_ruleEngine` | `RuleEngine` |
-| `_eventQueue` | `EventQueue` |
-
-#### Overrides
-
-[default](Container.default.md).[constructor](Container.default.md#constructor)

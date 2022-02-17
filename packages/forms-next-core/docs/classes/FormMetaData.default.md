@@ -2,29 +2,23 @@
 
 [FormMetaData](../modules/FormMetaData.md).default
 
+Defines form metadata which implements [Form MetaData Model](../interfaces/FormModel.FormMetaDataModel.md)
+
 ## Hierarchy
 
-- [`default`](Node.default.md)<[`MetaDataJson`](../modules/types_Json.md#metadatajson)\>
+- `Node`<[`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson)\>
 
   ↳ **`default`**
 
 ## Implements
 
-- [`FormMetaDataModel`](../interfaces/types_Model.FormMetaDataModel.md)
+- [`FormMetaDataModel`](../interfaces/FormModel.FormMetaDataModel.md)
 
 ## Table of contents
-
-### Properties
-
-- [\_jsonModel](FormMetaData.default.md#_jsonmodel)
 
 ### Constructors
 
 - [constructor](FormMetaData.default.md#constructor)
-
-### Methods
-
-- [getP](FormMetaData.default.md#getp)
 
 ### Accessors
 
@@ -32,16 +26,6 @@
 - [isContainer](FormMetaData.default.md#iscontainer)
 - [locale](FormMetaData.default.md#locale)
 - [version](FormMetaData.default.md#version)
-
-## Properties
-
-### \_jsonModel
-
-• `Protected` **\_jsonModel**: [`MetaDataJson`](../modules/types_Json.md#metadatajson)
-
-#### Inherited from
-
-[default](Node.default.md).[_jsonModel](Node.default.md#_jsonmodel)
 
 ## Constructors
 
@@ -53,38 +37,11 @@
 
 | Name | Type |
 | :------ | :------ |
-| `inputModel` | [`MetaDataJson`](../modules/types_Json.md#metadatajson) |
+| `inputModel` | [`MetaDataJson`](../modules/FormJsonTypes.md#metadatajson) |
 
 #### Inherited from
 
-[default](Node.default.md).[constructor](Node.default.md#constructor)
-
-## Methods
-
-### getP
-
-▸ `Protected` **getP**<`S`\>(`key`, `def`): `S`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `S` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `key` | `string` |
-| `def` | `S` |
-
-#### Returns
-
-`S`
-
-#### Inherited from
-
-[default](Node.default.md).[getP](Node.default.md#getp)
+Node<MetaDataJson\>.constructor
 
 ## Accessors
 
@@ -100,7 +57,7 @@ Version of the rule grammar
 
 #### Implementation of
 
-[FormMetaDataModel](../interfaces/types_Model.FormMetaDataModel.md).[grammarVersion](../interfaces/types_Model.FormMetaDataModel.md#grammarversion)
+[FormMetaDataModel](../interfaces/FormModel.FormMetaDataModel.md).[grammarVersion](../interfaces/FormModel.FormMetaDataModel.md#grammarversion)
 
 ___
 
@@ -130,7 +87,7 @@ Form locale
 
 #### Implementation of
 
-[FormMetaDataModel](../interfaces/types_Model.FormMetaDataModel.md).[locale](../interfaces/types_Model.FormMetaDataModel.md#locale)
+[FormMetaDataModel](../interfaces/FormModel.FormMetaDataModel.md).[locale](../interfaces/FormModel.FormMetaDataModel.md#locale)
 
 ___
 
@@ -138,7 +95,7 @@ ___
 
 • `get` **version**(): `string`
 
-Version of the adaptive form specification
+Version of the crispr form specification
 
 #### Returns
 
@@ -146,4 +103,4 @@ Version of the adaptive form specification
 
 #### Implementation of
 
-[FormMetaDataModel](../interfaces/types_Model.FormMetaDataModel.md).[version](../interfaces/types_Model.FormMetaDataModel.md#version)
+[FormMetaDataModel](../interfaces/FormModel.FormMetaDataModel.md).[version](../interfaces/FormModel.FormMetaDataModel.md#version)

@@ -1,13 +1,13 @@
 {
   "name": "performance-testing",
-  "version": "0.9.20",
+  "version": "0.9.25",
   "private": true,
   "homepage": "./",
   "dependencies": {
     "@adobe/react-spectrum": "^3.15.1",
-    "@aemforms/forms-next-core": "^0.6.15",
-    "@aemforms/forms-next-react-bindings": "^0.5.17",
-    "@aemforms/forms-next-react-core-components": "^0.9.19",
+    "@aemforms/crispr-core": "^0.6.20",
+    "@aemforms/crispr-react-bindings": "^0.5.22",
+    "@aemforms/crispr-react-core-components": "^0.9.24",
     "@react/react-spectrum": "^2.27.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -2,13 +2,14 @@
   "name": "root",
   "private": true,
   "scripts" : {
-    "clean" : "lerna clean && rm -rf node_modules packages/*/lib packages/*/node_modules packages/*/build",
+    "clean" : "lerna clean --yes && rm -rf packages/*/lib packages/*/build",
     "build" : "lerna run build",
     "build:libs" : "lerna run build-libs",
     "start" : "lerna run start",
     "story" : "lerna run storybook",
     "test" : "lerna run test",
-    "bootstrap" : "npx lerna bootstrap"
+    "bootstrap" : "npx lerna bootstrap",
+    "docs" : "lerna run docs"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

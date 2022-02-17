@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/forms-next-react-bindings';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import dynamicValueForm from '../../../../../docs/examples/rules/dynamicValue.form.json';
 import dynamicOptionsForm from '../../../../../docs/examples/rules/dynamicOptions.form.json';
 import { ComponentStory } from '@storybook/react';

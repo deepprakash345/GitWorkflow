@@ -1,3 +1,8 @@
+/**
+ * Defines generic utilities to interact with form runtime model
+ * @module FormUtils
+ */
+
 import {FileObject} from '../FileObject';
 import {isFile} from './JsonUtils';
 import {BaseModel, ContainerModel, FieldsetModel, FormModel} from '../types';
@@ -6,6 +11,11 @@ import FormMetaData from '../FormMetaData';
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
 const fileSizeRegex =  /^(\d*\.?\d+)(\\?(?=[KMGT])([KMGT])(?:i?B)?|B?)$/i;
 
+/**
+ * Utility to generate a random word from seed
+ * @param l seed value
+ * @returns random word
+ */
 export const randomWord = (l: number) => {
     const ret = [];
     for (let i = 0; i<=l; i++) {
@@ -15,6 +25,10 @@ export const randomWord = (l: number) => {
     return ret.join('');
 };
 
+/**
+ * @param input
+ * @private
+ */
 export const getAttachments = (input : ContainerModel) : any=> {
     const items = input.items || [];
     return items?.reduce((acc, item) => {
@@ -44,7 +58,11 @@ export const getAttachments = (input : ContainerModel) : any=> {
     }, {});
 };
 
-// this works as per IEC specification
+/**
+ * Converts file size in string to bytes based on IEC specification
+ * @param str   file size
+ * @returns file size as bytes (in kb) based on IEC specification
+ */
 export const getFileSizeInBytes = (str: any) => {
     let retVal = 0;
     if (typeof str === 'string') {
@@ -56,6 +74,12 @@ export const getFileSizeInBytes = (str: any) => {
     return retVal;
 };
 
+/**
+ * Converts number to bytes based on the symbol as per IEC specification
+ * @param size      size as number
+ * @param symbol    symbol to use (for example, kb, mb, gb or tb)
+ * @returns number as bytes based on the symbol
+ */
 export const sizeToBytes = (size: number, symbol : string) => {
     let sizes = {'KB' : 1, 'MB' : 2, 'GB' : 3, 'TB' : 4};
     // @ts-ignore
@@ -63,6 +87,12 @@ export const sizeToBytes = (size: number, symbol : string) => {
     return Math.round(size * i);
 };
 
+/**
+ * ID Generator
+ * @param initial
+ * @constructor
+ * @private
+ */
 export const IdGenerator = function *(initial = 50): Generator<string, void, string> {
     const initialize = function () {
         const arr = [];
@@ -89,7 +119,11 @@ export const IdGenerator = function *(initial = 50): Generator<string, void, str
     } while(ids.length > 0);
 };
 
-
+/**
+ * Utility to convert data URI to a `blob` object
+ * @param dataURI uri to convert to blob
+ * @returns `Blob` object for the data URI
+ */
 export const dataURItoBlob = (dataURI : string) => {
     // Split metadata from data
     const splitted = dataURI.split(',');

@@ -8,6 +8,12 @@ import Form from './Form';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
 
+/**
+ * Creates a child model inside the given parent
+ * @param child
+ * @param options
+ * @private
+ */
 export const createChild = (child: FieldsetJson | FieldJson, options: {form: FormModel, parent: ContainerModel}) => {
   let retVal: FieldsetModel | FieldModel;
   if ('items' in child) {
@@ -33,8 +39,16 @@ const defaults = {
   visible: true
 };
 
+/**
+ * Defines a field set class which extends from {@link Container | container}
+ */
 export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
 
+  /**
+   * @param params
+   * @param _options
+   * @private
+   */
   public constructor (params: FieldsetJson, _options: {form: FormModel, parent: ContainerModel}) {
     super(params, _options);
     this._applyDefaults();

@@ -12,17 +12,21 @@
 
 ### createFormInstance
 
-▸ `Const` **createFormInstance**(`formModel`): [`FormModel`](../interfaces/types_Model.FormModel.md)
+▸ `Const` **createFormInstance**(`formModel`): [`FormModel`](../interfaces/FormModel.FormModel-1.md)
+
+Creates form instance using form model definition as per `crispr form specification`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `formModel` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `formModel` | `any` | form model definition |
 
 #### Returns
 
-[`FormModel`](../interfaces/types_Model.FormModel.md)
+[`FormModel`](../interfaces/FormModel.FormModel-1.md)
+
+[form model](FormModel.md)
 
 ___
 
@@ -30,16 +34,20 @@ ___
 
 ▸ `Const` **fetchForm**(`url`, `headers?`): `Promise`<`string`\>
 
+Helper API to fetch form model definition from an AEM instance
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `url` | `string` |
-| `headers` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` | URL of the instance |
+| `headers` | `any` | HTTP headers to pass to the aem instance |
 
 #### Returns
 
 `Promise`<`string`\>
+
+promise which resolves to the form model definition
 
 ___
 
@@ -47,13 +55,17 @@ ___
 
 ▸ `Const` **validateFormInstance**(`formModel`, `data`): `boolean`
 
+Validates Form model definition with the given data
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `formModel` | `any` |
-| `data` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `formModel` | `any` | form model definition |
+| `data` | `any` | form data |
 
 #### Returns
 
 `boolean`
+
+`true`, if form is valid against the given form data, `false` otherwise

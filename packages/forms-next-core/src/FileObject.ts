@@ -1,5 +1,8 @@
 import {IFileObject} from './types';
 
+/**
+ * Defines a file object which implements the {@link IFileObject | file object interface}
+ */
 export class FileObject implements IFileObject {
     data: any;
     mediaType: string = 'application/octet-stream';

@@ -1,6 +1,6 @@
 {
-  "name": "@aemforms/forms-next-core",
-  "version": "0.6.15",
+  "name": "@aemforms/crispr-core",
+  "version": "0.6.20",
   "description": "Core Module for Forms Runtime",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
