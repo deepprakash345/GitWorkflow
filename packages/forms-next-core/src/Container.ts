@@ -6,7 +6,7 @@ import {
     FieldModel,
     FieldsetJson,
     FieldsetModel,
-    RulesJson
+    RulesJson, ValidationError
 } from './types';
 import {deepClone} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
@@ -221,6 +221,12 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 x.queueEvent(action);
             });
         }
+    }
+
+    validate() {
+        return this.items.flatMap(x => {
+            return x.validate();
+        }).filter(x => x.fieldName !== '');
     }
 
     /**

@@ -3,7 +3,6 @@ import {jsonString} from './utils/JsonUtils';
 import {request} from './utils/Fetch';
 import RuleEngine from './rules/RuleEngine';
 import {FormModel} from './types';
-import {Validate} from './controller/Controller';
 
 /**
  * Creates form instance using form model definition as per `crispr form specification`
@@ -42,9 +41,7 @@ export const validateFormInstance = (formModel: any, data: any): boolean => {
         if (data) {
             f.importData(data);
         }
-        f.queueEvent(new Validate());
-        f.getEventQueue().runPendingQueue();
-        return f.isValid();
+        return f.validate().length === 0;
     } catch (e: any) {
         throw new Error(e);
     }

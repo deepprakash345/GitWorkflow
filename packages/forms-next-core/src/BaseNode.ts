@@ -6,7 +6,7 @@ import {
     ContainerModel, FieldModel, FieldsetJson, FieldsetModel,
     FormModel,
     Primitives,
-    Subscription
+    Subscription, ValidationError
 } from './types';
 import {ExecuteRule, propertyChange} from './controller/Controller';
 import DataGroup from './data/DataGroup';
@@ -266,6 +266,8 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
             this._dependents.splice(index, 1);
         }
     }
+
+    abstract validate() : Array<ValidationError>
 
     abstract executeAction(action: Action): any
 

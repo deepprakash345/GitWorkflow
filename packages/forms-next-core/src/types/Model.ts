@@ -209,6 +209,13 @@ export interface BaseModel extends ConstraintsJson, WithController {
      * Default value of the Field.
      */
     readonly default?: any;
+
+    /**
+     * Validates the given form field
+     * @returns list of {@link ValidationError | validation errors}
+     */
+    validate() : Array<ValidationError>
+
     /**
      * Imports data to the form field
      *  @private
@@ -354,4 +361,33 @@ export interface IFileObject {
      * Size of the file binary as per iec specification.
      */
     size? : number
+}
+
+/**
+ * Defines Validation Error interface.
+ */
+export interface IValidationError {
+    /**
+     * {@link FieldModel.id | name} of the field
+     */
+    fieldName: string;
+    /**
+     * List of error messages
+     */
+    errorMessages: Array<string>
+}
+
+/**
+ * Implementation of {@link IValidationError | Validation Error} interface
+ */
+export class ValidationError implements IValidationError {
+
+    fieldName: string;
+    errorMessages: Array<string>;
+
+    constructor(fieldName: string = '', errorMessages: Array<any> = []) {
+        this.errorMessages = errorMessages;
+        this.fieldName = fieldName;
+    }
+
 }

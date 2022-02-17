@@ -140,7 +140,7 @@ class FileUpload extends Field implements FieldModel {
      * @param updates
      * @private
      */
-    protected _checkUpdates(propNames: string[], updates: any) {
+    protected _applyUpdates(propNames: string[], updates: any) {
         return propNames.reduce((acc: any, propertyName) => {
             //@ts-ignore
             const prevValue = this._jsonModel[propertyName];

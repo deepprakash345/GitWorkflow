@@ -178,8 +178,13 @@ class FunctionRuntimeImpl {
 
         return {
             validate : {
-                _func:  () => {
-                    return true;
+                _func:  (args: Array<unknown>, data: unknown, interpreter: any) => {
+                    const element: any = args[0];
+                    if (typeof element === 'string' || typeof element === 'undefined') {
+                        return interpreter.globals.form.validate();
+                    } else {
+                        return interpreter.globals.form.getElement(element.id).validate();
+                    }
                 },
                 _signature: []
             },

@@ -91,6 +91,67 @@ test('dispatch_event should invoke dispatch API', async () => {
     expect(form.dispatch).toHaveBeenCalledWith(new CustomEvent('event1', {x: 'y'}, true));
 });
 
+test('validate API should invoke form validations', async () => {
+    const formJson = create(['f',
+        {
+            'f': {
+                'type' : 'string',
+                'view-type' : 'text-input',
+                'required': true,
+                'constraintMessages': {
+                    'required': 'mandatory field'
+                }
+            }
+        },
+        {
+            'f': {
+                'type' : 'string',
+                'view-type' : 'text-input',
+                'required': true,
+                'constraintMessages': {
+                    'required': 'mandatory field 2'
+                }
+            }
+        },
+        {
+            'f': {
+                'events': {
+                    'click': 'validate(f1)'
+                }
+            }
+        },
+        {
+            'f': {
+                'events': {
+                    'click': 'validate()'
+                }
+            }
+        }]);
+    let form = await createFormInstance(formJson);
+    const state = form.getState();
+    form.getElement(state.items[0].id).value = 'value2';
+    //form.getElement(state.items[2].id).dispatch(new Click());
+    // @ts-ignore
+    // expect(form.isValid()).toEqual(false); // this does not work since validate is on particular field, and not on entire form
+    let secondElement = form.getElement(state.items[1].id);
+    let thirdElement = form.getElement(state.items[2].id);
+    // check form validation using API
+    let errorList = form.validate();
+    expect(errorList.length).toEqual(2);
+    expect(errorList[0].fieldName).toEqual(secondElement.id);
+    expect(errorList[1].fieldName).toEqual(thirdElement.id);
+    // check particular field validation
+    errorList = secondElement.validate();
+    expect(errorList.length).toEqual(1);
+    expect(errorList[0].fieldName).toEqual(secondElement.id);
+    secondElement.value = 'value1';
+    thirdElement.value = 'value2';
+    // validate the entire form using rule grammar
+    form.getElement(state.items[3].id).dispatch(new Click());
+    // @ts-ignore
+    expect(form.isValid()).toEqual(true);
+});
+
 test('getData should return the current state of the form data', async () => {
     const formJson = create(['f', 'f', {
         'f': {
