@@ -45,6 +45,7 @@ Defines `form model` which implements [form model](../interfaces/FormModel.md)
 - [importData](Form.md#importdata)
 - [indexOf](Form.md#indexof)
 - [isValid](Form.md#isvalid)
+- [validate](Form.md#validate)
 
 ## Accessors
 
@@ -584,3 +585,23 @@ Checks if the given form is valid or not
 `boolean`
 
 `true`, if form is valid, `false` otherwise
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](ValidationError.md)[]
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[validate](../interfaces/FormModel.md#validate)
+
+#### Inherited from
+
+[Container](Container.md).[validate](Container.md#validate)

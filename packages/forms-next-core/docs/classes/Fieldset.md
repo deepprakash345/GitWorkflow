@@ -38,6 +38,7 @@ Defines a field set class which extends from [container](Container.md)
 - [executeAction](Fieldset.md#executeaction)
 - [getState](Fieldset.md#getstate)
 - [indexOf](Fieldset.md#indexof)
+- [validate](Fieldset.md#validate)
 
 ## Accessors
 
@@ -464,3 +465,23 @@ Returns the index of the [child item](../interfaces/FieldModel.md) or the [child
 #### Inherited from
 
 [Container](Container.md).[indexOf](Container.md#indexof)
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](ValidationError.md)[]
+
+#### Implementation of
+
+[FieldsetModel](../interfaces/FieldsetModel.md).[validate](../interfaces/FieldsetModel.md#validate)
+
+#### Inherited from
+
+[Container](Container.md).[validate](Container.md#validate)

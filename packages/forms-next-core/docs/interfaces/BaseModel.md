@@ -60,6 +60,10 @@ Defines common properties that each form field should have
 - [viewType](BaseModel.md#viewtype)
 - [visible](BaseModel.md#visible)
 
+### Methods
+
+- [validate](BaseModel.md#validate)
+
 ## Properties
 
 ### accept
@@ -387,3 +391,17 @@ ___
 • `Optional` **visible**: `boolean`
 
 Whether the field should be visible to author or not.
+
+## Methods
+
+### validate
+
+▸ **validate**(): [`ValidationError`](../classes/ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](../classes/ValidationError.md)[]
+
+list of [validation errors](../classes/ValidationError.md)

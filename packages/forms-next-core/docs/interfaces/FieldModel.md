@@ -64,6 +64,7 @@ Defines properties that each form field should have
 ### Methods
 
 - [getState](FieldModel.md#getstate)
+- [validate](FieldModel.md#validate)
 
 ## Properties
 
@@ -512,3 +513,21 @@ Whether the field should be visible to author or not.
 #### Inherited from
 
 WithState.getState
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](../classes/ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](../classes/ValidationError.md)[]
+
+list of [validation errors](../classes/ValidationError.md)
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[validate](BaseModel.md#validate)

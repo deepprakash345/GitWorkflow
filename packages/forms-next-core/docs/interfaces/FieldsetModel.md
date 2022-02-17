@@ -62,6 +62,7 @@ Defines properties that each field set should have
 
 - [getState](FieldsetModel.md#getstate)
 - [indexOf](FieldsetModel.md#indexof)
+- [validate](FieldsetModel.md#validate)
 
 ## Properties
 
@@ -532,3 +533,21 @@ Returns the index of the [child item](FieldModel.md) or the [child container](Fi
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[indexOf](ContainerModel.md#indexof)
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](../classes/ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](../classes/ValidationError.md)[]
+
+list of [validation errors](../classes/ValidationError.md)
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[validate](ContainerModel.md#validate)

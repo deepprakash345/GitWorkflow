@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.23
+# @aemforms/crispr-core - v0.6.24
 
 ## Table of contents
 
@@ -12,6 +12,7 @@
 - [FormMetaDataModel](interfaces/FormMetaDataModel.md)
 - [FormModel](interfaces/FormModel.md)
 - [IFileObject](interfaces/IFileObject.md)
+- [IValidationError](interfaces/IValidationError.md)
 - [ScriptableField](interfaces/ScriptableField.md)
 
 ### Classes
@@ -38,7 +39,7 @@
 - [Scriptable](classes/Scriptable.md)
 - [Submit](classes/Submit.md)
 - [Valid](classes/Valid.md)
-- [Validate](classes/Validate.md)
+- [ValidationError](classes/ValidationError.md)
 
 ### Type aliases
 

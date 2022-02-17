@@ -67,6 +67,7 @@ Defines the interface for form model
 - [getState](FormModel.md#getstate)
 - [importData](FormModel.md#importdata)
 - [indexOf](FormModel.md#indexof)
+- [validate](FormModel.md#validate)
 
 ## Properties
 
@@ -613,3 +614,21 @@ Returns the index of the [child item](FieldModel.md) or the [child container](Fi
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[indexOf](ContainerModel.md#indexof)
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](../classes/ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](../classes/ValidationError.md)[]
+
+list of [validation errors](../classes/ValidationError.md)
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[validate](ContainerModel.md#validate)

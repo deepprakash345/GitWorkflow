@@ -47,6 +47,7 @@ Defines a generic container class which any form container should extend from.
 - [executeAction](Container.md#executeaction)
 - [getState](Container.md#getstate)
 - [indexOf](Container.md#indexof)
+- [validate](Container.md#validate)
 
 ### Properties
 
@@ -441,6 +442,26 @@ Returns the index of the [child item](../interfaces/FieldModel.md) or the [child
 #### Implementation of
 
 [ContainerModel](../interfaces/ContainerModel.md).[indexOf](../interfaces/ContainerModel.md#indexof)
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](ValidationError.md)[]
+
+#### Implementation of
+
+[ContainerModel](../interfaces/ContainerModel.md).[validate](../interfaces/ContainerModel.md#validate)
+
+#### Overrides
+
+[Scriptable](Scriptable.md).[validate](Scriptable.md#validate)
 
 ## Properties
 

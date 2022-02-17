@@ -42,6 +42,7 @@ Defines a generic base class which all objects of form runtime model should exte
 - [executeAction](BaseNode.md#executeaction)
 - [getState](BaseNode.md#getstate)
 - [importData](BaseNode.md#importdata)
+- [validate](BaseNode.md#validate)
 
 ### Properties
 
@@ -342,6 +343,22 @@ ___
 #### Implementation of
 
 BaseModel.importData
+
+___
+
+### validate
+
+▸ `Abstract` **validate**(): [`ValidationError`](ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](ValidationError.md)[]
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[validate](../interfaces/BaseModel.md#validate)
 
 ## Properties
 

@@ -48,6 +48,7 @@ execution of rules/events should extend from this class.
 - [executeAction](Scriptable.md#executeaction)
 - [getState](Scriptable.md#getstate)
 - [importData](Scriptable.md#importdata)
+- [validate](Scriptable.md#validate)
 
 ### Properties
 
@@ -368,6 +369,22 @@ ___
 #### Inherited from
 
 [BaseNode](BaseNode.md).[importData](BaseNode.md#importdata)
+
+___
+
+### validate
+
+▸ `Abstract` **validate**(): [`ValidationError`](ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](ValidationError.md)[]
+
+#### Inherited from
+
+[BaseNode](BaseNode.md).[validate](BaseNode.md#validate)
 
 ## Properties
 

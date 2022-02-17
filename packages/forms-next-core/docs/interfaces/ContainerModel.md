@@ -65,6 +65,7 @@ Defines properties that each container should have
 ### Methods
 
 - [indexOf](ContainerModel.md#indexof)
+- [validate](ContainerModel.md#validate)
 
 ## Properties
 
@@ -517,3 +518,21 @@ Returns the index of the [child item](FieldModel.md) or the [child container](Fi
 `number`
 
 `index` of the item
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](../classes/ValidationError.md)[]
+
+Validates the given form field
+
+#### Returns
+
+[`ValidationError`](../classes/ValidationError.md)[]
+
+list of [validation errors](../classes/ValidationError.md)
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[validate](BaseModel.md#validate)

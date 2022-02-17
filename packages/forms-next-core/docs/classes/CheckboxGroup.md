@@ -182,19 +182,13 @@ ___
 
 ### validate
 
-▸ **validate**(`action`): `void`
+▸ **validate**(): [`ValidationError`](ValidationError.md)[]
 
 Validates the current form object
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/Action.md) |
-
 #### Returns
 
-`void`
+[`ValidationError`](ValidationError.md)[]
 
 #### Inherited from
 
