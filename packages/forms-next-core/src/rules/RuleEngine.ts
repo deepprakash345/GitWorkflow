@@ -1,9 +1,11 @@
 /**
  * Implementation of rule engine
+ * @module
+ * @private
  */
 import {BaseModel} from '../types';
 import {ActionImpl} from '../controller/Controller';
-import {Formula} from '@adobe/json-formula';
+import {Formula} from '@aemforms/json-formula';
 import FunctionRuntime from './FunctionRuntime';
 
 /**
