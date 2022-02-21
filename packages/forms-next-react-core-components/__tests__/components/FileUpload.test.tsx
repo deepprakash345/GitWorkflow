@@ -61,7 +61,7 @@ const fieldWithMultipleFiles = {
     }]
 };
 
-export type FileUploadExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null, c: HTMLElement | null) => any
+type FileUploadExpectType = (l: HTMLLabelElement | null, i: HTMLInputElement | null, c: HTMLElement | null) => any
 
 const labelInputTests: InputFieldTestCase<FileUploadExpectType>[] = [
     {
@@ -74,7 +74,18 @@ const labelInputTests: InputFieldTestCase<FileUploadExpectType>[] = [
         }
     },
     {
-        name: 'field gets rendered without a provider',
+        name : 'a file input should render the description',
+        field : {
+            ...field,
+            description : "This description should be rendered in html"
+        },
+        x: true,
+        expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null, container : HTMLElement | null) => {
+            expect(container?.textContent).toContain('This description should be rendered in html');
+        }
+    },
+    {
+        name: 'field gets rendered without value',
         field: fieldWithValueAndMaxFileSize,
         expects: (label : HTMLLabelElement | null, input: HTMLInputElement|null, container : HTMLElement | null) => {
             expect(label?.textContent).toEqual('Profile Image');
