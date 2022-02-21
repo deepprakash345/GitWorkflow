@@ -84,6 +84,12 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.valid;
     }
 
+    get emptyValue() {
+        if (this._jsonModel.emptyValue === null) return null;
+        else if (this._jsonModel.emptyValue === '' && this.type === 'string') return '';
+        else return undefined;
+    }
+
     get enum() {
         return this._jsonModel.enum;
     }
@@ -106,8 +112,18 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
 
     get value() {
         this.ruleEngine.trackDependency(this);
-        if (this._jsonModel.value === undefined) return null;
+        if (this._jsonModel.value === undefined) {
+            return null;
+        }
         else return this._jsonModel.value;
+    }
+
+    /**
+     * returns whether the value is empty. Empty value is either a '', undefined or null
+     * @private
+     */
+    private isEmpty() {
+        return this._jsonModel.value === undefined || this._jsonModel.value === null || this._jsonModel.value === ''
     }
 
     set value(v) {
@@ -118,7 +134,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             }
             const dataNode = this.getDataNode();
             if (typeof dataNode !== 'undefined') {
-                dataNode.$value = this._jsonModel.value;
+                dataNode.$value = this.isEmpty() ? this.emptyValue : this._jsonModel.value;
             }
             const changeAction = new Change({changes: Object.values(changes)});
             this.dispatch(changeAction);
@@ -275,7 +291,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * @private
      */
     defaultDataModel(name: string|number): DataValue {
-        return new DataValue(name, this._jsonModel.value, this.type || 'string');
+        return new DataValue(name, this.isEmpty() ? this.emptyValue : this._jsonModel.value, this.type || 'string');
     }
 }
 

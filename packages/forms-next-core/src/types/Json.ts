@@ -7,7 +7,7 @@
 export type Items<T> = { [key: string]: T }
 
 /** Type alias for primitive types */
-export type Primitives = string | number | boolean | null;
+export type Primitives = string | number | boolean | null | undefined;
 
 /** Type for `label` based on `crispr form specification` */
 export type Label = {
@@ -63,7 +63,7 @@ export type ConstraintsMessages = {
 /** Type for `constraint messages` based on `crispr form specification` */
 export type RulesJson = {
     'rules' ?: Items<string>
-    'events' ?: Items<string[]|string>
+    'events' ?: Items<string[]|string|undefined>
 }
 
 /** Type for `generic form properties` which can be translated based on `crispr form specification` */
@@ -100,6 +100,7 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
     'props'?: {
         [key: string]: any;
     }
+    emptyValue?: 'null'|'undefined'|''
 }
 
 /** Type for `form container properties` based on `crispr form specification` */
@@ -111,7 +112,7 @@ export type ContainerJson = BaseJson & {
 /** Type for `form metadata` based on `crispr form specification` */
 export type MetaDataJson = {
     'version'?: string
-    'grammarVersion'?: string
+    'grammar'?: string
     'locale'?: string
 }
 
@@ -125,7 +126,8 @@ export type FormJson = ContainerJson & {
     'metadata'?: MetaDataJson,
     'data'?: any
     title?: string
-    action ?: string
+    action ?: string,
+    adaptiveForm?: string
 }
 
 /** Type for all properties which can be translated based on `crispr form specification` */
