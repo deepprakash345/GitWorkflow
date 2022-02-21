@@ -26,6 +26,12 @@ const radioE = {
     'viewType' : 'radio-group'
 };
 
+const radioEWithEnumNames = {
+    ...radioE,
+    enumNames: ["option 1", "Option 2"],
+    description: "The labels of individual options can be changed using enumNames"
+};
+
 const checkboxGroupE = {
     'label' : {
         'value' : 'Checkbox group with enum'
@@ -43,7 +49,6 @@ const checkboxE = {
 
 const item = {
     'enum' : [1, 2],
-    'enumNames': ['1', '2'],
     'name' : 'field'
 };
 
@@ -93,3 +98,6 @@ checkbox.args = {formJson: args(checkboxE)};
 
 export const checkboxGroup = Template.bind({});
 checkboxGroup.args = {formJson: args(checkboxGroupE)};
+
+export const enumNames = Template.bind({});
+enumNames.args = {formJson: args(radioEWithEnumNames)};

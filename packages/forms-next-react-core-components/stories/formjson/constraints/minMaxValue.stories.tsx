@@ -4,10 +4,11 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import minValueForm from '../../../../../docs/examples/constraints/minimum.form.json';
-import minValueForm2 from '../../../../../docs/examples/constraints/minimumErrorMessage.form.json';
 import maxValueForm from '../../../../../docs/examples/constraints/maxValue.form.json';
-import maxValueForm2 from '../../../../../docs/examples/constraints/maxValueErrorMessage.form.json';
-
+import minLengthForm from '../../../../../docs/examples/constraints/minLength.form.json';
+import maxLengthForm from '../../../../../docs/examples/constraints/maxLength.form.json';
+import exactLengthForm from '../../../../../docs/examples/constraints/exactLength.form.json';
+import patternForm from '../../../../../docs/examples/constraints/pattern.form.json';
 
 export default {
     title: 'Form JSON/Constraints',
@@ -23,11 +24,17 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 export const minimum = Template.bind({});
 minimum.args = {formJson: minValueForm};
 
-export const minimumWithErrorMessage = Template.bind({});
-minimumWithErrorMessage.args = {formJson: minValueForm2};
-
 export const maximum = Template.bind({});
 maximum.args = {formJson: maxValueForm};
 
-export const maximumWithErrorMessage = Template.bind({});
-maximumWithErrorMessage.args = {formJson: maxValueForm2};
+export const minLength = Template.bind({});
+minLength.args = {formJson: minLengthForm};
+
+export const maxLength = Template.bind({});
+maxLength.args = {formJson: maxLengthForm};
+
+export const exactLength = Template.bind({});
+exactLength.args = {formJson: exactLengthForm};
+
+export const pattern = Template.bind({});
+pattern.args = {formJson: patternForm};

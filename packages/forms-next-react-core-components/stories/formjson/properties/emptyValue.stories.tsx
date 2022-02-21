@@ -57,14 +57,14 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     </Spectrum3Provider>
 );
 
-export const useCase1 = Template.bind({})
-useCase1.storyName = "undefined"
-useCase1.args=  {formJson : undefExample}
+export const undefinedValue = Template.bind({})
+undefinedValue.storyName = "undefined"
+undefinedValue.args=  {formJson : undefExample}
 
-export const useCase2 = Template.bind({})
-useCase2.storyName = "null"
-useCase2.args=  {formJson : nullExample}
+export const nullValue = Template.bind({})
+nullValue.storyName = "null"
+nullValue.args=  {formJson : nullExample}
 
-export const useCase3 = Template.bind({})
-useCase3.storyName = "empty string"
-useCase3.args=  {formJson : emptyStringExample}
+export const emptyS = Template.bind({})
+emptyS.storyName = "empty string"
+emptyS.args=  {formJson : emptyStringExample}
