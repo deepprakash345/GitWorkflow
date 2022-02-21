@@ -18,7 +18,6 @@ const options = {
 
 const json:any = {
     'adaptiveform': '0.0.17-pre',
-    'action': 'http://www.google.com/',
     'metadata': {
         'grammar': 'json-formula-1.0.0',
         'version': '1.0.0'

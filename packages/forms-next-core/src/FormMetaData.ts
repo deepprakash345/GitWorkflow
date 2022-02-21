@@ -14,8 +14,8 @@ class FormMetaData extends Node<MetaDataJson> implements FormMetaDataModel {
         return this.getP('locale', '');
     }
 
-    get grammarVersion(): string {
-        return this.getP('grammarVersion', '');
+    get grammar(): string {
+        return this.getP('grammar', '');
     }
 }
 

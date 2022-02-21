@@ -3,7 +3,7 @@ import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-const textInput = {
+const textInputE = {
     'label' : {
         'value' : 'Field with enum'
     },
@@ -12,28 +12,34 @@ const textInput = {
 };
 
 
-const dropDown = {
+const dropDownE = {
     'label' : {
         'value' : 'Dropdown with enum'
     },
     'viewType' : 'drop-down'
 };
 
-const radio = {
+const radioE = {
     'label' : {
         'value' : 'Radio Button Group with enum'
     },
     'viewType' : 'radio-group'
 };
 
-const checkboxGroup = {
+const radioEWithEnumNames = {
+    ...radioE,
+    enumNames: ["option 1", "Option 2"],
+    description: "The labels of individual options can be changed using enumNames"
+};
+
+const checkboxGroupE = {
     'label' : {
         'value' : 'Checkbox group with enum'
     },
     'viewType' : 'checkbox-group'
 };
 
-const checkbox = {
+const checkboxE = {
     'label' : {
         'value' : 'Checkbox with enum'
     },
@@ -43,7 +49,6 @@ const checkbox = {
 
 const item = {
     'enum' : [1, 2],
-    'enumNames': ['1', '2'],
     'name' : 'field'
 };
 
@@ -79,17 +84,20 @@ const args = function (x) {
     };
 };
 
-export const enumTextInput = Template.bind({});
-enumTextInput.args = {formJson: args(textInput)};
+export const textInput = Template.bind({});
+textInput.args = {formJson: args(textInput)};
 
-export const enumDropDown = Template.bind({});
-enumDropDown.args = {formJson: args(dropDown)};
+export const dropDown = Template.bind({});
+dropDown.args = {formJson: args(dropDownE)};
 
-export const enumRadio = Template.bind({});
-enumRadio.args = {formJson: args(radio)};
+export const radio = Template.bind({});
+radio.args = {formJson: args(radioE)};
 
-export const enumCheckbox = Template.bind({});
-enumCheckbox.args = {formJson: args(checkbox)};
+export const checkbox = Template.bind({});
+checkbox.args = {formJson: args(checkboxE)};
 
-export const enumCheckboxGroup = Template.bind({});
-enumCheckboxGroup.args = {formJson: args(checkboxGroup)};
+export const checkboxGroup = Template.bind({});
+checkboxGroup.args = {formJson: args(checkboxGroupE)};
+
+export const enumNames = Template.bind({});
+enumNames.args = {formJson: args(radioEWithEnumNames)};

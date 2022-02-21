@@ -259,7 +259,7 @@ export interface FormMetaDataModel {
     /**
      * Version of the rule grammar
      */
-    readonly grammarVersion: string
+    readonly grammar: string
     /**
      * Form locale
      */
