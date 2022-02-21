@@ -20,7 +20,7 @@ Defines form metadata which implements [Form MetaData Model](../interfaces/FormM
 
 ### Accessors
 
-- [grammarVersion](FormMetaData.md#grammarversion)
+- [grammar](FormMetaData.md#grammar)
 - [isContainer](FormMetaData.md#iscontainer)
 - [locale](FormMetaData.md#locale)
 - [version](FormMetaData.md#version)
@@ -43,9 +43,9 @@ Defines form metadata which implements [Form MetaData Model](../interfaces/FormM
 
 ## Accessors
 
-### grammarVersion
+### grammar
 
-• `get` **grammarVersion**(): `string`
+• `get` **grammar**(): `string`
 
 Version of the rule grammar
 
@@ -55,7 +55,7 @@ Version of the rule grammar
 
 #### Implementation of
 
-[FormMetaDataModel](../interfaces/FormMetaDataModel.md).[grammarVersion](../interfaces/FormMetaDataModel.md#grammarversion)
+[FormMetaDataModel](../interfaces/FormMetaDataModel.md).[grammar](../interfaces/FormMetaDataModel.md#grammar)
 
 ___
 
