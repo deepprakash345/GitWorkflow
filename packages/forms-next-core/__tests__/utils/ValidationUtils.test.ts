@@ -1,5 +1,5 @@
 import {Constraints} from '../../src/utils/ValidationUtils';
-import {jest26CompatibleTable as j26} from '../collateral/index';
+import {jest26CompatibleTable as j26, randomInt, randomWord, range} from '../collateral/index';
 type TestCase = {
     name?: string
     value: string | string[] | boolean[] | number[],
@@ -298,7 +298,7 @@ describe('format test - invalid dates', () => {
     });
 });
 
-test('minimum test should fail if value is less than or equal to minimum', () => {
+test('minimum test should fail if value is strictly less than  minimum', () => {
     let res = Constraints.minimum(2, 0);
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual(0);
@@ -320,7 +320,7 @@ test('minimum test should pass if value is greater than or equal to minimum', ()
     expect(res.value).toEqual(2);
 });
 
-test('maximum test should fail if value is greater than to maximum', () => {
+test('maximum test should fail if value is strictly greater than maximum', () => {
     let res = Constraints.maximum(2, 4);
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual(4);
@@ -453,4 +453,156 @@ test("enum constraint should fail if value doesn't exists inside options", () =>
 
     options = ['a', 'b'];
     expect(Constraints.enum(options, 'c').valid).toEqual(false);
+});
+
+test("minItems constraint should fail if value is not an array", () => {
+    const num = randomInt(100)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        //@ts-ignore
+        expect(Constraints.minItems(num, v).valid).toBe(false)
+    })
+})
+
+test("minItems constraint should pass if length of array is equal to the constraint", () => {
+    const num = randomInt(100)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        const val = new Array(num).fill(v)
+        expect(Constraints.minItems(num, val).valid).toBe(true)
+    })
+})
+
+test("minItems constraint should pass if length of array is greater than the constraint", () => {
+    const num = randomInt(100)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        const val = new Array(num + randomInt(10, 1)).fill(v)
+        expect(Constraints.minItems(num, val).valid).toBe(true)
+    })
+})
+
+test("minItems constraint should fail if length of array is less than the constraint", () => {
+    const num = randomInt(100, 5)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        const val = new Array(num - randomInt(num, 1)).fill(v)
+        expect(Constraints.minItems(num, val).valid).toBe(false)
+    })
+})
+
+test("maxItems constraint should fail if value is not an array", () => {
+    const num = randomInt(100)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        //@ts-ignore
+        expect(Constraints.maxItems(num, v).valid).toBe(false)
+    })
+})
+
+test("maxItems constraint should pass if length of array is equal to the constraint", () => {
+    const num = randomInt(100)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        const val = new Array(num).fill(v)
+        expect(Constraints.maxItems(num, val).valid).toBe(true)
+    })
+})
+
+test("maxItems constraint should pass if length of array is less than the constraint", () => {
+    const num = randomInt(100)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        const val = new Array(num - randomInt(num, 1)).fill(v)
+        expect(Constraints.maxItems(num, val).valid).toBe(true)
+    })
+})
+
+test("maxItems constraint should fail if length of array is greater than the constraint", () => {
+    const num = randomInt(100, 5)
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(num + 1), num, bool, {}]
+    values.forEach(v => {
+        const val = new Array(num + randomInt(10, 1)).fill(v)
+        expect(Constraints.maxItems(num, val).valid).toBe(false)
+    })
+})
+
+test("uniqueItems constraint should pass if constraint is false", () => {
+    const bool = [true, false][randomInt(2)]
+    const values = [randomWord(5), randomInt(5), bool, {}]
+    values.forEach(v => {
+        //@ts-ignore
+        expect(Constraints.uniqueItems(false, v).valid).toBe(true)
+        const val = new Array(10).fill(v)
+        expect(Constraints.uniqueItems(false, val).valid).toBe(true)
+    })
+})
+
+test("uniqueItems constraint should fail if value is not an array", () => {
+    const arraySize = randomInt(100);
+    const array = new Array(arraySize).fill(1).map(x => randomInt(100))
+    const items = new Set(array)
+    expect(Constraints.uniqueItems(true, Array.from(items)).valid).toBe(true)
+})
+
+test("uniqueItems constraint should fail if it contains a duplicate value", () => {
+    const arraySize = 5 + randomInt(100);
+    const array = new Array(arraySize - 1).fill(1).map(x => randomInt(100))
+    const pick = array[randomInt(arraySize - 1)]
+    array.push(pick)
+    expect(Constraints.uniqueItems(true, array).valid).toBe(false)
+})
+
+test('exclusiveMinimum test should fail if value is less than or equal to minimum', () => {
+    let res = Constraints.exclusiveMinimum(2, 0);
+    expect(res.valid).toEqual(false);
+    expect(res.value).toEqual(0);
+
+    res = Constraints.exclusiveMinimum(2, -2);
+    expect(res.valid).toEqual(false);
+    expect(res.value).toEqual(-2);
+
+    res = Constraints.exclusiveMinimum(2, 2);
+    expect(res.valid).toEqual(false);
+    expect(res.value).toEqual(2);
+});
+
+test('exclusiveMinimum test should pass if value is strictly greater than minimum', () => {
+    let res = Constraints.exclusiveMinimum(2, 4);
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual(4);
+});
+
+test('exclusiveMaximum test should fail if value is greater than or equal to maximum', () => {
+    let res = Constraints.exclusiveMaximum(2, 4);
+    expect(res.valid).toEqual(false);
+    expect(res.value).toEqual(4);
+
+    res = Constraints.exclusiveMaximum(-2, 2);
+    expect(res.valid).toEqual(false);
+    expect(res.value).toEqual(2);
+
+    res = Constraints.exclusiveMaximum(2, 2);
+    expect(res.valid).toEqual(false);
+    expect(res.value).toEqual(2);
+});
+
+test('exclusiveMaximum test should pass if value is strictly less than maximum', () => {
+    let res = Constraints.exclusiveMaximum(3, 2);
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual(2);
+
+    res = Constraints.exclusiveMaximum(2, -4);
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual(-4);
+
+
 });

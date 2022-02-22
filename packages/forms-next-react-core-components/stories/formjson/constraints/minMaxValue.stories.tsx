@@ -25,8 +25,40 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 export const minimum = Template.bind({});
 minimum.args = {formJson: minValueForm};
 
+export const exclusiveMinimum = Template.bind({});
+exclusiveMinimum.args = {formJson: {
+        ...base,
+        items: [
+            {
+                "name": "textInput1",
+                "type": "number",
+                "viewType": "text-input",
+                "exclusiveMinimum": 100,
+                "label": {
+                    "value": "Field with minimum value 100 (exclusive)"
+                }
+            }
+        ]
+    }};
+
 export const maximum = Template.bind({});
 maximum.args = {formJson: maxValueForm};
+
+export const exclusiveMaximum = Template.bind({});
+exclusiveMaximum.args = {formJson: {
+        ...base,
+        items: [
+            {
+                "name": "textInput1",
+                "type": "number",
+                "viewType": "text-input",
+                "exclusiveMaximum": 100,
+                "label": {
+                    "value": "Field with maximum value 100 (exclusive)"
+                }
+            }
+        ]
+    }};
 
 export const minLength = Template.bind({});
 minLength.args = {formJson: minLengthForm};
