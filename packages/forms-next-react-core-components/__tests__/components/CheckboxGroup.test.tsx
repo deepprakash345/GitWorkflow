@@ -251,6 +251,22 @@ test('value set in the model selects the checkbox', async () => {
   expect(inputs[2]?.checked).toEqual(true);
 });
 
+test('clicking a checkbox should set the value', async () => {
+  const f = {
+    ...field
+  };
+  const { inputs, element } = await helper(f);
+  userEvent.click(inputs[0]);
+  expect(element.value).toEqual([1])
+
+  userEvent.click(inputs[1]);
+  expect(element.value).toEqual([1, 2])
+
+  userEvent.click(inputs[0]);
+  expect(element.value).toEqual([2])
+});
+
+
 test('it should handle visible property', async () => {
   const f = {
     ...field,
@@ -284,6 +300,26 @@ test('help text content changes when field becomes invalid', async () => {
   // @ts-ignore
   expect(err.textContent).toEqual(DEFAULT_ERROR_MESSAGE);
 });
+
+test("checkbox group with non array type should allow only single selection", async () => {
+  const f = {
+    ...field,
+    description: 'some description',
+    'type' : 'number'
+  };
+  const {container, element, inputs} = await helper(f);
+  userEvent.click(inputs[0]);
+  expect(element.value).toEqual(1)
+
+  userEvent.click(inputs[1]);
+  expect(element.value).toEqual(2)
+
+  expect(inputs[0].checked).toEqual(false)
+  expect(inputs[1].checked).toEqual(true)
+
+  userEvent.click(inputs[1]);
+  expect(element.value).toEqual(null)
+})
 
 test.todo('it should handle disable property');
 test.todo('it should handle richTextTitle property');
