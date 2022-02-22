@@ -9,6 +9,7 @@ import minValueForm2 from '../../../../../docs/examples/constraints/minimumError
 import maxValueForm2 from '../../../../../docs/examples/constraints/maxValueErrorMessage.form.json';
 import patternForm from '../../../../../docs/examples/constraints/patternMessage.form.json';
 import formatForm from '../../../../../docs/examples/constraints/formatMessage.form.json';
+import {base} from "../template";
 
 export default {
     title: 'Form JSON/Constraints/Messages',
@@ -38,3 +39,40 @@ pattern.args = {formJson: patternForm};
 
 export const format = Template.bind({});
 format.args = {formJson: formatForm};
+
+export const step = Template.bind({});
+step.args = {formJson: {
+        ...base,
+        items : [
+            {
+                type: "number",
+                step: 2,
+                default: 2,
+                viewType: "number-input",
+                label: {
+                    value: "Enter a number"
+                },
+                constraintMessages: {
+                    step: "Enter an even number only"
+                }
+            }
+        ]
+    }};
+
+
+
+export const enforceEnum = Template.bind({});
+enforceEnum.args = {formJson: {
+        ...base,
+        items: [{
+            viewType: 'text-input',
+            label: {
+                value: 'Field with enum 1 or 2'
+            },
+            enforceEnum: true,
+            enum: [1, 2],
+            constraintMessages: {
+                enum: "Only 1 or 2 are allowed"
+            }
+        }]
+    }};
