@@ -11,10 +11,22 @@ import {
 } from '../utils/SpectrumMappers';
 
 const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConvertor,
-    enumToChildConvertor(Checkbox), (a) => {
+    enumToChildConvertor(Checkbox), (a, b) => {
       const isArray = (a.type || '[]').indexOf('[]') >  -1;
       return {
-        value: a.value == null ? isArray ? [] : '' : a.value
+        onChange: (val: any) => {
+            let finalVal;
+            if (val === null) finalVal = null
+            if (isArray) {
+                finalVal = val;
+            } else if (val.length > 0) {
+                finalVal = val.filter((x:any) => a.value !== x)[0] //val[0]
+            } else {
+                finalVal = null
+            }
+            b.dispatchChange(finalVal)
+        },
+        value: a.value == null ? [] : a.value instanceof Array ? a.value : [a.value]
       };
 });
 
