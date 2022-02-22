@@ -15,7 +15,7 @@ import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
-import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize} from './controller/Controller';
+import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, ValidationComplete} from './controller/Controller';
 
 
 /**
@@ -148,6 +148,13 @@ class Form extends Container<FormJson> implements FormModel {
                 this.dispatch(fieldChangedAction);
             }
         });
+    }
+
+    validate() {
+        let validationErrors = super.validate();
+        // trigger event on form so that user's can customize their application
+        this.dispatch(new ValidationComplete(validationErrors));
+        return validationErrors;
     }
 
     /**

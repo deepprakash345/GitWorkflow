@@ -8,7 +8,8 @@ export const mockHandler = {
     dispatchClick: () => {},
     dispatchChange: (val?: string) => {},
     dispatchAddItem: (id?: number) => {},
-    dispatchRemoveItem: (id?: number) => {}
+    dispatchRemoveItem: (id?: number) => {},
+    dispatchBlur: ()=>{}
 };
 const formatMessage = (input: any) => (value: string) => {return input[value];};
 

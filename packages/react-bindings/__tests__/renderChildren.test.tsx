@@ -16,7 +16,8 @@ export const mockHandler = {
     dispatchClick: () => {},
     dispatchChange: (val?: string) => {},
     dispatchAddItem: (id?: number) => {},
-    dispatchRemoveItem: (id?: number) => {}
+    dispatchRemoveItem: (id?: number) => {},
+    dispatchBlur: () => {}
 };
 
 test('render children with no mappings returns undefined elements', () => {
