@@ -227,7 +227,7 @@ export const Constraints = {
      * @return {@link ValidationResult | validation result}
      */
     minimum : (constraint: number, value: number) => {
-        return {valid :value > constraint, value};
+        return {valid :value >= constraint, value};
     },
 
     //todo : add support for date
@@ -238,7 +238,7 @@ export const Constraints = {
      * @return {@link ValidationResult | validation result}
      */
     maximum : (constraint: number, value: number) => {
-        return {valid : value < constraint, value};
+        return {valid : value <= constraint, value};
     },
 
     /**

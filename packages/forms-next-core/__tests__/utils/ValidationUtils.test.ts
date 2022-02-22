@@ -307,19 +307,20 @@ test('minimum test should fail if value is less than or equal to minimum', () =>
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual(-2);
 
-    res = Constraints.minimum(2, 2);
-    expect(res.valid).toEqual(false);
-    expect(res.value).toEqual(2);
 
 });
 
-test('minimum test should pass if value is greater than minimum', () => {
+test('minimum test should pass if value is greater than or equal to minimum', () => {
     let res = Constraints.minimum(2, 4);
     expect(res.valid).toEqual(true);
     expect(res.value).toEqual(4);
+
+    res = Constraints.minimum(2, 2);
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual(2);
 });
 
-test('maximum test should fail if value is greater than or equal to maximum', () => {
+test('maximum test should fail if value is greater than to maximum', () => {
     let res = Constraints.maximum(2, 4);
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual(4);
@@ -327,14 +328,9 @@ test('maximum test should fail if value is greater than or equal to maximum', ()
     res = Constraints.maximum(-2, 2);
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual(2);
-
-    res = Constraints.maximum(2, 2);
-    expect(res.valid).toEqual(false);
-    expect(res.value).toEqual(2);
-
 });
 
-test('maximum test should pass if value is less than maximum', () => {
+test('maximum test should pass if value is less than or equal to maximum', () => {
     let res = Constraints.maximum(3, 2);
     expect(res.valid).toEqual(true);
     expect(res.value).toEqual(2);
@@ -342,10 +338,14 @@ test('maximum test should pass if value is less than maximum', () => {
     res = Constraints.maximum(2, -4);
     expect(res.valid).toEqual(true);
     expect(res.value).toEqual(-4);
+
+    res = Constraints.maximum(2, 2);
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual(2);
 });
 
 
-test('minLength test should fail if length of string is less than or equal to minLength', () => {
+test('minLength test should fail if length of string is less than  minLength', () => {
     let res = Constraints.minLength(2, '');
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual('');
@@ -354,19 +354,20 @@ test('minLength test should fail if length of string is less than or equal to mi
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual('abc');
 
-    res = Constraints.minLength(4, 'abcd');
-    expect(res.valid).toEqual(false);
-    expect(res.value).toEqual('abcd');
 
 });
 
-test('minLength test should pass if length of string is greater than minLength', () => {
+test('minLength test should pass if length of string is greater than or equal to minLength', () => {
     let res = Constraints.minLength(2, 'abc');
     expect(res.valid).toEqual(true);
     expect(res.value).toEqual('abc');
+
+    res = Constraints.minLength(4, 'abcd');
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual('abcd');
 });
 
-test('maxLength test should fail if length of string is greater than or equal to maximum', () => {
+test('maxLength test should fail if length of string is greater than maximum', () => {
     let res = Constraints.maxLength(2, 'abc');
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual('abc');
@@ -374,14 +375,9 @@ test('maxLength test should fail if length of string is greater than or equal to
     res = Constraints.maxLength(1, 'ab');
     expect(res.valid).toEqual(false);
     expect(res.value).toEqual('ab');
-
-    res = Constraints.maxLength(2, 'ab');
-    expect(res.valid).toEqual(false);
-    expect(res.value).toEqual('ab');
-
 });
 
-test('maxLength test should pass if length of string is less than maximum', () => {
+test('maxLength test should pass if length of string is less than or equal to maximum', () => {
     let res = Constraints.maxLength(3, 'ab');
     expect(res.valid).toEqual(true);
     expect(res.value).toEqual('ab');
@@ -389,6 +385,10 @@ test('maxLength test should pass if length of string is less than maximum', () =
     res = Constraints.maxLength(3, '');
     expect(res.valid).toEqual(true);
     expect(res.value).toEqual('');
+
+    res = Constraints.maxLength(2, 'ab');
+    expect(res.valid).toEqual(true);
+    expect(res.value).toEqual('ab');
 });
 
 const randomString = (length: number) => {
