@@ -1,10 +1,18 @@
 import React from 'react';
 import {FormModel} from '@aemforms/crispr-core/lib';
 
+
+type viewApiMap = {
+    setFocus: () => void
+}
+
 export type IFormContext = {
     mappings: any,
     form: FormModel,
-    modelId: string
+    modelId: string,
+    refMap: {
+        [key: string]: viewApiMap;
+    }
 };
 
 //@ts-ignore

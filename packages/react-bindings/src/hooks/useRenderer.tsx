@@ -1,7 +1,7 @@
 import {FieldJson, TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core/lib';
-import React, {JSXElementConstructor} from 'react';
+import React, {JSXElementConstructor, useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {Handlers, useRuleEngine} from './useRuleEngine';
+import {Handlers, useFocus, useRuleEngine} from './useRuleEngine';
 
 export type Convertor<T> = (props: T, handlers: Handlers, localizedProperty: (propName: string) => string) => any
 
@@ -54,6 +54,7 @@ export const useRenderer = function(formFieldState:FieldJson & {id: string},
                                     wrap:boolean = false)  {
     const [state, handlers] = useRuleEngine(formFieldState);
     const i18n = useFormIntl();
+    const [ref, setFocus] = useFocus(formFieldState);
     const res = propsMapper(state, handlers, translateMessage(state, i18n.formatMessage));
-    return (wrap ? (<div className={'field'}><Component {...res} /></div>) : <Component {...res} />);
+    return (wrap ? (<div className={'field'}><Component {...res} ref={ref} /></div>) : <Component {...res} ref={ref} />);
 };

@@ -4,13 +4,15 @@ import {
     FormModel, State
 } from '@aemforms/crispr-core/lib';
 import formContext, {IFormContext} from '../component/FormContext';
-import {useContext, useEffect, useState} from 'react';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 //@ts-ignore
 import {AddItem, Click, RemoveItem} from '@aemforms/crispr-core/lib/controller/Controller';
 import {jsonString} from '@aemforms/crispr-core/lib/utils/JsonUtils';
+import {Blur} from '@aemforms/crispr-core';
 
 export type Dispatch<T> = (x?: T) => any
 export type Handlers = {
+    dispatchBlur: Dispatch<any>
     dispatchChange: Dispatch<any>
     dispatchClick: Dispatch<void>
     dispatchAddItem: Dispatch<number>
@@ -46,6 +48,13 @@ export const useRuleEngine = function <P>(props : State<P>): [any, Handlers] {
         }
     };
 
+    const dispatchBlur = () => {
+        if (!element?.isContainer) {
+            const blurAction = new Blur(null);
+            element?.dispatch(blurAction);
+        }
+    };
+
     const dispatchClick = () => {
         const clickAction = new Click(null);
         element?.dispatch(clickAction);
@@ -61,6 +70,33 @@ export const useRuleEngine = function <P>(props : State<P>): [any, Handlers] {
         element?.dispatch(action);
     };
 
-    return [elementState, {dispatchChange, dispatchClick, dispatchAddItem, dispatchRemoveItem}];
+    return [elementState, {dispatchChange, dispatchClick, dispatchAddItem, dispatchRemoveItem, dispatchBlur}];
+};
+
+
+// @ts-ignore
+export const useFocus =  function <P>(props : State<P>) {
+    const context:IFormContext = useContext(formContext);
+    const id = props.id as string;
+    const ref = useRef(null);
+    const setRef = useCallback(node => {
+        if (ref.current) {
+            // Make sure to cleanup any events/references added to the last instance
+        }
+        if (node) {
+            // Check if a node is actually passed. Otherwise node would be null.
+            // You can now do what you need to, addEventListeners, measure, etc.
+        }
+        // Save a reference to the node
+        ref.current = node;
+    }, []);
+    const setFocus = function() {
+        // @ts-ignore
+        ref.current &&  ref.current.focus();
+    };
+    if (context?.refMap) {
+        context.refMap[id] = {'setFocus': setFocus};
+    }
+    return [setRef, setFocus];
 };
 

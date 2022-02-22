@@ -57,7 +57,8 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
         placeholder: f('placeholder'),
         value: a.value == null ? '' : a.value,
         validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
-        onChange: b.dispatchChange,
+        onChange: b.dispatchChange, // Handler that is called when the value changes.
+        onBlur : b.dispatchBlur, //Handler that is called when the element loses focus.
         isReadOnly : a.readOnly === true,
         errorMessage
     };

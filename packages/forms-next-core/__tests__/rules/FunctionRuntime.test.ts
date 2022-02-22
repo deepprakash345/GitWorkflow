@@ -136,7 +136,11 @@ test('validate API should invoke form validations', async () => {
     let secondElement = form.getElement(state.items[1].id);
     let thirdElement = form.getElement(state.items[2].id);
     // check form validation using API
+    const callback = jest.fn();
+    form.subscribe(callback, 'validationComplete');
     let errorList = form.validate();
+    // validationComplete event handler should be called once form validation is complete
+    expect(callback).toBeCalled();
     expect(errorList.length).toEqual(2);
     expect(errorList[0].fieldName).toEqual(secondElement.id);
     expect(errorList[1].fieldName).toEqual(thirdElement.id);

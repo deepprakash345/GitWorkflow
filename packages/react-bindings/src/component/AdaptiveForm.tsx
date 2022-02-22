@@ -1,7 +1,7 @@
 import React, {JSXElementConstructor, useEffect, useState} from 'react';
-import FormContext from './FormContext';
+import FormContext, {IFormContext} from './FormContext';
 import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/crispr-core/lib';
-import {FormJson} from '@aemforms/crispr-core';
+import {Change, FormJson} from '@aemforms/crispr-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
 import {getTranslationMessages} from './i18n';
@@ -50,12 +50,15 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
     onInitialize?: (a: InitializeAction) => any
     onFieldChanged?: (a: FieldChanged) => any
     onSubmit?: (a:Submit) => any
+    /** {@link Field.id | field name} to set focus on **/
+    focusOn?: string
     mappings: {[key:string]:JSXElementConstructor<any>}
 }
 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
-    const { formJson, mappings, locale, localizationMessages, onInitialize} = props;
+    const { formJson, mappings, locale, localizationMessages, onInitialize, focusOn} = props;
     const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
+    const [refMap, setRefMap] = useState<any>({});
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
         // any expensive react operation should generally be inside useMemo
@@ -95,6 +98,7 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
                 isCustomEvent: false
             });
         }
+        // initialize all the event handlers
         Object.keys(props)
             .map((propKey) => {
                     if (propKey.startsWith('on') && propKey !== 'onInitialize' && typeof props[propKey] === 'function') {
@@ -111,10 +115,16 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
         const state = {model: form, id: form.getUniqueId()};
         setState(state);
     }, [formJson]);
+
+    if (focusOn && refMap[focusOn]) {
+        refMap[focusOn].setFocus();
+    }
     const formState = state?.model?.getState();
+
     return (
         state && formState ?
-            (<FormContext.Provider value={{mappings, form: state.model, modelId: state.id}}>
+            // @ts-ignore
+            (<FormContext.Provider value={{mappings, form: state.model, modelId: state.id, refMap: refMap}}>
             <IntlProvider onError={(err)=> console.log(err)} locale={locale as string} messages={localizationMessagesProp}>
                 <form>
                     {formState.title ?<h2>{formState.title}</h2> : null}

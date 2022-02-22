@@ -1,60 +1,79 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React, {useState} from 'react';
+import { render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FieldsetJson, FormJson, State, Action } from '@aemforms/crispr-core';
 import { AdaptiveForm, useRuleEngine } from '../../src';
+import {useFocus} from '../../src/hooks';
 
 const formJson: FormJson = {
-  "items": [
+  'items': [
     {
-      "name": "textInput",
-      "label": {
-        "value": "Text input"
+      'name': 'textInput1',
+      'label': {
+        'value': 'Text input Sample'
       },
-      "type": "string",
-      "viewType": "text-input",
-      "placeholder": "Please enter text",
-      "required": true,
-      "events": {
-        "change": "dispatch_event($form, 'custom:textChange', $event.payload)"
+      'type': 'string',
+      'viewType': 'text-input',
+      'placeholder': 'Please enter text'
+    },
+    {
+      'name': 'textInput',
+      'label': {
+        'value': 'Text input'
+      },
+      'type': 'string',
+      'viewType': 'text-input',
+      'placeholder': 'Please enter text',
+      'required': true,
+      'events': {
+        'change': "dispatch_event($form, 'custom:textChange', $event.payload)"
       }
     },
     {
-      "viewType": "button",
-      "label": {
-        "value": "submit"
+      'viewType': 'button',
+      'label': {
+        'value': 'submit'
       },
-      "events": {
-        "click": "submit_form()"
+      'name' : 'submit',
+      'events': {
+        'click': 'submit_form()'
       }
     }
   ]
-}
+};
 const InputField = (fieldset: State<FieldsetJson>) => {
   const [props, handler] = useRuleEngine(fieldset);
+  const [inputRef, setFocus] = useFocus(fieldset);
   return <div className="t-field">
-    <label className="t-field-label" htmlFor="textInput" data-testid="labelId">Text input</label>
-    <input className="t-field-input" data-testid="textInput" onInput={handler.dispatchChange}
-      type="text" id="textInput" value={props.value} required name="textInput" placeholder="text" />
-  </div>
-}
+    <label className="t-field-label" htmlFor="textInput" data-testid={`${props.name}_label`}>Text input</label>
+    <input className="t-field-input" data-testid={props.name}  ref={inputRef} onInput={
+      // @ts-ignore
+      (e)=> handler.dispatchChange(e.target.value)
+    }
+      type="text" value={props.value} required name={props.name} placeholder="text" />
+  </div>;
+};
 const Button = (fieldset: State<FieldsetJson>) => {
-  const [props] = useRuleEngine(fieldset);
-  return <button className="t-button" type="button" data-testid="buttonID" onClick={props.onClick}>submit</button>
-}
+  const [props, handler] = useRuleEngine(fieldset);
+  const [inputRef, setFocus] = useFocus(fieldset);
+  // @ts-ignore
+  return <button className="t-button" type="button" data-testid="buttonID" ref={inputRef} onClick={handler.dispatchClick} onPress={handler.dispatchClick}>submit</button>;
+};
 const mappings = {
   'text-input': InputField,
   'button': Button
-}
+};
+
+
 
 describe('AF super component test cases', () => {
-  let initializeHandler: any, submitHandler: any, renderResponse: any, changeHandler: any;
+  let initializeHandler: any, submitHandler: any, renderResponse: any, renderDivWithForm:any, changeHandler: any, validationCompleteHandler: any;
   let customEvents: any;
-  let currentForm: any, fieldChangeSet: any, customEventPayload: any;
+  let currentForm: any, fieldChangeSet: any, customEventPayload: any, validationCompleteHandlerPayload: any, TestComp: any;
   beforeEach(() => {
     initializeHandler = jest.fn().mockImplementation((action: Action) => {
       currentForm = action;
-    })
+    });
     submitHandler = jest.fn();
     changeHandler = jest.fn().mockImplementation((action: Action) => {
       fieldChangeSet = action.payload;
@@ -63,13 +82,31 @@ describe('AF super component test cases', () => {
       customEventPayload = action.payload;
     });
     renderResponse = render(<AdaptiveForm
-      mappings={mappings} formJson={formJson} locale='en'
-      onInitialize={initializeHandler}
-      onSubmit={submitHandler}
-      onFieldChanged={changeHandler}
-      onTextChange={customEvents}
-    />);
-  })
+          mappings={mappings} formJson={formJson} locale='en'
+          onInitialize={initializeHandler}
+          onSubmit={submitHandler}
+          onFieldChanged={changeHandler}
+          onTextChange={customEvents}
+          onValidationComplete={validationCompleteHandler}
+      />);
+    TestComp = function () {
+      const [focusOn, setFocusOn] = useState('');
+      return <div>
+        <AdaptiveForm mappings={mappings} formJson={formJson} locale='en'
+                      onInitialize={initializeHandler}
+                      onSubmit={submitHandler}
+                      onFieldChanged={changeHandler}
+                      onTextChange={customEvents}
+                      focusOn={focusOn}
+                      onValidationComplete={(action: any)=> {
+                        validationCompleteHandlerPayload = action.payload;
+                        setFocusOn(validationCompleteHandlerPayload[0].fieldName);
+                      }
+                      }/>
+        <button className="t-button" type="button" data-testid="buttonOutsideForm" onClick={()=>setFocusOn('someField')}>submit</button>
+      </div>;
+    };
+  });
 
   test('AdaptiveForm should rendered', () => {
     const { container } = renderResponse;
@@ -97,9 +134,9 @@ describe('AF super component test cases', () => {
   });
 
   test('Should render text field with empty value', async () => {
-    const { getByTestId } = renderResponse
-    const lebel = getByTestId('labelId') as HTMLElement
-    expect(lebel?.innerHTML).toEqual('Text input');
+    const { getByTestId } = renderResponse;
+    const label = getByTestId('textInput_label') as HTMLElement;
+    expect(label?.innerHTML).toEqual('Text input');
     const input = getByTestId('textInput') as HTMLInputElement;
     expect(input?.value).toEqual('');
   });
@@ -142,4 +179,24 @@ describe('AF super component test cases', () => {
     expect(customEvents).toHaveBeenCalled();
   });
 
-})
+  test('FocusOn property should work as expected', async () => {
+    cleanup();
+    renderDivWithForm = render(<TestComp/>);
+    let { getByTestId } = renderDivWithForm;
+    // check if input is validated
+    let input = getByTestId('textInput1') as HTMLInputElement;
+    userEvent.type(input, 'welcome');
+    let button = getByTestId('buttonOutsideForm') as HTMLButtonElement;
+    userEvent.click(button);
+    input = getByTestId('textInput1') as HTMLInputElement;
+    expect(input.value).toEqual('welcome');
+
+    // click on form submit
+    let submit = getByTestId('buttonID') as HTMLButtonElement;
+    userEvent.click(submit); // move the focus away from text input
+    let input1 = getByTestId('textInput1') as HTMLInputElement;
+    let inputOnFOcus = getByTestId('textInput') as HTMLInputElement;
+    expect(inputOnFOcus).toBe(document.activeElement);
+  });
+
+});

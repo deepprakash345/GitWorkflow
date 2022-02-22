@@ -24,7 +24,8 @@ export const Provider = (form: FormModel,
     const c = {
         form,
         mappings,
-        modelId: '$form'
+        modelId: '$form',
+        refMap : {}
     };
     const {children} = props;
     return (

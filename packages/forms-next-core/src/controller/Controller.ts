@@ -3,7 +3,7 @@
  */
 import {
     Action, BaseJson,
-    FieldModel, FieldsetModel, FormModel
+    FieldModel, FieldsetModel, FormModel, ValidationError
 } from '../types';
 
 /**
@@ -185,6 +185,44 @@ export class Click extends ActionImpl {
 }
 
 /**
+ * Implementation of `blur` event. The event is triggered when the element loses focus.
+ */
+export class Blur extends ActionImpl {
+    /**
+     * @constructor
+     * @param [payload] event payload
+     * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
+     */
+    constructor(payload?: any, dispatch: boolean = false) {
+        super(payload, 'blur', {dispatch});
+    }
+}
+
+/**
+ * Implementation of `ValidationComplete` event. The ValidationComplete event is triggered once validation is completed
+ * on the form.
+ *
+ * An example of using this event,
+ * ```
+ * function onValidationComplete(event) {
+ *	 const x = event.payload[0].id;
+ *	 // do something with the invalid field
+ * }
+ * ```
+ */
+export class ValidationComplete extends ActionImpl {
+    /**
+     * @constructor
+     * @param [payload] event payload (ie) list of {@link ValidationError | validation errors}
+     * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
+     */
+    constructor(payload?: Array<ValidationError>, dispatch: boolean = false) {
+        super(payload, 'validationComplete', {dispatch});
+    }
+}
+
+
+/**
  * Implementation of `submit` event. The submit event is triggered on the Form.
  * To trigger the submit event, submit function needs to be invoked or one can invoke dispatchEvent API.
  */
@@ -211,6 +249,7 @@ export class FieldChanged extends ActionImpl {
         }, 'fieldChanged');
     }
 }
+
 
 /**
  * Implementation of `custom event`.
