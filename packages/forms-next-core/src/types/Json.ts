@@ -23,22 +23,22 @@ type TranslationConstraintsJson = {
 
 /** Type for `constraint properties` based on `crispr form specification` */
 export type ConstraintsJson = TranslationConstraintsJson & {
-    'type'?: string
-    'required'?: boolean;
-    'pattern'?: string,
-    'format'?: string
-    'expression'?: string;
-    'minLength'?: number;
-    'maxLength'?: number;
-    'minimum'?: number;
-    'maximum'?: number;
-    'maxFileSize'?:number;
-    'accept'?:string[];
-    'fracDigits'?: number;
-    'leadDigits'?: number;
-    'enforceEnum'?: boolean
-    'minItems'?: number;
-    'maxItems'?: number;
+    accept?:string[];
+    enforceEnum?: boolean
+    exclusiveMinimum?:number
+    exclusiveMaximum?:number
+    format?: string
+    maxFileSize?:number|string;
+    maxLength?: number;
+    maximum?: number;
+    maxItems?: number
+    minLength?: number;
+    minimum?: number;
+    minItems?: number;
+    pattern?: string,
+    required?: boolean;
+    type?: string
+    validationExpression?: string;
 }
 
 const a: FieldJson  = {
@@ -47,16 +47,22 @@ const a: FieldJson  = {
 
 /** Type for `constraint messages` based on `crispr form specification` */
 export type ConstraintsMessages = {
-    'required'?: string;
-    'expression'?: string;
-    'minLength'?: string;
-    'maxLength'?: string;
-    'minimum'?: string;
-    'maximum'?: string;
-    'fracDigits'?: string;
-    'leadDigits'?: string;
-    'enforceEnum'?: string;
-    'type'?: string;
+    accept?:string
+    enum?: string;
+    exclusiveMinimum?:string
+    exclusiveMaximum?:string
+    format?: string
+    maxFileSize?: string,
+    maxLength?: string;
+    maximum?: string;
+    maxItems?: string
+    minLength?: string;
+    minimum?: string;
+    minItems?: string
+    pattern?: string,
+    required?: string;
+    type?: string;
+    validationExpression?: string;
 }
 
 /** Type for `constraint messages` based on `crispr form specification` */

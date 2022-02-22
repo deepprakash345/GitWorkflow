@@ -242,6 +242,53 @@ export const Constraints = {
     },
 
     /**
+     * Implementation of exclusiveMinimum constraint
+     * @param constraint    `minimum` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
+    exclusiveMinimum : (constraint: number, value: number) => {
+        return {valid :value > constraint, value};
+    },
+
+    //todo : add support for date
+    /**
+     * Implementation of exclusiveMaximum constraint
+     * @param constraint    `maximum` property of the form object
+     * @param value         value of the form object
+     * @return {@link ValidationResult | validation result}
+     */
+    exclusiveMaximum : (constraint: number, value: number) => {
+        return {valid : value < constraint, value};
+    },
+
+    /**
+     * Implementation of the minItems constraint
+     * @param constraint `minItems` constraint from object
+     * @param value value of the form object
+     */
+    minItems: <T>(constraint: number, value: T[]) => {
+        return {valid: (value instanceof Array) && value.length >= constraint, value}
+    },
+
+    /**
+     * Implementation of the maxItems constraint
+     * @param constraint `maxItems` constraint from object
+     * @param value value of the form object
+     */
+    maxItems: <T>(constraint: number, value: T[]) => {
+        return {valid : (value instanceof Array) && value.length <= constraint, value}
+    },
+
+    /**
+     * Implementation of the uniqueItems constraint
+     * @param constraint `uniqueItems` constraint from object
+     * @param value value of the form object
+     */
+    uniqueItems: <T>(constraint: boolean, value: T[]) => {
+        return {valid: !constraint || ((value instanceof Array) && value.length === new Set(value).size), value}
+    },
+    /**
      * Implementation of minLength constraint
      * @param constraint    `minLength` property of the form object
      * @param value         value of the form object

@@ -31,8 +31,46 @@ maxLength.args = {formJson: maxLengthForm2};
 export const minimum = Template.bind({});
 minimum.args = {formJson: minValueForm2};
 
+export const exclusiveMinimum = Template.bind({});
+exclusiveMinimum.args = {formJson: {
+    ...base,
+    items: [
+        {
+            "name": "textInput1",
+            "type": "number",
+            "viewType": "text-input",
+            "exclusiveMinimum": 100,
+            "label": {
+                "value": "Field with minimum value 100 (exclusive) and custom error message"
+            },
+            "constraintMessages": {
+                "exclusiveMinimum" : "Custom Error Message to be shown when value is less than or equal to 100"
+            }
+        }
+    ]
+}};
+
 export const maximum = Template.bind({});
 maximum.args = {formJson: maxValueForm2};
+
+export const exclusiveMaximum = Template.bind({});
+exclusiveMaximum.args = {formJson: {
+    ...base,
+    items: [
+        {
+            "name": "textInput1",
+            "type": "number",
+            "viewType": "text-input",
+            "exclusiveMaximum": 100,
+            "label": {
+                "value": "Field with maximum value 100 (exclusive) and custom error message"
+            },
+            "constraintMessages": {
+                "exclusiveMaximum" : "Custom Error Message to be shown when value is greater than or equal to 100"
+            }
+        }
+    ]
+}};
 
 export const pattern = Template.bind({});
 pattern.args = {formJson: patternForm};
@@ -59,7 +97,63 @@ step.args = {formJson: {
         ]
     }};
 
+export const minItems = Template.bind({});
+minItems.args = {formJson: {
+        ...base,
+        items: [
+            {
+                viewType: 'checkbox-group',
+                label: {
+                    value: 'select minimum 3'
+                },
+                type: "number[]",
+                enum: [1, 2, 3, 4, 5],
+                enumNames : [1, 2, 3, 4, 5].map((i) => `Option ${i}`),
+                minItems : 3,
+                constraintMessages : {
+                    minItems: "Select atleast 3"
+                },
+            },
+            {
+                "viewType": "button",
+                "label": {
+                    "value": "submit"
+                },
+                "events": {
+                    "click": "submit_form()"
+                }
+            }
+        ]
+    }};
 
+export const maxItems = Template.bind({});
+maxItems.args = {formJson: {
+        ...base,
+        items: [
+            {
+                viewType: 'checkbox-group',
+                label: {
+                    value: 'select at most 3'
+                },
+                type: "number[]",
+                enum: [1, 2, 3, 4, 5],
+                enumNames : [1, 2, 3, 4, 5].map((i) => `Option ${i}`),
+                constraintMessages : {
+                    maxItems: "Select at most 3"
+                },
+                maxItems : 3
+            },
+            {
+                "viewType": "button",
+                "label": {
+                    "value": "submit"
+                },
+                "events": {
+                    "click": "submit_form()"
+                }
+            }
+        ]
+    }};
 
 export const enforceEnum = Template.bind({});
 enforceEnum.args = {formJson: {

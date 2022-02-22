@@ -98,6 +98,14 @@ export const randomWord = (l: number, ex: string = '') => {
     }
     return ret.join('');
 };
+
+export const randomInt = (end: number, beg: number = 0) => {
+    if (end < beg) {
+        return 0
+    }
+    return Math.floor(beg + Math.random() * (end - beg))
+}
+
 /**
  * Create a Form JSON
  * @param arr
@@ -184,3 +192,10 @@ export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormMod
         directReferences: jest.fn()
     };
 };
+
+export const range = function* (start: number, end: number) {
+    for (let i = start; i <= end; i++) {
+        yield i;
+    }
+}
+
