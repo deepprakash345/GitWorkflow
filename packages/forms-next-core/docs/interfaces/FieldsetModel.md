@@ -28,15 +28,14 @@ Defines properties that each field set should have
 - [enum](FieldsetModel.md#enum)
 - [enumNames](FieldsetModel.md#enumnames)
 - [events](FieldsetModel.md#events)
-- [expression](FieldsetModel.md#expression)
+- [exclusiveMaximum](FieldsetModel.md#exclusivemaximum)
+- [exclusiveMinimum](FieldsetModel.md#exclusiveminimum)
 - [format](FieldsetModel.md#format)
-- [fracDigits](FieldsetModel.md#fracdigits)
 - [id](FieldsetModel.md#id)
 - [index](FieldsetModel.md#index)
 - [isContainer](FieldsetModel.md#iscontainer)
 - [items](FieldsetModel.md#items)
 - [label](FieldsetModel.md#label)
-- [leadDigits](FieldsetModel.md#leaddigits)
 - [maxFileSize](FieldsetModel.md#maxfilesize)
 - [maxItems](FieldsetModel.md#maxitems)
 - [maxLength](FieldsetModel.md#maxlength)
@@ -54,6 +53,7 @@ Defines properties that each field set should have
 - [rules](FieldsetModel.md#rules)
 - [type](FieldsetModel.md#type)
 - [valid](FieldsetModel.md#valid)
+- [validationExpression](FieldsetModel.md#validationexpression)
 - [value](FieldsetModel.md#value)
 - [viewType](FieldsetModel.md#viewtype)
 - [visible](FieldsetModel.md#visible)
@@ -170,13 +170,23 @@ Events is a dictionary of eventName to the actions to perform.
 
 ___
 
-### expression
+### exclusiveMaximum
 
-• `Optional` **expression**: `string`
+• `Optional` **exclusiveMaximum**: `number`
 
 #### Inherited from
 
-[ContainerModel](ContainerModel.md).[expression](ContainerModel.md#expression)
+[ContainerModel](ContainerModel.md).[exclusiveMaximum](ContainerModel.md#exclusivemaximum)
+
+___
+
+### exclusiveMinimum
+
+• `Optional` **exclusiveMinimum**: `number`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[exclusiveMinimum](ContainerModel.md#exclusiveminimum)
 
 ___
 
@@ -187,16 +197,6 @@ ___
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[format](ContainerModel.md#format)
-
-___
-
-### fracDigits
-
-• `Optional` **fracDigits**: `number`
-
-#### Inherited from
-
-[ContainerModel](ContainerModel.md).[fracDigits](ContainerModel.md#fracdigits)
 
 ___
 
@@ -260,19 +260,9 @@ Label to be used for the field.
 
 ___
 
-### leadDigits
-
-• `Optional` **leadDigits**: `number`
-
-#### Inherited from
-
-[ContainerModel](ContainerModel.md).[leadDigits](ContainerModel.md#leaddigits)
-
-___
-
 ### maxFileSize
 
-• `Optional` **maxFileSize**: `number`
+• `Optional` **maxFileSize**: `string` \| `number`
 
 #### Inherited from
 
@@ -459,6 +449,16 @@ The current validation state of the Field. The property is always computed after
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[valid](ContainerModel.md#valid)
+
+___
+
+### validationExpression
+
+• `Optional` **validationExpression**: `string`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[validationExpression](ContainerModel.md#validationexpression)
 
 ___
 

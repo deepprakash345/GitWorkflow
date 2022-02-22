@@ -483,7 +483,7 @@ ___
 
 ### getState
 
-▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
 Returns the current state of the form
 
@@ -496,7 +496,7 @@ const attachments = form.getState().attachments
 
 #### Returns
 
-`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
 #### Implementation of
 
@@ -602,6 +602,6 @@ Validates the given form field
 
 [FormModel](../interfaces/FormModel.md).[validate](../interfaces/FormModel.md#validate)
 
-#### Inherited from
+#### Overrides
 
 [Container](Container.md).[validate](Container.md#validate)

@@ -31,15 +31,14 @@ Defines properties that each form field should have
 - [enum](FieldModel.md#enum)
 - [enumNames](FieldModel.md#enumnames)
 - [events](FieldModel.md#events)
-- [expression](FieldModel.md#expression)
+- [exclusiveMaximum](FieldModel.md#exclusivemaximum)
+- [exclusiveMinimum](FieldModel.md#exclusiveminimum)
 - [format](FieldModel.md#format)
-- [fracDigits](FieldModel.md#fracdigits)
 - [id](FieldModel.md#id)
 - [index](FieldModel.md#index)
 - [isContainer](FieldModel.md#iscontainer)
 - [items](FieldModel.md#items)
 - [label](FieldModel.md#label)
-- [leadDigits](FieldModel.md#leaddigits)
 - [maxFileSize](FieldModel.md#maxfilesize)
 - [maxItems](FieldModel.md#maxitems)
 - [maxLength](FieldModel.md#maxlength)
@@ -57,6 +56,7 @@ Defines properties that each form field should have
 - [rules](FieldModel.md#rules)
 - [type](FieldModel.md#type)
 - [valid](FieldModel.md#valid)
+- [validationExpression](FieldModel.md#validationexpression)
 - [value](FieldModel.md#value)
 - [viewType](FieldModel.md#viewtype)
 - [visible](FieldModel.md#visible)
@@ -172,13 +172,23 @@ Events is a dictionary of eventName to the actions to perform.
 
 ___
 
-### expression
+### exclusiveMaximum
 
-• `Optional` **expression**: `string`
+• `Optional` **exclusiveMaximum**: `number`
 
 #### Inherited from
 
-[BaseModel](BaseModel.md).[expression](BaseModel.md#expression)
+[BaseModel](BaseModel.md).[exclusiveMaximum](BaseModel.md#exclusivemaximum)
+
+___
+
+### exclusiveMinimum
+
+• `Optional` **exclusiveMinimum**: `number`
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[exclusiveMinimum](BaseModel.md#exclusiveminimum)
 
 ___
 
@@ -189,16 +199,6 @@ ___
 #### Inherited from
 
 [BaseModel](BaseModel.md).[format](BaseModel.md#format)
-
-___
-
-### fracDigits
-
-• `Optional` **fracDigits**: `number`
-
-#### Inherited from
-
-[BaseModel](BaseModel.md).[fracDigits](BaseModel.md#fracdigits)
 
 ___
 
@@ -262,19 +262,9 @@ Label to be used for the field.
 
 ___
 
-### leadDigits
-
-• `Optional` **leadDigits**: `number`
-
-#### Inherited from
-
-[BaseModel](BaseModel.md).[leadDigits](BaseModel.md#leaddigits)
-
-___
-
 ### maxFileSize
 
-• `Optional` **maxFileSize**: `number`
+• `Optional` **maxFileSize**: `string` \| `number`
 
 #### Inherited from
 
@@ -461,6 +451,16 @@ The current validation state of the Field. The property is always computed after
 #### Inherited from
 
 [BaseModel](BaseModel.md).[valid](BaseModel.md#valid)
+
+___
+
+### validationExpression
+
+• `Optional` **validationExpression**: `string`
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[validationExpression](BaseModel.md#validationexpression)
 
 ___
 

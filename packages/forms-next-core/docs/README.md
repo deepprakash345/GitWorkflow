@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.27
+# @aemforms/crispr-core - v0.6.28
 
 ## Table of contents
 
@@ -19,6 +19,7 @@
 
 - [AddItem](classes/AddItem.md)
 - [BaseNode](classes/BaseNode.md)
+- [Blur](classes/Blur.md)
 - [Change](classes/Change.md)
 - [Checkbox](classes/Checkbox.md)
 - [CheckboxGroup](classes/CheckboxGroup.md)
@@ -39,6 +40,7 @@
 - [Scriptable](classes/Scriptable.md)
 - [Submit](classes/Submit.md)
 - [Valid](classes/Valid.md)
+- [ValidationComplete](classes/ValidationComplete.md)
 - [ValidationError](classes/ValidationError.md)
 
 ### Type aliases
@@ -106,7 +108,7 @@ ___
 
 ### ConstraintsJson
 
-Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  }
+Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `number` \| `string` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  }
 
 Type for `constraint properties` based on `crispr form specification`
 
@@ -122,16 +124,22 @@ Type for `constraint messages` based on `crispr form specification`
 
 | Name | Type |
 | :------ | :------ |
-| `enforceEnum?` | `string` |
-| `expression?` | `string` |
-| `fracDigits?` | `string` |
-| `leadDigits?` | `string` |
+| `accept?` | `string` |
+| `enum?` | `string` |
+| `exclusiveMaximum?` | `string` |
+| `exclusiveMinimum?` | `string` |
+| `format?` | `string` |
+| `maxFileSize?` | `string` |
+| `maxItems?` | `string` |
 | `maxLength?` | `string` |
 | `maximum?` | `string` |
+| `minItems?` | `string` |
 | `minLength?` | `string` |
 | `minimum?` | `string` |
+| `pattern?` | `string` |
 | `required?` | `string` |
 | `type?` | `string` |
+| `validationExpression?` | `string` |
 
 ___
 
