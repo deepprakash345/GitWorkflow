@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.25
+# @aemforms/crispr-core - v0.6.26
 
 ## Table of contents
 
@@ -145,7 +145,7 @@ ___
 
 ### FieldJson
 
-Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
+Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``"null"`` \| ``"undefined"`` \| ``""`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
 
 Type for `form field properties` based on `crispr form specification`
 
@@ -161,7 +161,7 @@ ___
 
 ### FormJson
 
-Ƭ **FormJson**: [`ContainerJson`](README.md#containerjson) & { `action?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](README.md#metadatajson) ; `title?`: `string`  }
+Ƭ **FormJson**: [`ContainerJson`](README.md#containerjson) & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](README.md#metadatajson) ; `title?`: `string`  }
 
 Type for `form model` based on `crispr form specification`
 
@@ -211,7 +211,7 @@ Type for `form metadata` based on `crispr form specification`
 
 | Name | Type |
 | :------ | :------ |
-| `grammarVersion?` | `string` |
+| `grammar?` | `string` |
 | `locale?` | `string` |
 | `version?` | `string` |
 
@@ -219,7 +219,7 @@ ___
 
 ### Primitives
 
-Ƭ **Primitives**: `string` \| `number` \| `boolean` \| ``null``
+Ƭ **Primitives**: `string` \| `number` \| `boolean` \| ``null`` \| `undefined`
 
 Type alias for primitive types
 
@@ -235,7 +235,7 @@ Type for `constraint messages` based on `crispr form specification`
 
 | Name | Type |
 | :------ | :------ |
-| `events?` | [`Items`](README.md#items)<`string`[] \| `string`\> |
+| `events?` | [`Items`](README.md#items)<`string`[] \| `string` \| `undefined`\> |
 | `rules?` | [`Items`](README.md#items)<`string`\> |
 
 ___

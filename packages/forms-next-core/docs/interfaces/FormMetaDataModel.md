@@ -10,15 +10,15 @@ Defines form meta data properties
 
 ### Properties
 
-- [grammarVersion](FormMetaDataModel.md#grammarversion)
+- [grammar](FormMetaDataModel.md#grammar)
 - [locale](FormMetaDataModel.md#locale)
 - [version](FormMetaDataModel.md#version)
 
 ## Properties
 
-### grammarVersion
+### grammar
 
-• `Readonly` **grammarVersion**: `string`
+• `Readonly` **grammar**: `string`
 
 Version of the rule grammar
 
