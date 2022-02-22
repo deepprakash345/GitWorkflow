@@ -1,6 +1,6 @@
 import React, {JSXElementConstructor, useEffect, useState} from 'react';
 import FormContext, {IFormContext} from './FormContext';
-import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/crispr-core/lib';
+import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/crispr-core';
 import {Change, FormJson} from '@aemforms/crispr-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
@@ -10,7 +10,7 @@ import {renderChildren} from '../renderChildren';
 import packageJson from '../../package.json';
 import {useAdoption} from '@quarry/eim-provider';
 import afLocalizationJson from '../i18n.json';
-import {ChangePayload} from '@aemforms/crispr-core/lib/controller/Controller';
+import {ChangePayload} from '@aemforms/crispr-core';
 
 /**
  * The minimum set of translation config that contains messages for all supported locales.
