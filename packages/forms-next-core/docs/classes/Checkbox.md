@@ -471,6 +471,22 @@ ___
 
 Field.required
 
+• `set` **required**(`r`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `r` | `boolean` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+Field.required
+
 ___
 
 ### ruleEngine

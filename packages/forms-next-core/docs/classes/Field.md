@@ -547,6 +547,22 @@ ___
 
 [FieldModel](../interfaces/FieldModel.md).[required](../interfaces/FieldModel.md#required)
 
+• `set` **required**(`r`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `r` | `boolean` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[FieldModel](../interfaces/FieldModel.md).[required](../interfaces/FieldModel.md#required)
+
 ___
 
 ### ruleEngine
