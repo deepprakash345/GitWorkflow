@@ -3,7 +3,7 @@ import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import {base} from "../template";
+import {base, logData} from "../template";
 
 export default {
     title: 'Form JSON/Constraints/maxItems',
@@ -12,7 +12,7 @@ export default {
 
 const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     <Spectrum3Provider theme={defaultTheme}>
-        <AdaptiveForm mappings={mappings} formJson={args.formJson} />
+        <AdaptiveForm mappings={mappings} formJson={args.formJson} onFieldChanged={logData} />
     </Spectrum3Provider>
 );
 
@@ -54,6 +54,7 @@ const form2 = {
     items: [
         {
             viewType: 'panel',
+            "name": "selection",
             label: {
                 value: 'Choose at most 3 items'
             },
@@ -66,7 +67,6 @@ const form2 = {
                         value: 'select an item'
                     },
                     type: "number",
-                    required: true,
                     enum: x,
                     enumNames : x.map((i) => `Option ${i}`)
                 }

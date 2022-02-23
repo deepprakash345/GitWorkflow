@@ -8,7 +8,7 @@ import {
     Primitives,
     Subscription, ValidationError
 } from './types';
-import {ExecuteRule, propertyChange} from './controller/Controller';
+import {ExecuteRule, propertyChange} from './controller';
 import DataGroup from './data/DataGroup';
 import {resolveData, TOK_GLOBAL, Token, tokenize} from './utils/DataRefParser';
 import Form from './Form';
