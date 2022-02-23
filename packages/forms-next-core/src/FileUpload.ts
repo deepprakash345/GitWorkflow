@@ -191,36 +191,28 @@ class FileUpload extends Field implements FieldModel {
         return val;
     }
 
-    _getConstraintObject() {
-        const baseConstraints =  {...super._getConstraintObject()};
-        const oldTypeCheck = baseConstraints.type;
-        const typeCheck = (constraint: string, value: any) => {
-            switch(constraint) {
-                case 'string':
-                    return {valid: true, value: value}
-                default:
-                    return oldTypeCheck(constraint, value)
-            }
+    typeCheck(value: any) {
+        const type = this._jsonModel.type || 'file';
+        switch(type) {
+            case 'string':
+                return {valid: true, value: value}
+            default:
+                return Constraints.type(type, value)
         }
-        baseConstraints.type = typeCheck
-        return baseConstraints;
     }
 
-    set value(payload) {
-        if (payload !== undefined) {
+    set value(value) {
+        if (value !== undefined) {
             // store file list here
-            let fileInfoPayload = FileUpload.extractFileInfo(payload as any);
+            const typeRes = this.typeCheck(value)
+            const changes = this._setProperty('value', typeRes.value, false)
+            let fileInfoPayload = FileUpload.extractFileInfo(value as any);
             fileInfoPayload = this.coerce(fileInfoPayload);
-            const changes = this.checkInput(fileInfoPayload);
-            if (changes.value) {
-                if (changes.valid) {
-                    this.triggerValidationEvent(changes);
-                }
-                const changeAction = new Change({changes: Object.values(changes)});
-                this.dispatch(changeAction);
+            this._setProperty('value', fileInfoPayload, false)
+            if (changes.length > 0) {
                 const dataNode = this.getDataNode();
                 if (typeof dataNode !== 'undefined') {
-                    let val : any = this._jsonModel.value;
+                    let val: any = this._jsonModel.value;
                     let retVal = (val instanceof Array ? val : [val]).map(file => {
                         if (this.type === 'file' || this.type === 'file[]') {
                             return file;
@@ -232,6 +224,21 @@ class FileUpload extends Field implements FieldModel {
                     val = this.coerce(retVal);
                     dataNode.$value = val;
                 }
+                let updates
+                if (typeRes.valid) {
+                    updates = this.evaluateConstraints();
+                } else {
+                    let changes = {
+                        'valid': typeRes.valid,
+                        'errorMessage': typeRes.valid ? '' : this.getErrorMessage('type')
+                    };
+                    updates = this._applyUpdates(['valid', 'errorMessage'], changes);
+                }
+                if (updates.valid) {
+                    this.triggerValidationEvent(updates);
+                }
+                const changeAction = new Change({changes: changes.concat(Object.values(updates))})
+                this.dispatch(changeAction);
             }
         }
     }

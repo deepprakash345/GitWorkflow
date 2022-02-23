@@ -37,6 +37,7 @@ export type ConstraintsJson = TranslationConstraintsJson & {
     minItems?: number;
     pattern?: string,
     required?: boolean;
+    step?: number;
     type?: string
     validationExpression?: string;
 }
@@ -61,6 +62,7 @@ export type ConstraintsMessages = {
     minItems?: string
     pattern?: string,
     required?: string;
+    step?: string;
     type?: string;
     validationExpression?: string;
 }

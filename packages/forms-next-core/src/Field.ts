@@ -1,5 +1,5 @@
 import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel, ValidationError} from './types';
-import {Constraints} from './utils/ValidationUtils';
+import {Constraints, ValidConstraints} from './utils/ValidationUtils';
 import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller/Controller';
 import Scriptable from './Scriptable';
 import {defaultViewTypes} from './utils/SchemaUtils';
@@ -75,6 +75,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                 this._jsonModel.enum = [true, false];
             }
         }
+        if (typeof this._jsonModel.step !== 'number' || this._jsonModel.type !== "number") {
+            this._jsonModel.step = undefined;
+        }
     }
 
     get readOnly() {
@@ -144,16 +147,28 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     set value(v) {
-        const changes = this.checkInput(v);
-        if (changes.value) {
-            if (changes.valid) {
-                this.triggerValidationEvent(changes);
-            }
+        const Constraints = this._getConstraintObject();
+        const typeRes = Constraints.type(this._jsonModel.type || 'string', v);
+        const changes = this._setProperty('value', typeRes.value, false)
+        if (changes.length > 0) {
             const dataNode = this.getDataNode();
             if (typeof dataNode !== 'undefined') {
                 dataNode.$value = this.isEmpty() ? this.emptyValue : this._jsonModel.value;
             }
-            const changeAction = new Change({changes: Object.values(changes)});
+            let updates
+            if (typeRes.valid) {
+                updates = this.evaluateConstraints();
+            } else {
+                let changes = {
+                    'valid': typeRes.valid,
+                    'errorMessage': typeRes.valid ? '' : this.getErrorMessage('type')
+                };
+                updates = this._applyUpdates(['valid', 'errorMessage'], changes);
+            }
+            if (updates.valid) {
+                this.triggerValidationEvent(updates);
+            }
+            const changeAction = new Change({changes: changes.concat(Object.values(updates))})
             this.dispatch(changeAction);
         }
     }
@@ -167,7 +182,11 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.value?.toString() || '';
     }
 
-    private getErrorMessage(constraint: keyof (ConstraintsMessages)) {
+    /**
+     * Returns the error message for a given constraint
+     * @param constraint
+     */
+    getErrorMessage(constraint: keyof (ConstraintsMessages)) {
         return this._jsonModel.constraintMessages?.[constraint as keyof (ConstraintsMessages)] || '';
     }
 
@@ -179,58 +198,147 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return Constraints;
     }
 
+
+    /**
+     * returns whether the field is array type or not
+     * @private
+     */
+    private isArrayType() {
+        return this.type ? this.type.indexOf('[]') > -1 : false;
+    }
+
+    /**
+     *
+     * @param value
+     * @param constraints
+     * @private
+     */
+    private checkEnum(value: any, constraints: any) {
+        if (this._jsonModel.enforceEnum === true && value != null) {
+            const fn = constraints.enum;
+            if (value instanceof Array && this.isArrayType()) {
+                return value.every(x => fn(this.enum || [], x).valid);
+            } else {
+                return  fn(this.enum || [], value).valid;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * checks whether the value can be achieved by stepping the min/default value by the step constraint.
+     * Basically to find a integer solution for n in the equation
+     * initialValue + n * step = value
+     * @param constraints
+     * @private
+     */
+    private checkStep() {
+        const value = this._jsonModel.value;
+        if (typeof this._jsonModel.step === "number") {
+            const initialValue = this._jsonModel.minimum || this._jsonModel.default || 0
+            return (value - initialValue) % this._jsonModel.step === 0
+        }
+        return true;
+    }
+
+    /**
+     * checks whether the validation expression returns a boolean value or not
+     * @private
+     */
+    private checkValidationExpression() {
+        if (typeof this._jsonModel.validationExpression === "string") {
+            return this.executeExpression(this._jsonModel.validationExpression)
+        }
+        return true;
+    }
+
+    /**
+     * Returns the applicable constraints for a given type
+     * @private
+     */
+    private getConstraints() {
+        switch (this.type) {
+            case 'string':
+                switch (this.format) {
+                    case 'date':
+                        return ValidConstraints.date
+                    case 'binary':
+                        return ValidConstraints.file
+                    case 'data-url':
+                        return ValidConstraints.file
+                    default:
+                        return ValidConstraints.string
+                }
+            case 'number':
+                return ValidConstraints.number
+        }
+        if (this.isArrayType()) {
+            return ValidConstraints.array
+        }
+        return []
+    }
+
+    /**
+     * returns the format constraint
+     */
+    get format() {
+        return this._jsonModel.format || '';
+    }
+
     /**
      * @private
      */
-    private evaluateConstraints(value: any) {
+    protected evaluateConstraints() {
         let constraint = 'type';
         let elem = this._jsonModel;
-        const Constraints = this._getConstraintObject();
-        const supportedConstraints = Object.keys(Constraints).filter(x => x != 'type' && x != 'enum' && x != 'required');
-        const typeRes = Constraints.type(elem.type || 'string', value);
-        const res = typeRes;
-        const isArrayType = this.type ? this.type.indexOf('[]') > -1 : false;
-        if (res.valid) {
-            res.valid = Constraints.required(this.required, res.value).valid &&
-                (isArrayType && this.required ? res.value.length > 0 : true);
+        let value = this._jsonModel.value;
+        const Constraints = this._getConstraintObject()
+        const supportedConstraints = this.getConstraints();
+        let valid = true
+        if (valid) {
+            valid = Constraints.required(this.required, value).valid &&
+                (this.isArrayType() && this.required ? value.length > 0 : true);
             constraint = 'required';
         }
-        if (res.valid) {
+        if (valid) {
             const invalidConstraint = supportedConstraints.find(key => {
                 if (key in elem) {
                     // @ts-ignore
                     const restriction = elem[key];
                     // @ts-ignore
                     const fn = Constraints[key];
-                    if (res.value instanceof Array && isArrayType) {
-                        return res.value.some(x => !(fn(restriction, value).valid));
+                    if (value instanceof Array && this.isArrayType()) {
+                        return value.some(x => !(fn(restriction, value).valid));
+                    } else if (typeof fn === "function") {
+                        return !fn(restriction, value).valid;
                     } else {
-                        return !fn(restriction, res.value).valid;
+                        return false;
                     }
                 } else {
                     return false;
                 }
             });
             if (invalidConstraint != null) {
-                res.valid = false;
+                valid = false;
                 constraint = invalidConstraint;
-            } else if (this._jsonModel.enforceEnum === true && res.value != null) {
-                const fn = Constraints.enum;
-                let enumCheck;
-                if (res.value instanceof Array && isArrayType) {
-                    enumCheck = res.value.every(x => fn(elem.enum || [], x).valid);
-                } else {
-                    enumCheck =  fn(elem.enum || [], res.value).valid;
+            } else {
+                valid = this.checkEnum(value, Constraints)
+                constraint = "enum"
+                if (valid && this.type === "number") {
+                    valid = this.checkStep()
+                    constraint = "step"
                 }
-                res.valid = enumCheck;
-                constraint = 'enum';
+                if (valid) {
+                    valid = this.checkValidationExpression();
+                    constraint = "validationExpression"
+                }
             }
         }
-        return {
-            valid: res.valid,
-            constraint,
-            value: res.value
+        let changes = {
+            'valid': valid,
+            'errorMessage': valid ? '' : this.getErrorMessage(constraint as keyof ConstraintsMessages)
         };
+        return this._applyUpdates(['valid', 'errorMessage'], changes);
     }
 
     triggerValidationEvent(changes: any) {
@@ -241,16 +349,6 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                 this.dispatch(new Invalid());
             }
         }
-    }
-
-    protected checkInput(input: any) {
-        let {valid, value, constraint} = this.evaluateConstraints(input);
-        const elem = {
-            'valid': valid,
-            'value': value,
-            'errorMessage': valid ? '' : this.getErrorMessage(constraint as keyof ConstraintsMessages)
-        };
-        return this._applyUpdates(['value', 'valid', 'errorMessage'], elem);
     }
 
     change(event: Action, context: any) {
@@ -269,14 +367,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             //@ts-ignore
             const prevValue = this._jsonModel[propertyName];
             const currentValue = updates[propertyName];
-            if (currentValue !== prevValue) {
-                acc[propertyName] = {
-                    propertyName,
-                    currentValue,
-                    prevValue
-                };
-                // @ts-ignore
-                this._jsonModel[propertyName] = currentValue;
+            const changes = this._setProperty(propertyName, currentValue, false)
+            if (changes.length > 0) {
+                acc[propertyName] = changes[0]
             }
             return acc;
         }, {});
@@ -286,7 +379,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * Validates the current form object
      */
     validate() {
-        const changes = this.checkInput(this._jsonModel.value);
+        let changes = this.evaluateConstraints();
         if (changes.valid) {
             this.triggerValidationEvent(changes);
             this.notifyDependents(new Change({ changes: Object.values(changes) }));

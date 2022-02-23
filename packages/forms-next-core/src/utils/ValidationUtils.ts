@@ -117,6 +117,14 @@ const partitionArray = (inputVal: any[], validatorFn: (x: any) => ValidationResu
     },[[],[]]);
 };
 
+export const ValidConstraints = {
+    date : ['minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'format'],
+    string: ['minLength', 'maxLength', 'pattern'],
+    number: ['minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum'],
+    array: ['minItems', 'maxItems', 'uniqueItems'],
+    file: ['accept', 'maxFileSize']
+}
+
 /**
  * Implementation of all constraints defined by `crispr form specification`
  */
