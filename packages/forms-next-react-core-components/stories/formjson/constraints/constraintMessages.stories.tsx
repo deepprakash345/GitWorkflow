@@ -12,7 +12,7 @@ import formatForm from '../../../../../docs/examples/constraints/formatMessage.f
 import {base} from "../template";
 
 export default {
-    title: 'Form JSON/Constraints/Messages',
+    title: 'Crispr/JSON/Constraints/Messages',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

@@ -9,7 +9,7 @@ import dateCons from '../../../../../docs/examples/constraints/dateConstraints.f
 
 
 export default {
-    title: 'Form JSON/Constraints/Multiple Constraints',
+    title: 'Crispr/JSON/Constraints/Multiple Constraints',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

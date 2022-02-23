@@ -13,7 +13,7 @@ import { ComponentStory } from '@storybook/react';
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON',
+    title: 'Crispr/examples',
     component: AdaptiveForm,
     argTypes: {
         onFieldChanged: {action: 'onFieldChanged'},
@@ -34,12 +34,6 @@ oneFieldForm.args = {formJson: fieldWithLabel};
 
 export const WithCaptionAndDescription = Template.bind({});
 WithCaptionAndDescription.args = {formJson: fieldWithLabelAndDescription};
-//
-// export const WithDefaultValue = Template.bind({});
-// WithDefaultValue.args = {formJson: withDefaultValue};
-//
-// export const WithPlaceholder = Template.bind({});
-// WithPlaceholder.args = {formJson: withPlaceholder};
 
 export const WithMultipleFields = Template.bind({});
 WithMultipleFields.args = {formJson: withMultipleFields};

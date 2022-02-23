@@ -47,7 +47,7 @@ const emptyStringExample = {
 }
 
 export default {
-    title: 'Form JSON/Properties/emptyValue',
+    title: 'Crispr/JSON/Properties/emptyValue',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

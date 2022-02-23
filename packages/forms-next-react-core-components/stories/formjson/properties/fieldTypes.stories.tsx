@@ -26,7 +26,7 @@ const json:any = {
 
 
 export default {
-    title: 'Form JSON/Properties/viewType',
+    title: 'Crispr/JSON/Properties/viewType',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

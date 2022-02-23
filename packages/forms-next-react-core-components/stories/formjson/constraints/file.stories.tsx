@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import {base} from "../template";
 
 export default {
-    title: 'Form JSON/Constraints/file',
+    title: 'Crispr/JSON/Constraints/file',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

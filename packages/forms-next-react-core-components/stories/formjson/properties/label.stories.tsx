@@ -32,7 +32,7 @@ const formJson:any = (label, description, visible = undefined, richText = undefi
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Properties/label',
+    title: 'Crispr/JSON/Properties/label',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

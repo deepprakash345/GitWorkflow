@@ -27,7 +27,7 @@ const formJson:any = (description) => {
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Properties/description',
+    title: 'Crispr/JSON/Properties/description',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

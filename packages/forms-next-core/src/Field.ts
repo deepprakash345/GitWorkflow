@@ -119,6 +119,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.required || false;
     }
 
+    set required(r) {
+        this._setProperty('required', r);
+    }
+
     set enumNames(e) {
         this._setProperty('enumNames', e);
     }

@@ -25,7 +25,7 @@ const generate = (t = "text-input", extras = {}) => {
 }
 
 export default {
-    title: 'Form JSON/Properties/readOnly',
+    title: 'Crispr/JSON/Properties/readOnly',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

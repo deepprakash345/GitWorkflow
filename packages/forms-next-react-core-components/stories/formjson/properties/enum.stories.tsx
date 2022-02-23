@@ -62,7 +62,7 @@ const json:any = {
 };
 
 export default {
-    title: 'Form JSON/Properties/enum',
+    title: 'Crispr/JSON/Properties/enum',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
