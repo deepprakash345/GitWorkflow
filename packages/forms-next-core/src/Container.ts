@@ -59,7 +59,10 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         }
     }
 
-    private _hasDynamicItems() {
+    /**
+     * returns whether the items in the Panel can repeat or not
+     */
+    hasDynamicItems() {
         return this._itemTemplate != null;
     }
 
@@ -88,10 +91,10 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         if (name.length > 0) {
             Object.defineProperty(this._ruleContext, name, {
                 get: () => {
-                    if (child.isContainer && child._hasDynamicItems()) {
+                    if (child.isContainer && child.hasDynamicItems()) {
                         self.ruleEngine.trackDependency(child); //accessing dynamic panel directly
                     }
-                    if (self._hasDynamicItems()) {
+                    if (self.hasDynamicItems()) {
                         self.ruleEngine.trackDependency(self); //accessing a child of dynamic panel
                         return this._children[name];
                     } else {
@@ -147,7 +150,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         const items = this._jsonModel.items;
         this._jsonModel.items = [];
         this._ruleContext = this._jsonModel.type == 'array' ? [] : {};
-        if (this._jsonModel.type == 'array' && items.length === 1) {
+        if (this._jsonModel.type == 'array' && items.length === 1 && this.getDataNode() != null) {
             this._itemTemplate = deepClone(items[0]);
             if (typeof (this._jsonModel.minItems) !== 'number') {
                 this._jsonModel.minItems = 0;

@@ -54,6 +54,7 @@ const form2 = {
     items: [
         {
             viewType: 'panel',
+            name: "selection",
             label: {
                 value: 'Choose 3 items'
             },
@@ -66,7 +67,6 @@ const form2 = {
                         value: 'select an item'
                     },
                     type: "number",
-                    required: true,
                     enum: x,
                     enumNames : x.map((i) => `Option ${i}`)
                 }
