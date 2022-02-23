@@ -22,13 +22,12 @@ const logAction = (name: string) => (e: Action) => action(name)({
     type: e.type
 });
 
-export const submit: ComponentStory<typeof AdaptiveForm> = (args) => (
+export const validationComplete: ComponentStory<typeof AdaptiveForm> = (args) => (
     <AdaptiveForm mappings={mappings}
                   formJson={args.formJson}
-                  onSubmit={logAction('Submit')}
-    />
+                  onValidationComplete={logAction('validationComplete')}/>
 );
 
-submit.args = {
+validationComplete.args = {
     formJson: jsonform.contactJson
 };

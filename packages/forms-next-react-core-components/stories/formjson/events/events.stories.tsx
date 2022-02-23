@@ -57,6 +57,25 @@ const changeJson = {
         }]
 }
 
+const blurJson = {
+    ...base,
+    "items": [
+        {
+            "name": "textinput",
+            "label": {
+                "value": "On focus out, value of text input would be transformed to upper case and validated"
+            },
+            'required': true,
+            'constraintMessages': {
+                'required': 'mandatory field'
+            },
+            "viewType": "text-input",
+            "events": {
+                "blur": ['{value : upper($field.value)}', 'validate($event.target)']
+            }
+        }]
+}
+
 const template: ComponentStory<typeof AdaptiveForm> = (args) => (
     <Spectrum3Provider theme={defaultTheme}>
         <AdaptiveForm mappings={mappings} formJson={args.formJson} />
@@ -77,5 +96,10 @@ initialize.args = {
 export const change = template.bind({})
 change.args = {
     formJson: changeJson
+};
+
+export const blur = template.bind({})
+blur.args = {
+    formJson: blurJson
 };
 
