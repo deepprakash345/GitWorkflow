@@ -370,6 +370,7 @@ test('rule node of a dynamic panel gets updated on removeItem event at specific 
 test('modification of items updates the values in the rules', async () => {
     const formJson = create(['f', ['f'], 'f']);
     formJson.items[1].type = 'array';
+    formJson.items[2].type = 'number'
     formJson.items[2].rules = {
         'value' : 'length(p1)'
     };

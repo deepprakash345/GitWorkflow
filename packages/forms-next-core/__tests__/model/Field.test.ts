@@ -32,7 +32,21 @@ test('a field should add all the default values in its json', () => {
     expect(f.ruleEngine).toEqual(form.ruleEngine);
     expect(f.readOnly).toEqual(false);
     expect(f.enabled).toEqual(true);
+});
 
+test("a field's type can be deduced from enum values", () => {
+    const f = new Field({
+        enum: [1, 2, 3],
+        viewType: 'text-input'
+    }, options);
+    expect(f.getState()).toMatchObject({
+        visible : true,
+        readOnly : false,
+        enum: [1, 2, 3],
+        viewType: 'text-input',
+        type: 'number',
+        enabled : true
+    });
 });
 
 test('a field should set the value correctly in its json from default value', () => {

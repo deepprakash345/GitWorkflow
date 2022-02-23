@@ -2,7 +2,7 @@ import {Constraints} from '../../src/utils/ValidationUtils';
 import {jest26CompatibleTable as j26, randomInt, randomWord, range} from '../collateral/index';
 type TestCase = {
     name?: string
-    value: string | string[] | boolean[] | number[],
+    value: any,
     valid: boolean,
     cval: any
 }
@@ -19,6 +19,11 @@ const dataTypeValidations: { [key: string]: TestCase[] } = {
             'name': 'an empty string should pass validation',
             'value': '',
             valid: true, cval: ''
+        }, {
+            'name': 'non string values',
+            'value': 1,
+            valid: true,
+            cval: '1'
         }],
     'number': [
         {

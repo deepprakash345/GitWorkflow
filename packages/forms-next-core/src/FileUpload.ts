@@ -1,16 +1,10 @@
 import {Change, propertyChange} from './controller/Controller';
 import Field from './Field';
 import {dataURItoBlob, getFileSizeInBytes} from './utils/FormUtils';
-import {isDataUrl} from './utils/ValidationUtils';
+import {Constraints, isDataUrl} from './utils/ValidationUtils';
 import {FieldModel} from './types';
 import {FileObject} from './FileObject';
 import DataGroup from './data/DataGroup';
-
-//todo: move to a single place in Model.ts or Json.ts
-const defaults = {
-    accept : ['audio/*', 'video/*', 'image/*', 'text/*', 'application/pdf'],
-    maxFileSize : '2MB'
-};
 
 function addNameToDataURL(dataURL: string, name: string) {
     return dataURL.replace(';base64', `;name=${encodeURIComponent(name)};base64`);
@@ -45,15 +39,12 @@ async function processFile(file : FileObject) {
 class FileUpload extends Field implements FieldModel {
     //private _files: FileObject[];
 
-    protected _applyDefaults() {
-        super._applyDefaults();
-        Object.entries(defaults).map(([key, value]) => {
-            //@ts-ignore
-            if (this._jsonModel[key] === undefined) {
-                //@ts-ignore
-                this._jsonModel[key] = value;
-            }
-        });
+    protected _getDefaults() {
+        return {
+            ...super._getDefaults(),
+            accept : ['audio/*', 'video/*', 'image/*', 'text/*', 'application/pdf'],
+            maxFileSize : '2MB'
+        }
     }
 
     private static extractFileInfo(files: string[] | string | File[]) : FileObject[] {
@@ -198,6 +189,21 @@ class FileUpload extends Field implements FieldModel {
                     }));
         }
         return val;
+    }
+
+    _getConstraintObject() {
+        const baseConstraints =  {...super._getConstraintObject()};
+        const oldTypeCheck = baseConstraints.type;
+        const typeCheck = (constraint: string, value: any) => {
+            switch(constraint) {
+                case 'string':
+                    return {valid: true, value: value}
+                default:
+                    return oldTypeCheck(constraint, value)
+            }
+        }
+        baseConstraints.type = typeCheck
+        return baseConstraints;
     }
 
     set value(payload) {

@@ -1,7 +1,7 @@
 import { FieldsetJson } from '@aemforms/crispr-core';
 import React from 'react';
 import { useRuleEngine } from '@aemforms/crispr-react-bindings';
-import { State } from '@aemforms/crispr-core/lib';
+import { State } from '@aemforms/crispr-core';
 import TabWrapper from './Tabs';
 
 const VerticalTab = function (fieldset: State<FieldsetJson>) {

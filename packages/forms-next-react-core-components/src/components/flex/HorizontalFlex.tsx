@@ -1,7 +1,7 @@
 import { FieldsetJson } from '@aemforms/crispr-core';
 import React, { useCallback } from 'react';
 import { useRuleEngine } from '@aemforms/crispr-react-bindings';
-import { State } from '@aemforms/crispr-core/lib';
+import { State } from '@aemforms/crispr-core';
 import FlexWrapper from './Flex';
 
 const HorizontalFlex = function (fieldset: State<FieldsetJson>) {

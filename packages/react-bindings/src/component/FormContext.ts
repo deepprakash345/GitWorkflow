@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormModel} from '@aemforms/crispr-core/lib';
+import {FormModel} from '@aemforms/crispr-core';
 
 
 type viewApiMap = {

@@ -1,4 +1,4 @@
-import {FieldJson, TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core/lib';
+import {FieldJson, TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core';
 import React, {JSXElementConstructor, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {Handlers, useFocus, useRuleEngine} from './useRuleEngine';

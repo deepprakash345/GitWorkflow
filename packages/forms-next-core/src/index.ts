@@ -4,7 +4,7 @@ export * from './controller/index';
 export * from './utils/TranslationUtils';
 export * from './utils/JsonUtils';
 export * from './utils/SchemaUtils';
-
+import {getFileSizeInBytes} from "./utils/FormUtils";
 import {BaseNode} from './BaseNode';
 import Checkbox from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';
@@ -19,5 +19,7 @@ import Scriptable from './Scriptable';
 import Form from './Form';
 
 export {
-    Form, BaseNode, Checkbox, CheckboxGroup, Container, Field, Fieldset, FileObject, FileUpload, FormMetaData, Node, Scriptable
+    Form, BaseNode, Checkbox, CheckboxGroup,
+    Container, Field, Fieldset, FileObject, FileUpload, FormMetaData, Node, Scriptable,
+    getFileSizeInBytes
 };

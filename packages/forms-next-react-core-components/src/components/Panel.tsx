@@ -3,7 +3,7 @@ import {FieldsetJson} from '@aemforms/crispr-core';
 import React, {useContext} from 'react';
 
 import {useRuleEngine, renderChildren, FormContext} from '@aemforms/crispr-react-bindings';
-import {State} from '@aemforms/crispr-core/lib';
+import {State} from '@aemforms/crispr-core';
 
 const Panel = function (fieldset: State<FieldsetJson>) {
     const context = useContext(FormContext);
