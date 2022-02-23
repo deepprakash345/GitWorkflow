@@ -42,6 +42,7 @@ Defines `form model` which implements [form model](../interfaces/FormModel.md)
 - [getElement](Form.md#getelement)
 - [getState](Form.md#getstate)
 - [getUniqueId](Form.md#getuniqueid)
+- [hasDynamicItems](Form.md#hasdynamicitems)
 - [importData](Form.md#importdata)
 - [indexOf](Form.md#indexof)
 - [isValid](Form.md#isvalid)
@@ -519,6 +520,22 @@ ___
 #### Implementation of
 
 FormModel.getUniqueId
+
+___
+
+### hasDynamicItems
+
+▸ **hasDynamicItems**(): `boolean`
+
+returns whether the items in the Panel can repeat or not
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Container](Container.md).[hasDynamicItems](Container.md#hasdynamicitems)
 
 ___
 

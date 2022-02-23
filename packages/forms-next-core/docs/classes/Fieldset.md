@@ -37,6 +37,7 @@ Defines a field set class which extends from [container](Container.md)
 
 - [executeAction](Fieldset.md#executeaction)
 - [getState](Fieldset.md#getstate)
+- [hasDynamicItems](Fieldset.md#hasdynamicitems)
 - [indexOf](Fieldset.md#indexof)
 - [validate](Fieldset.md#validate)
 
@@ -439,6 +440,22 @@ Returns the current container state
 #### Inherited from
 
 [Container](Container.md).[getState](Container.md#getstate)
+
+___
+
+### hasDynamicItems
+
+▸ **hasDynamicItems**(): `boolean`
+
+returns whether the items in the Panel can repeat or not
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Container](Container.md).[hasDynamicItems](Container.md#hasdynamicitems)
 
 ___
 
