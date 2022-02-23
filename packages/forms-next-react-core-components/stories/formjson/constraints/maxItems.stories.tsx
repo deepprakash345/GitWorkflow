@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import {base, logData} from "../template";
 
 export default {
-    title: 'Form JSON/Constraints/maxItems',
+    title: 'Crispr/JSON/Constraints/maxItems',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

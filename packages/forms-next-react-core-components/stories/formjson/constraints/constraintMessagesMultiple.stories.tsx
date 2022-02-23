@@ -8,7 +8,7 @@ import numCons from '../../../../../docs/examples/constraints/numberConstraintsM
 import dateCons from '../../../../../docs/examples/constraints/dateConstraintsMessage.form.json';
 
 export default {
-    title: 'Form JSON/Constraints/Messages/multiple',
+    title: 'Crispr/JSON/Constraints/Messages/multiple',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

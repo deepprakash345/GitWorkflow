@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import formatForm from '../../../../../docs/examples/constraints/format.form.json';
 
 export default {
-    title: 'Form JSON/Constraints/format',
+    title: 'Crispr/JSON/Constraints/format',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

@@ -29,7 +29,7 @@ const numberInputTypeExample = {
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Constraints/type/string',
+    title: 'Crispr/JSON/Constraints/type/string',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

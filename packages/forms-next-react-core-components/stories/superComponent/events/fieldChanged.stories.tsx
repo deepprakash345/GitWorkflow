@@ -1,0 +1,33 @@
+import { ComponentMeta } from '@storybook/react';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import { ComponentStory } from '@storybook/react';
+import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
+import mappings from '../../../src/utils/mappings';
+import jsonform from '../../example/json';
+import { action } from '@storybook/addon-actions';
+import {Action} from '@aemforms/crispr-core/lib';
+export default {
+    title: 'Crispr/SuperComponent/events',
+    component: AdaptiveForm,
+    decorators : [(Story) => {
+        return (<Spectrum3Provider theme={defaultTheme}>
+            <Story />
+        </Spectrum3Provider>);
+    }]
+} as ComponentMeta<typeof AdaptiveForm>;
+
+const logAction = (name: string) => (e: Action) => action(name)({
+    target : e.target.getState(),
+    payload: e.payload,
+    type: e.type
+});
+
+export const fieldChanged: ComponentStory<typeof AdaptiveForm> = (args) => (
+    <AdaptiveForm mappings={mappings}
+                  formJson={args.formJson}
+                  onFieldChanged={logAction('fieldChanged')}/>
+);
+
+fieldChanged.args = {
+    formJson: jsonform.contactJson
+};

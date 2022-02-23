@@ -12,7 +12,7 @@ import patternForm from '../../../../../docs/examples/constraints/pattern.form.j
 import {base} from "../template";
 
 export default {
-    title: 'Form JSON/Constraints',
+    title: 'Crispr/JSON/Constraints',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

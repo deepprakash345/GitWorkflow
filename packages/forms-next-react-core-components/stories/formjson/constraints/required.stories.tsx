@@ -84,7 +84,7 @@ const json:any = {
 };
 
 export default {
-    title: 'Form JSON/Constraints/required',
+    title: 'Crispr/JSON/Constraints/required',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

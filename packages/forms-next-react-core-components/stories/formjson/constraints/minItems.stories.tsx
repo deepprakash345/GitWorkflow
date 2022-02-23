@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import {base} from "../template";
 
 export default {
-    title: 'Form JSON/Constraints/minItems',
+    title: 'Crispr/JSON/Constraints/minItems',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

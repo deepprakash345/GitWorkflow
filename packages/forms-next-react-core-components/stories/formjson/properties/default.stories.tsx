@@ -57,7 +57,7 @@ const base = {
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Properties/default',
+    title: 'Crispr/JSON/Properties/default',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

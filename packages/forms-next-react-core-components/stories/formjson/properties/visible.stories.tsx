@@ -38,7 +38,7 @@ const hiddenExample = [
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Properties/visible',
+    title: 'Crispr/JSON/Properties/visible',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

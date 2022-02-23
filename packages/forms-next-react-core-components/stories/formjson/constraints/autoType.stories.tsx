@@ -29,7 +29,7 @@ const enumInputTypeExample = {
 const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
 export default {
-    title: 'Form JSON/Constraints/type/auto',
+    title: 'Crispr/JSON/Constraints/type/auto',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
