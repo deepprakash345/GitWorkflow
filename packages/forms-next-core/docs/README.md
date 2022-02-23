@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.28
+# @aemforms/crispr-core - v0.6.29
 
 ## Table of contents
 
@@ -74,6 +74,7 @@
 - [defaultViewTypes](README.md#defaultviewtypes)
 - [exportDataSchema](README.md#exportdataschema)
 - [fetchForm](README.md#fetchform)
+- [getFileSizeInBytes](README.md#getfilesizeinbytes)
 - [getProperty](README.md#getproperty)
 - [isCheckbox](README.md#ischeckbox)
 - [isCheckboxGroup](README.md#ischeckboxgroup)
@@ -395,6 +396,26 @@ Helper API to fetch form model definition from an AEM instance
 `Promise`<`string`\>
 
 promise which resolves to the form model definition
+
+___
+
+### getFileSizeInBytes
+
+▸ `Const` **getFileSizeInBytes**(`str`): `number`
+
+Converts file size in string to bytes based on IEC specification
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `any` | file size |
+
+#### Returns
+
+`number`
+
+file size as bytes (in kb) based on IEC specification
 
 ___
 
