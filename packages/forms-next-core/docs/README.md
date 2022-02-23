@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.27
+# @aemforms/crispr-core - v0.6.31
 
 ## Table of contents
 
@@ -19,6 +19,7 @@
 
 - [AddItem](classes/AddItem.md)
 - [BaseNode](classes/BaseNode.md)
+- [Blur](classes/Blur.md)
 - [Change](classes/Change.md)
 - [Checkbox](classes/Checkbox.md)
 - [CheckboxGroup](classes/CheckboxGroup.md)
@@ -39,6 +40,7 @@
 - [Scriptable](classes/Scriptable.md)
 - [Submit](classes/Submit.md)
 - [Valid](classes/Valid.md)
+- [ValidationComplete](classes/ValidationComplete.md)
 - [ValidationError](classes/ValidationError.md)
 
 ### Type aliases
@@ -72,6 +74,7 @@
 - [defaultViewTypes](README.md#defaultviewtypes)
 - [exportDataSchema](README.md#exportdataschema)
 - [fetchForm](README.md#fetchform)
+- [getFileSizeInBytes](README.md#getfilesizeinbytes)
 - [getProperty](README.md#getproperty)
 - [isCheckbox](README.md#ischeckbox)
 - [isCheckboxGroup](README.md#ischeckboxgroup)
@@ -106,7 +109,7 @@ ___
 
 ### ConstraintsJson
 
-Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `expression?`: `string` ; `format?`: `string` ; `fracDigits?`: `number` ; `leadDigits?`: `number` ; `maxFileSize?`: `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string`  }
+Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `number` \| `string` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  }
 
 Type for `constraint properties` based on `crispr form specification`
 
@@ -122,16 +125,22 @@ Type for `constraint messages` based on `crispr form specification`
 
 | Name | Type |
 | :------ | :------ |
-| `enforceEnum?` | `string` |
-| `expression?` | `string` |
-| `fracDigits?` | `string` |
-| `leadDigits?` | `string` |
+| `accept?` | `string` |
+| `enum?` | `string` |
+| `exclusiveMaximum?` | `string` |
+| `exclusiveMinimum?` | `string` |
+| `format?` | `string` |
+| `maxFileSize?` | `string` |
+| `maxItems?` | `string` |
 | `maxLength?` | `string` |
 | `maximum?` | `string` |
+| `minItems?` | `string` |
 | `minLength?` | `string` |
 | `minimum?` | `string` |
+| `pattern?` | `string` |
 | `required?` | `string` |
 | `type?` | `string` |
+| `validationExpression?` | `string` |
 
 ___
 
@@ -387,6 +396,26 @@ Helper API to fetch form model definition from an AEM instance
 `Promise`<`string`\>
 
 promise which resolves to the form model definition
+
+___
+
+### getFileSizeInBytes
+
+▸ `Const` **getFileSizeInBytes**(`str`): `number`
+
+Converts file size in string to bytes based on IEC specification
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `any` | file size |
+
+#### Returns
+
+`number`
+
+file size as bytes (in kb) based on IEC specification
 
 ___
 

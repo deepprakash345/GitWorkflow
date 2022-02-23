@@ -31,15 +31,14 @@ Defines common properties that each form field should have
 - [enforceEnum](BaseModel.md#enforceenum)
 - [enum](BaseModel.md#enum)
 - [enumNames](BaseModel.md#enumnames)
-- [expression](BaseModel.md#expression)
+- [exclusiveMaximum](BaseModel.md#exclusivemaximum)
+- [exclusiveMinimum](BaseModel.md#exclusiveminimum)
 - [format](BaseModel.md#format)
-- [fracDigits](BaseModel.md#fracdigits)
 - [id](BaseModel.md#id)
 - [index](BaseModel.md#index)
 - [isContainer](BaseModel.md#iscontainer)
 - [items](BaseModel.md#items)
 - [label](BaseModel.md#label)
-- [leadDigits](BaseModel.md#leaddigits)
 - [maxFileSize](BaseModel.md#maxfilesize)
 - [maxItems](BaseModel.md#maxitems)
 - [maxLength](BaseModel.md#maxlength)
@@ -56,6 +55,7 @@ Defines common properties that each form field should have
 - [required](BaseModel.md#required)
 - [type](BaseModel.md#type)
 - [valid](BaseModel.md#valid)
+- [validationExpression](BaseModel.md#validationexpression)
 - [value](BaseModel.md#value)
 - [viewType](BaseModel.md#viewtype)
 - [visible](BaseModel.md#visible)
@@ -138,13 +138,23 @@ ConstraintsJson.enumNames
 
 ___
 
-### expression
+### exclusiveMaximum
 
-• `Optional` **expression**: `string`
+• `Optional` **exclusiveMaximum**: `number`
 
 #### Inherited from
 
-ConstraintsJson.expression
+ConstraintsJson.exclusiveMaximum
+
+___
+
+### exclusiveMinimum
+
+• `Optional` **exclusiveMinimum**: `number`
+
+#### Inherited from
+
+ConstraintsJson.exclusiveMinimum
 
 ___
 
@@ -155,16 +165,6 @@ ___
 #### Inherited from
 
 ConstraintsJson.format
-
-___
-
-### fracDigits
-
-• `Optional` **fracDigits**: `number`
-
-#### Inherited from
-
-ConstraintsJson.fracDigits
 
 ___
 
@@ -208,19 +208,9 @@ Label to be used for the field.
 
 ___
 
-### leadDigits
-
-• `Optional` **leadDigits**: `number`
-
-#### Inherited from
-
-ConstraintsJson.leadDigits
-
-___
-
 ### maxFileSize
 
-• `Optional` **maxFileSize**: `number`
+• `Optional` **maxFileSize**: `string` \| `number`
 
 #### Inherited from
 
@@ -367,6 +357,16 @@ ___
 • `Optional` **valid**: `boolean`
 
 The current validation state of the Field. The property is always computed after merging the Data Model with the Form
+
+___
+
+### validationExpression
+
+• `Optional` **validationExpression**: `string`
+
+#### Inherited from
+
+ConstraintsJson.validationExpression
 
 ___
 

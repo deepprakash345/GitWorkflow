@@ -28,15 +28,14 @@ Defines the interface for form model
 - [enum](FormModel.md#enum)
 - [enumNames](FormModel.md#enumnames)
 - [events](FormModel.md#events)
-- [expression](FormModel.md#expression)
+- [exclusiveMaximum](FormModel.md#exclusivemaximum)
+- [exclusiveMinimum](FormModel.md#exclusiveminimum)
 - [format](FormModel.md#format)
-- [fracDigits](FormModel.md#fracdigits)
 - [id](FormModel.md#id)
 - [index](FormModel.md#index)
 - [isContainer](FormModel.md#iscontainer)
 - [items](FormModel.md#items)
 - [label](FormModel.md#label)
-- [leadDigits](FormModel.md#leaddigits)
 - [maxFileSize](FormModel.md#maxfilesize)
 - [maxItems](FormModel.md#maxitems)
 - [maxLength](FormModel.md#maxlength)
@@ -56,6 +55,7 @@ Defines the interface for form model
 - [title](FormModel.md#title)
 - [type](FormModel.md#type)
 - [valid](FormModel.md#valid)
+- [validationExpression](FormModel.md#validationexpression)
 - [value](FormModel.md#value)
 - [viewType](FormModel.md#viewtype)
 - [visible](FormModel.md#visible)
@@ -183,13 +183,23 @@ Events is a dictionary of eventName to the actions to perform.
 
 ___
 
-### expression
+### exclusiveMaximum
 
-• `Optional` **expression**: `string`
+• `Optional` **exclusiveMaximum**: `number`
 
 #### Inherited from
 
-[ContainerModel](ContainerModel.md).[expression](ContainerModel.md#expression)
+[ContainerModel](ContainerModel.md).[exclusiveMaximum](ContainerModel.md#exclusivemaximum)
+
+___
+
+### exclusiveMinimum
+
+• `Optional` **exclusiveMinimum**: `number`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[exclusiveMinimum](ContainerModel.md#exclusiveminimum)
 
 ___
 
@@ -200,16 +210,6 @@ ___
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[format](ContainerModel.md#format)
-
-___
-
-### fracDigits
-
-• `Optional` **fracDigits**: `number`
-
-#### Inherited from
-
-[ContainerModel](ContainerModel.md).[fracDigits](ContainerModel.md#fracdigits)
 
 ___
 
@@ -273,19 +273,9 @@ Label to be used for the field.
 
 ___
 
-### leadDigits
-
-• `Optional` **leadDigits**: `number`
-
-#### Inherited from
-
-[ContainerModel](ContainerModel.md).[leadDigits](ContainerModel.md#leaddigits)
-
-___
-
 ### maxFileSize
 
-• `Optional` **maxFileSize**: `number`
+• `Optional` **maxFileSize**: `string` \| `number`
 
 #### Inherited from
 
@@ -488,6 +478,16 @@ The current validation state of the Field. The property is always computed after
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[valid](ContainerModel.md#valid)
+
+___
+
+### validationExpression
+
+• `Optional` **validationExpression**: `string`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[validationExpression](ContainerModel.md#validationexpression)
 
 ___
 

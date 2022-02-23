@@ -46,6 +46,7 @@ Defines a generic container class which any form container should extend from.
 
 - [executeAction](Container.md#executeaction)
 - [getState](Container.md#getstate)
+- [hasDynamicItems](Container.md#hasdynamicitems)
 - [indexOf](Container.md#indexof)
 - [validate](Container.md#validate)
 
@@ -420,6 +421,18 @@ Returns the current container state
 #### Overrides
 
 [Scriptable](Scriptable.md).[getState](Scriptable.md#getstate)
+
+___
+
+### hasDynamicItems
+
+▸ **hasDynamicItems**(): `boolean`
+
+returns whether the items in the Panel can repeat or not
+
+#### Returns
+
+`boolean`
 
 ___
 
