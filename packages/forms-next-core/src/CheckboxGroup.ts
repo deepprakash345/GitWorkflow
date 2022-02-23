@@ -14,11 +14,16 @@ class CheckboxGroup extends Field {
     public constructor(params: FieldJson,
                        _options: { form: FormModel, parent: ContainerModel }) {
         super(params, _options);
-        const type = params.type;
-        const _enum = this.enum.length > 0 ? this.enum[0] : '';
-        const enumType = typeof _enum;
-        if (typeof type !== 'string') {
-            this._jsonModel.type = `${enumType}[]`;
+    }
+
+    /**
+     * converts the fallback type, if required, to an array. Since checkbox-group has an array type
+     * @protected
+     */
+    protected _getFallbackType(): string | undefined {
+        const fallbackType =  super._getFallbackType();
+        if (typeof fallbackType === "string") {
+            return `${fallbackType}[]`
         }
     }
 

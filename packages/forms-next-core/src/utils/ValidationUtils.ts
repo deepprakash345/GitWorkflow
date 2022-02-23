@@ -139,6 +139,7 @@ export const Constraints = {
         switch(constraint) {
             case 'string':
                 valid = true;
+                value = inputVal.toString()
                 break;
             case 'string[]':
                 value = toArray(inputVal);

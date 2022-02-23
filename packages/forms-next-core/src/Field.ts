@@ -37,14 +37,27 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             readOnly: false,
             enabled: true,
             visible: true,
-            type: 'string'
+            type: this._getFallbackType()
         };
+    }
+
+    /**
+     * Returns the fallback type to be used for this field, in case type is not defined. Otherwise returns
+     * undefined
+     * @protected
+     */
+    protected _getFallbackType(): string | undefined {
+        const type = this._jsonModel.type
+        if (typeof type !== "string") {
+            const _enum = this.enum;
+            return _enum && _enum.length > 0 ? typeof _enum[0] : 'string';
+        }
     }
 
     protected _applyDefaults() {
         Object.entries(this._getDefaults()).map(([key, value]) => {
             //@ts-ignore
-            if (this._jsonModel[key] === undefined) {
+            if (this._jsonModel[key] === undefined && value !== undefined) {
                 //@ts-ignore
                 this._jsonModel[key] = value;
             }
