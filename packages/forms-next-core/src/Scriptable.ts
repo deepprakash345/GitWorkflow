@@ -132,6 +132,17 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         }
     }
 
+    executeExpression(expr: string) {
+        const ruleContext = {
+            'form': this.form,
+            '$form': this.form.getRuleNode(),
+            '$field': this.getRuleNode(),
+            'field': this
+        };
+        const node = this.ruleEngine.compileRule(expr)
+        return this.ruleEngine.execute(node, this.getExpressionScope(), ruleContext);
+    }
+
     /**
      * Executes the given action
      * @param action    {@link Action | event object}
@@ -167,15 +178,19 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
      * @param newValue
      * @private
      */
-    _setProperty<T>(prop: string, newValue: T) {
+    _setProperty<T>(prop: string, newValue: T, notify = true) {
         //@ts-ignore
         const oldValue = this._jsonModel[prop];
         if (oldValue !== newValue) {
-            const changeAction = propertyChange(prop, newValue, oldValue);
             //@ts-ignore
             this._jsonModel[prop] = newValue;
-            this.notifyDependents(changeAction);
+            const changeAction = propertyChange(prop, newValue, oldValue);
+            if (notify) {
+                this.notifyDependents(changeAction);
+            }
+            return changeAction.payload.changes;
         }
+        return []
     }
 }
 

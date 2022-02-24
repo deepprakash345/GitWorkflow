@@ -76,6 +76,7 @@ const blurJson = {
         }]
 }
 
+
 const template: ComponentStory<typeof AdaptiveForm> = (args) => (
     <Spectrum3Provider theme={defaultTheme}>
         <AdaptiveForm mappings={mappings} formJson={args.formJson} />

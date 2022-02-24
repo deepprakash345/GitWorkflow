@@ -120,7 +120,7 @@ validationExpression.args = {formJson: {
             label: {
                 value: 'Enter a number'
             },
-            validationExpression: "value < field2 * field 2",
+            validationExpression: "value < field2 * field2",
             description: 'The value must be less than the square of value in field 2'
         }, {
             viewType: 'text-input',

@@ -1,7 +1,7 @@
 import {create} from '../collateral';
 import {Action, BaseModel, createFormInstance, FieldModel, FormModel} from '../../src';
-import {FieldJson} from '../../src/types';
-import {Change, Click, CustomEvent, propertyChange} from '../../src/controller/Controller';
+import {FieldJson} from '../../src';
+import {Change, Click, CustomEvent, propertyChange} from '../../src';
 import RuleEngine from '../../src/rules/RuleEngine';
 import Form from '../../src/Form';
 
