@@ -5,7 +5,7 @@ import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectr
 import mappings from '../../../src/utils/mappings';
 import { action } from '@storybook/addon-actions';
 import {Action} from "@aemforms/crispr-core/lib";
-import {base} from "../template";
+import {base} from "../../template";
 
 const visibleExample = [
     {

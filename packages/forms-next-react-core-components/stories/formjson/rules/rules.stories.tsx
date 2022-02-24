@@ -6,7 +6,7 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import rules from './rules.mdx';
 import mappings from '../../../src/utils/mappings';
-import {base} from "../template";
+import {base} from "../../template";
 import formJson from "../../rules/json";
 
 /**

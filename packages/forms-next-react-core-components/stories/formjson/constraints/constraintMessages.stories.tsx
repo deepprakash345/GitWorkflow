@@ -9,7 +9,7 @@ import minValueForm2 from '../../../../../docs/examples/constraints/minimumError
 import maxValueForm2 from '../../../../../docs/examples/constraints/maxValueErrorMessage.form.json';
 import patternForm from '../../../../../docs/examples/constraints/patternMessage.form.json';
 import formatForm from '../../../../../docs/examples/constraints/formatMessage.form.json';
-import {base} from "../template";
+import {base} from "../../template";
 
 export default {
     title: 'Crispr/JSON/Constraints/Messages',

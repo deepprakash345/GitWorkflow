@@ -3,7 +3,7 @@ import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import {base} from "../template";
+import {base} from "../../template";
 
 export default {
     title: 'Crispr/JSON/Constraints/minItems',

@@ -5,7 +5,7 @@ import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectr
 import mappings from '../../../src/utils/mappings';
 import {Action} from "@aemforms/crispr-core/lib";
 import { action } from '@storybook/addon-actions';
-import {base} from "../template";
+import {base} from "../../template";
 
 const textInputExample = {
     "name" : "field",

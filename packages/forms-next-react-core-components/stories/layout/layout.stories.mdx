@@ -1,0 +1,23 @@
+import {Meta, Story} from '@storybook/addon-docs';
+import {AdaptiveForm} from '@aemforms/crispr-react-bindings';
+import {mappings} from '../../src';
+import {argTypes, decorator} from "../template";
+
+export const Template = (args) => <AdaptiveForm mappings={mappings} formJson={args.formJson} />
+
+<Meta title="Crispr/Chapter 2: Form layout" component={AdaptiveForm}
+      viewMode="docs"
+      argTypes={
+          argTypes
+      }
+      decorators={[
+          decorator
+      ]}/>
+
+# Form Components
+
+The Form specification provides different field types which are represented using the
+[viewType](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-viewType) property in
+the JSON
+
+## Text Field

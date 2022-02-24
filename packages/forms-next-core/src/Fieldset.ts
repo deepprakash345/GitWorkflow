@@ -19,15 +19,14 @@ export const createChild = (child: FieldsetJson | FieldJson, options: {form: For
   if ('items' in child) {
     retVal = new Fieldset(child as FieldsetJson, options);
   } else {
-    if (isFile(child)) {
+    if (isFile(child) || child.viewType === 'file-input') {
       // @ts-ignore
       retVal = new FileUpload(child as FieldJson, options);
     } else if (isCheckbox(child)) {
       retVal = new Checkbox(child, options);
     } else if (isCheckboxGroup(child)) {
       retVal = new CheckboxGroup(child, options);
-    }
-    else  {
+    } else  {
       retVal = new Field(child as FieldJson, options);
     }
   }

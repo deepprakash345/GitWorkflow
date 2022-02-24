@@ -6,9 +6,10 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  layout: 'padded',
   options: {
     storySort : {
-      order : ['Form JSON', ['Properties', ['name', 'label', 'description', 'viewType', 'enum', "*"]],'*']
+      order : ['Crispr', ['Introduction', 'Form Components', ['Button', 'TextField']]]
     }
   }
 }

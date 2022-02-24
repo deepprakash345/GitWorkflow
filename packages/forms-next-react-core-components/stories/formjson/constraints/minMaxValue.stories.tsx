@@ -9,7 +9,7 @@ import minLengthForm from '../../../../../docs/examples/constraints/minLength.fo
 import maxLengthForm from '../../../../../docs/examples/constraints/maxLength.form.json';
 import exactLengthForm from '../../../../../docs/examples/constraints/exactLength.form.json';
 import patternForm from '../../../../../docs/examples/constraints/pattern.form.json';
-import {base} from "../template";
+import {base} from "../../template";
 
 export default {
     title: 'Crispr/JSON/Constraints',
