@@ -15,6 +15,8 @@ Implementation of check box runtime model which extends from [field](Field.md) m
 - [change](Checkbox.md#change)
 - [dispatch](Checkbox.md#dispatch)
 - [executeAction](Checkbox.md#executeaction)
+- [executeExpression](Checkbox.md#executeexpression)
+- [getErrorMessage](Checkbox.md#geterrormessage)
 - [getState](Checkbox.md#getstate)
 - [importData](Checkbox.md#importdata)
 - [toString](Checkbox.md#tostring)
@@ -30,6 +32,7 @@ Implementation of check box runtime model which extends from [field](Field.md) m
 - [enum](Checkbox.md#enum)
 - [enumNames](Checkbox.md#enumnames)
 - [form](Checkbox.md#form)
+- [format](Checkbox.md#format)
 - [id](Checkbox.md#id)
 - [index](Checkbox.md#index)
 - [isContainer](Checkbox.md#iscontainer)
@@ -111,15 +114,57 @@ Executes the given action
 
 ___
 
+### executeExpression
+
+▸ **executeExpression**(`expr`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expr` | `string` |
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+[Field](Field.md).[executeExpression](Field.md#executeexpression)
+
+___
+
+### getErrorMessage
+
+▸ **getErrorMessage**(`constraint`): `string`
+
+Returns the error message for a given constraint
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `constraint` | keyof [`ConstraintsMessages`](../README.md#constraintsmessages) |
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+[Field](Field.md).[getErrorMessage](Field.md#geterrormessage)
+
+___
+
 ### getState
 
-▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
 
 [state](../README.md#state) of the form object
 
 #### Returns
 
-`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
+`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
 
 #### Inherited from
 
@@ -326,6 +371,22 @@ ___
 #### Inherited from
 
 Field.form
+
+___
+
+### format
+
+• `get` **format**(): `string`
+
+returns the format constraint
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+Field.format
 
 ___
 

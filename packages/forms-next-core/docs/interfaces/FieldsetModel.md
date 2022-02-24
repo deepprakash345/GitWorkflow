@@ -51,6 +51,7 @@ Defines properties that each field set should have
 - [readOnly](FieldsetModel.md#readonly)
 - [required](FieldsetModel.md#required)
 - [rules](FieldsetModel.md#rules)
+- [step](FieldsetModel.md#step)
 - [type](FieldsetModel.md#type)
 - [valid](FieldsetModel.md#valid)
 - [validationExpression](FieldsetModel.md#validationexpression)
@@ -427,6 +428,16 @@ Rules that modify the property of the object dynamically. The rules are evaluate
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[rules](ContainerModel.md#rules)
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[step](ContainerModel.md#step)
 
 ___
 

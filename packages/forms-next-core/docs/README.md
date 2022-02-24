@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.31
+# @aemforms/crispr-core - v0.6.32
 
 ## Table of contents
 
@@ -109,7 +109,7 @@ ___
 
 ### ConstraintsJson
 
-Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `number` \| `string` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  }
+Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `number` \| `string` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  }
 
 Type for `constraint properties` based on `crispr form specification`
 
@@ -139,6 +139,7 @@ Type for `constraint messages` based on `crispr form specification`
 | `minimum?` | `string` |
 | `pattern?` | `string` |
 | `required?` | `string` |
+| `step?` | `string` |
 | `type?` | `string` |
 | `validationExpression?` | `string` |
 

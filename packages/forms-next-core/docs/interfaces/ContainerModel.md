@@ -55,6 +55,7 @@ Defines properties that each container should have
 - [readOnly](ContainerModel.md#readonly)
 - [required](ContainerModel.md#required)
 - [rules](ContainerModel.md#rules)
+- [step](ContainerModel.md#step)
 - [type](ContainerModel.md#type)
 - [valid](ContainerModel.md#valid)
 - [validationExpression](ContainerModel.md#validationexpression)
@@ -430,6 +431,16 @@ Rules that modify the property of the object dynamically. The rules are evaluate
 #### Inherited from
 
 [ScriptableField](ScriptableField.md).[rules](ScriptableField.md#rules)
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[step](BaseModel.md#step)
 
 ___
 

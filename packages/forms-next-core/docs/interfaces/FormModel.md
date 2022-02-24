@@ -52,6 +52,7 @@ Defines the interface for form model
 - [readOnly](FormModel.md#readonly)
 - [required](FormModel.md#required)
 - [rules](FormModel.md#rules)
+- [step](FormModel.md#step)
 - [title](FormModel.md#title)
 - [type](FormModel.md#type)
 - [valid](FormModel.md#valid)
@@ -448,6 +449,16 @@ Rules that modify the property of the object dynamically. The rules are evaluate
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[rules](ContainerModel.md#rules)
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[step](ContainerModel.md#step)
 
 ___
 

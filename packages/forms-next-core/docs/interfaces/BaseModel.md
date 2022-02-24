@@ -53,6 +53,7 @@ Defines common properties that each form field should have
 - [props](BaseModel.md#props)
 - [readOnly](BaseModel.md#readonly)
 - [required](BaseModel.md#required)
+- [step](BaseModel.md#step)
 - [type](BaseModel.md#type)
 - [valid](BaseModel.md#valid)
 - [validationExpression](BaseModel.md#validationexpression)
@@ -339,6 +340,16 @@ ___
 #### Inherited from
 
 ConstraintsJson.required
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+ConstraintsJson.step
 
 ___
 

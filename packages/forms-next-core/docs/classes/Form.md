@@ -38,6 +38,7 @@ Defines `form model` which implements [form model](../interfaces/FormModel.md)
 
 ### Methods
 
+- [executeExpression](Form.md#executeexpression)
 - [exportData](Form.md#exportdata)
 - [getElement](Form.md#getelement)
 - [getState](Form.md#getstate)
@@ -444,6 +445,26 @@ Container.visible
 
 ## Methods
 
+### executeExpression
+
+▸ **executeExpression**(`expr`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expr` | `string` |
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+[Container](Container.md).[executeExpression](Container.md#executeexpression)
+
+___
+
 ### exportData
 
 ▸ **exportData**(): `any`
@@ -484,7 +505,7 @@ ___
 
 ### getState
 
-▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
 Returns the current state of the form
 
@@ -497,7 +518,7 @@ const attachments = form.getState().attachments
 
 #### Returns
 
-`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & { `initialItems?`: `number` ; `items`: ([`ContainerJson`](../README.md#containerjson) \| [`FieldJson`](../README.md#fieldjson))[]  } & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](../README.md#metadatajson) ; `title?`: `string`  } & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
 
 #### Implementation of
 

@@ -54,6 +54,7 @@ Defines properties that each form field should have
 - [readOnly](FieldModel.md#readonly)
 - [required](FieldModel.md#required)
 - [rules](FieldModel.md#rules)
+- [step](FieldModel.md#step)
 - [type](FieldModel.md#type)
 - [valid](FieldModel.md#valid)
 - [validationExpression](FieldModel.md#validationexpression)
@@ -429,6 +430,16 @@ Rules that modify the property of the object dynamically. The rules are evaluate
 #### Inherited from
 
 [ScriptableField](ScriptableField.md).[rules](ScriptableField.md#rules)
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[step](BaseModel.md#step)
 
 ___
 

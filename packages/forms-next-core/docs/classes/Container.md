@@ -45,6 +45,7 @@ Defines a generic container class which any form container should extend from.
 ### Methods
 
 - [executeAction](Container.md#executeaction)
+- [executeExpression](Container.md#executeexpression)
 - [getState](Container.md#getstate)
 - [hasDynamicItems](Container.md#hasdynamicitems)
 - [indexOf](Container.md#indexof)
@@ -405,6 +406,26 @@ Executes the given action
 #### Inherited from
 
 [Scriptable](Scriptable.md).[executeAction](Scriptable.md#executeaction)
+
+___
+
+### executeExpression
+
+▸ **executeExpression**(`expr`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expr` | `string` |
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+[Scriptable](Scriptable.md).[executeExpression](Scriptable.md#executeexpression)
 
 ___
 

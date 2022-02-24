@@ -46,6 +46,7 @@ execution of rules/events should extend from this class.
 - [defaultDataModel](Scriptable.md#defaultdatamodel)
 - [dispatch](Scriptable.md#dispatch)
 - [executeAction](Scriptable.md#executeaction)
+- [executeExpression](Scriptable.md#executeexpression)
 - [getState](Scriptable.md#getstate)
 - [importData](Scriptable.md#importdata)
 - [validate](Scriptable.md#validate)
@@ -335,6 +336,22 @@ Executes the given action
 #### Overrides
 
 [BaseNode](BaseNode.md).[executeAction](BaseNode.md#executeaction)
+
+___
+
+### executeExpression
+
+▸ **executeExpression**(`expr`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expr` | `string` |
+
+#### Returns
+
+`any`
 
 ___
 
