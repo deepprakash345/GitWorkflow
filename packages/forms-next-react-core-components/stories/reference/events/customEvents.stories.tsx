@@ -8,6 +8,9 @@ import {base, decorator} from "../../template";
 export default {
     title: 'Reference/JSON/events/custom',
     decorators: [decorator],
+    parameters : {
+        highlights: ["items.0.events", "items.1.events"]
+    },
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
@@ -36,6 +39,7 @@ const dispatchJson = {
         }
     }]
 }
+
 
 const payloadJson = {
     ...base,
