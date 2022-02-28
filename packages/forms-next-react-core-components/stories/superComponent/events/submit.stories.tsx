@@ -7,7 +7,7 @@ import jsonform from '../../example/json';
 import { action } from '@storybook/addon-actions';
 import {Action} from '@aemforms/crispr-core';
 export default {
-    title: 'Crispr/SuperComponent/events',
+    title: 'Reference/Component/events',
     component: AdaptiveForm,
     decorators : [(Story) => {
         return (<Spectrum3Provider theme={defaultTheme}>

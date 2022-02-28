@@ -73,7 +73,7 @@ export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
 
 export const enumToChildConvertor = (Component: JSXElementConstructor<any>) =>  {
     return enumConvertor('children', (text, value) => {
-        return <Component key={value} value={value}>{text}</Component>;
+        return <Component key={value} value={value}>{text + ""}</Component>;
     });
 };
 

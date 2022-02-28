@@ -7,6 +7,7 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
+    '@storybook/addon-a11y',
     {
       name: '@storybook/addon-storysource',
       options: {
@@ -28,6 +29,5 @@ module.exports = {
         }
       }
     },
-    '@storybook/addon-a11y'
   ]
 }

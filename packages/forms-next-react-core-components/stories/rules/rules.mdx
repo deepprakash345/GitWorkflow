@@ -1,0 +1,65 @@
+import { Canvas, Story } from "@storybook/addon-docs";
+
+
+# Rules
+
+Crispr Form allows changing the properties of a field dynamically using
+[JSON Formula](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_expression_grammar) expressions.
+
+Every field has a [rules](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_rules)
+property which is an object where the key is the name of the property with the value as a
+valid JSON Formula expression that gets computed dynamically whenever the value of the fields used in the expression
+change.
+
+For example, the below JSON will produce two fields `fieldA` and `fieldB` and whenver a user enters the value in
+`fieldA`, the value of `fieldB` will become the square of the value of fieldA
+```json
+{
+"items": [
+    {
+      "name" : "fieldA",
+      "type" : "number"
+    },
+    {
+      "name" :"fieldB",
+      "rules" : {
+         "value" : "fieldA * fieldA"
+      }
+    }
+]
+}
+```
+
+
+## Computing First Name based on First Name and Last Name
+<Story id="crispr-dynamic-properties--value" />
+
+## Setting options dynamically
+Options can be set dynamically using rules.
+They can be set based on the value of some other field
+
+<Story id="crispr-dynamic-properties--options" />
+
+Or, can be fetched from a server
+
+<Story id="reference-json-events-custom--fetch-data" />
+
+
+## Making a field readonly
+The [readOnly](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-readOnly) property
+can be updated dynamically
+
+<Story id="crispr-dynamic-properties--read-only" />
+
+And similarly other dynamic properties like enabled, label, etc can be modified using rules
+
+
+## Conditionally Optional Fields
+
+A common use case in forms, is to show/hide a field or make the optional depending upon the data entered in other
+fields. Using rules, one can achieve that by making `required` or `visible` property dynamic
+
+<Story id="crispr-dynamic-properties--required" />
+
+<Story id="crispr-dynamic-properties--visible" />
+

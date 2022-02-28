@@ -7,7 +7,7 @@ import jsonform from '../../example/json';
 import React, {useState} from 'react';
 import produce from 'immer';
 export default {
-    title: 'Crispr/SuperComponent/properties',
+    title: 'Reference/Component/props',
     component: AdaptiveForm,
     decorators : [(Story) => {
         return (<Spectrum3Provider theme={defaultTheme}>

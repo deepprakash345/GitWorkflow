@@ -43,7 +43,8 @@ class FileUpload extends Field implements FieldModel {
         return {
             ...super._getDefaults(),
             accept : ['audio/*', 'video/*', 'image/*', 'text/*', 'application/pdf'],
-            maxFileSize : '2MB'
+            maxFileSize : '2MB',
+            type: 'file'
         }
     }
 

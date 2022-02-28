@@ -20,7 +20,7 @@ const mapper = combineConvertors(baseConvertor,
     (a, b) => {
         return {
             onSelectionChange: b.dispatchChange,
-            selectedKey: a.value
+            selectedKey: a.value != null ? a.value + "": a.value
         };
     });
 
