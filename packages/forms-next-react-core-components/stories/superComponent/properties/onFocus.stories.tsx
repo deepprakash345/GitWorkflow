@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import jsonform from '../../example/json';
 import React, {useState} from 'react';
 export default {
-    title: 'Crispr/SuperComponent/properties',
+    title: 'Reference/Component/props',
     component: AdaptiveForm,
     decorators : [(Story) => {
         return (<Spectrum3Provider theme={defaultTheme}>

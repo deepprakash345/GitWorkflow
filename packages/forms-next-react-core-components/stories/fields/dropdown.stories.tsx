@@ -5,7 +5,7 @@ import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectr
 import {mappings} from '../../src';
 import {decorator, logAction} from "../template";
 import {examples} from "./json";
-import documentation from './doc/chapter1.mdx'
+import documentation from './documentation.mdx'
 
 export default {
     title: 'Crispr/Form Components/DropDown',

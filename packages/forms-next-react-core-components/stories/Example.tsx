@@ -4,15 +4,11 @@ import {Provider as Spectrum3Provider, defaultTheme} from '@adobe/react-spectrum
 import ReactJson from 'react-json-view'
 import {useState} from "react";
 import {Code} from "./Code";
-const Example = ({Component, args}) => {
-    const [data, setData] = useState(null)
+
+const Example = ({children, args, highlights, data}) => {
     const json = args.formJson
-    const wrapSubmit = (action) => {
-        setData(action.target.exportData())
-    }
     const callbacks = Object.keys(args).filter(x => x.startsWith('on'))
-    return (<Spectrum3Provider theme={defaultTheme}>
-        <Tabs>
+    return (<Tabs>
             <TabList>
                 <Item key="form">HTML</Item>
                 <Item key="json">Form.json</Item>
@@ -20,18 +16,17 @@ const Example = ({Component, args}) => {
             </TabList>
             <TabPanels>
                 <Item  key="json">
-                    <PrettyJson json={json} />
+                    <PrettyJson json={json} highlights={highlights}/>
                 </Item>
                 <Item key="code">
                     <Code json={json} callbacks={callbacks}/>
                 </Item>
                 <Item key="form">
-                    <Component args={{...args, onSubmit: args.onSubmit ? wrapSubmit : undefined}}/>
-                    {data == null ? null: (<><h2>Data</h2><PrettyJson json={data} /></>)}
+                    {children}
+                    {data == null ? null: (<><h4>Data</h4><PrettyJson json={data} highlights={[]}/></>)}
                 </Item>
             </TabPanels>
-        </Tabs>
-    </Spectrum3Provider>)
+        </Tabs>)
 }
 
 export default Example

@@ -1,15 +1,13 @@
-import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
-import { ComponentStory } from '@storybook/react';
-import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
-import mappings from '../src/utils/mappings';
-import { action } from '@storybook/addon-actions';
+import {Provider as Spectrum3Provider, defaultTheme} from '@adobe/react-spectrum';
+import {action} from '@storybook/addon-actions';
 import {Action} from '@aemforms/crispr-core';
 import Example from "./Example";
+import React, {useState} from "react";
 
 //@ts-ignore
 export const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
 
-export const logAction = (name:string) => (e: Action) => action(name)(e.target.exportData());
+export const logAction = (name: string) => (e: Action) => action(name)(e.target.exportData());
 
 export const base = {
     'adaptiveform': '0.0.17-pre',
@@ -19,12 +17,47 @@ export const base = {
     }
 }
 
+
+export const form = (...items) => {
+    return {
+        ...base,
+        items
+    }
+}
+
+export const formWithSubmit = (...items) => {
+    return form(...[...items, submitButton()])
+}
+
+
+export const submitButton = (label = "Submit") => {
+    return {
+        viewType: 'button',
+        label: {
+            value: "Submit"
+        },
+        'events': {"click": "submit_form()"}
+    }
+}
+
+
 export const decorator = (Story, context) => {
     const {args, viewMode} = context
-    console.log(context)
+    const highlights = context.parameters.highlights;
+
+    const [data, setData] = useState(null)
+
+    const wrapSubmit = (action) => {
+        setData(action.target.exportData())
+    }
+
     return (<Spectrum3Provider theme={defaultTheme}>
-        {args.wrap === false || viewMode === "story" ? <Story /> :
-            (<Example args={args} Component={Story} />)}
+        {viewMode === "story" ? <Story/> :
+            (<Example args={args} highlights={highlights} data={data}>
+                <div key="story">
+                    <Story args={{...args, onSubmit: wrapSubmit}}/>
+                </div>
+            </Example>)}
     </Spectrum3Provider>)
 }
 

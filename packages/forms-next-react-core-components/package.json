@@ -29,7 +29,7 @@
     "test-ci": "jest --silent --coverage",
     "prepublishOnly": "npm run build && npm run test",
     "test": "jest --silent",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploye-storybook": "gh-pages -d storybook-static -e story"
   },

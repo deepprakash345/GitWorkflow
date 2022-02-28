@@ -1,4 +1,4 @@
-import {base} from "../../template";
+import {form, formWithSubmit} from "../../template";
 
 export const inputViewTypes = [
     'text-input',
@@ -14,25 +14,12 @@ export const optionsViewTypes = [
     'checkbox-group'
 ]
 
-
 const basic = {
     'label' : {
         'value' : 'Field'
     },
     'name' : 'field'
 };
-
-const form = (...items) => {
-    return {
-        ...base,
-        items
-    }
-}
-
-const formWithSubmit = (...items) => {
-    return form(...[...items, submitButton()])
-}
-
 
 const component = (viewType, extras: any = {}, label = undefined, description= undefined) => {
     return {
@@ -46,15 +33,10 @@ const component = (viewType, extras: any = {}, label = undefined, description= u
     }
 }
 
-export const submitButton = (label = "Submit") => {
-    return component('button', {'events' : {"click" : "submit_form()"}}, "Submit")
-}
-
-
 //@ts-ignore
 const data = Object.fromEntries(inputViewTypes.concat(optionsViewTypes).map(x => {
     const isInput = inputViewTypes.indexOf(x) > -1
-    const obj = isInput ? {} : {enum: [1, 2, 3]}
+    const obj = isInput ? {} : {enum: ["1", "2", "3"]}
     return [x, formWithSubmit(component(x, obj))]
 }))
 
@@ -65,8 +47,8 @@ const additional = {
     'checkbox-group-single': formWithSubmit(component('checkbox-group', {type: 'number', enum: [1, 2, 3]})),
     button : form(component('button', {label: {value: 'click me'}})),
     "plain-text" : form(component('plain-text', {value: 'This is a plain text'})),
-    "text-input-number" : formWithSubmit(component('text-input', {type: 'number'}, 'Number Text Field', 'Enter only numbers')),
-    "text-input-date" : formWithSubmit(component('text-input', {type: 'string', format: 'date'}, 'Number Date Field', 'Enter date (yyyy-mm-dd)')),
+    "text-input-number" : formWithSubmit(component('text-input', {type: 'number'}, 'Text Field for Number', 'Enter only numbers')),
+    "text-input-date" : formWithSubmit(component('text-input', {type: 'string', format: 'date'}, 'Text Field for Date', 'Enter date (yyyy-mm-dd)')),
     "drop-down-enumNames": formWithSubmit(component('drop-down', {enum: [1, 2, 3], enumNames: ['Apple', 'Orange', 'Guava']}))
 }
 

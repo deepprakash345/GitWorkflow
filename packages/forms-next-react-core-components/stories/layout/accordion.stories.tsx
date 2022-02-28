@@ -1,0 +1,26 @@
+import {ComponentMeta} from '@storybook/react';
+import {AdaptiveForm} from '@aemforms/crispr-react-bindings';
+import {ComponentStory} from '@storybook/react';
+import {mappings} from '../../src';
+import {decorator} from "../template";
+import documentation from "./documentation.mdx"
+import layouts from './json';
+
+export default {
+    title: 'Crispr/Form Layouts/Accordion',
+    component: AdaptiveForm,
+    decorators: [decorator],
+    parameters: {
+        docs: {
+            page: documentation
+        }
+    }
+} as ComponentMeta<typeof AdaptiveForm>;
+
+const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
+    <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit}/>
+);
+
+export const def = Template.bind({});
+def.storyName = "Accordion";
+def.args = {formJson: layouts.accordionJson }

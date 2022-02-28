@@ -4,7 +4,7 @@ import {ComponentStory} from '@storybook/react';
 import {Provider as Spectrum3Provider, defaultTheme} from '@adobe/react-spectrum';
 import {mappings} from '../../src';
 import {decorator, logAction} from "../template";
-import documentation from './doc/chapter1.mdx'
+import documentation from './documentation.mdx'
 import {examples} from "./json";
 
 export default {
@@ -25,6 +25,12 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 export const def = Template.bind({});
 def.storyName="Default"
 def.args={formJson:examples['checkbox-group'], onSubmit : logAction('data')}
+def.parameters = {
+    highlights : ['items.0.enum']
+}
 
 export const singleSelection = Template.bind({});
 singleSelection.args={formJson:examples['checkbox-group-single'], onSubmit : logAction('data')}
+singleSelection.parameters = {
+    highlights : ['items.0.type']
+}

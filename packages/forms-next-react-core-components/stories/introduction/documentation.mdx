@@ -1,0 +1,117 @@
+import {Story} from '@storybook/addon-docs';
+
+# What is Crispr
+
+Crispr Form specifies a mechanism to create a Form or Data Capture Experience using a JSON representation,
+which allows rendering that experience across multiple channels.
+
+The Crispr Form Specification can be used by implementors to generate a visual appearance for the
+Data Capture Experience in the choice of their language.
+
+# Crispr Modules
+
+The Crispr is mainly made up of these components
+
+* A Specification that details how a form with its dynamic behaviour can be represented in JSON.
+* A Core Library (@aemforms/crispr-core) that understands the dynamic behaviour and manipulates the state of the Form
+* An Adaptive Form Super Component that takes the form json and renders it using react spectrum components.
+
+# Getting Started
+
+To Render an Adaptive Form using the Super Component there are two prerequisites
+
+## Form JSON
+
+One needs to define The Form in JSON as per the
+[Crispr Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/).
+
+## Mappings Object
+
+A Mappings Object is a JavaScript map that maps the
+[field types](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-viewType)
+defined in the Crispr Specificationto its respective React Component. The Adaptive Form Super Component
+uses this map to render the different components defined in the Form JSON.
+
+The default mappings can be found in
+[git](https://git.corp.adobe.com/livecycle/af2-web-runtime/blob/main/packages/forms-next-react-core-components/src/utils/mappings.ts)
+
+To use that in your project use the following import, assuming you have added the project as a dependency in your project
+
+```
+import {mappings} from '@aemforms/crispr-react-core-components'
+```
+
+Once you have defined the JSON for the form, the code would look like
+
+```
+import {mappings} from '@aemforms/crispr-react-core-components'
+const json = {...}
+<AdaptiveForm mappings={mappings} formJson={json} />
+```
+
+# Examples
+
+A simple one field form will have the following representation
+
+<Story id="crispr-introduction--introduction" />
+
+
+Additional capabilities including submission and multiple fields can be added in the JSON itself. The data can be
+extracted out at submit using the callbacks provided by the Adaptive Form Super Component
+
+<Story id="crispr-introduction--form-data" />
+
+
+The Form can also generate a hierarchical data
+
+<Story id="crispr-introduction--nested-data" />
+
+
+# How to read the storybook
+
+The storybook demonstrates the properties of the JSON specification and the capabilities that the super component adds
+on.
+
+The storybook is divided into different chapters
+
+## Chapter 1. Form Fields and Panels
+
+The chapter deals with different types of fields in the form and how they can be defined and what capabilities they
+provide. There are two types of components in the Form: Fields and Panels.
+
+A Field is the unit entity in the Crispr Form Document and is represented as a JSON Object.
+A field can specify one or more of,
+
+* constraints on the data they capture,
+* dynamic rules to change their state they have including visibility, enabled, etc.,
+* label, help text, etc.,
+* handling of any events that can be performed by the end user, like click, change etc.
+
+A Form Panel is an entity to group a set of fields logically (to create a complex data type) or visually.
+
+## Chapter 2. Form Layouts
+
+The Panels in addition to group fields, can also be used to provide a layout to the form as well. The second chapter
+deals with the different kind of layout, that
+
+Note that layout is not defined in the Crispr Form Specification, but is extended by the Adaptive Form Super Component
+to provide basic layout capabilities
+
+## Chapter 3. Form Validation
+
+A user can specify multiple constraints in the fields and those constraints are validated whenever the user is entering
+the data in the field.
+
+## Chapter 4. Dynamic Behaviour
+
+A Form can have a dynamic behaviour, which may include (and the list is not exhaustive)
+
+* Spouse Name is mandatory if the Marital Status is married
+* Show/Enable the submit button only if user agrees to the Terms of the Document
+* Compute Total Field in the purchase order form as user enters details.
+* Uppercase the values when the user exits from a field
+* Allow adding dependent information for the number of dependents user has chosen
+
+## Chapter 5. Adaptive Form Super Component Capabilities
+
+## Chapter 6. Advanced Usage
