@@ -20,7 +20,7 @@ const form = {
     ...base,
     items: [
         {
-            viewType: 'panel',
+            fieldType: 'panel',
             name: "selection",
             label: {
                 value: 'Choose unique items'
@@ -29,7 +29,7 @@ const form = {
             uniqueItems: true,
             items : [
                 {
-                    viewType: 'checkbox-group',
+                    fieldType: 'checkbox-group',
                     label: {
                         value: 'select an item'
                     },

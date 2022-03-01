@@ -17,8 +17,8 @@ export type Label = {
 
 /** Type for `constraint properties` which can be translated based on `crispr form specification` */
 type TranslationConstraintsJson = {
-    'enumNames'?: string[];
-    'enum'?: any[];
+    enumNames?: string[];
+    enum?: any[];
 }
 
 /** Type for `constraint properties` based on `crispr form specification` */
@@ -69,58 +69,59 @@ export type ConstraintsMessages = {
 
 /** Type for `constraint messages` based on `crispr form specification` */
 export type RulesJson = {
-    'rules' ?: Items<string>
-    'events' ?: Items<string[]|string|undefined>
+    rules ?: Items<string>
+    events ?: Items<string[]|string|undefined>
 }
 
 /** Type for `generic form properties` which can be translated based on `crispr form specification` */
 type TranslationBaseJson = {
-    'description'?: string
+    description ?: string
 }
 
 
 /** Type for `generic form properties` based on `crispr form specification` */
 export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     dataRef?: string | null;
+    ':type'?:string
     label?: Label
-    'enabled'?: boolean;
-    'visible'?: boolean;
-    'name'?: string;
-    'constraintMessages'?: ConstraintsMessages;
-    'viewType'?: string
-    'errorMessage'?: string
+    enabled?: boolean;
+    visible?: boolean;
+    name?: string;
+    constraintMessages?: ConstraintsMessages;
+    fieldType?: string
+    errorMessage?: string
+    properties?: {
+        [key: string] : any
+    }
 }
 
 /** Type for `form field properties`which can be translated based on `crispr form specification` */
 type TranslationFieldJson = {
-    'placeholder'?: string
+    placeholder?: string
 }
 
 
 /** Type for `form field properties` based on `crispr form specification` */
 export type FieldJson = BaseJson & TranslationFieldJson & {
-    'readOnly'?: boolean;
-    'valid'?: boolean
-    'default'?: any
-    'value'?: any
-    'multiline'?: boolean;
-    'props'?: {
-        [key: string]: any;
-    }
+    readOnly?: boolean;
+    valid?: boolean
+    default?: any
+    value?: any
+    multiline?: boolean;
     emptyValue?: 'null'|'undefined'|''
 }
 
 /** Type for `form container properties` based on `crispr form specification` */
 export type ContainerJson = BaseJson & {
-    'items': Array<FieldJson | ContainerJson>
-    'initialItems'?: number;
+    items: Array<FieldJson | ContainerJson>
+    initialItems?: number;
 }
 
 /** Type for `form metadata` based on `crispr form specification` */
 export type MetaDataJson = {
-    'version'?: string
-    'grammar'?: string
-    'locale'?: string
+    version?: string
+    grammar?: string
+    locale?: string
 }
 
 /** Type for `form fieldset` based on `crispr form specification` */
@@ -130,8 +131,8 @@ export type FieldsetJson = ContainerJson & {
 
 /** Type for `form model` based on `crispr form specification` */
 export type FormJson = ContainerJson & {
-    'metadata'?: MetaDataJson,
-    'data'?: any
+    metadata?: MetaDataJson,
+    data?: any
     title?: string
     action ?: string,
     adaptiveForm?: string

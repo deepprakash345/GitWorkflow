@@ -18,7 +18,7 @@ const generate = (t = "text-input", extras = {}) => {
             },
             'description': 'This field is disabled',
             'enabled' : false,
-            viewType: t,
+            fieldType: t,
             ...extras
         }
     ]}

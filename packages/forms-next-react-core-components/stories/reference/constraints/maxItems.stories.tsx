@@ -28,7 +28,7 @@ const form = {
     ...base,
     items: [
         {
-            viewType: 'checkbox-group',
+            fieldType: 'checkbox-group',
             label: {
                 value: 'select at most 3'
             },
@@ -38,7 +38,7 @@ const form = {
             maxItems : 3
         },
         {
-            "viewType": "button",
+            "fieldType": "button",
             "label": {
                 "value": "submit"
             },
@@ -53,7 +53,7 @@ const form2 = {
     ...base,
     items: [
         {
-            viewType: 'panel',
+            fieldType: 'panel',
             "name": "selection",
             label: {
                 value: 'Choose at most 3 items'
@@ -62,7 +62,7 @@ const form2 = {
             maxItems: 3,
             items : [
                 {
-                    viewType: 'checkbox-group',
+                    fieldType: 'checkbox-group',
                     label: {
                         value: 'select an item'
                     },
@@ -73,7 +73,7 @@ const form2 = {
             ]
         },
         {
-            "viewType": "button",
+            "fieldType": "button",
             "label": {
                 "value": "submit"
             },

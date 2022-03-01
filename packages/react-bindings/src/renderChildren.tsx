@@ -13,7 +13,7 @@ export const renderChildren = function <P extends ContainerJson>(props: State<P>
         const children = props.items;
         return (
                 children.map((child: any) => {
-                    const Comp = mappings?.[child.viewType];
+                    const Comp = mappings?.[child[':type']];
                     if (Comp === undefined) {
                         return <div><h4>Undefined Element</h4>
                             <pre>{JSON.stringify(child, null, 2)}</pre>

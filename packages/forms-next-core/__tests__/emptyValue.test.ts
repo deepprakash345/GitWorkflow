@@ -2,7 +2,7 @@ import {createFormInstance} from "../lib";
 
 
 const undefinedEmptyValue = {
-    viewType: 'text-input',
+    fieldType: 'text-input',
     type: "string",
     "name" : "field",
     label: {

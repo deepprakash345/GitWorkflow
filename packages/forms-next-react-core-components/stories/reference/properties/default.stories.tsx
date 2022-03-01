@@ -12,7 +12,7 @@ const defaultString = [{
         value : 'Text Field'
     },
     'default': 'Default Value',
-    'viewType' : 'text-input'
+    'fieldType' : 'text-input'
 }]
 
 const defaultNumber = [{
@@ -21,7 +21,7 @@ const defaultNumber = [{
         value : 'Number Field'
     },
     'default': 1,
-    'viewType' : 'number-input'
+    'fieldType' : 'number-input'
 }]
 
 const defaultDate = [{
@@ -30,7 +30,7 @@ const defaultDate = [{
         value : 'Date Field'
     },
     'default': "2010-10-10",
-    'viewType' : 'date-input'
+    'fieldType' : 'date-input'
 }]
 
 const defaultArray = [{
@@ -43,7 +43,7 @@ const defaultArray = [{
     'default': ["a", "b"],
     enum: ["a", "b", "c"],
     enumNames: ["Option 1", "Option 2", "Option 3"],
-    'viewType' : 'checkbox-group'
+    'fieldType' : 'checkbox-group'
 }]
 
 const base = {

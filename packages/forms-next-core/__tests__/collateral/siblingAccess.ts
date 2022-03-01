@@ -3,12 +3,12 @@ const staticForm = {
         {
             name: 'field1',
             type: 'string',
-            viewType: 'text-input'
+            fieldType: 'text-input'
         },
         {
             name: 'field2',
             type: 'string',
-            viewType: 'text-input',
+            fieldType: 'text-input',
             rules: {
                 value : 'field1.value'
             }
@@ -21,28 +21,28 @@ const dynamicForm = {
         {
             name: 'orders',
             type: 'array',
-            viewType: 'panel',
+            fieldType: 'panel',
             minItems : 1,
             maxItems : 10,
             items: [
                 {
-                    viewType: 'panel',
+                    fieldType: 'panel',
                     type: 'object',
                     items: [
                         {
                             name : 'price',
                             type: 'number',
-                            viewType: 'text-input'
+                            fieldType: 'text-input'
                         },
                         {
                             name : 'quantity',
                             type: 'number',
-                            viewType: 'text-input'
+                            fieldType: 'text-input'
                         },
                         {
                             name : 'total',
                             type: 'number',
-                            viewType: 'text-input',
+                            fieldType: 'text-input',
                             rules: {
                                 value : 'price * quantity'
                             }

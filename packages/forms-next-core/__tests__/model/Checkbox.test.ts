@@ -6,7 +6,7 @@ test('A required checkbox with explicit off value should be invalid', () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox',
+            fieldType: 'checkbox',
             type: 'number',
             enum: [1, 0],
             required: true
@@ -23,7 +23,7 @@ test("A required checkbox with type boolean value should be invalid when it's va
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox',
+            fieldType: 'checkbox',
             type: 'boolean',
             required: true
         }]
@@ -39,7 +39,7 @@ test('A checkbox without enum property should return an empty array', () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox',
+            fieldType: 'checkbox',
             type: 'number',
             required: true
         }]
@@ -52,7 +52,7 @@ test('A checkbox without enum property should remain invalid', () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox',
+            fieldType: 'checkbox',
             type: 'number',
             required: true
         }]
@@ -66,7 +66,7 @@ test('An optional checkbox should be valid if it is not selected', () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox',
+            fieldType: 'checkbox',
             type: 'boolean'
         }]
     };
@@ -79,7 +79,7 @@ test('An optional checkbox with no off value should be valid if it is not select
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox',
+            fieldType: 'checkbox',
             enum: [1]
         }]
     };

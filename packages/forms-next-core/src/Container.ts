@@ -76,8 +76,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     getState() {
         return {
             ...this._jsonModel,
+            ':type' : this[":type"],
             items: this._children.map(x => {
-                return { ...x.getState() } as {id: string, viewType: string};
+                return { ...x.getState() }
             })
         };
     }

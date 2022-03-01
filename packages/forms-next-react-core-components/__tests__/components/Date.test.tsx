@@ -19,7 +19,7 @@ const field = {
   'visible': true,
   'type': 'string',
   'format' : 'date',
-  'viewType' : 'date-input'
+  'fieldType' : 'date-input'
 };
 
 const labelInputTests: InputFieldTestCase<FieldExpectType>[] = [

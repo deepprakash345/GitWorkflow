@@ -16,7 +16,7 @@ const field = {
     label : {
         value : 'name'
     },
-    viewType: 'checkbox',
+    fieldType: 'checkbox',
     'visible' : true,
     'type' : 'boolean'
 };

@@ -5,7 +5,7 @@ test("Checkbox Group's default type is deduced from enum values", () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox-group',
+            fieldType: 'checkbox-group',
             enum: [1, 0],
             enumNames: ['Option 1', 'Option 2'],
             required: true
@@ -17,7 +17,7 @@ test("Checkbox Group's default type is deduced from enum values", () => {
     const formJson1 = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox-group',
+            fieldType: 'checkbox-group',
             enum: ['1', '0'],
             enumNames: ['Option 1', 'Option 2'],
             required: true
@@ -29,7 +29,7 @@ test("Checkbox Group's default type is deduced from enum values", () => {
     const formJson2 = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox-group',
+            fieldType: 'checkbox-group',
             required: true
         }]
     };
@@ -41,7 +41,7 @@ test('Checkbox Group without enum should return an empty array', () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox-group',
+            fieldType: 'checkbox-group',
             required: true
         }]
     };
@@ -53,7 +53,7 @@ test('Checkbox Group without enum should be invalid', () => {
     const formJson = {
         items: [{
             name: 'f1',
-            viewType: 'checkbox-group',
+            fieldType: 'checkbox-group',
             type: 'number[]',
             required: true
         }]

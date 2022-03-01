@@ -8,10 +8,10 @@ test('returns form model json with translation id present', () => {
     const actual = addTranslationId({
         'items' : {
             'panel' : {
-                'viewType': 'panel',
+                'fieldType': 'panel',
                 'items' : {
                     'firstName': {
-                        'viewType': 'text-input',
+                        'fieldType': 'text-input',
                         'type': 'string',
                         'label': {
                             'value' : 'Hello, world'
@@ -21,7 +21,7 @@ test('returns form model json with translation id present', () => {
                         'required': true
                     },
                     'lastName': {
-                        'viewType': 'text-input',
+                        'fieldType': 'text-input',
                         'type': 'string',
                         'label': {
                             'value': 'Hello, world'
@@ -49,10 +49,10 @@ test('returns translation dictionary with translation keys', () => {
     const actual = {
         'items' : {
             'panel' : {
-                'viewType': 'panel',
+                'fieldType': 'panel',
                 'items' : {
                     'firstName': {
-                        'viewType': 'text-input',
+                        'fieldType': 'text-input',
                         'type': 'string',
                         'label': {
                             'value' : 'Hello, world'
@@ -62,7 +62,7 @@ test('returns translation dictionary with translation keys', () => {
                         'required': true
                     },
                     'lastName': {
-                        'viewType': 'text-input',
+                        'fieldType': 'text-input',
                         'type': 'string',
                         'label': {
                             'value' : 'Hello, world'

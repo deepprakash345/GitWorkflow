@@ -2,7 +2,7 @@
     "items": [
         {
             "name": "firstName",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "default": "john",
             "type": "string",
             "minLength": 0,
@@ -24,7 +24,7 @@
         },
         {
             "name": "lastName",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "default": "doe",
             "description": "We need it to address you in our responses",
             "screenReaderText": "Enter your name as you like us to address you",
@@ -46,7 +46,7 @@
         },
         {
             "name": "name",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "rules": {
                 "value": "$form.firstName.value & ' ' & $form.lastName.value"
             },
@@ -56,7 +56,7 @@
         },
         {
             "name": "email",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "description": "It's a promise that we will not spam you",
             "screenReaderText": "Provide your email address so that we can reply to you.",
             "type": "string",
@@ -75,7 +75,7 @@
         },
         {
             "name": "isAnonymous",
-            "viewType": "checkbox",
+            "fieldType": "checkbox",
             "description": "In case you want to remain anonymous",
             "type": "boolean",
             "required": true,
@@ -87,7 +87,7 @@
         },
         {
             "name": "phone",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "description": "Your mobile number where we can reach you. But only if you want",
             "screenReaderText": "Enter you mobile number without the ISD code",
             "pattern": "[0-9]{10}",
@@ -100,7 +100,7 @@
         },
         {
             "name": "submit",
-            "viewType": "button",
+            "fieldType": "button",
             "title": "Submit",
             "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
             "events": {

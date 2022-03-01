@@ -1,6 +1,6 @@
 import { Button } from '@adobe/react-spectrum';
 import React from 'react';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import {
     baseConvertor,
     combineConvertors,
@@ -18,6 +18,6 @@ const mapper = combineConvertors(baseConvertor,
     });
 
 
-const ButtonFormComponent = (field: FieldJson & {id: string}) => useRenderer(field, Button, mapper);
+const ButtonFormComponent = (field: State<FieldJson>) => useRenderer(field, Button, mapper);
 
 export default ButtonFormComponent;

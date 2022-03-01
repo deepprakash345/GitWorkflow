@@ -4,7 +4,7 @@ import {
     combineConvertors
 } from '../utils/SpectrumMappers';
 import {useRenderer} from '@aemforms/crispr-react-bindings';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 
 const PlainText = function (props: any) {
     const { value } = props;
@@ -15,6 +15,6 @@ const mapper = combineConvertors(baseConvertor, (a) => {
     return {value : a.value};
 });
 
-const FormPlainTextComponent = (field: FieldJson & {id: string}) => useRenderer(field, PlainText, mapper);
+const FormPlainTextComponent = (field: State<FieldJson>) => useRenderer(field, PlainText, mapper);
 
 export default FormPlainTextComponent;

@@ -24,18 +24,18 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 const panelJson = formWithSubmit({
-    viewType: 'panel',
+    fieldType: 'panel',
     name: "personalInfo",
     items : [
         {
-            viewType : "text-input",
+            fieldType : "text-input",
             name : "firstName",
             label : {
                 value  : "First Name"
             }
         },
         {
-            viewType : "text-input",
+            fieldType : "text-input",
             name : "lastName",
             label : {
                 value  : "Last Name"

@@ -15,13 +15,15 @@ const emptyFLex = {
 
 const flexWithData = {
   'id': 'flexWithData',
+  ':type' : 'custom:flex',
   'visible': true,
   'label': { value: 'flex label' },
   'items': [
     {
       'id': 'field',
       'name': 'f1',
-      'viewType': 'text-field',
+      'fieldType': 'text-field',
+      ':type' : "text-field",
       'title': 'name',
       'visible': true,
       'label': { value: 'text field label' }
@@ -29,7 +31,8 @@ const flexWithData = {
     {
       'id': 'field',
       'name': 'f2',
-      'viewType': 'text-field',
+      'fieldType': 'text-field',
+      ':type' : "text-field",
       'title': 'name',
       'visible': true,
       'label': { value: 'text field label 2' }

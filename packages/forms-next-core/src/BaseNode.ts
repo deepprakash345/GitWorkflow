@@ -168,8 +168,12 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         return this._jsonModel.type;
     }
 
-    get viewType() {
-        return this._jsonModel.viewType || 'text-input';
+    get fieldType() {
+        return this._jsonModel.fieldType || 'text-input';
+    }
+
+    get ':type'() {
+        return this._jsonModel[':type'] || this.fieldType;
     }
 
     get name() {
@@ -217,7 +221,8 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     getState() {
         return {
-            ...this._jsonModel
+            ...this._jsonModel,
+            ':type' : this[":type"]
         };
     }
 
@@ -346,6 +351,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         return this._data;
     }
 
+    get properties() {
+        return this._jsonModel.properties || {}
+    }
 
     abstract defaultDataModel(name: string|number): DataValue
 

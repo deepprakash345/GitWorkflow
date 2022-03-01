@@ -1,5 +1,5 @@
 import {ComboBox, Item} from '@adobe/react-spectrum';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import {useRenderer} from '@aemforms/crispr-react-bindings';
 import {
     baseConvertor,
@@ -29,7 +29,7 @@ const mapper = combineConvertors(baseConvertor,
  * @param originalProps
  * @constructor
  */
-const ComboBoxComponent = function (originalProps: FieldJson & {id: string}) {
+const ComboBoxComponent = function (originalProps: State<FieldJson>) {
     return useRenderer(originalProps, ComboBox, mapper, true);
 };
 

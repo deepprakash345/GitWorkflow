@@ -12,7 +12,7 @@ const textInputExample = {
     },
     type: 'number',
     description: 'Enter only numbers',
-    'viewType' : 'text-input'
+    'fieldType' : 'text-input'
 };
 
 const numberInputExample = {
@@ -22,7 +22,7 @@ const numberInputExample = {
     },
     type: 'number',
     'description': "A text input's value can be saved as number",
-    'viewType' : 'number-input',
+    'fieldType' : 'number-input',
 };
 
 

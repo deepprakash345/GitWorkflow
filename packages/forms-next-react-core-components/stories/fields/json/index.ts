@@ -1,6 +1,6 @@
 import {form, formWithSubmit} from "../../template";
 
-export const inputViewTypes = [
+export const inputfieldTypes = [
     'text-input',
     'multiline-input',
     'date-input',
@@ -8,7 +8,7 @@ export const inputViewTypes = [
     'file-input'
 ]
 
-export const optionsViewTypes = [
+export const optionsfieldTypes = [
     'drop-down',
     'radio-group',
     'checkbox-group'
@@ -21,21 +21,21 @@ const basic = {
     'name' : 'field'
 };
 
-const component = (viewType, extras: any = {}, label = undefined, description= undefined) => {
+const component = (fieldType, extras: any = {}, label = undefined, description= undefined) => {
     return {
         ...basic,
         label: {
             value : label ? label : basic.label.value
         },
         description,
-        viewType,
+        fieldType,
         ...extras
     }
 }
 
 //@ts-ignore
-const data = Object.fromEntries(inputViewTypes.concat(optionsViewTypes).map(x => {
-    const isInput = inputViewTypes.indexOf(x) > -1
+const data = Object.fromEntries(inputfieldTypes.concat(optionsfieldTypes).map(x => {
+    const isInput = inputfieldTypes.indexOf(x) > -1
     const obj = isInput ? {} : {enum: ["1", "2", "3"]}
     return [x, formWithSubmit(component(x, obj))]
 }))

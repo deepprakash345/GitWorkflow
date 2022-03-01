@@ -19,7 +19,7 @@ const formJson = {
             "value": "Basic Details"
         },
         description: "A panel holds a set of fields together",
-        "viewType": "panel",
+        "fieldType": "panel",
         "items": [
             {
                 "name": "firstName",
@@ -27,7 +27,7 @@ const formJson = {
                     "value": "First Name"
                 },
                 "type": "string",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "required": true
             },
             {
@@ -36,7 +36,7 @@ const formJson = {
                     "value": "Last Name"
                 },
                 "type": "text",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "required": true
             }
         ]
@@ -46,7 +46,7 @@ const formJson = {
         "label": {
             "value": "contact"
         },
-        "viewType": "panel",
+        "fieldType": "panel",
         "items": [
             {
                 "name": "mobile",
@@ -54,7 +54,7 @@ const formJson = {
                     "value": "Mobile Number"
                 },
                 "type": "string",
-                "viewType": "number-input",
+                "fieldType": "number-input",
                 "required": true
             }
         ]

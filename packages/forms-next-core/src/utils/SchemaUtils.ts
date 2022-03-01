@@ -25,7 +25,7 @@ const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
  * @param schema    schema item for which default view type is to found
  * @returns default view type
  */
-export const defaultViewTypes = (schema: any): string => {
+export const defaultFieldTypes = (schema: any): string => {
     const type = schema.type || 'string';
     if ('enum' in schema) {
         const enums = schema.enum;

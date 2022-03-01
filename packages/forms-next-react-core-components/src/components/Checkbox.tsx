@@ -1,5 +1,5 @@
 import {Checkbox, ComboBox} from '@adobe/react-spectrum';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import {useRenderer} from '@aemforms/crispr-react-bindings';
 import React from 'react';
 import {
@@ -36,7 +36,7 @@ const Comp = withErrorMessage(SpectrumCheckboxWrapper);
  * @param originalProps
  * @constructor
  */
-const CheckboxComponent = function (originalProps: FieldJson & {id: string}) {
+const CheckboxComponent = function (originalProps: State<FieldJson>) {
     return useRenderer(originalProps, Comp, mapper);
 };
 

@@ -89,7 +89,7 @@ test('deepClone an object with null value', () => {
     expect(output.b.x.a).toEqual(null);
 });
 
-test('isCheckbox should return true for fields whose viewType map to checkbox', () => {
+test('isCheckbox should return true for fields whose fieldType map to checkbox', () => {
     expect(isCheckbox({
         type: 'boolean'
     })).toEqual(true);
@@ -105,14 +105,14 @@ test('isCheckbox should return true for fields whose viewType map to checkbox', 
 
 test('isCheckbox should return true for checkbox', () => {
     expect(isCheckbox({
-       viewType: 'checkbox'
+       fieldType: 'checkbox'
     })).toEqual(true);
 });
 
-test('isCheckbox should not return true for non checkbox viewTypes', () => {
+test('isCheckbox should not return true for non checkbox fieldTypes', () => {
     const x = randomWord(1, 'c') + randomWord(Math.random()*10);
     expect(isCheckbox({
-        viewType: x
+        fieldType: x
     })).toEqual(false);
 
     expect(isCheckbox({
@@ -130,18 +130,18 @@ test('isCheckbox should not return true for non checkbox viewTypes', () => {
 
 test('isCheckboxGroup should return true for checkbox-group', () => {
     expect(isCheckboxGroup({
-        viewType: 'checkbox-group'
+        fieldType: 'checkbox-group'
     })).toEqual(true);
 });
 
-test('isCheckboxGroup should not return true non checkbox-group viewTypes', () => {
+test('isCheckboxGroup should not return true non checkbox-group fieldTypes', () => {
     const x = randomWord(1, 'c') + randomWord(Math.random()*10);
     expect(isCheckboxGroup({
-        viewType: x
+        fieldType: x
     })).toEqual(false);
 
     expect(isCheckboxGroup({
-        viewType: 'checkbox'
+        fieldType: 'checkbox'
     })).toEqual(false);
 
     expect(isCheckboxGroup({

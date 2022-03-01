@@ -19,7 +19,8 @@ const accordionWithData = {
     {
       'id': 'field',
       'name': 'f1',
-      'viewType': 'text-field',
+      'fieldType': 'text-field',
+      ':type' : "text-field",
       'title': 'name',
       'visible': true,
       'label': { value: 'text field label' }

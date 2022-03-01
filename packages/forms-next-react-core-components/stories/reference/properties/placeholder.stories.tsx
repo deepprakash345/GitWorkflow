@@ -15,7 +15,7 @@ const generate = (t = "text-input", extras = {}, support = true) => {
                     value : 'Field Label'
                 },
                 'placeholder': 'Enter the value in the field',
-                viewType: t,
+                fieldType: t,
                 ...extras
             }
         ]}

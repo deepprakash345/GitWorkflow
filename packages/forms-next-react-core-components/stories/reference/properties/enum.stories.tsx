@@ -8,7 +8,7 @@ const textInputE = {
         'value' : 'Field with enum'
     },
     'description': 'Enter either 1 or 2',
-    'viewType' : 'text-input'
+    'fieldType' : 'text-input'
 };
 
 
@@ -16,14 +16,14 @@ const dropDownE = {
     'label' : {
         'value' : 'Dropdown with enum'
     },
-    'viewType' : 'drop-down'
+    'fieldType' : 'drop-down'
 };
 
 const radioE = {
     'label' : {
         'value' : 'Radio Button Group with enum'
     },
-    'viewType' : 'radio-group'
+    'fieldType' : 'radio-group'
 };
 
 const radioEWithEnumNames = {
@@ -36,7 +36,7 @@ const checkboxGroupE = {
     'label' : {
         'value' : 'Checkbox group with enum'
     },
-    'viewType' : 'checkbox-group'
+    'fieldType' : 'checkbox-group'
 };
 
 const checkboxE = {
@@ -44,7 +44,7 @@ const checkboxE = {
         'value' : 'Checkbox with enum'
     },
     'description': 'When selected 1 will be submitted, otherwise 2',
-    'viewType' : 'checkbox'
+    'fieldType' : 'checkbox'
 };
 
 const item = {

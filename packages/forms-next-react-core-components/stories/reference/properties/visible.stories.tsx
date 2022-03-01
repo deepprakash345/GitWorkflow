@@ -15,7 +15,7 @@ const visibleExample = [
         },
         visible: true,
         'description': 'A Field is visible by default. Visible property is applicable for all field types',
-        'viewType' : 'text-input'
+        'fieldType' : 'text-input'
     }
 ]
 const hiddenExample = [
@@ -25,11 +25,11 @@ const hiddenExample = [
             value : 'Field 1'
         },
         'description': 'There is a hidden field in the form. Type some thing and check the data.',
-        'viewType' : 'text-input'
+        'fieldType' : 'text-input'
     },
     {
         'name' : 'field2',
-        viewType: 'text-input',
+        fieldType: 'text-input',
         "default": 'default Value for hidden field',
         visible: false
     }

@@ -1,7 +1,7 @@
 {
   "items": [
     {
-      "viewType": "custom:horizontal-tab",
+      ":type": "custom:horizontal-tab",
       "name": "tabs",
       "label": {
         "value": "Horizontal Tabs Title"
@@ -13,21 +13,21 @@
             "value": "Item 1"
           },
           "type": "string",
-          "viewType": "text-input"
+          "fieldType": "text-input"
         },
         {
           "name": "plainText",
           "label": {
             "value": "Item 2"
           },
-          "viewType": "button"
+          "fieldType": "button"
         },
         {
           "name": "item3",
           "label": {
             "value": "Item 3"
           },
-          "viewType": "panel",
+          "fieldType": "panel",
           "items": [
             {
               "name": "firstName",
@@ -35,7 +35,7 @@
                 "value": "First Name"
               },
               "type": "string",
-              "viewType": "text-input"
+              "fieldType": "text-input"
             },
             {
               "name": "lastName",
@@ -43,7 +43,7 @@
                 "value": "Last Name"
               },
               "type": "text",
-              "viewType": "text-input"
+              "fieldType": "text-input"
             }
           ]
         }

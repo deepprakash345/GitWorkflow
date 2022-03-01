@@ -1,5 +1,5 @@
 import { TextField, TextArea } from '@adobe/react-spectrum';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import React from 'react';
 import {
     baseConvertor,
@@ -17,8 +17,8 @@ const mapper = combineConvertors(baseConvertor,
         return {width: '100%'};
     });
 
-const TextFieldComponent = function (props: FieldJson & {id: string}) {
-    const component = props.viewType === 'multiline-input' ? TextArea : TextField;
+const TextFieldComponent = function (props: State<FieldJson>) {
+    const component = props[':type'] === 'multiline-input' ? TextArea : TextField;
     const renderedComponent = useRenderer(props, component, mapper, true);
     return renderedComponent;
 };

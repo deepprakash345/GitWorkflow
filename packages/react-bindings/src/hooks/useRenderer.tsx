@@ -1,4 +1,4 @@
-import {FieldJson, TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core';
+import {FieldJson, State, TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core';
 import React, {JSXElementConstructor, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {Handlers, useFocus, useRuleEngine} from './useRuleEngine';
@@ -48,7 +48,7 @@ export const useFormIntl = function () {
  * @param Component The component to render.
  * @param wrap
  */
-export const useRenderer = function(formFieldState:FieldJson & {id: string},
+export const useRenderer = function(formFieldState: State<FieldJson>,
                                     Component: JSXElementConstructor<any>,
                                     propsMapper: Convertor<any> = (a, b, c) => a,
                                     wrap:boolean = false)  {

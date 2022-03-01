@@ -14,7 +14,7 @@ const enumInputTypeExample = {
     },
     enum: [1, 2, 3, 4],
     'description': "Type can be deduced from enum values as well",
-    'viewType' : 'text-input',
+    'fieldType' : 'text-input',
 };
 
 export default {

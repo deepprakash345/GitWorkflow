@@ -22,7 +22,7 @@ const clickJson = {
         "label": {
             "value": "click me"
         },
-        "viewType": "button",
+        "fieldType": "button",
         "events": {
             "click": "{label: {value : 'You Clicked me'}}",
         }
@@ -37,7 +37,7 @@ const initializeJson = {
             "label": {
                 "value": "click me"
             },
-            "viewType": "button",
+            "fieldType": "button",
             "events": {
                 "initialize": "{label: {value : 'I have been initialized. Click me'}}",
                 "click": "{label: {value : 'You Clicked me again'}}"
@@ -54,7 +54,7 @@ const changeJson = {
                 "value": "click me"
             },
             "enum" : [1, 2],
-            "viewType": "checkbox",
+            "fieldType": "checkbox",
             "events": {
                 "change": "{label: {value : if(value == 1, 'Hurray, I am chosen :-)', 'Please choose me :-|')}}"
             }
@@ -73,7 +73,7 @@ const blurJson = {
             'constraintMessages': {
                 'required': 'mandatory field'
             },
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "events": {
                 "blur": ['{value : upper($field.value)}', 'validate($event.target)']
             }

@@ -1,12 +1,13 @@
 {
-  "adaptiveform": "0.0.16-next",
+  "adaptiveform": "0.0.17-pre",
   "items": [
     {
-      "viewType": "custom:vertical-flex",
+      ":type": "custom:vertical-flex",
+      "fieldType" : "panel",
       "name": "pi",
       "items": [
         {
-          "viewType": "plain-text",
+          "fieldType": "plain-text",
           "label": {
             "value": "Persona Infromation"
           }

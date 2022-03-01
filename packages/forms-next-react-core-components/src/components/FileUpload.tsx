@@ -1,5 +1,5 @@
 import FileUpload from './fileupload/FileUpload';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import {useRenderer} from '@aemforms/crispr-react-bindings';
 import React from 'react';
 import {baseConvertor, combineConvertors, constraintConvertor, withErrorMessage} from '../utils/SpectrumMappers';
@@ -44,7 +44,7 @@ const FileUploadWrapper = (props: any) => {
     return <FileUpload {...props} updateFilesCb={handleChange}/>;
 };
 
-const FileUploadComponent = function (originalProps: FieldJson & {id: string}) {
+const FileUploadComponent = function (originalProps: State<FieldJson>) {
     return useRenderer(originalProps, FileUploadWrapper, mapper, true);
 };
 
