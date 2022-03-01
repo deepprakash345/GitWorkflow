@@ -3,10 +3,14 @@ import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import {base} from "../../template";
+import {base, decorator} from "../../template";
 
 export default {
     title: 'Reference/JSON/events',
+    decorators: [decorator],
+    properties: {
+        highlights : ["items.0.events"]
+    },
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

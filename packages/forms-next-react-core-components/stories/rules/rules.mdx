@@ -63,3 +63,31 @@ fields. Using rules, one can achieve that by making `required` or `visible` prop
 
 <Story id="crispr-dynamic-properties--visible" />
 
+# Events
+
+Apart from rules, one can handle events in the Form Definition to provide dynamic behaviour to the Form. The Spec
+supports a number of [events](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_events) that allow
+adding additional capabilities in the Form.
+
+For instance changing the label of a checkbox when it is selected
+
+<Story id="reference-json-events--change" />
+
+Or changing the text entered on focus out
+
+<Story id="reference-json-events--blur" />
+
+
+Apart from out of the box events, the Form Definition allows dispatching a
+[custom event](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_custom_events) to a field and changing
+its property.
+
+For instance one can set the value of a field to the number of times a button has been clicked
+
+<Story id="reference-json-events-custom--dispatch" />
+
+Apart from that custom events can also pass an extra payload
+
+<Story id="reference-json-events-custom--dispatch-with-payload" />
+
+
