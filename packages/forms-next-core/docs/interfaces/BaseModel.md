@@ -23,6 +23,7 @@ Defines common properties that each form field should have
 
 ### Properties
 
+- [:type](BaseModel.md#:type)
 - [accept](BaseModel.md#accept)
 - [dataRef](BaseModel.md#dataref)
 - [default](BaseModel.md#default)
@@ -33,6 +34,7 @@ Defines common properties that each form field should have
 - [enumNames](BaseModel.md#enumnames)
 - [exclusiveMaximum](BaseModel.md#exclusivemaximum)
 - [exclusiveMinimum](BaseModel.md#exclusiveminimum)
+- [fieldType](BaseModel.md#fieldtype)
 - [format](BaseModel.md#format)
 - [id](BaseModel.md#id)
 - [index](BaseModel.md#index)
@@ -50,7 +52,7 @@ Defines common properties that each form field should have
 - [parent](BaseModel.md#parent)
 - [pattern](BaseModel.md#pattern)
 - [placeholder](BaseModel.md#placeholder)
-- [props](BaseModel.md#props)
+- [properties](BaseModel.md#properties)
 - [readOnly](BaseModel.md#readonly)
 - [required](BaseModel.md#required)
 - [step](BaseModel.md#step)
@@ -58,7 +60,6 @@ Defines common properties that each form field should have
 - [valid](BaseModel.md#valid)
 - [validationExpression](BaseModel.md#validationexpression)
 - [value](BaseModel.md#value)
-- [viewType](BaseModel.md#viewtype)
 - [visible](BaseModel.md#visible)
 
 ### Methods
@@ -66,6 +67,14 @@ Defines common properties that each form field should have
 - [validate](BaseModel.md#validate)
 
 ## Properties
+
+### :type
+
+• `Readonly` **:type**: `string`
+
+Custom widget type show to the user for capturing the data.
+
+___
 
 ### accept
 
@@ -156,6 +165,14 @@ ___
 #### Inherited from
 
 ConstraintsJson.exclusiveMinimum
+
+___
+
+### fieldType
+
+• `Readonly` **fieldType**: `string`
+
+Type of field to capture the user data.
 
 ___
 
@@ -313,9 +330,9 @@ The placeholder to show on the widget.
 
 ___
 
-### props
+### properties
 
-• `Optional` **props**: `Object`
+• **properties**: `Object`
 
 Custom properties of the form field.
 
@@ -386,14 +403,6 @@ ___
 • **value**: `any`
 
 The current value of the Field. The property is serialized in the Data Model.
-
-___
-
-### viewType
-
-• `Readonly` **viewType**: `string`
-
-Type of widget to show to the user for capturing the data..
 
 ___
 

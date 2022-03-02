@@ -22,7 +22,9 @@ Defines a generic base class which all objects of form runtime model should exte
 
 ### Accessors
 
+- [:type](BaseNode.md#:type)
 - [dataRef](BaseNode.md#dataref)
+- [fieldType](BaseNode.md#fieldtype)
 - [form](BaseNode.md#form)
 - [id](BaseNode.md#id)
 - [index](BaseNode.md#index)
@@ -30,9 +32,9 @@ Defines a generic base class which all objects of form runtime model should exte
 - [label](BaseNode.md#label)
 - [name](BaseNode.md#name)
 - [parent](BaseNode.md#parent)
+- [properties](BaseNode.md#properties)
 - [ruleEngine](BaseNode.md#ruleengine)
 - [type](BaseNode.md#type)
-- [viewType](BaseNode.md#viewtype)
 - [visible](BaseNode.md#visible)
 
 ### Methods
@@ -50,6 +52,22 @@ Defines a generic base class which all objects of form runtime model should exte
 
 ## Accessors
 
+### :type
+
+• `get` **:type**(): `string`
+
+Custom widget type show to the user for capturing the data.
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[:type](../interfaces/BaseModel.md#:type)
+
+___
+
 ### dataRef
 
 • `get` **dataRef**(): `undefined` \| ``null`` \| `string`
@@ -63,6 +81,22 @@ To map the field’s value to a property in the data model.
 #### Implementation of
 
 [BaseModel](../interfaces/BaseModel.md).[dataRef](../interfaces/BaseModel.md#dataref)
+
+___
+
+### fieldType
+
+• `get` **fieldType**(): `string`
+
+Type of field to capture the user data.
+
+#### Returns
+
+`string`
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[fieldType](../interfaces/BaseModel.md#fieldtype)
 
 ___
 
@@ -190,6 +224,22 @@ The Parent Panel of the Field/Panel.
 
 ___
 
+### properties
+
+• `get` **properties**(): `Object`
+
+Custom properties of the form field.
+
+#### Returns
+
+`Object`
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[properties](../interfaces/BaseModel.md#properties)
+
+___
+
 ### ruleEngine
 
 • `get` **ruleEngine**(): `RuleEngine`
@@ -211,22 +261,6 @@ ___
 #### Implementation of
 
 [BaseModel](../interfaces/BaseModel.md).[type](../interfaces/BaseModel.md#type)
-
-___
-
-### viewType
-
-• `get` **viewType**(): `string`
-
-Type of widget to show to the user for capturing the data..
-
-#### Returns
-
-`string`
-
-#### Implementation of
-
-[BaseModel](../interfaces/BaseModel.md).[viewType](../interfaces/BaseModel.md#viewtype)
 
 ___
 
@@ -318,11 +352,11 @@ ___
 
 ### getState
 
-▸ **getState**(): `T` & { `id`: `string`  }
+▸ **getState**(): `T` & { `:type`: `string` ; `id`: `string`  }
 
 #### Returns
 
-`T` & { `id`: `string`  }
+`T` & { `:type`: `string` ; `id`: `string`  }
 
 ___
 

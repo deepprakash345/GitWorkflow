@@ -10,6 +10,33 @@ Implementation of check box runtime model which extends from [field](Field.md) m
 
 ## Table of contents
 
+### Accessors
+
+- [:type](Checkbox.md#:type)
+- [dataRef](Checkbox.md#dataref)
+- [emptyValue](Checkbox.md#emptyvalue)
+- [enabled](Checkbox.md#enabled)
+- [enum](Checkbox.md#enum)
+- [enumNames](Checkbox.md#enumnames)
+- [fieldType](Checkbox.md#fieldtype)
+- [form](Checkbox.md#form)
+- [format](Checkbox.md#format)
+- [id](Checkbox.md#id)
+- [index](Checkbox.md#index)
+- [isContainer](Checkbox.md#iscontainer)
+- [label](Checkbox.md#label)
+- [name](Checkbox.md#name)
+- [parent](Checkbox.md#parent)
+- [properties](Checkbox.md#properties)
+- [readOnly](Checkbox.md#readonly)
+- [required](Checkbox.md#required)
+- [ruleEngine](Checkbox.md#ruleengine)
+- [rules](Checkbox.md#rules)
+- [type](Checkbox.md#type)
+- [valid](Checkbox.md#valid)
+- [value](Checkbox.md#value)
+- [visible](Checkbox.md#visible)
+
 ### Methods
 
 - [change](Checkbox.md#change)
@@ -24,127 +51,11 @@ Implementation of check box runtime model which extends from [field](Field.md) m
 - [validate](Checkbox.md#validate)
 - [valueOf](Checkbox.md#valueof)
 
-### Accessors
+## Accessors
 
-- [dataRef](Checkbox.md#dataref)
-- [emptyValue](Checkbox.md#emptyvalue)
-- [enabled](Checkbox.md#enabled)
-- [enum](Checkbox.md#enum)
-- [enumNames](Checkbox.md#enumnames)
-- [form](Checkbox.md#form)
-- [format](Checkbox.md#format)
-- [id](Checkbox.md#id)
-- [index](Checkbox.md#index)
-- [isContainer](Checkbox.md#iscontainer)
-- [label](Checkbox.md#label)
-- [name](Checkbox.md#name)
-- [parent](Checkbox.md#parent)
-- [readOnly](Checkbox.md#readonly)
-- [required](Checkbox.md#required)
-- [ruleEngine](Checkbox.md#ruleengine)
-- [rules](Checkbox.md#rules)
-- [type](Checkbox.md#type)
-- [valid](Checkbox.md#valid)
-- [value](Checkbox.md#value)
-- [viewType](Checkbox.md#viewtype)
-- [visible](Checkbox.md#visible)
+### :type
 
-## Methods
-
-### change
-
-▸ **change**(`event`, `context`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `event` | [`Action`](../interfaces/Action.md) |
-| `context` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Field](Field.md).[change](Field.md#change)
-
-___
-
-### dispatch
-
-▸ **dispatch**(`action`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `action` | [`Action`](../interfaces/Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Field](Field.md).[dispatch](Field.md#dispatch)
-
-___
-
-### executeAction
-
-▸ **executeAction**(`action`): `void`
-
-Executes the given action
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `action` | [`Action`](../interfaces/Action.md) | [event object](../interfaces/Action.md) |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Field](Field.md).[executeAction](Field.md#executeaction)
-
-___
-
-### executeExpression
-
-▸ **executeExpression**(`expr`): `any`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `expr` | `string` |
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[Field](Field.md).[executeExpression](Field.md#executeexpression)
-
-___
-
-### getErrorMessage
-
-▸ **getErrorMessage**(`constraint`): `string`
-
-Returns the error message for a given constraint
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `constraint` | keyof [`ConstraintsMessages`](../README.md#constraintsmessages) |
+• `get` **:type**(): `string`
 
 #### Returns
 
@@ -152,109 +63,9 @@ Returns the error message for a given constraint
 
 #### Inherited from
 
-[Field](Field.md).[getErrorMessage](Field.md#geterrormessage)
+Field.:type
 
 ___
-
-### getState
-
-▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
-
-[state](../README.md#state) of the form object
-
-#### Returns
-
-`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `id`: `string`  }
-
-#### Inherited from
-
-[Field](Field.md).[getState](Field.md#getstate)
-
-___
-
-### importData
-
-▸ **importData**(`contextualDataModel`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `contextualDataModel` | `default` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Field](Field.md).[importData](Field.md#importdata)
-
-___
-
-### toString
-
-▸ **toString**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[Field](Field.md).[toString](Field.md#tostring)
-
-___
-
-### triggerValidationEvent
-
-▸ **triggerValidationEvent**(`changes`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `changes` | `any` |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Field](Field.md).[triggerValidationEvent](Field.md#triggervalidationevent)
-
-___
-
-### validate
-
-▸ **validate**(): [`ValidationError`](ValidationError.md)[]
-
-Validates the current form object
-
-#### Returns
-
-[`ValidationError`](ValidationError.md)[]
-
-#### Inherited from
-
-[Field](Field.md).[validate](Field.md#validate)
-
-___
-
-### valueOf
-
-▸ **valueOf**(): `any`
-
-#### Returns
-
-`any`
-
-#### Inherited from
-
-[Field](Field.md).[valueOf](Field.md#valueof)
-
-## Accessors
 
 ### dataRef
 
@@ -357,6 +168,20 @@ Field.enumNames
 #### Inherited from
 
 Field.enumNames
+
+___
+
+### fieldType
+
+• `get` **fieldType**(): `string`
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+Field.fieldType
 
 ___
 
@@ -487,6 +312,20 @@ ___
 #### Inherited from
 
 Field.parent
+
+___
+
+### properties
+
+• `get` **properties**(): `Object`
+
+#### Returns
+
+`Object`
+
+#### Inherited from
+
+Field.properties
 
 ___
 
@@ -636,20 +475,6 @@ Field.value
 
 ___
 
-### viewType
-
-• `get` **viewType**(): `string`
-
-#### Returns
-
-`string`
-
-#### Inherited from
-
-Field.viewType
-
-___
-
 ### visible
 
 • `get` **visible**(): `undefined` \| `boolean`
@@ -677,3 +502,208 @@ Field.visible
 #### Inherited from
 
 Field.visible
+
+## Methods
+
+### change
+
+▸ **change**(`event`, `context`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `event` | [`Action`](../interfaces/Action.md) |
+| `context` | `any` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Field](Field.md).[change](Field.md#change)
+
+___
+
+### dispatch
+
+▸ **dispatch**(`action`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `action` | [`Action`](../interfaces/Action.md) |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Field](Field.md).[dispatch](Field.md#dispatch)
+
+___
+
+### executeAction
+
+▸ **executeAction**(`action`): `void`
+
+Executes the given action
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `action` | [`Action`](../interfaces/Action.md) | [event object](../interfaces/Action.md) |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Field](Field.md).[executeAction](Field.md#executeaction)
+
+___
+
+### executeExpression
+
+▸ **executeExpression**(`expr`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expr` | `string` |
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+[Field](Field.md).[executeExpression](Field.md#executeexpression)
+
+___
+
+### getErrorMessage
+
+▸ **getErrorMessage**(`constraint`): `string`
+
+Returns the error message for a given constraint
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `constraint` | keyof [`ConstraintsMessages`](../README.md#constraintsmessages) |
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+[Field](Field.md).[getErrorMessage](Field.md#geterrormessage)
+
+___
+
+### getState
+
+▸ **getState**(): `TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `:type?`: `string` ; `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `fieldType?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `properties?`: { [key: string]: `any`;  } ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `:type`: `string` ; `id`: `string`  }
+
+[state](../README.md#state) of the form object
+
+#### Returns
+
+`TranslationBaseJson` & [`RulesJson`](../README.md#rulesjson) & `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `string` \| `number` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  } & { `:type?`: `string` ; `constraintMessages?`: [`ConstraintsMessages`](../README.md#constraintsmessages) ; `dataRef?`: ``null`` \| `string` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `fieldType?`: `string` ; `label?`: [`Label`](../README.md#label) ; `name?`: `string` ; `properties?`: { [key: string]: `any`;  } ; `visible?`: `boolean`  } & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``""`` \| ``"undefined"`` \| ``"null"`` ; `multiline?`: `boolean` ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  } & { `:type`: `string` ; `id`: `string`  }
+
+#### Inherited from
+
+[Field](Field.md).[getState](Field.md#getstate)
+
+___
+
+### importData
+
+▸ **importData**(`contextualDataModel`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `contextualDataModel` | `default` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Field](Field.md).[importData](Field.md#importdata)
+
+___
+
+### toString
+
+▸ **toString**(): `any`
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+[Field](Field.md).[toString](Field.md#tostring)
+
+___
+
+### triggerValidationEvent
+
+▸ **triggerValidationEvent**(`changes`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `changes` | `any` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Field](Field.md).[triggerValidationEvent](Field.md#triggervalidationevent)
+
+___
+
+### validate
+
+▸ **validate**(): [`ValidationError`](ValidationError.md)[]
+
+Validates the current form object
+
+#### Returns
+
+[`ValidationError`](ValidationError.md)[]
+
+#### Inherited from
+
+[Field](Field.md).[validate](Field.md#validate)
+
+___
+
+### valueOf
+
+▸ **valueOf**(): `any`
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+[Field](Field.md).[valueOf](Field.md#valueof)

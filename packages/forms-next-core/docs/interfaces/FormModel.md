@@ -6,7 +6,7 @@ Defines the interface for form model
 
 - [`ContainerModel`](ContainerModel.md)
 
-- `WithContainerState`<[`FormJson`](../README.md#formjson)\>
+- `WithState`<[`FormJson`](../README.md#formjson)\>
 
   ↳ **`FormModel`**
 
@@ -18,6 +18,7 @@ Defines the interface for form model
 
 ### Properties
 
+- [:type](FormModel.md#:type)
 - [accept](FormModel.md#accept)
 - [data](FormModel.md#data)
 - [dataRef](FormModel.md#dataref)
@@ -30,6 +31,7 @@ Defines the interface for form model
 - [events](FormModel.md#events)
 - [exclusiveMaximum](FormModel.md#exclusivemaximum)
 - [exclusiveMinimum](FormModel.md#exclusiveminimum)
+- [fieldType](FormModel.md#fieldtype)
 - [format](FormModel.md#format)
 - [id](FormModel.md#id)
 - [index](FormModel.md#index)
@@ -48,7 +50,7 @@ Defines the interface for form model
 - [parent](FormModel.md#parent)
 - [pattern](FormModel.md#pattern)
 - [placeholder](FormModel.md#placeholder)
-- [props](FormModel.md#props)
+- [properties](FormModel.md#properties)
 - [readOnly](FormModel.md#readonly)
 - [required](FormModel.md#required)
 - [rules](FormModel.md#rules)
@@ -58,7 +60,6 @@ Defines the interface for form model
 - [valid](FormModel.md#valid)
 - [validationExpression](FormModel.md#validationexpression)
 - [value](FormModel.md#value)
-- [viewType](FormModel.md#viewtype)
 - [visible](FormModel.md#visible)
 
 ### Methods
@@ -71,6 +72,18 @@ Defines the interface for form model
 - [validate](FormModel.md#validate)
 
 ## Properties
+
+### :type
+
+• `Readonly` **:type**: `string`
+
+Custom widget type show to the user for capturing the data.
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[:type](ContainerModel.md#:type)
+
+___
 
 ### accept
 
@@ -201,6 +214,18 @@ ___
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[exclusiveMinimum](ContainerModel.md#exclusiveminimum)
+
+___
+
+### fieldType
+
+• `Readonly` **fieldType**: `string`
+
+Type of field to capture the user data.
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[fieldType](ContainerModel.md#fieldtype)
 
 ___
 
@@ -398,9 +423,9 @@ The placeholder to show on the widget.
 
 ___
 
-### props
+### properties
 
-• `Optional` **props**: `Object`
+• **properties**: `Object`
 
 Custom properties of the form field.
 
@@ -410,7 +435,7 @@ Custom properties of the form field.
 
 #### Inherited from
 
-[ContainerModel](ContainerModel.md).[props](ContainerModel.md#props)
+[ContainerModel](ContainerModel.md).[properties](ContainerModel.md#properties)
 
 ___
 
@@ -514,18 +539,6 @@ The current value of the Field. The property is serialized in the Data Model.
 
 ___
 
-### viewType
-
-• `Readonly` **viewType**: `string`
-
-Type of widget to show to the user for capturing the data..
-
-#### Inherited from
-
-[ContainerModel](ContainerModel.md).[viewType](ContainerModel.md#viewtype)
-
-___
-
 ### visible
 
 • `Optional` **visible**: `boolean`
@@ -570,15 +583,17 @@ ___
 
 ### getState
 
-▸ **getState**(): `T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+▸ **getState**(): [`State`](../README.md#state)<`T`\>
+
+[state](../README.md#state) of the form object
 
 #### Returns
 
-`T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+[`State`](../README.md#state)<`T`\>
 
 #### Inherited from
 
-WithContainerState.getState
+WithState.getState
 
 ___
 

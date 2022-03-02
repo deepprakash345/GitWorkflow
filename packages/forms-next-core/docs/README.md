@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.34
+# @aemforms/crispr-core - v0.6.35
 
 ## Table of contents
 
@@ -71,7 +71,7 @@
 
 - [createFormInstance](README.md#createforminstance)
 - [createTranslationObject](README.md#createtranslationobject)
-- [defaultViewTypes](README.md#defaultviewtypes)
+- [defaultFieldTypes](README.md#defaultfieldtypes)
 - [exportDataSchema](README.md#exportdataschema)
 - [fetchForm](README.md#fetchform)
 - [getFileSizeInBytes](README.md#getfilesizeinbytes)
@@ -87,7 +87,7 @@
 
 ### BaseJson
 
-Ƭ **BaseJson**: `TranslationBaseJson` & [`RulesJson`](README.md#rulesjson) & [`ConstraintsJson`](README.md#constraintsjson) & { `constraintMessages?`: [`ConstraintsMessages`](README.md#constraintsmessages) ; `dataRef?`: `string` \| ``null`` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `label?`: [`Label`](README.md#label) ; `name?`: `string` ; `viewType?`: `string` ; `visible?`: `boolean`  }
+Ƭ **BaseJson**: `TranslationBaseJson` & [`RulesJson`](README.md#rulesjson) & [`ConstraintsJson`](README.md#constraintsjson) & { `:type?`: `string` ; `constraintMessages?`: [`ConstraintsMessages`](README.md#constraintsmessages) ; `dataRef?`: `string` \| ``null`` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `fieldType?`: `string` ; `label?`: [`Label`](README.md#label) ; `name?`: `string` ; `properties?`: { [key: string]: `any`;  } ; `visible?`: `boolean`  }
 
 Type for `generic form properties` based on `crispr form specification`
 
@@ -155,7 +155,7 @@ ___
 
 ### FieldJson
 
-Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``"null"`` \| ``"undefined"`` \| ``""`` ; `multiline?`: `boolean` ; `props?`: { [key: string]: `any`;  } ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
+Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``"null"`` \| ``"undefined"`` \| ``""`` ; `multiline?`: `boolean` ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
 
 Type for `form field properties` based on `crispr form specification`
 
@@ -252,7 +252,7 @@ ___
 
 ### State
 
-Ƭ **State**<`T`\>: `T` extends [`ContainerJson`](README.md#containerjson) ? `T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  } : `T` & { `id`: `string`  }
+Ƭ **State**<`T`\>: `T` extends [`ContainerJson`](README.md#containerjson) ? `T` & { `id`: `string` ; `items`: [`State`](README.md#state)<[`FieldJson`](README.md#fieldjson) \| [`ContainerJson`](README.md#containerjson)\>[]  } : `T` & { `:type`: `string` ; `id`: `string`  }
 
 Generic type for a form object state
 
@@ -339,9 +339,9 @@ translation object for each bcp 47 language tag
 
 ___
 
-### defaultViewTypes
+### defaultFieldTypes
 
-▸ `Const` **defaultViewTypes**(`schema`): `string`
+▸ `Const` **defaultFieldTypes**(`schema`): `string`
 
 Returns the default view type for a given form field object based on `crispr form specification`
 
