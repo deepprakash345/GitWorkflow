@@ -16,6 +16,7 @@ import RuleEngine from '../rules/RuleEngine';
 import EventQueue from '../controller/EventQueue';
 import DataGroup from '../data/DataGroup';
 import {Fieldset} from '../Fieldset';
+import {Logger} from "../Form";
 
 /**
  * Generic Scriptable field interface. All non-transparent fields which support rule/events
@@ -310,6 +311,8 @@ export interface FormModel extends ContainerModel,
      * Form title.
      */
     readonly title: string
+
+    readonly logger: Logger
 
     /**
      * Imports the given form data

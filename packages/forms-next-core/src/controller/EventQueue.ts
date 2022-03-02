@@ -3,6 +3,7 @@
  */
 import {Action, BaseJson} from '../types';
 import {BaseNode} from '../BaseNode';
+import {Logger} from "../Form";
 
 /**
  * Implementation of event node
@@ -44,7 +45,7 @@ class EventQueue {
     private _isProcessing: boolean = false
     private _pendingEvents: EventNode<any>[] = []
 
-    constructor() {
+    constructor(private logger: Logger = new Logger("off")) {
         this._runningEventCount = {};
     }
 
@@ -73,7 +74,7 @@ class EventQueue {
             const counter = this._runningEventCount[evntNode.valueOf()] || 0;
             const alreadyExists = this.isQueued(node, e);
             if (!alreadyExists || counter < 10) {
-                console.log(`Queued event : ${e.type} node: ${node.id} - ${node.name}`);
+                this.logger.info(`Queued event : ${e.type} node: ${node.id} - ${node.name}`);
                 //console.log(`Event Details ${e.toString()}`)
                 if (priority) {
                     const index = this._isProcessing ? 1 : 0;
@@ -93,7 +94,7 @@ class EventQueue {
         this._isProcessing = true;
         while(this._pendingEvents.length > 0) {
             const e = this._pendingEvents[0];
-            console.log(`Dequeued event : ${e.event.type} node: ${e.node.id} - ${e.node.name}`);
+            this.logger.info(`Dequeued event : ${e.event.type} node: ${e.node.id} - ${e.node.name}`);
             //console.log(`Event Details ${e.event.toString()}`);
             e.node.executeAction(e.event);
             this._pendingEvents.shift();

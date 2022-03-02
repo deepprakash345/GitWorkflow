@@ -17,6 +17,47 @@ import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
 import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, ValidationComplete} from './controller/Controller';
 
+export type LogType = "info" | "warn" | "error"
+export type LogLevel = "off" | LogType
+
+const levels = {
+    off: 0,
+    info: 1,
+    warn : 2,
+    error: 3
+}
+
+/**
+ * private
+ */
+export class Logger {
+
+    info(msg: string) {
+        this.log(msg, 'info')
+    }
+
+    warn(msg: string) {
+        this.log(msg, 'warn')
+    }
+
+    error(msg: string) {
+        this.log(msg, 'error')
+    }
+
+    log(msg: string, level: LogType) {
+        if (this.logLevel <= levels[level]) {
+            console[level](msg)
+        }
+    }
+
+    private logLevel: number
+
+    constructor(logLevel: LogLevel = "off") {
+        this.logLevel = levels[logLevel]
+    }
+}
+
+
 
 /**
  * Defines `form model` which implements {@link FormModel | form model}
@@ -36,20 +77,31 @@ class Form extends Container<FormJson> implements FormModel {
      */
     private _invalidFields: string[] = []
 
+    private _logger: Logger
+
     /**
      * @param n
      * @param _ruleEngine
      * @param _eventQueue
+     * @param logLevel
      * @private
      */
-    constructor(n: FormJson, private _ruleEngine: RuleEngine, private _eventQueue = new EventQueue()) {
+    constructor(n: FormJson,
+                private _ruleEngine: RuleEngine,
+                private _eventQueue = new EventQueue(),
+                private logLevel: "off" | "info" | "warning" | "error" = "off") {
         //@ts-ignore
         super(n, {});
+        this._logger = new Logger()
         this.queueEvent(new Initialize());
         this.queueEvent(new ExecuteRule());
         this._ids = IdGenerator();
         this._bindToDataModel(new DataGroup('$form', {}));
         this._initialize();
+    }
+
+    get logger() {
+        return this._logger;
     }
 
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
