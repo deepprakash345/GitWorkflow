@@ -1,6 +1,6 @@
 import {NumberField} from '@adobe/react-spectrum';
 import React from 'react';
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import {
     baseConvertor,
     combineConvertors,
@@ -19,7 +19,7 @@ const mapper = combineConvertors(baseConvertor,
         }
     });
 
-const NumberComp = function (props: FieldJson & { id: string }) {
+const NumberComp = function (props: State<FieldJson>) {
     return useRenderer(props, NumberField, mapper, true);
 };
 

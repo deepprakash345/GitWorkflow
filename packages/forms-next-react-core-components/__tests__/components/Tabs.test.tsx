@@ -8,6 +8,7 @@ import { jsonString } from '@aemforms/crispr-core/lib/utils/JsonUtils';
 
 const emptyTabs = {
   'id': 'emptyTabs',
+  ':type' : "custom:tabs",
   'visible': true,
   'label': { value: 'empty label' },
   'items': []
@@ -15,13 +16,15 @@ const emptyTabs = {
 
 const tabsWithData = {
   'id': 'tabsWithData',
+  ':type' : "custom:tabs",
   'visible': true,
   'label': { value: 'tab label' },
   'items': [
     {
       'id': 'field',
       'name': 'f1',
-      'viewType': 'text-field',
+      'fieldType': 'text-field',
+      ':type' : "text-field",
       'title': 'name',
       'visible': true,
       'label': { value: 'text field label' }

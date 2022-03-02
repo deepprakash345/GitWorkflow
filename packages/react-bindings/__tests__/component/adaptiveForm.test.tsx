@@ -13,7 +13,7 @@ const formJson: FormJson = {
         'value': 'Text input Sample'
       },
       'type': 'string',
-      'viewType': 'text-input',
+      'fieldType': 'text-input',
       'placeholder': 'Please enter text'
     },
     {
@@ -22,7 +22,7 @@ const formJson: FormJson = {
         'value': 'Text input'
       },
       'type': 'string',
-      'viewType': 'text-input',
+      'fieldType': 'text-input',
       'placeholder': 'Please enter text',
       'required': true,
       'events': {
@@ -30,7 +30,7 @@ const formJson: FormJson = {
       }
     },
     {
-      'viewType': 'button',
+      'fieldType': 'button',
       'label': {
         'value': 'submit'
       },

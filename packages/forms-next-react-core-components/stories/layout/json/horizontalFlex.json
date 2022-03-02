@@ -1,11 +1,12 @@
 {
   "items": [
     {
-      "viewType": "custom:horizontal-flex",
+      ":type": "custom:horizontal-flex",
       "name": "flex",
       "label": {
         "value": "Horizontal Flex Title"
       },
+      "fieldType" : "panel",
       "items": [
         {
           "name": "textInput1",
@@ -13,7 +14,7 @@
             "value": "Text Input 1"
           },
           "type": "string",
-          "viewType": "text-input"
+          "fieldType": "text-input"
         },
         {
           "name": "textInput2",
@@ -21,7 +22,7 @@
             "value": "Text Input 2"
           },
           "type": "string",
-          "viewType": "text-input"
+          "fieldType": "text-input"
         },
         {
           "name": "textInput3",
@@ -29,7 +30,7 @@
             "value": "Text Input 4"
           },
           "type": "string",
-          "viewType": "text-input"
+          "fieldType": "text-input"
         },
         {
           "name": "textInput4",
@@ -37,7 +38,7 @@
             "value": "Text Input 4"
           },
           "type": "string",
-          "viewType": "text-input"
+          "fieldType": "text-input"
         }
       ]
     }

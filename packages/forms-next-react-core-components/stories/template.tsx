@@ -32,7 +32,7 @@ export const formWithSubmit = (...items) => {
 
 export const submitButton = (label = "Submit") => {
     return {
-        viewType: 'button',
+        fieldType: 'button',
         label: {
             value: "Submit"
         },

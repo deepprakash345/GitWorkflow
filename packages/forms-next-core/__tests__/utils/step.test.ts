@@ -12,7 +12,7 @@ const formJson = {
         {
             "type": "string",
             "step": 2,
-            "viewType": "number-input",
+            "fieldType": "number-input",
             "label": {
                 "value": "Enter an even number only"
             },
@@ -21,7 +21,7 @@ const formJson = {
         {
             "type": "string",
             "step": "2",
-            "viewType": "number-input",
+            "fieldType": "number-input",
             "label": {
                 "value": "Enter an even number only"
             },
@@ -30,7 +30,7 @@ const formJson = {
         {
             "type": "number",
             "step": 2,
-            "viewType": "number-input",
+            "fieldType": "number-input",
             "label": {
                 "value": "Enter an even number only"
             },
@@ -40,7 +40,7 @@ const formJson = {
             "type": "number",
             "step": 2,
             "default": 1,
-            "viewType": "number-input",
+            "fieldType": "number-input",
             "label": {
                 "value": "Enter an even number only"
             },
@@ -49,7 +49,7 @@ const formJson = {
         {
             "type": "number",
             "step": 2,
-            "viewType": "number-input",
+            "fieldType": "number-input",
             "label": {
                 "value": "Enter an even number only"
             },
@@ -60,7 +60,7 @@ const formJson = {
             "type": "number",
             "step": 2,
             "default": 2,
-            "viewType": "number-input",
+            "fieldType": "number-input",
             "label": {
                 "value": "Enter an even number only"
             },

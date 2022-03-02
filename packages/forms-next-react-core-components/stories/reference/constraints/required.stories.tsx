@@ -8,7 +8,7 @@ const textInput = {
         'value' : 'Field'
     },
     'description': 'Leave the field empty to fail required validation',
-    'viewType' : 'text-input'
+    'fieldType' : 'text-input'
 };
 
 const dropDown = {
@@ -18,7 +18,7 @@ const dropDown = {
     'enum' : [0, 1],
     'enumNames' : ['Option 1', 'Option 2'],
     'description': 'Leave the field empty to fail required validation',
-    'viewType' : 'drop-down'
+    'fieldType' : 'drop-down'
 };
 
 const radio = {
@@ -28,7 +28,7 @@ const radio = {
     'enum' : [0, 1],
     'enumNames' : ['Option 1', 'Option 2'],
     'description': 'Do not select any option to fail required validation',
-    'viewType' : 'radio-group'
+    'fieldType' : 'radio-group'
 };
 
 const checkboxGroup = {
@@ -38,7 +38,7 @@ const checkboxGroup = {
     'enum' : [0, 1],
     'enumNames' : ['Option 1', 'Option 2'],
     'description': 'Do not select any option to fail required validation',
-    'viewType' : 'checkbox-group'
+    'fieldType' : 'checkbox-group'
 };
 
 const checkbox = {
@@ -47,7 +47,7 @@ const checkbox = {
     },
     'type' : 'boolean',
     'description': 'Unselect to trigger fail validation',
-    'viewType' : 'checkbox'
+    'fieldType' : 'checkbox'
 };
 
 const item = {
@@ -68,7 +68,7 @@ const json:any = {
     'action': 'http://www.google.com/',
     'items' : [
         {
-            'viewType': 'button',
+            'fieldType': 'button',
             'label' : {
                 'value' : 'submit to trigger validation'
             },

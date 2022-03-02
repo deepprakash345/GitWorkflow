@@ -1,5 +1,5 @@
 import { TextField } from '@adobe/react-spectrum';
-import { FieldJson } from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import React from 'react';
 import { useRenderer } from '@aemforms/crispr-react-bindings';
 import {
@@ -21,7 +21,7 @@ const mapper = combineConvertors(baseConvertor,
 
 // Date component using TextField with input type date,
 // to be replaced with react-spectrum datepicker after release    
-const DateField = function (props: FieldJson & { id: string }) {
+const DateField = function (props: State<FieldJson>) {
   const renderedComponent = useRenderer(props, TextField, mapper, true);
   return renderedComponent;
 };

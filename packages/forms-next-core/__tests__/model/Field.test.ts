@@ -23,7 +23,7 @@ test('a field should add all the default values in its json', () => {
     expect(f.getState()).toMatchObject({
         visible : true,
         readOnly : false,
-        viewType: 'text-input',
+        fieldType: 'text-input',
         type: 'string',
         enabled : true
     });
@@ -37,13 +37,13 @@ test('a field should add all the default values in its json', () => {
 test("a field's type can be deduced from enum values", () => {
     const f = new Field({
         enum: [1, 2, 3],
-        viewType: 'text-input'
+        fieldType: 'text-input'
     }, options);
     expect(f.getState()).toMatchObject({
         visible : true,
         readOnly : false,
         enum: [1, 2, 3],
-        viewType: 'text-input',
+        fieldType: 'text-input',
         type: 'number',
         enabled : true
     });
@@ -57,7 +57,7 @@ test('a field should set the value correctly in its json from default value', ()
         enabled : true,
         default : 'test',
         value : 'test',
-        viewType : 'text-input',
+        fieldType : 'text-input',
         type: 'string'
     });
 });

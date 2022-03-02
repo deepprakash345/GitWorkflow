@@ -1,15 +1,16 @@
 import { Flex, Tabs, TabList, TabPanels, Item } from '@adobe/react-spectrum';
 import React, { useContext, useCallback } from 'react';
 import { FormContext } from '@aemforms/crispr-react-bindings';
+import {ContainerJson, State} from "@aemforms/crispr-core";
 
-const TabWrapper = function (props: any) {
+const TabWrapper = function (props: State<ContainerJson> & {orientation? : string}) {
   const mappings = useContext(FormContext).mappings;
   const { items, label, id, visible, orientation } = props;
 
   const getTabPanels = useCallback(() => {
     return (
       items.map((child: any, index: any) => {
-        const Comp = mappings?.[child.viewType];
+        const Comp = mappings?.[child[":type"]];
         return Comp ? (
           <Item key={child?.label?.value}>
             <Comp key={`${child.id}_${index}`} {...child} />

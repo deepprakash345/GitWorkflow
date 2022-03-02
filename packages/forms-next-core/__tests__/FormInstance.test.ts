@@ -10,7 +10,7 @@ test('single field form', async () => {
     const actual = await createFormInstance(form);
     expect(actual.items?.[0].getState()).toMatchObject({
         type: 'string',
-        viewType: 'text-input',
+        fieldType: 'text-input',
         name: 'name',
         readOnly: false,
         visible: true,
@@ -21,7 +21,7 @@ test('single field form', async () => {
 test('single field form with number type', async () => {
     const actual = await createFormInstance(numberFieldForm);
     expect(actual.items?.[0].getState()).toMatchObject({
-        viewType: 'number-input',
+        fieldType: 'number-input',
         type: 'number',
         name: 'name',
         readOnly: false,
@@ -36,7 +36,7 @@ test('single field form with default', async () => {
     const actual = await createFormInstance(form);
     expect(actual.items?.[0].getState()).toMatchObject({
         default: 'john doe',
-        viewType: 'text-input',
+        fieldType: 'text-input',
         type: 'string',
         name: 'name',
         readOnly: false,
@@ -49,7 +49,7 @@ test('single field form with default', async () => {
 test('form with panel', async () => {
     const actual = await createFormInstance(formWithPanel);
     expect(actual.items?.[0].getState()).toMatchObject({
-        viewType: 'text-input',
+        fieldType: 'text-input',
         type: 'string',
         name: 'name',
         readOnly: false,
@@ -62,7 +62,7 @@ test('form with panel', async () => {
         visible : true
     });
     expect(actual.items?.[1].items?.[0].getState()).toMatchObject({
-        viewType: 'number-input',
+        fieldType: 'number-input',
         type: 'number',
         name: 'zip',
         value: undefined,
@@ -75,7 +75,7 @@ test('form with panel', async () => {
 test.skip('nested fields with non form component', async () => {
     const actual = await createFormInstance(nonFormComponent);
     expect(actual.items?.[0].getState()).toMatchObject({
-        viewType: 'text-input',
+        fieldType: 'text-input',
         type: 'string',
         name: 'name',
         readOnly: false,
@@ -88,7 +88,7 @@ test.skip('nested fields with non form component', async () => {
         visible : true,
         items : [
             {
-                viewType: 'number-input',
+                fieldType: 'number-input',
                 type: 'number',
                 name: 'zip',
                 readOnly: false,

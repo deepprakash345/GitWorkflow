@@ -19,7 +19,7 @@ const dispatchJson = {
     "items": [
         {
             "name": "textfield",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             label: {
                 value: 'Counts how many times the button is clicked'
             },
@@ -33,7 +33,7 @@ const dispatchJson = {
         "label": {
             "value": "click me"
         },
-        "viewType": "button",
+        "fieldType": "button",
         "events": {
             "click": "dispatch_event(textfield, 'custom:buttonClicked')",
         }
@@ -46,7 +46,7 @@ const payloadJson = {
     "items": [
         {
             "name": "textfield",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             label: {
                 value: 'Counts how many times the button is clicked'
             },
@@ -60,7 +60,7 @@ const payloadJson = {
             "label": {
                 "value": "Single click is counted 5 times"
             },
-            "viewType": "button",
+            "fieldType": "button",
             "events": {
                 "click": "dispatch_event(textfield, 'custom:buttonClicked', {weight: 5})",
             }
@@ -73,7 +73,7 @@ const requestJson = {
         {
             "name": "countries",
             "type": "string",
-            "viewType": "drop-down",
+            "fieldType": "drop-down",
             "label": {
                 "value": "Countries"
             },
@@ -87,7 +87,7 @@ const requestJson = {
                 "value": "click me to load countries list"
             },
             description: "The request function on success/errors triggers a custom event which can be handled by any fields",
-            "viewType": "button",
+            "fieldType": "button",
             "events": {
                 "click": "request('https://countriesnow.space/api/v0.1/countries', 'GET', null, 'countriesLoaded', 'countriesLoadFail')",
             }

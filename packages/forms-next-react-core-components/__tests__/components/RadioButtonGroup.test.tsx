@@ -18,7 +18,7 @@ const field : FieldJson = {
     label : {
         value : 'Are you Employed'
     },
-    'viewType' : 'radio-group',
+    'fieldType' : 'radio-group',
     'type' : 'boolean',
     'enum' : [true, false],
     'enumNames' : ['Yes',  'No']

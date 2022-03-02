@@ -44,7 +44,7 @@ const fieldWithMultipleFiles = {
     'format': 'data-url',
     'type': 'string[]',
     'maxFileSize': '10MB',
-    'viewType': 'file-input',
+    'fieldType': 'file-input',
     'label': {
         'value': 'Multiple Profile'
     },

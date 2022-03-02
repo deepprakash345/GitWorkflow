@@ -53,9 +53,9 @@ const _createTranslationId = (input: formElementJson, path: string, transProps: 
         if (typeof value == 'object') {
             _createTranslationId(value, ((key === 'items') ? path : `${path === '' ? path : path + TRANSLATION_TOKEN}${key}${TRANSLATION_TOKEN}${Math.floor(Math.random() * 10000) + 1}`), transProps);
         } else {
-            // set it only if either of type or viewType properties is present
+            // set it only if either of type or fieldType properties is present
             if ('type' in input ||
-                'viewType' in input) {
+                'fieldType' in input) {
                 for (const transProp of transProps) {
                     // if property exist add it
                     if (input[transProp] != null) {

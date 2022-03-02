@@ -1,5 +1,5 @@
 import { CheckboxGroup, Checkbox } from '@adobe/react-spectrum';
-import { FieldJson } from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/crispr-core';
 import React from 'react';
 import { useRenderer } from '@aemforms/crispr-react-bindings';
 import {
@@ -32,7 +32,7 @@ const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConver
 
 const Comp = withErrorMessage(CheckboxGroup);
 
-const CheckboxGroupComponent = function (props: FieldJson & { id: string }) {
+const CheckboxGroupComponent = function (props: State<FieldJson>) {
   return useRenderer(props, Comp, mapper);
 };
 

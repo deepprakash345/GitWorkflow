@@ -10,7 +10,7 @@ const textInputExample = {
     'label' : {
         'value' : 'Text Field'
     },
-    'viewType' : 'text-input',
+    'fieldType' : 'text-input',
     type: 'string'
 };
 

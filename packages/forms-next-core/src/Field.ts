@@ -2,7 +2,7 @@ import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, Form
 import {Constraints, ValidConstraints} from './utils/ValidationUtils';
 import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller/Controller';
 import Scriptable from './Scriptable';
-import {defaultViewTypes} from './utils/SchemaUtils';
+import {defaultFieldTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
 import DataGroup from './data/DataGroup';
 
@@ -66,8 +66,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         if (value === undefined) {
             this._jsonModel.value = this._jsonModel.default;
         }
-        if (this._jsonModel.viewType === undefined) {
-            this._jsonModel.viewType = defaultViewTypes(this._jsonModel);
+        if (this._jsonModel.fieldType === undefined) {
+            this._jsonModel.fieldType = defaultFieldTypes(this._jsonModel);
         }
         if (this._jsonModel.enum === undefined) {
             const type = this._jsonModel.type;

@@ -4,11 +4,13 @@ import {renderChildren} from '../src';
 
 const item = {
     'id' : 'id',
-    'viewType' : 'someType'
+    ':type' : 'someType',
+    'fieldType' : 'someType'
 };
 
 const parent = {
     'id' : 'parentid',
+    ':type' : 'panel',
     'items' : [item]
 };
 
@@ -65,7 +67,7 @@ test('render children with missing mapping returns undefined element', () => {
 test('render children with correct mappings', () => {
     const item = {
         'id' : 'id',
-        'viewType' : 'someType',
+        'fieldType' : 'someType',
         'value' : 'some value'
     };
     const p = {

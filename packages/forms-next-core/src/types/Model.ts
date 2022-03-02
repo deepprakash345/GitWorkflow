@@ -52,22 +52,11 @@ interface WithState<T> {
     getState : () => State<T>
 }
 
-/**
- * Generic interface which defines container state
- * @typeparam T type of the form object which extends from {@link ContainerJson | container}
- */
-interface WithContainerState<T extends ContainerJson> {
-    getState : () => T & {
-        id: string
-        items: Array<{id: string, viewType: string}>
-    }
-}
-
 /** Generic type for a form object state */
 export type State<T> =
     T extends ContainerJson ? T & {
     id: string,
-    items: Array<{id: string, viewType: string}> } : T & {id: string}
+    items: Array<State<FieldJson | ContainerJson>> } : T & {id: string, ':type' : string }
 
 /**
  * @private
@@ -180,13 +169,18 @@ export interface BaseModel extends ConstraintsJson, WithController {
      */
     valid?: boolean
     /**
-     * Type of widget to show to the user for capturing the data..
+     * Custom widget type show to the user for capturing the data.
      */
-    readonly viewType: string
+    readonly ':type': string
+
+    /**
+     * Type of field to capture the user data.
+     */
+    readonly 'fieldType': string
     /**
      * Custom properties of the form field.
      */
-    props?: {
+    properties: {
         [key: string]: any;
     }
     /**
@@ -291,7 +285,7 @@ export interface ContainerModel extends BaseModel, ScriptableField {
  * Generic field set model interface.
  * Defines properties that each field set should have
  */
-export interface FieldsetModel extends ContainerModel, WithContainerState<FieldsetJson> {
+export interface FieldsetModel extends ContainerModel, WithState<FieldsetJson> {
     type?: 'array' | 'object'
 }
 
@@ -299,7 +293,7 @@ export interface FieldsetModel extends ContainerModel, WithContainerState<Fields
  * Defines the interface for form model
  */
 export interface FormModel extends ContainerModel,
-    WithContainerState<FormJson> {
+    WithState<FormJson> {
     /**
      * Id of the form.
      */

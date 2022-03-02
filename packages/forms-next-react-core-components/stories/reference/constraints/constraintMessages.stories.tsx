@@ -38,7 +38,7 @@ exclusiveMinimum.args = {formJson: {
         {
             "name": "textInput1",
             "type": "number",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "exclusiveMinimum": 100,
             "label": {
                 "value": "Field with minimum value 100 (exclusive) and custom error message"
@@ -60,7 +60,7 @@ exclusiveMaximum.args = {formJson: {
         {
             "name": "textInput1",
             "type": "number",
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "exclusiveMaximum": 100,
             "label": {
                 "value": "Field with maximum value 100 (exclusive) and custom error message"
@@ -86,7 +86,7 @@ step.args = {formJson: {
                 type: "number",
                 step: 2,
                 default: 2,
-                viewType: "number-input",
+                fieldType: "number-input",
                 label: {
                     value: "Enter a number"
                 },
@@ -102,7 +102,7 @@ minItems.args = {formJson: {
         ...base,
         items: [
             {
-                viewType: 'checkbox-group',
+                fieldType: 'checkbox-group',
                 label: {
                     value: 'select minimum 3'
                 },
@@ -115,7 +115,7 @@ minItems.args = {formJson: {
                 },
             },
             {
-                "viewType": "button",
+                "fieldType": "button",
                 "label": {
                     "value": "submit"
                 },
@@ -131,7 +131,7 @@ maxItems.args = {formJson: {
         ...base,
         items: [
             {
-                viewType: 'checkbox-group',
+                fieldType: 'checkbox-group',
                 label: {
                     value: 'select at most 3'
                 },
@@ -144,7 +144,7 @@ maxItems.args = {formJson: {
                 maxItems : 3
             },
             {
-                "viewType": "button",
+                "fieldType": "button",
                 "label": {
                     "value": "submit"
                 },
@@ -159,7 +159,7 @@ export const enforceEnum = Template.bind({});
 enforceEnum.args = {formJson: {
         ...base,
         items: [{
-            viewType: 'text-input',
+            fieldType: 'text-input',
             label: {
                 value: 'Field with enum 1 or 2'
             },

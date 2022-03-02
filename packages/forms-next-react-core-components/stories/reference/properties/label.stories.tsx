@@ -19,7 +19,7 @@ const formJson:any = (label, description, visible = undefined, richText = undefi
                     richText
                 },
                 'description': description,
-                'viewType' : 'text-input'
+                'fieldType' : 'text-input'
             }
         ],
         'metadata': {

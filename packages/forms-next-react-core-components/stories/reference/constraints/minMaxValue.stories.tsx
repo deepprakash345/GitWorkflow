@@ -32,7 +32,7 @@ exclusiveMinimum.args = {formJson: {
             {
                 "name": "textInput1",
                 "type": "number",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "exclusiveMinimum": 100,
                 "label": {
                     "value": "Field with minimum value 100 (exclusive)"
@@ -51,7 +51,7 @@ exclusiveMaximum.args = {formJson: {
             {
                 "name": "textInput1",
                 "type": "number",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "exclusiveMaximum": 100,
                 "label": {
                     "value": "Field with maximum value 100 (exclusive)"
@@ -80,7 +80,7 @@ step.args = {formJson: {
                 type: "number",
                 step: 2,
                 default: 2,
-                viewType: "number-input",
+                fieldType: "number-input",
                 label: {
                     value: "Enter an even number only"
                 },
@@ -93,14 +93,14 @@ export const enforceEnum = Template.bind({});
 enforceEnum.args = {formJson: {
         ...base,
         items: [{
-            viewType: 'text-input',
+            fieldType: 'text-input',
             label: {
                 value: 'Field with enum 1 or 2'
             },
             enum: [1, 2],
             description: 'Since enum is not enforced other values can be entered'
         }, {
-                viewType: 'text-input',
+                fieldType: 'text-input',
                 label: {
                     value: 'Field with enum 1 or 2'
                 },
@@ -114,7 +114,7 @@ export const validationExpression = Template.bind({});
 validationExpression.args = {formJson: {
         ...base,
         items: [{
-            viewType: 'text-input',
+            fieldType: 'text-input',
             name: "field1",
             type:"number",
             label: {
@@ -123,7 +123,7 @@ validationExpression.args = {formJson: {
             validationExpression: "value < field2 * field2",
             description: 'The value must be less than the square of value in field 2'
         }, {
-            viewType: 'text-input',
+            fieldType: 'text-input',
             type: "number",
             name: "field2",
             label: {

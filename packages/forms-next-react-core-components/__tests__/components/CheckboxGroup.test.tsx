@@ -10,7 +10,7 @@ const field: FieldJson = {
   label: {
     value: 'Checkbox group'
   },
-  viewType: 'checkbox-group',
+  fieldType: 'checkbox-group',
   'enum': [1, 2, 3],
   'enumNames': ['checkbox 1', 'checkbox 2', 'checkbox 3']
 };

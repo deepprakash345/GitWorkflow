@@ -8,7 +8,7 @@ export const oneFieldForm: FormJson = {
     items: [
         {
             type: 'string',
-            viewType: 'text-input',
+            fieldType: 'text-input',
             name: 'name'
         }]
 };
@@ -17,7 +17,7 @@ export const numberFieldForm : FormJson = {
     items: [
         {
             type : 'number',
-            viewType: 'number-input',
+            fieldType: 'number-input',
             name: 'name'
         }
         ]
@@ -27,7 +27,7 @@ export const formWithPanel: FormJson = {
     items: [
         {
             type : 'string',
-            viewType: 'text-input',
+            fieldType: 'text-input',
             name: 'name'
         },
         {
@@ -36,7 +36,7 @@ export const formWithPanel: FormJson = {
             items: [
                 {
                     type : 'number',
-                    viewType: 'number-input',
+                    fieldType: 'number-input',
                     name: 'zip'
                 }
             ]
@@ -48,7 +48,7 @@ export const nonFormComponent: FormJson = {
     items : [
         {
             type : 'string',
-            viewType: 'text-input',
+            fieldType: 'text-input',
             name: 'name'
         },
         {
@@ -56,7 +56,7 @@ export const nonFormComponent: FormJson = {
             items : [
                 {
                     type : 'number',
-                    viewType: 'number-input',
+                    fieldType: 'number-input',
                     name: 'zip'
                 }
             ]
@@ -69,17 +69,17 @@ export const formWithRules = {
     items :[
         {
             type : 'string',
-            viewType: 'text-input',
+            fieldType: 'text-input',
             name: 'firstName'
         },
         {
             type : 'string',
-            viewType: 'text-input',
+            fieldType: 'text-input',
             name: 'lastName'
         },
         {
             type : 'string',
-            viewType : 'text-input',
+            fieldType : 'text-input',
             rules : {
                 value : "$form.firstName.value & ' ' & $form.lastName.value"
             },
@@ -178,7 +178,7 @@ export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormMod
         parent: null,
         //@ts-ignore
         value: undefined,
-        viewType: '',
+        fieldType: '',
         dispatch: jest.fn(),
         getEventQueue: () => {
             return eventQueue;

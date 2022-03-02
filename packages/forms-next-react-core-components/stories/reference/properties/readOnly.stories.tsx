@@ -18,7 +18,7 @@ const generate = (t = "text-input", extras = {}) => {
             },
             'description': 'This field is read only',
             'readOnly' : true,
-            viewType: t,
+            fieldType: t,
             ...extras
         }
     ]}

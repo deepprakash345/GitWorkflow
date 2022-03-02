@@ -26,7 +26,7 @@ export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormMod
         parent: null,
         //@ts-ignore
         value: undefined,
-        viewType: '',
+        fieldType: '',
         dispatch: jest.fn(),
         getEventQueue: () => {
             return eventQueue;
@@ -54,28 +54,28 @@ beforeEach(() => {
 });
 
 test('should fetch the field controller', () => {
-    renderHook(() => useRuleEngine({'id': 'something'}), {wrapper});
+    renderHook(() => useRuleEngine({'id': 'something', ':type' : 'text-input'}), {wrapper});
     expect(form.getElement).toHaveBeenCalledWith('something');
 });
 
 test('should return the original value', () => {
-    const {result} = renderHook(() => useRuleEngine({'id': 'something'}), {wrapper});
-    expect(result.current[0]).toEqual({'id' : 'something'});
+    const {result} = renderHook(() => useRuleEngine({'id': 'something', ':type' : 'text-input'}), {wrapper});
+    expect(result.current[0]).toEqual({'id' : 'something', ':type' : 'text-input'});
 });
 
 test('should subscribe to the form', () => {
-    renderHook(() => useRuleEngine({'id': 'id'}), {wrapper});
+    renderHook(() => useRuleEngine({'id': 'id', ':type' : 'text-input'}), {wrapper});
     expect(form.subscribe).toHaveBeenCalledWith(expect.anything());
 });
 
 test('should trigger the dispatch event of the form', () => {
-    const {result} = renderHook(() => useRuleEngine({'id': 'id'}), {wrapper});
+    const {result} = renderHook(() => useRuleEngine({'id': 'id', ':type' : 'text-input'}), {wrapper});
     result.current[1].dispatchAddItem();
     expect(form.dispatch).toHaveBeenCalledWith(new AddItem());
 });
 
 test('should trigger the dispatch click event on the form', () => {
-    const {result} = renderHook(() => useRuleEngine({'id': 'id'}), {wrapper});
+    const {result} = renderHook(() => useRuleEngine({'id': 'id', ':type' : 'text-input'}), {wrapper});
     result.current[1].dispatchClick();
     expect(form.dispatch).toHaveBeenCalledWith(new Click(null));
 });

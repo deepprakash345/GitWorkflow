@@ -19,7 +19,7 @@ const field = {
     'value': 'birthYear'
   },
   type: 'number',
-  viewType: 'number-input',
+  fieldType: 'number-input',
   'visible': true
 };
 

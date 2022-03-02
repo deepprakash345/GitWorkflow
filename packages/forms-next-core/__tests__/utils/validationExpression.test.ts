@@ -8,7 +8,7 @@ const formJson = {
     },
     "items": [
         {
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "name": "field1",
             "type": "number",
             "label": {
@@ -21,7 +21,7 @@ const formJson = {
             }
         },
         {
-            "viewType": "text-input",
+            "fieldType": "text-input",
             "type": "number",
             "name": "field2",
             "label": {

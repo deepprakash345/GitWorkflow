@@ -1,11 +1,12 @@
 {
   "items": [
     {
-      "viewType": "custom:accordion",
+      ":type": "custom:accordion",
       "name": "accordion",
       "label": {
         "value": "horizontal accordion title"
       },
+      "fieldType" : "panel",
       "items": [
         {
           "name": "textInput",
@@ -13,21 +14,21 @@
             "value": "Item 1"
           },
           "type": "string",
-          "viewType": "text-input"
+          "fieldType": "text-input"
         },
         {
           "name": "button",
           "label": {
             "value": "Item 2"
           },
-          "viewType": "button"
+          "fieldType": "button"
         },
         {
           "name": "item3",
           "label": {
             "value": "Item 3"
           },
-          "viewType": "panel",
+          "fieldType": "panel",
           "items": [
             {
               "name": "firstName",
@@ -35,7 +36,7 @@
                 "value": "First Name"
               },
               "type": "string",
-              "viewType": "text-input"
+              "fieldType": "text-input"
             },
             {
               "name": "lastName",
@@ -43,7 +44,7 @@
                 "value": "Last Name"
               },
               "type": "text",
-              "viewType": "text-input"
+              "fieldType": "text-input"
             }
           ]
         }

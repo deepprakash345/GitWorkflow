@@ -2,7 +2,7 @@
   "adaptiveform": "0.0.17-pre",
   "items" : [
     {
-      "viewType": "button",
+      "fieldType": "button",
       "label": {
         "value": "Trigger Event A"
       },
@@ -11,7 +11,7 @@
       }
     },
     {
-      "viewType": "button",
+      "fieldType": "button",
       "label": {
         "value": "Trigger Event B"
       },
@@ -20,7 +20,7 @@
       }
     },
     {
-      "viewType": "button",
+      "fieldType": "button",
       "label": {
         "value": "Trigger Both Events A and B"
       },
@@ -29,7 +29,7 @@
       }
     },
     {
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "label": {
         "value": "Event A Listener"
       },
@@ -38,7 +38,7 @@
       }
     },
     {
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "label": {
         "value": "Event B Listener"
       },

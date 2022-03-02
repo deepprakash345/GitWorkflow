@@ -4,7 +4,7 @@
 
 import {FieldsetJson, FieldJson} from '../types';
 import {FileObject} from '../FileObject';
-import {defaultViewTypes} from './SchemaUtils';
+import {defaultFieldTypes} from './SchemaUtils';
 
 /**
  * Get the property value form the json
@@ -42,8 +42,8 @@ export const isFile = function (item: FieldsetJson | FieldJson) {
  * @returns `true` if `item` is a form check box, `false` otherwise
  */
 export const isCheckbox = function (item: FieldsetJson | FieldJson) {
-    const viewType = item?.viewType || defaultViewTypes(item);
-    return viewType === 'checkbox';
+    const fieldType = item?.fieldType || defaultFieldTypes(item);
+    return fieldType === 'checkbox';
 };
 
 /**
@@ -52,8 +52,8 @@ export const isCheckbox = function (item: FieldsetJson | FieldJson) {
  * @returns `true` if `item` is a form check box group, `false` otherwise
  */
 export const isCheckboxGroup = function (item: FieldsetJson | FieldJson) {
-    const viewType = item?.viewType || defaultViewTypes(item);
-    return viewType === 'checkbox-group';
+    const fieldType = item?.fieldType || defaultFieldTypes(item);
+    return fieldType === 'checkbox-group';
 };
 
 /**

@@ -6,10 +6,10 @@ test('i18n getTranslationMessages returns flat react-intl message format', () =>
     const actual = getTranslationMessages({
         'items' : {
             'panel' : {
-                'viewType': 'panel',
+                'fieldType': 'panel',
                 'items' : {
                     'firstName': {
-                        'viewType': 'text-input',
+                        'fieldType': 'text-input',
                         'type': 'string',
                         'title': 'Hello, world',
                         'description': "The person's first name.",
@@ -21,7 +21,7 @@ test('i18n getTranslationMessages returns flat react-intl message format', () =>
                         'required': true
                     },
                     'lastName': {
-                        'viewType': 'text-input',
+                        'fieldType': 'text-input',
                         'type': 'string',
                         'title': 'Hello, world',
                         'description': "The person's last name.",

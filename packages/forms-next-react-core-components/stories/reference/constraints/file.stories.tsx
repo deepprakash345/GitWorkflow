@@ -31,7 +31,7 @@ const form = {
             "name": "profile_image",
             "type": "file",
             "maxFileSize": "2MB",
-            "viewType": "file-input",
+            "fieldType": "file-input",
             "label": {
                 "value": "Profile Image"
             },
@@ -47,7 +47,7 @@ const form2 = {
             "name": "profile_image",
             "type": "file",
             "accept": "image/*",
-            "viewType": "file-input",
+            "fieldType": "file-input",
             "label": {
                 "value": "Profile Image"
             },

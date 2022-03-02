@@ -44,7 +44,7 @@ readOnly.args = {
             {
                 "name": "checkbox",
                 "type": "boolean",
-                "viewType": "checkbox",
+                "fieldType": "checkbox",
                 "label": {
                     "value": "Select for enabling the text field"
                 }
@@ -52,7 +52,7 @@ readOnly.args = {
             {
                 "name": "name",
                 "type": "string",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "label": {
                     "value": "Text input"
                 },
@@ -72,7 +72,7 @@ required.args = {
             {
                 "name": "checkbox",
                 "type": "boolean",
-                "viewType": "checkbox",
+                "fieldType": "checkbox",
                 "label": {
                     "value": "Select to make the text field required"
                 }
@@ -80,7 +80,7 @@ required.args = {
             {
                 "name": "name",
                 "type": "string",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "label": {
                     "value": "Text input"
                 },
@@ -101,7 +101,7 @@ visible.args = {
             {
                 "name": "field",
                 "type": "string",
-                "viewType": "text-input",
+                "fieldType": "text-input",
                 "label": {
                     "value": "Text input"
                 },
@@ -109,7 +109,7 @@ visible.args = {
             },
             {
                 "name": "button",
-                "viewType": "button",
+                "fieldType": "button",
                 "label": {
                     "value": "Submit"
                 },

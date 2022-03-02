@@ -7,7 +7,7 @@ const FlexWrapper = function (props: any) {
   const { items, visible, columns } = props;
 
   const getItem = useCallback((child: any, index: any) => {
-    const Comp = mappings?.[child.viewType];
+    const Comp = mappings?.[child[':type']];
     return Comp ? <Comp key={`${child.id}_${index}`} {...child} /> : (null);
   }, [mappings]);
 

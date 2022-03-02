@@ -16,7 +16,7 @@ const formJson:any = (name, label, description) => {
                     'value' : label
                 },
                 'description': description,
-                'viewType' : 'text-input'
+                'fieldType' : 'text-input'
             }
         ],
         'metadata': {

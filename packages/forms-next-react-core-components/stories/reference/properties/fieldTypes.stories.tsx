@@ -36,22 +36,22 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     </Spectrum3Provider>
 );
 
-const getJson = (viewType: string) => {
+const getJson = (fieldType: string) => {
     return {
     ...json,
         items: [{
         ...item,
-        viewType
+        fieldType
     }]
     };
 };
 
-const getOptionsJson = (viewType: string) => {
+const getOptionsJson = (fieldType: string) => {
     return {
         ...json,
         items: [{
             ...item,
-            viewType,
+            fieldType,
             ...options
         }]
     };
@@ -99,7 +99,7 @@ const checkboxJson = {
     ...json,
     items: [{
         ...item,
-        viewType: 'checkbox',
+        fieldType: 'checkbox',
         type: 'boolean'
     }]
 };
@@ -110,7 +110,7 @@ const textJson = {
     ...json,
     items: [{
         'name' : 'textInput',
-        viewType: 'plain-text',
+        fieldType: 'plain-text',
         value: 'text'
     }]
 };
@@ -120,7 +120,7 @@ const buttonJson = {
     ...json,
     items: [{
         ...item,
-        viewType: 'button',
+        fieldType: 'button',
         label: {
             value: 'click me'
         }

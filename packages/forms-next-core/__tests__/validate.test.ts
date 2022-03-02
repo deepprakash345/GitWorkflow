@@ -2,13 +2,13 @@ import {validateFormInstance} from '../src/FormInstance';
 
 const form = {
     'items': [{
-        'viewType': 'panel',
+        'fieldType': 'panel',
         'name': 'personal',
         'type': 'object',
         'items': [
             {
                 'name': 'firstname',
-                'viewType': 'text-input',
+                'fieldType': 'text-input',
                 'type': 'string',
                 'required': true,
                 'constraintMessages': {
@@ -23,7 +23,7 @@ const form = {
             },
             {
                 'name': 'lastname',
-                'viewType': 'text-input',
+                'fieldType': 'text-input',
                 'type': 'string',
                 'required': true,
                 'constraintMessages': {
@@ -38,7 +38,7 @@ const form = {
             },
             {
                 'name': 'selectone',
-                'viewType': 'radio-group',
+                'fieldType': 'radio-group',
                 'type': 'boolean',
                 'enum': [
                     true,
@@ -63,7 +63,7 @@ const form = {
             },
             {
                 'name': 'aboutme',
-                'viewType': 'multiline-input',
+                'fieldType': 'multiline-input',
                 'default': 'Everything is awesome!',
                 'type': 'string',
                 'required': true,
@@ -79,7 +79,7 @@ const form = {
             },
             {
                 'name': 'submit',
-                'viewType': 'button',
+                'fieldType': 'button',
                 'screenReaderText': 'Enter your message in less than 1000 characters and minimum 50 characters',
                 'events': {
                     'click': "dispatch_event($form, 'submit')"

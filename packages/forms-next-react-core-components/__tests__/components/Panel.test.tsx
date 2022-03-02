@@ -17,7 +17,8 @@ const panelWithField = {
         {
             'id' : 'field',
             'name' : 'f1',
-            'viewType' : 'text-field',
+            'fieldType' : 'text-field',
+            ':type' : "text-field",
             'title' : 'name',
             'visible' : true
         }

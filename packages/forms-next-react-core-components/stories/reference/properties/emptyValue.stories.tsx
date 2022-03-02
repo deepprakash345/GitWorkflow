@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import {base, logData} from "../../template";
 
 const sampleField = {
-    viewType: 'text-input',
+    fieldType: 'text-input',
     type: "string",
     "name": "field",
     label: {
