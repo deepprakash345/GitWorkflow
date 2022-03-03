@@ -1,4 +1,4 @@
-import {createFormInstance} from "../lib";
+import {createFormInstance} from "../src";
 
 
 const undefinedEmptyValue = {

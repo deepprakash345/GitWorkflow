@@ -17,8 +17,11 @@ import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
 import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, ValidationComplete} from './controller/Controller';
 
-export type LogType = "info" | "warn" | "error"
-export type LogLevel = "off" | LogType
+type LogFunction = "info" | "warn" | "error"
+/**
+ * Logging levels.
+ */
+export type LogLevel = "off" | LogFunction
 
 const levels = {
     off: 0,
@@ -28,7 +31,7 @@ const levels = {
 }
 
 /**
- * private
+ * @private
  */
 export class Logger {
 
@@ -44,7 +47,7 @@ export class Logger {
         this.log(msg, 'error')
     }
 
-    log(msg: string, level: LogType) {
+    log(msg: string, level: LogFunction) {
         if (this.logLevel <= levels[level]) {
             console[level](msg)
         }
@@ -89,7 +92,7 @@ class Form extends Container<FormJson> implements FormModel {
     constructor(n: FormJson,
                 private _ruleEngine: RuleEngine,
                 private _eventQueue = new EventQueue(),
-                private logLevel: "off" | "info" | "warning" | "error" = "off") {
+                private logLevel: LogLevel = "off") {
         //@ts-ignore
         super(n, {});
         this._logger = new Logger()
