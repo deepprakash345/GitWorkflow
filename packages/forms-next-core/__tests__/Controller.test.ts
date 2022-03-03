@@ -1,10 +1,10 @@
-import {Change, Click, ExecuteRule} from '../src/controller/Controller';
+import {Change, Click, ExecuteRule} from '../src/';
 import {create, MockForm} from './collateral';
 import Form from '../src/Form';
 import Field from '../src/Field';
 import RuleEngine from '../src/rules/RuleEngine';
 import EventQueue from '../src/controller/EventQueue';
-import {FormModel} from '../src/types';
+import {FormModel} from '../src';
 
 describe('Field Controller with Form', () => {
 

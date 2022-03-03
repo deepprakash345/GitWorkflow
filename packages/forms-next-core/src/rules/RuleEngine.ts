@@ -40,12 +40,18 @@ class RuleEngine {
         return new Formula(rule as string, customFunctions, undefined, this._globalNames);
     }
 
-    execute(node: any, data: any, globals: any) {
+    execute(node: any, data: any, globals: any, useValueOf: boolean = false) {
         const oldContext = this._context;
         this._context = globals;
         const res = node.search(data, globals);
+        let finalRes = res;
+        if (useValueOf) {
+            if (typeof res === "object" && res !== null) {
+                finalRes = Object.getPrototypeOf(res).valueOf.call(res)
+            }
+        }
         this._context = oldContext;
-        return res;
+        return finalRes;
     }
 
     /**

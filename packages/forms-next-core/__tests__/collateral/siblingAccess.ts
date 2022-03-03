@@ -10,7 +10,7 @@ const staticForm = {
             type: 'string',
             fieldType: 'text-input',
             rules: {
-                value : 'field1.value'
+                value : 'field1'
             }
         }
     ]
