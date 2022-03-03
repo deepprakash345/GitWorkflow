@@ -15,6 +15,7 @@ import HorizontalFlex from '../components/flex/HorizontalFlex';
 import VerticalFlex from '../components/flex/VerticalFlex';
 import HorizontalTab from '../components/tabs/HorizontalTabs';
 import VerticalTab from '../components/tabs/VerticalTabs';
+import PasswordField from '../components/Password';
 
 const mappings = {
     'text-input' : TextField,
@@ -34,7 +35,8 @@ const mappings = {
     'custom:vertical-flex': VerticalFlex,
     'custom:horizontal-flex': HorizontalFlex,
     'custom:vertical-tab': VerticalTab,
-    'custom:horizontal-tab': HorizontalTab
+    'custom:horizontal-tab': HorizontalTab,
+    'password-input' : PasswordField
 };
 
 export default mappings;
