@@ -22,6 +22,7 @@ Defines properties that each form field should have
 
 ### Properties
 
+- [:type](FieldModel.md#:type)
 - [accept](FieldModel.md#accept)
 - [dataRef](FieldModel.md#dataref)
 - [default](FieldModel.md#default)
@@ -33,6 +34,7 @@ Defines properties that each form field should have
 - [events](FieldModel.md#events)
 - [exclusiveMaximum](FieldModel.md#exclusivemaximum)
 - [exclusiveMinimum](FieldModel.md#exclusiveminimum)
+- [fieldType](FieldModel.md#fieldtype)
 - [format](FieldModel.md#format)
 - [id](FieldModel.md#id)
 - [index](FieldModel.md#index)
@@ -50,15 +52,15 @@ Defines properties that each form field should have
 - [parent](FieldModel.md#parent)
 - [pattern](FieldModel.md#pattern)
 - [placeholder](FieldModel.md#placeholder)
-- [props](FieldModel.md#props)
+- [properties](FieldModel.md#properties)
 - [readOnly](FieldModel.md#readonly)
 - [required](FieldModel.md#required)
 - [rules](FieldModel.md#rules)
+- [step](FieldModel.md#step)
 - [type](FieldModel.md#type)
 - [valid](FieldModel.md#valid)
 - [validationExpression](FieldModel.md#validationexpression)
 - [value](FieldModel.md#value)
-- [viewType](FieldModel.md#viewtype)
 - [visible](FieldModel.md#visible)
 
 ### Methods
@@ -67,6 +69,18 @@ Defines properties that each form field should have
 - [validate](FieldModel.md#validate)
 
 ## Properties
+
+### :type
+
+• `Readonly` **:type**: `string`
+
+Custom widget type show to the user for capturing the data.
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[:type](BaseModel.md#:type)
+
+___
 
 ### accept
 
@@ -189,6 +203,18 @@ ___
 #### Inherited from
 
 [BaseModel](BaseModel.md).[exclusiveMinimum](BaseModel.md#exclusiveminimum)
+
+___
+
+### fieldType
+
+• `Readonly` **fieldType**: `string`
+
+Type of field to capture the user data.
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[fieldType](BaseModel.md#fieldtype)
 
 ___
 
@@ -378,9 +404,9 @@ The placeholder to show on the widget.
 
 ___
 
-### props
+### properties
 
-• `Optional` **props**: `Object`
+• **properties**: `Object`
 
 Custom properties of the form field.
 
@@ -390,7 +416,7 @@ Custom properties of the form field.
 
 #### Inherited from
 
-[BaseModel](BaseModel.md).[props](BaseModel.md#props)
+[BaseModel](BaseModel.md).[properties](BaseModel.md#properties)
 
 ___
 
@@ -429,6 +455,16 @@ Rules that modify the property of the object dynamically. The rules are evaluate
 #### Inherited from
 
 [ScriptableField](ScriptableField.md).[rules](ScriptableField.md#rules)
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+[BaseModel](BaseModel.md).[step](BaseModel.md#step)
 
 ___
 
@@ -473,18 +509,6 @@ The current value of the Field. The property is serialized in the Data Model.
 #### Inherited from
 
 [BaseModel](BaseModel.md).[value](BaseModel.md#value)
-
-___
-
-### viewType
-
-• `Readonly` **viewType**: `string`
-
-Type of widget to show to the user for capturing the data..
-
-#### Inherited from
-
-[BaseModel](BaseModel.md).[viewType](BaseModel.md#viewtype)
 
 ___
 

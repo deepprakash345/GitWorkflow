@@ -8,6 +8,7 @@ const AccordionWrapper = function (fieldset: State<FieldsetJson>) {
   const mappings = useContext(FormContext).mappings;
   const [props] = useRuleEngine(fieldset);
   const { items, visible } = props;
+  const layout = props?.properties?.layout || {};
 
   const getItems = useCallback(() => {
     return (
@@ -23,7 +24,7 @@ const AccordionWrapper = function (fieldset: State<FieldsetJson>) {
   }, [items, mappings]);
 
   return visible ? (
-    <Accordion>{getItems()}</Accordion>
+    <Accordion {...layout}>{getItems()}</Accordion>
   ) : (null);
 };
 

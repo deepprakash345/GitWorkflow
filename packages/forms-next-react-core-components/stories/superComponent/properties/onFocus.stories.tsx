@@ -5,6 +5,7 @@ import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectr
 import mappings from '../../../src/utils/mappings';
 import jsonform from '../../example/json';
 import React, {useState} from 'react';
+import produce from 'immer';
 export default {
     title: 'Reference/Component/props',
     component: AdaptiveForm,
@@ -33,6 +34,12 @@ export const onFocus: ComponentStory<typeof AdaptiveForm> = (args) => (
     <App formJson={args.formJson}/>
 );
 
+// maintain immutability via immer
+const newContactJson: any = produce(jsonform.contactJson, draft => {
+    // mutating draft implementation without changing the original object
+    draft.items[6].label.value = 'Click me to set focus on invalid field on form submit';
+});
+
 onFocus.args = {
-    formJson: jsonform.contactJson
+    formJson: newContactJson
 };

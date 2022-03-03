@@ -27,7 +27,9 @@ execution of rules/events should extend from this class.
 
 ### Accessors
 
+- [:type](Scriptable.md#:type)
 - [dataRef](Scriptable.md#dataref)
+- [fieldType](Scriptable.md#fieldtype)
 - [form](Scriptable.md#form)
 - [id](Scriptable.md#id)
 - [index](Scriptable.md#index)
@@ -35,10 +37,10 @@ execution of rules/events should extend from this class.
 - [label](Scriptable.md#label)
 - [name](Scriptable.md#name)
 - [parent](Scriptable.md#parent)
+- [properties](Scriptable.md#properties)
 - [ruleEngine](Scriptable.md#ruleengine)
 - [rules](Scriptable.md#rules)
 - [type](Scriptable.md#type)
-- [viewType](Scriptable.md#viewtype)
 - [visible](Scriptable.md#visible)
 
 ### Methods
@@ -46,6 +48,7 @@ execution of rules/events should extend from this class.
 - [defaultDataModel](Scriptable.md#defaultdatamodel)
 - [dispatch](Scriptable.md#dispatch)
 - [executeAction](Scriptable.md#executeaction)
+- [executeExpression](Scriptable.md#executeexpression)
 - [getState](Scriptable.md#getstate)
 - [importData](Scriptable.md#importdata)
 - [validate](Scriptable.md#validate)
@@ -55,6 +58,20 @@ execution of rules/events should extend from this class.
 - [value](Scriptable.md#value)
 
 ## Accessors
+
+### :type
+
+• `get` **:type**(): `string`
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+BaseNode.:type
+
+___
 
 ### dataRef
 
@@ -67,6 +84,20 @@ execution of rules/events should extend from this class.
 #### Inherited from
 
 BaseNode.dataRef
+
+___
+
+### fieldType
+
+• `get` **fieldType**(): `string`
+
+#### Returns
+
+`string`
+
+#### Inherited from
+
+BaseNode.fieldType
 
 ___
 
@@ -184,6 +215,20 @@ BaseNode.parent
 
 ___
 
+### properties
+
+• `get` **properties**(): `Object`
+
+#### Returns
+
+`Object`
+
+#### Inherited from
+
+BaseNode.properties
+
+___
+
 ### ruleEngine
 
 • `get` **ruleEngine**(): `RuleEngine`
@@ -229,20 +274,6 @@ ___
 #### Inherited from
 
 BaseNode.type
-
-___
-
-### viewType
-
-• `get` **viewType**(): `string`
-
-#### Returns
-
-`string`
-
-#### Inherited from
-
-BaseNode.viewType
 
 ___
 
@@ -338,13 +369,29 @@ Executes the given action
 
 ___
 
-### getState
+### executeExpression
 
-▸ **getState**(): `T` & { `id`: `string`  }
+▸ **executeExpression**(`expr`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `expr` | `string` |
 
 #### Returns
 
-`T` & { `id`: `string`  }
+`any`
+
+___
+
+### getState
+
+▸ **getState**(): `T` & { `:type`: `string` ; `id`: `string`  }
+
+#### Returns
+
+`T` & { `:type`: `string` ; `id`: `string`  }
 
 #### Inherited from
 

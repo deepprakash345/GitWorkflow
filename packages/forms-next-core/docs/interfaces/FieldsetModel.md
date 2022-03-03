@@ -7,7 +7,7 @@ Defines properties that each field set should have
 
 - [`ContainerModel`](ContainerModel.md)
 
-- `WithContainerState`<[`FieldsetJson`](../README.md#fieldsetjson)\>
+- `WithState`<[`FieldsetJson`](../README.md#fieldsetjson)\>
 
   ↳ **`FieldsetModel`**
 
@@ -19,6 +19,7 @@ Defines properties that each field set should have
 
 ### Properties
 
+- [:type](FieldsetModel.md#:type)
 - [accept](FieldsetModel.md#accept)
 - [dataRef](FieldsetModel.md#dataref)
 - [default](FieldsetModel.md#default)
@@ -30,6 +31,7 @@ Defines properties that each field set should have
 - [events](FieldsetModel.md#events)
 - [exclusiveMaximum](FieldsetModel.md#exclusivemaximum)
 - [exclusiveMinimum](FieldsetModel.md#exclusiveminimum)
+- [fieldType](FieldsetModel.md#fieldtype)
 - [format](FieldsetModel.md#format)
 - [id](FieldsetModel.md#id)
 - [index](FieldsetModel.md#index)
@@ -47,15 +49,15 @@ Defines properties that each field set should have
 - [parent](FieldsetModel.md#parent)
 - [pattern](FieldsetModel.md#pattern)
 - [placeholder](FieldsetModel.md#placeholder)
-- [props](FieldsetModel.md#props)
+- [properties](FieldsetModel.md#properties)
 - [readOnly](FieldsetModel.md#readonly)
 - [required](FieldsetModel.md#required)
 - [rules](FieldsetModel.md#rules)
+- [step](FieldsetModel.md#step)
 - [type](FieldsetModel.md#type)
 - [valid](FieldsetModel.md#valid)
 - [validationExpression](FieldsetModel.md#validationexpression)
 - [value](FieldsetModel.md#value)
-- [viewType](FieldsetModel.md#viewtype)
 - [visible](FieldsetModel.md#visible)
 
 ### Methods
@@ -65,6 +67,18 @@ Defines properties that each field set should have
 - [validate](FieldsetModel.md#validate)
 
 ## Properties
+
+### :type
+
+• `Readonly` **:type**: `string`
+
+Custom widget type show to the user for capturing the data.
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[:type](ContainerModel.md#:type)
+
+___
 
 ### accept
 
@@ -187,6 +201,18 @@ ___
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[exclusiveMinimum](ContainerModel.md#exclusiveminimum)
+
+___
+
+### fieldType
+
+• `Readonly` **fieldType**: `string`
+
+Type of field to capture the user data.
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[fieldType](ContainerModel.md#fieldtype)
 
 ___
 
@@ -376,9 +402,9 @@ The placeholder to show on the widget.
 
 ___
 
-### props
+### properties
 
-• `Optional` **props**: `Object`
+• **properties**: `Object`
 
 Custom properties of the form field.
 
@@ -388,7 +414,7 @@ Custom properties of the form field.
 
 #### Inherited from
 
-[ContainerModel](ContainerModel.md).[props](ContainerModel.md#props)
+[ContainerModel](ContainerModel.md).[properties](ContainerModel.md#properties)
 
 ___
 
@@ -427,6 +453,16 @@ Rules that modify the property of the object dynamically. The rules are evaluate
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[rules](ContainerModel.md#rules)
+
+___
+
+### step
+
+• `Optional` **step**: `number`
+
+#### Inherited from
+
+[ContainerModel](ContainerModel.md).[step](ContainerModel.md#step)
 
 ___
 
@@ -474,18 +510,6 @@ The current value of the Field. The property is serialized in the Data Model.
 
 ___
 
-### viewType
-
-• `Readonly` **viewType**: `string`
-
-Type of widget to show to the user for capturing the data..
-
-#### Inherited from
-
-[ContainerModel](ContainerModel.md).[viewType](ContainerModel.md#viewtype)
-
-___
-
 ### visible
 
 • `Optional` **visible**: `boolean`
@@ -500,15 +524,17 @@ Whether the field should be visible to author or not.
 
 ### getState
 
-▸ **getState**(): `T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+▸ **getState**(): [`State`](../README.md#state)<`T`\>
+
+[state](../README.md#state) of the form object
 
 #### Returns
 
-`T` & { `id`: `string` ; `items`: { `id`: `string` ; `viewType`: `string`  }[]  }
+[`State`](../README.md#state)<`T`\>
 
 #### Inherited from
 
-WithContainerState.getState
+WithState.getState
 
 ___
 
