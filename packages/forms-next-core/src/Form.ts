@@ -48,7 +48,7 @@ export class Logger {
     }
 
     log(msg: string, level: LogFunction) {
-        if (this.logLevel <= levels[level]) {
+        if (this.logLevel !== 0 && this.logLevel <= levels[level]) {
             console[level](msg)
         }
     }

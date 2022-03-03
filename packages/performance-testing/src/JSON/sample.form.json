@@ -295,7 +295,7 @@
           "name": "textfield_with_calculatedValue",
           "type": "string",
           "rules": {
-            "value": "$form.textfield_simple.value"
+            "value": "$form.textfield_simple"
           },
           "label": {
             "value": "Text Field Mirrors simple Textfield"
