@@ -210,6 +210,7 @@ export const resolveData = <T extends DataValue>(data: DataGroup,
             result = data;
         } else if (token.type === TOK_IDENTIFIER) {
             if (result instanceof DataGroup && result.$type === 'object') {
+                //@ts-ignore
                 if (result.$containsDataNode(token.value) && result.$getDataNode(token.value).$value !== null) {
                     result = result.$getDataNode(token.value);
                 } else if (create) {

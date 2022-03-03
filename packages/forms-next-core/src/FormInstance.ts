@@ -8,6 +8,9 @@ import EventQueue from "./controller/EventQueue";
 /**
  * Creates form instance using form model definition as per `crispr form specification`
  * @param formModel form model definition
+ * @param callback a callback that recieves the FormModel instance that gets executed before any event in the Form
+ * is executed
+ * @param logLevel Logging Level for the form. Setting it off will disable the logging
  * @returns {@link FormModel | form model}
  */
 export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "off"): FormModel => {
@@ -28,6 +31,7 @@ export const createFormInstance = (formModel: any, callback?: (f: FormModel) => 
         f.getEventQueue().runPendingQueue();
         return f;
     } catch (e: any) {
+        console.error(`Unable to create an instance of the Form ${e}`)
         throw new Error(e);
     }
 };

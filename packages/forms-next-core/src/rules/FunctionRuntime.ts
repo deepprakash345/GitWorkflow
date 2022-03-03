@@ -50,7 +50,7 @@ export const request = async (context: any,
         result = await fRequest(endpoint, inputPayload, requestOptions);
     } catch (e) {
         //todo: define error payload
-        console.log('error handled');
+        context.form.logger.error('Error invoking a rest API');
         context.form.dispatch(new CustomEvent(error, {}, true));
         return;
     }

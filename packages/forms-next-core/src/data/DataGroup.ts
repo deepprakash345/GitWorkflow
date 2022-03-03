@@ -52,11 +52,13 @@ export default class DataGroup extends DataValue {
     }
 
     $getDataNode(name: string|number) {
-        return this.$_items[name];
+        if (this.$_items.hasOwnProperty(name)) {
+            return this.$_items[name];
+        }
     }
 
     $containsDataNode(name: string| number) {
-        return typeof(this.$_items[name]) !== 'undefined';
+        return this.$_items.hasOwnProperty(name) && typeof(this.$_items[name]) !== 'undefined';
     }
 
     get $isDataGroup() {

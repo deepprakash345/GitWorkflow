@@ -1,6 +1,6 @@
 import {create} from './collateral';
 import { createFormInstance} from '../src';
-import {Blur} from '../lib';
+import {Blur} from '../src';
 // @ts-ignore
 
 
@@ -15,7 +15,7 @@ test('blur event should execute as expected', async () => {
                     'required': 'mandatory field'
                 },
                 'events' : {
-                    'blur' : ['{value : upper($field.value)}', 'validate($event.target)']
+                    'blur' : ['{value : upper($field.$value)}', 'validate($event.target)']
                 }
             }
         }]);

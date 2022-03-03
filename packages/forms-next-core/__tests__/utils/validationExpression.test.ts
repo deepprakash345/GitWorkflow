@@ -14,7 +14,7 @@ const formJson = {
             "label": {
                 "value": "Enter a number"
             },
-            "validationExpression": "value < field2 * field2",
+            "validationExpression": "$field < field2 * field2",
             "description": "The value must be less than the square of value in field 2",
             "constraintMessages" : {
                 "validationExpression" : "some custom error message"
