@@ -1,6 +1,6 @@
 import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel, ValidationError} from './types';
 import {Constraints, ValidConstraints} from './utils/ValidationUtils';
-import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller/Controller';
+import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller';
 import Scriptable from './Scriptable';
 import {defaultFieldTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
@@ -67,7 +67,19 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             this._jsonModel.value = this._jsonModel.default;
         }
         if (this._jsonModel.fieldType === undefined) {
-            this._jsonModel.fieldType = defaultFieldTypes(this._jsonModel);
+            //@ts-ignore
+            if (this._jsonModel.viewType) {
+                //@ts-ignore
+                if (this._jsonModel.viewType.startsWith('custom:')) {
+                    this.form.logger.error("viewType property has been removed. For custom types, use :type property")
+                } else {
+                    this.form.logger.error("viewType property has been removed. Use fieldType property")
+                }
+                //@ts-ignore
+                this._jsonModel.fieldType = this._jsonModel.viewType
+            } else {
+                this._jsonModel.fieldType = defaultFieldTypes(this._jsonModel);
+            }
         }
         if (this._jsonModel.enum === undefined) {
             const type = this._jsonModel.type;
@@ -333,6 +345,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                     constraint = "validationExpression"
                 }
             }
+        }
+        if (!valid) {
+            //@ts-ignore
+            this.form.logger.log(`${constraint} constraint evaluation failed ${this[constraint]}. Received ${this._jsonModel.value}`);
         }
         let changes = {
             'valid': valid,

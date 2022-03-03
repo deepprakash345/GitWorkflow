@@ -50,7 +50,6 @@ const checkNumber = (inputVal: string) => {
     let value:any = parseFloat(inputVal);
     const valid = !isNaN(value);
     if (!valid) {
-        console.log('dataType constraint evaluation failed. Expected Integer. Received ' + inputVal);
         value = inputVal;
     }
     return {
@@ -166,7 +165,6 @@ export const Constraints = {
                 value = parseFloat(inputVal);
                 valid = !isNaN(value) && Math.round(value) === value;
                 if (!valid) {
-                    console.log('dataType constraint evaluation failed. Expected Integer. Received ' + inputVal);
                     value = inputVal;
                 }
                 break;
@@ -174,7 +172,6 @@ export const Constraints = {
                 valid = true;
                 //valid = isFileObject(value);
                 if (!valid) {
-                    console.log('dataType constraint evaluation failed. Expected File Object. Received ' + inputVal);
                     value = inputVal;
                 }
                 break;

@@ -1,20 +1,24 @@
-import Form from './Form';
+import Form, {Logger, LogLevel} from './Form';
 import {jsonString} from './utils/JsonUtils';
 import {request} from './utils/Fetch';
 import RuleEngine from './rules/RuleEngine';
 import {FormModel} from './types';
+import EventQueue from "./controller/EventQueue";
 
 /**
  * Creates form instance using form model definition as per `crispr form specification`
  * @param formModel form model definition
  * @returns {@link FormModel | form model}
  */
-export const createFormInstance = (formModel: any): FormModel => {
+export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "off"): FormModel => {
     try {
-        let f = new Form({...formModel}, new RuleEngine());
+        let f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), "off");
         let formData = formModel?.data;
         if (formData) {
             f.importData(formData);
+        }
+        if (typeof callback === "function") {
+            callback(f)
         }
         // Once the field or panel is initialized, execute the initialization script
         // this means initialization happens after prefill and restore

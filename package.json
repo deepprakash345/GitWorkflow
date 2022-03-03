@@ -8,6 +8,7 @@
     "start" : "lerna run start",
     "story" : "lerna run storybook",
     "test" : "lerna run test",
+    "test:ci" : "lerna run test-ci",
     "bootstrap" : "npx lerna bootstrap",
     "docs" : "lerna run docs"
   },
