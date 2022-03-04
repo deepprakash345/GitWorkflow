@@ -221,12 +221,10 @@ export interface BaseModel extends ConstraintsJson, WithController {
      */
     getRuleNode(): any
     /**
-     * The current value of the Field. The property is serialized in the Data Model
      * @private
      */
-    directReferences(): any
+    ruleNodeReference(): any
     /**
-     * The current value of the Field. The property is serialized in the Data Model
      * @private
      */
     _initialize(): any

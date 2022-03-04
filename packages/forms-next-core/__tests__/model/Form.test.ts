@@ -236,7 +236,7 @@ const subscriptionCollateral = ['a',
     {
         b: {
             'rules': {
-                'value': '$form.d1.value'
+                'value': '$form.d1'
             }
         }
     },
@@ -244,7 +244,7 @@ const subscriptionCollateral = ['a',
         c:
             {
                 'rules': {
-                    'value': '$form.a1.value + $form.b1.value'
+                    'value': '$form.a1 + $form.b1'
                 }
             }
     }, 'd'];
@@ -253,11 +253,28 @@ test('default subscription gets invoked for dependent fields', async () => {
     const formJson = create(subscriptionCollateral);
     let form = await createFormInstance(formJson);
     let callback = jest.fn();
-    const state = form.getState();
-    form.getElement(state.items[2].id).subscribe(callback);
-    form.getElement(state.items[0].id).value = '10';
+    form.items[2].subscribe(callback)
+    form.items[0].value = '10'
     expect(callback).toHaveBeenCalled();
 });
+
+test.skip('addDependent events gets fired for dependent fields', () => {
+    const formJson = create(subscriptionCollateral);
+    let callbacks = [jest.fn(), jest.fn(), jest.fn()]
+    let form = createFormInstance(formJson, (f) => {
+        //c is dependent on a
+        f.items[0].subscribe(callbacks[0], 'addDependent')
+        //c is dependent on b
+        f.items[1].subscribe(callbacks[1], 'addDependent')
+        //b is dependent on d
+        f.items[3].subscribe(callbacks[2], 'addDependent')
+    });
+
+    expect(callbacks[0]).toHaveBeenCalled()
+    expect(callbacks[1]).toHaveBeenCalled()
+    expect(callbacks[2]).toHaveBeenCalled()
+
+})
 
 test('change event subscription gets invoked for dependent fields', async () => {
     const formJson = create(subscriptionCollateral);
@@ -604,7 +621,7 @@ test('custom event should pass the payload to the event', async () => {
                 'value': 'myfield'
             },
             'events': {
-                'custom:customClick2': '{"value" : $event.target.label.value}'
+                'custom:customClick2': '{"value" : $event.target.$label.value}'
             }
         }
     }]);
@@ -751,19 +768,19 @@ test('Rule Node for a Form should have correct hierarchy', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = new Form(formJson, new RuleEngine());
     const r1 = form.getRuleNode();
-    expect(r1.f1.name).toEqual('f1');
-    expect(r1.f2.name).toEqual('f2');
-    expect(r1.f3.name).toEqual('f3');
+    expect(r1.f1.$name).toEqual('f1');
+    expect(r1.f2.$name).toEqual('f2');
+    expect(r1.f3.$name).toEqual('f3');
 });
 
 test('Rule Node for a Panel should have correct hierarchy', async () => {
     const formJson = create(['f', ['f', 'f'], 'f']);
     let form = new Form(formJson, new RuleEngine());
     const r1 = form.getRuleNode();
-    expect(r1.f1.name).toEqual('f1');
-    expect(r1.p1.f2.name).toEqual('f2');
-    expect(r1.p1.f3.name).toEqual('f3');
-    expect(r1.f2.name).toEqual('f2');
+    expect(r1.f1.$name).toEqual('f1');
+    expect(r1.p1.f2.$name).toEqual('f2');
+    expect(r1.p1.f3.$name).toEqual('f3');
+    expect(r1.f2.$name).toEqual('f2');
 });
 
 test('Rule Node for a Panel with type array should have correct hierarchy', async () => {
@@ -783,5 +800,6 @@ test('Rule Node for a Panel with type array should have correct hierarchy', asyn
     };
     let form = new Form(formJson, new RuleEngine());
     const r1 = form.getRuleNode();
+    const x = r1.panel instanceof Array
     expect(r1.panel).toBeInstanceOf(Array);
 });

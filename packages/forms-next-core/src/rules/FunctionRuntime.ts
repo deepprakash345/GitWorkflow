@@ -183,7 +183,7 @@ class FunctionRuntimeImpl {
                     if (typeof element === 'string' || typeof element === 'undefined') {
                         return interpreter.globals.form.validate();
                     } else {
-                        return interpreter.globals.form.getElement(element.id).validate();
+                        return interpreter.globals.form.getElement(element.$id).validate();
                     }
                 },
                 _signature: []
@@ -245,7 +245,7 @@ class FunctionRuntimeImpl {
                         if (typeof element === 'string') {
                             interpreter.globals.form.dispatch(event);
                         } else {
-                            interpreter.globals.form.getElement(element.id).dispatch(event);
+                            interpreter.globals.form.getElement(element.$id).dispatch(event);
                         }
                     }
                     return {};

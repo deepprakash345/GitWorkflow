@@ -3,6 +3,7 @@ import {createFormInstance} from "../src";
 
 const undefinedEmptyValue = {
     fieldType: 'text-input',
+    emptyValue : "undefined",
     type: "string",
     "name" : "field",
     label: {
@@ -13,7 +14,7 @@ const undefinedEmptyValue = {
 
 const nullEmptyValue = {
     ...undefinedEmptyValue,
-    emptyValue: null,
+    emptyValue: "null",
     description: "When empty value is undefined, data will not be submitted for the field"
 }
 

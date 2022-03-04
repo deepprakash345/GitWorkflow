@@ -58,6 +58,7 @@ class ActionImplWithTarget implements Action {
     } 
 }
 
+export const target = Symbol("target")
 
 /**
  * Defines a generic base class which all objects of form runtime model should extend from.
@@ -98,13 +99,19 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     abstract value: Primitives
 
     protected setupRuleNode() {
-        this._ruleNode = new Proxy(this.directReferences(), this._proxyHandler());
+        const self = this;
+        this._ruleNode = new Proxy(this.ruleNodeReference(),
+            {
+                get: (ruleNodeReference: any, prop: string, receiver: any) => {
+                    return self.getFromRule(ruleNodeReference, prop);
+                }
+            });
     }
 
     /**
      * @private
      */
-    directReferences() {
+    ruleNodeReference() {
         return this;
     }
 
@@ -115,41 +122,31 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         return this._ruleNode;
     }
 
-    private get(target: any, prop: string | Symbol) {
-        if (prop === Symbol.toPrimitive) {
-            return this.valueOf;
+    private getFromRule(ruleNodeReference: any, prop: string | Symbol) {
+        if (prop === Symbol.toPrimitive || (prop === "valueOf" && !ruleNodeReference.hasOwnProperty("valueOf"))) {
+            return this.valueOf
+        } else if (prop === target) {
+            return this;
         } else if (typeof(prop) === 'string') {
             //look for property
             if (prop.startsWith('$')) {
                 prop = prop.substr(1);
+                //@todo: create a list of properties that are allowed
                 //@ts-ignore
                 // return only non functional properties in this object
                 if (typeof this[prop] !== 'function') {
                     //@ts-ignore
                     return this[prop];
                 }
-            }
-            //look in the items
-            const res = target[prop];
-            if (typeof res !== 'undefined') {
-                return res;
-            }
-            //since currently rule grammar doesn't support '$' for properties. This needs to be removed
-            //@ts-ignore
-            if (typeof this[prop] !== 'function') {
-                //@ts-ignore
-                return this[prop];
+            } else {
+                //look in the items
+                if (ruleNodeReference.hasOwnProperty(prop)) {
+                    return ruleNodeReference[prop];
+                } else if (typeof ruleNodeReference[prop] === "function") { //todo : create allow list of functions
+                    return ruleNodeReference[prop]
+                }
             }
         }
-    }
-
-    private _proxyHandler = () => {
-        return {
-            get: (target: any, prop: string, receiver: any) => {
-                const value = this.get(target, prop);
-                return value;
-            }
-        };
     }
 
     get id() {

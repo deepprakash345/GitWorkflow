@@ -105,10 +105,15 @@ test('accessing field value directly works in rules', () => {
     const globals = {
         '$field' : f.getRuleNode()
     };
-    const rule = "$field & ' a'";
-    const node = form.ruleEngine.compileRule(rule);
-    const result = form.ruleEngine.execute(node, {}, globals);
+    let rule = "$field & ' a'";
+    let node = form.ruleEngine.compileRule(rule);
+    let result = form.ruleEngine.execute(node, {}, globals);
     expect(result).toEqual('test a');
+
+    rule = "$field";
+    node = form.ruleEngine.compileRule(rule);
+    result = form.ruleEngine.execute(node, {}, globals, true);
+    expect(result).toEqual('test');
 });
 
 

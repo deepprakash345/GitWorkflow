@@ -66,7 +66,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             const scope = this.getExpressionScope();
             const values = entries.map(([prop, rule]) => {
                 const node = this.getCompiledRule(prop, rule);
-                const newVal = this.ruleEngine.execute(node, scope, context);
+                let newVal = this.ruleEngine.execute(node, scope, context, true);
                 //@ts-ignore
                 if (newVal != this._jsonModel[prop]) {
                     return [prop, newVal];
@@ -81,7 +81,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
     private getExpressionScope() {
         const target = {
             self: this.getRuleNode(),
-            siblings: this.parent?.directReferences() || {}
+            siblings: this.parent?.ruleNodeReference() || {}
         };
         const scope = new Proxy(target, {
             get: (target: any, prop: string | Symbol, receiver) => {
@@ -89,22 +89,26 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
                     return 'Object';
                 }
                 prop = prop as string;
-                var selfProperty = target.self[prop];
+                // The order of resolution is
+                // 1. property
+                // 2. sibling
+                // 3. child
                 if (prop.startsWith('$')) {
-                    //This will not be required once rule grammar supports $
-                    return selfProperty;
-                } else if (typeof selfProperty !== 'undefined') { //found a child
-                    return selfProperty;
-                } else if (prop in target.siblings) { // found a sibling
-                    return target.siblings[prop];
+                    //this returns children as well, so adding an explicit check for property name
+                    return target.self[prop];
+                } else {
+                    if (prop in target.siblings) {
+                        return target.siblings[prop]
+                    } else {
+                        return target.self[prop]
+                    }
                 }
-                return selfProperty;
             },
             has : (target: { siblings: any; self: any }, prop: string | symbol)  => {
                 prop = prop as string;
-                var selfProperty = target.self[prop];
+                var selfPropertyOrChild = target.self[prop]
                 var sibling = target.siblings[prop];
-                return typeof selfProperty != 'undefined' || typeof sibling != 'undefined';
+                return typeof selfPropertyOrChild != 'undefined' || typeof sibling != 'undefined';
             }
         });
         return scope;
@@ -156,7 +160,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             '$event': {
                 type: action.type,
                 payload: action.payload,
-                target: this
+                target: this.getRuleNode()
             }
         };
         const eventName = action.isCustomEvent ? `custom:${action.type}` : action.type;

@@ -5,6 +5,7 @@ import Scriptable from './Scriptable';
 import {defaultFieldTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
 import DataGroup from './data/DataGroup';
+import {target} from "./BaseNode";
 
 /**
  * Defines a form object field which implements {@link FieldModel | field model} interface
@@ -113,7 +114,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     get emptyValue() {
-        if (this._jsonModel.emptyValue === null) return null;
+        if (this._jsonModel.emptyValue === 'null') return null;
         else if (this._jsonModel.emptyValue === '' && this.type === 'string') return '';
         else return undefined;
     }
@@ -143,6 +144,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     get value() {
+        //@ts-ignore
         this.ruleEngine.trackDependency(this);
         if (this._jsonModel.value === undefined) {
             return null;
@@ -186,12 +188,18 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     valueOf() {
-        this.ruleEngine.trackDependency(this);
-        return this._jsonModel.value || null;
+        // @ts-ignore
+        const obj = this[target]
+        const actualField = obj === undefined ? this : obj
+        actualField.ruleEngine.trackDependency(actualField);
+        return actualField._jsonModel.value || null;
     }
 
     toString() {
-        return this._jsonModel.value?.toString() || '';
+        // @ts-ignore
+        const obj = this[target]
+        const actualField = obj === undefined ? this : obj
+        return actualField._jsonModel.value?.toString() || '';
     }
 
     /**

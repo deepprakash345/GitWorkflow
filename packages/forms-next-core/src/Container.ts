@@ -22,7 +22,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     protected _children: Array<FieldModel | FieldsetModel> = []
     //@ts-ignore
-    protected _ruleContext: any
+    protected _childrenReference: any
 
     private _itemTemplate: FieldsetJson | FieldJson | null = null;
 
@@ -35,8 +35,8 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     /**
      * @private
      */
-    directReferences() {
-        return this._ruleContext;
+    ruleNodeReference() {
+        return this._childrenReference;
     }
 
     //todo : this should not be public
@@ -50,11 +50,11 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         const itemsLength = this._children.length;
         let items2Remove = Math.min(itemsLength - m, itemsLength - minItems);
         if (items2Remove > 0) {
-            const elems = this._children.splice(m, items2Remove);
             for (let i = 0; i < items2Remove; i++) {
                 (this.getDataNode() as DataGroup).$removeDataNode(m + i);
-                this._ruleContext.pop();
+                this._childrenReference.pop();
             }
+            const elems = this._children.splice(m, items2Remove);
             this.notifyDependents(propertyChange('items', elems, null));
         }
     }
@@ -90,14 +90,16 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         //the child has not been added to the array, hence using the length as new index
         const name = this.type == 'array' ? this._children.length + '' : (this.type == 'object') ? child.name || '' : '';
         if (name.length > 0) {
-            Object.defineProperty(this._ruleContext, name, {
+            Object.defineProperty(this._childrenReference, name, {
                 get: () => {
                     if (child.isContainer && child.hasDynamicItems()) {
                         self.ruleEngine.trackDependency(child); //accessing dynamic panel directly
                     }
                     if (self.hasDynamicItems()) {
                         self.ruleEngine.trackDependency(self); //accessing a child of dynamic panel
-                        return this._children[name];
+                        if (this._children[name] !== undefined) { // pop function calls this getter in order to return the item
+                            return this._children[name].getRuleNode();
+                        }
                     } else {
                         return child.getRuleNode();
                     }
@@ -150,7 +152,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         super._initialize();
         const items = this._jsonModel.items;
         this._jsonModel.items = [];
-        this._ruleContext = this._jsonModel.type == 'array' ? [] : {};
+        this._childrenReference = this._jsonModel.type == 'array' ? [] : {};
         if (this._jsonModel.type == 'array' && items.length === 1 && this.getDataNode() != null) {
             this._itemTemplate = deepClone(items[0]);
             if (typeof (this._jsonModel.minItems) !== 'number') {
@@ -203,12 +205,12 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             if (this._children.length > this._jsonModel.minItems) {
                 // clear child
                 //remove field
+                this._childrenReference.pop();
                 this._children.splice(index, 1);
                 (this.getDataNode() as DataGroup).$removeDataNode(index);
                 for (let i = index; i < this._children.length; i++) {
                     this._children[i].dispatch(new ExecuteRule());
                 }
-                this._ruleContext.pop();
                 this.notifyDependents(propertyChange('items', null, state));
             }
         }
@@ -277,7 +279,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             if (items2Remove > 0) {
                 this._children.splice(dataLength, items2Remove);
                 for (let i = 0; i < items2Remove; i++) {
-                    this._ruleContext.pop();
+                    this._childrenReference.pop();
                 }
             }
         }

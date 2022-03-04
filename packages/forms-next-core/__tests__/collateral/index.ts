@@ -189,7 +189,7 @@ export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormMod
         importData: jest.fn(),
         id : '$form',
         getRuleNode: jest.fn(),
-        directReferences: jest.fn()
+        ruleNodeReference: jest.fn()
     };
 };
 
