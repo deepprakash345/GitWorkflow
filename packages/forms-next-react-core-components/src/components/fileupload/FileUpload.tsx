@@ -1,4 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
+import '@spectrum-css/typography';
+import '@spectrum-css/button';
+import classNames from 'classnames';
+
 import {
     FileUploadContainer,
     FormField,
@@ -86,8 +90,17 @@ const FileUpload = ({
         <>
             <FileUploadContainer>
                 <InputLabel>{label}</InputLabel>
-                <DragDropText>Drag and drop your files anywhere or</DragDropText>
-                <UploadFileBtn type="button" onClick={handleUploadBtnClick}>
+                <DragDropText className={classNames(
+                    'spectrum-Heading',
+                    'spectrum-Heading--sizeM',
+                    'spectrum-Heading--light'
+                )}>Drag and drop your files anywhere or</DragDropText>
+                <UploadFileBtn type='button' className={classNames(
+                    'spectrum-Button',
+                    'spectrum-Button--outline',
+                    'spectrum-Button--primary',
+                    'spectrum-Button--sizeM'
+                )} onClick={handleUploadBtnClick}>
                     <i className="fas fa-file-upload" />
                     <span> Upload {otherProps.multiple ? 'files' : 'a file'}</span>
                 </UploadFileBtn>
