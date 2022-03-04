@@ -7,7 +7,8 @@ import {FieldJson, FieldsetJson, FormJson, TranslationJson, translationProps} fr
 /** Token used while creating translation specific properties from `crispr form specification` */
 export const TRANSLATION_TOKEN : string = '##';
 /** Name of the object which holds all translation specific properties */
-export const TRANSLATION_ID = 'props:translationIds';
+export const TRANSLATION_ID = 'afs:translationIds';
+export const CUSTOM_PROPS_KEY = 'properties';
 type formElementJson = FieldJson | FieldsetJson | FormJson | any
 
 const defaultBcp47LangTags = [
@@ -28,8 +29,8 @@ const defaultBcp47LangTags = [
  */
 export const invalidateTranslation = (input: formElementJson, updates: any) => {
     translationProps.forEach((prop) => {
-        if (prop in updates && input?.[TRANSLATION_ID]?.[prop]) {
-            delete input?.[TRANSLATION_ID]?.[prop];
+        if (prop in updates && input?.[CUSTOM_PROPS_KEY]?.[TRANSLATION_ID]?.[prop]) {
+            delete input?.[CUSTOM_PROPS_KEY]?.[TRANSLATION_ID]?.[prop];
         }
     });
 };
@@ -60,13 +61,16 @@ const _createTranslationId = (input: formElementJson, path: string, transProps: 
                     // if property exist add it
                     if (input[transProp] != null) {
                         // if translation id is not yet set, set it
-                        if (!(TRANSLATION_ID in input)) {
-                            input[TRANSLATION_ID] = {};
-                        }
+                         if (!(CUSTOM_PROPS_KEY in input)) {
+                            input[CUSTOM_PROPS_KEY] = {};
+                          }
+                          if (!(TRANSLATION_ID in input[CUSTOM_PROPS_KEY])) {
+                            input[CUSTOM_PROPS_KEY][TRANSLATION_ID] = {};
+                          }
                         // if transprop is not yet set, set it
                         // this is done to prevent overwrite
-                        if (!(transProp in input[TRANSLATION_ID])) {
-                            input[TRANSLATION_ID][transProp] = `${path}${TRANSLATION_TOKEN}${transProp}${TRANSLATION_TOKEN}${Math.floor(Math.random() * 10000) + 1}`;
+                        if (!(transProp in input[CUSTOM_PROPS_KEY][TRANSLATION_ID])) {
+                            input[CUSTOM_PROPS_KEY][TRANSLATION_ID][transProp] = `${path}${TRANSLATION_TOKEN}${transProp}${TRANSLATION_TOKEN}${Math.floor(Math.random() * 10000) + 1}`;
                         }
                     }
                 }
@@ -88,18 +92,18 @@ const _createTranslationObj = (input: formElementJson, translationObj : object, 
             _createTranslationObj(value, translationObj, translationProps);
         } else {
             for (const translationProp of translationProps) {
-                if (translationProp in input && input?.[TRANSLATION_ID]?.[translationProp]) {
+                if (translationProp in input && input?.[CUSTOM_PROPS_KEY]?.[TRANSLATION_ID]?.[translationProp]) {
                     // todo: right now we create only for english
                     if (input[translationProp] instanceof Array) {
                         input[translationProp].forEach((item: any, index: number)=> {
                             if (typeof item === 'string') { // only if string, then convert, since values can also be boolean
                                 // @ts-ignore
-                                translationObj[`${input[TRANSLATION_ID][translationProp]}${TRANSLATION_TOKEN}${index}`] = item;
+                                translationObj[`${input[CUSTOM_PROPS_KEY][TRANSLATION_ID][translationProp]}${TRANSLATION_TOKEN}${index}`] = item;
                             }
                         });
                     } else {
                         // @ts-ignore
-                        translationObj[`${input[TRANSLATION_ID][translationProp]}`] = input[translationProp];
+                        translationObj[`${input[CUSTOM_PROPS_KEY][TRANSLATION_ID][translationProp]}`] = input[translationProp];
                     }
                 }
             }

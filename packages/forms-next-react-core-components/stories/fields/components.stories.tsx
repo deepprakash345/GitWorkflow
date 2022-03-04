@@ -55,14 +55,14 @@ numberInput.parameters = {
     highlights: ["items.0"]
 }
 
-export const radioGroup = Template.bind({})
-radioGroup.args = {formJson: examples['radio-group']}
-radioGroup.parameters = {
-    highlights: ["items.0"]
-}
-
 export const text = Template.bind({});
 text.args={formJson:examples['plain-text']}
 text.parameters = {
     highlights: ["items.0"]
+}
+
+export const password = Template.bind({});
+password.args = { formJson: examples['password'] }
+password.parameters = {
+  highlights: ["items.0"]
 }

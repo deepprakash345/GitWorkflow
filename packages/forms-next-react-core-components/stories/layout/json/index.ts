@@ -4,6 +4,8 @@ import horizontalTabsJson from './horizontalTabs.json';
 import verticalFlex from './verticalFlex.json';
 import horizontalFlex from './horizontalFlex.json';
 import nestingFlex from './nestingFlex.json';
+import accordionMutiSelectJson from './accordionMultiselect.json';
+import accordionDeafultSelectedJson from './accordionDefaultSelectdIndex.json';
 
 export default {
   accordionJson,
@@ -11,5 +13,7 @@ export default {
   horizontalTabsJson,
   verticalFlex,
   horizontalFlex,
-  nestingFlex
+  nestingFlex,
+  accordionMutiSelectJson,
+  accordionDeafultSelectedJson
 };

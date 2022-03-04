@@ -35,3 +35,7 @@ export const typeDate = Template.bind({})
 typeDate.storyName = "Capturing Dates"
 typeDate.args = {formJson: examples['text-input-date'], onSubmit : logAction('data')}
 
+export const customProperties = Template.bind({})
+customProperties.storyName = "Custom Properties- isQuiet=true"
+customProperties.args = {formJson: examples['text-input-custom'], onSubmit : logAction('data')}
+

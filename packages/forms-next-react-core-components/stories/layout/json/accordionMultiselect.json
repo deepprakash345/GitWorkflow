@@ -1,0 +1,59 @@
+{
+  "items": [
+    {
+      ":type": "custom:accordion",
+      "name": "accordion",
+      "label": {
+        "value": "horizontal accordion title"
+      },
+      "fieldType": "panel",
+      "properties": {
+        "afs:layout": {
+          "multiselectable": true
+        }
+      },
+      "items": [
+        {
+          "name": "textInput",
+          "label": {
+            "value": "Item 1"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        },
+        {
+          "name": "button",
+          "label": {
+            "value": "Item 2"
+          },
+          "fieldType": "button"
+        },
+        {
+          "name": "item3",
+          "label": {
+            "value": "Item 3"
+          },
+          "fieldType": "panel",
+          "items": [
+            {
+              "name": "firstName",
+              "label": {
+                "value": "First Name"
+              },
+              "type": "string",
+              "fieldType": "text-input"
+            },
+            {
+              "name": "lastName",
+              "label": {
+                "value": "Last Name"
+              },
+              "type": "text",
+              "fieldType": "text-input"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

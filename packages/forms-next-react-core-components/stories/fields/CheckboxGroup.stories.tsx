@@ -34,3 +34,9 @@ singleSelection.args={formJson:examples['checkbox-group-single'], onSubmit : log
 singleSelection.parameters = {
     highlights : ['items.0.type']
 }
+
+export const horizontal = Template.bind({});
+horizontal.args = { formJson: examples['horizontal-checkbox'], onSubmit: logAction('data') }
+horizontal.parameters = {
+  highlights: ['items.0.properties']
+}

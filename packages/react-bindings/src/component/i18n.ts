@@ -1,5 +1,5 @@
 import {FieldJson, FieldsetJson, FormJson, translationProps} from '@aemforms/crispr-core';
-import {TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core';
+import {TRANSLATION_ID, TRANSLATION_TOKEN, CUSTOM_PROPS_KEY} from '@aemforms/crispr-core';
 
 export const getTranslationMessages = (input: FieldJson | FieldsetJson | FormJson | any) : any => {
     return Object.keys(input).reduce((acc, curr) => {
@@ -11,8 +11,8 @@ export const getTranslationMessages = (input: FieldJson | FieldsetJson | FormJso
             ret = getTranslationMessages(objValue[0]);
         } else {
             const f1 = input;
-            if (TRANSLATION_ID in f1) {
-                let idObj = f1[TRANSLATION_ID];
+            if (CUSTOM_PROPS_KEY in f1 && TRANSLATION_ID in f1[CUSTOM_PROPS_KEY]) {
+                let idObj = f1[CUSTOM_PROPS_KEY][TRANSLATION_ID];
                 ret = translationProps.reduce((a, prop) => {
                     let localRet = {};
                     // only if value exists, add to translation object

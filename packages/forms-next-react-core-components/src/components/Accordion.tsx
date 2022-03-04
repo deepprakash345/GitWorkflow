@@ -8,7 +8,7 @@ const AccordionWrapper = function (fieldset: State<FieldsetJson>) {
   const mappings = useContext(FormContext).mappings;
   const [props] = useRuleEngine(fieldset);
   const { items, visible } = props;
-  const layout = props?.properties?.layout || {};
+  const layout = props?.properties?.['afs:layout'] || {};
 
   const getItems = useCallback(() => {
     return (

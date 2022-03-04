@@ -49,7 +49,11 @@ const additional = {
     "plain-text" : form(component('plain-text', {value: 'This is a plain text'})),
     "text-input-number" : formWithSubmit(component('text-input', {type: 'number'}, 'Text Field for Number', 'Enter only numbers')),
     "text-input-date" : formWithSubmit(component('text-input', {type: 'string', format: 'date'}, 'Text Field for Date', 'Enter date (yyyy-mm-dd)')),
-    "drop-down-enumNames": formWithSubmit(component('drop-down', {enum: [1, 2, 3], enumNames: ['Apple', 'Orange', 'Guava']}))
+    "drop-down-enumNames": formWithSubmit(component('drop-down', {enum: [1, 2, 3], enumNames: ['Apple', 'Orange', 'Guava']})),
+    "password": formWithSubmit(component('password-input', { type: 'string' }, 'Password Field')),
+    "horizontal-checkbox": formWithSubmit(component('checkbox-group', { enum: [1, 2, 3], properties: { 'afs:layout': { orientation: 'horizontal' } } })),
+    "radio-group-horizontal": formWithSubmit(component('radio-group', { enum: [1, 2, 3], properties: { 'afs:layout': { orientation: 'horizontal' } } })),
+    "text-input-custom" : formWithSubmit(component('text-input', {properties: { 'afs:layout': { isQuiet	: true } }}, 'Text Field for custom properties')),
 }
 
 export const examples = {

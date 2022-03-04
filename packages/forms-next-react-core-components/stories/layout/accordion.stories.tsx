@@ -22,5 +22,12 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const def = Template.bind({});
-def.storyName = "Accordion";
-def.args = {formJson: layouts.accordionJson }
+def.storyName = "Default";
+def.args = { formJson: layouts.accordionJson };
+
+export const Multiselectable = Template.bind({});
+Multiselectable.args = { formJson: layouts.accordionMutiSelectJson };
+
+export const selectedIndex = Template.bind({});
+selectedIndex.storyName = "Default Selected Index";
+selectedIndex.args = { formJson: layouts.accordionDeafultSelectedJson };

@@ -55,7 +55,7 @@ function App() {
             })()
         }
         if (Object.keys(formToRender).length > 1) {
-            let path = formToRender?.['props:links']?.['i18n']?.['href'];
+            let path = formToRender?.properties?.['afs:links']?.['i18n']?.['href'];
             fetchFormDictionary(path);
         }
     }, [formToRender])

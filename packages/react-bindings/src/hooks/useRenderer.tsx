@@ -1,4 +1,4 @@
-import {FieldJson, State, TRANSLATION_ID, TRANSLATION_TOKEN} from '@aemforms/crispr-core';
+import {FieldJson, State, TRANSLATION_ID, TRANSLATION_TOKEN, CUSTOM_PROPS_KEY} from '@aemforms/crispr-core';
 import React, {JSXElementConstructor, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {Handlers, useFocus, useRuleEngine} from './useRuleEngine';
@@ -8,8 +8,8 @@ export type Convertor<T> = (props: T, handlers: Handlers, localizedProperty: (pr
 export const translateMessage = (obj: any, formatMessage: any) => (propName: string) => {
     // todo: need to handle enumNames in a special manner here
     let value = obj[propName];
-    if (obj?.[TRANSLATION_ID]?.[propName]) {
-        let identifier = obj?.[TRANSLATION_ID]?.[propName];
+    if (obj?.[CUSTOM_PROPS_KEY]?.[TRANSLATION_ID]?.[propName]) {
+        let identifier = obj?.[CUSTOM_PROPS_KEY]?.[TRANSLATION_ID]?.[propName];
         if (value instanceof Array) {
             value = value.map((x, index) => {
                 let tempId = `${identifier}${TRANSLATION_TOKEN}${index}`;

@@ -52,15 +52,17 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
   const i18n = useFormIntl();
   const formatedMessage = i18n.formatMessage({ id: 'defaultErrorMessage', defaultMessage: DEFAULT_ERROR_MESSAGE })
   const errorMessage = a.errorMessage === '' && a.valid === false ? formatedMessage : a.errorMessage
-    return {
+  const layout = a?.properties?.['afs:layout'] || {};
+  return {
         placeholder: f('placeholder'),
         value: a.value == null ? '' : a.value,
         validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
         onChange: b.dispatchChange, // Handler that is called when the value changes.
         onBlur : b.dispatchBlur, //Handler that is called when the element loses focus.
         isReadOnly : a.readOnly === true,
-        errorMessage
-    };
+        errorMessage,
+        ...layout
+  };
 };
 
 export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
