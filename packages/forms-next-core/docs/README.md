@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.36
+# @aemforms/crispr-core - v0.6.37
 
 ## Table of contents
 
@@ -63,6 +63,7 @@
 
 ### Variables
 
+- [CUSTOM\_PROPS\_KEY](README.md#custom_props_key)
 - [TRANSLATION\_ID](README.md#translation_id)
 - [TRANSLATION\_TOKEN](README.md#translation_token)
 - [translationProps](README.md#translationprops)
@@ -272,9 +273,15 @@ Type for all properties which can be translated based on `crispr form specificat
 
 ## Variables
 
+### CUSTOM\_PROPS\_KEY
+
+• **CUSTOM\_PROPS\_KEY**: ``"properties"``
+
+___
+
 ### TRANSLATION\_ID
 
-• **TRANSLATION\_ID**: ``"props:translationIds"``
+• **TRANSLATION\_ID**: ``"afs:translationIds"``
 
 Name of the object which holds all translation specific properties
 
@@ -298,15 +305,17 @@ Constant for all properties which can be translated based on `crispr form specif
 
 ### createFormInstance
 
-▸ `Const` **createFormInstance**(`formModel`): [`FormModel`](interfaces/FormModel.md)
+▸ `Const` **createFormInstance**(`formModel`, `callback?`, `logLevel?`): [`FormModel`](interfaces/FormModel.md)
 
 Creates form instance using form model definition as per `crispr form specification`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `formModel` | `any` | form model definition |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `formModel` | `any` | `undefined` | form model definition |
+| `callback?` | (`f`: [`FormModel`](interfaces/FormModel.md)) => `any` | `undefined` | a callback that recieves the FormModel instance that gets executed before any event in the Form is executed |
+| `logLevel` | `LogLevel` | `"off"` | Logging Level for the form. Setting it off will disable the logging |
 
 #### Returns
 

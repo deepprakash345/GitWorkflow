@@ -38,6 +38,7 @@ Defines the interface for form model
 - [isContainer](FormModel.md#iscontainer)
 - [items](FormModel.md#items)
 - [label](FormModel.md#label)
+- [logger](FormModel.md#logger)
 - [maxFileSize](FormModel.md#maxfilesize)
 - [maxItems](FormModel.md#maxitems)
 - [maxLength](FormModel.md#maxlength)
@@ -296,6 +297,12 @@ Label to be used for the field.
 #### Inherited from
 
 [ContainerModel](ContainerModel.md).[label](ContainerModel.md#label)
+
+___
+
+### logger
+
+• `Readonly` **logger**: `Logger`
 
 ___
 

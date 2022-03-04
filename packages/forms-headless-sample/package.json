@@ -1,13 +1,13 @@
 {
   "name": "forms-headless-sample",
-  "version": "0.9.42",
+  "version": "0.9.43",
   "private": true,
   "homepage": "/pages/livecycle/af2-web-runtime/dist",
   "dependencies": {
     "@adobe/react-spectrum": "^3.15.1",
-    "@aemforms/crispr-core": "^0.6.36",
-    "@aemforms/crispr-react-bindings": "^0.5.38",
-    "@aemforms/crispr-react-core-components": "^0.9.40",
+    "@aemforms/crispr-core": "^0.6.37",
+    "@aemforms/crispr-react-bindings": "^0.5.39",
+    "@aemforms/crispr-react-core-components": "^0.9.41",
     "@react-aria/i18n": "^3.3.2",
     "@react/react-spectrum": "^2.27.0",
     "classnames": "^2.3.1",

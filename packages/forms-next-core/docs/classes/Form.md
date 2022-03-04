@@ -26,6 +26,7 @@ Defines `form model` which implements [form model](../interfaces/FormModel.md)
 - [isContainer](Form.md#iscontainer)
 - [items](Form.md#items)
 - [label](Form.md#label)
+- [logger](Form.md#logger)
 - [maxItems](Form.md#maxitems)
 - [metaData](Form.md#metadata)
 - [name](Form.md#name)
@@ -256,6 +257,20 @@ Label to be used for the field.
 #### Inherited from
 
 Container.label
+
+___
+
+### logger
+
+• `get` **logger**(): `Logger`
+
+#### Returns
+
+`Logger`
+
+#### Implementation of
+
+[FormModel](../interfaces/FormModel.md).[logger](../interfaces/FormModel.md#logger)
 
 ___
 
