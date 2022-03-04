@@ -13,9 +13,9 @@ import EventQueue from "./controller/EventQueue";
  * @param logLevel Logging Level for the form. Setting it off will disable the logging
  * @returns {@link FormModel | form model}
  */
-export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "off"): FormModel => {
+export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "error"): FormModel => {
     try {
-        let f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), "off");
+        let f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
         let formData = formModel?.data;
         if (formData) {
             f.importData(formData);

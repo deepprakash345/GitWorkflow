@@ -92,10 +92,10 @@ class Form extends Container<FormJson> implements FormModel {
     constructor(n: FormJson,
                 private _ruleEngine: RuleEngine,
                 private _eventQueue = new EventQueue(),
-                private logLevel: LogLevel = "off") {
+                logLevel: LogLevel = "off") {
         //@ts-ignore
         super(n, {});
-        this._logger = new Logger()
+        this._logger = new Logger(logLevel)
         this.queueEvent(new Initialize());
         this.queueEvent(new ExecuteRule());
         this._ids = IdGenerator();

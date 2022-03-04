@@ -23,7 +23,11 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         if (!(eName in this._rules)) {
             let eString = rule || this.rules[eName];
             if (typeof eString === 'string' && eString.length > 0) {
-                this._rules[eName] = this.ruleEngine.compileRule(eString);
+                try {
+                    this._rules[eName] = this.ruleEngine.compileRule(eString);
+                } catch (e) {
+                    this.form.logger.error(`Unable to compile rule \`"${eName}" : "${eString}"\` Exception : ${e}`)
+                }
             } else {
                 throw new Error(`only expression strings are supported. ${typeof (eString)} types are not supported`);
             }
@@ -38,7 +42,14 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
                 eString = [eString];
             }
             if (typeof  eString !== 'undefined' && eString.length > 0) {
-                this._events[eName] = (eString as string[]).map(x => this.ruleEngine.compileRule(x));
+                this._events[eName] = (eString as string[]).map(x => {
+                    try {
+                        return this.ruleEngine.compileRule(x);
+                    } catch (e) {
+                        this.form.logger.error(`Unable to compile expression \`"${eName}" : "${eString}"\` Exception : ${e}`)
+                    }
+                    return null
+                }).filter(x => x !== null)
             }
         }
         return this._events[eName] || [];
@@ -66,13 +77,15 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             const scope = this.getExpressionScope();
             const values = entries.map(([prop, rule]) => {
                 const node = this.getCompiledRule(prop, rule);
-                let newVal = this.ruleEngine.execute(node, scope, context, true);
-                //@ts-ignore
-                if (newVal != this._jsonModel[prop]) {
-                    return [prop, newVal];
-                } else {
-                    return [];
+                let newVal;
+                if (node) {
+                    newVal = this.ruleEngine.execute(node, scope, context, true);
+                    //@ts-ignore
+                    if (newVal != this._jsonModel[prop]) {
+                        return [prop, newVal];
+                    }
                 }
+                return [];
             }).filter(x => x.length == 2);
             this.applyUpdates(Object.fromEntries(values));
         }
