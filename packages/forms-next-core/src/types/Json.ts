@@ -108,7 +108,7 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
     default?: any
     value?: any
     multiline?: boolean;
-    emptyValue?: 'null'|'undefined'|''
+    emptyValue?: 'null' | 'undefined' |''
 }
 
 /** Type for `form container properties` based on `crispr form specification` */

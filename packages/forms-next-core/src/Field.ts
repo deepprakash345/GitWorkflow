@@ -114,7 +114,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     get emptyValue() {
-        if (this._jsonModel.emptyValue === null) return null;
+        if (this._jsonModel.emptyValue === 'null') return null;
         else if (this._jsonModel.emptyValue === '' && this.type === 'string') return '';
         else return undefined;
     }
