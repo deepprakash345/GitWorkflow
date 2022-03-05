@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.39
+# @aemforms/crispr-core - v0.6.40
 
 ## Table of contents
 
@@ -315,7 +315,7 @@ Creates form instance using form model definition as per `crispr form specificat
 | :------ | :------ | :------ | :------ |
 | `formModel` | `any` | `undefined` | form model definition |
 | `callback?` | (`f`: [`FormModel`](interfaces/FormModel.md)) => `any` | `undefined` | a callback that recieves the FormModel instance that gets executed before any event in the Form is executed |
-| `logLevel` | `LogLevel` | `"off"` | Logging Level for the form. Setting it off will disable the logging |
+| `logLevel` | `LogLevel` | `"error"` | Logging Level for the form. Setting it off will disable the logging |
 
 #### Returns
 
