@@ -143,6 +143,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
                 if (ruleNodeReference.hasOwnProperty(prop)) {
                     return ruleNodeReference[prop];
                 } else if (typeof ruleNodeReference[prop] === "function") { //todo : create allow list of functions
+                    //to support panel instanceof Array panel1.map(..)
                     return ruleNodeReference[prop]
                 }
             }
