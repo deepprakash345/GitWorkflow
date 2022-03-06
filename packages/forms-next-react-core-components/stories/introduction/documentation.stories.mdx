@@ -1,12 +1,15 @@
-import {Story} from '@storybook/addon-docs';
+import {Meta, Story} from '@storybook/addon-docs';
+import {AdaptiveForm} from "@aemforms/crispr-react-bindings";
+
+<Meta title="Crispr/Introduction" component={AdaptiveForm} />
 
 # What is Crispr
 
 Crispr Form specifies a mechanism to create a Form or Data Capture Experience using a JSON representation,
 which allows rendering that experience across multiple channels.
 
-The Crispr Form Specification can be used by implementors to generate a visual appearance for the
-Data Capture Experience in the choice of their language.
+The [Crispr Form Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/)
+can be used by implementors to generate a visual appearance for the Data Capture Experience for multiple channels.
 
 # Crispr Modules
 
@@ -53,18 +56,18 @@ const json = {...}
 
 A simple one field form will have the following representation
 
-<Story id="crispr-introduction--introduction" />
+<Story id="reference-examples--introduction" />
 
 
 Additional capabilities including submission and multiple fields can be added in the JSON itself. The data can be
 extracted out at submit using the callbacks provided by the Adaptive Form Super Component
 
-<Story id="crispr-introduction--form-data" />
+<Story id="reference-examples--form-data" />
 
 
 The Form can also generate a hierarchical data
 
-<Story id="crispr-introduction--nested-data" />
+<Story id="reference-examples--nested-data" />
 
 
 # How to read the storybook
@@ -112,6 +115,4 @@ A Form can have a dynamic behaviour, which may include (and the list is not exha
 * Uppercase the values when the user exits from a field
 * Allow adding dependent information for the number of dependents user has chosen
 
-## Chapter 5. Adaptive Form Super Component Capabilities
-
-## Chapter 6. Advanced Usage
+## Chapter 5. Advanced Usage

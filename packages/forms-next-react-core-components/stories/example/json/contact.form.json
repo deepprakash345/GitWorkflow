@@ -1,4 +1,8 @@
 {
+    "adaptiveform" : "0.0.17-pre",
+    "metadata" : {
+        "version": "1.0.0"
+    },
     "items": [
         {
             "name": "firstName",
@@ -16,7 +20,7 @@
             "description": "We need it to address you in our responses",
             "screenReaderText": "'Enter your name as you like us to address you'",
             "rules": {
-                "required": "$form.isAnonymous.value != true"
+                "required": "$form.isAnonymous.$value != true"
             },
             "label": {
                 "value": "First Name"
@@ -38,7 +42,7 @@
                 "required": "Name cannot be empty"
             },
             "rules": {
-                "required": "$form.isAnonymous.value != true"
+                "required": "$form.isAnonymous.$value != true"
             },
             "label": {
                 "value": "Last Name"
@@ -48,7 +52,7 @@
             "name": "name",
             "fieldType": "text-input",
             "rules": {
-                "value": "$form.firstName.value & ' ' & $form.lastName.value"
+                "value": "$form.firstName.$value & ' ' & $form.lastName.$value"
             },
             "label": {
                 "value": "Your Full Name"
@@ -67,7 +71,7 @@
                 "required": "The email address is mandatory"
             },
             "rules": {
-                "required": "$form.isAnonymous.value != true"
+                "required": "$form.isAnonymous.$value != true"
             },
             "label": {
                 "value": "Email Address"
@@ -101,7 +105,6 @@
         {
             "name": "submit",
             "fieldType": "button",
-            "title": "Submit",
             "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
             "events": {
                 "click": "dispatch_event($form, 'submit')"

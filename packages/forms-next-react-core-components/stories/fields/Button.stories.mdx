@@ -1,0 +1,111 @@
+import { Meta, Story } from '@storybook/addon-docs';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import {decorator, form, formWithSubmit, logAction} from "../template";
+import {
+    mappings
+} from "../../src";
+
+<Meta title="Crispr/Form Components/Button"
+      component={AdaptiveForm}
+      decorators={[decorator]}
+      args={{onSubmit: logAction("data")}}
+      properties={{viewMode: 'docs'}}
+/>
+
+export const Template = (args) => <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit} />;
+
+# Button
+
+The button component can be created using the `button` fieldType
+
+```json
+{
+  "fieldType": "button",
+  "label" : {
+    "value": "..."
+  }
+}
+```
+
+<Story
+    name="default"
+args={{
+    formJson: form({
+        fieldType: 'button',
+        label : {
+            value : "A Simple Button"
+        }
+    })
+}} >{Template.bind({})}</Story>
+
+## Click Event
+
+Buttons can specify an
+[event handler](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#_event_handler) on
+[click](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#event-click) event using
+[JSON Formula](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#_expression_grammar)
+Expressions
+
+The example below demonstrates changing the label of the button upon click
+```
+{
+  "fieldType": "button",
+  ...
+  "events": {
+    "click": "{label: {value : 'some value' }}"
+  }
+}
+```
+
+
+<Story
+    name="click"
+args={{
+    formJson: form({
+        fieldType: 'button',
+        label : {
+            value : "Click Me"
+        },
+        events : {
+            "click": "{label:{value : if(startsWith($label.value, 'Click'), 'You Clicked me', 'Click Me Again')}}"
+        }
+    })
+}} >{Template.bind({})}</Story>
+
+## Submit
+
+The common functionality of a button is to submit the form. This can be achieved by using the
+[submit_form](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#submit_form_function) function
+on click and specifying the `action` property on the form
+
+```
+{
+  "action": "https://customdomain.com",
+  "items" : [
+    ...,
+    {
+      "fieldType": "button",
+      ....
+      "events" : {
+        "click" : "submit_form()"
+      }
+    }
+  ]
+}
+```
+
+<Story
+    name="submit"
+    args={{
+        formJson: {...form({
+            fieldType: 'button',
+            label : {
+                value : "I submit the form to https://www.google.com/"
+            },
+            events : {
+                "click": "submit_form()"
+            }
+        }),
+        action: "https://www.google.com/"
+        }
+    }} >{Template.bind({})}</Story>

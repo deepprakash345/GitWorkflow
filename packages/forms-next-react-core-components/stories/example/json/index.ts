@@ -1,4 +1,4 @@
-import contactJson from './contact.json';
+import contactJson from './contact.form.json';
 
 export default {
     contactJson

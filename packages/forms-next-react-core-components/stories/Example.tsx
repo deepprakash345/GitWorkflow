@@ -8,7 +8,7 @@ import {Code} from "./Code";
 const Example = ({children, args, highlights, data}) => {
     const json = args.formJson
     const callbacks = Object.keys(args).filter(x => x.startsWith('on'))
-    return (<Tabs>
+    return (<Tabs marginBottom="size-400">
             <TabList>
                 <Item key="form">HTML</Item>
                 <Item key="json">Form.json</Item>
