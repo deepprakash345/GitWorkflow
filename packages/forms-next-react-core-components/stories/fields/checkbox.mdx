@@ -1,0 +1,155 @@
+import {Story} from '@storybook/addon-docs'
+
+# Checkbox
+
+Checkbox component can have an on or an off value. When selected the on value is submitted while upon deselection
+off value is submitted.
+The values are provided via the
+[enum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enum) property. The first
+value in the array is an on value, while the second is off value. Any other value will be discarded
+
+## Default
+
+```json
+{
+ "fieldType" : "checkbox",
+ "label" : {
+    "value" : "..."
+ },
+ "enum" : ["on","off"]
+}
+```
+<Story id="crispr-form-components-checkbox--def" />
+
+## With Rich Text Label and Description
+
+Like [Text Field](?path=/docs/crispr-form-components-text-input-field--def) checkbox also supports rich text labels
+and description properties
+
+<Story id="crispr-form-components-checkbox--with-rich-text-label" />
+
+<Story id="crispr-form-components-checkbox--with-description" />
+
+
+## Submit only when selected
+
+The off value is optional, if not defined then no value will be submitted when the checkbox is not selected
+
+```json
+{
+ "fieldType" : "checkbox",
+ "label" : {
+    "value" : "..."
+ },
+ "enum" : ["on"]
+}
+```
+
+<Story id="crispr-form-components-checkbox--no-off-value" />
+
+A checkbox can specify enum implicitly by setting
+[type](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-type) property to boolean
+
+```json
+{
+ "fieldType" : "checkbox",
+ "label" : {
+    "value" : "..."
+ },
+ "type" : "boolean"
+}
+```
+
+<Story id="crispr-form-components-checkbox--boolean" />
+
+## Checkbox Group
+
+[//]: # (Checkboxes can be made part of a group as well. )
+
+[//]: # (When checkboxes are a part of group, individual checkboxes do not have an off value. )
+
+[//]: # (Only the selected items are submitted. )
+
+[//]: # (If multiple checkboxes are a part of a group, then )
+
+The Spec supports a custom fieldType `checkbox-group` to create a group of checkboxes as well. In a group,
+individual checkboxes do not have an off value and only the selected items are submitted. In case of `checkbox-group`
+one can define the individual checkboxes,
+[enum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enum)
+property is used while the label of individual checkbox is defined
+using
+[enumNames](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enumNames)
+
+```json
+{
+ "fieldType" : "checkbox-group",
+ "label" : {
+    "value" : "..."
+ },
+ "enum" : [1, 2, 3, 4],
+ "enumNames" : ["Option 1", "Option 2", "Option 3", "Option 4"]
+}
+```
+<Story id="crispr-form-components-checkbox--group" />
+
+
+### Alignment of checkboxes in a group
+Using custom layout properties supported by Adaptive Form Super Components,
+the checkboxes in a group can be highlighted.
+```
+{
+  "fieldType": "checkbox-group",
+  ...
+  "properties" : {
+    "afs:layout": {
+      "orientation" : "horizontal"
+    }
+  }
+}
+```
+
+<Story id="crispr-form-components-checkbox--group-horizontal-alignment" />
+
+
+### Rich Text Checkboxes in a group
+
+Unfortunately the checkbox group doesn't support rich text labels for individual checkboxes. Only the label of the
+entire group can be set to richText
+
+<Story id="crispr-form-components-checkbox--group-with-rich-text-labels" />
+
+### Single Selection in a group
+By default a checkbox-group enables multi selection. i.e. the `type` property is set to an array. In the example above,
+the type is set implicitly to `number[]` as the type of value in enum array is
+
+One can enable single selection by setting the type property to be a primitive and not an array.
+
+```
+{
+ "fieldType" : "checkbox-group",
+ ...
+ "enum" : [1, 2, 3, 4],
+ "type" : "number"
+}
+```
+
+<Story id="crispr-form-components-checkbox--group-single-selection" />
+
+### Dynamic options for a group
+
+The options in a group can be dynamic. Using
+[JSON Formula Expressions](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-rules)
+and [rules](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#rules) property of a field
+one can make the properties dynamic. For example,
+
+```
+{
+ "fieldType" : "checkbox-group",
+ ...
+ "rules" : {
+    "enum" : "if(true(), [1, 2, 3], [1])"
+ }
+}
+```
+
+<Story id="crispr-form-components-checkbox--dynamic-group" />

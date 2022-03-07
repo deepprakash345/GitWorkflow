@@ -30,12 +30,9 @@ class CheckboxGroup extends Field {
     protected _getDefaults() {
         return {
             ...super._getDefaults(),
-            enforceEnum: true
+            enforceEnum: true,
+            enum : []
         };
-    }
-
-    get enum() {
-       return super.enum || [];
     }
 }
 

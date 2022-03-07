@@ -9,7 +9,8 @@ export const parameters = {
   layout: 'padded',
   options: {
     storySort : {
-      order : ['Crispr', ['Introduction', 'Form Components', 'Form Layouts', 'Form Validations', 'Dynamic Properties']]
+      order : ['Crispr', ['Introduction', 'Form Components', ["Text Input Field", "Checkbox", "Radio Group", "Drop Down", "File Upload", "Button", "Panel"],
+        'Form Layouts', 'Form Validations', 'Dynamic Properties']]
     }
   }
 }

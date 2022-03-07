@@ -1,0 +1,140 @@
+import {Story} from '@storybook/addon-docs'
+
+# Text Field
+
+A Text Field is a component to capture a text that user can enter using keyboard.
+
+One can provide a
+[label](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-label),
+[help text](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-description)
+and
+[placeholder](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-placeholder)
+that can be displayed to the user to aid them in filling the data in the fields.
+It also supports entering multiple formats including date and numbers using the
+[type](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-constraints-type)
+and
+[format](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-constraints-format)
+constraints.
+
+```json
+{
+ "fieldType" : "text-input",
+ "label" : {
+     "value" : "...."
+  },
+  "name" : "field1"
+}
+```
+
+<Story id="crispr-form-components-text-input-field--def" />
+
+
+## With Rich Text Caption
+
+The captions can contain html text as well. For <strong>html text</strong> we use sanitize-html
+package with <a href="https://www.npmjs.com/package/sanitize-html#default-options"> default options</a>
+
+```
+{
+  "fieldType" : "text-input",
+  "label" : {
+     ....,
+     "richText" : true
+  }
+}
+```
+
+<Story id="crispr-form-components-text-input-field--with-rich-text-label" />
+
+## With Placeholder and Help Text
+
+```
+{
+  "fieldType" : "text-input",
+  ...
+  "placeholder" : "..."
+}
+```
+
+<Story id="crispr-form-components-text-input-field--with-placeholder" />
+
+<Story id="crispr-form-components-text-input-field--with-help-text" />
+
+Description supports HTML as well
+
+<Story id="crispr-form-components-text-input-field--with-rich-help-text" />
+
+
+## Different Data Types
+
+The Text Field can coerce the value into different data types using the `type` property. It allows capturing data in
+number, string, boolean types and date format.
+
+```json
+{
+  "fieldType": "text-input",
+  "type" : "..."
+}
+```
+
+### For Capturing Numbers
+
+```json
+{
+  "fieldType": "text-input",
+  "type" : "number"
+}
+```
+
+<Story id="crispr-form-components-text-input-field--type-number" />
+
+We also support a number widget which allows entering only numbers.
+
+#### Using the number widget
+
+```json
+{
+  "fieldType": "number-input"
+}
+```
+
+<Story id="crispr-form-components-text-input-field--number-widget" />
+
+When using a specialized widget for entering numbers, type property is not required. One can although set the property
+to string as well and the numbers will be saved as string
+
+### For Capturing Date
+
+```json
+{
+  "fieldType": "text-input",
+  "type" : "string",
+  "format" : "date"
+}
+```
+
+<Story id="crispr-form-components-text-input-field--type-date" />
+
+A special widget for providing date input also exists in the implementation.
+
+#### Using the date widget
+
+```json
+{
+  "fieldType": "date-input"
+}
+```
+
+<Story id="crispr-form-components-text-input-field--date-widget" />
+
+## Capturing multi line data
+
+To capture multi line input, the spec provides a special fieldType `multiline-input`.
+
+```json
+{
+  "fieldType": "multiline-input"
+}
+```
+
+<Story id="crispr-form-components-text-input-field--multi-line-widget" />

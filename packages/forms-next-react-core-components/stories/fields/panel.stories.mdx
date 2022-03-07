@@ -1,0 +1,158 @@
+import { Meta, Story } from '@storybook/addon-docs';
+import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import {decorator, formWithSubmit, logAction} from "../template";
+import {
+    mappings
+} from "../../src";
+
+<Meta title="Crispr/Form Components/Panel"
+      component={AdaptiveForm}
+      decorators={[decorator]}
+      args={{onSubmit: logAction("data")}}
+      properties={{viewMode: 'docs'}}
+/>
+
+export const Template = (args) => <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit} />;
+
+# Panel
+
+[Panels](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_crispr_form_panel_object) are
+entities to group a set of fields logically (to create a complex data type) or visually.
+
+```json
+{
+  "fieldType": "panel",
+  "label" : {
+    "value": "Panel"
+  },
+  "name" : "panel1",
+  "type" : "object",
+  "items" : [
+    {
+      "fieldType": "text-input",
+      "name" : "field1"
+    }
+  ]
+}
+```
+
+The example above will create the following data hierarchy
+
+```json
+{
+  "panel1":  {
+    "field1": ""
+  }
+}
+```
+
+## Object Type Panel
+
+A Panel can create a nested hierarchy by specifying a type property. The Panel creates an object in the data if it
+has a type object
+
+```
+{
+  "fieldType" : "panel",
+  "name": "panel1",
+  "items" : [...],
+  "type": "object"
+}
+```
+
+<Story
+    name="Object Type Panel"
+args={{
+    formJson: formWithSubmit({
+        fieldType: 'panel',
+        name: "personalInfo",
+        type: "object",
+        items : [
+            {
+                fieldType : "text-input",
+                name : "firstName",
+                label : {
+                    value  : "First Name"
+                }
+            },
+            {
+                fieldType : "text-input",
+                name : "lastName",
+                label : {
+                    value  : "Last Name"
+                }
+            }
+        ]
+    })
+}} >{Template.bind({})}</Story>
+
+## Array Type Panel
+
+A Panel can also create an array by specifying the type property as `array`. The items inside that panel, need not have
+names and even if they have, those names are ignored and the fields are referenced using their indices.
+
+```
+{
+  "fieldType" : "panel",
+  "name": "panel1",
+  "items" : [...],
+  "type": "array"
+}
+```
+
+<Story
+    name="Array Type Panel"
+args={{
+    formJson: formWithSubmit({
+        fieldType: 'panel',
+        name: "location",
+        type: "array",
+        items : [
+            {
+                fieldType : "text-input",
+                label : {
+                    value  : "Latitude"
+                }
+            },
+            {
+                fieldType : "text-input",
+                label : {
+                    value  : "Longitude"
+                }
+            }
+        ]
+    })
+}} >{Template.bind({})}</Story>
+
+## Array with dynamic items
+
+When a panel defines its type as array and has only a single item, then that item can be added/removed dynamically.
+The [minItems](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-constraints-minItems)
+/[maxItems](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-constraints-maxItems)
+constraint determines how many items can be removed/added.
+
+<Story
+    name="Panel with Dynamic Items"
+    args={{
+        formJson: formWithSubmit({
+            fieldType : "plain-text",
+            value : "Enter the names of your dependents (5 dependents allowed)"
+        },{
+            fieldType: 'panel',
+            name: "names",
+            "label" : {
+                value : "Enter the names of your dependents (5 dependents allowed)"
+            },
+            type: "array",
+            minItems : 1,
+            maxItems : 5,
+            items : [
+                {
+                    fieldType : "text-input",
+                    label : {
+                        value  : "Dependent Name"
+                    }
+                }
+            ]
+        })
+    }} >{Template.bind({})}</Story>
