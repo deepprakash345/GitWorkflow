@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.40
+# @aemforms/crispr-core - v0.6.41
 
 ## Table of contents
 

@@ -127,13 +127,29 @@ ___
 
 ### enum
 
-• `get` **enum**(): `any`[]
+• `get` **enum**(): `undefined` \| `any`[]
 
 #### Returns
 
-`any`[]
+`undefined` \| `any`[]
 
-#### Overrides
+#### Inherited from
+
+Field.enum
+
+• `set` **enum**(`e`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `e` | `undefined` \| `any`[] |
+
+#### Returns
+
+`void`
+
+#### Inherited from
 
 Field.enum
 
