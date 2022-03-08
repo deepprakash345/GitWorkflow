@@ -85,19 +85,22 @@ const args = function (x) {
 };
 
 export const textInput = Template.bind({});
-textInput.args = {formJson: args(textInput)};
+textInput.storyName = "text-input"
+textInput.args = {formJson: args(textInputE)};
 
 export const dropDown = Template.bind({});
+dropDown.storyName = "drop-down"
 dropDown.args = {formJson: args(dropDownE)};
 
 export const radio = Template.bind({});
+radio.storyName = "radio-group"
 radio.args = {formJson: args(radioE)};
 
 export const checkbox = Template.bind({});
+checkbox.storyName = "checkbox"
 checkbox.args = {formJson: args(checkboxE)};
 
 export const checkboxGroup = Template.bind({});
+checkboxGroup.storyName = "checkbox-group"
 checkboxGroup.args = {formJson: args(checkboxGroupE)};
 
-export const enumNames = Template.bind({});
-enumNames.args = {formJson: args(radioEWithEnumNames)};

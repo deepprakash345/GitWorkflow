@@ -23,9 +23,11 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const minimum = Template.bind({});
+minimum.storyName = "minimum"
 minimum.args = {formJson: minValueForm};
 
 export const exclusiveMinimum = Template.bind({});
+exclusiveMinimum.storyName = "exclusiveMinimum"
 exclusiveMinimum.args = {formJson: {
         ...base,
         items: [
@@ -42,9 +44,11 @@ exclusiveMinimum.args = {formJson: {
     }};
 
 export const maximum = Template.bind({});
+maximum.storyName = "maximum"
 maximum.args = {formJson: maxValueForm};
 
 export const exclusiveMaximum = Template.bind({});
+exclusiveMaximum.storyName = "exclusiveMaximum"
 exclusiveMaximum.args = {formJson: {
         ...base,
         items: [
@@ -61,18 +65,22 @@ exclusiveMaximum.args = {formJson: {
     }};
 
 export const minLength = Template.bind({});
+minLength.storyName = "minLength"
 minLength.args = {formJson: minLengthForm};
 
 export const maxLength = Template.bind({});
+maxLength.storyName = "maxLength"
 maxLength.args = {formJson: maxLengthForm};
 
-export const exactLength = Template.bind({});
-exactLength.args = {formJson: exactLengthForm};
+// export const exactLength = Template.bind({});
+// exactLength.args = {formJson: exactLengthForm};
 
 export const pattern = Template.bind({});
+pattern.storyName = "pattern"
 pattern.args = {formJson: patternForm};
 
 export const step = Template.bind({});
+step.storyName = "step"
 step.args = {formJson: {
         ...base,
         items : [
@@ -90,6 +98,7 @@ step.args = {formJson: {
     }};
 
 export const enforceEnum = Template.bind({});
+enforceEnum.storyName = "enforceEnum"
 enforceEnum.args = {formJson: {
         ...base,
         items: [{
@@ -111,6 +120,7 @@ enforceEnum.args = {formJson: {
     }};
 
 export const validationExpression = Template.bind({});
+validationExpression.storyName = "validationExpression"
 validationExpression.args = {formJson: {
         ...base,
         items: [{

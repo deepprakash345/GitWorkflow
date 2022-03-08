@@ -4,7 +4,7 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import { action } from '@storybook/addon-actions';
-import {Action} from "@aemforms/crispr-core/lib";
+import {Action} from "@aemforms/crispr-core";
 import {base} from "../../template";
 
 const generate = (t = "text-input", extras = {}) => {

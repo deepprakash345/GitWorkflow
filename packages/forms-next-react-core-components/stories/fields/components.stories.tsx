@@ -17,7 +17,7 @@ export default {
 } as ComponentMeta<typeof AdaptiveForm>;
 
 const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
-        <AdaptiveForm mappings={mappings} formJson={args.formJson}  onSubmit={args.onSubmit}/>
+    <AdaptiveForm mappings={mappings} formJson={args.formJson}  onSubmit={args.onSubmit}/>
 );
 
 export const text = Template.bind({});

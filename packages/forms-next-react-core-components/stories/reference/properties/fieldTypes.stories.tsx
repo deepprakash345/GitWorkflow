@@ -95,6 +95,7 @@ checkboxGroup.storyName = 'checkbox-group';
 checkboxGroup.args = {formJson: getOptionsJson('checkbox-group')};
 
 export const checkbox = Template.bind({});
+checkbox.storyName = "checkbox"
 const checkboxJson = {
     ...json,
     items: [{
@@ -106,6 +107,7 @@ const checkboxJson = {
 checkbox.args = {formJson: checkboxJson};
 
 export const text = Template.bind({});
+text.storyName = "text"
 const textJson = {
     ...json,
     items: [{
@@ -116,6 +118,7 @@ const textJson = {
 };
 text.args = {formJson: textJson};
 export const button = Template.bind({});
+button.storyName = "button"
 const buttonJson = {
     ...json,
     items: [{

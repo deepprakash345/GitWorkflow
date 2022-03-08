@@ -6,7 +6,7 @@ import {decorator, formWithSubmit, logAction, logData} from "../../template";
 import documentation from './defaultFieldTypes.docs.mdx'
 
 export default {
-    title: 'Reference/JSON/Properties/viewType/defaults',
+    title: 'Reference/JSON/Properties/fieldType/defaults',
     component: AdaptiveForm,
     parameters: {
         docs: {
@@ -23,8 +23,9 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit}/>
 );
 
-export const StringType = Template.bind({});
-StringType.args = {
+export const string = Template.bind({});
+string.storyName = "string"
+string.args = {
     formJson: formWithSubmit({
         "name": "field",
         "type": "string",
@@ -35,11 +36,12 @@ StringType.args = {
     })
 }
 
-export const booleanType = Template.bind({});
-booleanType.parameters = {
+export const boolean = Template.bind({});
+boolean.storyName = "boolean"
+boolean.parameters = {
     highlights : ["items.0.type"]
 }
-booleanType.args = {
+boolean.args = {
     formJson: formWithSubmit({
         "name": "field",
         "type": "boolean",
@@ -50,8 +52,9 @@ booleanType.args = {
     })
 }
 
-export const dateFormat = Template.bind({});
-dateFormat.args = {
+export const date = Template.bind({});
+date.storyName = "date"
+date.args = {
     formJson: formWithSubmit(
         {
             "name": "field",
@@ -64,8 +67,9 @@ dateFormat.args = {
         })
 }
 
-export const fileType = Template.bind({});
-fileType.args = {
+export const file = Template.bind({});
+file.storyName = "file"
+file.args = {
     formJson: formWithSubmit(
         {
             "name": "field",
@@ -78,8 +82,9 @@ fileType.args = {
 }
 
 
-export const numberType = Template.bind({});
-numberType.args = {
+export const number = Template.bind({});
+number.storyName = "number"
+number.args = {
     formJson: formWithSubmit(
         {
             "name": "field",

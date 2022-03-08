@@ -4,6 +4,7 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import {base} from "../../template";
+import {max} from "lodash";
 
 export default {
     title: 'Reference/JSON/Constraints/file',
@@ -57,7 +58,9 @@ const form2 = {
 }
 
 export const maxFileSize = Template.bind({});
+maxFileSize.storyName = "maxFileSize"
 maxFileSize.args = {formJson: form};
 
 export const accept = Template.bind({});
+accept.storyName = "accept"
 accept.args = {formJson: form2};

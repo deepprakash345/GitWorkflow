@@ -3,7 +3,7 @@ import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import {Action} from "@aemforms/crispr-core/lib";
+import {Action} from "@aemforms/crispr-core";
 import { action } from '@storybook/addon-actions';
 import {base, decorator, formWithSubmit, logAction} from "../../template";
 

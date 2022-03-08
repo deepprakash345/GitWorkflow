@@ -30,7 +30,7 @@ to attach files along with form data.
 ```
 
 <Story
-    name="default"
+    name="Default"
 args={{
     formJson: formWithSubmit({
         "name" : "field1",
@@ -63,7 +63,7 @@ The Data URL representation serializes the data using the standard data-url form
 }
 ```
 <Story
-    name="data-url"
+    name="Uploading files as data-url"
     args={{
         formJson: formWithSubmit({
             "name" : "field1",
@@ -89,7 +89,7 @@ The Binary representation serializes the data in base64 encoded binary string
 }
 ```
 <Story
-    name="binary"
+    name="Uploading files as binary"
     args={{
         formJson: formWithSubmit({
             "name" : "field1",
@@ -124,7 +124,7 @@ The
 }
 ```
 <Story
-    name="file"
+    name="Uploading files as file type"
     args={{
         formJson: formWithSubmit({
             "name" : "field1",
@@ -149,7 +149,7 @@ Multiple files can be uploaded by setting the type to be an array `file[]` or `s
 ```
 
 <Story
-    name="multiple files"
+    name="Uploading multiple files"
     args={{
         formJson: formWithSubmit({
             "name" : "field1",

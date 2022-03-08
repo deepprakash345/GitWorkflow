@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import {base, decorator} from "../../template";
 
 export default {
-    title: 'Reference/JSON/events',
+    title: 'Reference/JSON/Events',
     decorators: [decorator],
     properties: {
         highlights : ["items.0.events"]
@@ -88,22 +88,26 @@ const template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const click = template.bind({})
+click.storyName = "click"
 click.args = {
     formJson: clickJson
 };
 
 
 export const initialize = template.bind({})
+initialize.storyName = "initialize"
 initialize.args = {
     formJson: initializeJson
 };
 
 export const change = template.bind({})
+change.storyName = "change"
 change.args = {
     formJson: changeJson
 };
 
 export const blur = template.bind({})
+blur.storyName = "blur"
 blur.args = {
     formJson: blurJson
 };
