@@ -3,7 +3,7 @@ import { Canvas, Story } from "@storybook/addon-docs";
 
 # Rules
 
-Crispr Form allows changing the properties of a field dynamically using
+Form allows changing the properties of a field dynamically using
 [JSON Formula](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_expression_grammar) expressions.
 
 Every field has a [rules](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_rules)
@@ -32,24 +32,24 @@ For example, the below JSON will produce two fields `fieldA` and `fieldB` and wh
 
 
 ## Computing Value based on other fields
-<Story id="crispr-dynamic-properties--value" />
+<Story id="adaptive-form-dynamic-behaviour--value" />
 
 ## Setting options dynamically
 Options of a drop down can be set dynamically using rules.
 They can be set based on the value of some other field
 
-<Story id="crispr-dynamic-properties--options" />
+<Story id="adaptive-form-dynamic-behaviour--options" />
 
 Or, can be fetched from a server
 
-<Story id="reference-json-events-custom--fetch-data" />
+<Story id="adaptive-form-dynamic-behaviour-events-custom-events--fetch-data" />
 
 
 ## Making a field readonly
 The [readOnly](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-readOnly) property
 can be updated dynamically
 
-<Story id="crispr-dynamic-properties--read-only" />
+<Story id="adaptive-form-dynamic-behaviour--read-only" />
 
 And similarly other dynamic properties like enabled, label, etc can be modified using rules
 
@@ -59,35 +59,9 @@ And similarly other dynamic properties like enabled, label, etc can be modified 
 A common use case in forms, is to show/hide a field or make the optional depending upon the data entered in other
 fields. Using rules, one can achieve that by making `required` or `visible` property dynamic
 
-<Story id="crispr-dynamic-properties--required" />
+<Story id="adaptive-form-dynamic-behaviour--required" />
 
-<Story id="crispr-dynamic-properties--visible" />
+<Story id="adaptive-form-dynamic-behaviour--visible" />
 
-# Events
-
-Apart from rules, one can handle events in the Form Definition to provide dynamic behaviour to the Form. The Spec
-supports a number of [events](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_events) that allow
-adding additional capabilities in the Form.
-
-For instance changing the label of a checkbox when it is selected
-
-<Story id="reference-json-events--change" />
-
-Or changing the text entered on focus out
-
-<Story id="reference-json-events--blur" />
-
-
-Apart from out of the box events, the Form Definition allows dispatching a
-[custom event](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_custom_events) to a field and changing
-its property.
-
-For instance one can set the value of a field to the number of times a button has been clicked
-
-<Story id="reference-json-events-custom--dispatch" />
-
-Apart from that custom events can also pass an extra payload
-
-<Story id="reference-json-events-custom--dispatch-with-payload" />
 
 

@@ -14,7 +14,7 @@ import formJson from "../../rules/json";
  * To do that in your form, one can use the rules property in the Field.
  */
 export default {
-    title: 'Crispr/Dynamic Behaviour',
+    title: 'Adaptive Form/Dynamic Behaviour',
     component: AdaptiveForm,
     decorators : [decorator],
     parameters: {
@@ -39,7 +39,7 @@ options.storyName = "Dynamic Options"
 options.args = {formJson: dynamicOptionsForm};
 
 export const readOnly = Template.bind({});
-readOnly.storyName = "Dynamic Options"
+readOnly.storyName = "Read Only"
 readOnly.args = {
     formJson: {
         ...base,
@@ -68,7 +68,7 @@ readOnly.args = {
 }
 
 export const required = Template.bind({});
-
+required.storyName = "Conditionally Mandatory fields"
 required.args = {
     formJson: {
         ...base,

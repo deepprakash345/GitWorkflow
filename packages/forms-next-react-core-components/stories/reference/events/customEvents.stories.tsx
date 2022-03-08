@@ -4,12 +4,16 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import {base, decorator} from "../../template";
+import documentation from "./events.mdx";
 
 export default {
-    title: 'Reference/JSON/events/custom',
+    title: 'Adaptive Form/Dynamic Behaviour/Events/Custom Events',
     decorators: [decorator],
     parameters : {
-        highlights: ["items.0.events", "items.1.events"]
+        highlights: ["items.0.events", "items.1.events"],
+        docs: {
+            page: documentation
+        }
     },
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;

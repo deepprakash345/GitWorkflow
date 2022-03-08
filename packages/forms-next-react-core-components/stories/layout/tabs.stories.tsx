@@ -7,7 +7,7 @@ import documentation from "./documentation.mdx"
 import layouts from "./json";
 
 export default {
-    title: 'Crispr/Form Layouts/Tabs',
+    title: 'Adaptive Form/Layouts/Tabs',
     component: AdaptiveForm,
     decorators: [decorator],
     parameters: {

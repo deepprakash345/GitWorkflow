@@ -6,7 +6,7 @@ import mappings from '../../../src/utils/mappings';
 import {base} from "../../template";
 
 export default {
-    title: 'Reference/JSON/Properties/viewType',
+    title: 'Reference/JSON/Properties/fieldType',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 

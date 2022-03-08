@@ -8,7 +8,7 @@ import {examples} from "./json";
 import React from 'react';
 
 export default {
-    title: 'Crispr/Form Components/Other Components',
+    title: 'Adaptive Form/Components/Other Components',
     component: AdaptiveForm,
     decorators: [decorator],
     args : {

@@ -2,11 +2,10 @@ import {renderHook} from '@testing-library/react-hooks';
 import FormContext from '../../src/component/FormContext';
 import React from 'react';
 import {useRuleEngine} from '../../src';
-import RuleEngine from '@aemforms/crispr-core/lib/rules/RuleEngine';
-import EventQueue from '@aemforms/crispr-core/lib/controller/EventQueue';
-import {FormModel} from '@aemforms/crispr-core/lib';
-import {randomWord} from '@aemforms/crispr-core/lib/utils/FormUtils';
-import {AddItem, Click} from '@aemforms/crispr-core/lib/controller/Controller';
+import {FormModel, AddItem, Click} from '@aemforms/crispr-core';
+import { randomWord } from '@aemforms/crispr-core/lib/utils/FormUtils';
+import RuleEngine from "@aemforms/crispr-core/lib/rules/RuleEngine";
+import EventQueue from "@aemforms/crispr-core/lib/controller/EventQueue";
 
 export const MockForm = (ruleEngine: RuleEngine, eventQueue: EventQueue):FormModel => {
     return {

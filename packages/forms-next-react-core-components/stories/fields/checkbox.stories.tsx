@@ -9,7 +9,7 @@ import documentation from './checkbox.mdx'
 import {examples} from "./json";
 
 export default {
-    title: 'Crispr/Form Components/Checkbox',
+    title: 'Adaptive Form/Components/Checkbox',
     component: AdaptiveForm,
     decorators: [decorator],
     parameters: {

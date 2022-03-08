@@ -4,7 +4,7 @@ import VerticalFlex from '../../src/components/flex/VerticalFlex';
 import React from 'react';
 import { render } from '@testing-library/react';
 import { createForm, Provider } from '../utils';
-import { jsonString } from '@aemforms/crispr-core/lib/utils/JsonUtils';
+import { jsonString } from '@aemforms/crispr-core';
 
 const emptyFLex = {
   'id': 'emptyFlex',
