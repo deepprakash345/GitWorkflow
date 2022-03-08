@@ -59,6 +59,7 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize, focusOn} = props;
     const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
     const [refMap, setRefMap] = useState<any>({});
+    console.error("@aemforms/crispr-react-bindings has been renamed. Please use @aemforms/forms-super-component")
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
         // any expensive react operation should generally be inside useMemo
