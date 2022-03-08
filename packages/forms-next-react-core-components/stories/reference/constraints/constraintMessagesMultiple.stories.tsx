@@ -8,7 +8,7 @@ import numCons from '../../../../../docs/examples/constraints/numberConstraintsM
 import dateCons from '../../../../../docs/examples/constraints/dateConstraintsMessage.form.json';
 
 export default {
-    title: 'Reference/JSON/Constraints/Messages/multiple',
+    title: 'Reference/JSON/Constraints/Messages/Multiple Constraints',
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
 
@@ -19,7 +19,6 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const string = Template.bind({});
-string.storyName="string"
 string.args = {formJson: stringCons};
 
 

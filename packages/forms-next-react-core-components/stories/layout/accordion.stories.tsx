@@ -5,6 +5,7 @@ import {mappings} from '../../src';
 import {decorator} from "../template";
 import documentation from "./documentation.mdx"
 import layouts from './json';
+import React from 'react';
 
 export default {
     title: 'Crispr/Form Layouts/Accordion',

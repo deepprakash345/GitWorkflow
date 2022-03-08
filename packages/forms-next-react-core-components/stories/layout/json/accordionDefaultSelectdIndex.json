@@ -9,9 +9,7 @@
       "fieldType": "panel",
       "properties": {
         "afs:layout": {
-          "defaultSelectedIndex": [
-            0
-          ]
+          "defaultSelectedIndex": 1
         }
       },
       "items": [

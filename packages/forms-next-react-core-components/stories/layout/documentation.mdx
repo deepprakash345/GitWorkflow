@@ -3,19 +3,81 @@ import {Story} from '@storybook/addon-docs';
 # Form Layouts
 
 Crispr Out of the Box does not support any layouts. But when the form is rendered on the screen a layout is required.
-Adaptive Form Super Component provides the layout functionality via custom View Types and custom Property that
+Adaptive Form Super Component provides the layout functionality using custom View Types and custom Property that
 Specification Supports.
+
+The layouts are supported only for fieldTypes that are Panels.
+
+```json
+{
+  "fieldType": "panel",
+  "name" : "panel1",
+  "items" : []
+}
+```
 
 The React based AF Super Component supports the following layouts
 
 ## Stacked
 
-<Story id="crispr-introduction--nested-data" />
+By default the elements in a panel are stacked from top to bottom
 
+```
+{
+"fieldType": "panel",
+"name" : "panel1",
+"items" : [{...}, {...}, {...}]
+}
+```
+
+<Story id="reference-examples--nested-data" />
+
+Additional layouts can be provided using the `:type` property which signifies the component to be rendered for the Form
 
 ## Accordion
 
+An accordion is provided using `custom:accordion` custom type.
+
+```
+{
+"fieldType": "panel",
+":type" : "custom:accordion"
+}
+```
+
+
 <Story id="crispr-form-layouts-accordion--def" />
+
+By default The accordion layout allows only one item to be visible on the screen. This can be changed via the
+
+### Making Multiple Items visible at a time
+
+```json
+{
+    "fieldType": "panel",
+    ":type" : "custom:accordion",
+    "properties" : {
+        "afs:multiselectable" : true
+    }
+}
+```
+<Story id="crispr-form-layouts-accordion--multiselectable" />
+
+### Selecting initial items
+
+[defaultSelectedIndex](https://react-spectrum.corp.adobe.com/components/Accordion) property can be specified to
+select an accordion item initially
+
+```
+{
+    "fieldType": "panel",
+    ":type" : "custom:accordion",
+    "properties" : {
+        "afs:defaultSelectedIndex" : 1 //it can be an array in case multiselectable property is true
+    }
+}
+```
+<Story id="crispr-form-layouts-accordion--selected-index" />
 
 ## Flex
 
