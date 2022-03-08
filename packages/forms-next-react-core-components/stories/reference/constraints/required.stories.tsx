@@ -73,7 +73,7 @@ const json:any = {
                 'value' : 'submit to trigger validation'
             },
             'events' : {
-                'click' : 'submit_form()'
+                'click' : 'submitForm()'
             }
         }
     ],

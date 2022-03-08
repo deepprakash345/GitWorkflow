@@ -75,7 +75,7 @@ args={{
 ## Submit
 
 The common functionality of a button is to submit the form. This can be achieved by using the
-[submit_form](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#submit_form_function) function
+[submitForm](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#submit_form_function) function
 on click and specifying the `action` property on the form
 
 ```
@@ -87,7 +87,7 @@ on click and specifying the `action` property on the form
       "fieldType": "button",
       ....
       "events" : {
-        "click" : "submit_form()"
+        "click" : "submitForm()"
       }
     }
   ]
@@ -103,7 +103,7 @@ on click and specifying the `action` property on the form
                 value : "I submit the form to https://www.google.com/"
             },
             events : {
-                "click": "submit_form()"
+                "click": "submitForm()"
             }
         }),
         action: "https://www.google.com/"

@@ -23,7 +23,7 @@ const dispatchJson = {
             label: {
                 value: 'Counts how many times the button is clicked'
             },
-            description : "dispatch_event can be used to dispatch an event on any field and the field can handle it to update any of its properties",
+            description : "dispatchEvent can be used to dispatch an event on any field and the field can handle it to update any of its properties",
             "events": {
                 "custom:buttonClicked": "{value : value + 1}"
             }
@@ -35,7 +35,7 @@ const dispatchJson = {
         },
         "fieldType": "button",
         "events": {
-            "click": "dispatch_event(textfield, 'custom:buttonClicked')",
+            "click": "dispatchEvent(textfield, 'custom:buttonClicked')",
         }
     }]
 }
@@ -50,7 +50,7 @@ const payloadJson = {
             label: {
                 value: 'Counts how many times the button is clicked'
             },
-            description : "dispatch_event can pass custom data which can be accessed by the handlers",
+            description : "dispatchEvent can pass custom data which can be accessed by the handlers",
             "events": {
                 "custom:buttonClicked": "{value : value + $event.payload.weight}"
             }
@@ -62,7 +62,7 @@ const payloadJson = {
             },
             "fieldType": "button",
             "events": {
-                "click": "dispatch_event(textfield, 'custom:buttonClicked', {weight: 5})",
+                "click": "dispatchEvent(textfield, 'custom:buttonClicked', {weight: 5})",
             }
         }]
 }

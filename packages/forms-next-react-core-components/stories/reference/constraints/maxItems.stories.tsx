@@ -43,7 +43,7 @@ const form = {
                 "value": "submit"
             },
             "events": {
-                "click": "submit_form()"
+                "click": "submitForm()"
             }
         }
     ]
@@ -78,7 +78,7 @@ const form2 = {
                 "value": "submit"
             },
             "events": {
-                "click": "submit_form()"
+                "click": "submitForm()"
             }
         }
     ]

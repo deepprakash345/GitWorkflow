@@ -82,7 +82,7 @@ const form = {
                 'fieldType': 'button',
                 'screenReaderText': 'Enter your message in less than 1000 characters and minimum 50 characters',
                 'events': {
-                    'click': "dispatch_event($form, 'submit')"
+                    'click': "dispatchEvent($form, 'submit')"
                 },
                 'props:translationIds': {
                     'title': 'personal##9636##submit##5663##title##8429'

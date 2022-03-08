@@ -188,13 +188,13 @@ class FunctionRuntimeImpl {
                 },
                 _signature: []
             },
-            get_data : {
+            getData : {
                 _func: (args: unknown, data: unknown, interpreter: any) => {
                     return interpreter.globals.form.exportData();
                 },
                 _signature: []
             },
-            submit_form: {
+            submitForm: {
                 _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
                     // success: string, error: string, submit_as: 'json' | 'multipart' = 'json', data: any = null
                     const success: string = toString(args[0]);
@@ -224,7 +224,7 @@ class FunctionRuntimeImpl {
                 },
                 _signature: []
             },
-            dispatch_event: {
+            dispatchEvent: {
                 _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
                     const element: any = args[0];
                     let eventName: string | any = valueOf(args[1]);

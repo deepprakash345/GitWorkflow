@@ -7,7 +7,7 @@
         "value": "Trigger Event A"
       },
       "events": {
-        "click": "dispatch_event('custom:a')"
+        "click": "dispatchEvent('custom:a')"
       }
     },
     {
@@ -16,7 +16,7 @@
         "value": "Trigger Event B"
       },
       "events": {
-        "click": "dispatch_event('custom:b')"
+        "click": "dispatchEvent('custom:b')"
       }
     },
     {
@@ -25,7 +25,7 @@
         "value": "Trigger Both Events A and B"
       },
       "events": {
-        "click": ["dispatch_event('custom:a')","dispatch_event('custom:b')"]
+        "click": ["dispatchEvent('custom:a')","dispatchEvent('custom:b')"]
       }
     },
     {

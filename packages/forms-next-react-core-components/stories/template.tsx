@@ -36,7 +36,7 @@ export const submitButton = (label = "Submit") => {
         label: {
             value: "Submit"
         },
-        'events': {"click": "submit_form()"}
+        'events': {"click": "submitForm()"}
     }
 }
 

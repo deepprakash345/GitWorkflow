@@ -60,24 +60,24 @@ const checkAfterTimeout = (callback: () => void) => {
 
 test('should return all the publically exposed functions', async () => {
     const result = FunctionRuntime.getFunctions();
-    expect(result.get_data._func).toBeInstanceOf(Function);
+    expect(result.getData._func).toBeInstanceOf(Function);
     expect(result.validate._func).toBeInstanceOf(Function);
-    expect(result.submit_form._func).toBeInstanceOf(Function);
-    expect(result.dispatch_event._func).toBeInstanceOf(Function);
+    expect(result.submitForm._func).toBeInstanceOf(Function);
+    expect(result.dispatchEvent._func).toBeInstanceOf(Function);
 });
 
-test('dispatch_event should invoke dispatch API', async () => {
+test('dispatchEvent should invoke dispatch API', async () => {
     const formJson = create(['f', {
         'f': {
             'events': {
-                'click': "dispatch_event($form, 'custom:event1', {x : 'y'})"
+                'click': "dispatchEvent($form, 'custom:event1', {x : 'y'})"
             }
         }
     },
         {
             'f': {
                 'events': {
-                    'click': "dispatch_event('custom:event1', {x : 'y'})"
+                    'click': "dispatchEvent('custom:event1', {x : 'y'})"
                 }
             }
         }]);
@@ -160,7 +160,7 @@ test('getData should return the current state of the form data', async () => {
     const formJson = create(['f', 'f', {
         'f': {
             'events': {
-                'click': "dispatch_event($form, 'custom:customEvent', get_data())"
+                'click': "dispatchEvent($form, 'custom:customEvent', getData())"
             }
         }
     }]);
@@ -187,7 +187,7 @@ test('submit should send a request to the url configured', async () => {
     const formJson = create(['f', 'f', {
         'f': {
             events: {
-                'click': "submit_form('event1', 'event2')"
+                'click': "submitForm('event1', 'event2')"
             }
         }
     }]);
@@ -201,14 +201,14 @@ test('submit should send a request to the url configured', async () => {
     });
 });
 
-test('submit event should be dispatched on submit_form', async () => {
+test('submit event should be dispatched on submitForm', async () => {
     nock(API_HOST)
         .post('/my-submit-end-point')
         .reply(200, {});
     const formJson = create(['f', 'f', {
         'f': {
             events: {
-                'click': "submit_form('event1', 'event2')"
+                'click': "submitForm('event1', 'event2')"
             }
         }
     }]);
@@ -243,7 +243,7 @@ test('submit success event should get executed', async () => {
     }, {
         'f': {
             events: {
-                'click': "submit_form('event1', 'event2')"
+                'click': "submitForm('event1', 'event2')"
             }
         }
     }, 'f']);
@@ -274,7 +274,7 @@ test('submit error event should be dispatched if service returns error', async (
     }, 'f', {
         'f': {
             events: {
-                'click': "submit_form('event1', 'event2')"
+                'click': "submitForm('event1', 'event2')"
             }
         }
     }]);
@@ -292,20 +292,20 @@ test('submit error event should be dispatched if service returns error', async (
     });
 });
 
-test.skip('submit_form should call the submit api', async () => {
+test.skip('submitForm should call the submit api', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     //f.submit = jest.fn();
-    f.getFunctions().submit_form._func(['e1', 'e2'], {}, {globals: {'$form': form.getRuleNode()}});
+    f.getFunctions().submitForm._func(['e1', 'e2'], {}, {globals: {'$form': form.getRuleNode()}});
 
     //expect(f.submit).toHaveBeenCalledWith('e1', 'e2');
 });
 
-test.skip('submit_form should return {}', async () => {
+test.skip('submitForm should return {}', async () => {
     const formJson = create(['f', 'f', 'f']);
     let form = await createFormInstance(formJson);
     const f = FunctionRuntime;
     //f.submit = jest.fn();
-    expect(f.getFunctions().submit_form._func(['e1', 'e2'], {}, {globals: {'$form': form.getRuleNode()}})).toEqual({});
+    expect(f.getFunctions().submitForm._func(['e1', 'e2'], {}, {globals: {'$form': form.getRuleNode()}})).toEqual({});
 });

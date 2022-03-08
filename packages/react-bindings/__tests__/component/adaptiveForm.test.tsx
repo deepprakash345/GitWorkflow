@@ -26,7 +26,7 @@ const formJson: FormJson = {
       'placeholder': 'Please enter text',
       'required': true,
       'events': {
-        'change': "dispatch_event($form, 'custom:textChange', $event.payload)"
+        'change': "dispatchEvent($form, 'custom:textChange', $event.payload)"
       }
     },
     {
@@ -36,7 +36,7 @@ const formJson: FormJson = {
       },
       'name' : 'submit',
       'events': {
-        'click': 'submit_form()'
+        'click': 'submitForm()'
       }
     }
   ]

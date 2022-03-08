@@ -120,7 +120,7 @@ minItems.args = {formJson: {
                     "value": "submit"
                 },
                 "events": {
-                    "click": "submit_form()"
+                    "click": "submitForm()"
                 }
             }
         ]
@@ -149,7 +149,7 @@ maxItems.args = {formJson: {
                     "value": "submit"
                 },
                 "events": {
-                    "click": "submit_form()"
+                    "click": "submitForm()"
                 }
             }
         ]
