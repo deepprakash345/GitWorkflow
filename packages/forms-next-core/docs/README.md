@@ -1,4 +1,4 @@
-# @aemforms/crispr-core - v0.6.42
+# @aemforms/forms-core - v0.6.42
 
 ## Table of contents
 
@@ -90,7 +90,7 @@
 
 Ƭ **BaseJson**: `TranslationBaseJson` & [`RulesJson`](README.md#rulesjson) & [`ConstraintsJson`](README.md#constraintsjson) & { `:type?`: `string` ; `constraintMessages?`: [`ConstraintsMessages`](README.md#constraintsmessages) ; `dataRef?`: `string` \| ``null`` ; `enabled?`: `boolean` ; `errorMessage?`: `string` ; `fieldType?`: `string` ; `label?`: [`Label`](README.md#label) ; `name?`: `string` ; `properties?`: { [key: string]: `any`;  } ; `visible?`: `boolean`  }
 
-Type for `generic form properties` based on `crispr form specification`
+Type for `generic form properties` based on `adaptive form specification`
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 Ƭ **ConstraintsJson**: `TranslationConstraintsJson` & { `accept?`: `string`[] ; `enforceEnum?`: `boolean` ; `exclusiveMaximum?`: `number` ; `exclusiveMinimum?`: `number` ; `format?`: `string` ; `maxFileSize?`: `number` \| `string` ; `maxItems?`: `number` ; `maxLength?`: `number` ; `maximum?`: `number` ; `minItems?`: `number` ; `minLength?`: `number` ; `minimum?`: `number` ; `pattern?`: `string` ; `required?`: `boolean` ; `step?`: `number` ; `type?`: `string` ; `validationExpression?`: `string`  }
 
-Type for `constraint properties` based on `crispr form specification`
+Type for `constraint properties` based on `adaptive form specification`
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 Ƭ **ConstraintsMessages**: `Object`
 
-Type for `constraint messages` based on `crispr form specification`
+Type for `constraint messages` based on `adaptive form specification`
 
 #### Type declaration
 
@@ -150,7 +150,7 @@ ___
 
 Ƭ **ContainerJson**: [`BaseJson`](README.md#basejson) & { `initialItems?`: `number` ; `items`: ([`FieldJson`](README.md#fieldjson) \| [`ContainerJson`](README.md#containerjson))[]  }
 
-Type for `form container properties` based on `crispr form specification`
+Type for `form container properties` based on `adaptive form specification`
 
 ___
 
@@ -158,7 +158,7 @@ ___
 
 Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``"null"`` \| ``"undefined"`` \| ``""`` ; `multiline?`: `boolean` ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
 
-Type for `form field properties` based on `crispr form specification`
+Type for `form field properties` based on `adaptive form specification`
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 Ƭ **FieldsetJson**: [`ContainerJson`](README.md#containerjson) & { `type?`: ``"array"`` \| ``"object"``  }
 
-Type for `form fieldset` based on `crispr form specification`
+Type for `form fieldset` based on `adaptive form specification`
 
 ___
 
@@ -174,7 +174,7 @@ ___
 
 Ƭ **FormJson**: [`ContainerJson`](README.md#containerjson) & { `action?`: `string` ; `adaptiveForm?`: `string` ; `data?`: `any` ; `metadata?`: [`MetaDataJson`](README.md#metadatajson) ; `title?`: `string`  }
 
-Type for `form model` based on `crispr form specification`
+Type for `form model` based on `adaptive form specification`
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 Ƭ **Items**<`T`\>: `Object`
 
-Type for `items property` based on `crispr form specification`
+Type for `items property` based on `adaptive form specification`
 
 #### Type parameters
 
@@ -200,7 +200,7 @@ ___
 
 Ƭ **Label**: `Object`
 
-Type for `label` based on `crispr form specification`
+Type for `label` based on `adaptive form specification`
 
 #### Type declaration
 
@@ -216,7 +216,7 @@ ___
 
 Ƭ **MetaDataJson**: `Object`
 
-Type for `form metadata` based on `crispr form specification`
+Type for `form metadata` based on `adaptive form specification`
 
 #### Type declaration
 
@@ -240,7 +240,7 @@ ___
 
 Ƭ **RulesJson**: `Object`
 
-Type for `constraint messages` based on `crispr form specification`
+Type for `constraint messages` based on `adaptive form specification`
 
 #### Type declaration
 
@@ -269,7 +269,7 @@ ___
 
 Ƭ **TranslationJson**: `TranslationBaseJson` & `TranslationFieldJson` & `TranslationConstraintsJson`
 
-Type for all properties which can be translated based on `crispr form specification`
+Type for all properties which can be translated based on `adaptive form specification`
 
 ## Variables
 
@@ -291,7 +291,7 @@ ___
 
 • **TRANSLATION\_TOKEN**: `string` = `'##'`
 
-Token used while creating translation specific properties from `crispr form specification`
+Token used while creating translation specific properties from `adaptive form specification`
 
 ___
 
@@ -299,7 +299,7 @@ ___
 
 • **translationProps**: `string`[]
 
-Constant for all properties which can be translated based on `crispr form specification`
+Constant for all properties which can be translated based on `adaptive form specification`
 
 ## Functions
 
@@ -307,7 +307,7 @@ Constant for all properties which can be translated based on `crispr form specif
 
 ▸ `Const` **createFormInstance**(`formModel`, `callback?`, `logLevel?`): [`FormModel`](interfaces/FormModel.md)
 
-Creates form instance using form model definition as per `crispr form specification`
+Creates form instance using form model definition as per `adaptive form specification`
 
 #### Parameters
 
@@ -352,7 +352,7 @@ ___
 
 ▸ `Const` **defaultFieldTypes**(`schema`): `string`
 
-Returns the default view type for a given form field object based on `crispr form specification`
+Returns the default view type for a given form field object based on `adaptive form specification`
 
 #### Parameters
 

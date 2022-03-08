@@ -1,10 +1,10 @@
 import FileUpload from './fileupload/FileUpload';
-import {FieldJson, State} from '@aemforms/crispr-core';
-import {useRenderer} from '@aemforms/crispr-react-bindings';
+import {FieldJson, State} from '@aemforms/forms-core';
+import {useRenderer} from '@aemforms/forms-super-component';
 import React from 'react';
 import {baseConvertor, combineConvertors, constraintConvertor, withErrorMessage} from '../utils/SpectrumMappers';
-import {FileObject} from '@aemforms/crispr-core';
-import {getFileSizeInBytes} from '@aemforms/crispr-core';
+import {FileObject} from '@aemforms/forms-core';
+import {getFileSizeInBytes} from '@aemforms/forms-core';
 
 const mapper = combineConvertors(baseConvertor, constraintConvertor, (a, b) => {
     // @ts-ignore

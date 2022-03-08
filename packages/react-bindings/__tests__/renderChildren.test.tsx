@@ -1,5 +1,5 @@
 import React from 'react';
-import {jsonString} from '@aemforms/crispr-core';
+import {jsonString} from '@aemforms/forms-core';
 import {renderChildren} from '../src';
 
 const item = {

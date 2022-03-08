@@ -6,7 +6,7 @@ import {FormModel} from './types';
 import EventQueue from "./controller/EventQueue";
 
 /**
- * Creates form instance using form model definition as per `crispr form specification`
+ * Creates form instance using form model definition as per `adaptive form specification`
  * @param formModel form model definition
  * @param callback a callback that recieves the FormModel instance that gets executed before any event in the Form
  * is executed
@@ -14,7 +14,7 @@ import EventQueue from "./controller/EventQueue";
  * @returns {@link FormModel | form model}
  */
 export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "error"): FormModel => {
-    console.error("@aemforms/crispr-core has been renamed. Please use @aemforms/forms-core")
+    console.error("@aemforms/forms-core has been renamed. Please use @aemforms/forms-core")
     try {
         let f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
         let formData = formModel?.data;

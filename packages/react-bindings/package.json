@@ -1,5 +1,5 @@
 {
-  "name": "@aemforms/crispr-react-bindings",
+  "name": "@aemforms/forms-super-component",
   "version": "0.5.44",
   "description": "React Hooks to add business logic to React Components",
   "author": "vdua <vdua@adobe.com>",
@@ -31,7 +31,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/crispr-core": "^0.6.42",
+    "@aemforms/forms-core": "^0.6.42",
     "@quarry/eim-provider": "^1.5.0"
   },
   "peerDependencies": {

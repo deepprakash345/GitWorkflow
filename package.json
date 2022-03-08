@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "clean": "lerna clean --yes && rm -rf packages/*/lib packages/*/build",
+    "clean": "lerna clean --yes && rm -rf packages/*/target packages/*/lib packages/*/build",
     "build": "lerna run build",
     "build:libs": "lerna run build-libs",
     "start": "lerna run start",

@@ -1,7 +1,7 @@
 import { Flex, Tabs, TabList, TabPanels, Item } from '@adobe/react-spectrum';
 import React, { useContext, useCallback } from 'react';
-import { FormContext } from '@aemforms/crispr-react-bindings';
-import {ContainerJson, State} from "@aemforms/crispr-core";
+import { FormContext } from '@aemforms/forms-super-component';
+import {ContainerJson, State} from "@aemforms/forms-core";
 
 const TabWrapper = function (props: State<ContainerJson> & {orientation? : string}) {
   const mappings = useContext(FormContext).mappings;

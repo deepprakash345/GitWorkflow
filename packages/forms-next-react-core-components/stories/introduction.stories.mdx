@@ -1,5 +1,5 @@
 import {Meta, Story} from '@storybook/addon-docs';
-import {AdaptiveForm} from "@aemforms/crispr-react-bindings";
+import {AdaptiveForm} from "@aemforms/forms-super-component";
 
 <Meta title="Adaptive Form/Introduction" component={AdaptiveForm} />
 
@@ -16,7 +16,7 @@ can be used by implementors to generate a visual appearance for the Data Capture
 The HAF is mainly made up of these components
 
 * A Specification that details how a form with its dynamic behaviour can be represented in JSON.
-* A Core Library (@aemforms/crispr-core) that understands the dynamic behaviour and manipulates the state of the Form
+* A Core Library (@aemforms/forms-core) that understands the dynamic behaviour and manipulates the state of the Form
 without the need of a User Interface.
 * An Adaptive Form Super Component that takes the form json and renders it using react spectrum components.
 
@@ -42,13 +42,13 @@ The default mappings can be found in
 To use that in your project use the following import, assuming you have added the project as a dependency in your project
 
 ```
-import {mappings} from '@aemforms/crispr-react-core-components'
+import {mappings} from '@aemforms/forms-react-components'
 ```
 
 Once you have defined the JSON for the form, the code would look like
 
 ```
-import {mappings} from '@aemforms/crispr-react-core-components'
+import {mappings} from '@aemforms/forms-react-components'
 const json = {...}
 <AdaptiveForm mappings={mappings} formJson={json} />
 ```

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import { AdaptiveForm } from '@aemforms/forms-super-component';
 import { ComponentStory } from '@storybook/react';
 import mappings from '../../src/utils/mappings';
 import formJson from './json';
@@ -8,7 +8,7 @@ import {decorator, logAction} from "../template";
 import fieldWithLabel from '../../../../docs/examples/starter/fieldWithLabel.form.json';
 import withSubmitButton from '../../../../docs/examples/starter/withSubmitButton.form.json';
 import hierarchy from '../../../../docs/examples/starter/hierarchy.form.json'
-import {FormJson} from "@aemforms/crispr-core";
+import {FormJson} from "@aemforms/forms-core";
 
 
 export default {

@@ -1,6 +1,6 @@
 /**
  * Defines generic utilities to validate form runtime model based on the constraints defined
- * as per `crispr form specification`
+ * as per `adaptive form specification`
  */
 
 // issue with import
@@ -125,7 +125,7 @@ export const ValidConstraints = {
 }
 
 /**
- * Implementation of all constraints defined by `crispr form specification`
+ * Implementation of all constraints defined by `adaptive form specification`
  */
 export const Constraints = {
     /**

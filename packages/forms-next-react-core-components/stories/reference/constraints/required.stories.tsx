@@ -1,5 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import { AdaptiveForm } from '@aemforms/forms-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';

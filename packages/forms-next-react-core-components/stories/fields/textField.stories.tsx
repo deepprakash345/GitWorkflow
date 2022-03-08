@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import { AdaptiveForm } from '@aemforms/forms-super-component';
 import { ComponentStory } from '@storybook/react';
 import {mappings} from '../../src';
 import {decorator, formWithSubmit, logAction} from "../template";

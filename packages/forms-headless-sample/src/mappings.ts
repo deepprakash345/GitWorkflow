@@ -1,4 +1,4 @@
-import { mappings } from "@aemforms/crispr-react-core-components";
+import { mappings } from "@aemforms/forms-react-components";
 
 const newMappings: any = {
   ...mappings

@@ -1,13 +1,13 @@
 import {NumberField} from '@adobe/react-spectrum';
 import React from 'react';
-import {FieldJson, State} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/forms-core';
 import {
     baseConvertor,
     combineConvertors,
     constraintConvertor,
     fieldConvertor
 } from '../utils/SpectrumMappers';
-import {useRenderer} from '@aemforms/crispr-react-bindings';
+import {useRenderer} from '@aemforms/forms-super-component';
 
 const mapper = combineConvertors(baseConvertor,
     fieldConvertor,

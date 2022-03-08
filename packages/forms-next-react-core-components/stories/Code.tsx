@@ -1,9 +1,9 @@
 import React from "react";
-import {jsonString} from "@aemforms/crispr-core";
+import {jsonString} from "@aemforms/forms-core";
 import { Source } from '@storybook/components';
 
 const imports = {
-    onSubmit: `import Submit from '@aemforms/crispr-react-bindings';`
+    onSubmit: `import Submit from '@aemforms/forms-super-component';`
 }
 
 const calls = {
@@ -18,8 +18,8 @@ const props = {
 }
 
 const getCode = (json, callbacks) => {
-    return `import {mappings} from '@aemforms/crispr-react-core-components'
-import {AdaptiveForm} from '@aemforms/crispr-react-bindings';
+    return `import {mappings} from '@aemforms/forms-react-components'
+import {AdaptiveForm} from '@aemforms/forms-super-component';
 ${callbacks.map(x => imports[x]).join('\n')}
 import json from './Form.json';
 ${callbacks.map(x => calls[x]).join('\n')}

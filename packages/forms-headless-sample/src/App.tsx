@@ -2,8 +2,8 @@ import React, {Key, useEffect} from 'react';
 import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
-import {AdaptiveForm} from "@aemforms/crispr-react-bindings";
-import {jsonString, exportDataSchema, Action} from "@aemforms/crispr-core";
+import {AdaptiveForm} from "@aemforms/forms-super-component";
+import {jsonString, exportDataSchema, Action} from "@aemforms/forms-core";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";

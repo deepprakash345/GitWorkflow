@@ -21,7 +21,7 @@ const typeToViewTypes = objToMap({
 const arrayTypes = ['string[]', 'boolean[]', 'number[]', 'array'];
 
 /**
- * Returns the default view type for a given form field object based on `crispr form specification`
+ * Returns the default view type for a given form field object based on `adaptive form specification`
  * @param schema    schema item for which default view type is to found
  * @returns default view type
  */

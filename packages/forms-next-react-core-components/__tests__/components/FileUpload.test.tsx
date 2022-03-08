@@ -11,8 +11,8 @@ import {
     Provider,
     renderComponent
 } from '../utils';
-import {FieldJson} from '@aemforms/crispr-core/lib';
-import {FileObject} from '@aemforms/crispr-core';
+import {FieldJson} from '@aemforms/forms-core/lib';
+import {FileObject} from '@aemforms/forms-core';
 
 const fieldWithValueAndMaxFileSize = {
     'name': 'profile_image',

@@ -17,7 +17,7 @@ import HorizontalTab from '../components/tabs/HorizontalTabs';
 import VerticalTab from '../components/tabs/VerticalTabs';
 import PasswordField from '../components/Password';
 
-console.error("@aemforms/crispr-react-core-components has been renamed. Please use @aemforms/forms-react-components")
+console.error("@aemforms/forms-react-components has been renamed. Please use @aemforms/forms-react-components")
 
 const mappings = {
     'text-input' : TextField,

@@ -1,11 +1,11 @@
-# `@aemforms/crispr-react-core-components`
+# `@aemforms/forms-react-components`
 
 > TODO: description
 
 ## Usage
 
 ```
-const formsNextReactCoreComponents = require('@aemforms/crispr-react-core-components');
+const formsNextReactCoreComponents = require('@aemforms/forms-react-components');
 
 // TODO: DEMONSTRATE API
 ```
