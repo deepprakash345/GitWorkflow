@@ -14,7 +14,7 @@ import formJson from "../../rules/json";
  * To do that in your form, one can use the rules property in the Field.
  */
 export default {
-    title: 'Crispr/Dynamic Behaviour',
+    title: 'Adaptive Form/Dynamic Behaviour',
     component: AdaptiveForm,
     decorators : [decorator],
     parameters: {

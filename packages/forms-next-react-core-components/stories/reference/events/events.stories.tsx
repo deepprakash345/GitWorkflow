@@ -4,12 +4,15 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import {base, decorator} from "../../template";
+import documentation from './events.mdx'
 
 export default {
-    title: 'Reference/JSON/Events',
+    title: 'Adaptive Form/Dynamic Behaviour/Events',
     decorators: [decorator],
-    properties: {
-        highlights : ["items.0.events"]
+    parameters: {
+        docs: {
+            page: documentation
+        }
     },
     component: AdaptiveForm
 } as ComponentMeta<typeof AdaptiveForm>;
@@ -82,23 +85,10 @@ const blurJson = {
 
 
 const template: ComponentStory<typeof AdaptiveForm> = (args) => (
-    <Spectrum3Provider theme={defaultTheme}>
         <AdaptiveForm mappings={mappings} formJson={args.formJson} />
-    </Spectrum3Provider>
 );
 
-export const click = template.bind({})
-click.storyName = "click"
-click.args = {
-    formJson: clickJson
-};
 
-
-export const initialize = template.bind({})
-initialize.storyName = "initialize"
-initialize.args = {
-    formJson: initializeJson
-};
 
 export const change = template.bind({})
 change.storyName = "change"
@@ -111,4 +101,19 @@ blur.storyName = "blur"
 blur.args = {
     formJson: blurJson
 };
+
+
+export const initialize = template.bind({})
+initialize.storyName = "initialize"
+initialize.args = {
+    formJson: initializeJson
+};
+
+
+export const click = template.bind({})
+click.storyName = "click"
+click.args = {
+    formJson: clickJson
+};
+
 

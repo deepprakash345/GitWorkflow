@@ -7,7 +7,7 @@ import {decorator, formWithSubmit, logAction} from "../template";
 import documentation from './textfield.mdx'
 
 export default {
-    title: 'Crispr/Form Components/Text Input Field',
+    title: 'Adaptive Form/Components/Text Input Field',
     component: AdaptiveForm,
     decorators: [decorator],
     parameters: {

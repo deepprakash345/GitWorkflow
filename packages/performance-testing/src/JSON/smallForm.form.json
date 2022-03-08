@@ -4,7 +4,7 @@
   "items": [
     {
       "name": "firstname",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {
@@ -13,7 +13,7 @@
     },
     {
       "name": "lastname",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {
@@ -22,7 +22,7 @@
     },
     {
       "name": "email",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {
@@ -31,7 +31,7 @@
     },
     {
       "name": "mobile",
-      "viewType": "number-input",
+      "fieldType": "number-input",
       "type": "string",
       "required": true,
       "label": {
@@ -40,7 +40,7 @@
     },
     {
       "name": "address",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {
@@ -49,7 +49,7 @@
     },
     {
       "name": "city",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {
@@ -58,7 +58,7 @@
     },
     {
       "name": "state",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {
@@ -67,7 +67,7 @@
     },
     {
       "name": "country",
-      "viewType": "text-input",
+      "fieldType": "text-input",
       "type": "string",
       "required": true,
       "label": {

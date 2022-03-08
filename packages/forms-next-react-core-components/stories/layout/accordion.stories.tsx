@@ -8,7 +8,7 @@ import layouts from './json';
 import React from 'react';
 
 export default {
-    title: 'Crispr/Form Layouts/Accordion',
+    title: 'Adaptive Form/Layouts/Accordion',
     component: AdaptiveForm,
     decorators: [decorator],
     parameters: {

@@ -7,7 +7,7 @@ import documentation from "./documentation.mdx"
 import layouts from './json';
 
 export default {
-    title: 'Crispr/Form Layouts/Flex',
+    title: 'Adaptive Form/Layouts/Flex',
     component: AdaptiveForm,
     decorators: [decorator],
     parameters: {

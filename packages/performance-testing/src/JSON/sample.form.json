@@ -44,7 +44,7 @@
         },
         {
           "name": "mobile",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "type": "string",
           "required": true,
           "pattern": "^(?:(?:\\+|0{0,2})91(\\s*[\\ -]\\s*)?|[0]?)?[789]\\d{9}|(\\d[ -]?){10}\\d$",
@@ -69,7 +69,7 @@
           }
         },
         {
-          "viewType": "number-input",
+          "fieldType": "number-input",
           "type": "number",
           "minimum": 1,
           "maximum": 32767,
@@ -79,7 +79,7 @@
           }
         },
         {
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "type": "string",
           "enum": [
             "male",
@@ -100,7 +100,7 @@
           }
         },
         {
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "type": "string",
           "enum": [
             "married",
@@ -124,7 +124,7 @@
           }
         },
         {
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "type": "string",
           "name": "spouseName",
           "label": {
@@ -132,7 +132,7 @@
           }
         },
         {
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "type": "string",
           "pattern": "^[A-Z]{2}$",
           "name": "nationality",
@@ -141,7 +141,7 @@
           }
         },
         {
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "type": "string",
           "name": "taxId",
           "label": {
@@ -151,11 +151,12 @@
       ]
     },
     {
-      "viewType": "custom:vertical-flex",
+      ":type": "custom:vertical-flex",
+      "fieldType" : "panel",
       "name": "address",
       "items": [
         {
-          "viewType": "plain-text",
+          "fieldType": "plain-text",
           "label": {
             "value": "Address"
           }
@@ -163,7 +164,7 @@
         {
           "name": "a1",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "Address 1"
           }
@@ -171,7 +172,7 @@
         {
           "name": "a2",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "Address 2"
           }
@@ -179,7 +180,7 @@
         {
           "name": "city",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "City"
           }
@@ -187,7 +188,7 @@
         {
           "name": "state",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "State"
           }
@@ -195,7 +196,7 @@
         {
           "name": "pin",
           "type": "string",
-          "viewType": "number-input",
+          "fieldType": "number-input",
           "label": {
             "value": "Pin Code"
           }
@@ -203,7 +204,7 @@
         {
           "name": "country",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "Country"
           }
@@ -211,11 +212,12 @@
       ]
     },
     {
-      "viewType": "custom:vertical-flex",
+      ":type": "custom:vertical-flex",
+      "fieldType": "panel",
       "name": "ed",
       "items": [
         {
-          "viewType": "plain-text",
+          "fieldType": "plain-text",
           "label": {
             "value": "Education Infromation"
           }
@@ -223,7 +225,7 @@
         {
           "name": "hq",
           "type": "string",
-          "viewType": "drop-down",
+          "fieldType": "drop-down",
           "enum": [
             "PG",
             "Batchelor"
@@ -235,7 +237,7 @@
         {
           "name": "degree",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "Highest Degree"
           }
@@ -243,7 +245,7 @@
         {
           "name": "py",
           "type": "string",
-          "viewType": "number-input",
+          "fieldType": "number-input",
           "label": {
             "value": "Passing Year"
           }
@@ -251,7 +253,7 @@
         {
           "name": "cn",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "College Name"
           }
@@ -259,7 +261,7 @@
         {
           "name": "grade",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "CGPA"
           }
@@ -267,7 +269,7 @@
         {
           "name": "ca",
           "type": "string",
-          "viewType": "text-input",
+          "fieldType": "text-input",
           "label": {
             "value": "College Address"
           }
@@ -275,11 +277,12 @@
       ]
     },
     {
-      "viewType": "custom:vertical-flex",
+      ":type": "custom:vertical-flex",
+      "fieldType" : "panel",
       "name": "ed",
       "items": [
         {
-          "viewType": "plain-text",
+          "fieldType": "plain-text",
           "label": {
             "value": "Dummy for testing pupose"
           }
