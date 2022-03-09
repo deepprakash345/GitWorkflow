@@ -21,6 +21,20 @@ value in the array is an on value, while the second is off value. Any other valu
 ```
 <Story id="adaptive-form-components-checkbox--def" />
 
+## Default Selected
+
+Using `default` property the checkbox can be selected initially
+
+```json
+{
+ "fieldType" : "checkbox",
+ "default" : "on",
+ "enum" : ["on","off"]
+}
+```
+
+<Story id="adaptive-form-components-checkbox--def-selected" />
+
 ## With Rich Text Label
 
 Like [Text Field](?path=/docs/adaptive-form-components-text-input-field--def) checkbox also supports rich text labels
@@ -95,6 +109,12 @@ using
 }
 ```
 <Story id="adaptive-form-components-checkbox--group" />
+
+### Default selection of a checkboxes in a group
+
+Using the default property as an array, one can provide the checkboxes that will be selected by default
+
+<Story id="reference-json-properties-default--array" />
 
 
 ## Horizontal Alignment of checkboxes in a group

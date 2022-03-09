@@ -106,7 +106,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     set enabled(e) {
-        this._jsonModel.enabled = e;
+        this._setProperty('enabled', e);
     }
 
     get valid() {

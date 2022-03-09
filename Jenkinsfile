@@ -9,6 +9,7 @@ config.setGithubAccessTokenId("cq-guides-password")
 Repository gitStrategy = RepositoryFactory.getStrategy(Repository.GIT, this)
 
 def prepareSample = false
+def deploySample = false
 
 DIFF_COVERAGE_FAIL_THRESHOLD = 80
 NPM_CREDENTIAL_ID = "CQGUIDES_ARTIFACTORY_NPM_TOKEN"
@@ -162,7 +163,11 @@ pipeline {
         stage("prepare sample") {
             when {
                 allOf {
-                    expression { return prepareSample }
+                    anyOf {
+                       expression { return prepareSample }
+                       changeset "**/src/**/*.stories.tsx"
+                       changeset "**/src/**/*.mdx"
+                    }
                     expression { return !isPullRequest() }
                     branch "main"
                 }
@@ -183,13 +188,14 @@ pipeline {
                     sh 'rm -r story'
                     sh 'mv tmp-story story'
                     sh 'git add -A .'
+                    deploySample = true
                 }
             }
         }
         stage("deploy sample") {
             when {
                 allOf {
-                    expression { return prepareSample }
+                    expression { return deploySample }
                     expression { return !isPullRequest() }
                     branch "main"
                     expression { return gitStrategy.hasUncomittedChanges() }

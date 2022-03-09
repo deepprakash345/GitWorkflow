@@ -13,8 +13,7 @@ export default {
     parameters: {
         docs: {
             page: documentation
-        },
-        viewMode: 'docs'
+        }
     }
 } as ComponentMeta<typeof AdaptiveForm>;
 
@@ -53,12 +52,8 @@ withPlaceholder.args = {formJson: formWithSubmit(
         {...field('Text Field with Placeholder', 'field1'), placeholder: 'Enter some text'}),
     onSubmit : logAction('data')}
 
-export const withHelpText = Template.bind({})
-withHelpText.args = {formJson: formWithSubmit(
-        {...field('Text Field with help text', 'field1'), description: 'Enter any characters'}),
-    onSubmit : logAction('data')}
-
 export const withRichHelpText = Template.bind({})
+withRichHelpText.storyName = "With Help Text"
 withRichHelpText.args = {formJson: formWithSubmit(
         {...field('Text Field with rich help text', 'field1'), description: 'For <strong>rich text</strong> we use sanitize-html package with <a href="https://www.npmjs.com/package/sanitize-html#default-options"> default options</a>'}),
     onSubmit : logAction('data')}
@@ -71,13 +66,6 @@ typeNumber.args = {formJson: formWithSubmit({
             description: 'Enter a number only'}),
     onSubmit : logAction('data')}
 
-export const numberWidget = Template.bind({})
-numberWidget.storyName = "Using Number widget"
-numberWidget.args = {formJson: formWithSubmit({
-        ...field('Numeric Widget to capture number', 'field1'),
-        type: 'number',
-        fieldType: 'number-input'}), onSubmit : logAction('data')}
-
 
 export const typeDate = Template.bind({})
 typeDate.storyName = "Date Input"
@@ -87,12 +75,6 @@ typeDate.args = {formJson: formWithSubmit({
         format: 'date',
         description: 'Enter date in yyyy-mm-dd format'}),
     onSubmit : logAction('data')}
-
-export const dateWidget = Template.bind({})
-dateWidget.storyName = "Using Date Widget"
-dateWidget.args = {formJson: formWithSubmit({
-        ...field('Date Widget to capture dates', 'field1'),
-        fieldType: 'date-input'}), onSubmit : logAction('data')}
 
 export const multiLineWidget = Template.bind({})
 multiLineWidget.storyName = "Multi Line Text Field"
