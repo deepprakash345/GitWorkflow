@@ -2,15 +2,14 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "clean": "lerna clean --yes && rm -rf packages/*/target packages/*/lib packages/*/build",
-    "build": "lerna run build",
-    "build:libs": "lerna run build-libs",
-    "start": "lerna run start",
-    "story": "lerna run storybook",
-    "test": "lerna run test",
-    "test:ci": "lerna run test-ci",
-    "bootstrap": "npx lerna bootstrap",
-    "docs": "lerna run docs"
+    "clean": "npx lerna clean --yes && rm -rf packages/*/target packages/*/lib packages/*/build",
+    "build": "npx lerna run build",
+    "build:libs": "npx lerna run build-libs",
+    "start": "npx lerna run start",
+    "story": "npx lerna run storybook",
+    "test": "npx lerna run test",
+    "test:ci": "npx lerna run test-ci",
+    "docs": "npx lerna run docs"
   },
   "devDependencies": {
     "lerna": "^4.0.0"

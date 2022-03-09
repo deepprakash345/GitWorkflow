@@ -17,20 +17,19 @@ const props = {
     onSubmit: `onSubmit={onSubmit}`
 }
 
-const getCode = (json, callbacks) => {
+const getCode = (callbacks) => {
     return `import {mappings} from '@aemforms/forms-react-components'
 import {AdaptiveForm} from '@aemforms/forms-super-component';
 ${callbacks.map(x => imports[x]).join('\n')}
-import json from './Form.json';
+import json from './demo.form.json';
 ${callbacks.map(x => calls[x]).join('\n')}
-const Example = () => <AdaptiveForm mappings={mappings} formJson={json} ${callbacks.map(x => props[x]).join(' ')}/>
-
+const Example = () => (<AdaptiveForm mappings={mappings} formJson={json} ${callbacks.map(x => props[x]).join(' ')}/>)
 export default Example
 `
 }
 
-export const Code = function ({json, callbacks}) {
-    const code = getCode(json, callbacks)
+export const Code = function ({callbacks}) {
+    const code = getCode(callbacks)
     return (
         <Source language="javascript" code={code} />);
 }

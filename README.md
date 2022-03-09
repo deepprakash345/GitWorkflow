@@ -11,12 +11,7 @@ Packages contained in this repository are published to the
 Artifactory in the scope @aemforms. 
 The packages can be consumed as a dependency (i.e. added to the package.json of any project).
 
-Simply add the following to your ~/.npmrc (or .npmrc):
-
-```
-@aemforms:registry=https://artifactory.corp.adobe.com:443/artifactory/api/npm/npm-aem-release/
-//artifactory.corp.adobe.com:443/artifactory/api/npm/npm-adobe-release/:_auth=${NPM_TOKEN}
-```
+Copy the .npmrc file at the root of this project to ~/.npmrc (or .npmrc):
 
 ## Setup npm authentication
 
@@ -53,7 +48,7 @@ The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecyc
 headless demo instance. To run the playground locally execute the following commands
 
 ```
-npm run bootstrap
+npx lerna run bootstrap
 npm run build
 npm run start
 ```
@@ -83,6 +78,10 @@ git submodule that contains the examples used in the storybook. The commands to 
 
 There are other ways to do that but for that you need to refer to the [git reference](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 
+### Warning
+
+**DO NOT RUN `npm install` AT THE ROOT OF THE REPOSITORY. IT DOESN'T GO WELL WITH LERNA. 
+SEE [HERE](https://github.com/lerna/lerna/issues/2447#issuecomment-594589355)**
 
 ### Bootstrap
 
@@ -90,7 +89,7 @@ Once you have cloned this repository and installed the correct version of Node/N
 root directory of this project 
 
 ```
-npm run bootstrap
+npx lerna run bootstrap
 ```
 
 We hoist all the packages at the root project.
