@@ -34,7 +34,7 @@ const field = (label, name, description= undefined) => {
 }
 
 export const def = Template.bind({})
-def.storyName = "Default"
+def.storyName = "Text Input"
 def.args = {formJson: formWithSubmit(field('Basic Text Field', 'field1')), onSubmit : logAction('data')}
 
 export const withRichTextLabel = Template.bind({})

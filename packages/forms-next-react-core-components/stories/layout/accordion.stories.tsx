@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
 );
 
 export const def = Template.bind({});
-def.storyName = "Default";
+def.storyName = "Simple Accordian";
 def.args = { formJson: layouts.accordionJson };
 
 export const Multiselectable = Template.bind({});
