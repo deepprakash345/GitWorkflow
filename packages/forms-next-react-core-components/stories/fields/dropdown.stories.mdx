@@ -110,8 +110,8 @@ API, options can be fetched from an endpoint and set into the form field.
                 "value": "Countries"
             },
             "events": {
-                "initialize" : "request('https://countriesnow.space/api/v0.1/countries', 'GET', null, 'countriesLoaded', 'countriesLoadFail')",
-                "custom:countriesLoaded": "{ enum : $event.payload.data[*].country}"
+                "initialize": "request('/pages/livecycle/af2-docs/examples/data/options.json', 'GET', null, 'countriesLoaded', 'countriesLoadFail')",
+                "custom:countriesLoaded": "{ enum : $event.payload[*].value, enumNames: $event.payload[*].text}"
             }
         })
     }}>{Template.bind({})}</Story>

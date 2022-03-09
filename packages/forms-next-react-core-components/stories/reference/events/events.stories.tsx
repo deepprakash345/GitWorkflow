@@ -78,7 +78,7 @@ const blurJson = {
             },
             "fieldType": "text-input",
             "events": {
-                "blur": ['{value : upper($field.value)}', 'validate($event.target)']
+                "blur": ['{value : upper($value)}', 'validate($event.target)']
             }
         }]
 }
