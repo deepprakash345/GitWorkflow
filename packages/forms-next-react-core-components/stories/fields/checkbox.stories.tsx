@@ -66,6 +66,7 @@ withDescription.parameters = {
 }
 
 export const noOffValue = Template.bind({});
+noOffValue.storyName = "Off Value"
 noOffValue.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox',
@@ -92,7 +93,7 @@ boolean.parameters = {
 }
 
 export const group = Template.bind({});
-group.storyName = "Group Checkbox"
+group.storyName = "Checkbox Group"
 group.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',
@@ -107,6 +108,7 @@ group.parameters = {
 }
 
 export const groupHorizontalAlignment = Template.bind({});
+groupHorizontalAlignment.storyName = "Horizontal Alignment"
 groupHorizontalAlignment.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',

@@ -8,7 +8,7 @@ The values are provided via the
 [enum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enum) property. The first
 value in the array is an on value, while the second is off value. Any other value will be discarded
 
-## Default
+
 
 ```json
 {
@@ -21,17 +21,19 @@ value in the array is an on value, while the second is off value. Any other valu
 ```
 <Story id="adaptive-form-components-checkbox--def" />
 
-## With Rich Text Label and Description
+## With Rich Text Label
 
 Like [Text Field](?path=/docs/adaptive-form-components-text-input-field--def) checkbox also supports rich text labels
 and description properties
 
 <Story id="adaptive-form-components-checkbox--with-rich-text-label" />
 
+## With Description
+
 <Story id="adaptive-form-components-checkbox--with-description" />
 
 
-## Submit only when selected
+## Off Value
 
 The off value is optional, if not defined then no value will be submitted when the checkbox is not selected
 
@@ -46,6 +48,8 @@ The off value is optional, if not defined then no value will be submitted when t
 ```
 
 <Story id="adaptive-form-components-checkbox--no-off-value" />
+
+## Boolean
 
 A checkbox can specify enum implicitly by setting
 [type](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-type) property to boolean
@@ -93,9 +97,9 @@ using
 <Story id="adaptive-form-components-checkbox--group" />
 
 
-### Alignment of checkboxes in a group
+## Horizontal Alignment of checkboxes in a group
 Using custom layout properties supported by Adaptive Form Super Components,
-the checkboxes in a group can be highlighted.
+the checkboxes in a group can be horizontally aligned.
 ```
 {
   "fieldType": "checkbox-group",
