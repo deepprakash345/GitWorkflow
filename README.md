@@ -36,10 +36,10 @@ npm i @aemforms/crispr-react-bindings @aemforms/crispr-react-core-components
 
 ## Versions
 
-Node : 16.13.0+
-NPM: 8.1.0+
+Node : 16.14.0 and v14.19.0 
+NPM: v8.3.1 and v6.14.16 
 
-The steps in this guide are tested against the latest version of node (Darwin 16.13.0) and npm (8.1.0). 
+The steps in this guide are tested against the above versions only. 
 If your version is different then please try to upgrade or log an issue to see if that version can be supported.
 
 # Try out the Playground
