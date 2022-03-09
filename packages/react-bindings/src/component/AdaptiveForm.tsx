@@ -1,7 +1,7 @@
 import React, {JSXElementConstructor, useEffect, useState} from 'react';
 import FormContext, {IFormContext} from './FormContext';
-import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/crispr-core';
-import {Change, FormJson} from '@aemforms/crispr-core';
+import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/forms-core';
+import {Change, FormJson} from '@aemforms/forms-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
 import {getTranslationMessages} from './i18n';
@@ -10,7 +10,7 @@ import {renderChildren} from '../renderChildren';
 import packageJson from '../../package.json';
 import {useAdoption} from '@quarry/eim-provider';
 import afLocalizationJson from '../i18n.json';
-import {ChangePayload} from '@aemforms/crispr-core';
+import {ChangePayload} from '@aemforms/forms-core';
 
 /**
  * The minimum set of translation config that contains messages for all supported locales.
@@ -59,7 +59,6 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize, focusOn} = props;
     const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
     const [refMap, setRefMap] = useState<any>({});
-    console.error("@aemforms/crispr-react-bindings has been renamed. Please use @aemforms/forms-super-component")
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
         // any expensive react operation should generally be inside useMemo

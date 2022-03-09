@@ -1,12 +1,12 @@
 import { Button } from '@adobe/react-spectrum';
 import React from 'react';
-import {FieldJson, State} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/forms-core';
 import {
     baseConvertor,
     combineConvertors,
     richTextString
 } from '../utils/SpectrumMappers';
-import {useRenderer} from '@aemforms/crispr-react-bindings';
+import {useRenderer} from '@aemforms/forms-super-component';
 
 const mapper = combineConvertors((a: FieldJson, b, f) => {
         return {

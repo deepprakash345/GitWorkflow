@@ -36,4 +36,4 @@ ___
 
 • `Readonly` **version**: `string`
 
-Version of the crispr form specification
+Version of the adaptive form specification

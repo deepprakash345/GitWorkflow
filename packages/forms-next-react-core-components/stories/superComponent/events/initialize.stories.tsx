@@ -1,11 +1,11 @@
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@aemforms/crispr-react-bindings';
+import { AdaptiveForm } from '@aemforms/forms-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import jsonform from '../../example/json';
 import { action } from '@storybook/addon-actions';
-import {Action} from '@aemforms/crispr-core';
+import {Action} from '@aemforms/forms-core';
 export default {
     title: 'Reference/Component/events',
     component: AdaptiveForm,

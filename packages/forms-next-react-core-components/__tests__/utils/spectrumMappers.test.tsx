@@ -1,9 +1,9 @@
 import {baseConvertor, combineConvertors, fieldConvertor} from '../../src/utils/SpectrumMappers';
 import {randomString} from './index';
 import mock = jest.mock;
-import {FieldJson} from '@aemforms/crispr-core/lib';
+import {FieldJson} from '@aemforms/forms-core/lib';
 import React from 'react';
-import { Convertor } from '@aemforms/crispr-react-bindings';
+import { Convertor } from '@aemforms/forms-super-component';
 export const mockHandler = {
     dispatchClick: () => {},
     dispatchChange: (val?: string) => {},

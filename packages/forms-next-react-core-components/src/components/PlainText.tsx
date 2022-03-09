@@ -3,8 +3,8 @@ import {
     baseConvertor,
     combineConvertors
 } from '../utils/SpectrumMappers';
-import {useRenderer} from '@aemforms/crispr-react-bindings';
-import {FieldJson, State} from '@aemforms/crispr-core';
+import {useRenderer} from '@aemforms/forms-super-component';
+import {FieldJson, State} from '@aemforms/forms-core';
 
 const PlainText = function (props: any) {
     const { value } = props;

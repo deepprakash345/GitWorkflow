@@ -2,7 +2,7 @@ import React from 'react';
 import Add from '@spectrum-icons/workflow/Add';
 import Remove from '@spectrum-icons/workflow/Remove';
 import {ActionButton, ButtonGroup} from '@adobe/react-spectrum';
-import {Handlers} from '@aemforms/crispr-react-bindings';
+import {Handlers} from '@aemforms/forms-super-component';
 
 const Repeater = ({add, remove, index, handlers}:{
                       add: boolean,

@@ -1,7 +1,7 @@
 import CheckboxGroup from '../../src/components/CheckboxGroup';
 import {filterTestTable, InputFieldTestCase, jest26CompatibleTable, renderComponent} from '../utils';
 import userEvent from '@testing-library/user-event';
-import { FieldJson } from '@aemforms/crispr-core/lib';
+import { FieldJson } from '@aemforms/forms-core/lib';
 import {DEFAULT_ERROR_MESSAGE} from './RadioButtonGroup.test';
 
 const field: FieldJson = {

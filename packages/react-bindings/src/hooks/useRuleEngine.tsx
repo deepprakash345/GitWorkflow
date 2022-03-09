@@ -2,12 +2,12 @@ import {
     FieldModel,
     FieldsetModel,
     FormModel, State
-} from '@aemforms/crispr-core';
+} from '@aemforms/forms-core';
 import formContext, {IFormContext} from '../component/FormContext';
 import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 //@ts-ignore
-import {AddItem, Click, RemoveItem} from '@aemforms/crispr-core';
-import {Blur} from '@aemforms/crispr-core';
+import {AddItem, Click, RemoveItem} from '@aemforms/forms-core';
+import {Blur} from '@aemforms/forms-core';
 
 export type Dispatch<T> = (x?: T) => any
 export type Handlers = {

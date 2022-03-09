@@ -1,27 +1,27 @@
 /**
- * Defines generic types based on `crispr form specification`
+ * Defines generic types based on `adaptive form specification`
  */
 
-/** Type for `items property` based on `crispr form specification` */
+/** Type for `items property` based on `adaptive form specification` */
 export type Items<T> = { [key: string]: T }
 
 /** Type alias for primitive types */
 export type Primitives = string | number | boolean | null | undefined;
 
-/** Type for `label` based on `crispr form specification` */
+/** Type for `label` based on `adaptive form specification` */
 export type Label = {
     value: string
     richText?: boolean
     visible?: boolean
 }
 
-/** Type for `constraint properties` which can be translated based on `crispr form specification` */
+/** Type for `constraint properties` which can be translated based on `adaptive form specification` */
 type TranslationConstraintsJson = {
     enumNames?: string[];
     enum?: any[];
 }
 
-/** Type for `constraint properties` based on `crispr form specification` */
+/** Type for `constraint properties` based on `adaptive form specification` */
 export type ConstraintsJson = TranslationConstraintsJson & {
     accept?:string[];
     enforceEnum?: boolean
@@ -46,7 +46,7 @@ const a: FieldJson  = {
     type : 'string'
 };
 
-/** Type for `constraint messages` based on `crispr form specification` */
+/** Type for `constraint messages` based on `adaptive form specification` */
 export type ConstraintsMessages = {
     accept?:string
     enum?: string;
@@ -67,19 +67,19 @@ export type ConstraintsMessages = {
     validationExpression?: string;
 }
 
-/** Type for `constraint messages` based on `crispr form specification` */
+/** Type for `constraint messages` based on `adaptive form specification` */
 export type RulesJson = {
     rules ?: Items<string>
     events ?: Items<string[]|string|undefined>
 }
 
-/** Type for `generic form properties` which can be translated based on `crispr form specification` */
+/** Type for `generic form properties` which can be translated based on `adaptive form specification` */
 type TranslationBaseJson = {
     description ?: string
 }
 
 
-/** Type for `generic form properties` based on `crispr form specification` */
+/** Type for `generic form properties` based on `adaptive form specification` */
 export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     dataRef?: string | null;
     ':type'?:string
@@ -95,13 +95,13 @@ export type BaseJson = TranslationBaseJson & RulesJson & ConstraintsJson & {
     }
 }
 
-/** Type for `form field properties`which can be translated based on `crispr form specification` */
+/** Type for `form field properties`which can be translated based on `adaptive form specification` */
 type TranslationFieldJson = {
     placeholder?: string
 }
 
 
-/** Type for `form field properties` based on `crispr form specification` */
+/** Type for `form field properties` based on `adaptive form specification` */
 export type FieldJson = BaseJson & TranslationFieldJson & {
     readOnly?: boolean;
     valid?: boolean
@@ -111,25 +111,25 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
     emptyValue?: 'null' | 'undefined' |''
 }
 
-/** Type for `form container properties` based on `crispr form specification` */
+/** Type for `form container properties` based on `adaptive form specification` */
 export type ContainerJson = BaseJson & {
     items: Array<FieldJson | ContainerJson>
     initialItems?: number;
 }
 
-/** Type for `form metadata` based on `crispr form specification` */
+/** Type for `form metadata` based on `adaptive form specification` */
 export type MetaDataJson = {
     version?: string
     grammar?: string
     locale?: string
 }
 
-/** Type for `form fieldset` based on `crispr form specification` */
+/** Type for `form fieldset` based on `adaptive form specification` */
 export type FieldsetJson = ContainerJson & {
     'type'?: 'array' | 'object'
 }
 
-/** Type for `form model` based on `crispr form specification` */
+/** Type for `form model` based on `adaptive form specification` */
 export type FormJson = ContainerJson & {
     metadata?: MetaDataJson,
     data?: any
@@ -138,8 +138,8 @@ export type FormJson = ContainerJson & {
     adaptiveForm?: string
 }
 
-/** Type for all properties which can be translated based on `crispr form specification` */
+/** Type for all properties which can be translated based on `adaptive form specification` */
 export type TranslationJson = TranslationBaseJson & TranslationFieldJson & TranslationConstraintsJson
 
-/** Constant for all properties which can be translated based on `crispr form specification` */
+/** Constant for all properties which can be translated based on `adaptive form specification` */
 export const translationProps = ['description', 'placeholder', 'enum', 'enumNames'];

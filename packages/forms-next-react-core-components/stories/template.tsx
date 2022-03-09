@@ -1,6 +1,6 @@
 import {Provider as Spectrum3Provider, defaultTheme} from '@adobe/react-spectrum';
 import {action} from '@storybook/addon-actions';
-import {Action} from '@aemforms/crispr-core';
+import {Action} from '@aemforms/forms-core';
 import Example from "./Example";
 import React, {useState} from "react";
 

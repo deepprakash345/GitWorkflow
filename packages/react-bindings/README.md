@@ -1,11 +1,11 @@
-# `@aemforms/crispr-react-bindings`
+# `@aemforms/forms-super-component`
 
 > TODO: description
 
 ## Usage
 
 ```
-const reactBindings = require('@aemforms/crispr-react-bindings');
+const reactBindings = require('@aemforms/forms-super-component');
 
 // TODO: DEMONSTRATE API
 ```

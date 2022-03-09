@@ -1,8 +1,8 @@
 import React, { useContext, useCallback } from 'react';
 import { Accordion, AccordionItem } from '@react/react-spectrum/Accordion';
-import { FieldsetJson } from '@aemforms/crispr-core';
-import { useRuleEngine, FormContext } from '@aemforms/crispr-react-bindings';
-import { State } from '@aemforms/crispr-core';
+import { FieldsetJson } from '@aemforms/forms-core';
+import { useRuleEngine, FormContext } from '@aemforms/forms-super-component';
+import { State } from '@aemforms/forms-core';
 
 const AccordionWrapper = function (fieldset: State<FieldsetJson>) {
   const mappings = useContext(FormContext).mappings;

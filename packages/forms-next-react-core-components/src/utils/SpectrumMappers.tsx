@@ -1,7 +1,7 @@
-import {FieldJson} from '@aemforms/crispr-core';
+import {FieldJson} from '@aemforms/forms-core';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
-import {Convertor, useFormIntl} from '@aemforms/crispr-react-bindings';
+import {Convertor, useFormIntl} from '@aemforms/forms-super-component';
 import '../styles.css';
 import clsx from 'clsx';
 

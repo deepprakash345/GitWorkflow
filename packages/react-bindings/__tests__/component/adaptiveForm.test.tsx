@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FieldsetJson, FormJson, State, Action } from '@aemforms/crispr-core';
+import { FieldsetJson, FormJson, State, Action } from '@aemforms/forms-core';
 import { AdaptiveForm, useRuleEngine } from '../../src';
 import {useFocus} from '../../src/hooks';
 

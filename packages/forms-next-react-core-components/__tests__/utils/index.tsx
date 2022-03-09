@@ -1,8 +1,8 @@
 
   
-import {FormContext} from '@aemforms/crispr-react-bindings';
+import {FormContext} from '@aemforms/forms-super-component';
 import React, {JSXElementConstructor} from 'react';
-import {createFormInstance, FieldModel, FormModel} from '@aemforms/crispr-core/lib';
+import {createFormInstance, FieldModel, FormModel} from '@aemforms/forms-core/lib';
 import {IntlProvider} from 'react-intl';
 import Checkbox from '../../src/components/Checkbox';
 import {render} from '@testing-library/react';

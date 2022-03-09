@@ -8,7 +8,7 @@ import {
   renderComponent
 } from '../utils';
 import userEvent from '@testing-library/user-event';
-import { FieldJson } from '@aemforms/crispr-core/lib';
+import { FieldJson } from '@aemforms/forms-core/lib';
 import {FieldExpectType} from './TextField.test';
 import {DEFAULT_ERROR_MESSAGE} from './RadioButtonGroup.test';
 

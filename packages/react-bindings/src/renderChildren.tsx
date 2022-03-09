@@ -1,5 +1,5 @@
 import React from 'react';
-import {ContainerJson, State} from '@aemforms/crispr-core/lib';
+import {ContainerJson, State} from '@aemforms/forms-core/lib';
 import {Handlers} from './hooks';
 
 export const renderChildren = function <P extends ContainerJson>(props: State<P>,

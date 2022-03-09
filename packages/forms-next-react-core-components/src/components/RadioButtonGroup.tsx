@@ -1,7 +1,7 @@
 import {RadioGroup, Radio} from '@adobe/react-spectrum';
-import {FieldJson, State} from '@aemforms/crispr-core';
+import {FieldJson, State} from '@aemforms/forms-core';
 import React from 'react';
-import {useRenderer} from '@aemforms/crispr-react-bindings';
+import {useRenderer} from '@aemforms/forms-super-component';
 import {
     baseConvertor,
     combineConvertors,

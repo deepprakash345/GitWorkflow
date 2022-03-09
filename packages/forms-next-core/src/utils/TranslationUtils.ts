@@ -4,7 +4,7 @@
 // todo: The API's defined in this file could move to a different package later on
 import {FieldJson, FieldsetJson, FormJson, TranslationJson, translationProps} from '../types';
 
-/** Token used while creating translation specific properties from `crispr form specification` */
+/** Token used while creating translation specific properties from `adaptive form specification` */
 export const TRANSLATION_TOKEN : string = '##';
 /** Name of the object which holds all translation specific properties */
 export const TRANSLATION_ID = 'afs:translationIds';
