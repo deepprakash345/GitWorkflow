@@ -5,6 +5,7 @@ import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectr
 import mappings from '../../../src/utils/mappings';
 import { action } from '@storybook/addon-actions';
 import {Action} from "@aemforms/forms-core";
+import {decorator, formWithSubmit, logAction} from "../../template";
 
 const defaultString = [{
     'name' : 'field1',
@@ -33,7 +34,7 @@ const defaultDate = [{
     'fieldType' : 'date-input'
 }]
 
-const defaultArray = [{
+const defaultArray = {
     'name' : 'field1',
     label : {
         value : 'Default Selection in Checkboxes'
@@ -44,7 +45,7 @@ const defaultArray = [{
     enum: ["a", "b", "c"],
     enumNames: ["Option 1", "Option 2", "Option 3"],
     'fieldType' : 'checkbox-group'
-}]
+}
 
 const base = {
     'adaptiveform': '0.0.17-pre',
@@ -54,17 +55,17 @@ const base = {
     }
 }
 
-const logData = (e: Action) => action('onFieldChanged')(e.target.exportData());
-
 export default {
     title: 'Reference/JSON/Properties/default',
-    component: AdaptiveForm
+    component: AdaptiveForm,
+    decorators : [decorator],
+    args: {
+        onSubmit: logAction("data")
+    }
 } as ComponentMeta<typeof AdaptiveForm>;
 
 const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
-    <Spectrum3Provider theme={defaultTheme}>
-        <AdaptiveForm mappings={mappings} formJson={args.formJson} onFieldChanged={logData}/>
-    </Spectrum3Provider>
+    <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit}/>
 );
 
 export const string = Template.bind({});
@@ -86,7 +87,4 @@ date.args = {formJson: {
     }};
 
 export const array = Template.bind({});
-array.args = {formJson: {
-        ...base,
-        items : defaultArray
-    }};
+array.args = {formJson: formWithSubmit(defaultArray)};

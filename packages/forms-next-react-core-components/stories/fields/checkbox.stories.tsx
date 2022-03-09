@@ -36,6 +36,18 @@ def.parameters = {
     highlights: ["items.0.enum"]
 }
 
+export const defSelected = Template.bind({});
+defSelected.storyName = "Default Selected"
+defSelected.args={formJson:formWithSubmit({
+        name : "field1",
+        fieldType: 'checkbox',
+        label: {
+            value : "single checkbox"
+        },
+        "default" : "on",
+        enum : ["on", "off"]
+    }), onSubmit : logAction('data')}
+
 export const withRichTextLabel = Template.bind({});
 withRichTextLabel.args={formJson:formWithSubmit({
         name : "field1",
