@@ -165,8 +165,10 @@ pipeline {
                 allOf {
                     anyOf {
                        expression { return prepareSample }
-                       changeset "**/src/**/*.stories.tsx"
-                       changeset "**/src/**/*.mdx"
+                       changeset "**/*.stories.tsx"
+                       changeset "**/*.mdx"
+                       changeset "**/stories/**/*.tsx"
+                       changeset "**/.storybook/*.js"
                     }
                     expression { return !isPullRequest() }
                     branch "main"

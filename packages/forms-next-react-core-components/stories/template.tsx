@@ -17,7 +17,6 @@ export const base = {
     }
 }
 
-
 export const form = (...items) => {
     return {
         ...base,
@@ -28,7 +27,6 @@ export const form = (...items) => {
 export const formWithSubmit = (...items) => {
     return form(...[...items, submitButton()])
 }
-
 
 export const submitButton = (label = "Submit") => {
     return {
