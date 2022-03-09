@@ -9,7 +9,6 @@ import {
       component={AdaptiveForm}
       decorators={[decorator]}
       args={{onSubmit: logAction("data")}}
-      properties={{viewMode: 'docs'}}
 />
 
 export const Template = (args) => <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit} />;

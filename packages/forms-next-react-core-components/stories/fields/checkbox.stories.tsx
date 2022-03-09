@@ -15,8 +15,7 @@ export default {
     parameters: {
         docs: {
             page: documentation
-        },
-        viewMode: 'docs'
+        }
     }
 } as ComponentMeta<typeof AdaptiveForm>;
 
