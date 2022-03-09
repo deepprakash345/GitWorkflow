@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof AdaptiveForm> = (args) => (
     <AdaptiveForm mappings={mappings} formJson={args.formJson} onSubmit={args.onSubmit}/>)
 
 export const def = Template.bind({});
-def.storyName = "Default"
+def.storyName = "Simple Checkbox"
 def.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox',
@@ -92,6 +92,7 @@ boolean.parameters = {
 }
 
 export const group = Template.bind({});
+group.storyName = "Group Checkbox"
 group.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',
