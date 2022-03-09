@@ -124,3 +124,34 @@ visible.args = {
         ]
     }
 };
+
+export const disable = Template.bind({});
+disable.storyName="Enable/Disable"
+disable.args = {
+    formJson: {
+        ...base,
+        title: "Enable/Disable",
+        "items": [
+            {
+                "name": "agree",
+                "type": "boolean",
+                "fieldType": "checkbox",
+                "label": {
+                    "value": "I agree to the terms and conditions"
+                },
+                description : "submit button will remain hidden until you <b>agree</b>"
+            },
+            {
+                "name": "button",
+                "fieldType": "button",
+                "label": {
+                    "value": "Submit"
+                },
+                enabled : false,
+                "rules": {
+                    "enabled": "agree == true()"
+                }
+            }
+        ]
+    }
+};
