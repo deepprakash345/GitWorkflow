@@ -126,6 +126,7 @@ groupHorizontalAlignment.parameters = {
 }
 
 export const groupWithRichTextLabels = Template.bind({});
+groupWithRichTextLabels.storyName = "Checkbox Group with Rich Text"
 groupWithRichTextLabels.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',
@@ -141,20 +142,6 @@ groupWithRichTextLabels.parameters = {
     highlights : ['items.0.enum']
 }
 
-export const groupSingleSelection = Template.bind({});
-groupSingleSelection.args={formJson:formWithSubmit({
-        name : "field1",
-        fieldType: 'checkbox-group',
-        label: {
-            value : "Select only 1"
-        },
-        enum : [1, 2, 3, 4],
-        enumNames: ["option 1", "option 2", "option 3", "option 4"],
-        type : "number"
-    }), onSubmit : logAction('data')}
-groupSingleSelection.parameters = {
-    highlights : ['items.0.type']
-}
 
 export const dynamicGroup = Template.bind({});
 dynamicGroup.args={formJson:formWithSubmit({

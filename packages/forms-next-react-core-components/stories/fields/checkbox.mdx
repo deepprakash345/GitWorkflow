@@ -115,31 +115,15 @@ the checkboxes in a group can be horizontally aligned.
 <Story id="adaptive-form-components-checkbox--group-horizontal-alignment" />
 
 
-### Rich Text Checkboxes in a group
+## Rich Text Checkboxes in a group
 
 Unfortunately the checkbox group doesn't support rich text labels for individual checkboxes. Only the label of the
 entire group can be set to richText
 
 <Story id="adaptive-form-components-checkbox--group-with-rich-text-labels" />
 
-### Single Selection in a group
-By default a checkbox-group enables multi selection. i.e. the `type` property is set to an array. In the example above,
-the type is set implicitly to `number[]` as the type of value in enum array is
 
-One can enable single selection by setting the type property to be a primitive and not an array.
-
-```
-{
- "fieldType" : "checkbox-group",
- ...
- "enum" : [1, 2, 3, 4],
- "type" : "number"
-}
-```
-
-<Story id="adaptive-form-components-checkbox--group-single-selection" />
-
-### Dynamic options for a group
+## Dynamic addition of checkboxes in a group
 
 The options in a group can be dynamic. Using
 [JSON Formula Expressions](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-rules)
