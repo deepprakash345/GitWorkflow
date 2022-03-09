@@ -45,7 +45,7 @@ property
         })
     }} >{Template.bind({})}</Story>
 
-## Option Display Names
+## Custom input for Dropdown
 
 By default the options use the enum property to display the text for each option. This can be configured by setting the
 [enumNames](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-enumNames)
@@ -61,7 +61,7 @@ property.
 ```
 
 <Story
-    name="Option Text"
+    name="Dropdown with custom input"
     args={{
         formJson: formWithSubmit({
             name : "field1",
@@ -74,7 +74,7 @@ property.
         })
     }} >{Template.bind({})}</Story>
 
-## Description, Rich Text Label etc.
+## Description and Rich Text Label for Dropdown
 
 Similar to Checkbox Group/Text Field the drop-down supports the description and rich text labels
 
@@ -94,14 +94,14 @@ Similar to Checkbox Group/Text Field the drop-down supports the description and 
         })
     }} >{Template.bind({})}</Story>
 
-## Fetching Options from an end point
+## Fetching Input Options from an end point
 
 Using [initialize](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#event-initialize)
 event and [request](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#request_form_function)
 API, options can be fetched from an endpoint and set into the form field.
 
 <Story
-    name="Dynamic Options"
+    name="Dropdown with external input"
     args={{
         formJson: formWithSubmit({
             "name": "countries",
