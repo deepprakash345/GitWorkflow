@@ -5,6 +5,7 @@ import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectr
 import mappings from '../../../src/utils/mappings';
 import {base, decorator} from "../../template";
 import documentation from "./events.mdx";
+import {click} from "./events.stories";
 
 export default {
     title: 'Adaptive Form/Events/Custom Events',
@@ -115,6 +116,7 @@ dispatchWithPayload.args = {
 };
 
 export const fetchData = template.bind({})
+fetchData.storyName = "Fetch Data from APIs"
 fetchData.args = {
     formJson: requestJson
 };
