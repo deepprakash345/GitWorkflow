@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-react-components",
-  "version": "0.9.46",
+  "version": "0.9.47",
   "description": "React Core Components for Forms",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "/pages/livecycle/af2-web-runtime/story",
@@ -34,8 +34,8 @@
     "deploye-storybook": "gh-pages -d storybook-static -e story"
   },
   "dependencies": {
-    "@aemforms/forms-core": "^0.6.42",
-    "@aemforms/forms-super-component": "^0.5.44",
+    "@aemforms/forms-core": "^0.6.43",
+    "@aemforms/forms-super-component": "^0.5.45",
     "@spectrum-css/button": "^3.0.1",
     "@spectrum-css/typography": "^3.0.1",
     "classnames": "^2.3.1",
