@@ -78,7 +78,7 @@ const blurJson = {
             },
             "fieldType": "text-input",
             "events": {
-                "blur": ['{value : upper($field.value)}', 'validate($event.target)']
+                "blur": ['{value : upper($value)}', 'validate($event.target)']
             }
         }]
 }
@@ -91,27 +91,27 @@ const template: ComponentStory<typeof AdaptiveForm> = (args) => (
 
 
 export const change = template.bind({})
-change.storyName = "change"
+change.storyName = "onChange"
 change.args = {
     formJson: changeJson
 };
 
 export const blur = template.bind({})
-blur.storyName = "blur"
+blur.storyName = "onBlur"
 blur.args = {
     formJson: blurJson
 };
 
 
 export const initialize = template.bind({})
-initialize.storyName = "initialize"
+initialize.storyName = "onInitialize"
 initialize.args = {
     formJson: initializeJson
 };
 
 
 export const click = template.bind({})
-click.storyName = "click"
+click.storyName = "onClick"
 click.args = {
     formJson: clickJson
 };

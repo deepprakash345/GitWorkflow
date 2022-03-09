@@ -77,6 +77,7 @@ withDescription.parameters = {
 }
 
 export const noOffValue = Template.bind({});
+noOffValue.storyName = "Off Value"
 noOffValue.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox',
@@ -103,7 +104,7 @@ boolean.parameters = {
 }
 
 export const group = Template.bind({});
-group.storyName = "Group Checkbox"
+group.storyName = "Checkbox Group"
 group.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',
@@ -118,6 +119,7 @@ group.parameters = {
 }
 
 export const groupHorizontalAlignment = Template.bind({});
+groupHorizontalAlignment.storyName = "Horizontal Alignment"
 groupHorizontalAlignment.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',
@@ -135,6 +137,7 @@ groupHorizontalAlignment.parameters = {
 }
 
 export const groupWithRichTextLabels = Template.bind({});
+groupWithRichTextLabels.storyName = "Checkbox Group with Rich Text"
 groupWithRichTextLabels.args={formJson:formWithSubmit({
         name : "field1",
         fieldType: 'checkbox-group',
@@ -150,20 +153,6 @@ groupWithRichTextLabels.parameters = {
     highlights : ['items.0.enum']
 }
 
-export const groupSingleSelection = Template.bind({});
-groupSingleSelection.args={formJson:formWithSubmit({
-        name : "field1",
-        fieldType: 'checkbox-group',
-        label: {
-            value : "Select only 1"
-        },
-        enum : [1, 2, 3, 4],
-        enumNames: ["option 1", "option 2", "option 3", "option 4"],
-        type : "number"
-    }), onSubmit : logAction('data')}
-groupSingleSelection.parameters = {
-    highlights : ['items.0.type']
-}
 
 export const dynamicGroup = Template.bind({});
 dynamicGroup.args={formJson:formWithSubmit({

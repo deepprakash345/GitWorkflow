@@ -59,7 +59,7 @@ withRichHelpText.args = {formJson: formWithSubmit(
     onSubmit : logAction('data')}
 
 export const typeNumber = Template.bind({})
-typeNumber.storyName = "Capture Numbers"
+typeNumber.storyName = "Number Input"
 typeNumber.args = {formJson: formWithSubmit({
             ...field('Text Field to capture number', 'field1'),
             type: 'number',
@@ -68,7 +68,7 @@ typeNumber.args = {formJson: formWithSubmit({
 
 
 export const typeDate = Template.bind({})
-typeDate.storyName = "Capture Dates"
+typeDate.storyName = "Date Input"
 typeDate.args = {formJson: formWithSubmit({
         ...field('Text Field to capture dates', 'field1'),
         type: 'string',
