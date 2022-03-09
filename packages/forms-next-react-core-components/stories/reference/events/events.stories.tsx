@@ -7,7 +7,7 @@ import {base, decorator} from "../../template";
 import documentation from './events.mdx'
 
 export default {
-    title: 'Adaptive Form/Dynamic Behaviour/Events',
+    title: 'Adaptive Form/Events',
     decorators: [decorator],
     parameters: {
         docs: {

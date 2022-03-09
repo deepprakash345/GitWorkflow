@@ -48,7 +48,7 @@ The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecyc
 headless demo instance. To run the playground locally execute the following commands
 
 ```
-npx lerna run bootstrap
+npx lerna bootstrap
 npm run build
 npm run start
 ```
@@ -89,7 +89,7 @@ Once you have cloned this repository and installed the correct version of Node/N
 root directory of this project 
 
 ```
-npx lerna run bootstrap
+npx lerna bootstrap
 ```
 
 We hoist all the packages at the root project.

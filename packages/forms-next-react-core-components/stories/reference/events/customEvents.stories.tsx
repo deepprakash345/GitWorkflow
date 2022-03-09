@@ -7,7 +7,7 @@ import {base, decorator} from "../../template";
 import documentation from "./events.mdx";
 
 export default {
-    title: 'Adaptive Form/Dynamic Behaviour/Events/Custom Events',
+    title: 'Adaptive Form/Events/Custom Events',
     decorators: [decorator],
     parameters : {
         highlights: ["items.0.events", "items.1.events"],
