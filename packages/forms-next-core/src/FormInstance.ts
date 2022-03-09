@@ -14,6 +14,7 @@ import EventQueue from "./controller/EventQueue";
  * @returns {@link FormModel | form model}
  */
 export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "error"): FormModel => {
+    console.error("@aemforms/crispr-core has been renamed. Please use @aemforms/forms-core")
     try {
         let f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
         let formData = formModel?.data;
