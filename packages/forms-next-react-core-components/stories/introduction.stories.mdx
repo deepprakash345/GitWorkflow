@@ -3,12 +3,12 @@ import {AdaptiveForm} from "@aemforms/forms-super-component";
 
 <Meta title="Adaptive Form/Introduction" component={AdaptiveForm} />
 
-# What is Headless Adaptive Form
+# What is Headless Adaptive Forms
 
-Headless Adaptive Form (HAF) specifies a mechanism to create a Form or Data Capture Experience using a JSON representation,
+Headless Adaptive Forms (HAF) specifies a mechanism to create a Form or Data Capture Experience using a JSON representation,
 which allows rendering that experience across multiple channels.
 
-The [Adaptive Form Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/)
+The [Adaptive Forms Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/)
 can be used by implementors to generate a visual appearance for the Data Capture Experience for multiple channels.
 
 # Modules
@@ -124,49 +124,3 @@ The Form can also generate a hierarchical data
 <Story id="reference-examples--nested-data" />
 
 
-# How to read the storybook
-
-The storybook demonstrates the properties of the JSON specification and the capabilities that the super component adds
-on.
-
-The storybook is divided into different chapters
-
-## Chapter 1. Form Fields and Panels
-
-The chapter deals with different types of fields in the form and how they can be defined and what capabilities they
-provide. There are two types of components in the Form: Fields and Panels.
-
-A Field is the unit entity in the Form Document and is represented as a JSON Object.
-A field can specify one or more of,
-
-* constraints on the data they capture,
-* dynamic rules to change their state they have including visibility, enabled, etc.,
-* label, help text, etc.,
-* handling of any events that can be performed by the end user, like click, change etc.
-
-A Form Panel is an entity to group a set of fields logically (to create a complex data type) or visually.
-
-## Chapter 2. Form Layouts
-
-The Panels in addition to group fields, can also be used to provide a layout to the form as well. The second chapter
-deals with the different kind of layout, that
-
-Note that layout is not defined in the Form Specification, but is extended by the Adaptive Form Super Component
-to provide basic layout capabilities
-
-## Chapter 3. Form Validation
-
-A user can specify multiple constraints in the fields and those constraints are validated whenever the user is entering
-the data in the field.
-
-## Chapter 4. Dynamic Behaviour
-
-A Form can have a dynamic behaviour, which may include (and the list is not exhaustive)
-
-* Spouse Name is mandatory if the Marital Status is married
-* Show/Enable the submit button only if user agrees to the Terms of the Document
-* Compute Total Field in the purchase order form as user enters details.
-* Uppercase the values when the user exits from a field
-* Allow adding dependent information for the number of dependents user has chosen
-
-## Chapter 5. Advanced Usage
