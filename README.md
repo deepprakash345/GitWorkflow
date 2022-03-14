@@ -31,8 +31,12 @@ export NPM_EMAIL=$(echo "${auth}" | grep "email" | awk -F " " '{ print $3 }')
 
 To use adaptive form super component, add the following dependency,
 ```
-npm i @aemforms/crispr-react-bindings @aemforms/crispr-react-core-components
+npm i @aemforms/forms-core @aemforms/forms-react-components @adobe/react-spectrum @react/react-spectrum
 ```
+
+## Using Form Builder Visual Studio Plugin
+
+[Download](https://artifactory.corp.adobe.com/ui/api/v1/download?repoKey=generic-flamingo-network-data-snapshot-local&path=crispr/0.10.0/adaptive-form-builder-0.10.0.vsix)
 
 ## Versions
 
