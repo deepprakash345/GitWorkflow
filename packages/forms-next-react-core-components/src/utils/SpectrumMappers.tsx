@@ -36,11 +36,11 @@ export const baseConvertor: Convertor<FieldJson> = (a, b, f) => {
         isDisabled : a.enabled === false,
         label: a.label?.visible === false ? '' : (a.label?.richText === true ? richTextString(a.label?.value) : a.label?.value),
         description: (localizedDescription && localizedDescription.length > 0) ? richTextString(localizedDescription) : null,
-        "aria-label" : a.label?.visible === false ? a.label?.value : undefined
+        'aria-label' : a.label?.visible === false ? a.label?.value : undefined
     };
 };
 
-export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
+export const constraintConvertor: Convertor<FieldJson> = (a) => {
     return {
         ...(a.required && {
             isRequired: true,
@@ -52,8 +52,8 @@ export const constraintConvertor: Convertor<FieldJson> = (a, b) => {
 
 export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
   const i18n = useFormIntl();
-  const formatedMessage = i18n.formatMessage({ id: 'defaultErrorMessage', defaultMessage: DEFAULT_ERROR_MESSAGE })
-  const errorMessage = a.errorMessage === '' && a.valid === false ? formatedMessage : a.errorMessage
+  const formatedMessage = i18n.formatMessage({ id: 'defaultErrorMessage', defaultMessage: DEFAULT_ERROR_MESSAGE });
+  const errorMessage = a.errorMessage === '' && a.valid === false ? formatedMessage : a.errorMessage;
   return {
         placeholder: f('placeholder'),
         value: a.value == null ? '' : a.value,
@@ -65,7 +65,7 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
   };
 };
 
-export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
+export const stringConstraintConvertor: Convertor<FieldJson> = (a) => {
     return {
         minLength: a.minLength,
         maxLength: a.maxLength,
@@ -75,7 +75,7 @@ export const stringConstraintConvertor: Convertor<FieldJson> = (a, b) => {
 
 export const enumToChildConvertor = (Component: JSXElementConstructor<any>) =>  {
     return enumConvertor('children', (text, value) => {
-        return <Component key={value} value={value}>{text + ""}</Component>;
+        return <Component key={value} value={value}>{text + ''}</Component>;
     });
 };
 
@@ -95,7 +95,7 @@ export const enumConvertor : EnumConvertor = (propertyName: string, callback: (t
     };
 };
 
-export const inputTypeConvertor: Convertor<FieldJson> = (a, b) => {
+export const inputTypeConvertor: Convertor<FieldJson> = (a) => {
   return {
     ...(a.type && {
       type: a.type

@@ -13,7 +13,7 @@ const AccordionWrapper = function (fieldset: State<FieldsetJson>) {
   const getItems = useCallback(() => {
     return (
       items.map((child: any, index: any) => {
-        const Comp = mappings?.[child[":type"]];
+        const Comp = mappings?.[child[':type']];
         return Comp ? (
           <AccordionItem key={child?.label?.value} header={child?.label?.value}>
             <Comp key={`${child.id}_${index}`} {...child} />

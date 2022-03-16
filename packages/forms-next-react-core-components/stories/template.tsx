@@ -10,22 +10,32 @@ export const logData = (e: Action) => action('onFieldChanged')(e.target.exportDa
 export const logAction = (name: string) => (e: Action) => action(name)(e.target.exportData());
 
 export const base = {
-    'adaptiveform': '0.0.17-pre',
+    'adaptiveform': '0.10.0',
     'metadata': {
         'grammar': 'json-formula-1.0.0',
         'version': '1.0.0'
     }
 }
 
-export const form = (...items) => {
+export const form = (title, ...items) => {
+    if (typeof title === "string") {
+        return {
+            ...base,
+            title,
+            items
+        }
+    }
     return {
         ...base,
-        items
+        items: [
+            title,
+            ...items
+        ]
     }
 }
 
-export const formWithSubmit = (...items) => {
-    return form(...[...items, submitButton()])
+export const formWithSubmit = (title, ...items) => {
+    return form(title, ...items, submitButton())
 }
 
 export const submitButton = (label = "Submit") => {

@@ -90,7 +90,7 @@ export class Change extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload: ChangePayload, dispatch: boolean = false) {
+    constructor(payload: ChangePayload, dispatch = false) {
         super(payload, 'change', {dispatch});
     }
 }
@@ -131,7 +131,7 @@ export class ExecuteRule extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload: any = {}, dispatch: boolean = false) {
+    constructor(payload: any = {}, dispatch = false) {
         super(payload, 'executeRule', {dispatch});
     }
 }
@@ -165,7 +165,7 @@ export class Initialize extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload?: any, dispatch: boolean = false) {
+    constructor(payload?: any, dispatch = false) {
         super(payload, 'initialize', {dispatch});
     }
 }
@@ -179,7 +179,7 @@ export class Click extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload?: any, dispatch: boolean = false) {
+    constructor(payload?: any, dispatch = false) {
         super(payload, 'click', {dispatch});
     }
 }
@@ -193,7 +193,7 @@ export class Blur extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload?: any, dispatch: boolean = false) {
+    constructor(payload?: any, dispatch = false) {
         super(payload, 'blur', {dispatch});
     }
 }
@@ -216,7 +216,7 @@ export class ValidationComplete extends ActionImpl {
      * @param [payload] event payload (ie) list of {@link ValidationError | validation errors}
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload?: Array<ValidationError>, dispatch: boolean = false) {
+    constructor(payload?: Array<ValidationError>, dispatch = false) {
         super(payload, 'validationComplete', {dispatch});
     }
 }
@@ -232,7 +232,7 @@ export class Submit extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(payload?: any, dispatch: boolean = false) {
+    constructor(payload?: any, dispatch = false) {
         super(payload, 'submit', {dispatch});
     }
 }
@@ -261,7 +261,7 @@ export class CustomEvent extends ActionImpl {
      * @param [payload] event payload
      * @param [dispatch] true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
      */
-    constructor(eventName: string, payload: any = {}, dispatch: boolean = false) {
+    constructor(eventName: string, payload: any = {}, dispatch = false) {
         super(payload, eventName, {dispatch});
     }
 

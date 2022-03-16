@@ -16,13 +16,16 @@
   },
   "plugins": ["@typescript-eslint", "react-hooks", "jest"],
   "rules": {
+    "curly": "error",
     "semi": ["error", "always"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "comma-dangle": ["error", "never"],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "dot-notation": "error",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"]
+    "@typescript-eslint/no-unused-vars": ["error", {"argsIgnorePattern": "React" }],
+    "@typescript-eslint/ban-ts-comment": ["off"],
+    "@typescript-eslint/no-explicit-any" : "off",
+    "@typescript-eslint/explicit-module-boundary-types" : "off",
+    "dot-notation": "error",
+    "no-prototype-builtins" : "off"
   }
 }

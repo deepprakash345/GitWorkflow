@@ -42,10 +42,6 @@ export type ConstraintsJson = TranslationConstraintsJson & {
     validationExpression?: string;
 }
 
-const a: FieldJson  = {
-    type : 'string'
-};
-
 /** Type for `constraint messages` based on `adaptive form specification` */
 export type ConstraintsMessages = {
     accept?:string
@@ -107,7 +103,6 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
     valid?: boolean
     default?: any
     value?: any
-    multiline?: boolean;
     emptyValue?: 'null' | 'undefined' |''
 }
 

@@ -24,7 +24,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npx tsc && cp src/styles.css lib",
+    "eslint" : "npx eslint src/**/*.ts*",
+    "build": "npm run eslint && npx tsc && cp src/styles.css lib",
     "build-libs": "npx tsc && cp src/styles.css lib",
     "test-ci": "jest --silent --coverage",
     "prepublishOnly": "npm run build && npm run test",

@@ -1,7 +1,7 @@
 import React, {JSXElementConstructor, useEffect, useState} from 'react';
-import FormContext, {IFormContext} from './FormContext';
+import FormContext from './FormContext';
 import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/forms-core';
-import {Change, FormJson} from '@aemforms/forms-core';
+import {FormJson} from '@aemforms/forms-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
 import {getTranslationMessages} from './i18n';
@@ -58,7 +58,7 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize, focusOn} = props;
     const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
-    const [refMap, setRefMap] = useState<any>({});
+    const [refMap] = useState<any>({});
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
         // any expensive react operation should generally be inside useMemo

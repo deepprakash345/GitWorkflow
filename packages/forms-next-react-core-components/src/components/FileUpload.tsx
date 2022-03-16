@@ -2,7 +2,7 @@ import FileUpload from './fileupload/FileUpload';
 import {FieldJson, State} from '@aemforms/forms-core';
 import {useRenderer} from '@aemforms/forms-super-component';
 import React from 'react';
-import {baseConvertor, combineConvertors, constraintConvertor, withErrorMessage} from '../utils/SpectrumMappers';
+import {baseConvertor, combineConvertors, constraintConvertor} from '../utils/SpectrumMappers';
 import {FileObject} from '@aemforms/forms-core';
 import {getFileSizeInBytes} from '@aemforms/forms-core';
 

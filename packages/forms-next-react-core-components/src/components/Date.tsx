@@ -1,5 +1,6 @@
 import { TextField } from '@adobe/react-spectrum';
 import {FieldJson, State} from '@aemforms/forms-core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import { useRenderer } from '@aemforms/forms-super-component';
 import {
@@ -15,7 +16,7 @@ const mapper = combineConvertors(baseConvertor,
   fieldConvertor,
   constraintConvertor,
   inputTypeConvertor,
-  stringConstraintConvertor, (a, b) => {
+  stringConstraintConvertor, () => {
     return { width: '100%', type: 'date' };
   });
 

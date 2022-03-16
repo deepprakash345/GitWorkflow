@@ -1,5 +1,5 @@
 import {FieldJson, State, TRANSLATION_ID, TRANSLATION_TOKEN, CUSTOM_PROPS_KEY} from '@aemforms/forms-core';
-import React, {JSXElementConstructor, useRef} from 'react';
+import React, {JSXElementConstructor} from 'react';
 import {useIntl} from 'react-intl';
 import {Handlers, useFocus, useRuleEngine} from './useRuleEngine';
 
@@ -50,11 +50,11 @@ export const useFormIntl = function () {
  */
 export const useRenderer = function(formFieldState: State<FieldJson>,
                                     Component: JSXElementConstructor<any>,
-                                    propsMapper: Convertor<any> = (a, b, c) => a,
+                                    propsMapper: Convertor<any> = (a) => a,
                                     wrap:boolean = false)  {
     const [state, handlers] = useRuleEngine(formFieldState);
     const i18n = useFormIntl();
-    const [ref, setFocus] = useFocus(formFieldState);
+    const [ref] = useFocus(formFieldState);
     const res = propsMapper(state, handlers, translateMessage(state, i18n.formatMessage));
     return (wrap ? (<div className={'field'}><Component {...res} ref={ref} /></div>) : <Component {...res} ref={ref} />);
 };

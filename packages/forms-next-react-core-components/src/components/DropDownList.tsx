@@ -7,6 +7,7 @@ import {
     constraintConvertor,
     fieldConvertor, enumToChildConvertor
 } from '../utils/SpectrumMappers';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 
 
@@ -20,7 +21,7 @@ const mapper = combineConvertors(baseConvertor,
     (a, b) => {
         return {
             onSelectionChange: b.dispatchChange,
-            selectedKey: a.value != null ? a.value + "": a.value
+            selectedKey: a.value != null ? a.value + '': a.value
         };
     });
 

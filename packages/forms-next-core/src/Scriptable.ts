@@ -1,11 +1,33 @@
 import {Action, RulesJson, ScriptableField} from './types';
 import {BaseNode} from './BaseNode';
-import {propertyChange} from './controller/Controller';
 
 /**
  * Defines scriptable aspects (ie rules, events) of form runtime model. Any form runtime object which requires
  * execution of rules/events should extend from this class.
  */
+
+const dynamicProps = ['label',
+    'enum',
+    'enumNames',
+    'enforceEnum',
+    'exclusiveMinimum',
+    'exclusiveMaximum',
+    'maxLength',
+    'maximum',
+    'maxItems',
+    'minLength',
+    'minimum',
+    'minItems',
+    'required',
+    'step',
+    'description',
+    'properties',
+    'readOnly',
+    'value',
+    'visible',
+    'enabled',
+    'placeholder'];
+
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
     private _events: {
         [key: string]: any
@@ -21,12 +43,12 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
 
     private getCompiledRule(eName: string, rule: string) {
         if (!(eName in this._rules)) {
-            let eString = rule || this.rules[eName];
+            const eString = rule || this.rules[eName];
             if (typeof eString === 'string' && eString.length > 0) {
                 try {
                     this._rules[eName] = this.ruleEngine.compileRule(eString);
                 } catch (e) {
-                    this.form.logger.error(`Unable to compile rule \`"${eName}" : "${eString}"\` Exception : ${e}`)
+                    this.form.logger.error(`Unable to compile rule \`"${eName}" : "${eString}"\` Exception : ${e}`);
                 }
             } else {
                 throw new Error(`only expression strings are supported. ${typeof (eString)} types are not supported`);
@@ -46,10 +68,10 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
                     try {
                         return this.ruleEngine.compileRule(x);
                     } catch (e) {
-                        this.form.logger.error(`Unable to compile expression \`"${eName}" : "${eString}"\` Exception : ${e}`)
+                        this.form.logger.error(`Unable to compile expression \`"${eName}" : "${eString}"\` Exception : ${e}`);
                     }
-                    return null
-                }).filter(x => x !== null)
+                    return null;
+                }).filter(x => x !== null);
             }
         }
         return this._events[eName] || [];
@@ -60,7 +82,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             // @ts-ignore
             // the first check is to disable accessing this.value & this.items property
             // otherwise that will trigger dependency tracking
-            if (key in this._jsonModel || (key in this && typeof this[key] !== 'function')) {
+            if (key in dynamicProps || (key in this && typeof this[key] !== 'function')) {
                 try {
                     // @ts-ignore
                     this[key] = value;
@@ -71,6 +93,8 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         });
     }
 
+
+
     protected executeAllRules(context: any) {
         const entries = Object.entries(this.rules);
         if (entries.length > 0) {
@@ -80,9 +104,9 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
                 let newVal;
                 if (node) {
                     newVal = this.ruleEngine.execute(node, scope, context, true);
-                    //@ts-ignore
-                    if (newVal != this._jsonModel[prop]) {
-                        return [prop, newVal];
+                    if (dynamicProps.indexOf(prop) > -1) {
+                        //@ts-ignore
+                        this[prop] = newVal;
                     }
                 }
                 return [];
@@ -97,7 +121,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             siblings: this.parent?.ruleNodeReference() || {}
         };
         const scope = new Proxy(target, {
-            get: (target: any, prop: string | Symbol, receiver) => {
+            get: (target: any, prop: string | symbol) => {
                 if (prop === Symbol.toStringTag) {
                     return 'Object';
                 }
@@ -111,16 +135,16 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
                     return target.self[prop];
                 } else {
                     if (prop in target.siblings) {
-                        return target.siblings[prop]
+                        return target.siblings[prop];
                     } else {
-                        return target.self[prop]
+                        return target.self[prop];
                     }
                 }
             },
             has : (target: { siblings: any; self: any }, prop: string | symbol)  => {
                 prop = prop as string;
-                var selfPropertyOrChild = target.self[prop]
-                var sibling = target.siblings[prop];
+                const selfPropertyOrChild = target.self[prop];
+                const sibling = target.siblings[prop];
                 return typeof selfPropertyOrChild != 'undefined' || typeof sibling != 'undefined';
             }
         });
@@ -156,7 +180,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             '$field': this.getRuleNode(),
             'field': this
         };
-        const node = this.ruleEngine.compileRule(expr)
+        const node = this.ruleEngine.compileRule(expr);
         return this.ruleEngine.execute(node, this.getExpressionScope(), ruleContext);
     }
 
@@ -188,26 +212,6 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             this[funcName](action, context);
         }
         this.notifyDependents(action);
-    }
-
-    /**
-     * @param prop
-     * @param newValue
-     * @private
-     */
-    _setProperty<T>(prop: string, newValue: T, notify = true) {
-        //@ts-ignore
-        const oldValue = this._jsonModel[prop];
-        if (oldValue !== newValue) {
-            //@ts-ignore
-            this._jsonModel[prop] = newValue;
-            const changeAction = propertyChange(prop, newValue, oldValue);
-            if (notify) {
-                this.notifyDependents(changeAction);
-            }
-            return changeAction.payload.changes;
-        }
-        return []
     }
 }
 

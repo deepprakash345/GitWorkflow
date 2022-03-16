@@ -4,6 +4,7 @@ import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
 import React from 'react';
+import {decorator} from "../../template";
 
 const item = {
     'label' : {
@@ -18,7 +19,7 @@ const options = {
 };
 
 const json:any = {
-    'adaptiveform': '0.0.17-pre',
+    'adaptiveform': '0.10.0',
     'metadata': {
         'grammar': 'json-formula-1.0.0',
         'version': '1.0.0'
@@ -28,7 +29,8 @@ const json:any = {
 
 export default {
     title: 'Reference/JSON/Properties/fieldType',
-    component: AdaptiveForm
+    component: AdaptiveForm,
+    decorators: [decorator]
 } as ComponentMeta<typeof AdaptiveForm>;
 
 const Template: ComponentStory<typeof AdaptiveForm> = (args) => <AdaptiveForm mappings={mappings} formJson={args.formJson} />

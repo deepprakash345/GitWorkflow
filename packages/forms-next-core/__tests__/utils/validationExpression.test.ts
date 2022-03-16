@@ -1,7 +1,7 @@
 import {createFormInstance} from "../../src";
 
 const formJson = {
-    "adaptiveform": "0.0.17-pre",
+    "adaptiveform": "0.10.0",
     "metadata": {
         "grammar": "json-formula-1.0.0",
         "version": "1.0.0"

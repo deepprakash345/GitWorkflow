@@ -1,4 +1,5 @@
 import {NumberField} from '@adobe/react-spectrum';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import {FieldJson, State} from '@aemforms/forms-core';
 import {
@@ -16,7 +17,7 @@ const mapper = combineConvertors(baseConvertor,
             minValue: a.minimum,
             maxValue: a.maximum,
             step: a.step
-        }
+        };
     });
 
 const NumberComp = function (props: State<FieldJson>) {

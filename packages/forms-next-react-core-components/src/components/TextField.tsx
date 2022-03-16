@@ -1,19 +1,20 @@
 import { TextField, TextArea } from '@adobe/react-spectrum';
 import {FieldJson, State} from '@aemforms/forms-core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import {
     baseConvertor,
     combineConvertors,
     constraintConvertor,
     fieldConvertor,
-    stringConstraintConvertor, withErrorMessage
+    stringConstraintConvertor
 } from '../utils/SpectrumMappers';
 import {useRenderer} from '@aemforms/forms-super-component';
 
 const mapper = combineConvertors(baseConvertor,
     fieldConvertor,
     constraintConvertor,
-    stringConstraintConvertor, (a, b) => {
+    stringConstraintConvertor, () => {
         return {width: '100%'};
     });
 

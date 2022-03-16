@@ -1,5 +1,6 @@
 import { CheckboxGroup, Checkbox } from '@adobe/react-spectrum';
 import {FieldJson, State} from '@aemforms/forms-core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import { useRenderer } from '@aemforms/forms-super-component';
 import {
@@ -16,15 +17,15 @@ const mapper = combineConvertors(baseConvertor, constraintConvertor, fieldConver
       return {
         onChange: (val: any) => {
             let finalVal;
-            if (val === null) finalVal = null
+            if (val === null) {finalVal = null;}
             if (isArray) {
                 finalVal = val;
             } else if (val.length > 0) {
-                finalVal = val.filter((x:any) => a.value !== x)[0] //val[0]
+                finalVal = val.filter((x:any) => a.value !== x)[0]; //val[0]
             } else {
-                finalVal = null
+                finalVal = null;
             }
-            b.dispatchChange(finalVal)
+            b.dispatchChange(finalVal);
         },
         value: a.value == null ? [] : a.value instanceof Array ? a.value : [a.value]
       };

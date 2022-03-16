@@ -1,11 +1,8 @@
-import Field from '../../src/Field';
 import {Constraints} from '../../src/utils/ValidationUtils';
-import {FormModel} from '../../src/types';
 import {create} from '../collateral';
-import Form from '../../src/Form';
 import RuleEngine from '../../src/rules/RuleEngine';
 import customMatchers from '../collateral/actions';
-import {Change} from '../../src/controller/Controller';
+import {createFormInstance, Change, FormModel, Form, Field} from "../../src";
 
 let form: FormModel;
 let options : {parent: FormModel, form: FormModel};
@@ -129,6 +126,84 @@ test('accessing field property via $ works', () => {
     expect(result).toEqual('test a');
 });
 
+test('Updating description will trigger a change event', () => {
+    const field = new Field({
+        type: 'string',
+        fieldType : 'text-input',
+        required: true
+    }, options);
+    const fn = jest.fn();
+    field.subscribe(fn);
+    field.description = "some new description"
+    expect(fn).toBeCalled()
+    expect(fn.mock.calls[0][0].payload).toEqual({
+        changes: [
+            {
+                propertyName : 'description',
+                currentValue : "some new description",
+                prevValue : undefined
+            }
+        ]
+    })
+})
+
+
+test('Updating properties will trigger a change event', () => {
+    const field = new Field({
+        type: 'string',
+        fieldType : 'text-input',
+        required: true
+    }, options);
+    const fn = jest.fn();
+    field.subscribe(fn);
+    field.properties = {'x' : 1}
+    expect(fn).toBeCalled()
+    expect(fn.mock.calls[0][0].payload).toEqual({
+        changes: [
+            {
+                propertyName : 'properties',
+                currentValue : {x : 1},
+                prevValue : undefined
+            }
+        ]
+    })
+})
+
+test('Properties is accessible via rule', () => {
+    const form = createFormInstance({
+        items : [{
+            name : 'field1',
+            type : 'string',
+            fieldType : 'text-input',
+            properties : {
+                'test' : 1
+            }
+        }, {
+            name : 'field2',
+            type : 'string',
+            fieldType: 'text-input',
+            properties : {
+                y : 1
+            },
+            rules : {
+                properties : "merge($field.$properties, field1.$properties)"
+            }
+        }]
+    })
+
+    const field2 = form.items[1]
+    expect(field2.properties).toEqual({
+        'test' : 1,
+        y : 1
+    })
+
+    // const field = form.items[0]
+    // field.properties = {'x' : 1}
+    // field.subscribe((x) => {
+    //     expect(x.target.properties.x).toEqual(1)
+    // })
+})
+
 describe('Field Validation', () => {
     beforeEach(() => {
         form = new Form(create(['f']), new RuleEngine());
@@ -214,4 +289,6 @@ describe('Field Validation', () => {
     test.todo('maxLength constraint');
     test.todo('pattern constraint');
     test.todo('format constraint');
+
+
 });

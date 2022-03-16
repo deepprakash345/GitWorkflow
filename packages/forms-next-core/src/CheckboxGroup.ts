@@ -22,8 +22,8 @@ class CheckboxGroup extends Field {
      */
     protected _getFallbackType(): string | undefined {
         const fallbackType =  super._getFallbackType();
-        if (typeof fallbackType === "string") {
-            return `${fallbackType}[]`
+        if (typeof fallbackType === 'string') {
+            return `${fallbackType}[]`;
         }
     }
 

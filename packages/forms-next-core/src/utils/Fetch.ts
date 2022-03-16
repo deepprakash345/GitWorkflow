@@ -2,7 +2,7 @@
  * Defines utilities to make external web request
  */
 
-declare var fetch: any;
+declare let fetch: any;
 
 export const request = (url: string, data: any = null, options: RequestOptions = {}) => {
     const opts = {...defaultRequestOptions, ...options};

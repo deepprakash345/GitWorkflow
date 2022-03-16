@@ -2,10 +2,10 @@
  * Defines generic utilities to translated form model definition
  */
 // todo: The API's defined in this file could move to a different package later on
-import {FieldJson, FieldsetJson, FormJson, TranslationJson, translationProps} from '../types';
+import {FieldJson, FieldsetJson, FormJson, translationProps} from '../types';
 
 /** Token used while creating translation specific properties from `adaptive form specification` */
-export const TRANSLATION_TOKEN : string = '##';
+export const TRANSLATION_TOKEN  = '##';
 /** Name of the object which holds all translation specific properties */
 export const TRANSLATION_ID = 'afs:translationIds';
 export const CUSTOM_PROPS_KEY = 'properties';
@@ -40,8 +40,8 @@ export const invalidateTranslation = (input: formElementJson, updates: any) => {
  */
 export const addTranslationId = (input: formElementJson, additionalTranslationProps : string[] = []) : formElementJson =>  {
     // don't create a schema copy, add it to the existing
-    let model = input;
-    let transProps = [...translationProps, ...additionalTranslationProps];
+    const model = input;
+    const transProps = [...translationProps, ...additionalTranslationProps];
     _createTranslationId(model, '', transProps);
     return model;
 };
@@ -86,8 +86,8 @@ const _createTranslationId = (input: formElementJson, path: string, transProps: 
  * @param translationProps
  * @private
  */
-const _createTranslationObj = (input: formElementJson, translationObj : object, translationProps : string[]) : any => {
-    Object.entries(input).forEach(([key, value]) => {
+const _createTranslationObj = (input: formElementJson, translationObj : any, translationProps : string[]) : any => {
+    Object.values(input).forEach((value) => {
         if (typeof value == 'object') {
             _createTranslationObj(value, translationObj, translationProps);
         } else {
@@ -117,8 +117,8 @@ const _createTranslationObj = (input: formElementJson, translationObj : object, 
  * @private
  */
 export const createTranslationObj = (input: formElementJson, additionalTranslationProps : string[] = []) : any => {
-    let obj = {};
-    let transProps = [...translationProps, ...additionalTranslationProps];
+    const obj = {};
+    const transProps = [...translationProps, ...additionalTranslationProps];
     _createTranslationObj(input, obj, transProps as string[]);
     return obj;
 };
@@ -134,12 +134,12 @@ export const createTranslationObj = (input: formElementJson, additionalTranslati
 export const createTranslationObject = (input: formElementJson,
                                         additionalTranslationProps : string[] = [],
                                         bcp47LangTags : string[] = []) : any => {
-    let transProps = [...translationProps, ...additionalTranslationProps];
+    const transProps = [...translationProps, ...additionalTranslationProps];
     // create a copy of the input
-    let inputCopy = JSON.parse(JSON.stringify(input));
-    let obj = createTranslationObj(addTranslationId(inputCopy), transProps as string[]);
-    let langTags = [...defaultBcp47LangTags, ...bcp47LangTags];
-    let allLangs : any = {};
+    const inputCopy = JSON.parse(JSON.stringify(input));
+    const obj = createTranslationObj(addTranslationId(inputCopy), transProps as string[]);
+    const langTags = [...defaultBcp47LangTags, ...bcp47LangTags];
+    const allLangs : any = {};
     for (const langTag of langTags) {
         // todo: added temporarily to test
         // todo: need to fix this as per machine translation

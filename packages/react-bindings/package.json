@@ -24,7 +24,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npx tsc",
+    "eslint" : "npx eslint src/**/*.tsx",
+    "build": "npm run eslint && npx tsc",
     "build-libs": "npx tsc",
     "test-ci": "jest --silent --coverage",
     "prepublishOnly": "npm run build && npm run test",

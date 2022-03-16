@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 const formJson:any = (label, description, visible = undefined, richText = undefined) => {
     return {
-        'adaptiveform': '0.0.17-pre',
+        'adaptiveform': '0.10.0',
         items: [
             {
                 'name' : 'field',

@@ -9,14 +9,12 @@ import {
     FieldsetJson,
     FormJson,
     Label,
-    MetaDataJson,
-    Primitives
+    MetaDataJson
 } from './Json';
 import RuleEngine from '../rules/RuleEngine';
 import EventQueue from '../controller/EventQueue';
 import DataGroup from '../data/DataGroup';
-import {Fieldset} from '../Fieldset';
-import {Logger} from "../Form";
+import {Logger} from '../Form';
 
 /**
  * Generic Scriptable field interface. All non-transparent fields which support rule/events
@@ -380,7 +378,7 @@ export class ValidationError implements IValidationError {
     fieldName: string;
     errorMessages: Array<string>;
 
-    constructor(fieldName: string = '', errorMessages: Array<any> = []) {
+    constructor(fieldName = '', errorMessages: Array<any> = []) {
         this.errorMessages = errorMessages;
         this.fieldName = fieldName;
     }

@@ -64,7 +64,7 @@ const itemWithCustomRequiredMessage = {
 };
 
 const json:any = {
-    'adaptiveform': '0.0.17-pre',
+    'adaptiveform': '0.10.0',
     'action': 'http://www.google.com/',
     'items' : [
         {
