@@ -3,7 +3,7 @@
  */
 import {Action, BaseJson} from '../types';
 import {BaseNode} from '../BaseNode';
-import {Logger} from "../Form";
+import {Logger} from '../Form';
 
 /**
  * Implementation of event node
@@ -42,10 +42,10 @@ class EventNode<T extends BaseJson> {
 class EventQueue {
 
     private _runningEventCount: any
-    private _isProcessing: boolean = false
+    private _isProcessing = false
     private _pendingEvents: EventNode<any>[] = []
 
-    constructor(private logger: Logger = new Logger("off")) {
+    constructor(private logger: Logger = new Logger('off')) {
         this._runningEventCount = {};
     }
 
@@ -62,7 +62,7 @@ class EventQueue {
         return this._pendingEvents.find(x => evntNode.isEqual(x)) !== undefined;
     }
 
-    queue<T extends BaseJson>(node : BaseNode<T>, events: Action | Action[], priority: boolean = false) {
+    queue<T extends BaseJson>(node : BaseNode<T>, events: Action | Action[], priority = false) {
         if (!node || !events) {
             return;
         }

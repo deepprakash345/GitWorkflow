@@ -58,7 +58,7 @@ class ActionImplWithTarget implements Action {
     } 
 }
 
-export const target = Symbol("target")
+export const target = Symbol('target');
 
 /**
  * Defines a generic base class which all objects of form runtime model should extend from.
@@ -99,10 +99,11 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     abstract value: Primitives
 
     protected setupRuleNode() {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         this._ruleNode = new Proxy(this.ruleNodeReference(),
             {
-                get: (ruleNodeReference: any, prop: string, receiver: any) => {
+                get: (ruleNodeReference: any, prop: string) => {
                     return self.getFromRule(ruleNodeReference, prop);
                 }
             });
@@ -122,9 +123,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         return this._ruleNode;
     }
 
-    private getFromRule(ruleNodeReference: any, prop: string | Symbol) {
-        if (prop === Symbol.toPrimitive || (prop === "valueOf" && !ruleNodeReference.hasOwnProperty("valueOf"))) {
-            return this.valueOf
+    private getFromRule(ruleNodeReference: any, prop: string | symbol) {
+        if (prop === Symbol.toPrimitive || (prop === 'valueOf' && !ruleNodeReference.hasOwnProperty('valueOf'))) {
+            return this.valueOf;
         } else if (prop === target) {
             return this;
         } else if (typeof(prop) === 'string') {
@@ -142,9 +143,9 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
                 //look in the items
                 if (ruleNodeReference.hasOwnProperty(prop)) {
                     return ruleNodeReference[prop];
-                } else if (typeof ruleNodeReference[prop] === "function") { //todo : create allow list of functions
+                } else if (typeof ruleNodeReference[prop] === 'function') { //todo : create allow list of functions
                     //to support panel instanceof Array panel1.map(..)
-                    return ruleNodeReference[prop]
+                    return ruleNodeReference[prop];
                 }
             }
         }
@@ -179,11 +180,11 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     }
 
     get description() {
-        return this._jsonModel.description
+        return this._jsonModel.description;
     }
 
     set description(d) {
-        this._setProperty("description", d)
+        this._setProperty('description', d);
     }
 
     get dataRef() {
@@ -228,14 +229,14 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     getState() {
         return {
             ...this._jsonModel,
-            ':type' : this[":type"]
+            ':type' : this[':type']
         };
     }
 
     /**
      * @private
      */
-    subscribe(callback: callbackFn, eventName: string = 'change') {
+    subscribe(callback: callbackFn, eventName = 'change') {
         this._callbacks[eventName] = this._callbacks[eventName] || [];
         this._callbacks[eventName].push(callback);
         //console.log(`subscription added : ${this._elem.id}, count : ${this._callbacks[eventName].length}`);
@@ -286,7 +287,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
      * @private
      */
     queueEvent(action: Action) {
-        let actionWithTarget: Action = new ActionImplWithTarget(action, this);
+        const actionWithTarget: Action = new ActionImplWithTarget(action, this);
         this.form.getEventQueue().queue(this, actionWithTarget, ['valid', 'invalid'].indexOf(actionWithTarget.type)> -1);
     }
 
@@ -322,7 +323,7 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
             }
             return changeAction.payload.changes;
         }
-        return []
+        return [];
     }
 
     /**
@@ -378,11 +379,11 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     }
 
     get properties() {
-        return this._jsonModel.properties || {}
+        return this._jsonModel.properties || {};
     }
 
     set properties(p) {
-        this._setProperty("properties", {...p})
+        this._setProperty('properties', {...p});
     }
 
     abstract defaultDataModel(name: string|number): DataValue

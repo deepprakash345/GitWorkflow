@@ -1,11 +1,11 @@
-import {Action, ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel, ValidationError} from './types';
+import {ConstraintsMessages, ContainerModel, FieldJson, FieldModel, FormModel, ValidationError} from './types';
 import {Constraints, ValidConstraints} from './utils/ValidationUtils';
 import {Change, ExecuteRule, Initialize, Invalid, propertyChange, Valid} from './controller';
 import Scriptable from './Scriptable';
 import {defaultFieldTypes} from './utils/SchemaUtils';
 import DataValue from './data/DataValue';
 import DataGroup from './data/DataGroup';
-import {target} from "./BaseNode";
+import {target} from './BaseNode';
 
 /**
  * Defines a form object field which implements {@link FieldModel | field model} interface
@@ -48,8 +48,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * @protected
      */
     protected _getFallbackType(): string | undefined {
-        const type = this._jsonModel.type
-        if (typeof type !== "string") {
+        const type = this._jsonModel.type;
+        if (typeof type !== 'string') {
             const _enum = this.enum;
             return _enum && _enum.length > 0 ? typeof _enum[0] : 'string';
         }
@@ -63,7 +63,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                 this._jsonModel[key] = value;
             }
         });
-        let value = this._jsonModel.value;
+        const value = this._jsonModel.value;
         if (value === undefined) {
             this._jsonModel.value = this._jsonModel.default;
         }
@@ -72,12 +72,12 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             if (this._jsonModel.viewType) {
                 //@ts-ignore
                 if (this._jsonModel.viewType.startsWith('custom:')) {
-                    this.form.logger.error("viewType property has been removed. For custom types, use :type property")
+                    this.form.logger.error('viewType property has been removed. For custom types, use :type property');
                 } else {
-                    this.form.logger.error("viewType property has been removed. Use fieldType property")
+                    this.form.logger.error('viewType property has been removed. Use fieldType property');
                 }
                 //@ts-ignore
-                this._jsonModel.fieldType = this._jsonModel.viewType
+                this._jsonModel.fieldType = this._jsonModel.viewType;
             } else {
                 this._jsonModel.fieldType = defaultFieldTypes(this._jsonModel);
             }
@@ -88,7 +88,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                 this._jsonModel.enum = [true, false];
             }
         }
-        if (typeof this._jsonModel.step !== 'number' || this._jsonModel.type !== "number") {
+        if (typeof this._jsonModel.step !== 'number' || this._jsonModel.type !== 'number') {
             this._jsonModel.step = undefined;
         }
     }
@@ -114,9 +114,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     }
 
     get emptyValue() {
-        if (this._jsonModel.emptyValue === 'null') return null;
-        else if (this._jsonModel.emptyValue === '' && this.type === 'string') return '';
-        else return undefined;
+        if (this._jsonModel.emptyValue === 'null') {return null;}
+        else if (this._jsonModel.emptyValue === '' && this.type === 'string') {return '';}
+        else {return undefined;}
     }
 
     get enum() {
@@ -131,16 +131,16 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         return this._jsonModel.enumNames;
     }
 
+    set enumNames(e) {
+        this._setProperty('enumNames', e);
+    }
+
     get required() {
         return this._jsonModel.required || false;
     }
 
     set required(r) {
         this._setProperty('required', r);
-    }
-
-    set enumNames(e) {
-        this._setProperty('enumNames', e);
     }
 
     get maximum() {
@@ -159,37 +159,38 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this._setProperty('minimum', m);
     }
 
-    get value() {
-        //@ts-ignore
-        this.ruleEngine.trackDependency(this);
-        if (this._jsonModel.value === undefined) {
-            return null;
-        }
-        else return this._jsonModel.value;
-    }
 
     /**
      * returns whether the value is empty. Empty value is either a '', undefined or null
      * @private
      */
     private isEmpty() {
-        return this._jsonModel.value === undefined || this._jsonModel.value === null || this._jsonModel.value === ''
+        return this._jsonModel.value === undefined || this._jsonModel.value === null || this._jsonModel.value === '';
+    }
+
+    get value() {
+        //@ts-ignore
+        this.ruleEngine.trackDependency(this);
+        if (this._jsonModel.value === undefined) {
+            return null;
+        }
+        else {return this._jsonModel.value;}
     }
 
     set value(v) {
         const Constraints = this._getConstraintObject();
         const typeRes = Constraints.type(this._jsonModel.type || 'string', v);
-        const changes = this._setProperty('value', typeRes.value, false)
+        const changes = this._setProperty('value', typeRes.value, false);
         if (changes.length > 0) {
             const dataNode = this.getDataNode();
             if (typeof dataNode !== 'undefined') {
                 dataNode.$value = this.isEmpty() ? this.emptyValue : this._jsonModel.value;
             }
-            let updates
+            let updates;
             if (typeRes.valid) {
                 updates = this.evaluateConstraints();
             } else {
-                let changes = {
+                const changes = {
                     'valid': typeRes.valid,
                     'errorMessage': typeRes.valid ? '' : this.getErrorMessage('type')
                 };
@@ -198,23 +199,23 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             if (updates.valid) {
                 this.triggerValidationEvent(updates);
             }
-            const changeAction = new Change({changes: changes.concat(Object.values(updates))})
+            const changeAction = new Change({changes: changes.concat(Object.values(updates))});
             this.dispatch(changeAction);
         }
     }
 
     valueOf() {
         // @ts-ignore
-        const obj = this[target]
-        const actualField = obj === undefined ? this : obj
+        const obj = this[target];
+        const actualField = obj === undefined ? this : obj;
         actualField.ruleEngine.trackDependency(actualField);
         return actualField._jsonModel.value || null;
     }
 
     toString() {
         // @ts-ignore
-        const obj = this[target]
-        const actualField = obj === undefined ? this : obj
+        const obj = this[target];
+        const actualField = obj === undefined ? this : obj;
         return actualField._jsonModel.value?.toString() || '';
     }
 
@@ -270,9 +271,9 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      */
     private checkStep() {
         const value = this._jsonModel.value;
-        if (typeof this._jsonModel.step === "number") {
-            const initialValue = this._jsonModel.minimum || this._jsonModel.default || 0
-            return (value - initialValue) % this._jsonModel.step === 0
+        if (typeof this._jsonModel.step === 'number') {
+            const initialValue = this._jsonModel.minimum || this._jsonModel.default || 0;
+            return (value - initialValue) % this._jsonModel.step === 0;
         }
         return true;
     }
@@ -282,8 +283,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * @private
      */
     private checkValidationExpression() {
-        if (typeof this._jsonModel.validationExpression === "string") {
-            return this.executeExpression(this._jsonModel.validationExpression)
+        if (typeof this._jsonModel.validationExpression === 'string') {
+            return this.executeExpression(this._jsonModel.validationExpression);
         }
         return true;
     }
@@ -297,21 +298,21 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             case 'string':
                 switch (this.format) {
                     case 'date':
-                        return ValidConstraints.date
+                        return ValidConstraints.date;
                     case 'binary':
-                        return ValidConstraints.file
+                        return ValidConstraints.file;
                     case 'data-url':
-                        return ValidConstraints.file
+                        return ValidConstraints.file;
                     default:
-                        return ValidConstraints.string
+                        return ValidConstraints.string;
                 }
             case 'number':
-                return ValidConstraints.number
+                return ValidConstraints.number;
         }
         if (this.isArrayType()) {
-            return ValidConstraints.array
+            return ValidConstraints.array;
         }
-        return []
+        return [];
     }
 
     /**
@@ -326,11 +327,11 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      */
     protected evaluateConstraints() {
         let constraint = 'type';
-        let elem = this._jsonModel;
-        let value = this._jsonModel.value;
-        const Constraints = this._getConstraintObject()
+        const elem = this._jsonModel;
+        const value = this._jsonModel.value;
+        const Constraints = this._getConstraintObject();
         const supportedConstraints = this.getConstraints();
-        let valid = true
+        let valid = true;
         if (valid) {
             valid = Constraints.required(this.required, value).valid &&
                 (this.isArrayType() && this.required ? value.length > 0 : true);
@@ -344,8 +345,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                     // @ts-ignore
                     const fn = Constraints[key];
                     if (value instanceof Array && this.isArrayType()) {
-                        return value.some(x => !(fn(restriction, value).valid));
-                    } else if (typeof fn === "function") {
+                        return value.some(x => !(fn(restriction, x).valid));
+                    } else if (typeof fn === 'function') {
                         return !fn(restriction, value).valid;
                     } else {
                         return false;
@@ -358,15 +359,15 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
                 valid = false;
                 constraint = invalidConstraint;
             } else {
-                valid = this.checkEnum(value, Constraints)
-                constraint = "enum"
-                if (valid && this.type === "number") {
-                    valid = this.checkStep()
-                    constraint = "step"
+                valid = this.checkEnum(value, Constraints);
+                constraint = 'enum';
+                if (valid && this.type === 'number') {
+                    valid = this.checkStep();
+                    constraint = 'step';
                 }
                 if (valid) {
                     valid = this.checkValidationExpression();
-                    constraint = "validationExpression"
+                    constraint = 'validationExpression';
                 }
             }
         }
@@ -374,7 +375,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
             //@ts-ignore
             this.form.logger.log(`${constraint} constraint evaluation failed ${this[constraint]}. Received ${this._jsonModel.value}`);
         }
-        let changes = {
+        const changes = {
             'valid': valid,
             'errorMessage': valid ? '' : this.getErrorMessage(constraint as keyof ConstraintsMessages)
         };
@@ -391,10 +392,6 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         }
     }
 
-    change(event: Action, context: any) {
-
-    }
-
     /**
      * Checks whether there are any updates in the properties. If there are applies them to the
      * json model as well.
@@ -405,11 +402,10 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     protected _applyUpdates(propNames: string[], updates: any) {
         return propNames.reduce((acc: any, propertyName) => {
             //@ts-ignore
-            const prevValue = this._jsonModel[propertyName];
             const currentValue = updates[propertyName];
-            const changes = this._setProperty(propertyName, currentValue, false)
+            const changes = this._setProperty(propertyName, currentValue, false);
             if (changes.length > 0) {
-                acc[propertyName] = changes[0]
+                acc[propertyName] = changes[0];
             }
             return acc;
         }, {});
@@ -419,7 +415,7 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
      * Validates the current form object
      */
     validate() {
-        let changes = this.evaluateConstraints();
+        const changes = this.evaluateConstraints();
         if (changes.valid) {
             this.triggerValidationEvent(changes);
             this.notifyDependents(new Change({ changes: Object.values(changes) }));

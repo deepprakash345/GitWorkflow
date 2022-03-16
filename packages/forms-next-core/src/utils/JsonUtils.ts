@@ -3,7 +3,6 @@
  */
 
 import {FieldsetJson, FieldJson} from '../types';
-import {FileObject} from '../FileObject';
 import {defaultFieldTypes} from './SchemaUtils';
 
 /**

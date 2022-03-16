@@ -2,10 +2,8 @@
  * Defines generic utilities to interact with form runtime model
  */
 
-import {FileObject} from '../FileObject';
 import {isFile} from './JsonUtils';
-import {BaseModel, ContainerModel, FieldsetModel, FormModel} from '../types';
-import FormMetaData from '../FormMetaData';
+import {ContainerModel} from '../types';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'.split('');
 const fileSizeRegex =  /^(\d*\.?\d+)(\\?(?=[KMGT])([KMGT])(?:i?B)?|B?)$/i;
@@ -38,7 +36,7 @@ export const getAttachments = (input : ContainerModel) : any=> {
             if (isFile(item.getState())) {
                 ret = {}; // @ts-ignore
                 const name = item.name || '';
-                let dataRef = (item.dataRef != null)
+                const dataRef = (item.dataRef != null)
                     ? item.dataRef
                     : (name.length > 0 ? item.name : undefined);
                 //@ts-ignore
@@ -65,7 +63,7 @@ export const getAttachments = (input : ContainerModel) : any=> {
 export const getFileSizeInBytes = (str: any) => {
     let retVal = 0;
     if (typeof str === 'string') {
-        let matches = fileSizeRegex.exec(str.trim());
+        const matches = fileSizeRegex.exec(str.trim());
         if (matches != null) {
             retVal = sizeToBytes(parseFloat(matches[1]), (matches[2] || 'kb').toUpperCase());
         }
@@ -80,9 +78,9 @@ export const getFileSizeInBytes = (str: any) => {
  * @returns number as bytes based on the symbol
  */
 export const sizeToBytes = (size: number, symbol : string) => {
-    let sizes = {'KB' : 1, 'MB' : 2, 'GB' : 3, 'TB' : 4};
+    const sizes = {'KB' : 1, 'MB' : 2, 'GB' : 3, 'TB' : 4};
     // @ts-ignore
-    let i = Math.pow(1024, (sizes[symbol] as number));
+    const i = Math.pow(1024, (sizes[symbol] as number));
     return Math.round(size * i);
 };
 

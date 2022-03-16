@@ -1,6 +1,6 @@
 import Container from './Container';
 import {
-    Action, BaseJson,
+    Action,
     FieldJson,
     FieldModel,
     FieldsetJson,
@@ -15,20 +15,20 @@ import RuleEngine from './rules/RuleEngine';
 import {getAttachments, IdGenerator} from './utils/FormUtils';
 import DataGroup from './data/DataGroup';
 import {submit} from './rules/FunctionRuntime';
-import {ActionImpl, ChangePayload, ExecuteRule, FieldChanged, Initialize, ValidationComplete} from './controller/Controller';
+import {ExecuteRule, FieldChanged, Initialize, ValidationComplete} from './controller';
 
-type LogFunction = "info" | "warn" | "error"
+type LogFunction = 'info' | 'warn' | 'error'
 /**
  * Logging levels.
  */
-export type LogLevel = "off" | LogFunction
+export type LogLevel = 'off' | LogFunction
 
 const levels = {
     off: 0,
     info: 1,
     warn : 2,
     error: 3
-}
+};
 
 /**
  * @private
@@ -36,27 +36,27 @@ const levels = {
 export class Logger {
 
     info(msg: string) {
-        this.log(msg, 'info')
+        this.log(msg, 'info');
     }
 
     warn(msg: string) {
-        this.log(msg, 'warn')
+        this.log(msg, 'warn');
     }
 
     error(msg: string) {
-        this.log(msg, 'error')
+        this.log(msg, 'error');
     }
 
     log(msg: string, level: LogFunction) {
         if (this.logLevel !== 0 && this.logLevel <= levels[level]) {
-            console[level](msg)
+            console[level](msg);
         }
     }
 
     private logLevel: number
 
-    constructor(logLevel: LogLevel = "off") {
-        this.logLevel = levels[logLevel]
+    constructor(logLevel: LogLevel = 'off') {
+        this.logLevel = levels[logLevel];
     }
 }
 
@@ -92,10 +92,10 @@ class Form extends Container<FormJson> implements FormModel {
     constructor(n: FormJson,
                 private _ruleEngine: RuleEngine,
                 private _eventQueue = new EventQueue(),
-                logLevel: LogLevel = "off") {
+                logLevel: LogLevel = 'off') {
         //@ts-ignore
         super(n, {});
-        this._logger = new Logger(logLevel)
+        this._logger = new Logger(logLevel);
         this.queueEvent(new Initialize());
         this.queueEvent(new ExecuteRule());
         this._ids = IdGenerator();
@@ -110,7 +110,7 @@ class Form extends Container<FormJson> implements FormModel {
     private dataRefRegex = /("[^"]+?"|[^.]+?)(?:\.|$)/g
 
     get metaData(): FormMetaData {
-        let metaData = this._jsonModel.metadata || {};
+        const metaData = this._jsonModel.metadata || {};
         return new FormMetaData(metaData);
     }
 
@@ -143,6 +143,7 @@ class Form extends Container<FormJson> implements FormModel {
      * ```
      */
     getState() {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         const res = super.getState();
         res.id = '$form';
@@ -206,7 +207,7 @@ class Form extends Container<FormJson> implements FormModel {
     }
 
     validate() {
-        let validationErrors = super.validate();
+        const validationErrors = super.validate();
         // trigger event on form so that user's can customize their application
         this.dispatch(new ValidationComplete(validationErrors));
         return validationErrors;

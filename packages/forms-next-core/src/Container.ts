@@ -48,7 +48,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         this._jsonModel.maxItems = m;
         const minItems = this._jsonModel.minItems || 1;
         const itemsLength = this._children.length;
-        let items2Remove = Math.min(itemsLength - m, itemsLength - minItems);
+        const items2Remove = Math.min(itemsLength - m, itemsLength - minItems);
         if (items2Remove > 0) {
             for (let i = 0; i < items2Remove; i++) {
                 (this.getDataNode() as DataGroup).$removeDataNode(m + i);
@@ -76,9 +76,9 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     getState() {
         return {
             ...this._jsonModel,
-            ':type' : this[":type"],
+            ':type' : this[':type'],
             items: this._children.map(x => {
-                return { ...x.getState() }
+                return { ...x.getState() };
             })
         };
     }
@@ -86,6 +86,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     protected abstract _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel
 
     private _addChildToRuleNode(child: any) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         //the child has not been added to the array, hence using the length as new index
         const name = this.type == 'array' ? this._children.length + '' : (this.type == 'object') ? child.name || '' : '';
@@ -119,7 +120,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             ...deepClone(itemJson)
         };
         //@ts-ignore
-        let retVal = this._createChild(itemTemplate, {parent: this, index: index});
+        const retVal = this._createChild(itemTemplate, {parent: this, index: index});
         this._addChildToRuleNode(retVal);
         if (index === this._children.length) {
             this._children.push(retVal);
@@ -169,7 +170,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
                 this._addChild(this._itemTemplate);
             }
         } else if (items.length > 0) {
-            items.forEach((item, index) => {
+            items.forEach((item) => {
                 this._addChild(item);
             });
             this._jsonModel.minItems = this._children.length;
@@ -182,7 +183,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     /**
      * @private
      */
-    addItem(action: Action, context: any) {
+    addItem(action: Action) {
         if (action.type === 'addItem' && this._itemTemplate != null) {
             //@ts-ignore
             if ((this._jsonModel.maxItems === -1) || (this._children.length < this._jsonModel.maxItems)) {
@@ -197,10 +198,10 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     /**
      * @private
      */
-    removeItem(action: Action, context: any) {
+    removeItem(action: Action) {
         if (action.type === 'removeItem' && this._itemTemplate != null) {
             const index = action.payload || this._children.length - 1;
-            var state = this._children[index].getState();
+            const state = this._children[index].getState();
             //@ts-ignore
             if (this._children.length > this._jsonModel.minItems) {
                 // clear child
@@ -271,7 +272,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
             //@ts-ignore
             let items2Add = Math.min(dataLength - itemsLength, maxItems - itemsLength);
             //@ts-ignore
-            let items2Remove = Math.min(itemsLength - dataLength, itemsLength - minItems);
+            const items2Remove = Math.min(itemsLength - dataLength, itemsLength - minItems);
             while (items2Add > 0) {
                 items2Add--;
                 this._addChild(this._itemTemplate);

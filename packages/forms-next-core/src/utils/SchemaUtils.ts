@@ -3,8 +3,8 @@
  */
 import {FieldJson, FieldsetJson, FormJson} from '../types';
 
-const primitives = ['string', 'boolean', 'number'];
-const containers = ['object', 'array', 'number'];
+// const primitives = ['string', 'boolean', 'number'];
+// const containers = ['object', 'array', 'number'];
 
 const objToMap = (o: any) => new Map(Object.entries(o));
 

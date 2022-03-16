@@ -123,7 +123,7 @@ class Tokenizer {
             this._current += 1;
         }
         const n = stream.slice(start, this._current);
-        let value = parseInt(n, 10);
+        const value = parseInt(n, 10);
         return { type: TOK_NUMBER, value, start };
     }
 

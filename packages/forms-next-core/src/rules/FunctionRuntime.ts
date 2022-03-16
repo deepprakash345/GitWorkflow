@@ -23,12 +23,12 @@ type HTTP_VERB = 'GET' | 'POST'
 export const request = async (context: any,
                        uri: string,
                        httpVerb: HTTP_VERB,
-                       payload: object,
+                       payload: any,
                        success: string,
                        error: string,
-                       payloadContentType: string = 'application/json') => {
+                       payloadContentType = 'application/json') => {
     const endpoint = uri;
-    let requestOptions: RequestOptions = {
+    const requestOptions: RequestOptions = {
         method: httpVerb
     };
     let result;
@@ -36,7 +36,7 @@ export const request = async (context: any,
     try {
         if (payload && payload instanceof FileObject && payload.data instanceof File) {
             // todo: have to implement array type
-            let formData = new FormData();
+            const formData = new FormData();
             formData.append(payload.name, payload.data);
             inputPayload = formData;
         } else if (payload && typeof payload === 'object' && Object.keys(payload).length > 0) {
@@ -63,12 +63,13 @@ export const request = async (context: any,
  * @param attachments       form events
  * @private
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const multipartFormData = (data: any, attachments: any) => {
     const formData = new FormData();
     formData.append(':data', data);
     formData.append(':contentType', 'application/json');
     const transformAttachment = (objValue: any, formData: any) : any => {
-        let newValue = {
+        const newValue = {
             ':name' : objValue.name,
             ':contentType' : objValue.mediaType,
             ':data' : objValue.data,
@@ -85,7 +86,7 @@ const multipartFormData = (data: any, attachments: any) => {
         return newValue;
     };
     // @ts-ignore
-    let submitAttachments = Object.keys(attachments).reduce((acc, curr) => {
+    const submitAttachments = Object.keys(attachments).reduce((acc, curr) => {
         const objValue = attachments[curr];
         if(objValue && objValue instanceof Array) {
             return [...acc, ...objValue.map((x)=>transformAttachment(x, formData))];
@@ -110,14 +111,15 @@ export const submit = async (context: any,
         data = context.form.exportData();
     }
     // todo: have to implement sending of attachments here
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const attachments = getAttachments(context.$form);
     let submitContentType: string = submitAs;
-    let formData: any;
+    //let formData: any;
     //if (Object.keys(attachments).length > 0) {
     //    multipartFormData(jsonString(data), attachments);
     //    submitContentType = 'multipart/form-data';
     //} else {
-    formData = {':data' : data};
+    const formData = {':data' : data};
     submitContentType = 'application/json';
     //}
     // note: don't send multipart/form-data let browser decide on the content type
@@ -131,7 +133,7 @@ export const submit = async (context: any,
  * @param dispatch      true to trigger the event on all the fields in DFS order starting from the top level form element, false otherwise
  * @private
  */
-const createAction = (name: string, payload: any = {}, dispatch: boolean = false)  => {
+const createAction = (name: string, payload: any = {})  => {
     switch (name) {
         case 'change':
             return new Change(payload);
@@ -164,7 +166,7 @@ class FunctionRuntimeImpl {
         }
 
         function valueOf(a: any): any {
-            if (a === null || a === undefined) return a;
+            if (a === null || a === undefined) {return a;}
             if (isArray(a)) {
                 return (a as []).map(i => valueOf(i));
             }
@@ -172,7 +174,7 @@ class FunctionRuntimeImpl {
         }
 
         function toString(a: any): string {
-            if (a === null || a === undefined) return '';
+            if (a === null || a === undefined) {return '';}
             return a.toString();
         }
 
@@ -216,7 +218,7 @@ class FunctionRuntimeImpl {
                 _func: (args: Array<unknown>, data: unknown, interpreter: any) => {
                     const uri: string = toString(args[0]);
                     const httpVerb: HTTP_VERB = toString(args[1]) as HTTP_VERB;
-                    const payload: object = valueOf(args[2]);
+                    const payload: any = valueOf(args[2]);
                     const success: string = valueOf(args[3]);
                     const error: string = valueOf(args[4]);
                     request(interpreter.globals, uri, httpVerb, payload, success, error, 'application/json');
@@ -239,7 +241,7 @@ class FunctionRuntimeImpl {
                     if (eventName.startsWith('custom:')) {
                         event = new CustomEvent(eventName.substring('custom:'.length), payload, dispatch);
                     } else {
-                        event = createAction(eventName, payload, dispatch);
+                        event = createAction(eventName, payload);
                     }
                     if (event != null) {
                         if (typeof element === 'string') {

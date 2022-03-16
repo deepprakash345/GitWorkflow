@@ -5,9 +5,9 @@ import {IFileObject} from './types';
  */
 export class FileObject implements IFileObject {
     data: any;
-    mediaType: string = 'application/octet-stream';
-    name: string = 'unknown';
-    size: number = 0;
+    mediaType = 'application/octet-stream';
+    name = 'unknown';
+    size = 0;
 
     public constructor(init?:Partial<FileObject>) {
         Object.assign(this, init);
@@ -20,4 +20,4 @@ export class FileObject implements IFileObject {
             'data'                  : this.data.toString()
         };
     }
-};
+}

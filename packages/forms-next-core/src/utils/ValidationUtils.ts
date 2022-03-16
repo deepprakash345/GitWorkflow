@@ -6,8 +6,6 @@
 // issue with import
 //import {FieldJson, isFileObject} from '../types';
 
-import Field from '../Field';
-
 const dateRegex = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
 const dataUrlRegex = /^data:([a-z]+\/[a-z0-9-+.]+)?;(?:name=(.*);)?base64,(.*)$/;
 
@@ -18,7 +16,7 @@ type ValidationResult = {
 }
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysInMonth = (leapYear: boolean, month: number) => {
-    if (leapYear && month == 2) return 29;
+    if (leapYear && month == 2) {return 29;}
     return days[month - 1];
 };
 
@@ -122,7 +120,7 @@ export const ValidConstraints = {
     number: ['minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum'],
     array: ['minItems', 'maxItems', 'uniqueItems'],
     file: ['accept', 'maxFileSize']
-}
+};
 
 /**
  * Implementation of all constraints defined by `adaptive form specification`
@@ -146,7 +144,7 @@ export const Constraints = {
         switch(constraint) {
             case 'string':
                 valid = true;
-                value = inputVal.toString()
+                value = inputVal.toString();
                 break;
             case 'string[]':
                 value = toArray(inputVal);
@@ -200,15 +198,16 @@ export const Constraints = {
      */
     format : (constraint: string, input: string) => {
         let valid = true;
-        let value = input;
+        const value = input;
         let res;
         switch(constraint) {
             case 'date':
                 res = dateRegex.exec(input.trim());
                 if (res != null) {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const [match, year, month, date] = res;
                     const [nMonth, nDate] = [+month, +date];
-                    let leapYear = isLeapYear(+year);
+                    const leapYear = isLeapYear(+year);
                     valid = (nMonth >= 1 && nMonth <= 12) &&
                         (nDate >= 1 && nDate <= daysInMonth(leapYear, nMonth));
                 } else {
@@ -274,7 +273,7 @@ export const Constraints = {
      * @param value value of the form object
      */
     minItems: <T>(constraint: number, value: T[]) => {
-        return {valid: (value instanceof Array) && value.length >= constraint, value}
+        return {valid: (value instanceof Array) && value.length >= constraint, value};
     },
 
     /**
@@ -283,7 +282,7 @@ export const Constraints = {
      * @param value value of the form object
      */
     maxItems: <T>(constraint: number, value: T[]) => {
-        return {valid : (value instanceof Array) && value.length <= constraint, value}
+        return {valid : (value instanceof Array) && value.length <= constraint, value};
     },
 
     /**
@@ -292,7 +291,7 @@ export const Constraints = {
      * @param value value of the form object
      */
     uniqueItems: <T>(constraint: boolean, value: T[]) => {
-        return {valid: !constraint || ((value instanceof Array) && value.length === new Set(value).size), value}
+        return {valid: !constraint || ((value instanceof Array) && value.length === new Set(value).size), value};
     },
     /**
      * Implementation of minLength constraint

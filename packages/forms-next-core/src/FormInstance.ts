@@ -3,7 +3,7 @@ import {jsonString} from './utils/JsonUtils';
 import {request} from './utils/Fetch';
 import RuleEngine from './rules/RuleEngine';
 import {FormModel} from './types';
-import EventQueue from "./controller/EventQueue";
+import EventQueue from './controller/EventQueue';
 
 /**
  * Creates form instance using form model definition as per `adaptive form specification`
@@ -13,15 +13,15 @@ import EventQueue from "./controller/EventQueue";
  * @param logLevel Logging Level for the form. Setting it off will disable the logging
  * @returns {@link FormModel | form model}
  */
-export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = "error"): FormModel => {
+export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = 'error'): FormModel => {
     try {
-        let f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
-        let formData = formModel?.data;
+        const f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
+        const formData = formModel?.data;
         if (formData) {
             f.importData(formData);
         }
-        if (typeof callback === "function") {
-            callback(f)
+        if (typeof callback === 'function') {
+            callback(f);
         }
         // Once the field or panel is initialized, execute the initialization script
         // this means initialization happens after prefill and restore
@@ -31,7 +31,7 @@ export const createFormInstance = (formModel: any, callback?: (f: FormModel) => 
         f.getEventQueue().runPendingQueue();
         return f;
     } catch (e: any) {
-        console.error(`Unable to create an instance of the Form ${e}`)
+        console.error(`Unable to create an instance of the Form ${e}`);
         throw new Error(e);
     }
 };
@@ -45,7 +45,7 @@ export const createFormInstance = (formModel: any, callback?: (f: FormModel) => 
  */
 export const validateFormInstance = (formModel: any, data: any): boolean => {
     try {
-        let f = new Form({...formModel}, new RuleEngine());
+        const f = new Form({...formModel}, new RuleEngine());
         if (data) {
             f.importData(data);
         }
@@ -62,7 +62,7 @@ export const validateFormInstance = (formModel: any, data: any): boolean => {
  * @returns promise which resolves to the form model definition
  */
 export const fetchForm = (url: string, headers: any = {}): Promise<string> => {
-    let headerObj = new Headers();
+    const headerObj = new Headers();
     Object.entries(headers).forEach(([key, value]) => {
         headerObj.append(key, value as string);
     });

@@ -1,4 +1,4 @@
-import {Checkbox, ComboBox} from '@adobe/react-spectrum';
+import {Checkbox} from '@adobe/react-spectrum';
 import {FieldJson, State} from '@aemforms/forms-core';
 import {useRenderer} from '@aemforms/forms-super-component';
 import React from 'react';
@@ -10,7 +10,7 @@ import {
 } from '../utils/SpectrumMappers';
 
 
-const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConvertor, (a, b) => {
+const mapper = combineConvertors(baseConvertor, fieldConvertor, constraintConvertor, (a) => {
     const value = a.value;
     const selectedValue = a.enum?.[0];
     const unselectedValue = (a.enum?.length || 0) < 2 ? null : a.enum?.[1];

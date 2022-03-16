@@ -17,7 +17,7 @@ function processFiles(files : FileObject[]) {
 async function processFile(file : FileObject) {
     const { name, size, mediaType} = file;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let fileObj : FileObject = await new Promise((resolve, reject) => {
+    const fileObj : FileObject = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = event => {
             resolve(new FileObject({
@@ -45,7 +45,7 @@ class FileUpload extends Field implements FieldModel {
             accept : ['audio/*', 'video/*', 'image/*', 'text/*', 'application/pdf'],
             maxFileSize : '2MB',
             type: 'file'
-        }
+        };
     }
 
     private static extractFileInfo(files: string[] | string | File[]) : FileObject[] {
@@ -82,7 +82,7 @@ class FileUpload extends Field implements FieldModel {
                     }
                     if (typeof jFile?.data === 'string' && isDataUrl(jFile?.data)) {
                         // case: data URL
-                        const {blob, name} = dataURItoBlob(jFile?.data);
+                        const {blob} = dataURItoBlob(jFile?.data);
                         retVal =  {
                             name: jFile?.name,
                             mediaType: jFile?.type,
@@ -91,7 +91,7 @@ class FileUpload extends Field implements FieldModel {
                         };
                     } else if (typeof jFile === 'string') {
                         // case: data as external url
-                        let fileName = jFile.split('/').pop();
+                        const fileName = jFile.split('/').pop();
                         retVal = {
                             name: fileName,
                             mediaType: 'application/octet-stream',  // todo: should we auto-deduce mime type based on file extension?
@@ -155,66 +155,66 @@ class FileUpload extends Field implements FieldModel {
         }, {});
     }
 
+    typeCheck(value: any) {
+        const type = this._jsonModel.type || 'file';
+        switch(type) {
+            case 'string':
+                return {valid: true, value: value};
+            default:
+                return Constraints.type(type, value);
+        }
+    }
+
     get value() {
         // @ts-ignore
         this.ruleEngine.trackDependency(this);
-        if (this._jsonModel.value === undefined) return null;
+        if (this._jsonModel.value === undefined) {return null;}
         let val = this._jsonModel.value;
         // always return file object irrespective of data schema
         if (val != null) {
             // @ts-ignore
             val = this.coerce((val instanceof Array ? val : [val])
-                    .map(file => {
-                        let retVal = file;
-                        if (!(retVal instanceof FileObject)) {
-                             retVal = new FileObject({
-                                'name': file.name,
-                                'mediaType': file.mediaType,
-                                'size': file.size,
-                                'data': file.data
-                            });
-                        }
-                        // define serialization here
-                        /*
-                        Object.defineProperty(retVal, 'data', {
-                            get: async function() {
-                                if (file.data instanceof File) {
-                                    return processFile(file);
-                                } else {
-                                    return file.data;
-                                }
-                            }
+                .map(file => {
+                    let retVal = file;
+                    if (!(retVal instanceof FileObject)) {
+                        retVal = new FileObject({
+                            'name': file.name,
+                            'mediaType': file.mediaType,
+                            'size': file.size,
+                            'data': file.data
                         });
-                        */
-                        return retVal;
-                    }));
+                    }
+                    // define serialization here
+                    /*
+                    Object.defineProperty(retVal, 'data', {
+                        get: async function() {
+                            if (file.data instanceof File) {
+                                return processFile(file);
+                            } else {
+                                return file.data;
+                            }
+                        }
+                    });
+                    */
+                    return retVal;
+                }));
         }
         return val;
-    }
-
-    typeCheck(value: any) {
-        const type = this._jsonModel.type || 'file';
-        switch(type) {
-            case 'string':
-                return {valid: true, value: value}
-            default:
-                return Constraints.type(type, value)
-        }
     }
 
     set value(value) {
         if (value !== undefined) {
             // store file list here
-            const typeRes = this.typeCheck(value)
-            const changes = this._setProperty('value', typeRes.value, false)
+            const typeRes = this.typeCheck(value);
+            const changes = this._setProperty('value', typeRes.value, false);
             let fileInfoPayload = FileUpload.extractFileInfo(value as any);
             fileInfoPayload = this.coerce(fileInfoPayload);
-            this._setProperty('value', fileInfoPayload, false)
+            this._setProperty('value', fileInfoPayload, false);
             if (changes.length > 0) {
                 const dataNode = this.getDataNode();
                 if (typeof dataNode !== 'undefined') {
                     let val: any = this._jsonModel.value;
-                    let retVal = (val instanceof Array ? val : [val]).map(file => {
+                    const retVal = (val instanceof Array ? val : [val]).map(file => {
                         if (this.type === 'file' || this.type === 'file[]') {
                             return file;
                         } else if (this.type === 'string' || this.type === 'string[]') {
@@ -225,11 +225,11 @@ class FileUpload extends Field implements FieldModel {
                     val = this.coerce(retVal);
                     dataNode.$value = val;
                 }
-                let updates
+                let updates;
                 if (typeRes.valid) {
                     updates = this.evaluateConstraints();
                 } else {
-                    let changes = {
+                    const changes = {
                         'valid': typeRes.valid,
                         'errorMessage': typeRes.valid ? '' : this.getErrorMessage('type')
                     };
@@ -238,17 +238,17 @@ class FileUpload extends Field implements FieldModel {
                 if (updates.valid) {
                     this.triggerValidationEvent(updates);
                 }
-                const changeAction = new Change({changes: changes.concat(Object.values(updates))})
+                const changeAction = new Change({changes: changes.concat(Object.values(updates))});
                 this.dispatch(changeAction);
             }
         }
     }
 
     private async _serialize() {
-        let val = this._jsonModel.value;
-        if (val === undefined) return null;
+        const val = this._jsonModel.value;
+        if (val === undefined) {return null;}
         // @ts-ignore
-        let filesInfo = await processFiles(val instanceof Array ? val : [val]);
+        const filesInfo = await processFiles(val instanceof Array ? val : [val]);
         return filesInfo;
     }
 
@@ -269,7 +269,7 @@ class FileUpload extends Field implements FieldModel {
             let newValue = value;
             // only if not undefined, proceed further
             if (value != null) {
-                let fileObj: FileObject[] = FileUpload.extractFileInfo(value);
+                const fileObj: FileObject[] = FileUpload.extractFileInfo(value);
                 newValue = this.coerce(fileObj);
                 // is this needed ?
                 this.form.getEventQueue().queue(this, propertyChange('value', newValue, this._jsonModel.value));
