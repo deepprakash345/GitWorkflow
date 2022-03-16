@@ -107,7 +107,6 @@ export type FieldJson = BaseJson & TranslationFieldJson & {
     valid?: boolean
     default?: any
     value?: any
-    multiline?: boolean;
     emptyValue?: 'null' | 'undefined' |''
 }
 

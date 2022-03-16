@@ -8,7 +8,7 @@ import {Action} from "@aemforms/forms-core";
 
 const formJson:any = (description) => {
     return {
-        'adaptiveform': '0.0.17-pre',
+        'adaptiveform': '0.10.0',
         items: [
             {
                 'name' : 'field',

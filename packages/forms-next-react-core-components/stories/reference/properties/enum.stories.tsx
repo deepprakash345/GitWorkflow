@@ -53,7 +53,7 @@ const item = {
 };
 
 const json:any = {
-    'adaptiveform': '0.0.17-pre',
+    'adaptiveform': '0.10.0',
     'action': 'http://www.google.com/',
     'metadata': {
         'grammar': 'json-formula-1.0.0',

@@ -178,6 +178,14 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         return this._jsonModel.name;
     }
 
+    get description() {
+        return this._jsonModel.description
+    }
+
+    set description(d) {
+        this._setProperty("description", d)
+    }
+
     get dataRef() {
         return this._jsonModel.dataRef;
     }
@@ -298,6 +306,26 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
     }
 
     /**
+     * @param prop
+     * @param newValue
+     * @private
+     */
+    _setProperty<T>(prop: string, newValue: T, notify = true) {
+        //@ts-ignore
+        const oldValue = this._jsonModel[prop];
+        if (oldValue !== newValue) {
+            //@ts-ignore
+            this._jsonModel[prop] = newValue;
+            const changeAction = propertyChange(prop, newValue, oldValue);
+            if (notify) {
+                this.notifyDependents(changeAction);
+            }
+            return changeAction.payload.changes;
+        }
+        return []
+    }
+
+    /**
      * @private
      */
     _bindToDataModel(contextualDataModel?: DataGroup) {
@@ -351,6 +379,10 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
 
     get properties() {
         return this._jsonModel.properties || {}
+    }
+
+    set properties(p) {
+        this._setProperty("properties", {...p})
     }
 
     abstract defaultDataModel(name: string|number): DataValue

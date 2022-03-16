@@ -6,11 +6,11 @@ import {
     FieldModel,
     FieldsetJson,
     FieldsetModel,
-    RulesJson, ValidationError
+    RulesJson
 } from './types';
 import {deepClone} from './utils/JsonUtils';
 import Scriptable from './Scriptable';
-import {ExecuteRule, Initialize, propertyChange} from './controller/Controller';
+import {ExecuteRule, Initialize, propertyChange} from './controller';
 import DataGroup from './data/DataGroup';
 
 

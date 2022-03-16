@@ -8,7 +8,7 @@ import { action } from '@storybook/addon-actions';
 
 const formJson:any = (name, label, description) => {
     return {
-        'adaptiveform': '0.0.17-pre',
+        'adaptiveform': '0.10.0',
         items: [
             {
                 'name' : name,

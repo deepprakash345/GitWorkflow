@@ -6,6 +6,21 @@ import {propertyChange} from './controller/Controller';
  * Defines scriptable aspects (ie rules, events) of form runtime model. Any form runtime object which requires
  * execution of rules/events should extend from this class.
  */
+
+const dynamicProps = ["label", "enum", "enumNames", "enforceEnum",
+    "exclusiveMinimum",
+    "exclusiveMaximum",
+    "maxLength",
+    "maximum",
+    "maxItems",
+    "minLength",
+    "minimum",
+    "minItems",
+    "required",
+    "step",
+    "description",
+    "properties", "readOnly", "value", "visible", "enabled",  "placeholder"]
+
 abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements ScriptableField {
     private _events: {
         [key: string]: any
@@ -60,7 +75,7 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             // @ts-ignore
             // the first check is to disable accessing this.value & this.items property
             // otherwise that will trigger dependency tracking
-            if (key in this._jsonModel || (key in this && typeof this[key] !== 'function')) {
+            if (key in dynamicProps || (key in this && typeof this[key] !== 'function')) {
                 try {
                     // @ts-ignore
                     this[key] = value;
@@ -71,6 +86,8 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
         });
     }
 
+
+
     protected executeAllRules(context: any) {
         const entries = Object.entries(this.rules);
         if (entries.length > 0) {
@@ -80,9 +97,9 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
                 let newVal;
                 if (node) {
                     newVal = this.ruleEngine.execute(node, scope, context, true);
-                    //@ts-ignore
-                    if (newVal != this._jsonModel[prop]) {
-                        return [prop, newVal];
+                    if (dynamicProps.indexOf(prop) > -1) {
+                        //@ts-ignore
+                        this[prop] = newVal
                     }
                 }
                 return [];
@@ -188,26 +205,6 @@ abstract class Scriptable<T extends RulesJson> extends BaseNode<T> implements Sc
             this[funcName](action, context);
         }
         this.notifyDependents(action);
-    }
-
-    /**
-     * @param prop
-     * @param newValue
-     * @private
-     */
-    _setProperty<T>(prop: string, newValue: T, notify = true) {
-        //@ts-ignore
-        const oldValue = this._jsonModel[prop];
-        if (oldValue !== newValue) {
-            //@ts-ignore
-            this._jsonModel[prop] = newValue;
-            const changeAction = propertyChange(prop, newValue, oldValue);
-            if (notify) {
-                this.notifyDependents(changeAction);
-            }
-            return changeAction.payload.changes;
-        }
-        return []
     }
 }
 

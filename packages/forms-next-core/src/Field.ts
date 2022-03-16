@@ -143,6 +143,22 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
         this._setProperty('enumNames', e);
     }
 
+    get maximum() {
+        return this._jsonModel.maximum;
+    }
+
+    set maximum(m) {
+        this._setProperty('maximum', m);
+    }
+
+    get minimum() {
+        return this._jsonModel.minimum;
+    }
+
+    set minimum(m) {
+        this._setProperty('minimum', m);
+    }
+
     get value() {
         //@ts-ignore
         this.ruleEngine.trackDependency(this);
