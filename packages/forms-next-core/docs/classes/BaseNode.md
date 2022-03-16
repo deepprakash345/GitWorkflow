@@ -24,6 +24,7 @@ Defines a generic base class which all objects of form runtime model should exte
 
 - [:type](BaseNode.md#:type)
 - [dataRef](BaseNode.md#dataref)
+- [description](BaseNode.md#description)
 - [fieldType](BaseNode.md#fieldtype)
 - [form](BaseNode.md#form)
 - [id](BaseNode.md#id)
@@ -81,6 +82,40 @@ To map the field’s value to a property in the data model.
 #### Implementation of
 
 [BaseModel](../interfaces/BaseModel.md).[dataRef](../interfaces/BaseModel.md#dataref)
+
+___
+
+### description
+
+• `get` **description**(): `undefined` \| `string`
+
+Extra description to be shown to the user to aid in form filling experience. It can be rich text.
+
+#### Returns
+
+`undefined` \| `string`
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[description](../interfaces/BaseModel.md#description)
+
+• `set` **description**(`d`): `void`
+
+Extra description to be shown to the user to aid in form filling experience. It can be rich text.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `d` | `undefined` \| `string` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[description](../interfaces/BaseModel.md#description)
 
 ___
 
@@ -233,6 +268,24 @@ Custom properties of the form field.
 #### Returns
 
 `Object`
+
+#### Implementation of
+
+[BaseModel](../interfaces/BaseModel.md).[properties](../interfaces/BaseModel.md#properties)
+
+• `set` **properties**(`p`): `void`
+
+Custom properties of the form field.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `p` | `Object` |
+
+#### Returns
+
+`void`
 
 #### Implementation of
 

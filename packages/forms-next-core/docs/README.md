@@ -1,4 +1,4 @@
-# @aemforms/forms-core - v0.10.0
+# @aemforms/forms-core - v0.10.1-alpha.0
 
 ## Table of contents
 
@@ -156,7 +156,7 @@ ___
 
 ### FieldJson
 
-Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``"null"`` \| ``"undefined"`` \| ``""`` ; `multiline?`: `boolean` ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
+Ƭ **FieldJson**: [`BaseJson`](README.md#basejson) & `TranslationFieldJson` & { `default?`: `any` ; `emptyValue?`: ``"null"`` \| ``"undefined"`` \| ``""`` ; `readOnly?`: `boolean` ; `valid?`: `boolean` ; `value?`: `any`  }
 
 Type for `form field properties` based on `adaptive form specification`
 
@@ -289,7 +289,7 @@ ___
 
 ### TRANSLATION\_TOKEN
 
-• **TRANSLATION\_TOKEN**: `string` = `'##'`
+• **TRANSLATION\_TOKEN**: ``"##"``
 
 Token used while creating translation specific properties from `adaptive form specification`
 
@@ -315,7 +315,7 @@ Creates form instance using form model definition as per `adaptive form specific
 | :------ | :------ | :------ | :------ |
 | `formModel` | `any` | `undefined` | form model definition |
 | `callback?` | (`f`: [`FormModel`](interfaces/FormModel.md)) => `any` | `undefined` | a callback that recieves the FormModel instance that gets executed before any event in the Form is executed |
-| `logLevel` | `LogLevel` | `"error"` | Logging Level for the form. Setting it off will disable the logging |
+| `logLevel` | `LogLevel` | `'error'` | Logging Level for the form. Setting it off will disable the logging |
 
 #### Returns
 

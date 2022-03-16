@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-super-component",
-  "version": "0.10.0",
+  "version": "0.10.1-alpha.0",
   "description": "React Hooks to add business logic to React Components",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -24,7 +24,7 @@
     "access": "public"
   },
   "scripts": {
-    "eslint" : "npx eslint src/**/*.tsx",
+    "eslint": "npx eslint src/**/*.tsx",
     "build": "npm run eslint && npx tsc",
     "build-libs": "npx tsc",
     "test-ci": "jest --silent --coverage",
@@ -32,7 +32,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/forms-core": "^0.10.0",
+    "@aemforms/forms-core": "^0.10.1-alpha.0",
     "@quarry/eim-provider": "^1.5.0"
   },
   "peerDependencies": {

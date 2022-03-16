@@ -1,8 +1,5 @@
 # Class: Scriptable<T\>
 
-Defines scriptable aspects (ie rules, events) of form runtime model. Any form runtime object which requires
-execution of rules/events should extend from this class.
-
 ## Type parameters
 
 | Name | Type |
@@ -29,6 +26,7 @@ execution of rules/events should extend from this class.
 
 - [:type](Scriptable.md#:type)
 - [dataRef](Scriptable.md#dataref)
+- [description](Scriptable.md#description)
 - [fieldType](Scriptable.md#fieldtype)
 - [form](Scriptable.md#form)
 - [id](Scriptable.md#id)
@@ -84,6 +82,36 @@ ___
 #### Inherited from
 
 BaseNode.dataRef
+
+___
+
+### description
+
+• `get` **description**(): `undefined` \| `string`
+
+#### Returns
+
+`undefined` \| `string`
+
+#### Inherited from
+
+BaseNode.description
+
+• `set` **description**(`d`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `d` | `undefined` \| `string` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+BaseNode.description
 
 ___
 
@@ -222,6 +250,22 @@ ___
 #### Returns
 
 `Object`
+
+#### Inherited from
+
+BaseNode.properties
+
+• `set` **properties**(`p`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `p` | `Object` |
+
+#### Returns
+
+`void`
 
 #### Inherited from
 
