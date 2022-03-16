@@ -34,7 +34,7 @@
     "docs": "npx typedoc --options .typedoc.cjs"
   },
   "dependencies": {
-    "@aemforms/json-formula": "0.1.18"
+    "@aemforms/json-formula": "0.1.20"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
