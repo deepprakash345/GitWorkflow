@@ -147,7 +147,7 @@ pipeline {
                 script {
                     gitStrategy.checkout(env.BRANCH_NAME)
                     gitStrategy.impersonate("cqguides", "cqguides") {
-                        runDocker("npx lerna version patch --no-push --yes -m \":release\"")
+                        runDocker("npx lerna version prerelease --no-push --yes -m \":release\"")
                         runDocker("npx lerna publish from-package --yes")
                         runDocker("npm run docs")
                         sh "git add -A ."
