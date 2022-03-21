@@ -40,11 +40,43 @@ export const InputLabel = styled.label`
 `;
 
 export const DragDropText = styled.p`
+
+  /* Styles for text inside file upload copied from spectrum */
+  --formField-fu-text-color: rgb(44, 44, 44);
+  --formField-fu-text-font-weight: 300;
+  --formField-fu-text-font-family: adobe-clean, "Source Sans Pro";
+  --formField-fu-text-font-size: 22px;
+  --formField-fu-text-line-height: 28.6px;
+  --formField-fu-text-font-style: normal;
+  --formField-fu-text-letter-spacing: normal;
+  --formField-fu-text-transform: none;
+  
   margin-bottom: 15px;
   text-align: center;
+  color: var(--formField-fu-text-color);
+  font-weight: var(--formField-fu-text-font-weight);
+  font-family: var(--formField-fu-text-font-family);
+  font-size: var(--formField-fu-text-font-size);
+  line-height: var(--formField-fu-text-line-height);
+  font-style: var(--formField-fu-text-font-style);
+  letter-spacing: var(--formField-fu-text-letter-spacing);
+  text-transform: var( --formField-fu-text-transform);
+  margin-top: 0;
 `;
 
 export const UploadFileBtn = styled.button`
+
+  /* Styles for button inside file upload copied from spectrum */
+  --formField-fu-button-padding: 0px;
+  --formField-fu-button-border-color: rgb(75, 75, 75);
+  --formField-fu-button-color: rgb(75, 75, 75);
+  --formField-fu-button-min-height: auto;
+  --formField-fu-button-min-width: auto;
+  --formField-fu-button-font-size: 14px;
+  --formField-fu-button-border-width: 2px;
+  --formField-fu-button-font-family: adobe-clean, "Source Sans Pro";
+  --formField-fu-button-line-height: 18.2px;
+  
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;
@@ -57,8 +89,31 @@ export const UploadFileBtn = styled.button`
   transition: color 250ms ease-in-out;
   width: 30%;
   align-items: center;
-  padding-right: 0;
   justify-content: center;
+  padding: var(--formField-fu-button-padding);
+  border-color: var(--formField-fu-button-border-color);
+  color: var(--formField-fu-button-color);
+  min-height: var(--formField-fu-button-min-height);
+  height: auto;
+  min-width: var(--formField-fu-button-min-width);
+  font-size: var(--formField-fu-button-font-size);
+  border-width: var(--formField-fu-button-border-width);
+  border-style: solid;
+  display: inline-flex;
+  margin: 0;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-appearance: button;
+  vertical-align: top;
+  text-decoration: none;
+  font-family: var(--formField-fu-button-font-family);
+  line-height: var(--formField-fu-button-line-height);
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
 
   &:after {
     content: "";
