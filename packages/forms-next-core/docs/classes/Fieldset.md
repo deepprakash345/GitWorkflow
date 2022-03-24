@@ -43,6 +43,7 @@ Defines a field set class which extends from [container](Container.md)
 - [getState](Fieldset.md#getstate)
 - [hasDynamicItems](Fieldset.md#hasdynamicitems)
 - [indexOf](Fieldset.md#indexof)
+- [isTransparent](Fieldset.md#istransparent)
 - [validate](Fieldset.md#validate)
 
 ## Accessors
@@ -610,6 +611,22 @@ Returns the index of the [child item](../interfaces/FieldModel.md) or the [child
 #### Inherited from
 
 [Container](Container.md).[indexOf](Container.md#indexof)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Container](Container.md).[isTransparent](Container.md#istransparent)
 
 ___
 

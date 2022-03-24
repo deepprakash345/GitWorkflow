@@ -49,6 +49,7 @@
 - [executeExpression](Scriptable.md#executeexpression)
 - [getState](Scriptable.md#getstate)
 - [importData](Scriptable.md#importdata)
+- [isTransparent](Scriptable.md#istransparent)
 - [validate](Scriptable.md#validate)
 
 ### Properties
@@ -460,6 +461,22 @@ ___
 #### Inherited from
 
 [BaseNode](BaseNode.md).[importData](BaseNode.md#importdata)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[BaseNode](BaseNode.md).[isTransparent](BaseNode.md#istransparent)
 
 ___
 

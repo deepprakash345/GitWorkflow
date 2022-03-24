@@ -52,6 +52,7 @@ Defines a generic container class which any form container should extend from.
 - [getState](Container.md#getstate)
 - [hasDynamicItems](Container.md#hasdynamicitems)
 - [indexOf](Container.md#indexof)
+- [isTransparent](Container.md#istransparent)
 - [validate](Container.md#validate)
 
 ### Properties
@@ -583,6 +584,22 @@ Returns the index of the [child item](../interfaces/FieldModel.md) or the [child
 #### Implementation of
 
 [ContainerModel](../interfaces/ContainerModel.md).[indexOf](../interfaces/ContainerModel.md#indexof)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Scriptable](Scriptable.md).[isTransparent](Scriptable.md#istransparent)
 
 ___
 

@@ -50,6 +50,7 @@ Defines `form model` which implements [form model](../interfaces/FormModel.md)
 - [hasDynamicItems](Form.md#hasdynamicitems)
 - [importData](Form.md#importdata)
 - [indexOf](Form.md#indexof)
+- [isTransparent](Form.md#istransparent)
 - [isValid](Form.md#isvalid)
 - [validate](Form.md#validate)
 
@@ -731,6 +732,22 @@ Returns the index of the [child item](../interfaces/FieldModel.md) or the [child
 #### Inherited from
 
 [Container](Container.md).[indexOf](Container.md#indexof)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Overrides
+
+[Container](Container.md).[isTransparent](Container.md#istransparent)
 
 ___
 

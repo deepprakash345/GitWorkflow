@@ -48,6 +48,7 @@ Implementation of CheckBoxGroup runtime model which extends from [field](Field.m
 - [getErrorMessage](CheckboxGroup.md#geterrormessage)
 - [getState](CheckboxGroup.md#getstate)
 - [importData](CheckboxGroup.md#importdata)
+- [isTransparent](CheckboxGroup.md#istransparent)
 - [toString](CheckboxGroup.md#tostring)
 - [triggerValidationEvent](CheckboxGroup.md#triggervalidationevent)
 - [validate](CheckboxGroup.md#validate)
@@ -744,6 +745,22 @@ ___
 #### Inherited from
 
 [Field](Field.md).[importData](Field.md#importdata)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Field](Field.md).[isTransparent](Field.md#istransparent)
 
 ___
 

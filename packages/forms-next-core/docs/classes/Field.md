@@ -58,6 +58,7 @@ Defines a form object field which implements [field model](../interfaces/FieldMo
 - [getErrorMessage](Field.md#geterrormessage)
 - [getState](Field.md#getstate)
 - [importData](Field.md#importdata)
+- [isTransparent](Field.md#istransparent)
 - [toString](Field.md#tostring)
 - [triggerValidationEvent](Field.md#triggervalidationevent)
 - [validate](Field.md#validate)
@@ -890,6 +891,22 @@ FieldModel.importData
 #### Overrides
 
 [Scriptable](Scriptable.md).[importData](Scriptable.md#importdata)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Scriptable](Scriptable.md).[isTransparent](Scriptable.md#istransparent)
 
 ___
 

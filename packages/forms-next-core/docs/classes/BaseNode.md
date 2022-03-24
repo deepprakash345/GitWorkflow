@@ -45,6 +45,7 @@ Defines a generic base class which all objects of form runtime model should exte
 - [executeAction](BaseNode.md#executeaction)
 - [getState](BaseNode.md#getstate)
 - [importData](BaseNode.md#importdata)
+- [isTransparent](BaseNode.md#istransparent)
 - [validate](BaseNode.md#validate)
 
 ### Properties
@@ -430,6 +431,18 @@ ___
 #### Implementation of
 
 BaseModel.importData
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
 
 ___
 

@@ -48,6 +48,7 @@ Implementation of check box runtime model which extends from [field](Field.md) m
 - [getErrorMessage](Checkbox.md#geterrormessage)
 - [getState](Checkbox.md#getstate)
 - [importData](Checkbox.md#importdata)
+- [isTransparent](Checkbox.md#istransparent)
 - [toString](Checkbox.md#tostring)
 - [triggerValidationEvent](Checkbox.md#triggervalidationevent)
 - [validate](Checkbox.md#validate)
@@ -730,6 +731,22 @@ ___
 #### Inherited from
 
 [Field](Field.md).[importData](Field.md#importdata)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Field](Field.md).[isTransparent](Field.md#istransparent)
 
 ___
 

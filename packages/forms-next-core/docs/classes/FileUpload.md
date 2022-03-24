@@ -54,6 +54,7 @@ Implementation of FileUpload runtime model which extends from [field](Field.md)
 - [getErrorMessage](FileUpload.md#geterrormessage)
 - [getState](FileUpload.md#getstate)
 - [importData](FileUpload.md#importdata)
+- [isTransparent](FileUpload.md#istransparent)
 - [toString](FileUpload.md#tostring)
 - [triggerValidationEvent](FileUpload.md#triggervalidationevent)
 - [typeCheck](FileUpload.md#typecheck)
@@ -991,6 +992,22 @@ FieldModel.importData
 #### Overrides
 
 [Field](Field.md).[importData](Field.md#importdata)
+
+___
+
+### isTransparent
+
+▸ **isTransparent**(): `boolean`
+
+Transparent form fields are meant only for creation of view. They are also not part of data
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[Field](Field.md).[isTransparent](Field.md#istransparent)
 
 ___
 

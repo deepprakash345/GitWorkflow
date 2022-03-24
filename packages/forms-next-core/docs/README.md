@@ -1,4 +1,4 @@
-# @aemforms/forms-core - v0.10.1-alpha.2
+# @aemforms/forms-core - v0.10.1-alpha.3
 
 ## Table of contents
 
