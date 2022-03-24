@@ -70,6 +70,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
         return true;
     }
 
+
     /**
      * Returns the current container state
      */
@@ -85,13 +86,16 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
 
     protected abstract _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel
 
-    private _addChildToRuleNode(child: any) {
+    private _addChildToRuleNode(child: any, options: any) {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
+        const {parent = this} = options;
         //the child has not been added to the array, hence using the length as new index
-        const name = this.type == 'array' ? this._children.length + '' : (this.type == 'object') ? child.name || '' : '';
+        // this means unnamed panel inside repeatable named parent // this is an edge case, handling it gracefully
+        // todo: rules don't work inside repeatable array
+        const name = parent.type == 'array' ? parent._children.length + '' : (parent.type == 'object') ? child.name || '' : '';
         if (name.length > 0) {
-            Object.defineProperty(this._childrenReference, name, {
+            Object.defineProperty(parent._childrenReference, name, {
                 get: () => {
                     if (child.isContainer && child.hasDynamicItems()) {
                         self.ruleEngine.trackDependency(child); //accessing dynamic panel directly
@@ -112,21 +116,29 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
     }
 
     private _addChild(itemJson: FieldJson | ContainerJson, index?: number) {
-        if (typeof index !== 'number' || index > this._children.length) {
-            index = this._children.length;
+        // get first non transparent parent
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        let nonTransparentParent = this;
+        while (nonTransparentParent != null && nonTransparentParent.isTransparent()) {
+            // @ts-ignore
+            nonTransparentParent = nonTransparentParent.parent;
+        }
+        if (typeof index !== 'number' || index > nonTransparentParent._children.length) {
+            index = nonTransparentParent?._children.length;
         }
         const itemTemplate = {
             index,
             ...deepClone(itemJson)
         };
         //@ts-ignore
-        const retVal = this._createChild(itemTemplate, {parent: this, index: index});
-        this._addChildToRuleNode(retVal);
-        if (index === this._children.length) {
-            this._children.push(retVal);
+        const retVal = this._createChild(itemTemplate, {parent: nonTransparentParent, index: index});
+        this._addChildToRuleNode(retVal, {parent: nonTransparentParent});
+        if (index === nonTransparentParent?._children.length) {
+            nonTransparentParent?._children.push(retVal);
             //(this.getDataNode() as DataGroup).$addDataNode(index);
         } else {
-            this._children.splice(index, 0, retVal);
+            // @ts-ignore
+            nonTransparentParent?._children.splice(index, 0, retVal);
             //(this.getDataNode() as DataGroup).$addDataNode();
         }
         retVal._initialize();
@@ -141,7 +153,7 @@ abstract class Container<T extends ContainerJson & RulesJson> extends Scriptable
      * @private
      */
     defaultDataModel(name: string) {
-        const type = this._jsonModel.type || 'object';
+        const type = this._jsonModel.type || undefined;
         const instance = type === 'array' ? [] : {};
         return new DataGroup(name, instance, type);
     }

@@ -226,6 +226,18 @@ export abstract class BaseNode<T extends BaseJson> implements BaseModel {
         }
     }
 
+
+    /**
+     * Transparent form fields are meant only for creation of view. They are also not part of data
+     */
+    isTransparent() {
+        // named form fields are not transparent
+        // @ts-ignore
+        // handling repeatable use-case where first item of array can be unnamed
+        const isNonTransparent = this.parent?._jsonModel.type === 'array' && this.parent?.items.length === 1;
+        return !this._jsonModel.name && !isNonTransparent;
+    }
+
     getState() {
         return {
             ...this._jsonModel,

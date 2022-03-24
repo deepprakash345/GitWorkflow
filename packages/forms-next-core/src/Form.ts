@@ -164,6 +164,10 @@ class Form extends Container<FormJson> implements FormModel {
         return 'object';
     }
 
+    isTransparent() {
+        return false;
+    }
+
     get form(): FormModel {
         return this;
     }

@@ -27,7 +27,7 @@ const dynamicForm = {
             items: [
                 {
                     fieldType: 'panel',
-                    type: 'object',
+                    type: 'object', // this can be transparent
                     items: [
                         {
                             name : 'price',

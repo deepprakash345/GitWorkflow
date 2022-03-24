@@ -73,8 +73,10 @@ export class Fieldset extends Container<FieldsetJson> implements FieldsetModel {
     return undefined;
   }
 
-  protected _createChild(child: FieldsetJson | FieldJson): FieldModel | FieldsetModel {
-    return createChild(child, {form: this.form, parent: this});
+  // @ts-ignore
+  protected _createChild(child: FieldsetJson | FieldJson, options: any): FieldModel | FieldsetModel {
+    const {parent = this} = options;
+    return createChild(child, {form: this.form, parent: parent});
   }
 
   get items() {
