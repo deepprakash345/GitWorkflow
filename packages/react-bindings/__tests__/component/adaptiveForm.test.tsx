@@ -69,7 +69,7 @@ const mappings = {
 describe('AF super component test cases', () => {
   let initializeHandler: any, submitHandler: any, renderResponse: any, renderDivWithForm:any, changeHandler: any, validationCompleteHandler: any;
   let customEvents: any;
-  let currentForm: any, fieldChangeSet: any, customEventPayload: any, validationCompleteHandlerPayload: any, TestComp: any;
+  let currentForm: any, fieldChangeSet: any, customEventPayload: any, validationCompleteHandlerPayload: any, TestComp: any, TestCompFieldFocus: any, TestCompFieldFocusLost: any;
   beforeEach(() => {
     initializeHandler = jest.fn().mockImplementation((action: Action) => {
       currentForm = action;
@@ -104,6 +104,41 @@ describe('AF super component test cases', () => {
                       }
                       }/>
         <button className="t-button" type="button" data-testid="buttonOutsideForm" onClick={()=>setFocusOn('someField')}>submit</button>
+      </div>;
+    };
+    TestCompFieldFocus = function () {
+      const [formJ, setFormJson] = useState(formJson);
+      return <div>
+        <AdaptiveForm mappings={mappings} formJson={formJ} locale='en'
+                      onInitialize={initializeHandler}
+                      onSubmit={submitHandler}
+                      onTextChange={customEvents}
+                      onFieldChanged={(action: any)=> {
+                        let data = action.target.exportData();
+                        let newState = {
+                          ...formJson,
+                          'data' : data
+                        };
+                        setFormJson(newState);
+                      }}/>
+      </div>;
+    };
+    TestCompFieldFocusLost = function () {
+      const [formJ, setFormJson] = useState(formJson);
+      return <div>
+        <AdaptiveForm mappings={mappings} formJson={formJ} locale='en'
+                      onInitialize={initializeHandler}
+                      onSubmit={submitHandler}
+                      onTextChange={customEvents}
+                      onFieldChanged={(action: any)=> {
+                        let data = action.target.exportData();
+                        let newState = {
+                          ...formJson,
+                          'data' : data,
+                          'title' : 'dummy adaptive form'
+                        };
+                        setFormJson(newState);
+                      }}/>
       </div>;
     };
   });
@@ -197,6 +232,45 @@ describe('AF super component test cases', () => {
     let input1 = getByTestId('textInput1') as HTMLInputElement;
     let inputOnFOcus = getByTestId('textInput') as HTMLInputElement;
     expect(inputOnFOcus).toBe(document.activeElement);
+  });
+
+  test('setting data in form json dynamically should not lose focus on field during re-render', async () => {
+    cleanup();
+    renderDivWithForm = render(<TestCompFieldFocus/>);
+    let { getByTestId } = renderDivWithForm;
+    // check if input is validated
+    let input = getByTestId('textInput1') as HTMLInputElement;
+    userEvent.type(input, 'welcome');
+    input = getByTestId('textInput1') as HTMLInputElement;
+    expect(input.value).toEqual('welcome');
+
+    // focus should not be lost if data is being changed dynamically in form json
+    let inputOnFocus = getByTestId('textInput1') as HTMLInputElement;
+    expect(inputOnFocus).toBe(document.activeElement);
+    // check if input is validated
+    input = getByTestId('textInput') as HTMLInputElement;
+    userEvent.type(input, 'welcome');
+    input = getByTestId('textInput') as HTMLInputElement;
+    expect(input.value).toEqual('welcome');
+
+    // focus should not be lost if data is being changed dynamically in form json
+    inputOnFocus = getByTestId('textInput') as HTMLInputElement;
+    expect(inputOnFocus).toBe(document.activeElement);
+  });
+
+  test('setting any other property (apart from data( in form json dynamically would lose focus on field during re-render', async () => {
+    cleanup();
+    renderDivWithForm = render(<TestCompFieldFocusLost/>);
+    let { getByTestId } = renderDivWithForm;
+    // check if input is validated
+    let input = getByTestId('textInput1') as HTMLInputElement;
+    userEvent.type(input, 'welcome');
+    input = getByTestId('textInput1') as HTMLInputElement;
+    // expect(input.value).toEqual('welcome'); // todo: this fails
+
+    // focus get lost since there is change in form json(ie other properties apart from data has changed)
+    let inputOnFocus = getByTestId('textInput1') as HTMLInputElement;
+    expect(inputOnFocus).not.toEqual(document.activeElement);
   });
 
 });

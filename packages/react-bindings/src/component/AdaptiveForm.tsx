@@ -1,6 +1,6 @@
 import React, {JSXElementConstructor, useEffect, useState} from 'react';
 import FormContext from './FormContext';
-import {Action, createFormInstance, FieldJson, FormModel} from '@aemforms/forms-core';
+import {Action, checkIfKeyAdded, createFormInstance, FieldJson, FormModel, jsonString} from '@aemforms/forms-core';
 import {FormJson} from '@aemforms/forms-core';
 import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
@@ -11,6 +11,7 @@ import packageJson from '../../package.json';
 import {useAdoption} from '@quarry/eim-provider';
 import afLocalizationJson from '../i18n.json';
 import {ChangePayload} from '@aemforms/forms-core';
+import {usePrevious} from '../hooks';
 
 /**
  * The minimum set of translation config that contains messages for all supported locales.
@@ -58,6 +59,7 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize, focusOn} = props;
     const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
+    const prevProps = usePrevious({formJson});
     const [refMap] = useState<any>({});
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
@@ -88,32 +90,44 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     // name aligns to the string used in quarry external docs
     useAdoption({name: '@aemforms/adaptive-form', version: packageJson.version});
     useEffect(() => {
-        const form = createFormInstance(formJson);
+        // @ts-ignore
+        const isOnlyDataAdded = checkIfKeyAdded(formJson, prevProps?.formJson, 'data');
+        // useEffect gets called even if there is no change in formJson, hence adding an explicit check here
+        // @ts-ignore
+        const shouldNewModelBeCreated = ((isOnlyDataAdded && jsonString(formJson?.data) !== jsonString(prevProps?.formJson?.data)) || !isOnlyDataAdded);
+        // @ts-ignore
+        const form = shouldNewModelBeCreated ? createFormInstance(formJson, ()=>{}, 'error', isOnlyDataAdded ? state?.model: null) : state?.model;
         if (typeof onInitialize === 'function') {
             onInitialize({
                 type : 'initialize',
+                // @ts-ignore
                 target: form,
                 payload: undefined,
                 metadata: undefined,
                 isCustomEvent: false
             });
         }
-        // initialize all the event handlers
-        Object.keys(props)
-            .map((propKey) => {
-                    if (propKey.startsWith('on') && propKey !== 'onInitialize' && typeof props[propKey] === 'function') {
-                        // get the event name from the function
-                        let eventName = propKey.substring(propKey.indexOf('on') + 2);
-                        eventName = eventName.charAt(0).toLowerCase() + eventName.slice(1);
-                        // subscribe to the event
-                        form.subscribe((action) => {
-                            props[propKey](action);
-                        }, eventName);
+        if (!isOnlyDataAdded) {
+            // initialize all the event handlers
+            Object.keys(props)
+                .map((propKey) => {
+                        if (propKey.startsWith('on') && propKey !== 'onInitialize' && typeof props[propKey] === 'function') {
+                            // get the event name from the function
+                            let eventName = propKey.substring(propKey.indexOf('on') + 2);
+                            eventName = eventName.charAt(0).toLowerCase() + eventName.slice(1);
+                            // subscribe to the event
+                            // @ts-ignore
+                            form.subscribe((action) => {
+                                props[propKey](action);
+                            }, eventName);
+                        }
                     }
-                }
-            );
-        const state = {model: form, id: form.getUniqueId()};
-        setState(state);
+                );
+            // @ts-ignore
+            const localState = {model: form, id: form.getUniqueId()};
+            // @ts-ignore
+            setState(localState);
+        }
     }, [formJson]);
 
     if (focusOn && refMap[focusOn]) {

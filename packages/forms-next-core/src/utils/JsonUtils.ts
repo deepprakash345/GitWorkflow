@@ -77,6 +77,25 @@ export function deepClone(obj : any) {
 }
 
 /**
+ * Checks if the key got added in current object
+ * @param currentObj
+ * @param prevObj
+ * @param objKey
+ */
+export function checkIfKeyAdded(currentObj: any, prevObj: any, objKey: string){
+    if (currentObj != null && prevObj != null) {
+        // add the new key
+        const newPrvObj = {...prevObj};
+        newPrvObj[objKey] = currentObj[objKey];
+        // do compare using json stringify
+        const newJsonStr = jsonString(currentObj).replace(jsonString(newPrvObj), '');
+        return newJsonStr === '';
+    } else {
+        return false;
+    }
+}
+
+/**
  * Prettifies obj as json string
  * @param obj object to prettify
  * @return json string

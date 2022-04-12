@@ -11,11 +11,15 @@ import EventQueue from './controller/EventQueue';
  * @param callback a callback that recieves the FormModel instance that gets executed before any event in the Form
  * is executed
  * @param logLevel Logging Level for the form. Setting it off will disable the logging
+ * @param fModel existing form model, this is additional optimization to prevent creation of form instance
  * @returns {@link FormModel | form model}
  */
-export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = 'error'): FormModel => {
+export const createFormInstance = (formModel: any, callback?: (f: FormModel) => any, logLevel: LogLevel = 'error', fModel: any = undefined): FormModel => {
     try {
-        const f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
+        let f = fModel;
+        if (f == null) {
+            f = new Form({...formModel}, new RuleEngine(), new EventQueue(new Logger(logLevel)), logLevel);
+        }
         const formData = formModel?.data;
         if (formData) {
             f.importData(formData);
