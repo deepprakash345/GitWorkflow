@@ -1,4 +1,4 @@
-# @aemforms/forms-core - v0.10.1-alpha.3
+# @aemforms/forms-core - v0.10.1-alpha.4
 
 ## Table of contents
 
@@ -70,6 +70,7 @@
 
 ### Functions
 
+- [checkIfKeyAdded](README.md#checkifkeyadded)
 - [createFormInstance](README.md#createforminstance)
 - [createTranslationObject](README.md#createtranslationobject)
 - [defaultFieldTypes](README.md#defaultfieldtypes)
@@ -303,9 +304,29 @@ Constant for all properties which can be translated based on `adaptive form spec
 
 ## Functions
 
+### checkIfKeyAdded
+
+▸ **checkIfKeyAdded**(`currentObj`, `prevObj`, `objKey`): `boolean`
+
+Checks if the key got added in current object
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `currentObj` | `any` |
+| `prevObj` | `any` |
+| `objKey` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### createFormInstance
 
-▸ `Const` **createFormInstance**(`formModel`, `callback?`, `logLevel?`): [`FormModel`](interfaces/FormModel.md)
+▸ `Const` **createFormInstance**(`formModel`, `callback?`, `logLevel?`, `fModel?`): [`FormModel`](interfaces/FormModel.md)
 
 Creates form instance using form model definition as per `adaptive form specification`
 
@@ -316,6 +337,7 @@ Creates form instance using form model definition as per `adaptive form specific
 | `formModel` | `any` | `undefined` | form model definition |
 | `callback?` | (`f`: [`FormModel`](interfaces/FormModel.md)) => `any` | `undefined` | a callback that recieves the FormModel instance that gets executed before any event in the Form is executed |
 | `logLevel` | `LogLevel` | `'error'` | Logging Level for the form. Setting it off will disable the logging |
+| `fModel` | `any` | `undefined` | existing form model, this is additional optimization to prevent creation of form instance |
 
 #### Returns
 
