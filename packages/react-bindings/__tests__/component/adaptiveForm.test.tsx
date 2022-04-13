@@ -258,7 +258,7 @@ describe('AF super component test cases', () => {
     expect(inputOnFocus).toBe(document.activeElement);
   });
 
-  test('setting any other property (apart from data( in form json dynamically would lose focus on field during re-render', async () => {
+  test('setting any other property (apart from data) in form json dynamically would lose focus on field during re-render', async () => {
     cleanup();
     renderDivWithForm = render(<TestCompFieldFocusLost/>);
     let { getByTestId } = renderDivWithForm;

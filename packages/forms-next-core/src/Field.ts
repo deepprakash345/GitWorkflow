@@ -426,7 +426,8 @@ class Field extends Scriptable<FieldJson> implements FieldModel {
     importData(contextualDataModel: DataGroup) {
         this._bindToDataModel(contextualDataModel);
         const dataNode = this.getDataNode();
-        if (dataNode !== undefined) {
+        // only if the value has changed, queue change event
+        if (dataNode !== undefined && dataNode.$value !== this._jsonModel.value) {
             const changeAction = propertyChange('value', dataNode.$value, this._jsonModel.value);
             this._jsonModel.value = dataNode.$value;
             this.queueEvent(changeAction);
