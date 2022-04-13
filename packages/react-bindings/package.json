@@ -1,6 +1,6 @@
 {
   "name": "@aemforms/forms-super-component",
-  "version": "0.10.1-alpha.4",
+  "version": "0.10.1-alpha.5",
   "description": "React Hooks to add business logic to React Components",
   "author": "vdua <vdua@adobe.com>",
   "homepage": "",
@@ -32,7 +32,7 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@aemforms/forms-core": "^0.10.1-alpha.4",
+    "@aemforms/forms-core": "^0.10.1-alpha.5",
     "@quarry/eim-provider": "^1.5.0"
   },
   "peerDependencies": {
