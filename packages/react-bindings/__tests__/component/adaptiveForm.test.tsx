@@ -133,7 +133,18 @@ describe('AF super component test cases', () => {
                       onFieldChanged={(action: any)=> {
                         let data = action.target.exportData();
                         let newState = {
-                          ...formJson,
+                          'items' : [
+                            ...formJson.items,
+                            {
+                              'name': 'extraInput',
+                              'label': {
+                                'value': 'Text input'
+                              },
+                              'type': 'string',
+                              'fieldType': 'text-input',
+                              'placeholder': 'Please enter text'
+                            }
+                           ],
                           'data' : data,
                           'title' : 'dummy adaptive form'
                         };
@@ -266,11 +277,14 @@ describe('AF super component test cases', () => {
     let input = getByTestId('textInput1') as HTMLInputElement;
     userEvent.type(input, 'welcome');
     input = getByTestId('textInput1') as HTMLInputElement;
-    // expect(input.value).toEqual('welcome'); // todo: this fails
+    //expect(input.value).toEqual('welcome'); // todo: this fails
 
     // focus get lost since there is change in form json(ie other properties apart from data has changed)
     let inputOnFocus = getByTestId('textInput1') as HTMLInputElement;
     expect(inputOnFocus).not.toEqual(document.activeElement);
+    // check if new field is present
+    let extraInput = getByTestId('extraInput') as HTMLInputElement;
+    expect(extraInput).toBeDefined();
   });
 
 });

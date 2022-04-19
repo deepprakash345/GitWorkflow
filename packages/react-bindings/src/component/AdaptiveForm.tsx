@@ -59,7 +59,9 @@ type AdaptiveFormProps = customEventHandlers & TranslationConfigWithAllMessages 
 const AdaptiveForm = function (props: AdaptiveFormProps) {
     const { formJson, mappings, locale, localizationMessages, onInitialize, focusOn} = props;
     const [state, setState] = useState<{ model: FormModel, id: string } | null>(null);
-    const prevProps = usePrevious({formJson});
+    //  this gets updated to new value on every rerender.
+    //  using JSON.stringify to convert object to string and storing it in usePrevious
+    const prevFormJsonStr = usePrevious(jsonString(formJson));
     const [refMap] = useState<any>({});
     if (localizationMessages) {
         // not using useMemo hook because createForm call is already optimized
@@ -91,10 +93,11 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
     useAdoption({name: '@aemforms/adaptive-form', version: packageJson.version});
     useEffect(() => {
         // @ts-ignore
-        const isOnlyDataAdded = checkIfKeyAdded(formJson, prevProps?.formJson, 'data');
+        let prevFormJson = prevFormJsonStr ? JSON.parse(prevFormJsonStr) : undefined;
+        const isOnlyDataAdded = checkIfKeyAdded(formJson, prevFormJson, 'data');
         // useEffect gets called even if there is no change in formJson, hence adding an explicit check here
         // @ts-ignore
-        const shouldNewModelBeCreated = ((isOnlyDataAdded && jsonString(formJson?.data) !== jsonString(prevProps?.formJson?.data)) || !isOnlyDataAdded);
+        const shouldNewModelBeCreated = ((isOnlyDataAdded && jsonString(formJson?.data) !== jsonString(prevFormJson?.data)) || !isOnlyDataAdded);
         // @ts-ignore
         const form = shouldNewModelBeCreated ? createFormInstance(formJson, ()=>{}, 'error', isOnlyDataAdded ? state?.model: null) : state?.model;
         if (typeof onInitialize === 'function') {
