@@ -138,3 +138,8 @@ export type TranslationJson = TranslationBaseJson & TranslationFieldJson & Trans
 
 /** Constant for all properties which can be translated based on `adaptive form specification` */
 export const translationProps = ['description', 'placeholder', 'enum', 'enumNames'];
+
+/** Constant for all properties which are constraints based on `adaptive form specification` */
+export const constraintProps = ['accept', 'enum', 'exclusiveMinimum', 'exclusiveMaximum',
+    'format', 'maxFileSize', 'maxLength', 'maximum', 'maxItems',
+    'minLength', 'minimum', 'minItems', 'pattern', 'required', 'step', 'validationExpression', 'enumNames'];

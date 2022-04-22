@@ -1,4 +1,4 @@
-import {baseConvertor, combineConvertors, fieldConvertor} from '../../src/utils/SpectrumMappers';
+import {baseConvertor, combineConvertors, constraintConvertor, fieldConvertor} from '../../src/utils/SpectrumMappers';
 import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@aemforms/forms-core/lib';
@@ -226,6 +226,50 @@ test('description should strip onerror attribute in img,video', () => {
     expect(res).toMatchObject({
         label: <div dangerouslySetInnerHTML={{'__html': '<b>text</b>'}} />
     });
+});
+
+test('validation state should be correctly set', () => {
+    // validation state should be undefined if type is string and there is no constraint properties exist
+    let state: any= {...base, 'type': 'string', 'value' : 'abc', 'valid': true};
+    let res = constraintConvertor(state, mockHandler, formatMessage(state));
+    expect(res).toMatchObject({
+        validationState : undefined
+    });
+
+    // validation state should be undefined if value is empty and valid is true
+    state = {
+        ...state,
+        'value' : ''
+    };
+    res = constraintConvertor(state, mockHandler, formatMessage(state));
+    expect(res).toMatchObject({
+        validationState : undefined
+    });
+
+    // validation state should be set if constraints exist
+    state = {
+        ...state,
+        'value' : 'def',
+        'minLength' : 5,
+        'valid': true
+    };
+    res = constraintConvertor(state, mockHandler, formatMessage(state));
+    expect(res).toMatchObject({
+        validationState : 'valid'
+    });
+
+    // validation state should be set if valid is set to false
+    state = {
+        ...state,
+        'value' : 'def',
+        'minLength' : 5,
+        'valid': false
+    };
+    res = constraintConvertor(state, mockHandler, formatMessage(state));
+    expect(res).toMatchObject({
+        validationState : 'invalid'
+    });
+
 });
 
 test.todo('description should allow src attribute in img,video');/*, () => {

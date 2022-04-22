@@ -2,7 +2,7 @@
  * Defines generic utilities to interact with form model definition which is represented as json
  */
 
-import {FieldsetJson, FieldJson} from '../types';
+import {FieldsetJson, FieldJson, constraintProps} from '../types';
 import {defaultFieldTypes} from './SchemaUtils';
 
 /**
@@ -33,6 +33,17 @@ export const isFile = function (item: FieldsetJson | FieldJson) {
     return (item?.type === 'file' || item?.type === 'file[]') ||
         ((item?.type === 'string' || item?.type === 'string[]') &&
             (item?.format === 'binary' || item?.format === 'data-url'));
+};
+
+
+/**
+ * Utility to check if the given form field has any data constraints
+ * @param item form field to check
+ * @returns `true` if `item` has data constraints, `false` otherwise
+ */
+export const checkIfConstraintsArePresent = function (item: FieldsetJson | FieldJson) {
+    // @ts-ignore
+    return constraintProps.some(cp => item[cp] !== undefined);
 };
 
 /**

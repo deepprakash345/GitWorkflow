@@ -1,9 +1,10 @@
-import {FieldJson} from '@aemforms/forms-core';
+import {checkIfConstraintsArePresent, FieldJson} from '@aemforms/forms-core';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
 import {Convertor, useFormIntl} from '@aemforms/forms-super-component';
 import '../styles.css';
 import clsx from 'clsx';
+import {isEmpty} from '@aemforms/forms-core/lib/utils/FormUtils';
 
 const DEFAULT_ERROR_MESSAGE = 'There is an error in the field';
 
@@ -41,12 +42,14 @@ export const baseConvertor: Convertor<FieldJson> = (a, b, f) => {
 };
 
 export const constraintConvertor: Convertor<FieldJson> = (a) => {
+    // if there are no constraints and type is string, valid would anyways always be true, hence validationState would be optional
+    const optionalValidation = !checkIfConstraintsArePresent(a) && a.type === 'string';
     return {
         ...(a.required && {
             isRequired: true,
             necessityIndicator: 'icon'
         }),
-        validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid')
+        validationState: a.valid === false ? 'invalid' : ((a.valid === undefined  || isEmpty(a.value) || optionalValidation) ? undefined : 'valid')
     };
 };
 
@@ -54,10 +57,12 @@ export const fieldConvertor: Convertor<FieldJson> = (a, b, f) => {
   const i18n = useFormIntl();
   const formatedMessage = i18n.formatMessage({ id: 'defaultErrorMessage', defaultMessage: DEFAULT_ERROR_MESSAGE });
   const errorMessage = a.errorMessage === '' && a.valid === false ? formatedMessage : a.errorMessage;
+    // if there are no constraints and type is string, valid would anyways always be true, hence validationState would be optional
+  const optionalValidation = !checkIfConstraintsArePresent(a) && a.type === 'string';
   return {
         placeholder: f('placeholder'),
         value: a.value == null ? '' : a.value,
-        validationState: a.valid === false ? 'invalid' : (a.valid === undefined ? undefined : 'valid'),
+        validationState: a.valid === false ? 'invalid' : ((a.valid === undefined  || isEmpty(a.value) || optionalValidation) ? undefined : 'valid'),
         onChange: b.dispatchChange, // Handler that is called when the value changes.
         onBlur : b.dispatchBlur, //Handler that is called when the element loses focus.
         isReadOnly : a.readOnly === true,

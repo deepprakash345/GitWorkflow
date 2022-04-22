@@ -23,6 +23,15 @@ export const randomWord = (l: number) => {
 };
 
 /**
+ * Utility to check if the value is empty
+ * @param value value
+ * @returns `true` if value is empty, `false` otherwise
+ */
+export const isEmpty = (value: any) => {
+    return value === '' || value === null || value === undefined;
+};
+
+/**
  * @param input
  * @private
  */
