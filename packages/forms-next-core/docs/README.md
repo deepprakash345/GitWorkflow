@@ -1,4 +1,4 @@
-# @aemforms/forms-core - v0.10.1-alpha.6
+# @aemforms/forms-core - v0.10.1-alpha.7
 
 ## Table of contents
 
@@ -66,10 +66,12 @@
 - [CUSTOM\_PROPS\_KEY](README.md#custom_props_key)
 - [TRANSLATION\_ID](README.md#translation_id)
 - [TRANSLATION\_TOKEN](README.md#translation_token)
+- [constraintProps](README.md#constraintprops)
 - [translationProps](README.md#translationprops)
 
 ### Functions
 
+- [checkIfConstraintsArePresent](README.md#checkifconstraintsarepresent)
 - [checkIfKeyAdded](README.md#checkifkeyadded)
 - [createFormInstance](README.md#createforminstance)
 - [createTranslationObject](README.md#createtranslationobject)
@@ -296,6 +298,14 @@ Token used while creating translation specific properties from `adaptive form sp
 
 ___
 
+### constraintProps
+
+• **constraintProps**: `string`[]
+
+Constant for all properties which are constraints based on `adaptive form specification`
+
+___
+
 ### translationProps
 
 • **translationProps**: `string`[]
@@ -303,6 +313,26 @@ ___
 Constant for all properties which can be translated based on `adaptive form specification`
 
 ## Functions
+
+### checkIfConstraintsArePresent
+
+▸ `Const` **checkIfConstraintsArePresent**(`item`): `boolean`
+
+Utility to check if the given form field has any data constraints
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `item` | [`FieldJson`](README.md#fieldjson) \| [`FieldsetJson`](README.md#fieldsetjson) | form field to check |
+
+#### Returns
+
+`boolean`
+
+`true` if `item` has data constraints, `false` otherwise
+
+___
 
 ### checkIfKeyAdded
 
