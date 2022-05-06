@@ -2,7 +2,7 @@
   "name": "@aemforms/forms-react-components",
   "version": "0.10.2-alpha.7",
   "description": "React Core Components for Forms",
-  "author": "vdua <vdua@adobe.com>",
+  "author": "Adobe Systems",
   "homepage": "/pages/livecycle/af2-web-runtime/story",
   "license": "Apache-2.0",
   "main": "lib/index.js",
