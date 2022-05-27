@@ -1,0 +1,122 @@
+{
+  "de-DE": {
+    "panel##9763##title##8295": "Benutzerdefinierter Assistent",
+    "panel##9763##step1##1788##title##6616": "Schritt1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Vorname des Arbeitgebers",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Nachname des Arbeitgebers",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Vollständiger Name des Arbeitgebers",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Adresse des Arbeitgebers",
+    "panel##9763##step2##8696##title##7093": "Schritt2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Berufsbezeichnung",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Beschäftigungsbeginn",
+    "formSubmit##6696##title##7626": "Absenden"
+  },
+  "en-US": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "es-ES": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "fr-FR": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "it-IT": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "ja-JP": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "ko-KR": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "pt-BR": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "zh-CN": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  },
+  "zh-TW": {
+    "panel##9763##title##8295": "Custom Wizard",
+    "panel##9763##step1##1788##title##6616": "Step1",
+    "panel##9763##step1##1788##employerFName##2059##title##2376": "Employer's First Name",
+    "panel##9763##step1##1788##employerLName##9309##title##8603": "Employer's Last Name",
+    "panel##9763##step1##1788##employerFullName##5021##title##5681": "Employer's Full Name",
+    "panel##9763##step1##1788##employer_address##808##title##9117": "Employer's Address",
+    "panel##9763##step2##8696##title##7093": "Step2",
+    "panel##9763##step2##8696##employment_position##6170##title##2276": "Employment Title",
+    "panel##9763##step2##8696##employment_start_date##2387##title##8045": "Employment Start Date",
+    "formSubmit##6696##title##7626": "Submit"
+  }
+}

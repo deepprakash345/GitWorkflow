@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "adaptiveform": "0.10.0",
+  "title" : "Dynamic options for dropdown/radiobutton/checkbox-group",
+  "items": [
+    {
+      "name": "choiceCount",
+      "type": "number",
+      "fieldType": "number-input",
+      "minimum" : 1,
+      "maximum": 3,
+      "label": {
+        "value": "Choose a number between 1 to 3"
+      }
+    },
+    {
+      "fieldType": "radio-group",
+      "type" : "number",
+      "rules" : {
+        "enum" : "if(choiceCount == 1, toArray(1), if(choiceCount == 2, [1,2], if(choiceCount == 3, [1, 2, 3], toArray(1))))",
+        "enumNames" : "if(choiceCount == 1, ['option 1'], if(choiceCount == 2, ['option 1', 'option 2'], if(choiceCount == 3, ['option 1', 'option 2', 'option 3'], ['option 1'])))"
+      },
+      "label": {
+        "value": "Dynamic Drop down"
+      },
+      "description": "options are dynamic based on the value entered in text field",
+      "enum" : [1],
+      "enumNames": ["option 1"]
+    }
+  ]
+}

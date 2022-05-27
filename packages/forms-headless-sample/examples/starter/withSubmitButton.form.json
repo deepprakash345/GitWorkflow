@@ -1,0 +1,41 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "fieldType": "text-input",
+      "label" : {
+        "value" : "First Name"
+      },
+      "name" : "firstName"
+    },
+    {
+      "fieldType": "text-input",
+      "label" : {
+        "value" : "Middle Name"
+      },
+      "description": "Middle Name is optional",
+      "name" : "middleName"
+    },
+    {
+      "fieldType": "text-input",
+      "label" : {
+        "value" : "Last Name"
+      },
+      "name" : "lastName"
+    },
+    {
+      "fieldType": "button",
+      "label" : {
+        "value" : "submit"
+      },
+      "events" : {
+        "click" : "submitForm()"
+      }
+    }
+  ],
+  "action": "http://www.google.com/",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

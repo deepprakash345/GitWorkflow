@@ -1,0 +1,21 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput1",
+      "type": "number",
+      "fieldType": "text-input",
+      "maximum": 100,
+      "label": {
+        "value": "Field with maximum value 100 and custom error message"
+      },
+      "constraintMessages": {
+        "maximum" : "Custom Error Message to be shown when value is greater than 100"
+      }
+    }
+  ]
+}

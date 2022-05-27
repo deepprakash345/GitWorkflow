@@ -1,0 +1,72 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "name": "profile_image",
+      "type": "file",
+      "maxFileSize": "5MB",
+      "fieldType": "file-input",
+      "label": {
+        "value": "Profile Image"
+      },
+      "events" : {
+        "change" : "request('url', 'POST', $form.profile_image.value, 'success', 'error', 'multipart/form-data')",
+        "custom:success" : "{value : {data : $event.payload}}"
+      }
+    },
+    {
+      "name": "profile",
+      "format": "data-url",
+      "type": "string",
+      "maxFileSize": "8MB",
+      "fieldType": "file-input",
+      "label": {
+        "value": "Profile"
+      }
+    },
+    {
+      "name": "profiles",
+      "format": "data-url",
+      "type": "string[]",
+      "maxFileSize": "10MB",
+      "fieldType": "file-input",
+      "label": {
+        "value": "Multiple Profile"
+      }
+    },
+    {
+      "name": "profileImages",
+      "type": "file[]",
+      "maxFileSize": "2MB",
+      "fieldType": "file-input",
+      "label": {
+        "value": "Multiple Profile Images"
+      }
+    },
+    {
+      "type": "string",
+      "label": {
+        "value": "dummy field"
+      },
+      "fieldType": "file-input"
+    },
+    {
+      "name": "formSubmit",
+      "fieldType": "button",
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "events": {
+        "click": "dispatchEvent($form, 'submit')"
+      },
+      "label": {
+        "value": "Submit"
+      }
+    }
+  ],
+  "events": {
+    "submit": "submitForm('submitSuccess', 'submitError')",
+    "custom:submitSuccess": "show_message_box($form.props.thankyouMessage)"
+  },
+  "metadata": {
+    "version": "1.0.0"
+  }
+}

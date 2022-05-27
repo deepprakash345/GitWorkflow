@@ -1,0 +1,167 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "name": "basicDetails",
+      "description": "This helps us determine the best route to take for picking you up.",
+      "fieldType": "panel",
+      "type": "object",
+      "items": [
+        {
+          "name": "firstName",
+          "type": "string",
+          "fieldType": "text-input",
+          "label": {
+            "value": "First Name"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##firstName##2176##title##2465"
+            }
+          }
+        },
+        {
+          "name": "lastName",
+          "type": "string",
+          "required": true,
+          "minLength": 0,
+          "constraintMessages": {
+            "required": "Enter your first name again if your have no last name",
+            "minLength": "Enter your first name again if your have no last name"
+          },
+          "fieldType": "text-input",
+          "label": {
+            "value": "Last Name"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##lastName##8396##title##3391"
+            }
+          }
+        },
+        {
+          "name": "gender",
+          "type": "string",
+          "enum": [
+            "male",
+            "female",
+            "not_specified"
+          ],
+          "enumNames": [
+            "Male",
+            "Female",
+            "I don't want to specify"
+          ],
+          "required": true,
+          "fieldType": "radio-group",
+          "label": {
+            "value": "Gender"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##gender##874##title##7099",
+              "enumNames": "basicDetails##979##gender##874##enumNames##9232",
+              "enum": "basicDetails##979##gender##874##enum##6570"
+            }
+          }
+        },
+        {
+          "name": "email",
+          "fieldType": "text-input",
+          "type": "string",
+          "format": "email",
+          "pattern": "^[a-z][a-z0-9]{2,}@[a-z]{2,}\\.com",
+          "required": true,
+          "constraintMessages": {
+            "pattern": "Please enter a valid email"
+          },
+          "label": {
+            "value": "Email Address"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##email##2150##title##8036"
+            }
+          }
+        },
+        {
+          "name": "phoneNumber",
+          "fieldType": "text-input",
+          "type": "string",
+          "pattern": "[0-9]{10}",
+          "required": true,
+          "constraintMessages": {
+            "pattern": "Please enter a 10 digit phone number without STD code"
+          },
+          "label": {
+            "value": "Phone Number"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##phoneNumber##9605##title##8685"
+            }
+          }
+        },
+        {
+          "name": "ageDeclaration",
+          "fieldType": "checkbox",
+          "type": "boolean",
+          "enum": [
+            true,
+            false
+          ],
+          "constraintMessages": {
+            "pattern": "Please enter a valid date"
+          },
+          "label": {
+            "value": "I declare my age is greater than 16 years"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##ageDeclaration##8801##title##6846",
+              "enum": "basicDetails##979##ageDeclaration##8801##enum##2073"
+            }
+          }
+        },
+        {
+          "name": "dateOfBirth",
+          "fieldType": "date-input",
+          "type": "string",
+          "format": "date",
+          "constraintMessages": {
+            "pattern": "Please enter a valid date"
+          },
+          "label": {
+            "value": "Date of Birth"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "basicDetails##979##dateOfBirth##8787##title##8780"
+            }
+          }
+        }
+      ],
+      "label": {
+        "value": "Please provide your pick up location"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "basicDetails##979##title##3523",
+          "description": "basicDetails##979##description##4388"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "dataUrl": "/adobe/forms/submission/wknd-forms/westcoastcycling",
+    "action": "/adobe/forms/submit/wknd-forms/westcoastcycling",
+    "version": "1.0.0"
+  },
+  "properties": {
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/west_coast_cycling.i18n.json"
+      }
+    }
+  }
+}

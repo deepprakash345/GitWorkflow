@@ -1,0 +1,108 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "nominees",
+      "type": "array",
+      "fieldType": "panel",
+      "items": [
+        {
+          "fieldType": "panel",
+          "type": "object",
+          "items": [
+            {
+              "name": "name",
+              "type": "string",
+              "fieldType": "text-input",
+              "required": true,
+              "label": {
+                "value": "name of the nominee"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "nominees##3197##0##8145##name##2553##title##4639"
+                }
+              }
+            },
+            {
+              "name": "share",
+              "type": "number",
+              "minimum": 1,
+              "fieldType": "text-input",
+              "required": true,
+              "validationExpression": "sum($form.nominees[*].share.value) <= 100",
+              "events": {
+                "change": "{ visible : true, p1 : field1, p2: field2, p3 : field3 }"
+              },
+              "label": {
+                "value": "share of the nominee"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "nominees##3197##0##8145##share##8998##title##8309"
+                }
+              }
+            },
+            {
+              "name": "delete",
+              "fieldType": "button",
+              "events": {
+                "click": "dispatchEvent($field.parent.parent, 'removeItem', {index : $field.parent.index})"
+              },
+              "label": {
+                "value": "Remove Nominee"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "nominees##3197##0##8145##delete##3915##title##2205"
+                }
+              }
+            }
+          ],
+          "label": {
+            "value": "Nominee Details"
+          }
+        }
+      ],
+      "label": {
+        "value": "Nominees"
+      }
+    },
+    {
+      "name": "addNominee",
+      "fieldType": "button",
+      "events": {
+        "click": "dispatchEvent(nominees, 'addItem')"
+      },
+      "rules": {
+        "enabled": "sum($form.nominees[*].share) < 100"
+      },
+      "label": {
+        "value": "add"
+      }
+    },
+    {
+      "name": "total",
+      "fieldType": "number-input",
+      "type": "number",
+      "maximum": 101,
+      "rules": {
+        "enabled": "false",
+        "value": "sum($form.nominees[*].share)"
+      },
+      "label": {
+        "value": "Total"
+      }
+    }
+  ],
+  "properties": {
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/nominees.i18n.json"
+      }
+    }
+  }
+}

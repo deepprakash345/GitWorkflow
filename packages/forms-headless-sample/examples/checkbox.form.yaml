@@ -1,0 +1,47 @@
+adaptiveform: 0.10.0
+items:
+  - name: checkbox_simplest
+    type: boolean
+    label:
+      value: Default Boolean checkbox
+  - name: checkbox_required
+    type: boolean
+    required: true
+    label:
+      value: Required Checkbox with boolean
+  - name: checkbox_required_no_off_value
+    type: boolean
+    required: true
+    enum:
+      - true
+    label:
+      value: Required Checkbox with no off value
+  - name: checkbox_boolean_reversed
+    type: boolean
+    enum:
+      - false
+      - true
+    label:
+      value: Boolean checkbox with false as selected value
+  - name: checkbox_no_off_value
+    type: boolean
+    enum:
+      - true
+    label:
+      value: Checkbox with no value when deselected
+  - name: checkbox_numeric
+    type: number
+    enum:
+      - 0
+      - 1
+    label:
+      value: Checkbox with number value
+  - name: checkbox_string
+    type: string
+    enum:
+      - a
+      - b
+    label:
+      value: Checkbox with string values
+metadata:
+  version: 1.0.0

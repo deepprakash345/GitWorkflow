@@ -1,0 +1,135 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      ":type": "custom:vertical-flex",
+      "items": [
+        {
+          ":type": "custom:horizontal-flex",
+          "items": [
+            {
+              "fieldType": "plain-text",
+              "value": "Create Form"
+            },
+            {
+              "name": "cancel",
+              "fieldType": "button",
+              "label": {
+                "value": "Cancel"
+              }
+            },
+            {
+              "name": "preview",
+              "fieldType": "button",
+              "label": {
+                "value": "Preview"
+              }
+            },
+            {
+              "name": "create",
+              "fieldType": "button",
+              "label": {
+                "value": "Create"
+              }
+            }
+          ]
+        },
+        {
+          ":type": "custom:horizontal-tab",
+          "items": [
+            {
+              "label": {
+                "value": "Source"
+              },
+              ":type": "custom:horizontal-flex",
+              "items": [
+                {
+                  ":type": "custom:vertical-flex",
+                  "items": [
+                    {
+                      "name": "theme",
+                      "fieldType": "drop-down",
+                      "label": {
+                        "value": "Custom select list for themes"
+                      },
+                      "enum": [
+                        ""
+                      ]
+                    },
+                    {
+                      "name": "forms",
+                      "fieldType": "drop-down",
+                      "label": {
+                        "value": "Custom select list for forms"
+                      },
+                      "enum": [
+                        ""
+                      ]
+                    },
+                    {
+                      "name": "path",
+                      "fieldType": "drop-down",
+                      "label": {
+                        "value": "folder list"
+                      },
+                      "enum": [
+                        ""
+                      ]
+                    }
+                  ]
+                },
+                {
+                  ":type": "custom:vertical-flex",
+                  "items": [
+                    {
+                      "fieldType": "text-input",
+                      "label": {
+                        "value": "search field"
+                      },
+                      "name": "search"
+                    },
+                    {
+                      "fieldType": "drop-down",
+                      "label": {
+                        "value": "Card Drop Down"
+                      },
+                      "name": "text",
+                      "enum": [
+                        ""
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "label": {
+                "value": "Style & Layout"
+              },
+              "fieldType": "panel",
+              "items": []
+            },
+            {
+              "label": {
+                "value": "Fragments"
+              },
+              "fieldType": "panel",
+              "items": []
+            },
+            {
+              "label": {
+                "value": "Data & Delivery"
+              },
+              "fieldType": "panel",
+              "items": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

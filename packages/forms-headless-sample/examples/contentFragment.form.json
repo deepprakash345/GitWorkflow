@@ -1,0 +1,184 @@
+{
+  "adaptiveform": "0.10.0",
+  "data": {},
+  "items": [
+    {
+      "fieldType": "panel",
+      "name": "office",
+      "type": "object",
+      "items": [
+        {
+          "name": "title",
+          "fieldType": "text-input",
+          "default": "Adobe",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Title"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##title##8593##title##5279"
+            }
+          }
+        },
+        {
+          "name": "streetAddress",
+          "fieldType": "multiline-input",
+          "default": "Adobe Tower, Block A, Prestige Platina Tech Park , Bangalore 560087",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Street Address"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##streetAddress##1466##title##3820"
+            }
+          }
+        },
+        {
+          "name": "state",
+          "fieldType": "drop-down",
+          "type": "string",
+          "enum": [],
+          "required": true,
+          "events": {
+            "initialize": "request('/pages/livecycle/af2-docs/examples/data/options.json', 'GET', null, 'stateSuccess', 'stateError')",
+            "custom:stateSuccess": "{ enum : $event.payload[*].value, enumNames: $event.payload[*].text }"
+          },
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "State"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##state##1765##title##1754",
+              "enum": "office##3504##state##1765##enum##5175"
+            }
+          }
+        },
+        {
+          "name": "city",
+          "fieldType": "text-input",
+          "default": "Bangalore",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "City"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##city##6341##title##3071"
+            }
+          }
+        },
+        {
+          "name": "postalcode",
+          "fieldType": "number-input",
+          "default": "560087",
+          "type": "number",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Postal Code"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##postalCode##7445##title##9060"
+            }
+          }
+        },
+        {
+          "name": "country",
+          "fieldType": "text-input",
+          "default": "india",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Country"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##country##4688##title##5089"
+            }
+          }
+        },
+        {
+          "name": "region",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Region"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "office##3504##region##5777##title##6326"
+            }
+          }
+        }
+      ],
+      "label": {
+        "value": "Office"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "office##3504##title##6581"
+        }
+      }
+    },
+    {
+      "name": "formSubmit",
+      "fieldType": "button",
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "events": {
+        "click": "dispatchEvent($form, 'submit')"
+      },
+      "label": {
+        "value": "Submit"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "formSubmit##1405##title##6542"
+        }
+      }
+    }
+  ],
+  "events": {
+    "submit": "submitForm('submitSuccess', 'submitError')",
+    "custom:submitSuccess": "show_message_box($form.thankyouMessage)"
+  },
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "locale": "en-us",
+    "version": "1.0.0"
+  },
+  "properties": {
+    "afs:thankyouMessage": "Thank you for submitting the form",
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/contentFragment.i18n.json"
+      }
+    }
+  }
+}

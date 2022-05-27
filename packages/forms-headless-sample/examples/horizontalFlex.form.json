@@ -1,0 +1,50 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      ":type": "custom:horizontal-flex",
+      "name": "flex",
+      "label": {
+        "value": "Horizontal Flex Title"
+      },
+      "items": [
+        {
+          "name": "textInput1",
+          "label": {
+            "value": "Text Input 1"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        },
+        {
+          "name": "textInput2",
+          "label": {
+            "value": "Text Input 2"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        },
+        {
+          "name": "textInput3",
+          "label": {
+            "value": "Text Input 4"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        },
+        {
+          "name": "textInput4",
+          "label": {
+            "value": "Text Input 4"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

@@ -4,8 +4,7 @@
   ],
   "command" : {
     "publish": {
-      "ignoreChanges": ["*.md"],
-      "registry": "@adobe:https://artifactory.corp.adobe.com/artifactory/api/npm/npm-aem-release/"
+      "ignoreChanges": ["*.md"]
     },
     "bootstrap" : {
       "hoist" : "**",

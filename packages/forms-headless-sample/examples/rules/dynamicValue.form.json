@@ -1,0 +1,33 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "firstName",
+      "fieldType": "text-input",
+      "label": {
+        "value": "First Name"
+      }
+    },
+    {
+      "name": "lastName",
+      "fieldType": "text-input",
+      "label": {
+        "value": "Last Name"
+      }
+    },
+    {
+      "name": "fullName",
+      "fieldType": "text-input",
+      "label": {
+        "value": "Full Name"
+      },
+      "rules" : {
+        "value" : "firstName & ' ' & lastName"
+      }
+    }
+  ]
+}

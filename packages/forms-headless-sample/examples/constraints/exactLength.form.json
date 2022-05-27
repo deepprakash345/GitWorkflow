@@ -1,0 +1,19 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput1",
+      "type": "string",
+      "fieldType": "text-input",
+      "minLength": 8,
+      "maxLength": 8,
+      "label": {
+        "value": "Field with exact Length 8"
+      }
+    }
+  ]
+}

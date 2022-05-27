@@ -1,0 +1,152 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "required": true,
+      "name": "cardOptions",
+      "fieldType": "radio-group",
+      "label": {
+        "value": "Select payment option"
+      },
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ],
+      "enumNames": [
+        "Debit Card / Best Compliments card",
+        "Credit card",
+        "Forex card"
+      ]
+    },
+    {
+      "fieldType": "radio-group",
+      "name": "cardType",
+      "required": true,
+      "label": {
+        "value": "Select card type"
+      },
+      "enum": [
+        "1",
+        "2",
+        "3"
+      ],
+      "enumNames": [
+        "Visa/Rupay",
+        "Master Card",
+        "Maestro"
+      ],
+      "rules": {
+        "visible": "cardOptions.$value=='1'"
+      }
+    },
+    {
+      ":type": "custom:vertical-flex",
+      "type": "object",
+      "name": "cardDetails",
+      "rules": {
+        "visible": "(cardOptions.$value =='1' && length(cardType.$value) >0) || (cardOptions.$value !='1' && length(cardOptions.$value)>0)"
+      },
+      "items": [
+        {
+          "name": "cardNumber",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "pattern": "[0-9]{16}",
+          "label": {
+            "value": "Enter card Number"
+          }
+        },
+        {
+          "name": "cardExpiry",
+          ":type": "custom:horizontal-flex",
+          "type": "object",
+          "items": [
+            {
+              "name": "month",
+              "fieldType": "drop-down",
+              "type": "string",
+              "required": true,
+              "label": {
+                "value": "Month"
+              },
+              "enum": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12"
+              ]
+            },
+            {
+              "name": "year",
+              "fieldType": "drop-down",
+              "type": "string",
+              "required": true,
+              "label": {
+                "value": "Year"
+              },
+              "enum": [
+                "2022",
+                "2023",
+                "2024",
+                "2025"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "cvv",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "pattern": "[0-9]{3}",
+          "label": {
+            "value": "Enter CVV"
+          }
+        },
+        {
+          "name": "pin",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "pattern": "[0-9]{6}",
+          "label": {
+            "value": "Enter pin code"
+          }
+        },
+        {
+          "name": "confirmPin",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "pattern": "[0-9]{6}",
+          "label": {
+            "value": "Enter confirm pin code"
+          }
+        }
+      ]
+    },
+    {
+      "fieldType": "button",
+      "label": {
+        "value": "Submit"
+      },
+      "events": {
+        "click": "submitForm()"
+      }
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

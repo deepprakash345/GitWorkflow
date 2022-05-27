@@ -1,0 +1,107 @@
+{
+  "adaptiveform": "0.10.0",
+  "title": "Create Form",
+  "items": [
+    {
+      "fieldType": "panel",
+      "name": "toolbar",
+      "dataRef": null,
+      "items": [
+        {
+          "name": "cancel",
+          "fieldType": "button",
+          "label": {
+            "value": "Cancel"
+          }
+        },
+        {
+          "name": "preview",
+          "fieldType": "button",
+          "label": {
+            "value": "Preview"
+          }
+        },
+        {
+          "name": "create",
+          "fieldType": "button",
+          "label": {
+            "value": "Create"
+          }
+        }
+      ]
+    },
+    {
+      "fieldType": "file-input",
+      "label": {
+        "value": "Import File"
+      },
+      "type": "file"
+    },
+    {
+      "fieldType": "panel",
+      "name": "sections",
+      "dataRef": null,
+      "items": [
+        {
+          "fieldType": "panel",
+          "label": {
+            "value": "Source"
+          },
+          "items": [
+            {
+              "name": "theme",
+              "fieldType": "drop-down",
+              "label": {
+                "value": "Custom select list for themes"
+              },
+              "enum": [
+                ""
+              ]
+            },
+            {
+              "name": "forms",
+              "fieldType": "drop-down",
+              "label": {
+                "value": "Custom select list for forms"
+              },
+              "enum": [
+                ""
+              ]
+            },
+            {
+              "name": "path",
+              "fieldType": "drop-down",
+              "label": {
+                "value": "folder list"
+              },
+              "enum": [
+                ""
+              ]
+            },
+            {
+              "fieldType": "text-input",
+              "label": {
+                "value": "search field"
+              },
+              "name": "search"
+            },
+            {
+              "fieldType": "drop-down",
+              "label": {
+                "value": "Card Drop Down"
+              },
+              "name": "text",
+              "enum": [
+                ""
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

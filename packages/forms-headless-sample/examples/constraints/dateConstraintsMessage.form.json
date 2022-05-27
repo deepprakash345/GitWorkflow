@@ -1,0 +1,27 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput",
+      "type": "string",
+      "format": "date",
+      "fieldType": "text-input",
+      "required": true,
+      "minimum": "2010-12-31",
+      "maximum": "2020-12-31",
+      "label": {
+        "value": "Constraints for Date"
+      },
+      "constraintMessages": {
+        "required": "The field is required",
+        "format" : "Enter the date in yyyy-mm-dd format",
+        "maximum": "older than 2020-12-31",
+        "minimum": "newer than 2010-12-31"
+      }
+    }
+  ]
+}

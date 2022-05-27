@@ -1,0 +1,22 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput",
+      "type": "string",
+      "format": "date",
+      "fieldType": "text-input",
+      "required": true,
+      "minimum": "2010-12-31",
+      "maximum": "2020-12-31",
+      "label": {
+        "value": "Constraints for Date"
+      },
+      "description": "<ul><li>The field is required</li><li>Value should be in the format yyyy-mm-dd format</li><li>Should be less than 2020-12-31</li><li>Should be more than 2010-12-31</li></ul>"
+    }
+  ]
+}

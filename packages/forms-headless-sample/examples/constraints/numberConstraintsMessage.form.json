@@ -1,0 +1,25 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "numberInput",
+      "type": "number",
+      "fieldType": "number-input",
+      "required": true,
+      "maximum": 10,
+      "minimum": 0,
+      "label": {
+        "value": "Constraints for Number"
+      },
+      "constraintMessages": {
+        "required": "The field is required",
+        "minimum": "more than 0",
+        "maximum": "less than 10"
+      }
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "de-DE": {
+    "office##3504##title##6581": "Büro",
+    "office##3504##title##8593##title##5279": "Titel",
+    "office##3504##streetAddress##1466##title##3820": "Straße",
+    "office##3504##state##1765##title##1754": "Bundesland",
+    "office##3504##city##6341##title##3071": "Stadt",
+    "office##3504##postalCode##7445##title##9060": "Postleitzahl",
+    "office##3504##country##4688##title##5089": "Land",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Senden"
+  },
+  "en-US": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "es-ES": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "fr-FR": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "it-IT": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "ja-JP": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "ko-KR": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "pt-BR": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "zh-CN": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  },
+  "zh-TW": {
+    "office##3504##title##6581": "Office",
+    "office##3504##title##8593##title##5279": "Title",
+    "office##3504##streetAddress##1466##title##3820": "Street Address",
+    "office##3504##state##1765##title##1754": "State",
+    "office##3504##city##6341##title##3071": "City",
+    "office##3504##postalCode##7445##title##9060": "Postal Code",
+    "office##3504##country##4688##title##5089": "Country",
+    "office##3504##region##5777##title##6326": "Region",
+    "formSubmit##1405##title##6542": "Submit"
+  }
+}

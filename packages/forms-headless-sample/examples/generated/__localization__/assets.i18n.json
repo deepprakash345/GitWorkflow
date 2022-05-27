@@ -1,0 +1,112 @@
+{
+  "de-DE": {
+    "personal##7195##title##8805": "Persönliche Daten",
+    "personal##9636##firstname##184##title##4993": "Vorname",
+    "personal##9636##lastname##5970##title##5962": "Nachname",
+    "personal##9636##selectone##9252##title##1205": "Einen auswählen",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1 (wähle mich)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "Über mich",
+    "personal##9636##reset##3753##title##5630": "Zurücksetzen",
+    "personal##9636##submit##5663##title##8429": "Senden"
+  },
+  "en-US": {
+    "personal##7195##title##8805": "Personal Information",
+    "personal##9636##firstname##184##title##4993": "Firstname",
+    "personal##9636##lastname##5970##title##5962": "Lastname",
+    "personal##9636##selectone##9252##title##1205": "Select One",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "About me",
+    "personal##9636##reset##3753##title##5630": "Reset",
+    "personal##9636##submit##5663##title##8429": "Submit"
+  },
+  "es-ES": {
+    "personal##7195##title##8805": "Información personal",
+    "personal##9636##firstname##184##title##4993": "Nombre",
+    "personal##9636##lastname##5970##title##5962": "Apellido",
+    "personal##9636##selectone##9252##title##1205": "Seleccione uno",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "Acerca de mí",
+    "personal##9636##reset##3753##title##5630": "Restablecer",
+    "personal##9636##submit##5663##title##8429": "Enviar"
+  },
+  "fr-FR": {
+    "personal##7195##title##8805": "Informations personnelles",
+    "personal##9636##firstname##184##title##4993": "Prénom",
+    "personal##9636##lastname##5970##title##5962": "Nom",
+    "personal##9636##selectone##9252##title##1205": "Sélectionnez un",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "À propos de moi",
+    "personal##9636##reset##3753##title##5630": "Réinitialiser",
+    "personal##9636##submit##5663##title##8429": "Envoyer"
+  },
+  "it-IT": {
+    "personal##7195##title##8805": "Informazioni personali",
+    "personal##9636##firstname##184##title##4993": "Nome",
+    "personal##9636##lastname##5970##title##5962": "Cognome",
+    "personal##9636##selectone##9252##title##1205": "Seleziona uno",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "Su di me",
+    "personal##9636##reset##3753##title##5630": "Ripristina",
+    "personal##9636##submit##5663##title##8429": "Invia"
+  },
+  "ja-JP": {
+    "personal##7195##title##8805": "個人情報",
+    "personal##9636##firstname##184##title##4993": "名",
+    "personal##9636##lastname##5970##title##5962": "姓",
+    "personal##9636##selectone##9252##title##1205": "1つ選択",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "自己紹介",
+    "personal##9636##reset##3753##title##5630": "リセット",
+    "personal##9636##submit##5663##title##8429": "送信"
+  },
+  "ko-KR": {
+    "personal##7195##title##8805": "개인정보",
+    "personal##9636##firstname##184##title##4993": "이름",
+    "personal##9636##lastname##5970##title##5962": "성",
+    "personal##9636##selectone##9252##title##1205": "하나 선택",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "내 소개",
+    "personal##9636##reset##3753##title##5630": "재설정",
+    "personal##9636##submit##5663##title##8429": "제출"
+  },
+  "pt-BR": {
+    "personal##7195##title##8805": "Informações pessoais",
+    "personal##9636##firstname##184##title##4993": "Nome",
+    "personal##9636##lastname##5970##title##5962": "Sobrenome",
+    "personal##9636##selectone##9252##title##1205": "Selecione um",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "Sobre mim",
+    "personal##9636##reset##3753##title##5630": "Redefinir",
+    "personal##9636##submit##5663##title##8429": "Enviar"
+  },
+  "zh-CN": {
+    "personal##7195##title##8805": "个人信息",
+    "personal##9636##firstname##184##title##4993": "名字",
+    "personal##9636##lastname##5970##title##5962": "姓氏",
+    "personal##9636##selectone##9252##title##1205": "选择一项",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "关于我",
+    "personal##9636##reset##3753##title##5630": "重置",
+    "personal##9636##submit##5663##title##8429": "提交"
+  },
+  "zh-TW": {
+    "personal##7195##title##8805": "個人信息",
+    "personal##9636##firstname##184##title##4993": "名字",
+    "personal##9636##lastname##5970##title##5962": "姓氏",
+    "personal##9636##selectone##9252##title##1205": "選擇一項",
+    "personal##9636##selectone##9252##enumNames##1723##0": "Option 1(choose me)",
+    "personal##9636##selectone##9252##enumNames##1723##1": "Option 2",
+    "personal##9636##aboutme##3552##title##543": "關於我",
+    "personal##9636##reset##3753##title##5630": "重置",
+    "personal##9636##submit##5663##title##8429": "提交"
+  }
+}

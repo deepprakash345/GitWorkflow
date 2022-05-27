@@ -1,0 +1,107 @@
+adaptiveform: 0.10.0
+items:
+  - name: fetchFromAEM
+    type: boolean
+    default: false
+    label:
+      value: Fetch From AEM
+  - name: aemServer
+    type: string
+    rules:
+      visible: fetchFromAEM == true()
+    label:
+      value: Enter Server URL
+  - name: aemFormUrl
+    type: string
+    rules:
+      visible: fetchFromAEM == true()
+    label:
+      value: Enter Form URL
+  - name: aemAuthRequired
+    type: boolean
+    rules:
+      visible: fetchFromAEM == true()
+    label:
+      value: Authentication Required
+  - name: aemAuthToken
+    type: string
+    rules:
+      visible: aemAuthRequired == true()
+    label:
+      value: Provide a developer token (not working currently)
+  - name: githubForm
+    type: string
+    visible: false
+    enum: []
+    rules:
+      visible: fetchFromAEM != true()
+    fieldType: drop-down
+    events:
+      initialize: >-
+        request('/pages/livecycle/af2-docs/examples/index.json', 'GET', null,
+        'setOptions', 'error')
+      custom:setOptions: |-
+        {
+          enum: map(&('/pages/livecycle/af2-docs/examples/' & @), values($event.payload)),
+          enumNames: keys($event.payload)
+        }
+    label:
+      value: Select a sample form
+  - name: locale
+    type: string
+    visible: false
+    enumNames:
+      - de-DE
+      - en-US
+      - es-ES
+      - fr-FR
+      - it-IT
+      - ja-JP
+      - ko-KR
+      - pt-BR
+      - zh-CN
+      - zh-TW
+    enum:
+      - de-DE
+      - en-US
+      - es-ES
+      - fr-FR
+      - it-IT
+      - ja-JP
+      - ko-KR
+      - pt-BR
+      - zh-CN
+      - zh-TW
+    events:
+      change: dispatchEvent($form, 'custom:localeChange', $event.payload)
+      custom:loadForm: '{visible: true()}'
+    fieldType: drop-down
+    label:
+      value: Select a locale,
+  - name: formUrl
+    type: string
+    rules:
+      value: >-
+        if(fetchFromAEM == true(), aemServer &
+        aemFormUrl, githubForm)
+    label:
+      value: Final Form Url
+  - name: fetchForm
+    fieldType: button
+    events:
+      click: request(formUrl, 'GET', null, 'loadForm', 'error')
+    label:
+      value: Fetch Form
+  - name: formContents
+    fieldType: multiline-input
+    visible: false
+    events:
+      custom:loadForm: |
+        {
+          visible: true,
+          value: $event.payload
+        }
+    label:
+      value: Form Contents
+metadata:
+  version: 1.0.0

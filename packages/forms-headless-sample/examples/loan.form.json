@@ -1,0 +1,186 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "name": "name",
+      ":type": "custom:horizontal-flex",
+      "type": "object",
+      "items": [
+        {
+          "name": "firstName",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "label": {
+            "value": "First Name"
+          },
+          "placeholder": "Please type in your first name"
+        },
+        {
+          "name": "lastName",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "label": {
+            "value": "Last Name"
+          },
+          "placeholder": "Please type in your last name"
+        }
+      ]
+    },
+    {
+      "name": "contact",
+      ":type": "custom:horizontal-flex",
+      "type": "object",
+      "items": [
+        {
+          "name": "email",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "format": "email",
+          "label": {
+            "value": "Email"
+          },
+          "placeholder": "Please type in your email"
+        },
+        {
+          "name": "telephone",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "pattern": "[0-9]{10}",
+          "label": {
+            "value": "Telephone"
+          },
+          "placeholder": "Please type in your telephone"
+        }
+      ]
+    },
+    {
+      "name": "availability",
+      ":type": "custom:horizontal-flex",
+      "type": "object",
+      "items": [
+        {
+          "name": "availableTime",
+          "fieldType": "drop-down",
+          "type": "string",
+          "required": true,
+          "label": {
+            "value": "When available"
+          },
+          "placeholder": "Please select a time at your convenience",
+          "enumNames": [
+            "8:30-12:00",
+            "13:00-17:50"
+          ],
+          "enum": [
+            "morning",
+            "evening"
+          ]
+        },
+        {
+          "name": "loanAmount",
+          "fieldType": "number-input",
+          "type": "number",
+          "required": true,
+          "minimum": 100000,
+          "label": {
+            "value": "Loan amount requested"
+          },
+          "placeholder": "0",
+          "description": "Minimum loan amount is 100,000"
+        }
+      ]
+    },
+    {
+      "fieldType": "plain-text",
+      "value": "Choose your preferred branch"
+    },
+    {
+      "fieldType": "plain-text",
+      "value": "Choose the most convenient branch near you"
+    },
+    {
+      "name": "branchInfo",
+      ":type": "custom:horizontal-flex",
+      "type": "object",
+      "items": [
+        {
+          "name": "province",
+          "fieldType": "drop-down",
+          "type": "string",
+          "required": true,
+          "label": {
+            "value": "Province"
+          },
+          "placeholder": "Province where you are curently located",
+          "enum": [
+            "DL",
+            "UP"
+          ],
+          "events": {
+            "change": "dispatchEvent(branchInfo.district, 'custom:emptyDistrict')"
+          }
+        },
+        {
+          "name": "district",
+          "fieldType": "drop-down",
+          "type": "string",
+          "required": true,
+          "label": {
+            "value": "District"
+          },
+          "placeholder": "District where you are curently located",
+          "rules": {
+            "visible": "length(branchInfo.province.value) > 0"
+          },
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ],
+          "events": {
+            "custom:emptyDistrict": "{value: ''}",
+            "change": "dispatchEvent(branch, 'custom:emptyBranch')"
+          }
+        }
+      ]
+    },
+    {
+      "name": "branch",
+      "fieldType": "drop-down",
+      "type": "string",
+      "required": true,
+      "label": {
+        "value": "Branch"
+      },
+      "placeholder": "Your convenience branch",
+      "rules": {
+        "visible": "length(branchInfo.district.value) > 0"
+      },
+      "enum": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "events": {
+        "custom:emptyBranch": "{value: ''}"
+      }
+    },
+    {
+      "fieldType": "button",
+      "label": {
+        "value": "Submit"
+      },
+      "events": {
+        "click": "submitForm()"
+      }
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

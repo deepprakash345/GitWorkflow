@@ -1,0 +1,198 @@
+{
+  "adaptiveform": "0.10.0",
+  "data": {},
+  "items": [
+    {
+      ":type": "custom:fd/af/components/wizard",
+      "name": "panel",
+      "type": "object",
+      "items": [
+        {
+          ":type": "custom:fd/af/components/wizardstep",
+          "name": "step1",
+          "type": "object",
+          "items": [
+            {
+              "name": "employerFName",
+              "fieldType": "text-input",
+              "default": "",
+              "type": "string",
+              "required": true,
+              "constraintMessages": {
+                "required": "The field is required"
+              },
+              "label": {
+                "value": "Employer's First Name"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "panel##9763##step1##1788##employerFName##2059##title##2376"
+                }
+              }
+            },
+            {
+              "name": "employerLName",
+              "fieldType": "text-input",
+              "default": "",
+              "type": "string",
+              "required": true,
+              "constraintMessages": {
+                "required": "The field is required"
+              },
+              "label": {
+                "value": "Employer's Last Name"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "panel##9763##step1##1788##employerLName##9309##title##8603"
+                }
+              }
+            },
+            {
+              "name": "employerFullName",
+              "fieldType": "text-input",
+              "type": "string",
+              "required": true,
+              "rules": {
+                "value": "$form.panel.step1.employerFName & ' ' & $form.panel.step1.employerLName"
+              },
+              "constraintMessages": {
+                "required": "The field is required"
+              },
+              "label": {
+                "value": "Employer's Full Name"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "panel##9763##step1##1788##employerFullName##5021##title##5681"
+                }
+              }
+            },
+            {
+              "name": "employer_address",
+              "fieldType": "multiline-input",
+              "rules": {
+                "required": "$form.employment_status == true()"
+              },
+              "type": "string",
+              "required": true,
+              "constraintMessages": {
+                "required": "The field is required"
+              },
+              "label": {
+                "value": "Employer's Address"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "panel##9763##step1##1788##employer_address##808##title##9117"
+                }
+              }
+            }
+          ],
+          "label": {
+            "value": "Step1"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##9763##step1##1788##title##6616"
+            }
+          }
+        },
+        {
+          ":type": "custom:fd/af/components/wizardstep",
+          "name": "step2",
+          "type": "object",
+          "items": [
+            {
+              "name": "employment_position",
+              "fieldType": "text-input",
+              "rules": {
+                "required": "$form.employment_status == true()"
+              },
+              "type": "string",
+              "required": true,
+              "constraintMessages": {
+                "required": "The field is required"
+              },
+              "label": {
+                "value": "Employment Title"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "panel##9763##step2##8696##employment_position##6170##title##2276"
+                }
+              }
+            },
+            {
+              "name": "employment_start_date",
+              "fieldType": "date-input",
+              "type": "string",
+              "format": "date",
+              "required": true,
+              "constraintMessages": {
+                "required": "The field is required"
+              },
+              "label": {
+                "value": "Employment Start Date"
+              },
+              "properties": {
+                "afs:translationIds": {
+                  "title": "panel##9763##step2##8696##employment_start_date##2387##title##8045"
+                }
+              }
+            }
+          ],
+          "label": {
+            "value": "Step2"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##9763##step2##8696##title##7093"
+            }
+          }
+        }
+      ],
+      "label": {
+        "value": "Custom Wizard"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "panel##9763##title##8295"
+        }
+      }
+    },
+    {
+      "name": "formSubmit",
+      "fieldType": "button",
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "events": {
+        "click": "dispatchEvent($form, 'submit')"
+      },
+      "label": {
+        "value": "Submit"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "formSubmit##6696##title##7626"
+        }
+      }
+    }
+  ],
+  "events": {
+    "submit": "submitForm('submitSuccess', 'submitError')",
+    "custom:submitSuccess": "show_message_box($form.$properties.thankyouMessage)"
+  },
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "locale": "en-us",
+    "version": "1.0.0"
+  },
+  "properties": {
+    "afs:thankyouMessage": "Thank you for submitting the form",
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/wizard.i18n.json"
+      }
+    }
+  }
+}

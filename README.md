@@ -6,32 +6,14 @@ Documentation site: https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/s
 
 # Usage
 
-Packages contained in this repository are published to the 
-[npm-aem-release](https://artifactory.corp.adobe.com/ui/#/artifacts/browse/simple/General/npm-aem-release) 
-Artifactory in the scope @aemforms. 
+Packages contained in this repository are published to the global npm registry.  Artifactory in the scope @adobe. 
 The packages can be consumed as a dependency (i.e. added to the package.json of any project).
-
-Copy the .npmrc file at the root of this project to ~/.npmrc (or .npmrc):
-
-## Setup npm authentication
-
-A user needs to be authenticated to access packages from the artifactory. 
-Follow the steps mentioned in the 
-[wiki](https://wiki.corp.adobe.com/display/Artifactory/NPM#NPM-authAuthenticatingthenpmClient)
-to authenticate with npm and set the environment variables NPM_AUTH and NPM_EMAIL.
-
-The script below does the same which can be copied to your bashrc file or can be run on terminal
-```
-auth=$(curl -s -u${ARTIFACTORY_USER}:${ARTIFACTORY_API_TOKEN} https://artifactory.corp.adobe.com/artifactory/api/npm/auth)
-export NPM_TOKEN=$(echo "${auth}" | grep "_auth" | awk -F " " '{ print $3 }')
-export NPM_EMAIL=$(echo "${auth}" | grep "email" | awk -F " " '{ print $3 }')
-```
 
 ## Using Adaptive Form Super Component
 
 To use adaptive form super component, add the following dependency,
 ```
-npm i @aemforms/forms-core @aemforms/forms-react-components @adobe/react-spectrum @react/react-spectrum
+npm i @adobe/aem-forms-af-core @adobe/aem-forms-af-react-components @adobe/react-spectrum @react/react-spectrum
 ```
 
 ## Using Form Builder Visual Studio Plugin

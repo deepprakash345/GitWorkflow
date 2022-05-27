@@ -1,0 +1,72 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "name": "number_of_dependents",
+      "fieldType": "number-input",
+      "minimum": 0,
+      "maximum": 10,
+      "type": "number",
+      "label": {
+        "value": "number of dependents"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "number_of_dependents##633##title##6327"
+        }
+      }
+    },
+    {
+      "name": "dependentNames",
+      "fieldType": "panel",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": [
+        {
+          "type": "string",
+          "fieldType": "text-input",
+          "label": {
+            "value": "Dependent Name"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "dependentNames##6213##0##5413##title##1691"
+            }
+          }
+        }
+      ],
+      "rules": {
+        "maxItems": "number_of_dependents"
+      },
+      "label": {
+        "value": "Dependent names"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "dependentNames##6213##title##2549"
+        }
+      }
+    },
+    {
+      "fieldType": "button",
+      "name": "addDependent",
+      "events": {
+        "click": "dispatchEvent($form.dependentNames, 'addItem')"
+      },
+      "label": {
+        "value": "Add Dependent"
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0"
+  },
+  "properties": {
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/dependents.i18n.json"
+      }
+    }
+  }
+}

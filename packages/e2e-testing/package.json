@@ -2,9 +2,9 @@
   "name": "@aemforms/super-component-e2e-testing",
   "version": "0.6.0",
   "description": "e2e test cases for super component ",
-  "author": "Adobe Systems",
   "homepage": "",
   "license": "Apache-2.0",
+  "private" : true,
   "directories": {
     "test": "__tests__"
   },
@@ -15,7 +15,6 @@
     "outputDirectory": "./target/test-reports"
   },
   "publishConfig": {
-    "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-aem-release-local",
     "access": "public"
   },
   "scripts": {
@@ -23,12 +22,11 @@
     "test": "jest --silent"
   },
   "dependencies": {
-    "@adobe/react-spectrum": "^3.15.1",
-    "@aemforms/forms-core": "^0.6.45",
-    "@aemforms/forms-react-components": "^0.9.49",
-    "@aemforms/forms-super-component": "^0.5.47",
-    "@react-aria/i18n": "^3.3.2",
-    "@react/react-spectrum": "^2.27.0"
+    "@adobe/react-spectrum": "^3.17.0",
+    "@adobe/aem-forms-af-core": "^0.11.0",
+    "@adobe/aem-forms-af-react-components": "^0.11.0",
+    "@adobe/aem-forms-af-super-component": "^0.11.0",
+    "@react-aria/i18n": "^3.3.2"
   },
   "peerDependencies": {
     "react": "^16.14.0 || ^17.0.2",

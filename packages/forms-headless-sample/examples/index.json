@@ -1,0 +1,22 @@
+{
+  "Checkboxes": "./generated/checkbox.form.json",
+  "Checkboxes Group": "./checkbox-group.form.json",
+  "TextFields": "./generated/textfield.form.json",
+  "Financial" : "./statement-financial-position.form.json",
+  "Playground Configuration" : "./generated/Application.form.json",
+  "WKND Cycling Form" : "./west_coast_cycling.form.json",
+  "Person" : "./person.form.json",
+  "Contact-Us" : "./contact-us.form.json",
+  "Assets" : "./assets.form.json",
+  "Content Fragment" : "./contentFragment.form.json",
+  "Dependents" : "./dependents.form.json",
+  "Insurance" : "./nominees.form.json",
+  "Form Builder" : "./generated/form-builder.form.json",
+  "File" : "./fileinput.form.json",
+  "Accordion": "./accordion.form.json",
+  "Vertical Tabs": "./verticalTabs.form.json",
+  "Horizontal Tabs": "./horizontalTabs.form.json",
+  "Vertical Flex": "./verticalFlex.form.json",
+  "Horizontal Flex": "./horizontalFlex.form.json",
+  "Nesting Flex": "./nestingFlex.form.json"
+}

@@ -1,0 +1,84 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      ":type": "custom:vertical-flex",
+      "name": "flex",
+      "label": {
+        "value": "Tabs title"
+      },
+      "items": [
+        {
+          ":type": "custom:horizontal-flex",
+          "items": [
+            {
+              "name": "textInput1",
+              "label": {
+                "value": "Text input 1"
+              },
+              "type": "string",
+              "fieldType": "text-input"
+            },
+            {
+              "name": "textInput2",
+              "label": {
+                "value": "Text input 2"
+              },
+              "type": "string",
+              "fieldType": "text-input"
+            },
+            {
+              "name": "textInput3",
+              "label": {
+                "value": "Text input 3"
+              },
+              "type": "string",
+              "fieldType": "text-input"
+            }
+          ]
+        },
+        {
+          "name": "textInput4",
+          "label": {
+            "value": "Text input 4"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        },
+        {
+          ":type": "custom:horizontal-flex",
+          "items": [
+            {
+              "name": "textInput5",
+              "label": {
+                "value": "Text input 5"
+              },
+              "type": "string",
+              "fieldType": "text-input"
+            },
+            {
+              "name": "textInput6",
+              "label": {
+                "value": "Text input 6"
+              },
+              "type": "string",
+              "fieldType": "text-input"
+            }
+          ]
+        },
+        {
+          "name": "textInput8",
+          "label": {
+            "value": "Text input 7"
+          },
+          "type": "string",
+          "fieldType": "text-input"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "de-DE": {
+    "nominees##3197##0##8145##name##2553##title##4639": "Name des Nominees",
+    "nominees##3197##0##8145##share##8998##title##8309": "Anteil des Nominees",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Nominee entfernen"
+  },
+  "en-US": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "es-ES": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "fr-FR": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "it-IT": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "ja-JP": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "ko-KR": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "pt-BR": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "zh-CN": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  },
+  "zh-TW": {
+    "nominees##3197##0##8145##name##2553##title##4639": "name of the nominee",
+    "nominees##3197##0##8145##share##8998##title##8309": "share of the nominee",
+    "nominees##3197##0##8145##delete##3915##title##2205": "Remove Nominee"
+  }
+}

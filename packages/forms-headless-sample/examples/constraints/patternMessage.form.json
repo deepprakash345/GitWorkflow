@@ -1,0 +1,21 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput1",
+      "type": "string",
+      "fieldType": "text-input",
+      "pattern": "^98\\d{8}",
+      "label": {
+        "value": "The field with pattern and error message"
+      },
+      "constraintMessages": {
+        "pattern" : "The field excepts only 10 digits as a valid value with first 2 digits as 98"
+      }
+    }
+  ]
+}

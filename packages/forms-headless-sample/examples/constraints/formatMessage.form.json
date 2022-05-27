@@ -1,0 +1,33 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput1",
+      "type": "string",
+      "fieldType": "text-input",
+      "format": "date",
+      "label": {
+        "value": "Text field with format date"
+      },
+      "constraintMessages": {
+        "format" : "Enter date in the format yyyy-mm-dd"
+      }
+    },
+    {
+      "name": "textInput1",
+      "type": "string",
+      "fieldType": "date-input",
+      "format": "date",
+      "label": {
+        "value": "Date field with format date"
+      },
+      "constraintMessages": {
+        "format" : "choose a valid date"
+      }
+    }
+  ]
+}

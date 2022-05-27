@@ -1,0 +1,22 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput",
+      "type": "string",
+      "fieldType": "text-input",
+      "required": true,
+      "pattern": "^[a-zA-Z. ]{1,10}$",
+      "maxLength": 11,
+      "minLength": 3,
+      "label": {
+        "value": "Constraints for String"
+      },
+      "description" : "<ul><li>The Field is required</li><li>only characters, dot (.) and space</li><li>Maximum 11 characters</li><li>Minimum 3 Characters</li></ul>"
+    }
+  ]
+}

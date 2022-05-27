@@ -1,0 +1,54 @@
+{
+  "adaptiveform": "0.10.0",
+  "items": [
+    {
+      "name": "checkbox",
+      "fieldType": "checkbox-group",
+      "label": {
+        "value": "Checkbox Group"
+      },
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "enumNames": [
+        "checkbox 1",
+        "checkbox 2",
+        "checkbox 3",
+        "checkbox 4",
+        "checkbox 5"
+      ]
+    },
+    {
+      "name": "checkbox1",
+      "fieldType": "checkbox-group",
+      "default": [
+        2,
+        3
+      ],
+      "label": {
+        "value": "Checkbox Group with default values"
+      },
+      "enum": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "enumNames": [
+        "checkbox 1",
+        "checkbox 2",
+        "checkbox 3",
+        "checkbox 4",
+        "checkbox 5"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0"
+  }
+}

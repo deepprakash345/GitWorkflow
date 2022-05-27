@@ -1,0 +1,66 @@
+adaptiveform: 0.10.0
+items:
+  - name: textfield_simple
+    type: string
+    label:
+      value: A simple Text Field
+  - name: textfield_with_calculatedValue
+    type: string
+    rules:
+      value: textfield_simple
+    label:
+      value: Text Field Mirrors simple Textfield
+  - name: textfield_with_helpText
+    type: string
+    description: This is a help text for the Text Field
+    label:
+      value: Text Field with description
+  - name: textfield_required
+    type: string
+    required: true
+    label:
+      value: Required Text Field
+  - name: textfield_custom_requiredMessage
+    type: string
+    required: true
+    constraintMessages:
+      required: The Field's required message has been modified
+    label:
+      value: Required Text Field With custom Message
+  - name: textfield_minLength
+    type: string
+    minLength: 5
+    label:
+      value: Text Field with min length 5
+  - name: textfield_minLength_message
+    type: string
+    minLength: 5
+    description: This has a custom error message as well
+    constraintMessages:
+      minLength: Please enter atleast 5 characters
+    label:
+      value: Text Field with min length
+  - name: textfield_maxLength
+    type: string
+    maxLength: 5
+    label:
+      value: Text Field with max length 5
+  - name: textfield_maxLength_message
+    type: string
+    maxLength: 5
+    description: This has a custom error message as well
+    constraintMessages:
+      maxLength: Please enter atmost 5 characters
+    label:
+      value: Text Field with max length
+  - name: textfield_pattern
+    type: string
+    pattern: ^a[b-z]{2}[0-9]{3}$
+    constraintMessages:
+      pattern: >-
+        The value should start with character `a` followed by 2 characters from
+        the character set b-z and followed by 3 numbers
+    label:
+      value: Text Field with pattern
+metadata:
+  version: 1.0.0

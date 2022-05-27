@@ -1,0 +1,21 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput1",
+      "type": "string",
+      "fieldType": "text-input",
+      "minLength": 3,
+      "label": {
+        "value": "Field with min Length 3"
+      },
+      "constraintMessages": {
+        "minLength" : "Custom Error Message to be shown when less than 3 characters are entered"
+      }
+    }
+  ]
+}

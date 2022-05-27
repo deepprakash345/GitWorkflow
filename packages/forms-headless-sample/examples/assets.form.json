@@ -1,0 +1,148 @@
+{
+  "adaptiveform": "0.10.0",
+  "data": {},
+  "items": [
+    {
+      "fieldType": "panel",
+      "name": "personal",
+      "type": "object",
+      "items": [
+        {
+          "name": "firstname",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "personal##9636##firstname##184##title##4993"
+            }
+          },
+          "label": {
+            "value": "Firstname"
+          }
+        },
+        {
+          "name": "lastname",
+          "fieldType": "text-input",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "personal##9636##lastname##5970##title##5962"
+            }
+          },
+          "label": {
+            "value": "Lastname"
+          }
+        },
+        {
+          "name": "selectone",
+          "fieldType": "radio-group",
+          "type": "boolean",
+          "enum": [
+            true,
+            false
+          ],
+          "enumNames": [
+            "Option 1(choose me)",
+            "Option 2"
+          ],
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Select One"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "personal##9636##selectone##9252##title##1205",
+              "enumNames": "personal##9636##selectone##9252##enumNames##1723",
+              "enum": "personal##2451##selectone##868##enum##2824"
+            }
+          }
+        },
+        {
+          "name": "aboutme",
+          "fieldType": "multiline-input",
+          "default": "Everything is awesome!",
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "About me"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "personal##9636##aboutme##3552##title##543"
+            }
+          }
+        },
+        {
+          "name": "reset",
+          "fieldType": "button",
+          "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+          "events": {
+            "click": "dispatchEvent($form, 'submit')"
+          },
+          "label": {
+            "value": "Reset"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "personal##9636##reset##3753##title##5630"
+            }
+          }
+        },
+        {
+          "name": "submit",
+          "fieldType": "button",
+          "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+          "events": {
+            "click": "dispatchEvent($form, 'submit')"
+          },
+          "label": {
+            "value": "Submit"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "personal##9636##submit##5663##title##8429"
+            }
+          }
+        }
+      ],
+      "label": {
+        "value": "Personal Information"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "personal##7195##title##8805"
+        }
+      }
+    }
+  ],
+  "events": {
+    "submit": "submitForm('submitSuccess', 'submitError')",
+    "custom:submitSuccess": "show_message_box($form.thankyouMessage)"
+  },
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "properties": {
+    "afs:thankyouMessage": "Thank you for submitting the form",
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/assets.i18n.json"
+      }
+    }
+  }
+}

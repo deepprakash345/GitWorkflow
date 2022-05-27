@@ -1,0 +1,87 @@
+adaptiveform: 0.10.0
+metadata:
+  version: 1.0.0
+items:
+  - name: form
+    fieldType: panel
+    type: object
+    items:
+      - name: items
+        type: array
+        fieldType: panel
+        items:
+          - type: object
+            fieldType: panel
+            items:
+              - name: name
+                type: string
+                fieldType: text-input
+                label:
+                  value: Name of the Field
+              - name: fieldType
+                fieldType: drop-down
+                type: string
+                enum:
+                  - text-input
+                  - number-input
+                  - date-input
+                  - file-input
+                  - multiline-input
+                  - drop-down
+                  - radio-group
+                  - checkbox-group
+                  - checkbox
+                  - switch
+                  - plain-text
+                  - button
+                  - panel
+                label:
+                  value: Field Type
+              - name: title
+                dataRef: label.value
+                type: string
+                fieldType: text-input
+                label:
+                  value: Label
+              - name: visible
+                type: boolean
+                label:
+                  value: Visible
+              - name: enabled
+                type: boolean
+                label:
+                  value: Enabled
+              - name: default
+                type: string
+                label:
+                  value: Default Value
+              - name: type
+                enum:
+                  - string
+                  - boolean
+                  - number
+                  - string[]
+                  - number[]
+                  - boolean[]
+                default: string
+                label:
+                  value: Data Type
+              - name: enum
+                fieldType: panel
+                items:
+                  - type: string
+                    label:
+                      value: Enter the Options Value
+                maxItems: 10
+                label:
+                  value: Options Value
+              - name: enumNames
+                fieldType: panel
+                items:
+                  - type: string
+                    label:
+                      value: Enter the Options Display text
+                label:
+                  value: Options Display
+        minItems: 1
+        maxItems: 10

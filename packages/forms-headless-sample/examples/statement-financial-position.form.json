@@ -1,0 +1,295 @@
+{
+  "adaptiveform": "0.10.0",
+  "data": {},
+  "items": [
+    {
+      "name": "employment_status",
+      "fieldType": "radio-group",
+      "type": "boolean",
+      "enum": [
+        true,
+        false
+      ],
+      "enumNames": [
+        "yes",
+        "no"
+      ],
+      "required": true,
+      "constraintMessages": {
+        "required": "Your current employment status is mandatory"
+      },
+      "label": {
+        "value": "Are you currently employed"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "employment_status##5634##title##5588",
+          "enumNames": "employment_status##5634##enumNames##5830",
+          "enum": "employment_status##5634##enum##2914"
+        }
+      }
+    },
+    {
+      "fieldType": "panel",
+      "name": "panel",
+      "rules": {
+        "visible": "$form.employment_status == true()"
+      },
+      "type": "object",
+      "items": [
+        {
+          "name": "employer",
+          "fieldType": "text-input",
+          "rules": {
+            "required": "$form.employment_status == true()"
+          },
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Employer's Name"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##6178##employer##1066##title##2404"
+            }
+          }
+        },
+        {
+          "name": "employer_address",
+          "fieldType": "multiline-input",
+          "rules": {
+            "required": "$form.employment_status == true()"
+          },
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Employer's Address"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##6178##employer_address##8891##title##3576"
+            }
+          }
+        },
+        {
+          "name": "employment_position",
+          "fieldType": "text-input",
+          "rules": {
+            "required": "$form.employment_status == true()"
+          },
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Employment Title"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##6178##employment_position##6699##title##8071"
+            }
+          }
+        },
+        {
+          "name": "employment_start_date",
+          "fieldType": "date-input",
+          "rules": {
+            "required": "$form.employment_status == true()"
+          },
+          "type": "string",
+          "format": "date",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Employment Start Date"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##6178##employment_start_date##4794##title##597"
+            }
+          }
+        },
+        {
+          "name": "payment_per_week",
+          "fieldType": "number-input",
+          "description": "the amount of all payments actually received by you from this employment (after deduction of tax) currently per week?\n(If the amount varies from week to week, state a typical amount.)\n",
+          "rules": {
+            "required": "$form.employment_status == true()"
+          },
+          "type": "number",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Weekly Payment Received (after taxes)"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "panel##6178##payment_per_week##5259##title##1120",
+              "description": "panel##6178##payment_per_week##5259##description##1562"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "last_employment_end_date",
+      "fieldType": "text-input",
+      "type": "string",
+      "format": "date",
+      "required": true,
+      "label": {
+        "value": "On what date did your last period of employment end?"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "last_employment_end_date##5235##title##7492"
+        }
+      }
+    },
+    {
+      "name": "self_employed",
+      "fieldType": "radio-group",
+      "type": "boolean",
+      "enum": [
+        true,
+        false
+      ],
+      "enumNames": [
+        "yes",
+        "no"
+      ],
+      "required": true,
+      "constraintMessages": {
+        "required": "Your current employment status is mandatory"
+      },
+      "label": {
+        "value": "Are you self employed"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "self_employed##1960##title##9186",
+          "enumNames": "self_employed##1960##enumNames##3740",
+          "enum": "self_employed##1960##enum##8494"
+        }
+      }
+    },
+    {
+      "fieldType": "panel",
+      "name": "self_employment_details",
+      "rules": {
+        "visible": "$form.self_employed == true()"
+      },
+      "type": "object",
+      "items": [
+        {
+          "name": "employer",
+          "fieldType": "text-input",
+          "rules": {
+            "required": "$form.self_employed == true()"
+          },
+          "type": "string",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Employer's Name"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "self_employment_details##9788##occupation##3203##title##7630"
+            }
+          }
+        },
+        {
+          "name": "expenses_last_year",
+          "fieldType": "number-input",
+          "description": "the total amount of expenditure incurred by you in earning income during that financial year",
+          "rules": {
+            "required": "$form.self_employed == true()"
+          },
+          "type": "number",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Expenditure in last financial year"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "self_employment_details##9788##expenses_last_year##3399##title##7113",
+              "description": "self_employment_details##9788##expenses_last_year##3399##description##872"
+            }
+          }
+        },
+        {
+          "name": "salary_last_year",
+          "fieldType": "number-input",
+          "description": "•\tthe total amount received by you as a self-employed person during the last financial year",
+          "rules": {
+            "required": "$form.self_employed == true()"
+          },
+          "type": "number",
+          "required": true,
+          "constraintMessages": {
+            "required": "The field is required"
+          },
+          "label": {
+            "value": "Weekly Payment Received (after taxes)"
+          },
+          "properties": {
+            "afs:translationIds": {
+              "title": "self_employment_details##9788##salary_last_year##5906##title##2991",
+              "description": "self_employment_details##9788##salary_last_year##5906##description##8730"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "submit",
+      "fieldType": "button",
+      "screenReaderText": "Enter your message in less than 1000 characters and minimum 50 characters",
+      "events": {
+        "click": "dispatchEvent($form, 'submit')"
+      },
+      "label": {
+        "value": "Submit"
+      },
+      "properties": {
+        "afs:translationIds": {
+          "title": "submit##4206##title##1087"
+        }
+      }
+    }
+  ],
+  "events": {
+    "submit": "submitForm('submitSuccess', 'submitError')",
+    "custom:submitSuccess": "show_message_box($form.thankyouMessage)"
+  },
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "locale": "en-us",
+    "version": "1.0.0"
+  },
+  "properties": {
+    "afs:thankyouMessage": "Thank you for submitting the form",
+    "afs:links": {
+      "i18n": {
+        "href": "/pages/livecycle/af2-docs/examples/generated/__localization__/statement-financial-position.i18n.json"
+      }
+    }
+  }
+}

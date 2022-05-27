@@ -1,0 +1,18 @@
+{
+  "adaptiveform": "0.10.0",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "name": "textInput1",
+      "type": "number",
+      "fieldType": "text-input",
+      "minimum": 100,
+      "label": {
+        "value": "Field with minimum value 100"
+      }
+    }
+  ]
+}
