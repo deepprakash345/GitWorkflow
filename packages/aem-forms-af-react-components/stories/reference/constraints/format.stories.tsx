@@ -17,7 +17,7 @@ import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import formatForm from '../../../../../docs/examples/constraints/format.form.json';
+import formatForm from '../../../../forms-headless-sample/public/examples/constraints/format.form.json';
 
 export default {
     title: 'Reference/JSON/Constraints/format',

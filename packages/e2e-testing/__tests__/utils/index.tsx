@@ -14,8 +14,6 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-// @ts-ignore
-import Spectrum2Provider from '@react/react-spectrum/Provider';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import { AdaptiveForm } from "@adobe/aem-forms-af-super-component";
 import { mappings } from '@adobe/aem-forms-af-react-components';
@@ -29,10 +27,8 @@ interface RenderType {
 
 export const renderComponent = (params: RenderType) => {
   return render(
-    <Spectrum2Provider >
       <Spectrum3Provider theme={defaultTheme}>
         <AdaptiveForm mappings={mappings} locale='en' {...params} />
       </Spectrum3Provider>
-    </Spectrum2Provider >
   );
 };

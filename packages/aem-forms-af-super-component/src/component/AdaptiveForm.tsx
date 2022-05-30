@@ -20,9 +20,6 @@ import {IntlConfig, defineMessages, IntlProvider} from 'react-intl';
 // quarry intl is not working with react-intl formatMessage
 import {getTranslationMessages} from './i18n';
 import {renderChildren} from '../renderChildren';
-// @ts-ignore
-import packageJson from '../../package.json';
-import {useAdoption} from '@quarry/eim-provider';
 import afLocalizationJson from '../i18n.json';
 import {ChangePayload} from '@adobe/aem-forms-af-core';
 import {usePrevious} from '../hooks';
@@ -102,9 +99,6 @@ const AdaptiveForm = function (props: AdaptiveFormProps) {
             localizationMessagesProp = {...localizationMessagesProp, ...afLocalization};
          }
     }
-    // this logs event only if used inside unified shell
-    // name aligns to the string used in quarry external docs
-    useAdoption({name: '@aemforms/adaptive-form', version: packageJson.version});
     useEffect(() => {
         // @ts-ignore
         let prevFormJson = prevFormJsonStr ? JSON.parse(prevFormJsonStr) : undefined;

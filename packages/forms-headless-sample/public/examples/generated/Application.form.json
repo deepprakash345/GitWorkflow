@@ -59,8 +59,8 @@
       },
       "fieldType": "drop-down",
       "events": {
-        "initialize": "request('/pages/livecycle/af2-docs/examples/index.json', 'GET', null, 'setOptions', 'error')",
-        "custom:setOptions": "{\n  enum: map(&('/pages/livecycle/af2-docs/examples/' & @), values($event.payload)),\n  enumNames: keys($event.payload)\n}"
+        "initialize": "request('./examples/index.json', 'GET', null, 'setOptions', 'error')",
+        "custom:setOptions": "{\n  enum: map(&('./examples/' & @), values($event.payload)),\n  enumNames: keys($event.payload)\n}"
       },
       "label": {
         "value": "Select a sample form"

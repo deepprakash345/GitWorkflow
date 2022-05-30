@@ -20,8 +20,6 @@ import {createFormInstance, FieldModel, FormModel} from '@adobe/aem-forms-af-cor
 import {IntlProvider} from 'react-intl';
 import Checkbox from '../../src/components/Checkbox';
 import {render} from '@testing-library/react';
-// @ts-ignore
-import Spectrum2Provider from '@react/react-spectrum/Provider';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 
 export const createForm = async (field: any) => {
@@ -43,13 +41,11 @@ export const Provider = (form: FormModel,
     };
     const {children} = props;
     return (
-      <Spectrum2Provider>
-        <Spectrum3Provider theme={defaultTheme}>
-          <IntlProvider locale={locale} messages={dictionaries}>
-            <FormContext.Provider value={c}>{children}</FormContext.Provider>
-          </IntlProvider>
-        </Spectrum3Provider>
-      </Spectrum2Provider>
+    <Spectrum3Provider theme={defaultTheme}>
+      <IntlProvider locale={locale} messages={dictionaries}>
+        <FormContext.Provider value={c}>{children}</FormContext.Provider>
+      </IntlProvider>
+    </Spectrum3Provider>
     );
   };
 

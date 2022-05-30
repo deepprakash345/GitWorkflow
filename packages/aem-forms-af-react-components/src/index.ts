@@ -23,7 +23,6 @@ import PlainText from './components/PlainText';
 import FileUploadComponent from './components/FileUpload';
 import Repeater from './components/Repeater';
 import NumberField from './components/NumberField';
-import Accordion from './components/Accordion';
 import DateField from './components/Date';
 import CheckboxGroup from './components/CheckboxGroup';
 import HorizontalFlex from './components/flex/HorizontalFlex';
@@ -36,7 +35,7 @@ export {
   mappings,
   TextField, Button, Panel, Checkbox, RadioGroup, ComboBox,
   PlainText, FileUploadComponent, Repeater, NumberField,
-  Accordion, DateField, CheckboxGroup, HorizontalFlex,
+  DateField, CheckboxGroup, HorizontalFlex,
   VerticalFlex, HorizontalTab, VerticalTab
 };
 

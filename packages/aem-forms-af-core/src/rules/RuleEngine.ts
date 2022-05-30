@@ -19,7 +19,7 @@
  */
 import {BaseModel} from '../types';
 import {ActionImpl} from '../controller/Controller';
-import {Formula} from '@aemforms/json-formula';
+import {Formula} from '@adobe/json-formula';
 import FunctionRuntime from './FunctionRuntime';
 
 /**

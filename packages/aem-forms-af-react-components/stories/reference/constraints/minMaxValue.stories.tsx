@@ -17,12 +17,12 @@ import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import minValueForm from '../../../../../docs/examples/constraints/minimum.form.json';
-import maxValueForm from '../../../../../docs/examples/constraints/maxValue.form.json';
-import minLengthForm from '../../../../../docs/examples/constraints/minLength.form.json';
-import maxLengthForm from '../../../../../docs/examples/constraints/maxLength.form.json';
-import exactLengthForm from '../../../../../docs/examples/constraints/exactLength.form.json';
-import patternForm from '../../../../../docs/examples/constraints/pattern.form.json';
+import minValueForm from '../../../../forms-headless-sample/public/examples/constraints/minimum.form.json';
+import maxValueForm from '../../../../forms-headless-sample/public/examples/constraints/maxValue.form.json';
+import minLengthForm from '../../../../forms-headless-sample/public/examples/constraints/minLength.form.json';
+import maxLengthForm from '../../../../forms-headless-sample/public/examples/constraints/maxLength.form.json';
+import exactLengthForm from '../../../../forms-headless-sample/public/examples/constraints/exactLength.form.json';
+import patternForm from '../../../../forms-headless-sample/public/examples/constraints/pattern.form.json';
 import {base} from "../../template";
 
 export default {

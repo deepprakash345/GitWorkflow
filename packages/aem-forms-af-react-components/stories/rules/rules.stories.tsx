@@ -14,8 +14,8 @@
 
 import { ComponentMeta } from '@storybook/react';
 import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
-import dynamicValueForm from '../../../../docs/examples/rules/dynamicValue.form.json';
-import dynamicOptionsForm from '../../../../docs/examples/rules/dynamicOptions.form.json';
+import dynamicValueForm from '../../../forms-headless-sample/public/examples/rules/dynamicValue.form.json';
+import dynamicOptionsForm from '../../../forms-headless-sample/public/examples/rules/dynamicOptions.form.json';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import rules from './rules.mdx';

@@ -17,9 +17,9 @@ import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import stringCons from '../../../../../docs/examples/constraints/stringConstraints.form.json';
-import numCons from '../../../../../docs/examples/constraints/numberConstraints.form.json';
-import dateCons from '../../../../../docs/examples/constraints/dateConstraints.form.json';
+import stringCons from '../../../../forms-headless-sample/public/examples/constraints/stringConstraints.form.json';
+import numCons from '../../../../forms-headless-sample/public/examples/constraints/numberConstraints.form.json';
+import dateCons from '../../../../forms-headless-sample/public/examples/constraints/dateConstraints.form.json';
 
 
 export default {

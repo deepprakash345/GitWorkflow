@@ -16,7 +16,7 @@ import { ComponentMeta } from '@storybook/react';
 import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
-import fieldWithLabel from '../../../../../docs/examples/starter/fieldWithLabel.form.json';
+import fieldWithLabel from '../../../../forms-headless-sample/public/examples/starter/fieldWithLabel.form.json';
 import mappings from '../../../src/utils/mappings';
 import {Action} from "@adobe/aem-forms-af-core";
 import { action } from '@storybook/addon-actions';

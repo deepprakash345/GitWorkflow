@@ -17,12 +17,12 @@ import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
 import { ComponentStory } from '@storybook/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
 import mappings from '../../../src/utils/mappings';
-import minLengthForm2 from '../../../../../docs/examples/constraints/minLengthErrorMessage.form.json';
-import maxLengthForm2 from '../../../../../docs/examples/constraints/maxLengthErrorMessage.form.json';
-import minValueForm2 from '../../../../../docs/examples/constraints/minimumErrorMessage.form.json';
-import maxValueForm2 from '../../../../../docs/examples/constraints/maxValueErrorMessage.form.json';
-import patternForm from '../../../../../docs/examples/constraints/patternMessage.form.json';
-import formatForm from '../../../../../docs/examples/constraints/formatMessage.form.json';
+import minLengthForm2 from '../../../../forms-headless-sample/public/examples/constraints/minLengthErrorMessage.form.json';
+import maxLengthForm2 from '../../../../forms-headless-sample/public/examples/constraints/maxLengthErrorMessage.form.json';
+import minValueForm2 from '../../../../forms-headless-sample/public/examples/constraints/minimumErrorMessage.form.json';
+import maxValueForm2 from '../../../../forms-headless-sample/public/examples/constraints/maxValueErrorMessage.form.json';
+import patternForm from '../../../../forms-headless-sample/public/examples/constraints/patternMessage.form.json';
+import formatForm from '../../../../forms-headless-sample/public/examples/constraints/formatMessage.form.json';
 import {base} from "../../template";
 
 export default {

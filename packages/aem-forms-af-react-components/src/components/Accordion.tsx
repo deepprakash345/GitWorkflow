@@ -13,25 +13,27 @@
  */
 
 import React, { useContext, useCallback } from 'react';
-import { Accordion, AccordionItem } from '@react-spectrum/Accordion';
+import { Accordion, Item} from '@react-spectrum/accordion';
 import { FieldsetJson } from '@adobe/aem-forms-af-core';
 import { useRuleEngine, FormContext } from '@adobe/aem-forms-af-super-component';
 import { State } from '@adobe/aem-forms-af-core';
 
+// export once adobe react spectrum solves this, https://github.com/adobe/react-spectrum/issues/1989
 const AccordionWrapper = function (fieldset: State<FieldsetJson>) {
   const mappings = useContext(FormContext).mappings;
   const [props] = useRuleEngine(fieldset);
   const { items, visible } = props;
   const layout = props?.properties?.['afs:layout'] || {};
 
+  // this does not work, https://github.com/adobe/react-spectrum/issues/1989
   const getItems = useCallback(() => {
     return (
       items.map((child: any, index: any) => {
         const Comp = mappings?.[child[':type']];
         return Comp ? (
-          <AccordionItem key={child?.label?.value} header={child?.label?.value}>
+          <Item key={child?.label?.value} title={child?.label?.value}>
             <Comp key={`${child.id}_${index}`} {...child} />
-          </AccordionItem>
+          </Item>
         ) : (null);
       })
     );

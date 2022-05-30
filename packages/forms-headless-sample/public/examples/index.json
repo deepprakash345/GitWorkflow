@@ -13,7 +13,6 @@
   "Insurance" : "./nominees.form.json",
   "Form Builder" : "./generated/form-builder.form.json",
   "File" : "./fileinput.form.json",
-  "Accordion": "./accordion.form.json",
   "Vertical Tabs": "./verticalTabs.form.json",
   "Horizontal Tabs": "./horizontalTabs.form.json",
   "Vertical Flex": "./verticalFlex.form.json",

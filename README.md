@@ -1,6 +1,6 @@
 # Introduction
 
-Client side runtime for Headless Adaptive Form. The headless adaptive form is based on the [crispr form specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/), which acts as the guiding principle for creating the JSON for headless forms.
+Client side runtime and tooling to build Adaptive Forms. This allows front end developers to create omni-channel adaptive form experiences.
 
 Documentation site: https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/story/
 
@@ -38,16 +38,6 @@ npx lerna bootstrap
 npm run build
 npm run start
 ```
-
-The playground is dependent on the JSON Files that are hosted on 
-[git](https://git.corp.adobe.com/livecycle/af2-docs/tree/gh-pages/examples) but due to cross origin issue, we have setup
-a proxy that does it. To start that proxy, navigate to the `docs` folder and run the following command
-```
-npm install
-npm run proxy
-```
-
-This will start a proxy server hosting all the examples that are needed by the Playground.
 
 # Development
 
@@ -107,7 +97,3 @@ npm run story
 # Contributing
 
 Please raise an issue and a PR.
-
-# CI/CD
-The project is built and tested using Jenkins and latest build status can be obtained 
-[here](https://lotus.ci.corp.adobe.com/view/Headless/job/af2-web-runtime/)
