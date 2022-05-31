@@ -2,7 +2,6 @@
 
 Client side runtime and tooling to build Adaptive Forms. This allows front end developers to create omni-channel adaptive form experiences.
 
-Documentation site: https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/story/
 
 # Usage
 
@@ -18,7 +17,7 @@ npm i @adobe/aem-forms-af-core @adobe/aem-forms-af-react-components @adobe/react
 
 ## Using Form Builder Visual Studio Plugin
 
-[Download](https://artifactory.corp.adobe.com/ui/api/v1/download?repoKey=generic-flamingo-network-data-snapshot-local&path=crispr/0.10.0/adaptive-form-builder-0.10.0.vsix)
+[Download](adaptive-form-builder-0.10.0.vsix)
 
 ## Versions
 
@@ -30,7 +29,7 @@ If your version is different then please try to upgrade or log an issue to see i
 
 # Try out the Playground
 
-The playground is hosted on [git-pages](https://git.corp.adobe.com/pages/livecycle/af2-web-runtime/dist/) and uses the
+The playground is hosted on [git-pages]() and uses the
 headless demo instance. To run the playground locally execute the following commands
 
 ```
