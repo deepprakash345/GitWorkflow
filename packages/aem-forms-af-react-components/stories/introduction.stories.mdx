@@ -8,7 +8,7 @@ import {AdaptiveForm} from "@adobe/aem-forms-af-react-renderer";
 Headless Adaptive Forms (HAF) specifies a mechanism to create a Form or Data Capture Experience using a JSON representation,
 which allows rendering that experience across multiple channels.
 
-The [Adaptive Forms Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/)
+The Adaptive Forms Specification
 can be used by implementors to generate a visual appearance for the Data Capture Experience for multiple channels.
 
 # Modules
@@ -37,17 +37,17 @@ npm i --save @adobe/aem-forms-af-react-renderer @adobe/aem-forms-af-react-compon
 ## Form JSON
 
 One needs to define The Form in JSON as per the
-[Specification](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/).
+Specification.
 
 ## Mappings Object
 
 A Mappings Object is a JavaScript map that maps the
-[field types](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-fieldType)
+field types
 defined in the Specification to its respective React Component. The Adaptive Form Super Component
 uses this map to render the different components defined in the Form JSON.
 
 The default mappings can be found in
-[git](https://git.corp.adobe.com/livecycle/af2-web-runtime/blob/main/packages/forms-next-react-core-components/src/utils/mappings.ts)
+git
 
 To use that in your project use the following import, assuming you have added the project as a dependency in your project
 

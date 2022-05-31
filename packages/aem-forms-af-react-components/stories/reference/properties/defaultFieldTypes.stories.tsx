@@ -17,16 +17,10 @@ import {AdaptiveForm} from '@adobe/aem-forms-af-react-renderer';
 import {ComponentStory} from '@storybook/react';
 import mappings from '../../../src/utils/mappings';
 import {decorator, formWithSubmit, logAction, logData} from "../../template";
-import documentation from './defaultFieldTypes.docs.mdx'
 
 export default {
     title: 'Reference/JSON/Properties/fieldType/defaults',
     component: AdaptiveForm,
-    parameters: {
-        docs: {
-            page: documentation
-        }
-    },
     decorators: [decorator],
     args: {
         onSubmit: logAction('data')

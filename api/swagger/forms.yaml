@@ -8,9 +8,6 @@ info:
   version: '1.0.0'
 servers:
   - url: '/adobe/forms/af/v1'
-externalDocs:
-  description: API documentation
-  url: "https://wiki.corp.adobe.com/display/lc/Form+Headless+API+Specification"
 paths:
   /listforms:
     get:
@@ -353,7 +350,6 @@ components:
       properties:
         afModelDefinition:
           type: object
-          description: https://git.corp.adobe.com/livecycle/af2-docs/blob/gh-pages/schema/generated/adaptive-form.schema.json
         dataSchema:
           oneOf:
             - type: string

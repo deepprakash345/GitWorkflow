@@ -5,7 +5,7 @@ import {Story} from '@storybook/addon-docs'
 Checkbox component can have an on or an off value. When selected the on value is submitted while upon deselection
 off value is submitted.
 The values are provided via the
-[enum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enum) property. The first
+enum property. The first
 value in the array is an on value, while the second is off value. Any other value will be discarded
 
 
@@ -66,7 +66,7 @@ The off value is optional, if not defined then no value will be submitted when t
 ## Boolean
 
 A checkbox can specify enum implicitly by setting
-[type](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-type) property to boolean
+type property to boolean
 
 ```json
 {
@@ -93,10 +93,10 @@ A checkbox can specify enum implicitly by setting
 The Spec supports a custom fieldType `checkbox-group` to create a group of checkboxes as well. In a group,
 individual checkboxes do not have an off value and only the selected items are submitted. In case of `checkbox-group`
 one can define the individual checkboxes,
-[enum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enum)
+enum
 property is used while the label of individual checkbox is defined
 using
-[enumNames](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-enumNames)
+enumNames
 
 ```json
 {
@@ -146,8 +146,8 @@ entire group can be set to richText
 ## Dynamic addition of checkboxes in a group
 
 The options in a group can be dynamic. Using
-[JSON Formula Expressions](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-properties-rules)
-and [rules](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#rules) property of a field
+JSON Formula Expressions
+and rules property of a field
 one can make the properties dynamic. For example,
 
 ```

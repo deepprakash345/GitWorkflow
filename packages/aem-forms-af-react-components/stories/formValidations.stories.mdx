@@ -6,7 +6,7 @@ import {AdaptiveForm} from "@adobe/aem-forms-af-react-renderer";
 # Form Validations
 
 A Form definition can specify validations on the data that is being produced by the form in terms of
-[Constraints](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_form_field_constraints).
+Constraints.
 The Form uses JSON Schema vocabulary to define simple constraints on the form, which allows a Form to be
 created from a JSON Schema without loosing most of the constraints in the Form Definition
 
@@ -15,7 +15,7 @@ The following constraints are supported in the Schema
 ## Type
 
 A Form Field can specify any of the
-[data types](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#_data_types) supported in
+data types supported in
 the specification. The value is coerced into the type before submitting the value
 
 ### Default Types
@@ -35,10 +35,10 @@ with the exception of Checkbox Group, File and enum types, which is `[]` and `fi
 
 ### Explicit
 
-The [type](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/index.html#field-constraints-type) constraint
+The type constraint
 can be use to define explicit property types.
 
-The [table](https://git.corp.adobe.com/livecycle/af2-docs/issues/120#issue-3380663) specifies all the types that are
+The table specifies all the types that are
 supported for the different field's
 
 A text field can capture boolean or number values as well
@@ -49,9 +49,9 @@ A text field can capture boolean or number values as well
 
 # Required
 
-The [required](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-required)
+The required
 property indicates whether the value of that field can be
-[empty](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-properties-emptyValue)
+empty
 or not. For checkboxes, the require constraint indicates that the checkbox must be on (i.e. its value should be on value)
 
 <Story id="reference-json-constraints-required--required-field" />
@@ -62,7 +62,7 @@ or not. For checkboxes, the require constraint indicates that the checkbox must 
 
 # Format
 
-The [format](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-format) constraint
+The format constraint
 is supported for string types and allows creation of date fields
 
 <Story id="reference-json-constraints-format--date" />
@@ -71,9 +71,9 @@ is supported for string types and allows creation of date fields
 
 For string data types, the following constraints are supported
 
-* [MinLength](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-minLength)
-* [MaxLength](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-minLength)
-* [pattern](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-minLength)
+* MinLength
+* MaxLength
+* pattern
 
 <Story id="reference-json-constraints-multiple-constraints--string-constraints" />
 
@@ -81,11 +81,11 @@ For string data types, the following constraints are supported
 
 For number data type, the following constraints are supported
 
-* [Minimum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-minimum)
-* [Maximum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-maximum)
-* [exclusiveMinimum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints--exclusive-minimum)
-* [exclusiveMaximum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints--exclusive-maximum)
-* [step](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-step)
+* Minimum
+* Maximum
+* exclusiveMinimum
+* exclusiveMaximum
+* step
 
 <Story id="reference-json-constraints-multiple-constraints--string-constraints" />
 
@@ -96,9 +96,9 @@ For number data type, the following constraints are supported
 
 For date data type `{type: string, format: date}`, the following constraints are supported
 
-* [Minimum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-minimum)
-* [Maximum](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-maximum)
-* [step](https://git.corp.adobe.com/pages/livecycle/af2-docs/spec/latest/#field-constraints-step)
+* Minimum
+* Maximum
+* step
 
 <Story id="reference-json-constraints-multiple-constraints--date-constraints" />
 
