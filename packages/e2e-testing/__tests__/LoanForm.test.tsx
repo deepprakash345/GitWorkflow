@@ -14,7 +14,7 @@
 
 import userEvent from '@testing-library/user-event';
 import { renderComponent } from './utils';
-import formJson from '../../../docs/examples/loan.form.json';
+import formJson from '../../forms-headless-sample/public/examples/loan.form.json';
 
 describe('Test contactUs form', () => {
   let renderResponse: any;

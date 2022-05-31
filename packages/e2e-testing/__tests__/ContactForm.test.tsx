@@ -14,7 +14,7 @@
 
 import { Action } from '@adobe/aem-forms-af-core';
 import { renderComponent } from './utils';
-import formJson from '../../../docs/examples/contact-us.form.json';
+import formJson from '../../forms-headless-sample/public/examples/contact-us.form.json';
 
 describe('Test contactUs form', () => {
   let renderResponse: any, onInitialize: any, currentForm: any;

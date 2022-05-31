@@ -2,7 +2,6 @@
   "name": "@adobe/aem-forms-af-react-components",
   "version": "0.11.0",
   "description": "React Components for Adaptive Forms",
-  "homepage": "/pages/livecycle/af2-web-runtime/story",
   "author": "Adobe Inc.",
   "license": "Apache-2.0",
   "main": "lib/index.js",

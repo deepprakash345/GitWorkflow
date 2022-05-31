@@ -14,8 +14,8 @@
 
 import { Action } from '@adobe/aem-forms-af-core';
 import { renderComponent } from './utils';
-import formJson from '../../../docs/examples/person.form.json';
-import localizationMessages from '../../../docs/examples/generated/__localization__/person.i18n.json';
+import formJson from '../../forms-headless-sample/public/examples/person.form.json';
+import localizationMessages from '../../forms-headless-sample/public/examples/generated/__localization__/person.i18n.json';
 
 describe('Translation', () => {
   let renderResponse: any, onInitialize: any, currentForm: any;

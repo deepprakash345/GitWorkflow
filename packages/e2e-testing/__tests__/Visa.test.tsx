@@ -14,7 +14,8 @@
 
 import { Action } from '@adobe/aem-forms-af-core';
 import { renderComponent } from './utils';
-import formJson from '../../../docs/examples/visa.form.json';
+// @ts-ignore
+import formJson from '../../forms-headless-sample/public/examples/visa.form.json';
 
 describe('Test Visa form', () => {
   let renderResponse: any, onInitialize: any, currentForm: any, container: any;

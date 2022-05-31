@@ -15,7 +15,7 @@
 import userEvent from '@testing-library/user-event';
 import { Action } from '@adobe/aem-forms-af-core';
 import { renderComponent } from './utils';
-import formJson from '../../../docs/examples/bank.form.json';
+import formJson from '../../forms-headless-sample/public/examples/bank.form.json';
 
 describe('Test Bank form', () => {
   let renderResponse: any, onInitialize: any, currentForm: any;

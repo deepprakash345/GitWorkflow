@@ -121,7 +121,6 @@ function App() {
                             <Item key="form-model"> Form Model </Item>
                             <Item key="data-model"> Data Model </Item>
                             <Item key="data-schema"> Data Schema </Item>
-                            <Item key="references"> References </Item>
                         </TabList>
                         <TabPanels>
                             <Item key="configuration">
@@ -196,48 +195,6 @@ function App() {
                                                enableSnippets: true
                                            }}
                                 />
-                            </Item>
-                            <Item key="references">
-                                <h2>Specification</h2>
-                                <ul>
-                                    <li>
-                                        <a href="https://wiki.corp.adobe.com/display/lc/Form+Model+Definition">Form Model Definition</a>
-                                    </li>
-                                    <li>
-                                        <a href="https://wiki.corp.adobe.com/display/lc/Rule+Grammar+Specification">Rule Grammar- JSON Formula</a>
-                                    </li>
-                                    <li>
-                                        <a href="https://wiki.corp.adobe.com/display/lc/Form+Headless+API+Specification">Adaptive Form APIs</a>
-                                    </li>
-                                </ul>
-                                <h2>Git Links</h2>
-                                <ul>
-                                    <li>
-                                        <a href="https://git.corp.adobe.com/livecycle/af2-docs/tree/gh-pages/examples">
-                                            Sample Form Definitions
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://git.corp.adobe.com/livecycle/af2-docs/tree/gh-pages/schema">
-                                            Form Definition Schema
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://git.corp.adobe.com/livecycle/af2-web-runtime/tree/main/packages/forms-headless-sample">
-                                            Playground code
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://git.corp.adobe.com/livecycle/af2-expression-parser/tree/main/af-expression-parser-ts">
-                                            Rule Grammar JavaScript Implementation
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://git.corp.adobe.com/livecycle/af2-web-runtime/blob/main/packages/forms-next-react-core-components/src/components/AdaptiveForm.tsx">
-                                            Adptive Form Component
-                                        </a>
-                                    </li>
-                                </ul>
                             </Item>
                         </TabPanels>
                     </Tabs>
