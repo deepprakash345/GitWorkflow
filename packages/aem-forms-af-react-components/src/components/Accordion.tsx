@@ -15,7 +15,7 @@
 import React, { useContext, useCallback } from 'react';
 import { Accordion, Item} from '@react-spectrum/accordion';
 import { FieldsetJson } from '@adobe/aem-forms-af-core';
-import { useRuleEngine, FormContext } from '@adobe/aem-forms-af-super-component';
+import { useRuleEngine, FormContext } from '@adobe/aem-forms-af-react-renderer';
 import { State } from '@adobe/aem-forms-af-core';
 
 // export once adobe react spectrum solves this, https://github.com/adobe/react-spectrum/issues/1989

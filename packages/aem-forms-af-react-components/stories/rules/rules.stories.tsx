@@ -13,7 +13,7 @@
  */
 
 import { ComponentMeta } from '@storybook/react';
-import { AdaptiveForm } from '@adobe/aem-forms-af-super-component';
+import { AdaptiveForm } from '@adobe/aem-forms-af-react-renderer';
 import dynamicValueForm from '../../../forms-headless-sample/public/examples/rules/dynamicValue.form.json';
 import dynamicOptionsForm from '../../../forms-headless-sample/public/examples/rules/dynamicOptions.form.json';
 import { ComponentStory } from '@storybook/react';

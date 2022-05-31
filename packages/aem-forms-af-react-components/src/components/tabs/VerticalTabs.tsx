@@ -14,7 +14,7 @@
 
 import { FieldsetJson } from '@adobe/aem-forms-af-core';
 import React from 'react';
-import { useRuleEngine } from '@adobe/aem-forms-af-super-component';
+import { useRuleEngine } from '@adobe/aem-forms-af-react-renderer';
 import { State } from '@adobe/aem-forms-af-core';
 import TabWrapper from './Tabs';
 

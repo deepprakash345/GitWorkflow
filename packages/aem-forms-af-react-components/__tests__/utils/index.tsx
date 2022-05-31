@@ -14,7 +14,7 @@
  *
  */
 
-import {FormContext} from '@adobe/aem-forms-af-super-component';
+import {FormContext} from '@adobe/aem-forms-af-react-renderer';
 import React, {JSXElementConstructor} from 'react';
 import {createFormInstance, FieldModel, FormModel} from '@adobe/aem-forms-af-core/lib';
 import {IntlProvider} from 'react-intl';

@@ -13,7 +13,7 @@
  */
 
 import {ComponentMeta} from '@storybook/react';
-import {AdaptiveForm} from '@adobe/aem-forms-af-super-component';
+import {AdaptiveForm} from '@adobe/aem-forms-af-react-renderer';
 import {ComponentStory} from '@storybook/react';
 import {mappings} from '../../src';
 import {decorator} from "../template";

@@ -17,7 +17,7 @@ import {jsonString} from "@adobe/aem-forms-af-core";
 import { Source } from '@storybook/components';
 
 const imports = {
-    onSubmit: `import Submit from '@adobe/aem-forms-af-super-component';`
+    onSubmit: `import Submit from '@adobe/aem-forms-af-react-renderer';`
 }
 
 const calls = {
@@ -33,7 +33,7 @@ const props = {
 
 const getCode = (callbacks) => {
     return `import {mappings} from '@adobe/aem-forms-af-react-components'
-import {AdaptiveForm} from '@adobe/aem-forms-af-super-component';
+import {AdaptiveForm} from '@adobe/aem-forms-af-react-renderer';
 ${callbacks.map(x => imports[x]).join('\n')}
 import json from './demo.form.json';
 ${callbacks.map(x => calls[x]).join('\n')}

@@ -1,5 +1,5 @@
 {
-  "name": "@adobe/aem-forms-af-super-component",
+  "name": "@adobe/aem-forms-af-react-renderer",
   "version": "0.11.0",
   "description": "React Hooks to add business logic to React Components",
   "author": "Adobe Inc.",

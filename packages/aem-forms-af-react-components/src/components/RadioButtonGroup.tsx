@@ -16,7 +16,7 @@ import {RadioGroup, Radio} from '@adobe/react-spectrum';
 import {FieldJson, State} from '@adobe/aem-forms-af-core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
-import {useRenderer} from '@adobe/aem-forms-af-super-component';
+import {useRenderer} from '@adobe/aem-forms-af-react-renderer';
 import {
     baseConvertor,
     combineConvertors,

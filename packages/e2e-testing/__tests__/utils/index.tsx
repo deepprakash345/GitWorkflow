@@ -15,7 +15,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Provider as Spectrum3Provider, defaultTheme } from '@adobe/react-spectrum';
-import { AdaptiveForm } from "@adobe/aem-forms-af-super-component";
+import { AdaptiveForm } from "@adobe/aem-forms-af-react-renderer";
 import { mappings } from '@adobe/aem-forms-af-react-components';
 
 interface RenderType {

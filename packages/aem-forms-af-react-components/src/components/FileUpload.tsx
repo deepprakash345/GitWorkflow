@@ -14,7 +14,7 @@
 
 import FileUpload from './fileupload/FileUpload';
 import {FieldJson, State} from '@adobe/aem-forms-af-core';
-import {useRenderer} from '@adobe/aem-forms-af-super-component';
+import {useRenderer} from '@adobe/aem-forms-af-react-renderer';
 import React from 'react';
 import {baseConvertor, combineConvertors, constraintConvertor} from '../utils/SpectrumMappers';
 import {FileObject} from '@adobe/aem-forms-af-core';

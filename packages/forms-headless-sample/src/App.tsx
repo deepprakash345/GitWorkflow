@@ -16,7 +16,7 @@ import React, {Key, useEffect} from 'react';
 import './App.css';
 import {Divider, Flex, Grid, View} from '@adobe/react-spectrum'
 import mappings from './mappings'
-import {AdaptiveForm} from "@adobe/aem-forms-af-super-component";
+import {AdaptiveForm} from "@adobe/aem-forms-af-react-renderer";
 import {jsonString, exportDataSchema, Action} from "@adobe/aem-forms-af-core";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";

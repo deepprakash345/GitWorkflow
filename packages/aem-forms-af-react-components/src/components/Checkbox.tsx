@@ -14,7 +14,7 @@
 
 import {Checkbox} from '@adobe/react-spectrum';
 import {FieldJson, State} from '@adobe/aem-forms-af-core';
-import {useRenderer} from '@adobe/aem-forms-af-super-component';
+import {useRenderer} from '@adobe/aem-forms-af-react-renderer';
 import React from 'react';
 import {
     baseConvertor,

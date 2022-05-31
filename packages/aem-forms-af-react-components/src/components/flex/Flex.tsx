@@ -14,7 +14,7 @@
 
 import { Grid } from '@adobe/react-spectrum';
 import React, { useContext, useCallback } from 'react';
-import { FormContext } from '@adobe/aem-forms-af-super-component';
+import { FormContext } from '@adobe/aem-forms-af-react-renderer';
 
 const FlexWrapper = function (props: any) {
   const mappings = useContext(FormContext).mappings;

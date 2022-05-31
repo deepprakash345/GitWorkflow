@@ -17,7 +17,7 @@ import {randomString} from './index';
 import mock = jest.mock;
 import {FieldJson} from '@adobe/aem-forms-af-core/lib';
 import React from 'react';
-import { Convertor } from '@adobe/aem-forms-af-super-component';
+import { Convertor } from '@adobe/aem-forms-af-react-renderer';
 export const mockHandler = {
     dispatchClick: () => {},
     dispatchChange: (val?: string) => {},

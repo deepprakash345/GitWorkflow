@@ -16,7 +16,7 @@ import { Flex } from '@adobe/react-spectrum';
 import {FieldsetJson} from '@adobe/aem-forms-af-core';
 import React, {useContext} from 'react';
 
-import {useRuleEngine, renderChildren, FormContext} from '@adobe/aem-forms-af-super-component';
+import {useRuleEngine, renderChildren, FormContext} from '@adobe/aem-forms-af-react-renderer';
 import {State} from '@adobe/aem-forms-af-core';
 
 const Panel = function (fieldset: State<FieldsetJson>) {

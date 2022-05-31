@@ -17,7 +17,7 @@ import './App.css';
 // @ts-ignore
 import { mappings } from "@adobe/aem-forms-af-react-components";
 // @ts-ignore
-import { AdaptiveForm } from "@adobe/aem-forms-af-super-component";
+import { AdaptiveForm } from "@adobe/aem-forms-af-react-renderer";
 // import formJson from "./JSON/form.json";
 import formJson from "./JSON/smallForm.form.json";
 

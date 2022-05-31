@@ -1,5 +1,5 @@
 {
-  "name": "@adobe/aem-forms-af-super-component-e2e-testing",
+  "name": "@adobe/aem-forms-af-react-renderer-e2e-testing",
   "version": "0.6.0",
   "description": "e2e test cases for super component ",
   "homepage": "",
@@ -25,7 +25,7 @@
     "@adobe/react-spectrum": "^3.17.0",
     "@adobe/aem-forms-af-core": "^0.11.0",
     "@adobe/aem-forms-af-react-components": "^0.11.0",
-    "@adobe/aem-forms-af-super-component": "^0.11.0",
+    "@adobe/aem-forms-af-react-renderer": "^0.11.0",
     "@react-aria/i18n": "^3.3.2"
   },
   "peerDependencies": {

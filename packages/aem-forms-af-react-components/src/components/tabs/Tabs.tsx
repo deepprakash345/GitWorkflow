@@ -14,7 +14,7 @@
 
 import { Flex, Tabs, TabList, TabPanels, Item } from '@adobe/react-spectrum';
 import React, { useContext, useCallback } from 'react';
-import { FormContext } from '@adobe/aem-forms-af-super-component';
+import { FormContext } from '@adobe/aem-forms-af-react-renderer';
 import {ContainerJson, State} from "@adobe/aem-forms-af-core";
 
 const TabWrapper = function (props: State<ContainerJson> & {orientation? : string}) {

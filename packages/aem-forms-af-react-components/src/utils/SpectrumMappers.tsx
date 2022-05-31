@@ -15,7 +15,7 @@
 import {checkIfConstraintsArePresent, FieldJson} from '@adobe/aem-forms-af-core';
 import React, {JSXElementConstructor} from 'react';
 import sanitizeHTML from 'sanitize-html';
-import {Convertor, useFormIntl} from '@adobe/aem-forms-af-super-component';
+import {Convertor, useFormIntl} from '@adobe/aem-forms-af-react-renderer';
 import '../styles.css';
 import clsx from 'clsx';
 import {isEmpty} from '@adobe/aem-forms-af-core/lib/utils/FormUtils';

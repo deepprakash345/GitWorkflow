@@ -21,7 +21,7 @@ import {
     combineConvertors,
     richTextString
 } from '../utils/SpectrumMappers';
-import {useRenderer} from '@adobe/aem-forms-af-super-component';
+import {useRenderer} from '@adobe/aem-forms-af-react-renderer';
 
 const mapper = combineConvertors((a: FieldJson, b) => {
         return {

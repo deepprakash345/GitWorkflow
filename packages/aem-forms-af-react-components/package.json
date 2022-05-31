@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@adobe/aem-forms-af-core": "^0.11.0",
-    "@adobe/aem-forms-af-super-component": "^0.11.0",
+    "@adobe/aem-forms-af-react-renderer": "^0.11.0",
     "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "sanitize-html": "^2.4.0",
