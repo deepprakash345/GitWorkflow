@@ -12,12 +12,8 @@ The packages can be consumed as a dependency (i.e. added to the package.json of 
 
 To use adaptive form super component, add the following dependency,
 ```
-npm i @adobe/aem-forms-af-core @adobe/aem-forms-af-react-components @adobe/react-spectrum @react/react-spectrum
+npm i @adobe/aem-forms-af-core @adobe/aem-forms-af-react-components @adobe/react-spectrum
 ```
-
-## Using Form Builder Visual Studio Plugin
-
-[Download](adaptive-form-builder-0.10.0.vsix)
 
 ## Versions
 
