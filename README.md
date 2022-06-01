@@ -8,9 +8,9 @@ Client side runtime and tooling to build Adaptive Forms. This allows front end d
 Packages contained in this repository are published to the global npm registry.  Artifactory in the scope @adobe. 
 The packages can be consumed as a dependency (i.e. added to the package.json of any project).
 
-## Using Adaptive Form Super Component
+## Using Adaptive Form React Renderer
 
-To use adaptive form super component, add the following dependency,
+To use adaptive form react renderer, add the following dependency,
 ```
 npm i @adobe/aem-forms-af-core @adobe/aem-forms-af-react-components @adobe/react-spectrum
 ```
