@@ -26,7 +26,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 17.7.1  
-    - name: Check node build
+#    - name: Check node build
 #      run: npm ci
     - name: build - environment
       run: |
