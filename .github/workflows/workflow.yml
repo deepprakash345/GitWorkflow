@@ -24,6 +24,7 @@ jobs:
       uses: actions/checkout@v3
     - name: build - environment
       run: |
+       echo "`ls`"
        sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
        sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
     - name: test-node14
