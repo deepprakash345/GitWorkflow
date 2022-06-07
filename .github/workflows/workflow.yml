@@ -27,12 +27,13 @@ jobs:
       with:
         node-version: 17.7.1  
     - name: Check node build
-      run: npm ci
+#      run: npm ci
     - name: build - environment
       run: |
        echo "`ls`"
+       sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
 #       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
-#       sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
+       
     - name: test-node14
       run: |
        docker run -u `id -u` --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npm ci
