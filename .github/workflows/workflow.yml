@@ -1,0 +1,53 @@
+name: Demo Workflow
+
+on:
+  push:
+    branches: [ "open" ]
+  pull_request:
+    branches: [ "open" ]
+
+env:
+  BUILDER_DOCKER_NAME: "af2-web-runtime-builder"
+  BUILDER_DOCKER_NAME_14: "af2-web-runtime-builder_14"
+  DOCKERCOMMAND: "docker run -u `id -u` --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c "
+  DOCKER14COMMAND: "docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c "
+jobs:
+  buildProject:
+    runs-on: ubuntu-latest
+    steps:
+    #  To automatically get bug fixes and new Php versions for shivammathur/setup-php,
+    # change this to (see https://github.com/shivammathur/setup-php#bookmark-versioning):
+    # uses: shivammathur/setup-php@v2
+    - name: checkout branch
+      uses: actions/checkout@v3
+    - name: build - environment
+      run: |
+       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
+       sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
+    - name: test-node14
+      run: |
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npm ci
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npx lerna bootstrap --ci --hoist --strict
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npx lerna run build
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npx lerna run test
+#     - uses: actions/checkout@v3
+#     - name: Copy .env.test.local
+#       run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+#     - name: Cache Composer packages
+#       id: composer-cache
+#       uses: actions/cache@v3
+#       with:
+#         path: vendor
+#         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+#         restore-keys: |
+#           ${{ runner.os }}-php-
+#     - name: Install Dependencies
+#       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+#     - name: Create Database
+#       run: |
+#         mkdir -p data
+#         touch data/database.sqlite
+#     - name: Execute tests (Unit and Feature tests) via PHPUnit
+#       env:
+#         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+#       run: vendor/bin/phpunit
