@@ -22,6 +22,10 @@ jobs:
       run: more $GITHUB_EVENT_PATH    
     - name: checkout branch
       uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 17.x
     - name: build - environment
       run: |
        sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
