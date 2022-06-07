@@ -22,11 +22,17 @@ jobs:
       run: more $GITHUB_EVENT_PATH    
     - name: checkout branch
       uses: actions/checkout@v3
+    - name: Use Node.js 
+      uses: actions/setup-node@v3
+      with:
+        node-version: 17.7.1  
+    - name: Check node build
+      run: npm ci
     - name: build - environment
       run: |
        echo "`ls`"
-       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
-       sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
+#       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
+#       sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
     - name: test-node14
       run: |
        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npm ci
