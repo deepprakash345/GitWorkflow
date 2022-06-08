@@ -15,31 +15,20 @@ jobs:
   buildProject:
     runs-on: ubuntu-latest
     steps:
-    #  To automatically get bug fixes and new Php versions for shivammathur/setup-php,
-    # change this to (see https://github.com/shivammathur/setup-php#bookmark-versioning):
-    # uses: shivammathur/setup-php@v2
     - name: list event
       run: more $GITHUB_EVENT_PATH    
     - name: checkout branch
       uses: actions/checkout@v3
-    - name: Use Node.js 
-      uses: actions/setup-node@v3
-      with:
-        node-version: 17.7.1  
-#    - name: Check node build
-#      run: npm ci
     - name: build - environment
       run: |
-       echo "`ls`"
+       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
        sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
-#       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
-       
     - name: test-node14
       run: |
-       docker run -u `id -u` --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npm ci
-#       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npx lerna bootstrap --ci --hoist --strict
-#       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npx lerna run build
-#       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c npx lerna run test
+       docker run -u `id -u` --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npm ci'
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna bootstrap --ci --hoist --strict'
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run build'
+       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run test'
 #     - uses: actions/checkout@v3
 #     - name: Copy .env.test.local
 #       run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
