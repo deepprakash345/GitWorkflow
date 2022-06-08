@@ -24,5 +24,5 @@ RUN npm set unsafe-perm true
 RUN npm install -g @lhci/cli@0.8.x
 RUN chown -R $(id -u):$(id -g) "/root/.npm"
 RUN mkdir /.npm
-RUN chown -R 1001:1001 "/.npm"
+RUN chown -R $(id -u):$(id -g) "/.npm"
 WORKDIR /app
