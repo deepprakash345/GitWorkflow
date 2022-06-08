@@ -23,13 +23,24 @@ jobs:
       run: |
        sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
        sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
-    - name: test-node14
+#     - name: test-node14
+#       run: |
+#        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npm ci'
+#        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna bootstrap --ci --hoist --strict'
+#        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run build'
+#        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run test'
+    - name: build - packages
       run: |
-       docker run -u `id -u` --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npm ci'
-       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna bootstrap --ci --hoist --strict'
-       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run build'
-       docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run test'
-#     - uses: actions/checkout@v3
+         rm -rf node_modules packages/*/node_modules packages/*/lib packages/*/build packages/*/target
+         git checkout .
+         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'npm ci'
+         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'npx lerna bootstrap --ci --hoist --strict'
+         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'npx lerna run build'
+  
+
+
+
+#- uses: actions/checkout@v3
 #     - name: Copy .env.test.local
 #       run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
 #     - name: Cache Composer packages
