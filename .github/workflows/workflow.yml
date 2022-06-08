@@ -34,8 +34,8 @@ jobs:
          rm -rf node_modules packages/*/node_modules packages/*/lib packages/*/build packages/*/target
          git checkout .
          docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'npm ci'
-         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'npx lerna bootstrap --ci --hoist --strict'
-         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'npx lerna run build'
+         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npx lerna bootstrap --ci --hoist --strict'
+         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npx lerna run build'
   
 
 
