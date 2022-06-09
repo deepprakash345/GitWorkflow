@@ -52,8 +52,6 @@ jobs:
       if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
-        mkdir /.npm
-        chown -R $(id -u):$(id -g) "/.npm"
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
