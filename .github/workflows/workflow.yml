@@ -55,10 +55,11 @@ jobs:
       if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
-        npm config set unsafe-perm true
-        npm ci
-        npx lerna bootstrap --ci --strict
-        npx lerna run build
+        npm show html-webpack-plugin version       
+#        npm config set unsafe-perm true
+#        npm ci
+#        npx lerna bootstrap --ci --strict
+#        npx lerna run build
       if: ${{matrix.node=='latest'}}
     - name: test-with-latest
       run: |
