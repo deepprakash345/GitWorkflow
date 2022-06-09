@@ -51,11 +51,9 @@ jobs:
 #          npx lerna run test
 #          npx lerna run clean
 #          rm -rf node_modules packages/*/node_modules
-          
       if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
-#        npm config set unsafe-perm true
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
