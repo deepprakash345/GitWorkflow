@@ -19,9 +19,12 @@ jobs:
       run: more $GITHUB_EVENT_PATH    
     - name: checkout branch
       uses: actions/checkout@v3
-    - name: build - environment
-      run: |
-       sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.3.0
+      
+#     - name: build - environment
+#       run: |
+#        sudo docker build -t $BUILDER_DOCKER_NAME -f Dockerfile.build.mt .
 #       sudo docker build -t $BUILDER_DOCKER_NAME_14 -f Dockerfile_14.build.mt .
 #     - name: test-node14
 #       run: |
@@ -33,8 +36,11 @@ jobs:
       run: |
          rm -rf node_modules packages/*/node_modules packages/*/lib packages/*/build packages/*/target
          git checkout .
-         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npm ci'
-         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npm ci && npx lerna bootstrap --ci --hoist --strict'
+         npm ci
+         npm ci && npx lerna bootstrap --ci --hoist --strict
+         npx lerna run build
+#         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npm ci'
+#         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npm ci && npx lerna bootstrap --ci --hoist --strict'
 #         docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c 'chown -R $(id -u):$(id -g) /root/.npm && npx lerna run build'
   
 
