@@ -64,7 +64,7 @@ jobs:
        npx lerna run test:ci
       if: ${{matrix.node=='latestasdasd'}}
     - name: diff-coverage
-      if: $(github_event.pull_request) 
+      #if: ${{github_event.pull_request}}
       run: |
         ls 
       
