@@ -56,7 +56,6 @@ jobs:
     - name: build-package-with-latest-node
       run: |
         npm config set unsafe-perm true
-        npm i -D html-webpack-plugin@next
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
