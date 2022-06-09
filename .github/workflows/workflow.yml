@@ -42,6 +42,7 @@ jobs:
 #        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run test'
     - name: test-with-node-14
       run: |
+          npm set unsafe-perm true
           npx lerna bootstrap --ci --strict
 #         npm ci --ignore-scripts
          
@@ -53,7 +54,8 @@ jobs:
       if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
-       npm ci
+        npm set unsafe-perm true
+        npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
       if: ${{matrix.node=='latest'}}
