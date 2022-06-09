@@ -58,15 +58,16 @@ jobs:
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
-      if: ${{matrix.node=='latestsdasd'}}
+      if: ${{matrix.node=='latest'}}
     - name: test-with-latest
       run: |
        npx lerna run test:ci
-      if: ${{matrix.node=='latestasdasd'}}
+      if: ${{matrix.node=='latest'}}
     - name: diff-coverage
-      if: ${{github.event.pull_request}}
+      if: github.event_name == 'pull_request'
       run: |
         ls 
+        diff-cover --html-report packages/forms-next-core/target/coverage/diff-cover.html --compare-branch ${{github.event.pull_request.base.ref}} packages/forms-next-core/target/coverage/cobertura-coverage.xml --fail-under=90
       
       
       
