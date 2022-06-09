@@ -51,11 +51,11 @@ jobs:
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
-      if: ${{matrix.node==latest}}
+      if: ${{matrix.node=='latest'}}
     - name: test
       run: |
        npx lerna run test:ci
 #       junit "packages/forms-next-core/target/test-reports/junit.xml"
 #       junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
 #       junit "packages/react-bindings/target/test-reports/junit.xml"
-      if: ${{matrix.node==latest}}       
+      if: ${{matrix.node=='latest'}}       
