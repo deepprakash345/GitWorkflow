@@ -6,7 +6,7 @@
 	},
 	"scripts": {
 		"clean": "npx lerna clean --yes && rm -rf packages/*/target packages/*/lib packages/*/build",
-		"build": "npx lerna run build",
+		"build": "CI=false && npx lerna run build",
 		"build:libs": "npx lerna run build-libs",
 		"start": "npx lerna run start",
 		"story": "npx lerna run storybook",
