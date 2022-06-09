@@ -55,6 +55,7 @@ jobs:
       if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
+        npm config set unsafe-perm true
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
