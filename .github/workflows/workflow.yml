@@ -43,7 +43,8 @@ jobs:
     - name: test-with-node-14
       run: |
           npm config set unsafe-perm true
-          ls -al /home/runner/work/GitWorkflow/GitWorkflow/node_modules/
+          ls -al /home/runner/work/GitWorkflow
+          cd /home/runner/work/GitWorkflow
           npx lerna bootstrap --ci --strict
 #         npm ci --ignore-scripts
          
