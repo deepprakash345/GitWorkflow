@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "open" ]
   pull_request:
-    branches: [ "open" ]
+    branches: [ "open","main" ]
 
 env:
   BUILDER_DOCKER_NAME: "af2-web-runtime-builder"
@@ -62,7 +62,11 @@ jobs:
     - name: test-with-latest
       run: |
        npx lerna run test:ci
-       junit "packages/forms-next-core/target/test-reports/junit.xml"
-       junit "packages/forms-next-react-core-components/target/test-reports/junit.xml"
-       junit "packages/react-bindings/target/test-reports/junit.xml"
-      if: ${{matrix.node=='latestasdasd'}}       
+      if: ${{matrix.node=='latestasdasd'}}
+    - name: diff-coverage
+      if: $(github_event.pull_request) 
+      run: |
+        ls 
+      
+      
+      
