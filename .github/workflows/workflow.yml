@@ -39,6 +39,7 @@ jobs:
     - name: build - packages
       run: |
          echo ${{matrix.node}}
+      if: ${{matrix.node==14}}   
 #         rm -rf node_modules packages/*/node_modules packages/*/lib packages/*/build packages/*/target
 #         git checkout .
 #         npm ci
