@@ -56,10 +56,6 @@ jobs:
     - name: build-package-with-latest-node
       run: |
         npm config set unsafe-perm true
-        npm install -g npm@latest 
-        npm install -g @lhci/cli@0.8.x
-        npm uninstall html-webpack-plugin
-        npm i -D html-webpack-plugin
         npm ci
         npx lerna bootstrap --ci --strict
         npx lerna run build
