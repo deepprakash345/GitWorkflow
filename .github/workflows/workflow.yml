@@ -38,6 +38,7 @@ jobs:
 #        docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c 'npx lerna run test'
     - name: test-with-node-14
       run: |
+         rm -rf package-lock.json
          npm ci --ignore-scripts
          npx lerna bootstrap --ci --strict
 #         npx lerna run build
