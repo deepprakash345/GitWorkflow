@@ -56,7 +56,7 @@ jobs:
     - name: build-package-with-latest-node
       run: |
         npm config set unsafe-perm true
-        npm install-g npm@latest 
+        npm install -g npm@latest 
         npm install -g @lhci/cli@0.8.x
         npm ci
         npx lerna bootstrap --ci --strict
