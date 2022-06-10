@@ -62,7 +62,7 @@ jobs:
     - name: test-with-latest
       run: |
        npx lerna run test:ci
-      if: ${{matrix.node=='latestsss'}}
+      if: ${{matrix.node=='latestss'}}
     - name: diff-coverage
       if: github.event_name == 'pull_request'
       run: |
