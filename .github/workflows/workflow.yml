@@ -68,6 +68,6 @@ jobs:
       run: |
         diff-cover --html-report packages/aem-forms-af-core/target/coverage/diff-cover.html --compare-branch main packages/aem-forms-af-core/target/coverage/cobertura-coverage.xml --fail-under=90
 #        diff-cover --html-report packages/forms-next-core/target/coverage/diff-cover.html --compare-branch ${{github.event.pull_request.base.ref}} packages/forms-next-core/target/coverage/cobertura-coverage.xml --fail-under=90
-      
+      if: ${{matrix.node=='latest'}}
       
       
