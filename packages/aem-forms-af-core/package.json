@@ -27,7 +27,7 @@
     "test": "jest --silent",
     "eslint": "npx eslint src/**",
     "eslint:fix": "npx eslint --fix src/**",
-    "test-ci": "jest --silent --coverage",
+    "test:ci": "jest --silent --coverage",
     "build": "npm run eslint && npx tsc",
     "build-libs": "npx tsc",
     "clean": "rm -rf lib coverage",
