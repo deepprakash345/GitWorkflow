@@ -31,8 +31,6 @@ class Checkbox extends Field {
 
     private offValue() {
         const opts = this.enum;
-        let abc=1;
-        abc=abc+1;
         return opts.length > 1 ? opts[1] : null;
     }
 
