@@ -51,7 +51,7 @@ jobs:
 #          npx lerna run test
 #          npx lerna run clean
 #          rm -rf node_modules packages/*/node_modules
-      if: ${{matrix.node==14}}
+      if: ${{matrix.node==141}}
     - name: build-package-with-latest-node
       run: |
         npm ci
