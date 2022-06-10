@@ -25,7 +25,7 @@
     "eslint": "npx eslint src/**/*.ts*",
     "build": "npm run eslint && npx tsc && cp src/styles.css lib",
     "build-libs": "npx tsc && cp src/styles.css lib",
-    "test-ci": "jest --silent --coverage",
+    "test:ci": "jest --silent --coverage",
     "prepublishOnly": "npm run build && npm run test",
     "test": "jest --silent",
     "storybook": "start-storybook -p 6006",
