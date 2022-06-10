@@ -72,6 +72,7 @@ jobs:
       run: |
         pip install diff-cover
         git fetch --no-tags --depth=500 origin main
+        git fetch --no-tags --depth=500 origin open
         diff-cover --html-report packages/aem-forms-af-core/target/coverage/diff-cover.html --compare-branch origin/main packages/aem-forms-af-core/target/coverage/cobertura-coverage.xml --fail-under=90
 #        diff-cover --html-report packages/forms-next-core/target/coverage/diff-cover.html --compare-branch ${{github.event.pull_request.base.ref}} packages/forms-next-core/target/coverage/cobertura-coverage.xml --fail-under=90
       if: ${{matrix.node=='latest'}}
