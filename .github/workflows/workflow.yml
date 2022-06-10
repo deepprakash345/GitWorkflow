@@ -43,7 +43,8 @@ jobs:
       run: |
        echo ${{matrix.node}}
          npm config set unsafe-perm true
-         npm -v
+         apk search openssh
+         apk add openssh
          npm ci --ignore-scripts
          npx lerna bootstrap --ci --strict
 #          npm ci --ignore-scripts
@@ -51,7 +52,7 @@ jobs:
 #          npx lerna run test
 #          npx lerna run clean
 #          rm -rf node_modules packages/*/node_modules
-      if: ${{matrix.node==141}}
+      if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
         npm ci
