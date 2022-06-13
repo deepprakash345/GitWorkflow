@@ -27,7 +27,7 @@
     "test": "jest --silent",
     "eslint": "npx eslint src/**",
     "eslint:fix": "npx eslint --fix src/**",
-    "test-ci": "jest --silent --coverage",
+    "test:ci": "jest --silent --coverage",
     "build": "npm run eslint && npx tsc",
     "build-libs": "npx tsc",
     "clean": "rm -rf lib coverage",
@@ -35,7 +35,7 @@
     "docs": "npx typedoc --options .typedoc.cjs"
   },
   "dependencies": {
-    "@adobe/json-formula": "git+https://github.com/adobe/json-formula.git#e246367c091948140db6f581806114ee482dcd1a"
+    "@adobe/json-formula": "git+https://git@github.com/adobe/json-formula.git#e246367c091948140db6f581806114ee482dcd1a"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",

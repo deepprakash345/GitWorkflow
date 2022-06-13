@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [ "open","main" ]
 
-env:
-  BUILDER_DOCKER_NAME: "af2-web-runtime-builder"
-  BUILDER_DOCKER_NAME_14: "af2-web-runtime-builder_14"
-  DOCKERCOMMAND: "docker run -u `id -u` --rm -v `pwd`:/app $BUILDER_DOCKER_NAME sh -c "
-  DOCKER14COMMAND: "docker run --rm -v `pwd`:/app $BUILDER_DOCKER_NAME_14 sh -c "
 jobs:
   buildProject:
     runs-on: ubuntu-latest
@@ -26,6 +21,10 @@ jobs:
       uses: actions/setup-node@v3.3.0
       with:
           node-version: ${{ matrix.node }}
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+       python-version: '3.x'
     - uses: actions/setup-java@v3
       with:
          distribution: 'zulu' # See 'Supported distributions' for available options
@@ -43,15 +42,13 @@ jobs:
     - name: test-with-node-14
       run: |
        echo ${{matrix.node}}
-         npm config set unsafe-perm true
-         npm -v
-         npm ci --ignore-scripts
-         npx lerna bootstrap --ci --strict
-#          npm ci --ignore-scripts
-#          npx lerna run build
-#          npx lerna run test
-#          npx lerna run clean
-#          rm -rf node_modules packages/*/node_modules
+       npm config set unsafe-perm true
+       npm ci --ignore-scripts
+       npx lerna bootstrap --ci --strict
+       npx lerna run build
+       npx lerna run test
+       npx lerna run clean
+       rm -rf node_modules packages/*/node_modules
       if: ${{matrix.node==14}}
     - name: build-package-with-latest-node
       run: |
@@ -64,10 +61,15 @@ jobs:
        npx lerna run test:ci
       if: ${{matrix.node=='latest'}}
     - name: diff-coverage
-      if: github.event_name == 'pull_request'
+      if: ${{github.event_name == 'pull_request' && matrix.node=='latest'}}
       run: |
-        ls 
-        diff-cover --html-report packages/forms-next-core/target/coverage/diff-cover.html --compare-branch ${{github.event.pull_request.base.ref}} packages/forms-next-core/target/coverage/cobertura-coverage.xml --fail-under=90
-      
+        pip install diff-cover
+        git fetch --no-tags --depth=500 origin main
+        git fetch --no-tags --depth=500 origin open
+        diff-cover --html-report packages/aem-forms-af-core/target/coverage/diff-cover.html --compare-branch origin/${{github.event.pull_request.base.ref}} packages/aem-forms-af-core/target/coverage/cobertura-coverage.xml --fail-under=90
+        diff-cover --html-report packages/aem-forms-af-react-components/target/coverage/diff-cover.html --compare-branch origin/${{github.event.pull_request.base.ref}} packages/aem-forms-af-react-components/target/coverage/cobertura-coverage.xml --fail-under=90
+
+#        diff-cover --html-report packages/forms-next-core/target/coverage/diff-cover.html --compare-branch ${{github.event.pull_request.base.ref}} packages/forms-next-core/target/coverage/cobertura-coverage.xml --fail-under=90
+     
       
       
