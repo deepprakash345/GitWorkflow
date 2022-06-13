@@ -35,7 +35,7 @@
     "docs": "npx typedoc --options .typedoc.cjs"
   },
   "dependencies": {
-    "@adobe/json-formula": "git+https://github.com/adobe/json-formula.git#e246367c091948140db6f581806114ee482dcd1a"
+    "@adobe/json-formula": "git+https://git@github.com/adobe/json-formula.git#e246367c091948140db6f581806114ee482dcd1a"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
