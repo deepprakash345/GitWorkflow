@@ -46,7 +46,7 @@ jobs:
        npm ci --ignore-scripts
        npx lerna bootstrap --ci --strict
        npx lerna run build
-       npx lerna run test --passWithNoTests
+       npx lerna run test
        npx lerna run clean
        rm -rf node_modules packages/*/node_modules
       if: ${{matrix.node==14}}
